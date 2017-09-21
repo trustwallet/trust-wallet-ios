@@ -85,6 +85,8 @@
 		29D03F1D1F712183006E548C /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D03F1C1F712183006E548C /* Button.swift */; };
 		29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D72A291F6A8D1500CE9209 /* AppCoordinator.swift */; };
 		29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB10291F6CBD23000907A4 /* UIAlertController.swift */; };
+		29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF12F51F74799D00AFD326 /* NSAttributedString.swift */; };
+		29FF12F81F747D6C00AFD326 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF12F71F747D6C00AFD326 /* Error.swift */; };
 		3CDDD1E2CD1B0180754B7992 /* Pods_Trust.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646C8C822C986358D7388602 /* Pods_Trust.framework */; };
 		7C08D788E0C6217EC03546AB /* Pods_etherwalletUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A6C60622930EA26A498DBB1 /* Pods_etherwalletUITests.framework */; };
 		A05B2C3F747BA21F37AB01CD /* Pods_etherwalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98AA7159907D154EF2CBEE41 /* Pods_etherwalletTests.framework */; };
@@ -193,6 +195,8 @@
 		29D03F1C1F712183006E548C /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		29D72A291F6A8D1500CE9209 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		29EB10291F6CBD23000907A4 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
+		29FF12F51F74799D00AFD326 /* NSAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
+		29FF12F71F747D6C00AFD326 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		477899BEAA4489DA423E8857 /* Pods-TrustUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4DB8204016307EAFC079EA48 /* Pods-Trust.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trust.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trust/Pods-Trust.debug.xcconfig"; sourceTree = "<group>"; };
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -467,6 +471,8 @@
 				291ED08A1F6F5D2100E7E93A /* Bundle.swift */,
 				29A0E1841F706B8C00BAAAED /* String.swift */,
 				29BE3FCF1F7071A200F6BFC2 /* UIColor.swift */,
+				29FF12F51F74799D00AFD326 /* NSAttributedString.swift */,
+				29FF12F71F747D6C00AFD326 /* Error.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -864,6 +870,7 @@
 				291ED08F1F6F613200E7E93A /* GetTransactionRequest.swift in Sources */,
 				295A59381F71C1B90092F0FC /* AccountsCoordinator.swift in Sources */,
 				296421971F70C1F200EB363B /* ErrorView.swift in Sources */,
+				29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */,
 				293B8B431F70815900356286 /* BalanceTitleView.swift in Sources */,
 				291F52B91F6B880F00B369AB /* EtherKeystore.swift in Sources */,
 				29BB94971F6FCD60009B09CC /* SendViewModel.swift in Sources */,
@@ -893,6 +900,7 @@
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
 				29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */,
 				29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */,
+				29FF12F81F747D6C00AFD326 /* Error.swift in Sources */,
 				291F52A51F6B762300B369AB /* EtherServiceRequest.swift in Sources */,
 				29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */,
 				296AF9A51F736BA20058AF78 /* Config.swift in Sources */,

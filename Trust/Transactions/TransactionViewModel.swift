@@ -18,4 +18,40 @@ struct TransactionViewModel {
     var backgroundColor: UIColor {
         return .white
     }
+    
+    var amount: String {
+        let value = EthereumConverter.from(value: transaction.value, to: .ether, minimumFractionDigits: 3)
+        switch transaction.direction {
+        case .incoming: return "+\(value)"
+        case .outgoing: return "-\(value)"
+        }
+    }
+    
+    var amountTextColor: UIColor {
+        switch transaction.direction {
+        case .incoming: return Colors.green
+        case .outgoing: return Colors.red
+        }
+    }
+    
+    var amountAttributedString: NSAttributedString {
+        let amount = NSAttributedString(
+            string: self.amount,
+            attributes: [
+                NSFontAttributeName : UIFont.systemFont(ofSize: 20),
+                NSForegroundColorAttributeName: amountTextColor
+            ]
+        )
+        
+        let currency = NSAttributedString(
+            string: " ether",
+            attributes: [
+                NSFontAttributeName : UIFont.systemFont(ofSize: 14),
+            ]
+        )
+        
+        return amount + currency
+    }
+    
+    
 }

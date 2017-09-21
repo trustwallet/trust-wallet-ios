@@ -9,20 +9,16 @@ enum ConfirmationError: LocalizedError {
 }
 
 extension UIViewController {
-    func displayError(error: LocalizedError) {
-        let alert = UIAlertController(title: error.errorDescription, message: "", preferredStyle: UIAlertControllerStyle.alert)
+    func displaySuccess(title: String? = .none, message: String? = .none) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
     
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    func dismissKeyboard() {
-        view.endEditing(true)
+    func displayError(error: Error) {
+        let alert = UIAlertController(title: error.prettyError, message: "", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     func confirm(

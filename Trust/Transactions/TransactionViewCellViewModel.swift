@@ -21,7 +21,7 @@ struct TransactionViewCellViewModel {
     var subTitle: String {
         switch transaction.direction {
         case .incoming: return "\(transaction.from)"
-        case .outgoing: return "\(transaction.from)"
+        case .outgoing: return "\(transaction.to)"
         }
     }
     
