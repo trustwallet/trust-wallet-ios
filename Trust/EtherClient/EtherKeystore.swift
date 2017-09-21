@@ -3,9 +3,11 @@
 import Foundation
 import Geth
 import Result
+import KeychainSwift
 
 class EtherKeystore {
     
+    private let keychain = KeychainSwift(keyPrefix: "trustwallet")
     let datadir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     lazy var ks: GethKeyStore = {
         return GethNewKeyStore(self.datadir + "/keystore", GethLightScryptN, GethLightScryptP)
@@ -20,15 +22,17 @@ class EtherKeystore {
     }
     
     func createAccout(password: String) -> Account {
-        let account = try! ks.newAccount("test")
+        let account = try! ks.newAccount(password)
         return .from(account: account)
     }
     
     func importKeystore(value: String, password: String) -> Result<Account, KeyStoreError> {
         let data = value.data(using: .utf8)
         do {
-            let account = try ks.importKey(data, passphrase: password, newPassphrase: password)
-            return (.success(.from(account: account)))
+            let gethAccount = try ks.importKey(data, passphrase: password, newPassphrase: password)
+            let account: Account = .from(account: gethAccount)
+            let _ = setPassword(password, for: account)
+            return (.success(account))
         } catch {
             return (.failure(.failedToImport))
         }
@@ -98,9 +102,10 @@ class EtherKeystore {
         let address = GethNewAddressFromHex(address.address, nil)
         
         let transaction = GethNewTransaction(nonce, address, amount, gasLimit, gasPrice, data)
+        let password = getPassword(for: account)
         
         do {
-            try ks.unlock(account.gethAccount, passphrase: "test")
+            try ks.unlock(account.gethAccount, passphrase: password)
             let signedTransaction = try ks.signTx(account.gethAccount, tx: transaction, chainID: chainID)
             NSLog("signedTransaction \(try signedTransaction.encodeJSON())")
             let rlp = try signedTransaction.encodeRLP()
@@ -108,6 +113,14 @@ class EtherKeystore {
         } catch {
             return (.failure(.failedToSignTransaction))
         }
+    }
+    
+    func getPassword(for account: Account) -> String? {
+        return keychain.get(account.address)
+    }
+    
+    func setPassword(_ password: String, for account: Account) -> Bool {
+        return keychain.set(password, forKey: account.address)
     }
 }
 
