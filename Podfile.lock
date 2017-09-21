@@ -8,6 +8,7 @@ PODS:
   - Geth (1.6.7)
   - JSONRPCKit (2.0.0):
     - Result (~> 3.0)
+  - KeychainSwift (8.0.2)
   - MBProgressHUD (1.0.0)
   - QRCodeReaderViewController (4.0.2)
   - R.swift (3.3.0):
@@ -22,6 +23,7 @@ DEPENDENCIES:
   - Eureka (from `https://github.com/xmartlabs/Eureka.git`, branch `feature/Xcode9-Swift3_2`)
   - Geth
   - JSONRPCKit (from `https://github.com/bricklife/JSONRPCKit.git`)
+  - KeychainSwift
   - MBProgressHUD
   - QRCodeReaderViewController
   - R.swift
@@ -49,6 +51,7 @@ SPEC CHECKSUMS:
   Eureka: 5b9418d7bfdc21ca977d69d124a6409f3e9af2c7
   Geth: d2496f4ad3b2191859aa4a1bf7f8fe63c0be695a
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
+  KeychainSwift: 213db04dfe7244988e61f77c72a2afb2f775954a
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   R.swift: bde9704d50ff36820f49e266bc88ef545e1e9b36
@@ -56,6 +59,6 @@ SPEC CHECKSUMS:
   Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
 
-PODFILE CHECKSUM: b4a4046f7aed4c7469ac911246ceff7fb7b4fbe6
+PODFILE CHECKSUM: 88f51d54c9f038eae8a4d28b1c585e2a980e5b5f
 
 COCOAPODS: 1.3.1

@@ -14,6 +14,7 @@ target 'Trust' do
   pod 'MBProgressHUD'
   pod 'StatefulViewController'
   pod 'QRCodeReaderViewController'
+  pod 'KeychainSwift'
 
   target 'TrustTests' do
     inherit! :search_paths
