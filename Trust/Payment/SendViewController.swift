@@ -8,17 +8,6 @@ import JSONRPCKit
 import APIKit
 import QRCodeReaderViewController
 
-enum SendPaymentError: LocalizedError {
-    case failedToSend
-    
-    var errorDescription: String? {
-        switch self {
-        case .failedToSend:
-            return "Failed to send transaction"
-        }
-    }
-}
-
 class SendViewController: FormViewController {
     
     private let viewModel = SendViewModel()
