@@ -26,7 +26,9 @@ class TransactionsViewController: UIViewController {
     let refreshControl = UIRefreshControl()
     
     lazy var titleView: BalanceTitleView = {
-        return BalanceTitleView(frame: .zero)
+        let view = BalanceTitleView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     weak var delegate: TransactionsViewControllerDelegate?

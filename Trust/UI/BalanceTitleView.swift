@@ -22,6 +22,8 @@ class BalanceTitleView: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
         addSubview(label)
         
         NSLayoutConstraint.activate([
