@@ -50,6 +50,7 @@ class TransactionsViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
+        tableView.rowHeight = 68
         view.addSubview(tableView)
         
         sendButton.translatesAutoresizingMaskIntoConstraints = false
