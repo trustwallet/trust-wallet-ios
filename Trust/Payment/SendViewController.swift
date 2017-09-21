@@ -8,6 +8,16 @@ import JSONRPCKit
 import APIKit
 import QRCodeReaderViewController
 
+enum SendPaymentError: LocalizedError {
+    case failedToSend
+    
+    var errorDescription: String? {
+        switch self {
+        case .failedToSend:
+            return "Failed to send transaction"
+        }
+    }
+}
 
 class SendViewController: FormViewController {
     
@@ -43,7 +53,7 @@ class SendViewController: FormViewController {
             
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
                 $0.add(rule: RuleRequired())
-                $0.validationOptions = .validatesOnChange
+                $0.validationOptions = .validatesOnDemand
             }.cellUpdate { cell, row in
                 let button = UIButton(type: UIButtonType.infoLight)
                 button.addTarget(self, action: #selector(self.openReader), for: .touchUpInside)
@@ -56,12 +66,23 @@ class SendViewController: FormViewController {
         
             <<< AppFormAppearance.textFieldFloat(tag: Values.amount) {
                 $0.add(rule: RuleRequired())
-                $0.validationOptions = .validatesOnChange
+                $0.validationOptions = .validatesOnDemand
             }.cellUpdate { cell, row in
                 cell.textField.textAlignment = .left
                 cell.textField.placeholder = "ETH Amount"
                 cell.textField.keyboardType = .decimalPad
             }
+    }
+    
+    func clear() {
+        let addressRow = (form.rowBy(tag: Values.address) as? TextFloatLabelRow)
+        let amountRow = (form.rowBy(tag: Values.amount) as? TextFloatLabelRow)
+        
+        addressRow?.value = ""
+        addressRow?.reload()
+        
+        amountRow?.value = ""
+        amountRow?.reload()
     }
     
     func send() {
@@ -106,20 +127,26 @@ class SendViewController: FormViewController {
             chainID: GethNewBigInt(Int64(config.chainID))
         )
         
+        let amountString = Int64(Double(EthereumUnit.ether.rawValue) / Double(amount))
+        
         switch res {
         case .success(let data):
             let sendData = "0x" + data.hex
             let request = EtherServiceRequest(batch: BatchFactory().create(SendRawTransactionRequest(signedTransaction: sendData)))
             Session.send(request) { [weak self] result in
                 switch result {
-                case .success(let count):
-                    NSLog("SendRawTransactionRequest \(count) for account \(self?.account.address ?? "")")
+                case .success(let transactionID):
+                    self?.displaySuccess(
+                        title: "Sent \(amountString) to \(self?.account.address ?? "")",
+                        message: "TransactionID: \(transactionID)"
+                    )
+                    self?.clear()
                 case .failure(let error):
-                    NSLog("SendRawTransactionRequest error \(error)")
+                    self?.displayError(error: error)
                 }
             }
-        case .failure:
-            break //TODO Show error
+        case .failure(let error):
+            displayError(error: error)
         }
     }
     
@@ -146,11 +173,6 @@ extension SendViewController: QRCodeReaderDelegate {
         reader.dismiss(animated: true, completion: nil)
         
         NSLog("result \(result)")
-        
-        if let urlComponents = URLComponents(string: result), let host = urlComponents.host, let queryItems = urlComponents.queryItems {
-            print(host) // mydummysite.com
-            print(queryItems) // [encodedMessage=PD94bWwgdmVyNlPg==, signature=kcig33sdAOAr/YYGf5r4HGN]
-        }
         
         let address = result.substring(with: 9..<51)
         
