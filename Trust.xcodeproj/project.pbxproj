@@ -87,6 +87,7 @@
 		29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB10291F6CBD23000907A4 /* UIAlertController.swift */; };
 		29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF12F51F74799D00AFD326 /* NSAttributedString.swift */; };
 		29FF12F81F747D6C00AFD326 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF12F71F747D6C00AFD326 /* Error.swift */; };
+		29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF12FA1F74CC8200AFD326 /* EthereumAddressRule.swift */; };
 		3CDDD1E2CD1B0180754B7992 /* Pods_Trust.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646C8C822C986358D7388602 /* Pods_Trust.framework */; };
 		D9F052FDC5B72E024DD05F0D /* Pods_TrustTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */; };
 /* End PBXBuildFile section */
@@ -195,6 +196,7 @@
 		29EB10291F6CBD23000907A4 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		29FF12F51F74799D00AFD326 /* NSAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
 		29FF12F71F747D6C00AFD326 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		29FF12FA1F74CC8200AFD326 /* EthereumAddressRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumAddressRule.swift; sourceTree = "<group>"; };
 		477899BEAA4489DA423E8857 /* Pods-TrustUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4DB8204016307EAFC079EA48 /* Pods-Trust.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trust.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trust/Pods-Trust.debug.xcconfig"; sourceTree = "<group>"; };
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -354,6 +356,7 @@
 		291EC9E01F7053C80004EDD0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				29FF12F91F74CC6C00AFD326 /* Form */,
 				291EC9DE1F7053C50004EDD0 /* NavigationController.swift */,
 				293B8B421F70815900356286 /* BalanceTitleView.swift */,
 				296421941F70C1EC00EB363B /* LoadingView.swift */,
@@ -500,6 +503,14 @@
 				29BE3FCD1F706D8800F6BFC2 /* EthereumConverterTests.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		29FF12F91F74CC6C00AFD326 /* Form */ = {
+			isa = PBXGroup;
+			children = (
+				29FF12FA1F74CC8200AFD326 /* EthereumAddressRule.swift */,
+			);
+			path = Form;
 			sourceTree = "<group>";
 		};
 		9A0F00B2D545197C8F7691C2 /* Pods */ = {
@@ -886,6 +897,7 @@
 				29CAEB8E1F70A2FB00F7357D /* TransactionViewCellViewModel.swift in Sources */,
 				29BE3FD01F7071A200F6BFC2 /* UIColor.swift in Sources */,
 				2996F1481F6C9AE5005C33AE /* SettingsCoordinator.swift in Sources */,
+				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
 				29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */,

@@ -41,7 +41,7 @@ class SendViewController: FormViewController {
             +++ Section("")
             
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
-                $0.add(rule: RuleRequired())
+                $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
             }.cellUpdate { cell, row in
                 let button = UIButton(type: UIButtonType.infoLight)
