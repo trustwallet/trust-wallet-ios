@@ -44,7 +44,9 @@ class SendViewController: FormViewController {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
             }.cellUpdate { cell, row in
-                let button = UIButton(type: UIButtonType.infoLight)
+                let button = UIButton(type: .custom)
+                button.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+                button.setImage(R.image.qr_code_icon(), for: .normal)
                 button.addTarget(self, action: #selector(self.openReader), for: .touchUpInside)
                 
                 cell.textField.textAlignment = .left
