@@ -31,13 +31,11 @@ class ImportWalletViewController: FormViewController {
             <<< AppFormAppearance.textArea(tag: Values.keystore) {
                 $0.placeholder = "Keystore JSON"
                 $0.textAreaHeight = .fixed(cellHeight: 100)
-                $0.tag = Values.keystore
                 $0.add(rule: RuleRequired())
             }
             
             <<< AppFormAppearance.textFieldFloat(tag: Values.password) {
-                //$0.add(rule: RuleRequired())
-                $0.validationOptions = .validatesOnChange
+                $0.validationOptions = .validatesOnDemand
             }.cellUpdate { cell, row in
                 cell.textField.isSecureTextEntry = true
                 cell.textField.textAlignment = .left

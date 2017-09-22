@@ -32,7 +32,7 @@ class CreateWalletViewController: FormViewController {
             
             <<< AppFormAppearance.textFieldFloat(tag: Values.password) {
                 $0.add(rule: RuleRequired())
-                $0.validationOptions = .validatesOnChange
+                $0.validationOptions = .validatesOnDemand
             }.cellUpdate { cell, row in
                 cell.textField.isSecureTextEntry = true
                 cell.textField.textAlignment = .left
@@ -41,7 +41,7 @@ class CreateWalletViewController: FormViewController {
             
             <<< AppFormAppearance.textFieldFloat(tag: Values.passwordRepeat) {
                 $0.add(rule: RuleRequired())
-                $0.validationOptions = .validatesOnChange
+                $0.validationOptions = .validatesOnDemand
             }.cellUpdate { cell, row in
                 cell.textField.isSecureTextEntry = true
                 cell.textField.textAlignment = .left
