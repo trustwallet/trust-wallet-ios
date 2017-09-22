@@ -81,4 +81,14 @@ struct AppFormAppearance {
         callback(textField)
         return textField
     }
+    
+    static func button(_ title: String? = .none, callback: @escaping (ButtonRow) -> Void) -> ButtonRow {
+        let button = ButtonRow(title)
+        .cellUpdate { cell, row in
+            cell.textLabel?.textAlignment = .left
+            cell.textLabel?.textColor = .black
+        }
+        callback(button)
+        return button
+    }
 }

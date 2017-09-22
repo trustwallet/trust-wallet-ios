@@ -2,6 +2,7 @@
 
 import UIKit
 import Eureka
+import SafariServices
 
 enum SettingsAction {
     case exportPrivateKey
@@ -24,12 +25,10 @@ class SettingsViewController: FormViewController {
 
         form = Section("Export")
             
-            <<< ButtonRow("Export Private Key") {
+            <<< AppFormAppearance.button("Export Private Key") {
                 $0.title = $0.tag
-            }.onCellSelection { [weak self] (cell, row) in
-                self?.run(action: .exportPrivateKey)
-            }.cellUpdate { cell, row in
-                cell.textLabel?.textAlignment = .left
+            }.onCellSelection { [unowned self] (cell, row) in
+                self.run(action: .exportPrivateKey)
             }
             
             +++ Section()
@@ -49,6 +48,22 @@ class SettingsViewController: FormViewController {
                 selectorController.enableDeselection = false
             }
             
+            +++ Section("Open source development")
+            
+            <<< AppFormAppearance.button() {
+                $0.title = "iOS Client"
+                $0.value = "https://github.com/TrustWallet/trust-wallet-ios"
+            }.onCellSelection { [unowned self] (cell, row) in
+                self.openURL(URL(string: row.value!)!)
+            }
+            
+            <<< AppFormAppearance.button() {
+                $0.title = "Road Map"
+                $0.value = "https://github.com/TrustWallet/trust-wallet-ios/projects/1"
+            }.onCellSelection { [unowned self] (cell, row) in
+                self.openURL(URL(string: row.value!)!)
+            }
+            
             +++ Section()
         
             <<< TextRow() {
@@ -66,5 +81,10 @@ class SettingsViewController: FormViewController {
     
     func run(action: SettingsAction) {
         delegate?.didAction(action: action, in: self)
+    }
+    
+    func openURL(_ url: URL) {
+        let controller = SFSafariViewController(url: url)
+        present(controller, animated: true, completion: nil)
     }
 }
