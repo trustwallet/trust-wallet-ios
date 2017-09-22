@@ -45,6 +45,8 @@ class SettingsViewController: FormViewController {
                 $0.value = RPCServer(chainID: config.chainID).name
             }.onChange { row in
                 self.config.chainID = RPCServer(name: row.value ?? "").chainID
+            }.onPresent { form, selectorController in
+                selectorController.enableDeselection = false
             }
             
             +++ Section()
