@@ -15,5 +15,5 @@ before_install:
 script:
   - set -o pipefail
   - pod install
-  - xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty -c
+  - xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator | xcpretty -c
 #  - swiftlint
