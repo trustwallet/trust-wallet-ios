@@ -4,11 +4,11 @@ import Foundation
 import UIKit
 
 struct SendViewModel {
-    
+
     var title: String {
         return "Send"
     }
-    
+
     var backgroundColor: UIColor {
         return .white
     }

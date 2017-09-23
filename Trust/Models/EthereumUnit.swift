@@ -9,5 +9,3 @@ enum EthereumUnit: Int64 {
 }
 
 //https://github.com/ethereumjs/ethereumjs-units/blob/master/units.json
-
-

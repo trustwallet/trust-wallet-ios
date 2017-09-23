@@ -4,21 +4,21 @@ import Foundation
 import UIKit
 
 struct TransactionViewModel {
-    
+
     let transaction: Transaction
-    
+
     init(transaction: Transaction) {
         self.transaction = transaction
     }
-    
+
     var title: String {
         return "Transaction"
     }
-    
+
     var backgroundColor: UIColor {
         return .white
     }
-    
+
     var amount: String {
         let value = EthereumConverter.from(value: transaction.value, to: .ether, minimumFractionDigits: 3)
         switch transaction.direction {
@@ -26,32 +26,31 @@ struct TransactionViewModel {
         case .outgoing: return "-\(value)"
         }
     }
-    
+
     var amountTextColor: UIColor {
         switch transaction.direction {
         case .incoming: return Colors.green
         case .outgoing: return Colors.red
         }
     }
-    
+
     var amountAttributedString: NSAttributedString {
         let amount = NSAttributedString(
             string: self.amount,
             attributes: [
-                NSFontAttributeName : UIFont.systemFont(ofSize: 20),
-                NSForegroundColorAttributeName: amountTextColor
+                NSFontAttributeName: UIFont.systemFont(ofSize: 20),
+                NSForegroundColorAttributeName: amountTextColor,
             ]
         )
-        
+
         let currency = NSAttributedString(
             string: " ether",
             attributes: [
-                NSFontAttributeName : UIFont.systemFont(ofSize: 14),
+                NSFontAttributeName: UIFont.systemFont(ofSize: 14),
             ]
         )
-        
+
         return amount + currency
     }
-    
-    
+
 }

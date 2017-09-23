@@ -5,5 +5,5 @@ import APIKit
 import JSONRPCKit
 
 class EtherClient {
-    
+
 }

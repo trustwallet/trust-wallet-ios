@@ -6,7 +6,7 @@ import Result
 import KeychainSwift
 
 class EtherKeystore: Keystore {
-    
+
     private let keychain = KeychainSwift(keyPrefix: "trustwallet")
     let datadir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     lazy var ks: GethKeyStore = {
@@ -14,18 +14,18 @@ class EtherKeystore: Keystore {
     }()
 
     init() {
-        
+
     }
-    
+
     var hasAccounts: Bool {
         return !accounts.isEmpty
     }
-    
+
     func createAccout(password: String) -> Account {
         let account = try! ks.newAccount(password)
         return .from(account: account)
     }
-    
+
     func importKeystore(value: String, password: String) -> Result<Account, KeyStoreError> {
         let data = value.data(using: .utf8)
         do {
@@ -37,32 +37,32 @@ class EtherKeystore: Keystore {
             return (.failure(.failedToImport))
         }
     }
-    
+
     func importPrivateKey() -> Account? {
         return nil
 //        return Account(
 //            address: ""
 //        )
     }
-    
+
     var accounts: [Account] {
-        return self.gethAccounts.map {Account(address: Address(address: $0.getAddress().getHex()))}
+        return self.gethAccounts.map { Account(address: Address(address: $0.getAddress().getHex())) }
     }
-    
+
     var gethAccounts: [GethAccount] {
         var finalAccounts: [GethAccount] = []
         let allAccounts = ks.getAccounts()
         let size = allAccounts?.size() ?? 0
-        
+
         for i in 0..<size {
             if let account = try! allAccounts?.get(i) {
                 finalAccounts.append(account)
             }
         }
-        
+
         return finalAccounts
     }
-    
+
     func export(account: Account, password: String) -> Result<String, KeyStoreError> {
         let result = exportData(account: account, password: password)
         switch result {
@@ -73,7 +73,7 @@ class EtherKeystore: Keystore {
             return (.failure(error))
         }
     }
-    
+
     func exportData(account: Account, password: String) -> Result<Data, KeyStoreError> {
         let gethAccount = getGethAccount(for: account.address)
         do {
@@ -83,10 +83,10 @@ class EtherKeystore: Keystore {
             return (.failure(.failedToDecryptKey))
         }
     }
-    
+
     func delete(account: Account, password: String, completion: (Result<Void, KeyStoreError>) -> Void) {
         let gethAccount = getGethAccount(for: account.address)
-        
+
         do {
             try ks.delete(gethAccount, passphrase: password)
             completion(.success())
@@ -94,7 +94,7 @@ class EtherKeystore: Keystore {
             completion(.failure(.failedToDeleteAccount))
         }
     }
-    
+
     func signTransaction(
         amount: GethBigInt,
         account: Account,
@@ -105,13 +105,13 @@ class EtherKeystore: Keystore {
         data: Data = Data(),
         chainID: GethBigInt = GethNewBigInt(1)
     ) -> Result<Data, KeyStoreError> {
-        
+
         let gethAddress = GethNewAddressFromHex(address.address, nil)
         let transaction = GethNewTransaction(nonce, gethAddress, amount, gasLimit, gasPrice, data)
         let password = getPassword(for: account)
-        
+
         let gethAccount = getGethAccount(for: account.address)
-        
+
         do {
             try ks.unlock(gethAccount, passphrase: password)
             let signedTransaction = try ks.signTx(gethAccount, tx: transaction, chainID: chainID)
@@ -122,17 +122,17 @@ class EtherKeystore: Keystore {
             return (.failure(.failedToSignTransaction))
         }
     }
-    
+
     func getPassword(for account: Account) -> String? {
         return keychain.get(account.address.address)
     }
-    
+
     func setPassword(_ password: String, for account: Account) -> Bool {
         return keychain.set(password, forKey: account.address.address)
     }
-    
+
     func getGethAccount(for address: Address) -> GethAccount {
-        return gethAccounts.filter{ $0.getAddress().getHex() == address.address }.first!
+        return gethAccounts.filter { $0.getAddress().getHex() == address.address }.first!
     }
 }
 

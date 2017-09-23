@@ -4,19 +4,19 @@ import Foundation
 import UIKit
 import Eureka
 
-//MARK: FloatLabelCell
+// MARK: FloatLabelCell
 public class _FloatLabelCell<T>: Cell<T>, UITextFieldDelegate, TextFieldCell where T: Equatable, T: InputTypeInitiable {
-    
+
     public var textField: UITextField! { return floatLabelTextField }
-    
+
     required public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     lazy public var floatLabelTextField: FloatLabelTextField = { [unowned self] in
         let floatTextField = FloatLabelTextField()
         floatTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -25,8 +25,7 @@ public class _FloatLabelCell<T>: Cell<T>, UITextFieldDelegate, TextFieldCell whe
         floatTextField.clearButtonMode = .whileEditing
         return floatTextField
         }()
-    
-    
+
     open override func setup() {
         super.setup()
         height = { 55 }
@@ -36,7 +35,7 @@ public class _FloatLabelCell<T>: Cell<T>, UITextFieldDelegate, TextFieldCell whe
         floatLabelTextField.addTarget(self, action: #selector(_FloatLabelCell.textFieldDidChange(_:)), for: .editingChanged)
         contentView.addConstraints(layoutConstraints())
     }
-    
+
     open override func update() {
         super.update()
         textLabel?.text = nil
@@ -47,26 +46,37 @@ public class _FloatLabelCell<T>: Cell<T>, UITextFieldDelegate, TextFieldCell whe
         floatLabelTextField.titleTextColour = .lightGray
         floatLabelTextField.alpha = row.isDisabled ? 0.6 : 1
     }
-    
+
     open override func cellCanBecomeFirstResponder() -> Bool {
         return !row.isDisabled && floatLabelTextField.canBecomeFirstResponder
     }
-    
+
     open override func cellBecomeFirstResponder(withDirection direction: Direction) -> Bool {
         return floatLabelTextField.becomeFirstResponder()
     }
-    
+
     open override func cellResignFirstResponder() -> Bool {
         return floatLabelTextField.resignFirstResponder()
     }
-    
+
     private func layoutConstraints() -> [NSLayoutConstraint] {
         let views = ["floatLabeledTextField": floatLabelTextField]
-        let metrics = ["vMargin":8.0]
-        return NSLayoutConstraint.constraints(withVisualFormat: "H:|-[floatLabeledTextField]-|", options: .alignAllLastBaseline, metrics: metrics, views: views) + NSLayoutConstraint.constraints(withVisualFormat: "V:|-(vMargin)-[floatLabeledTextField]-(vMargin)-|", options: .alignAllLastBaseline, metrics: metrics, views: views)
+        let metrics = ["vMargin": 8.0]
+        return NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-[floatLabeledTextField]-|",
+            options: .alignAllLastBaseline,
+            metrics: metrics,
+            views: views
+        ) +
+        NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-(vMargin)-[floatLabeledTextField]-(vMargin)-|",
+            options: .alignAllLastBaseline,
+            metrics: metrics,
+            views: views
+        )
     }
-    
-    public func textFieldDidChange(_ textField : UITextField){
+
+    public func textFieldDidChange(_ textField: UITextField) {
         guard let textValue = textField.text else {
             row.value = nil
             return
@@ -87,8 +97,7 @@ public class _FloatLabelCell<T>: Cell<T>, UITextFieldDelegate, TextFieldCell whe
                     }
                     return
                 }
-            }
-            else {
+            } else {
                 let value: AutoreleasingUnsafeMutablePointer<AnyObject?> = AutoreleasingUnsafeMutablePointer<AnyObject?>.init(UnsafeMutablePointer<T>.allocate(capacity: 1))
                 let errorDesc: AutoreleasingUnsafeMutablePointer<NSString?>? = nil
                 if formatter.getObjectValue(value, for: textValue, errorDescription: errorDesc) {
@@ -106,9 +115,7 @@ public class _FloatLabelCell<T>: Cell<T>, UITextFieldDelegate, TextFieldCell whe
         }
         row.value = newValue
     }
-    
-    
-    //Mark: Helpers
+
     private func displayValue(useFormatter: Bool) -> String? {
         guard let v = row.value else { return nil }
         if let formatter = (row as? FormatterConformance)?.formatter, useFormatter {
@@ -116,8 +123,7 @@ public class _FloatLabelCell<T>: Cell<T>, UITextFieldDelegate, TextFieldCell whe
         }
         return String(describing: v)
     }
-    
-    //MARK: TextFieldDelegate
+
     public func textFieldDidBeginEditing(_ textField: UITextField) {
         formViewController()?.beginEditing(of: self)
         if let fieldRowConformance = row as? FormatterConformance, let _ = fieldRowConformance.formatter, fieldRowConformance.useFormatterOnDidBeginEditing ?? fieldRowConformance.useFormatterDuringInput {
@@ -126,7 +132,7 @@ public class _FloatLabelCell<T>: Cell<T>, UITextFieldDelegate, TextFieldCell whe
             textField.text = displayValue(useFormatter: false)
         }
     }
-    
+
     public func textFieldDidEndEditing(_ textField: UITextField) {
         formViewController()?.endEditing(of: self)
         formViewController()?.textInputDidEndEditing(textField, cell: self)
@@ -135,16 +141,16 @@ public class _FloatLabelCell<T>: Cell<T>, UITextFieldDelegate, TextFieldCell whe
     }
 }
 
-public class TextFloatLabelCell : _FloatLabelCell<String>, CellType {
-    
+public class TextFloatLabelCell: _FloatLabelCell<String>, CellType {
+
     required public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override func setup() {
         super.setup()
         textField?.autocorrectionType = .default
@@ -153,17 +159,16 @@ public class TextFloatLabelCell : _FloatLabelCell<String>, CellType {
     }
 }
 
+public class IntFloatLabelCell: _FloatLabelCell<Int>, CellType {
 
-public class IntFloatLabelCell : _FloatLabelCell<Int>, CellType {
-    
     required public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override func setup() {
         super.setup()
         textField?.autocorrectionType = .default
@@ -172,32 +177,32 @@ public class IntFloatLabelCell : _FloatLabelCell<Int>, CellType {
     }
 }
 
-public class PhoneFloatLabelCell : _FloatLabelCell<String>, CellType {
-    
+public class PhoneFloatLabelCell: _FloatLabelCell<String>, CellType {
+
     required public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override func setup() {
         super.setup()
         textField?.keyboardType = .phonePad
     }
 }
 
-public class NameFloatLabelCell : _FloatLabelCell<String>, CellType {
-    
+public class NameFloatLabelCell: _FloatLabelCell<String>, CellType {
+
     required public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override func setup() {
         super.setup()
         textField.autocorrectionType = .no
@@ -206,16 +211,16 @@ public class NameFloatLabelCell : _FloatLabelCell<String>, CellType {
     }
 }
 
-public class EmailFloatLabelCell : _FloatLabelCell<String>, CellType {
-    
+public class EmailFloatLabelCell: _FloatLabelCell<String>, CellType {
+
     required public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override func setup() {
         super.setup()
         textField?.autocorrectionType = .no
@@ -224,16 +229,16 @@ public class EmailFloatLabelCell : _FloatLabelCell<String>, CellType {
     }
 }
 
-public class PasswordFloatLabelCell : _FloatLabelCell<String>, CellType {
-    
+public class PasswordFloatLabelCell: _FloatLabelCell<String>, CellType {
+
     required public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override func setup() {
         super.setup()
         textField?.autocorrectionType = .no
@@ -243,48 +248,48 @@ public class PasswordFloatLabelCell : _FloatLabelCell<String>, CellType {
     }
 }
 
-public class DecimalFloatLabelCell : _FloatLabelCell<Float>, CellType {
-    
+public class DecimalFloatLabelCell: _FloatLabelCell<Float>, CellType {
+
     required public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override func setup() {
         super.setup()
         textField?.keyboardType = .decimalPad
     }
 }
 
-public class URLFloatLabelCell : _FloatLabelCell<URL>, CellType {
-    
+public class URLFloatLabelCell: _FloatLabelCell<URL>, CellType {
+
     required public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override func setup() {
         super.setup()
         textField?.keyboardType = .URL
     }
 }
 
-public class TwitterFloatLabelCell : _FloatLabelCell<String>, CellType {
-    
+public class TwitterFloatLabelCell: _FloatLabelCell<String>, CellType {
+
     required public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override func setup() {
         super.setup()
         textField?.autocorrectionType = .no
@@ -293,16 +298,16 @@ public class TwitterFloatLabelCell : _FloatLabelCell<String>, CellType {
     }
 }
 
-public class AccountFloatLabelCell : _FloatLabelCell<String>, CellType {
-    
+public class AccountFloatLabelCell: _FloatLabelCell<String>, CellType {
+
     required public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override func setup() {
         super.setup()
         textField?.autocorrectionType = .no
@@ -311,12 +316,9 @@ public class AccountFloatLabelCell : _FloatLabelCell<String>, CellType {
     }
 }
 
-
-
-//MARK: FloatLabelRow
+// MARK: FloatLabelRow
 open class FloatFieldRow<Cell: CellType>: FormatteableRow<Cell> where Cell: BaseCell, Cell: TextFieldCell {
-    
-    
+
     public required init(tag: String?) {
         super.init(tag: tag)
     }
@@ -377,31 +379,31 @@ public final class ImageCheckRow<T: Equatable>: Row<ImageCheckCell<T>>, Selectab
 }
 
 public class ImageCheckCell<T: Equatable> : Cell<T>, CellType {
-    
+
     required public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     /// Image for selected state
     lazy public var trueImage: UIImage = {
         return UIImage(named: "selected")!
     }()
-    
+
     /// Image for unselected state
     lazy public var falseImage: UIImage = {
         return UIImage(named: "unselected")!
     }()
-    
+
     public override func update() {
         super.update()
         checkImageView?.image = row.value != nil ? trueImage : falseImage
         checkImageView?.sizeToFit()
     }
-    
+
     /// Image view to render images. If `accessoryType` is set to `checkmark`
     /// will create a new `UIImageView` and set it as `accessoryView`.
     /// Otherwise returns `self.imageView`.
@@ -409,30 +411,25 @@ public class ImageCheckCell<T: Equatable> : Cell<T>, CellType {
         guard accessoryType == .checkmark else {
             return self.imageView
         }
-        
+
         guard let accessoryView = accessoryView else {
             let imageView = UIImageView()
             self.accessoryView = imageView
             return imageView
         }
-        
+
         return accessoryView as? UIImageView
     }
-    
+
     public override func setup() {
         super.setup()
         accessoryType = .none
     }
-    
+
     public override func didSelect() {
         row.reload()
         row.select()
         row.deselect()
     }
-    
+
 }
-
-
-
-
-

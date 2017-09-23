@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 
 struct CreateWalletViewModel {
-    
+
     var title: String {
         return "New Wallet"
     }

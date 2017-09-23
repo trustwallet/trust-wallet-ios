@@ -8,7 +8,7 @@ enum TransactionDirection {
 }
 
 struct Transaction {
-    
+
     let blockHash: String
     let blockNumber: String
     let confirmations: String
@@ -23,23 +23,23 @@ struct Transaction {
     let value: BInt
     let timestamp: String
     let isError: Bool
-    
+
     var amount: String {
         return EthereumConverter.from(value: value, to: .ether, minimumFractionDigits: 2)
     }
-    
+
     var direction: TransactionDirection {
         if owner == from { return .outgoing }
         return .incoming
     }
-    
+
     var state: TransactionState {
         if isError {
             return .error
         }
         return .completed
     }
-    
+
     var time: Date {
         return NSDate(timeIntervalSince1970: TimeInterval(timestamp) ?? 0) as Date
     }

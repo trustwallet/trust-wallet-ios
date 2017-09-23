@@ -3,23 +3,23 @@
 import Foundation
 
 struct Config {
-    
+
     struct Keys {
         static let chainID = "chainID"
     }
-    
+
     static let defaults = UserDefaults.standard
-    
+
     var chainID: Int = Config.defaults.integer(forKey: Keys.chainID) {
         didSet {
             Config.defaults.set(chainID, forKey: Keys.chainID)
         }
     }
-    
+
     var server: RPCServer {
         return RPCServer(chainID: chainID)
     }
-    
+
     var rpcURL: URL {
         let urlString: String = {
             switch server {
@@ -31,7 +31,7 @@ struct Config {
         }()
         return URL(string: urlString)!
     }
-    
+
     var etherScanURL: URL {
         let urlString: String = {
             switch server {

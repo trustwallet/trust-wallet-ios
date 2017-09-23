@@ -3,7 +3,7 @@
 import Foundation
 
 struct ImportWalletViewModel {
-    
+
     var title: String {
         return "Import Wallet"
     }

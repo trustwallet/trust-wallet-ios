@@ -8,16 +8,16 @@ protocol WelcomeViewControllerDelegate: class {
 }
 
 class WelcomeViewController: UIViewController {
-    
+
     private let viewModel = WelcomeViewModel()
     weak var delegate: WelcomeViewControllerDelegate?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
-        
+
         let button = Button(size: .large, style: .solid)
         button.frame = CGRect(x: 0, y: 0, width: 300, height: 60)
         button.setTitle("GET STARTED", for: .normal)
@@ -55,7 +55,7 @@ class WelcomeViewController: UIViewController {
         button.removeTarget(introView, action: nil, for: .touchUpInside)
         button.addTarget(self, action: #selector(startFlow), for: .touchUpInside)
     }
-    
+
     func constructPage(
         title: String,
         description: String,
@@ -73,19 +73,19 @@ class WelcomeViewController: UIViewController {
         page.titleIconView = UIImageView(image: image)
         return page
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
-    
+
     @objc func startFlow() {
         delegate?.didPressStart(in: self)
     }
@@ -93,10 +93,10 @@ class WelcomeViewController: UIViewController {
 
 extension WelcomeViewController: EAIntroDelegate {
     func introDidFinish(_ introView: EAIntroView!, wasSkipped: Bool) {
-        
+
     }
-    
+
     func introWillFinish(_ introView: EAIntroView!, wasSkipped: Bool) {
-        
+
     }
 }

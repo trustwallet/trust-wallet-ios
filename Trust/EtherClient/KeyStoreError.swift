@@ -7,7 +7,7 @@ enum KeyStoreError: LocalizedError {
     case failedToDecryptKey
     case failedToImport
     case failedToSignTransaction
-    
+
     var errorDescription: String? {
         switch self {
         case .failedToDeleteAccount:

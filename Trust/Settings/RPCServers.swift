@@ -7,7 +7,7 @@ enum RPCServer: String {
     case ropsten
     case kovan
     case rinkeby
-    
+
     var chainID: Int {
         switch self {
         case .main: return 1
@@ -16,7 +16,7 @@ enum RPCServer: String {
         case .rinkeby: return 4
         }
     }
-    
+
     var name: String {
         switch self {
         case .main: return "Main"
@@ -25,11 +25,11 @@ enum RPCServer: String {
         case .rinkeby: return "Rinkeby"
         }
     }
-    
+
     init(name: String) {
         self = RPCServer(rawValue: name.lowercased()) ?? .main
     }
-    
+
     init(chainID: Int) {
         self = {
             switch chainID {

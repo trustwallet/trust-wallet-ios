@@ -5,20 +5,20 @@ import JSONRPCKit
 
 struct GetTransactionCountRequest: JSONRPCKit.Request {
     typealias Response = Int64
-    
+
     let address: String
-    
+
     var method: String {
         return "eth_getTransactionCount"
     }
-    
+
     var parameters: Any? {
         return [
             address,
-            "latest"
+            "latest",
         ]
     }
-    
+
     func response(from resultObject: Any) throws -> Response {
         if let response = resultObject as? String {
             let value = BInt(hex: response.drop0x).dec
@@ -29,4 +29,3 @@ struct GetTransactionCountRequest: JSONRPCKit.Request {
         }
     }
 }
-

@@ -3,9 +3,9 @@
 import Foundation
 
 struct Balance {
-    
+
     let value: BInt
-    
+
     init(value: BInt) {
         self.value = value
     }
@@ -13,11 +13,11 @@ struct Balance {
     var isZero: Bool {
         return value.isZero()
     }
-    
+
     var wei: String {
         return EthereumConverter.from(value: value, to: .wei, minimumFractionDigits: 2)
     }
-    
+
     var amount: String {
         return EthereumConverter.from(value: value, to: .ether, minimumFractionDigits: 4)
     }

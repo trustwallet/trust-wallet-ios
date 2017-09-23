@@ -10,30 +10,30 @@ protocol WalletCoordinatorDelegate: class {
 }
 
 class WalletCoordinator {
-    
+
     let presenterViewController: UINavigationController
     let navigationViewController: UINavigationController = NavigationController()
     weak var delegate: WalletCoordinatorDelegate?
-    
+
     init(rootNavigationController: UINavigationController) {
         self.presenterViewController = rootNavigationController
     }
-    
+
     func start() {
         showCreateWallet()
     }
-    
+
     func showCreateWallet() {
         let controller: CreateWalletViewController = .make(delegate: self)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         navigationViewController.viewControllers = [controller]
         presenterViewController.present(navigationViewController, animated: true, completion: nil)
     }
-    
+
     @objc func dismiss() {
         delegate?.didCancel(in: self)
     }
-    
+
     func didCreateAccount(account: Account) {
         delegate?.didFinish(with: account, in: self)
     }
@@ -44,11 +44,11 @@ extension WalletCoordinator: CreateWalletViewControllerDelegate {
         let controller: ImportWalletViewController = .make(delegate: self)
         navigationViewController.pushViewController(controller, animated: true)
     }
-    
+
     func didCreateAccount(account: Account, in viewController: CreateWalletViewController) {
         didCreateAccount(account: account)
     }
-    
+
     func didCancel(in viewController: CreateWalletViewController) {
         viewController.dismiss(animated: true, completion: nil)
     }
@@ -75,4 +75,3 @@ extension ImportWalletViewController {
         return controller
     }
 }
-

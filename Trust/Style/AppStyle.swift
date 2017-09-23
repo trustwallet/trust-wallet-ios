@@ -5,13 +5,13 @@ import UIKit
 
 func applyStyle() {
     //UINavigationBar.appearance().isTranslucent = false
-    
+
     UINavigationBar.appearance().tintColor = Colors.blue
-    
+
     UINavigationBar.appearance().titleTextAttributes = [
-        NSForegroundColorAttributeName: Colors.black
+        NSForegroundColorAttributeName: Colors.black,
     ]
-    
+
     BalanceTitleView.appearance().titleTextColor = Colors.black
 }
 
@@ -23,7 +23,6 @@ struct Colors {
     static let gray = UIColor.gray
     static let black = UIColor.black
 }
-
 
 struct Layout {
     static let sideMargin: CGFloat = 15

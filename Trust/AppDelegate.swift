@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        
+
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

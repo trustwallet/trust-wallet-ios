@@ -10,11 +10,11 @@ protocol ExportCoordinatorDelegate: class {
 }
 
 class ExportCoordinator {
-    
+
     let navigationController: UIViewController
     weak var delegate: ExportCoordinatorDelegate?
     let keystore = EtherKeystore()
-    
+
     lazy var rootNavigationController: UINavigationController = {
         let controller = AccountsViewController()
         controller.headerTitle = "Select Account to Export"
@@ -22,26 +22,26 @@ class ExportCoordinator {
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         return NavigationController(rootViewController: controller)
     }()
-    
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-    
+
     func start() {
         navigationController.present(rootNavigationController, animated: true, completion: nil)
     }
-    
+
     @objc func dismiss() {
         delegate?.didCancel(in: self)
     }
-    
+
     func finish() {
         delegate?.didFinish(in: self)
     }
-    
+
     func presentActivityViewController(for account: Account, password: String, completionHandler: @escaping () -> Void) {
         let result = keystore.export(account: account, password: password)
-        
+
         switch result {
         case .success(let value):
             let activityViewController = UIActivityViewController(
@@ -71,8 +71,8 @@ extension ExportCoordinator: AccountsViewControllerDelegate {
         }
         rootNavigationController.present(verifyController, animated: true, completion: nil)
     }
-    
+
     func didDeleteAccount(account: Account, in viewController: AccountsViewController) {
-        
+
     }
 }
