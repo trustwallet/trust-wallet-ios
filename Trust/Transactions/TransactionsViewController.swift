@@ -116,8 +116,6 @@ class TransactionsViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        delegate?.didPressTokens(account: account, in: self)
     }
 
     func setTitlte(text: String) {
