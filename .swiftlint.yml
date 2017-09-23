@@ -19,7 +19,9 @@ opt_in_rules:
   - vertical_parameter_alignment_on_call
 included:
   - Trust
-excluded: []
+excluded:
+  - Trust/Vendors
+  - Trust/R.generated.swift
 function_parameter_count:
   warning: 20
   error: 25
@@ -35,5 +37,7 @@ file_length:
   error: 1200
 trailing_comma:
   mandatory_comma: true
+file_header:
+  required_pattern: "// Copyright SIX DAY LLC, Inc. All rights reserved.\n"
 superfluous_disable_command: warning
 reporter: "xcode"
