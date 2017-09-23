@@ -105,12 +105,12 @@ class EtherKeystore: Keystore {
         data: Data = Data(),
         chainID: GethBigInt = GethNewBigInt(1)
     ) -> Result<Data, KeyStoreError> {
-        let gethAddress = GethNewAddressFromHex(address.address, nil)
         
+        let gethAddress = GethNewAddressFromHex(address.address, nil)
         let transaction = GethNewTransaction(nonce, gethAddress, amount, gasLimit, gasPrice, data)
         let password = getPassword(for: account)
         
-        let gethAccount = getGethAccount(for: address)
+        let gethAccount = getGethAccount(for: account.address)
         
         do {
             try ks.unlock(gethAccount, passphrase: password)

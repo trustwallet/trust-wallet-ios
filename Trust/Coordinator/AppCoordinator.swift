@@ -5,9 +5,7 @@ import UIKit
 
 class AppCoordinator: NSObject {
     
-    lazy var rootNavigationController: UINavigationController = {
-        return NavigationController()
-    }()
+    let rootNavigationController: UINavigationController
     
     lazy var welcomeViewController: WelcomeViewController = {
         return WelcomeViewController.make(delegate: self)
@@ -29,11 +27,14 @@ class AppCoordinator: NSObject {
     
     init(
         window: UIWindow,
-        keystore: Keystore = EtherKeystore()
+        keystore: Keystore = EtherKeystore(),
+        rootNavigationController: UINavigationController = NavigationController()
     ) {
         self.keystore = keystore
+        self.rootNavigationController = rootNavigationController
         super.init()
         window.rootViewController = rootNavigationController
+        window.makeKeyAndVisible()
     }
     
     func start() {
