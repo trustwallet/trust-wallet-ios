@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class AppCoordinator {
+class AppCoordinator: NSObject {
     
     lazy var rootNavigationController: UINavigationController = {
         return NavigationController()
@@ -25,9 +25,14 @@ class AppCoordinator {
         return AccountsCoordinator(navigationController: self.rootNavigationController)
     }()
     
-    private let keystore = EtherKeystore()
+    private let keystore: Keystore
     
-    init(window: UIWindow) {
+    init(
+        window: UIWindow,
+        keystore: Keystore = EtherKeystore()
+    ) {
+        self.keystore = keystore
+        super.init()
         window.rootViewController = rootNavigationController
     }
     
