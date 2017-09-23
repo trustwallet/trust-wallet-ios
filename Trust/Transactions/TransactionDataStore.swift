@@ -22,7 +22,7 @@ class TransactionDataStore {
     }
     
     func fetch() {
-        let request = FetchTransactionsRequest(address: account.address)
+        let request = FetchTransactionsRequest(address: account.address.address)
         Session.send(request) { result in
             switch result {
             case .success(let response):

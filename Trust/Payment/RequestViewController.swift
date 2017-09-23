@@ -39,7 +39,7 @@ class RequestViewController: UIViewController {
         copyButton.addTarget(self, action: #selector(copyAddress), for: .touchUpInside)
         
         addressLabel.translatesAutoresizingMaskIntoConstraints = false
-        addressLabel.text = account.address
+        addressLabel.text = account.address.address
         addressLabel.textAlignment = .center
         addressLabel.minimumScaleFactor = 0.5
         addressLabel.adjustsFontSizeToFitWidth = true
@@ -94,7 +94,7 @@ class RequestViewController: UIViewController {
     }
     
     @objc func copyAddress() {
-        UIPasteboard.general.string = account.address
+        UIPasteboard.general.string = account.address.address
         
         let hud = MBProgressHUD.showAdded(to: view, animated: true)
         hud.mode = .text

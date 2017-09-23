@@ -5,7 +5,7 @@ import Geth
 import Result
 import KeychainSwift
 
-class EtherKeystore {
+class EtherKeystore: Keystore {
     
     private let keychain = KeychainSwift(keyPrefix: "trustwallet")
     let datadir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
@@ -46,14 +46,17 @@ class EtherKeystore {
     }
     
     var accounts: [Account] {
-        var finalAccounts: [Account] = []
+        return self.gethAccounts.map {Account(address: Address(address: $0.getAddress().getHex()))}
+    }
+    
+    var gethAccounts: [GethAccount] {
+        var finalAccounts: [GethAccount] = []
         let allAccounts = ks.getAccounts()
         let size = allAccounts?.size() ?? 0
         
         for i in 0..<size {
             if let account = try! allAccounts?.get(i) {
-                let newAccount: Account = .from(account: account)
-                finalAccounts.append(newAccount)
+                finalAccounts.append(account)
             }
         }
         
@@ -72,8 +75,9 @@ class EtherKeystore {
     }
     
     func exportData(account: Account, password: String) -> Result<Data, KeyStoreError> {
+        let gethAccount = getGethAccount(for: account.address)
         do {
-            let data = try ks.exportKey(account.gethAccount, passphrase: password, newPassphrase: password)
+            let data = try ks.exportKey(gethAccount, passphrase: password, newPassphrase: password)
             return (.success(data))
         } catch {
             return (.failure(.failedToDecryptKey))
@@ -81,8 +85,10 @@ class EtherKeystore {
     }
     
     func delete(account: Account, password: String, completion: (Result<Void, KeyStoreError>) -> Void) {
+        let gethAccount = getGethAccount(for: account.address)
+        
         do {
-            try ks.delete(account.gethAccount, passphrase: password)
+            try ks.delete(gethAccount, passphrase: password)
             completion(.success())
         } catch {
             completion(.failure(.failedToDeleteAccount))
@@ -99,14 +105,16 @@ class EtherKeystore {
         data: Data = Data(),
         chainID: GethBigInt = GethNewBigInt(1)
     ) -> Result<Data, KeyStoreError> {
-        let address = GethNewAddressFromHex(address.address, nil)
+        let gethAddress = GethNewAddressFromHex(address.address, nil)
         
-        let transaction = GethNewTransaction(nonce, address, amount, gasLimit, gasPrice, data)
+        let transaction = GethNewTransaction(nonce, gethAddress, amount, gasLimit, gasPrice, data)
         let password = getPassword(for: account)
         
+        let gethAccount = getGethAccount(for: address)
+        
         do {
-            try ks.unlock(account.gethAccount, passphrase: password)
-            let signedTransaction = try ks.signTx(account.gethAccount, tx: transaction, chainID: chainID)
+            try ks.unlock(gethAccount, passphrase: password)
+            let signedTransaction = try ks.signTx(gethAccount, tx: transaction, chainID: chainID)
             NSLog("signedTransaction \(try signedTransaction.encodeJSON())")
             let rlp = try signedTransaction.encodeRLP()
             return (.success(rlp))
@@ -116,18 +124,22 @@ class EtherKeystore {
     }
     
     func getPassword(for account: Account) -> String? {
-        return keychain.get(account.address)
+        return keychain.get(account.address.address)
     }
     
     func setPassword(_ password: String, for account: Account) -> Bool {
-        return keychain.set(password, forKey: account.address)
+        return keychain.set(password, forKey: account.address.address)
+    }
+    
+    func getGethAccount(for address: Address) -> GethAccount {
+        return gethAccounts.filter{ $0.getAddress().getHex() == address.address }.first!
     }
 }
 
 extension Account {
     static func from(account: GethAccount) -> Account {
         return Account(
-            gethAccount: account
+            address: Address(address: account.getAddress().getHex())
         )
     }
 }

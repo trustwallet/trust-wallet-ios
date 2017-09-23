@@ -45,7 +45,9 @@ class AccountsViewController: UITableViewController {
     }
     
     func fetch() {
-        accounts = keystore.accounts
+        accounts = keystore.accounts.map {
+            Account(address: Address(address: $0.address.address))
+        }
     }
     
     func configure(viewModel: AccountsViewModel) {
@@ -67,7 +69,7 @@ class AccountsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let account = self.account(for: indexPath)
         let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-        cell.textLabel?.text = account.address
+        cell.textLabel?.text = account.address.address
         return cell
     }
     

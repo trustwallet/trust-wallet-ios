@@ -96,11 +96,11 @@ class SendViewController: FormViewController {
     }
     
     func sendPayment(to address: Address, amount: Int64) {
-        let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: account.address)))
+        let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: account.address.address)))
         Session.send(request) { [weak self] result in
             switch result {
             case .success(let count):
-                NSLog("GetTransactionsCountRequest \(count) for account \(self?.account.address ?? "")")
+                NSLog("GetTransactionsCountRequest \(count) for account \(self?.account.address.address ?? "")")
                 self?.sign(address: address, nonce: count, amount: amount)
             case .failure(let error):
                 NSLog("GetTransactionsCountRequest error \(error)")
@@ -128,7 +128,7 @@ class SendViewController: FormViewController {
                 switch result {
                 case .success(let transactionID):
                     self?.displaySuccess(
-                        title: "Sent \(amountString) to \(self?.account.address ?? "")",
+                        title: "Sent \(amountString) to \(self?.account.address.address ?? "")",
                         message: "TransactionID: \(transactionID)"
                     )
                     self?.clear()

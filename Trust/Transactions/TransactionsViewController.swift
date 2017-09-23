@@ -136,12 +136,12 @@ class TransactionsViewController: UIViewController {
     
     func fetchBalance() {
         
-        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: account.address)))
+        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: account.address.address)))
         Session.send(request) { [weak self] result in
             switch result {
             case .success(let balance):
                 self?.configureBalance(balance)
-                NSLog("balance \(balance) for account \(self?.account.address ?? "")")
+                NSLog("balance \(balance) for account \(self?.account.address.address ?? "")")
             case .failure(let error):
                 NSLog("fetchBalance error \(error)")
             }

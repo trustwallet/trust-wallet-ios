@@ -4,15 +4,15 @@ import Foundation
 import Geth
 
 struct Account {
-    var address: String {
-        return gethAccount.getAddress().getHex() ?? ""
-    }
+    let address: Address
     
-    let gethAccount: GethAccount
+    init(address: Address) {
+        self.address = address
+    }
 }
 
 extension Account: Equatable {
     static func == (lhs: Account, rhs: Account) -> Bool {
-        return lhs.address == rhs.address
+        return lhs.address.address == rhs.address.address
     }
 }
