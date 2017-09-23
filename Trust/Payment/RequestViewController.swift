@@ -83,7 +83,7 @@ class RequestViewController: UIViewController {
     }
     
     func changeQRCode(value: Int) {
-        let string = "ethereum:\(account.address)?value=\(value)"
+        let string = "ethereum:\(account.address.address)?value=\(value)"
         
         DispatchQueue.global(qos: .background).async {
             let image = self.generateQRCode(from: string)
