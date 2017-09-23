@@ -17,11 +17,26 @@ class TransactionDataStore {
 
     let account: Account
     var transactions: [Transaction] = []
+    var tokens: [Token] = []
     init(account: Account) {
         self.account = account
     }
 
     func fetch() {
+        fetchTransactions()
+        fetchTokens()
+    }
+
+    func update(transactions: [Transaction]) {
+        self.transactions = transactions
+        delegate?.didUpdate(viewModel: viewModel)
+    }
+
+    func update(tokens: [Token]) {
+        self.tokens = tokens
+    }
+
+    func fetchTransactions() {
         let request = FetchTransactionsRequest(address: account.address.address)
         Session.send(request) { result in
             switch result {
@@ -33,85 +48,15 @@ class TransactionDataStore {
         }
     }
 
-    func update(transactions: [Transaction]) {
-        self.transactions = transactions
-
-        delegate?.didUpdate(viewModel: viewModel)
-    }
-}
-
-struct FetchTransactionsRequest: APIKit.Request {
-    typealias Response = [Transaction]
-
-    let address: String
-
-    var baseURL: URL {
-        let config = Config()
-        return config.etherScanURL
-    }
-
-    var method: HTTPMethod {
-        return .get
-    }
-
-    var path: String {
-        return ""
-    }
-
-    var parameters: Any? {
-        return [
-            "module": "account",
-            "action": "txlist",
-            "address": address,
-            "startblock": "0",
-            "endblock": "99999999",
-            "sort": "asc",
-            "apikey": "7V8AMAVQWKNAZHZG8ARYB9SQWWKBBDA7S8",
-        ]
-    }
-
-    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-        NSLog("transactions urlResponse \(urlResponse)")
-        if
-            let objectJSON = object as? [String: AnyObject],
-            let transactionJSON = objectJSON["result"] as? [[String: AnyObject]] {
-            let transactions: [Transaction] = transactionJSON.map { json in
-
-                let blockHash = json["blockHash"] as? String ?? ""
-                let blockNumber = json["blockNumber"] as? String ?? ""
-                let confirmation = json["confirmations"] as? String ?? ""
-                let cumulativeGasUsed = json["cumulativeGasUsed"] as? String ?? ""
-                let from = json["from"] as? String ?? ""
-                let to = json["to"] as? String ?? ""
-                let gas = json["gas"] as? String ?? ""
-                let gasPrice = json["gasPrice"] as? String ?? ""
-                let gasUsed = json["gasUsed"] as? String ?? ""
-                let hash = json["hash"] as? String ?? ""
-                let isError = Bool(json["isError"] as? String ?? "") ?? false
-                let timestamp = (json["timeStamp"] as? String ?? "")
-
-                let hex = (json["value"] as? String ?? "")
-                let value = BInt(hex)
-
-                return Transaction(
-                    blockHash: blockHash,
-                    blockNumber: blockNumber,
-                    confirmations: confirmation,
-                    cumulativeGasUsed: cumulativeGasUsed,
-                    from: from,
-                    to: to,
-                    owner: address,
-                    gas: gas,
-                    gasPrice: gasPrice,
-                    gasUsed: gasUsed,
-                    hash: hash,
-                    value: value,
-                    timestamp: timestamp,
-                    isError: isError
-                )
+    func fetchTokens() {
+        let request = GetTokensRequest(address: account.address.address)
+        Session.send(request) { result in
+            switch result {
+            case .success(let response):
+                self.update(tokens: response)
+            case .failure(let error):
+                self.delegate?.didFail(with: error, viewModel: self.viewModel)
             }
-         return transactions
         }
-        return []
     }
 }
