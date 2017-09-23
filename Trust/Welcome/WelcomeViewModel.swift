@@ -14,18 +14,26 @@ struct WelcomeViewModel {
     }
     
     var pageTitleFont: UIFont {
-        return UIFont.systemFont(ofSize: 22)
+        return UIFont.systemFont(ofSize: 23, weight: UIFontWeightMedium)
     }
     
     var pageTitleColor: UIColor {
-        return Colors.black
+        return UIColor(hex: "438FCA")
     }
     
     var pageDescriptionFont: UIFont {
-        return UIFont.systemFont(ofSize: 14)
+        return UIFont.systemFont(ofSize: 15)
     }
     
     var pageDescriptionColor: UIColor {
-        return UIColor(hex: "848484")
+        return UIColor(hex: "69A5D5")
+    }
+    
+    var pageIndicatorTintColor: UIColor {
+        return UIColor(hex: "c3dbee")
+    }
+    
+    var currentPageIndicatorTintColor: UIColor {
+        return UIColor(hex: "438FCA")
     }
 }

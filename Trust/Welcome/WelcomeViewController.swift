@@ -20,32 +20,37 @@ class WelcomeViewController: UIViewController {
         
         let button = Button(size: .large, style: .solid)
         button.frame = CGRect(x: 0, y: 0, width: 300, height: 60)
-        button.setTitle("Get Started", for: .normal)
-
+        button.setTitle("GET STARTED", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
         button.layer.cornerRadius = 5
 
         let introView = EAIntroView(frame: self.view.frame, andPages: [
             constructPage(
                 title: "Private and Secure",
                 description: "Private keys never leave your device.",
-                image: R.image.lock()
+                image: R.image.onboarding_lock()
             ),
             constructPage(
                 title: "Open Source",
                 description: "Code audited and reviewed by the community. Open under MIT license",
-                image: R.image.settings_icon()
+                image: R.image.onboarding_rocket()
+            ),
+            constructPage(
+                title: "Fast and Reliable",
+                description: "No ones like to wait, so do us. No compomises on perfomance and safery to provide best user experience.",
+                image: R.image.onboarding_rocket()
             ),
         ])
         introView?.backgroundColor = .white
         introView?.pageControlY = 130
-        introView?.pageControl.pageIndicatorTintColor = Colors.lightGray
-        introView?.pageControl.currentPageIndicatorTintColor = Colors.black
+        introView?.pageControl.pageIndicatorTintColor = viewModel.pageIndicatorTintColor
+        introView?.pageControl.currentPageIndicatorTintColor = viewModel.currentPageIndicatorTintColor
         introView?.skipButton = button
-        introView?.skipButtonY = 70
+        introView?.skipButtonY = 80
         introView?.swipeToExit = false
         introView?.skipButtonAlignment = .center
         introView?.delegate = self
-        introView?.show(in: self.view, animateDuration: 0.3)
+        introView?.show(in: self.view, animateDuration: 0)
 
         button.removeTarget(introView, action: nil, for: .touchUpInside)
         button.addTarget(self, action: #selector(startFlow), for: .touchUpInside)
@@ -59,8 +64,8 @@ class WelcomeViewController: UIViewController {
         let page = EAIntroPage()
         page.title = title
         page.desc = description
-        page.titleIconPositionY = 140
-        page.descPositionY = 250
+        page.titleIconPositionY = 70
+        page.descPositionY = 200
         page.titleFont = viewModel.pageTitleFont
         page.titleColor = viewModel.pageTitleColor
         page.descFont = viewModel.pageDescriptionFont
@@ -83,10 +88,6 @@ class WelcomeViewController: UIViewController {
     
     @objc func startFlow() {
         delegate?.didPressStart(in: self)
-    }
-    
-    @IBAction func start(_ sender: UIButton) {
-        startFlow()
     }
 }
 
