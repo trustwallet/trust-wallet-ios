@@ -78,7 +78,7 @@ class SendViewController: FormViewController {
     
     func send() {
         let errors = form.validate()
-        guard errors.count == 0 else { return }
+        guard !errors.isEmpty else { return }
         
         let addressString = (form.rowBy(tag: Values.address) as? TextFloatLabelRow)?.value ?? ""
         let amountString = (form.rowBy(tag: Values.amount) as? TextFloatLabelRow)?.value ?? ""

@@ -21,7 +21,7 @@ class AccountsViewController: UITableViewController {
     }
     
     var hasAccounts: Bool {
-        return accounts.count > 0
+        return !accounts.isEmpty
     }
     
     var accounts: [Account] = [] {
