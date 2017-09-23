@@ -1,0 +1,39 @@
+swiftlint_version: 0.21.0
+disabled_rules:
+  - cyclomatic_complexity
+  - force_cast
+  - force_try
+  - identifier_name
+  - nesting
+  - redundant_discardable_let
+  - todo
+  - type_name
+  - unused_optional_binding
+  - xctfail_message
+opt_in_rules:
+  - closure_end_indentation
+  - closure_spacing
+  - empty_count
+  - file_header
+  - multiline_parameters
+  - vertical_parameter_alignment_on_call
+included:
+  - Trust
+excluded: []
+function_parameter_count:
+  warning: 20
+  error: 25
+line_length:
+  warning: 250
+  error: 450
+type_body_length:
+  warning: 450
+  error: 650
+function_body_length: 80
+file_length:
+  warning: 600
+  error: 1200
+trailing_comma:
+  mandatory_comma: true
+superfluous_disable_command: warning
+reporter: "xcode"

@@ -584,6 +584,7 @@
 				2912CCF31F6A830700C6CBE3 /* Resources */,
 				F291FF6299FBB0600050DA49 /* [CP] Embed Pods Frameworks */,
 				2909B06A324FDD6FB858F676 /* [CP] Copy Pods Resources */,
+				29282B511F7629DB0067F88D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -754,6 +755,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trust/Pods-Trust-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		29282B511F7629DB0067F88D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"";
 		};
 		29336FE81F6B24FF005E3BFC /* R.Swift */ = {
 			isa = PBXShellScriptBuildPhase;
