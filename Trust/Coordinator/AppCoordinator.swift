@@ -84,6 +84,11 @@ class AppCoordinator: NSObject {
         settingsCoordinator.start()
         settingsCoordinator.delegate = self
     }
+
+    func showTokens(for account: Account) {
+        let controller = TokensViewController(account: account)
+        rootNavigationController.pushViewController(controller, animated: true)
+    }
 }
 
 extension AppCoordinator: WelcomeViewControllerDelegate {
@@ -157,5 +162,9 @@ extension AppCoordinator: TransactionsViewControllerDelegate {
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
         let controller = TransactionViewController(transaction: transaction)
         rootNavigationController.pushViewController(controller, animated: true)
+    }
+
+    func didPressTokens(account: Account, in viewController: TransactionsViewController) {
+        showTokens(for: account)
     }
 }

@@ -4,16 +4,18 @@ import UIKit
 import APIKit
 import JSONRPCKit
 import StatefulViewController
+import Result
 
 protocol TransactionsViewControllerDelegate: class {
     func didPressSend(for account: Account, in viewController: TransactionsViewController)
     func didPressRequest(for account: Account, in viewController: TransactionsViewController)
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController)
+    func didPressTokens(account: Account, in viewController: TransactionsViewController)
 }
 
 class TransactionsViewController: UIViewController {
 
-    var viewModel: TransactionsViewModel!
+    var viewModel: TransactionsViewModel = TransactionsViewModel(transactions: [])
 
     private lazy var dataStore: TransactionDataStore = {
         return .init(account: self.account)
@@ -38,8 +40,6 @@ class TransactionsViewController: UIViewController {
         tableView = UITableView(frame: .zero, style: .plain)
         sendButton = Button(size: .extraLarge, style: .squared)
         requestButton = Button(size: .extraLarge, style: .squared)
-
-        viewModel = TransactionsViewModel(transactions: [])
 
         super.init(nibName: nil, bundle: nil)
 
@@ -114,6 +114,12 @@ class TransactionsViewController: UIViewController {
         fetch()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        delegate?.didPressTokens(account: account, in: self)
+    }
+
     func setTitlte(text: String) {
         titleView.title = text
     }
@@ -176,14 +182,19 @@ extension TransactionsViewController: UITableViewDelegate {
 }
 
 extension TransactionsViewController: TransactionDataStoreDelegate {
-    func didFail(with error: Error, viewModel: TransactionsViewModel) {
-        endLoading(error: error)
+    func didUpdate(result: Result<TokensViewModel, TokenError>) {
+
     }
 
-    func didUpdate(viewModel: TransactionsViewModel) {
-        self.viewModel = viewModel
+    func didUpdate(result: Result<TransactionsViewModel, TransactionError>) {
+        switch result {
+        case .success(let viewModel):
+            self.viewModel = viewModel
+            endLoading()
+        case .failure(let error):
+            endLoading(error: error)
+        }
         tableView.reloadData()
-        endLoading()
 
         if refreshControl.isRefreshing {
             refreshControl.endRefreshing()

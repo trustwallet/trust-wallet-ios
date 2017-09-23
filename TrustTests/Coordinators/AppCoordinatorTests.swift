@@ -102,4 +102,19 @@ class AppCoordinatorTests: XCTestCase {
         
         XCTAssertTrue(coordinator.rootNavigationController.viewControllers[0] is TransactionsViewController)
     }
+
+    func testShowTokens() {
+        let coordinator = AppCoordinator(
+            window: UIWindow(),
+            keystore: FakeKeystore(
+                accounts: [.make()]
+            ),
+            rootNavigationController: FakeNavigationController()
+        )
+        coordinator.start()
+
+        coordinator.showTokens(for: .make())
+
+        XCTAssertTrue(coordinator.rootNavigationController.viewControllers[1] is TokensViewController)
+    }
 }

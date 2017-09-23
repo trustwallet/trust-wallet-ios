@@ -2,10 +2,18 @@
 
 import Foundation
 import APIKit
+import Result
+
+enum TransactionError: Error {
+    case failedToFetch
+}
+
+enum TokenError: Error {
+    case failedToFetch
+}
 
 protocol TransactionDataStoreDelegate: class {
-    func didUpdate(viewModel: TransactionsViewModel)
-    func didFail(with error: Error, viewModel: TransactionsViewModel)
+    func didUpdate(result: Result<TransactionsViewModel, TransactionError>)
 }
 
 class TransactionDataStore {
@@ -24,12 +32,11 @@ class TransactionDataStore {
 
     func fetch() {
         fetchTransactions()
-        fetchTokens()
     }
 
     func update(transactions: [Transaction]) {
         self.transactions = transactions
-        delegate?.didUpdate(viewModel: viewModel)
+        delegate?.didUpdate(result: .success(viewModel))
     }
 
     func update(tokens: [Token]) {
@@ -42,20 +49,8 @@ class TransactionDataStore {
             switch result {
             case .success(let response):
                 self.update(transactions: response)
-            case .failure(let error):
-                self.delegate?.didFail(with: error, viewModel: self.viewModel)
-            }
-        }
-    }
-
-    func fetchTokens() {
-        let request = GetTokensRequest(address: account.address.address)
-        Session.send(request) { result in
-            switch result {
-            case .success(let response):
-                self.update(tokens: response)
-            case .failure(let error):
-                self.delegate?.didFail(with: error, viewModel: self.viewModel)
+            case .failure:
+                self.delegate?.didUpdate(result: .failure(TransactionError.failedToFetch))
             }
         }
     }
