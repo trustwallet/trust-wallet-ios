@@ -5,8 +5,17 @@ import UIKit
 
 struct RequestViewModel {
 
+    let transferType: TransferType
+
+    init(transferType: TransferType) {
+        self.transferType = transferType
+    }
+
     var title: String {
-        return "Request"
+        switch transferType {
+        case .ether: return "Request ETH"
+        case .token(let token): return "Request \(token.name)"
+        }
     }
 
     var backgroundColor: UIColor {

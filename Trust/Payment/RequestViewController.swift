@@ -7,15 +7,20 @@ import MBProgressHUD
 
 class RequestViewController: UIViewController {
 
-    private let viewModel = RequestViewModel()
+    private lazy var viewModel: RequestViewModel = {
+        return .init(transferType: self.transferType)
+    }()
+
     let account: Account
     let amountTextField: UITextField
     let QRImageView: UIImageView
     let copyButton: UIButton
     let addressLabel: UILabel
+    let transferType: TransferType
 
-    init(account: Account) {
+    init(account: Account, transferType: TransferType = .ether) {
         self.account = account
+        self.transferType = transferType
         amountTextField = UITextField(frame: .zero)
         QRImageView = UIImageView(frame: .zero)
         copyButton = Button(size: .normal, style: .border)

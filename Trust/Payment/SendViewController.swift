@@ -10,7 +10,9 @@ import QRCodeReaderViewController
 
 class SendViewController: FormViewController {
 
-    private let viewModel = SendViewModel()
+    private lazy var viewModel: SendViewModel = {
+        return .init(transferType: self.transferType)
+    }()
     private let keystore = EtherKeystore()
 
     struct Values {
@@ -19,9 +21,11 @@ class SendViewController: FormViewController {
     }
 
     let account: Account
+    let transferType: TransferType
 
-    init(account: Account) {
+    init(account: Account, transferType: TransferType = .ether) {
         self.account = account
+        self.transferType = transferType
 
         super.init(nibName: nil, bundle: nil)
 
