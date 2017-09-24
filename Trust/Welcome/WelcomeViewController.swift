@@ -27,18 +27,18 @@ class WelcomeViewController: UIViewController {
 
         let introView = EAIntroView(frame: self.view.frame, andPages: [
             constructPage(
-                title: "Private and Secure",
+                title: "Private & Secure",
                 description: "Private keys never leave your device.",
                 image: R.image.onboarding_lock()
             ),
             constructPage(
-                title: "Open Source",
-                description: "Code audited and reviewed by the community. Open under MIT license",
+                title: "Fully transparent",
+                description: "Code is open sourced (MIT licence) and fully audited.",
                 image: R.image.onboarding_rocket()
             ),
             constructPage(
-                title: "Fast and Reliable",
-                description: "No ones like to wait, so do us. No compomises on perfomance and safery to provide best user experience.",
+                title: "Ultra Reliable",
+                description: "The fastest Ethereum wallet experience on mobile",
                 image: R.image.onboarding_rocket()
             ),
         ])
