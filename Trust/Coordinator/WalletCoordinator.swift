@@ -30,6 +30,11 @@ class WalletCoordinator {
         presenterViewController.present(navigationViewController, animated: true, completion: nil)
     }
 
+    func showImportWallet() {
+        let controller: ImportWalletViewController = .make(delegate: self)
+        navigationViewController.pushViewController(controller, animated: true)
+    }
+
     @objc func dismiss() {
         delegate?.didCancel(in: self)
     }
@@ -41,8 +46,7 @@ class WalletCoordinator {
 
 extension WalletCoordinator: CreateWalletViewControllerDelegate {
     func didPressImport(in viewController: CreateWalletViewController) {
-        let controller: ImportWalletViewController = .make(delegate: self)
-        navigationViewController.pushViewController(controller, animated: true)
+        showImportWallet()
     }
 
     func didCreateAccount(account: Account, in viewController: CreateWalletViewController) {
