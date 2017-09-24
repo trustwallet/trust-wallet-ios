@@ -5,6 +5,14 @@ import UIKit
 
 struct TransactionViewModel {
 
+    static let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .medium
+        formatter.timeZone = TimeZone.current
+        return formatter
+    }()
+
     let transaction: Transaction
 
     init(transaction: Transaction) {
@@ -53,4 +61,7 @@ struct TransactionViewModel {
         return amount + currency
     }
 
+    var createdAt: String {
+        return TransactionViewModel.formatter.string(from: transaction.time)
+    }
 }

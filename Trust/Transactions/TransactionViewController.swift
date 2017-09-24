@@ -54,9 +54,10 @@ class TransactionViewController: UIViewController {
             item(title: "From", subTitle: transaction.from),
             item(title: "To", subTitle: transaction.to),
             item(title: "Gas Fee", subTitle: gasFee),
-            item(title: "Confirmation", subTitle: transaction.confirmations + " 0x"),
+            item(title: "Confirmation", subTitle: transaction.confirmations),
             divider(),
             item(title: "Transaction #", subTitle: transaction.to),
+            item(title: "Transaction time", subTitle: viewModel.createdAt),
             item(title: "Block #", subTitle: transaction.blockNumber),
         ]
 
