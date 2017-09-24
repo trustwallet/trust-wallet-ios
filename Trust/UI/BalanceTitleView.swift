@@ -5,9 +5,14 @@ import UIKit
 class BalanceTitleView: UIView {
 
     /// UIAppearance compatible property
-    dynamic var titleTextColor: UIColor {
-        get { return self.label.backgroundColor! }
+    dynamic var titleColor: UIColor {
+        get { return self.label.textColor! }
         set { self.label.textColor = newValue }
+    }
+
+    dynamic var titleFont: UIFont {
+        get { return self.label.font! }
+        set { self.label.font = newValue }
     }
 
     let label: UILabel = UILabel()

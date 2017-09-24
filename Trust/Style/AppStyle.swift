@@ -12,7 +12,8 @@ func applyStyle() {
         NSForegroundColorAttributeName: Colors.black,
     ]
 
-    BalanceTitleView.appearance().titleTextColor = Colors.black
+    BalanceTitleView.appearance().titleColor = Colors.black
+    BalanceTitleView.appearance().titleFont = UIFont.systemFont(ofSize: 17, weight: UIFontWeightSemibold)
 }
 
 struct Colors {
