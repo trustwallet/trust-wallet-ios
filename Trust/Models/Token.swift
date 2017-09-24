@@ -20,7 +20,7 @@ extension Token {
             symbol: tokenInfo["symbol"] as? String ?? "",
             totalSupply: tokenInfo["symbol"] as? String ?? "",
             balance: json["balance"] as? Int64 ?? 0,
-            decimals: json["decimals"] as? Int64 ??  Int64(json["decimals"] as? String ?? "") ?? 0
+            decimals: tokenInfo["decimals"] as? Int64 ??  Int64(tokenInfo["decimals"] as? String ?? "") ?? 0
         )
     }
 }

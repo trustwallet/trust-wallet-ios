@@ -21,7 +21,7 @@ class TokenViewCell: UITableViewCell {
         subTitleLabel.lineBreakMode = .byTruncatingMiddle
 
         symbolImageView.translatesAutoresizingMaskIntoConstraints = false
-        symbolImageView.image = R.image.accountsSwitch()
+        symbolImageView.contentMode = .scaleAspectFit
 
         amountLabel.textAlignment = .right
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -29,7 +29,7 @@ class TokenViewCell: UITableViewCell {
         let leftStackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
         leftStackView.translatesAutoresizingMaskIntoConstraints = false
         leftStackView.axis = .vertical
-        leftStackView.spacing = 6
+        leftStackView.spacing = 2
 
         let rightStackView = UIStackView(arrangedSubviews: [amountLabel])
         rightStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -50,6 +50,7 @@ class TokenViewCell: UITableViewCell {
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
+            symbolImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 40),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: Layout.sideMargin),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Layout.sideMargin),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -Layout.sideMargin),
@@ -71,6 +72,8 @@ class TokenViewCell: UITableViewCell {
         subTitleLabel.text = viewModel.subTitle
         subTitleLabel.textColor = viewModel.subTitleTextColor
         subTitleLabel.font = viewModel.subTitleFont
+
+        symbolImageView.image = viewModel.image
 
         backgroundColor = viewModel.backgroundColor
     }

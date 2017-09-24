@@ -23,7 +23,8 @@ struct Colors {
     static let green = UIColor(hex: "2fbb4f")
     static let lightGray = UIColor.lightGray
     static let gray = UIColor.gray
-    static let black = UIColor.black
+    static let black = UIColor(hex: "313849")
+
 }
 
 struct Layout {
