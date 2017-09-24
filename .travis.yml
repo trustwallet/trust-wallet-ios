@@ -12,6 +12,8 @@ before_install:
   - gem install xcpretty -N
   - brew update
   - brew install swiftlint || true
+  - bundle install
+  - bundle exec danger
 script:
   - set -o pipefail
   - pod install
