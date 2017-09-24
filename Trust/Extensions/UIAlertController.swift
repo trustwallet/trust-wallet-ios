@@ -7,7 +7,7 @@ import Result
 extension UIAlertController {
 
     static func askPassword(
-        title: String = "Enter password for you wallet",
+        title: String = "",
         message: String = "",
         completion: @escaping (Result<String, ConfirmationError>) -> Void
     ) -> UIAlertController {

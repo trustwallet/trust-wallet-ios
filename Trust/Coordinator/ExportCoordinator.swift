@@ -39,8 +39,8 @@ class ExportCoordinator {
         delegate?.didFinish(in: self)
     }
 
-    func presentActivityViewController(for account: Account, password: String, completionHandler: @escaping () -> Void) {
-        let result = keystore.export(account: account, password: password)
+    func presentActivityViewController(for account: Account, newPassword: String, completionHandler: @escaping () -> Void) {
+        let result = keystore.export(account: account, newPassword: newPassword)
 
         switch result {
         case .success(let value):
@@ -60,10 +60,10 @@ class ExportCoordinator {
 
 extension ExportCoordinator: AccountsViewControllerDelegate {
     func didSelectAccount(account: Account, in viewController: AccountsViewController) {
-        let verifyController = UIAlertController.askPassword { result in
+        let verifyController = UIAlertController.askPassword(title: "Enter your new password") { result in
             switch result {
-            case .success(let password):
-                self.presentActivityViewController(for: account, password: password, completionHandler: {
+            case .success(let newPassword):
+                self.presentActivityViewController(for: account, newPassword: newPassword, completionHandler: {
                     self.finish()
                 })
             case .failure: break
