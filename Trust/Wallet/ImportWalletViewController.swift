@@ -48,7 +48,7 @@ class ImportWalletViewController: FormViewController {
                 $0.title = $0.tag
             }.onCellSelection { [unowned self] (_, row) in
                 let validatedError = row.section?.form?.validate()
-                guard let errors = validatedError, !errors.isEmpty else { return }
+                guard let errors = validatedError, errors.isEmpty else { return }
                 self.importWallet()
             }
     }
