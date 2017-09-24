@@ -23,6 +23,7 @@ class WelcomeViewController: UIViewController {
         button.setTitle("GET STARTED", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
         button.layer.cornerRadius = 5
+        button.backgroundColor = Colors.darkBlue
 
         let introView = EAIntroView(frame: self.view.frame, andPages: [
             constructPage(
