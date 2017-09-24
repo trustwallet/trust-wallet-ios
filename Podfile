@@ -16,6 +16,7 @@ target 'Trust' do
   pod 'QRCodeReaderViewController'
   pod 'KeychainSwift'
   pod 'SwiftLint'
+  pod 'ActiveLabel'
 
   target 'TrustTests' do
     inherit! :search_paths

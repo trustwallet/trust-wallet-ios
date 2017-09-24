@@ -1,4 +1,5 @@
 PODS:
+  - ActiveLabel (0.7.1)
   - APIKit (3.1.1):
     - Result (~> 3.0)
   - EAIntroView (2.10.0):
@@ -19,6 +20,7 @@ PODS:
   - SwiftLint (0.20.1)
 
 DEPENDENCIES:
+  - ActiveLabel
   - APIKit
   - EAIntroView
   - Eureka (from `https://github.com/xmartlabs/Eureka.git`, branch `feature/Xcode9-Swift3_2`)
@@ -47,6 +49,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/bricklife/JSONRPCKit.git
 
 SPEC CHECKSUMS:
+  ActiveLabel: 68625f22775f51c31bb691ca8de20f1e5a3bc825
   APIKit: 7460983f490d3bde6aaaaa4164d18c9865a6f91d
   EAIntroView: 3494b7bbd1212e3a4f7e8d16194a1b00e7b9abb2
   EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
@@ -62,6 +65,6 @@ SPEC CHECKSUMS:
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: f60095dc173a3f3ec505bb34f5229c3dfd779a54
 
-PODFILE CHECKSUM: 483fbca79f9c7222d5d3df634e93408fdc18f605
+PODFILE CHECKSUM: bef26e86d1fbe89c8c4aa4e3a95495f9f033bb5b
 
 COCOAPODS: 1.3.1
