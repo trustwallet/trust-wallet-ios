@@ -7,7 +7,7 @@ struct TransactionsViewModel {
 
     static let formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
+        formatter.dateStyle = .medium
         return formatter
     }()
 
