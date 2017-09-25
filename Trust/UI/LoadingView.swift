@@ -2,13 +2,21 @@
 
 import Foundation
 import UIKit
+import StatefulViewController
 
 class LoadingView: UIView {
 
     let label = UILabel()
     let imageView = UIImageView()
 
-    init(message: String = "Loading...", image: UIImage? = .none) {
+    let insets: UIEdgeInsets
+
+    init(
+        message: String = "Loading...",
+        image: UIImage? = .none,
+        insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    ) {
+        self.insets = insets
         super.init(frame: .zero)
 
         backgroundColor = .white
@@ -37,5 +45,11 @@ class LoadingView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension LoadingView: StatefulPlaceholderView {
+    func placeholderViewInsets() -> UIEdgeInsets {
+        return insets
     }
 }

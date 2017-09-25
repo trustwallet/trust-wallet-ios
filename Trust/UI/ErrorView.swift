@@ -2,16 +2,25 @@
 
 import Foundation
 import UIKit
+import StatefulViewController
 
 class ErrorView: UIView {
 
     let label = UILabel()
     let imageView = UIImageView()
     let button = Button(size: .normal, style: .solid)
+    let insets: UIEdgeInsets
 
     var onRetry: (() -> Void)? = .none
 
-    init(message: String = "Failed", image: UIImage? = .none) {
+    init(
+        message: String = "Failed",
+        image: UIImage? = .none,
+        insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
+        onRetry: (() -> Void)? = .none
+    ) {
+        self.onRetry = onRetry
+        self.insets = insets
         super.init(frame: .zero)
 
         backgroundColor = .white
@@ -49,5 +58,11 @@ class ErrorView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension ErrorView: StatefulPlaceholderView {
+    func placeholderViewInsets() -> UIEdgeInsets {
+        return insets
     }
 }

@@ -2,16 +2,24 @@
 
 import Foundation
 import UIKit
+import StatefulViewController
 
 class EmptyView: UIView {
 
     let label = UILabel()
     let imageView = UIImageView()
     let button = Button(size: .normal, style: .solid)
-
+    let insets: UIEdgeInsets
     var onRetry: (() -> Void)? = .none
 
-    init(message: String = "Empty", image: UIImage? = .none) {
+    init(
+        message: String = "Empty",
+        image: UIImage? = .none,
+        insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
+        onRetry: (() -> Void)? = .none
+    ) {
+        self.insets = insets
+        self.onRetry = onRetry
         super.init(frame: .zero)
 
         backgroundColor = .white
@@ -49,5 +57,11 @@ class EmptyView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension EmptyView: StatefulPlaceholderView {
+    func placeholderViewInsets() -> UIEdgeInsets {
+        return insets
     }
 }

@@ -86,8 +86,7 @@ class TransactionViewController: UIViewController {
         subTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFontWeightLight)
         subTitleLabel.adjustsFontSizeToFitWidth = true
         subTitleLabel.enabledTypes = [ethereumAddress]
-        subTitleLabel.handleCustomTap(for: ethereumAddress) { action in
-        }
+        subTitleLabel.handleCustomTap(for: ethereumAddress) { _ in }
 
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
