@@ -85,22 +85,11 @@ class TransactionsViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
 
-        errorView = {
-            let view = ErrorView()
-            view.onRetry = fetch
-            return view
-        }()
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: ButtonSize.extraLarge.height, right: 0)
 
-        loadingView = {
-            let view = LoadingView()
-            return view
-        }()
-
-        emptyView = {
-            let view = EmptyView()
-            view.onRetry = fetch
-            return view
-        }()
+        errorView = ErrorView(insets: insets, onRetry: fetch)
+        loadingView = LoadingView(insets: insets)
+        emptyView = EmptyView(insets: insets, onRetry: fetch)
 
         navigationItem.titleView = titleView
 
