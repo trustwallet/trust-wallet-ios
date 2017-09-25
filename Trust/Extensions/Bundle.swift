@@ -10,3 +10,11 @@ extension Bundle {
         return infoDictionary?["CFBundleVersion"] as? String
     }
 }
+
+func isDebug() -> Bool {
+    #if DEBUG
+        return true
+    #else
+        return false
+    #endif
+}
