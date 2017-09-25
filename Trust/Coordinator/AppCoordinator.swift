@@ -23,7 +23,7 @@ class AppCoordinator: NSObject {
         return AccountsCoordinator(navigationController: self.rootNavigationController)
     }()
 
-    private let keystore: Keystore
+    private var keystore: Keystore
 
     init(
         window: UIWindow,
@@ -41,13 +41,14 @@ class AppCoordinator: NSObject {
         rootNavigationController.viewControllers = [welcomeViewController]
 
         if keystore.hasAccounts {
-            showTransactions(for: keystore.accounts.first!)
+            showTransactions(for: keystore.recentlyUsedAccount ?? keystore.accounts.first!)
         }
     }
 
     func showTransactions(for account: Account) {
         let controller = makeTransactionsController(with: account)
         rootNavigationController.viewControllers = [controller]
+        keystore.recentlyUsedAccount = account
     }
 
     func showCreateWallet() {

@@ -7,6 +7,10 @@ import KeychainSwift
 
 class EtherKeystore: Keystore {
 
+    struct Keys {
+        static let recentlyUsedAddress: String = "recentlyUsedAddress"
+    }
+
     private let keychain = KeychainSwift(keyPrefix: "trustwallet")
     let datadir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     lazy var ks: GethKeyStore = {
@@ -19,6 +23,16 @@ class EtherKeystore: Keystore {
 
     var hasAccounts: Bool {
         return !accounts.isEmpty
+    }
+
+    var recentlyUsedAccount: Account? {
+        set {
+            keychain.set(newValue?.address.address ?? "", forKey: Keys.recentlyUsedAddress)
+        }
+        get {
+            let address = keychain.get(Keys.recentlyUsedAddress)
+            return accounts.filter { $0.address.address == address }.first
+        }
     }
 
     func createAccout(password: String) -> Account {
