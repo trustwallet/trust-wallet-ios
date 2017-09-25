@@ -34,7 +34,7 @@ class WelcomeViewController: UIViewController {
             constructPage(
                 title: "Fully transparent",
                 description: "Code is open sourced (MIT licence) and fully audited.",
-                image: R.image.onboarding_rocket()
+                image: R.image.onboarding_open_source()
             ),
             constructPage(
                 title: "Ultra Reliable",
@@ -42,12 +42,13 @@ class WelcomeViewController: UIViewController {
                 image: R.image.onboarding_rocket()
             ),
         ])
+        let height = view.frame.height
         introView?.backgroundColor = .white
-        introView?.pageControlY = 130
+        introView?.pageControlY = height / 4.2
         introView?.pageControl.pageIndicatorTintColor = viewModel.pageIndicatorTintColor
         introView?.pageControl.currentPageIndicatorTintColor = viewModel.currentPageIndicatorTintColor
         introView?.skipButton = button
-        introView?.skipButtonY = 80
+        introView?.skipButtonY = view.frame.height / 6
         introView?.swipeToExit = false
         introView?.skipButtonAlignment = .center
         introView?.delegate = self
@@ -62,11 +63,13 @@ class WelcomeViewController: UIViewController {
         description: String,
         image: UIImage?
     ) -> EAIntroPage {
+        let height = view.frame.height
+
         let page = EAIntroPage()
         page.title = title
         page.desc = description
-        page.titleIconPositionY = 70
-        page.descPositionY = 200
+        page.titleIconPositionY = height / 6
+        page.descPositionY = height / 3
         page.titleFont = viewModel.pageTitleFont
         page.titleColor = viewModel.pageTitleColor
         page.descFont = viewModel.pageDescriptionFont
