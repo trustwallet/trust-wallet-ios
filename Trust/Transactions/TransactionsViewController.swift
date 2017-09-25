@@ -227,4 +227,10 @@ extension TransactionsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return viewModel.titleForHeader(in: section)
     }
+
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+
+        header.textLabel?.textColor = Colors.black
+    }
 }

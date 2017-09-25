@@ -63,7 +63,7 @@ class RequestViewController: UIViewController {
         view.addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: Layout.sideMargin + 64),
+            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: Layout.sideMargin),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Layout.sideMargin),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -Layout.sideMargin),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Layout.sideMargin),
