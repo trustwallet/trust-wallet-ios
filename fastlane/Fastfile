@@ -44,7 +44,8 @@ platform :ios do
     # snapshot
     gym(scheme: "Trust") # Build your app - more options available
     deliver(force: true)
-    # frameit
+    snapshot
+    frameit
   end
 
   # You can define as many lanes as you want
