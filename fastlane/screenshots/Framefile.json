@@ -1,0 +1,27 @@
+{
+  "device_frame_version": "latest",
+  "default": {
+    "keyword": {
+    },
+    "title": {
+      "color": "#545454"
+    },
+    "background": "./background.jpg",
+    "padding": 50,
+    "show_complete_frame": false,
+    "stack_title" : false,
+    "title_below_image": false
+  },
+
+  "data": [
+    {
+      "filter": "Launch",
+      "keyword": {
+        "color": "#d21559",
+      },
+      "title": {
+       "text": "Launch"
+      }
+    }
+  ]
+}
