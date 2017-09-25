@@ -28,7 +28,7 @@ class CreateWalletViewController: FormViewController {
 
         //Demo purpose
         if isDebug() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.4) {
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Demo", style: .done, target: self, action: #selector(self.demo))
             }
         }
