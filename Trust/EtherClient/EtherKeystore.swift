@@ -130,7 +130,6 @@ class EtherKeystore: Keystore {
         do {
             try ks.unlock(gethAccount, passphrase: password)
             let signedTransaction = try ks.signTx(gethAccount, tx: transaction, chainID: chainID)
-            NSLog("signedTransaction \(try signedTransaction.encodeJSON())")
             let rlp = try signedTransaction.encodeRLP()
             return (.success(rlp))
         } catch {
