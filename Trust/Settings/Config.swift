@@ -35,7 +35,7 @@ struct Config {
     var etherScanURL: URL {
         let urlString: String = {
             switch server {
-            case .main: return "https://api.etherscan.io/"
+            case .main: return "https://api.etherscan.io/api"
             case .ropsten: return "https://ropsten.etherscan.io/api"
             case .kovan: return "https://kovan.etherscan.io/api"
             case .rinkeby: return "https://rinkeby.etherscan.io/api"
