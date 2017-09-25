@@ -77,10 +77,6 @@ class AppCoordinator: NSObject {
         accountsCoordinator.delegate = self
     }
 
-    @objc func add() {
-        showCreateWallet()
-    }
-
     @objc func showSettings() {
         settingsCoordinator.start()
         settingsCoordinator.delegate = self

@@ -29,6 +29,8 @@ class SettingsViewController: FormViewController {
                 $0.title = $0.tag
             }.onCellSelection { [unowned self] (_, _) in
                 self.run(action: .exportPrivateKey)
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_export()
             }
 
             +++ Section()
@@ -46,6 +48,8 @@ class SettingsViewController: FormViewController {
                 self.config.chainID = RPCServer(name: row.value ?? "").chainID
             }.onPresent { _, selectorController in
                 selectorController.enableDeselection = false
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_server()
             }
 
             +++ Section("Open source development")
@@ -55,6 +59,8 @@ class SettingsViewController: FormViewController {
                 $0.value = "https://github.com/TrustWallet/trust-wallet-ios"
             }.onCellSelection { [unowned self] (_, row) in
                 self.openURL(URL(string: row.value!)!)
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_open_source()
             }
 
             <<< AppFormAppearance.button {
@@ -62,6 +68,8 @@ class SettingsViewController: FormViewController {
                 $0.value = "https://github.com/TrustWallet/trust-wallet-ios/projects/1"
             }.onCellSelection { [unowned self] (_, row) in
                 self.openURL(URL(string: row.value!)!)
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_road_map()
             }
 
             +++ Section()

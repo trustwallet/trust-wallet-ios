@@ -100,7 +100,11 @@ class TransactionsViewController: UIViewController {
 
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
-        emptyView = EmptyView(insets: insets, onRetry: fetch)
+        emptyView = EmptyView(
+            message: "No Transactions",
+            insets: insets,
+            onRetry: fetch
+        )
 
         navigationItem.titleView = titleView
 

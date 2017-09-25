@@ -44,22 +44,12 @@ class TokensViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
 
-        errorView = {
-            let view = ErrorView()
-            view.onRetry = fetch
-            return view
-        }()
-
-        loadingView = {
-            let view = LoadingView()
-            return view
-        }()
-
-        emptyView = {
-            let view = EmptyView()
-            view.onRetry = fetch
-            return view
-        }()
+        errorView = ErrorView(onRetry: fetch)
+        loadingView = LoadingView()
+        emptyView = EmptyView(
+            message: "No tokens",
+            onRetry: fetch
+        )
 
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
