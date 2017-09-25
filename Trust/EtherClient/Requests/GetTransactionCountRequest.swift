@@ -22,7 +22,6 @@ struct GetTransactionCountRequest: JSONRPCKit.Request {
     func response(from resultObject: Any) throws -> Response {
         if let response = resultObject as? String {
             let value = BInt(hex: response.drop0x).dec
-            NSLog("value \(value)")
             return Int64(value) ?? 0
         } else {
             throw CastError(actualValue: resultObject, expectedType: Response.self)

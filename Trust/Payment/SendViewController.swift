@@ -104,10 +104,9 @@ class SendViewController: FormViewController {
         Session.send(request) { [weak self] result in
             switch result {
             case .success(let count):
-                NSLog("GetTransactionsCountRequest \(count) for account \(self?.account.address.address ?? "")")
                 self?.sign(address: address, nonce: count, amount: amount)
             case .failure(let error):
-                NSLog("GetTransactionsCountRequest error \(error)")
+                displayError(error: error)
             }
         }
     }
@@ -167,12 +166,8 @@ extension SendViewController: QRCodeReaderDelegate {
     func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
         reader.dismiss(animated: true, completion: nil)
 
-        NSLog("result \(result)")
-
+        //Move login into parser
         let address = result.substring(with: 9..<51)
-
-        NSLog("address \(address)")
-
         let row = (form.rowBy(tag: Values.address) as? TextFloatLabelRow)!
         row.value = address
         row.reload()

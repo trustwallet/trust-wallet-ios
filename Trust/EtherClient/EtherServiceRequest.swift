@@ -27,7 +27,6 @@ struct EtherServiceRequest<Batch: JSONRPCKit.Batch>: APIKit.Request {
     }
 
     func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-        NSLog("urlResponse \(String(describing: urlResponse.url))")
         return try batch.responses(from: object)
     }
 }
