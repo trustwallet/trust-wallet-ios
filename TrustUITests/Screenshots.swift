@@ -18,23 +18,19 @@ class Screenshots: XCTestCase {
         snapshot("0Launch")
 
         app.buttons["GET STARTED"].tap()
+        snapshot("1CreateWallet")
+        sleep(4)
+        app.navigationBars["New Wallet"].buttons["Demo"].tap()
 
-        snapshot("1Create Wallet")
-
-        app.tables.staticTexts["Demo"].tap()
+        app.buttons["Send"].tap()
+        XCUIApplication().tables/*@START_MENU_TOKEN@*/.textFields["ETH Amount"]/*[[".cells.textFields[\"ETH Amount\"]",".textFields[\"ETH Amount\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        snapshot("2SendRequest")
+        app.navigationBars["Send ETH"].buttons["Cancel"].tap()
 
         snapshot("3Transactions")
 
-        app.buttons["Send"].tap()
-
-        snapshot("2SendAndReceive")
-
-        app.navigationBars["Send ETH"].buttons["Cancel"].tap()
-
         app.tables.buttons["Show my tokens"].tap()
-
         sleep(12)
-
         snapshot("4Tokens")
     }
 }

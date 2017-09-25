@@ -2,7 +2,7 @@
 
 # A list of devices you want to take the screenshots from
 devices([
-  "iPhone 7",
+  #{}"iPhone 7",
   "iPhone 7 Plus",
   #{}"iPhone 5",
   #{}"iPad Pro (12.9-inch)",
@@ -23,10 +23,12 @@ scheme "TrustUITests"
 # Where should the resulting screenshots be stored?
 output_directory "./fastlane/screenshots"
 
-# clear_previous_screenshots true # remove the '#' to clear all previously generated screenshots before creating new ones
+clear_previous_screenshots true # remove the '#' to clear all previously generated screenshots before creating new ones
 
 configuration "Debug"
 # clean true
+
+skip_open_summary false
 
 # Choose which project/workspace to use
 # project "./Project.xcodeproj"

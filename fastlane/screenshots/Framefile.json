@@ -2,6 +2,7 @@
   "device_frame_version": "latest",
   "default": {
     "keyword": {
+      "color": "#d21559"
     },
     "title": {
       "color": "#FFFFFF"
@@ -16,11 +17,32 @@
   "data": [
     {
       "filter": "Launch",
-      "keyword": {
-        "color": "#d21559"
-      },
       "title": {
         "text": "Private and Secure"
+      }
+    },
+    {
+      "filter": "CreateWallet",
+      "title": {
+        "text": "Create Wallet in one tap"
+      }
+    },
+    {
+      "filter": "SendRequest",
+      "title": {
+        "text": "Send and Request"
+      }
+    },
+    {
+      "filter": "Transactions",
+      "title": {
+        "text": "See your transactions"
+      }
+    },
+    {
+      "filter": "Tokens",
+      "title": {
+        "text": "Track your tokens"
       }
     }
   ]
