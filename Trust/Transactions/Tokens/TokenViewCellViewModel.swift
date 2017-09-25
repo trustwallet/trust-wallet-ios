@@ -25,7 +25,9 @@ struct TokenViewCellViewModel {
     var amount: String {
         //Hack. Improve this part of the code
         var value = String(token.balance)
-        value.insert(".", at: value.index(value.endIndex, offsetBy: -Int(token.decimals)))
+        if value.characters.count >= token.decimals {
+            value.insert(".", at: value.index(value.endIndex, offsetBy: -Int(token.decimals)))
+        }
         let double = NSNumber(value: Double(value) ?? 0)
         return TokenViewCellViewModel.numberFormatter.string(from: double)!
     }
