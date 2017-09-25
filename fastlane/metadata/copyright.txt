@@ -1,1 +1,1 @@
-Copyright SIX DAY LLC
+copyright "#{Time.now.year} SIX DAY LLC"
