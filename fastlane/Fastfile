@@ -40,12 +40,10 @@ platform :ios do
 
   desc "Deploy a new version to the App Store"
   lane :release do
-    # match(type: "appstore")
-    # snapshot
-    gym(scheme: "Trust") # Build your app - more options available
-    deliver(force: true)
     snapshot
     frameit
+    gym(scheme: "Trust") # Build your app - more options available
+    deliver(force: true)
   end
 
   # You can define as many lanes as you want
