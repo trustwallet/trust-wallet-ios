@@ -58,6 +58,13 @@ class CreateWalletViewController: FormViewController {
                 self.startImport()
             }
 
+            <<< ButtonRow("Demo") {
+                $0.title = $0.tag
+                $0.hidden = Eureka.Condition(booleanLiteral: !isDebug())
+            }.onCellSelection { [unowned self] (_, _) in
+                self.demo()
+            }
+
             +++ Section("")
             +++ Section("")
             +++ Section("")
@@ -83,6 +90,14 @@ class CreateWalletViewController: FormViewController {
         let account = keystore.createAccout(password: password)
 
         delegate?.didCreateAccount(account: account, in: self)
+    }
+
+    func demo() {
+        //Used for taking screenshots to the App Store by snapshot
+        let demoAccount = Account(
+            address: Address(address: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")
+        )
+        delegate?.didCreateAccount(account: demoAccount, in: self)
     }
 
     func importWallet() {
