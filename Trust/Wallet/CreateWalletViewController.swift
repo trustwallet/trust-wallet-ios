@@ -26,6 +26,13 @@ class CreateWalletViewController: FormViewController {
         title = viewModel.title
         view.backgroundColor = .white
 
+        //Demo purpose
+        if isDebug() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Demo", style: .done, target: self, action: #selector(self.demo))
+            }
+        }
+
         form = Section()
 
             //+++ Section("New wallet")
@@ -56,13 +63,6 @@ class CreateWalletViewController: FormViewController {
                 let validatedError = row.section?.form?.validate()
                 guard let errors = validatedError, errors.isEmpty else { return }
                 self.startImport()
-            }
-
-            <<< ButtonRow("Demo") {
-                $0.title = $0.tag
-                $0.hidden = Eureka.Condition(booleanLiteral: !isDebug())
-            }.onCellSelection { [unowned self] (_, _) in
-                self.demo()
             }
 
             +++ Section("")
