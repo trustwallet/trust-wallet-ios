@@ -4,12 +4,12 @@
     "keyword": {
     },
     "title": {
-      "color": "#545454"
+      "color": "#FFFFFF"
     },
     "background": "./background.jpg",
     "padding": 50,
     "show_complete_frame": false,
-    "stack_title" : false,
+    "stack_title" : true,
     "title_below_image": false
   },
 
@@ -17,10 +17,10 @@
     {
       "filter": "Launch",
       "keyword": {
-        "color": "#d21559",
+        "color": "#d21559"
       },
       "title": {
-       "text": "Launch"
+        "text": "Private and Secure"
       }
     }
   ]
