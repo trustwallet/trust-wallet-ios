@@ -164,7 +164,7 @@ extension AppCoordinator: TransactionsViewControllerDelegate {
         rootNavigationController.pushViewController(controller, animated: true)
     }
 
-    func didPressTokens(account: Account, in viewController: TransactionsViewController) {
+    func didPressTokens(for account: Account, in viewController: TransactionsViewController) {
         showTokens(for: account)
     }
 }

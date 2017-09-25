@@ -10,7 +10,7 @@ protocol TransactionsViewControllerDelegate: class {
     func didPressSend(for account: Account, in viewController: TransactionsViewController)
     func didPressRequest(for account: Account, in viewController: TransactionsViewController)
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController)
-    func didPressTokens(account: Account, in viewController: TransactionsViewController)
+    func didPressTokens(for account: Account, in viewController: TransactionsViewController)
 }
 
 class TransactionsViewController: UIViewController {
@@ -52,6 +52,17 @@ class TransactionsViewController: UIViewController {
         tableView.backgroundColor = .white
         tableView.rowHeight = 68
         view.addSubview(tableView)
+
+        let tokensButton = Button(size: .extraLarge, style: .borderless)
+        tokensButton.setTitle("Show my tokens", for: .normal)
+        tokensButton.contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+
+        tokensButton.setTitleColor(Colors.black, for: .normal)
+        tokensButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium)
+        tokensButton.sizeToFit()
+        tokensButton.addTarget(self, action: #selector(showTokens), for: .touchUpInside)
+
+        tableView.tableHeaderView = tokensButton
 
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
@@ -147,6 +158,10 @@ class TransactionsViewController: UIViewController {
 
     @objc func request() {
         delegate?.didPressRequest(for: account, in: self)
+    }
+
+    @objc func showTokens() {
+        delegate?.didPressTokens(for: account, in: self)
     }
 
     required init?(coder aDecoder: NSCoder) {
