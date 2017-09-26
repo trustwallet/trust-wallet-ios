@@ -25,9 +25,11 @@ platform :ios do
 
   desc "Deploy a new version to the App Store"
   lane :release do
+    ensure_git_branch(branch: 'master')
     snapshot
     frameit(white: true)
-    gym(scheme: "Trust") # Build your app - more options available
+    gym(scheme: "Trust")
+    commit_version_bump(message: "Version Bump")
     deliver(force: true)
   end
 
