@@ -1,4 +1,4 @@
-// Copyright SIX DAY LLC, Inc. All rights reserved.
+// Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
 import Eureka
