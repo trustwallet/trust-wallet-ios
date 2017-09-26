@@ -54,23 +54,29 @@ class SettingsViewController: FormViewController {
 
             +++ Section("Open source development")
 
-            <<< AppFormAppearance.button {
-                $0.title = "iOS Client"
-                $0.value = "https://github.com/TrustWallet/trust-wallet-ios"
-            }.onCellSelection { [unowned self] (_, row) in
-                self.openURL(URL(string: row.value!)!)
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_open_source()
-            }
+            <<< link(
+                title: "Source Code",
+                value: "https://github.com/TrustWallet/trust-wallet-ios",
+                image: R.image.settings_open_source()
+            )
 
-            <<< AppFormAppearance.button {
-                $0.title = "Road Map"
-                $0.value = "https://github.com/TrustWallet/trust-wallet-ios/projects/1"
-            }.onCellSelection { [unowned self] (_, row) in
-                self.openURL(URL(string: row.value!)!)
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_road_map()
-            }
+            <<< link(
+                title: "Road Map",
+                value: "https://github.com/TrustWallet/trust-wallet-ios/projects/1",
+                image: R.image.settings_road_map()
+            )
+
+            <<< link(
+                title: "Report a Bug",
+                value: "https://github.com/TrustWallet/trust-wallet-ios/issues/new",
+                image: R.image.settings_bug()
+            )
+
+            <<< link(
+                title: "Twitter",
+                value: "https://twitter.com/thetrustwallet",
+                image: R.image.settings_twitter()
+            )
 
             +++ Section()
 
@@ -85,6 +91,22 @@ class SettingsViewController: FormViewController {
         let versionNumber = Bundle.main.versionNumber ?? ""
         let buildNumber = Bundle.main.buildNumber ?? ""
         return "\(versionNumber) (\(buildNumber))"
+    }
+
+    private func link(
+        title: String,
+        value: String,
+        image: UIImage?
+    ) -> ButtonRow {
+        return AppFormAppearance.button {
+            $0.title = title
+            $0.value = value
+        }.onCellSelection { [unowned self] (_, row) in
+            guard let value = row.value, let url = URL(string: value) else { return }
+            self.openURL(url)
+        }.cellSetup { cell, _ in
+            cell.imageView?.image = image
+        }
     }
 
     func run(action: SettingsAction) {
