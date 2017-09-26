@@ -72,7 +72,6 @@
 		296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */; };
 		297800521F71FDCF003185C1 /* FormAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297800511F71FDCF003185C1 /* FormAppearance.swift */; };
 		29850D251F6B27A800791A49 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29850D241F6B27A800791A49 /* R.generated.swift */; };
-		29850D291F6B30E400791A49 /* Transaction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29850D281F6B30E400791A49 /* Transaction.storyboard */; };
 		29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29850D2A1F6B30FF00791A49 /* TransactionViewController.swift */; };
 		2996F1431F6C96FF005C33AE /* ImportWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2996F1421F6C96FF005C33AE /* ImportWalletViewModel.swift */; };
 		2996F1461F6C98B3005C33AE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2996F1451F6C98B3005C33AE /* SettingsViewController.swift */; };
@@ -99,6 +98,8 @@
 		29CAEB901F70A3DC00F7357D /* TransactionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CAEB8F1F70A3DC00F7357D /* TransactionState.swift */; };
 		29D03F1D1F712183006E548C /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D03F1C1F712183006E548C /* Button.swift */; };
 		29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D72A291F6A8D1500CE9209 /* AppCoordinator.swift */; };
+		29E2E33A1F7A008C000CF94A /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E3391F7A008C000CF94A /* UIView.swift */; };
+		29E2E33E1F7A2423000CF94A /* TransactionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */; };
 		29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB10291F6CBD23000907A4 /* UIAlertController.swift */; };
 		29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF12F51F74799D00AFD326 /* NSAttributedString.swift */; };
 		29FF12F81F747D6C00AFD326 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF12F71F747D6C00AFD326 /* Error.swift */; };
@@ -201,7 +202,6 @@
 		296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionCountRequest.swift; sourceTree = "<group>"; };
 		297800511F71FDCF003185C1 /* FormAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormAppearance.swift; sourceTree = "<group>"; };
 		29850D241F6B27A800791A49 /* R.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
-		29850D281F6B30E400791A49 /* Transaction.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Transaction.storyboard; sourceTree = "<group>"; };
 		29850D2A1F6B30FF00791A49 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		2996F1421F6C96FF005C33AE /* ImportWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportWalletViewModel.swift; sourceTree = "<group>"; };
 		2996F1451F6C98B3005C33AE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -229,6 +229,8 @@
 		29CAEB8F1F70A3DC00F7357D /* TransactionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionState.swift; sourceTree = "<group>"; };
 		29D03F1C1F712183006E548C /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		29D72A291F6A8D1500CE9209 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		29E2E3391F7A008C000CF94A /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHeaderView.swift; sourceTree = "<group>"; };
 		29EB10291F6CBD23000907A4 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		29FF12F51F74799D00AFD326 /* NSAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
 		29FF12F71F747D6C00AFD326 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
@@ -363,16 +365,15 @@
 		2912CD291F6A831D00C6CBE3 /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
+				29952CFE1F79FF7100CA3990 /* Transaction */,
 				296106C01F7640240006164B /* Tokens */,
 				2912CD2A1F6A833E00C6CBE3 /* TransactionsViewController.swift */,
 				2912CD351F6A853300C6CBE3 /* TransactionsViewModel.swift */,
-				29850D281F6B30E400791A49 /* Transaction.storyboard */,
-				29850D2A1F6B30FF00791A49 /* TransactionViewController.swift */,
 				29BB94921F6FC380009B09CC /* BalanceViewModel.swift */,
-				291EC9DC1F704D340004EDD0 /* TransactionDataStore.swift */,
-				293B8B401F707F4600356286 /* TransactionViewModel.swift */,
 				293B8B441F70A20200356286 /* TransactionViewCell.swift */,
 				29CAEB8D1F70A2FB00F7357D /* TransactionViewCellViewModel.swift */,
+				291EC9DC1F704D340004EDD0 /* TransactionDataStore.swift */,
+				293B8B401F707F4600356286 /* TransactionViewModel.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -531,6 +532,15 @@
 			path = Tokens;
 			sourceTree = "<group>";
 		};
+		29952CFE1F79FF7100CA3990 /* Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				29850D2A1F6B30FF00791A49 /* TransactionViewController.swift */,
+				29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */,
+			);
+			path = Transaction;
+			sourceTree = "<group>";
+		};
 		2996F1441F6C9875005C33AE /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -552,6 +562,7 @@
 				29FF12F51F74799D00AFD326 /* NSAttributedString.swift */,
 				29FF12F71F747D6C00AFD326 /* Error.swift */,
 				29358DA81F79FD1C00925D61 /* CALayer.swift */,
+				29E2E3391F7A008C000CF94A /* UIView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -756,7 +767,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29850D291F6B30E400791A49 /* Transaction.storyboard in Resources */,
 				29A13E351F6B1E8E00E432A2 /* Welcome.storyboard in Resources */,
 				296106CE1F777E410006164B /* LaunchScreen.storyboard in Resources */,
 				2912CD021F6A830700C6CBE3 /* Assets.xcassets in Resources */,
@@ -936,6 +946,7 @@
 				"${BUILT_PRODUCTS_DIR}/QRCodeReaderViewController/QRCodeReaderViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/SeedStackViewController/StackViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/StatefulViewController/StatefulViewController.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -951,6 +962,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReaderViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StackViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatefulViewController.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -987,6 +999,7 @@
 				296106C41F7640C50006164B /* TokenViewCellViewModel.swift in Sources */,
 				291EC9E21F70565A0004EDD0 /* Transaction.swift in Sources */,
 				291F52B11F6B814300B369AB /* MG Basic Math.swift in Sources */,
+				29E2E33A1F7A008C000CF94A /* UIView.swift in Sources */,
 				291EC9DD1F704D340004EDD0 /* TransactionDataStore.swift in Sources */,
 				291F52B21F6B814300B369AB /* MG Benchmark Tools.swift in Sources */,
 				291ED08F1F6F613200E7E93A /* GetTransactionRequest.swift in Sources */,
@@ -1064,6 +1077,7 @@
 				296106CA1F764AB60006164B /* TokensDataStore.swift in Sources */,
 				29BB94931F6FC380009B09CC /* BalanceViewModel.swift in Sources */,
 				29D03F1D1F712183006E548C /* Button.swift in Sources */,
+				29E2E33E1F7A2423000CF94A /* TransactionHeaderView.swift in Sources */,
 				291F52BF1F6C874E00B369AB /* AccountsViewController.swift in Sources */,
 				2996F1431F6C96FF005C33AE /* ImportWalletViewModel.swift in Sources */,
 				291ED08D1F6F5F0A00E7E93A /* KeyStoreError.swift in Sources */,

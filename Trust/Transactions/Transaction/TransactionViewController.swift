@@ -2,40 +2,28 @@
 
 import UIKit
 import ActiveLabel
+import StackViewController
 
 class TransactionViewController: UIViewController {
 
     private lazy var viewModel: TransactionViewModel = {
         return .init(transaction: self.transaction)
     }()
+    let stackViewController = StackViewController()
 
     let transaction: Transaction
-
-    let stackView: UIStackView
-    let amountLabel = UILabel()
-    let memoLabel = UILabel()
+    let refreshControl = UIRefreshControl()
 
     init(transaction: Transaction) {
         self.transaction = transaction
 
-        stackView = UIStackView(arrangedSubviews: [amountLabel])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 12
+        stackViewController.scrollView.alwaysBounceVertical = true
+        stackViewController.stackView.spacing = 10
 
         super.init(nibName: nil, bundle: nil)
 
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
-
-        view.addSubview(stackView)
-
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: Layout.sideMargin),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Layout.sideMargin),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -Layout.sideMargin),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Layout.sideMargin),
-        ])
 
         let gasUsed = BInt(String(transaction.gasUsed))
         let gasPrice = BInt(String(transaction.gasPrice))
@@ -46,10 +34,11 @@ class TransactionViewController: UIViewController {
             maximumFractionDigits: 5
         )
 
+        displayStackViewController()
+
         let items: [UIView] = [
             spacer(),
             header(),
-            spacer(),
             divider(),
             item(title: "From", subTitle: transaction.from),
             item(title: "To", subTitle: transaction.to),
@@ -61,13 +50,33 @@ class TransactionViewController: UIViewController {
             item(title: "Block #", subTitle: transaction.blockNumber),
         ]
 
-        let _ = items.map(stackView.addArrangedSubview)
+        for item in items {
+            stackViewController.addItem(item)
+        }
+
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        stackViewController.scrollView.addSubview(refreshControl)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+    }
+
+    private func displayStackViewController() {
+        addChildViewController(stackViewController)
+        view.addSubview(stackViewController.view)
+        _ = stackViewController.view.activateSuperviewHuggingConstraints()
+        stackViewController.didMove(toParentViewController: self)
+    }
+
+    func pullToRefresh() {
+        fetch()
+    }
+
+    func fetch() {
+        refreshControl.beginRefreshing()
+        refreshControl.endRefreshing()
     }
 
     private func item(title: String, subTitle: String) -> UIView {
@@ -91,7 +100,9 @@ class TransactionViewController: UIViewController {
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 4
+        stackView.spacing = 10
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }
 
@@ -111,11 +122,10 @@ class TransactionViewController: UIViewController {
     }
 
     private func header() -> UIView {
-        let amountLabel = UILabel(frame: .zero)
-        amountLabel.translatesAutoresizingMaskIntoConstraints = false
-        amountLabel.attributedText = viewModel.amountAttributedString
-        amountLabel.textAlignment = .center
-        return amountLabel
+        let view = TransactionHeaderView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.amountLabel.attributedText = viewModel.amountAttributedString
+        return view
     }
 
     required init?(coder aDecoder: NSCoder) {
