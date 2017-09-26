@@ -106,7 +106,7 @@ class SendViewController: FormViewController {
             case .success(let count):
                 self?.sign(address: address, nonce: count, amount: amount)
             case .failure(let error):
-                displayError(error: error)
+                self?.displayError(error: error)
             }
         }
     }
