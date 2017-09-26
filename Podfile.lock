@@ -16,6 +16,7 @@ PODS:
     - R.swift.Library (~> 3.0.2)
   - R.swift.Library (3.0.2)
   - Result (3.2.3)
+  - SeedStackViewController (0.3.0)
   - StatefulViewController (3.0)
   - SwiftLint (0.20.1)
 
@@ -30,6 +31,7 @@ DEPENDENCIES:
   - MBProgressHUD
   - QRCodeReaderViewController
   - R.swift
+  - SeedStackViewController (from `https://github.com/seedco/StackViewController.git`, branch `swift32`)
   - StatefulViewController
   - SwiftLint
 
@@ -39,6 +41,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/xmartlabs/Eureka.git
   JSONRPCKit:
     :git: https://github.com/bricklife/JSONRPCKit.git
+  SeedStackViewController:
+    :branch: swift32
+    :git: https://github.com/seedco/StackViewController.git
 
 CHECKOUT OPTIONS:
   Eureka:
@@ -47,6 +52,9 @@ CHECKOUT OPTIONS:
   JSONRPCKit:
     :commit: 50d19a4f7ec593ac5e07cffa1e11c17f1fbe347d
     :git: https://github.com/bricklife/JSONRPCKit.git
+  SeedStackViewController:
+    :commit: d25bf043176b661d3039405899270404ab80745a
+    :git: https://github.com/seedco/StackViewController.git
 
 SPEC CHECKSUMS:
   ActiveLabel: 68625f22775f51c31bb691ca8de20f1e5a3bc825
@@ -62,9 +70,10 @@ SPEC CHECKSUMS:
   R.swift: bde9704d50ff36820f49e266bc88ef545e1e9b36
   R.swift.Library: fbdec16c9802ad104fc1ba53415dc190e6ec5c73
   Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
+  SeedStackViewController: 9c9a0a7e1488c08872bc610926becb8865710fb1
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: f60095dc173a3f3ec505bb34f5229c3dfd779a54
 
-PODFILE CHECKSUM: bef26e86d1fbe89c8c4aa4e3a95495f9f033bb5b
+PODFILE CHECKSUM: ef64ff633ab7fa3008f34c424d4c4d0d8db25e57
 
 COCOAPODS: 1.3.1
