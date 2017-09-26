@@ -4,6 +4,7 @@ import Foundation
 import UIKit
 import CoreImage
 import MBProgressHUD
+import StackViewController
 
 class RequestViewController: UIViewController {
 
@@ -11,76 +12,80 @@ class RequestViewController: UIViewController {
         return .init(transferType: self.transferType)
     }()
 
+    let stackViewController = StackViewController()
     let account: Account
-    let amountTextField: UITextField
-    let QRImageView: UIImageView
-    let copyButton: UIButton
-    let addressLabel: UILabel
+
+    lazy var amountTextField: UITextField = {
+        let textField = UITextField(frame: .zero)
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Enter ETH amount"
+        textField.textAlignment = .center
+        textField.keyboardType = .decimalPad
+        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        return textField
+    }()
+
+    lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+
+    lazy var copyButton: UIButton = {
+        let button = Button(size: .normal, style: .border)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Copy Wallet Address", for: .normal)
+        button.addTarget(self, action: #selector(copyAddress), for: .touchUpInside)
+        return button
+    }()
+
+    lazy var addressLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = self.account.address.address
+        label.textAlignment = .center
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
+        return label
+    }()
+
     let transferType: TransferType
 
     init(account: Account, transferType: TransferType = .ether) {
         self.account = account
         self.transferType = transferType
-        amountTextField = UITextField(frame: .zero)
-        QRImageView = UIImageView(frame: .zero)
-        copyButton = Button(size: .normal, style: .border)
-        addressLabel = UILabel(frame: .zero)
+
+        stackViewController.scrollView.alwaysBounceVertical = true
 
         super.init(nibName: nil, bundle: nil)
 
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
-        amountTextField.translatesAutoresizingMaskIntoConstraints = false
-        amountTextField.placeholder = "Enter ETH amount"
-        amountTextField.textAlignment = .center
-        amountTextField.keyboardType = .decimalPad
-        amountTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        displayStackViewController()
 
-        QRImageView.translatesAutoresizingMaskIntoConstraints = false
-
-        copyButton.translatesAutoresizingMaskIntoConstraints = false
-        copyButton.setTitle("Copy Wallet Address", for: .normal)
-        copyButton.addTarget(self, action: #selector(copyAddress), for: .touchUpInside)
-
-        addressLabel.translatesAutoresizingMaskIntoConstraints = false
-        addressLabel.text = account.address.address
-        addressLabel.textAlignment = .center
-        addressLabel.minimumScaleFactor = 0.5
-        addressLabel.adjustsFontSizeToFitWidth = true
-
-        let stackView = UIStackView(arrangedSubviews: [
-            //amountTextField,
-            QRImageView,
-            addressLabel,
-            copyButton,
-        ])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.spacing = 20
-
-        view.addSubview(stackView)
+        stackViewController.addItem(imageView)
+        stackViewController.addItem(addressLabel)
+        stackViewController.addItem(copyButton)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: Layout.sideMargin),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Layout.sideMargin),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -Layout.sideMargin),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Layout.sideMargin),
-
-            copyButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            copyButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-
-            QRImageView.heightAnchor.constraint(equalToConstant: 290),
-            QRImageView.widthAnchor.constraint(equalToConstant: 290),
+            copyButton.trailingAnchor.constraint(equalTo: stackViewController.stackView.layoutMarginsGuide.trailingAnchor),
+            copyButton.leadingAnchor.constraint(equalTo: stackViewController.stackView.layoutMarginsGuide.leadingAnchor),
         ])
 
         changeQRCode(value: 0)
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private func displayStackViewController() {
+        addChildViewController(stackViewController)
+        view.addSubview(stackViewController.view)
+        _ = stackViewController.view.activateSuperviewHuggingConstraints()
+        stackViewController.didMove(toParentViewController: self)
 
+        stackViewController.stackView.spacing = 20
+        stackViewController.stackView.alignment = .center
+        stackViewController.stackView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
+        stackViewController.stackView.isLayoutMarginsRelativeArrangement = true
     }
 
     func textFieldDidChange(_ textField: UITextField) {
@@ -93,7 +98,7 @@ class RequestViewController: UIViewController {
         DispatchQueue.global(qos: .background).async {
             let image = self.generateQRCode(from: string)
             DispatchQueue.main.async {
-                self.QRImageView.image = image
+                self.imageView.image = image
             }
         }
     }
