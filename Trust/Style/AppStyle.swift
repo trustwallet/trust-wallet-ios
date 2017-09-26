@@ -4,8 +4,6 @@ import Foundation
 import UIKit
 
 func applyStyle() {
-    UINavigationBar.appearance().isTranslucent = false
-
     UINavigationBar.appearance().tintColor = Colors.blue
 
     UINavigationBar.appearance().titleTextAttributes = [
