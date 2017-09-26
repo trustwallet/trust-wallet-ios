@@ -228,7 +228,11 @@ extension TransactionsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.contentView.backgroundColor = UIColor(hex: "fafafa")
+        header.textLabel?.textColor = UIColor(hex: "555357")
+        header.textLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
 
-        header.textLabel?.textColor = Colors.black
+        header.layer.addBorder(edge: .top, color: UIColor(hex: "e1e1e1"), thickness: 0.5)
+        header.layer.addBorder(edge: .bottom, color: UIColor(hex: "e1e1e1"), thickness: 0.5)
     }
 }
