@@ -120,7 +120,7 @@ class SendViewController: FormViewController {
 
         switch res {
         case .success(let data):
-            let sendData = "0x" + data.hex
+            let sendData = data.hexEncoded
             let request = EtherServiceRequest(batch: BatchFactory().create(SendRawTransactionRequest(signedTransaction: sendData)))
             Session.send(request) { [weak self] result in
                 guard let `self` = self else { return }
