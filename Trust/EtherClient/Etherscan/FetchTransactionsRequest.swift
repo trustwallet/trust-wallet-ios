@@ -37,7 +37,7 @@ struct FetchTransactionsRequest: APIKit.Request {
         if
             let objectJSON = object as? [String: AnyObject],
             let transactionJSON = objectJSON["result"] as? [[String: AnyObject]] {
-            return transactionJSON.map { .from(address: address, json: $0) }
+            return transactionJSON.map { .from(address: address.lowercased(), json: $0) }
         }
         return []
     }
