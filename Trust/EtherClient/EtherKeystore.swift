@@ -138,11 +138,11 @@ class EtherKeystore: Keystore {
     }
 
     func getPassword(for account: Account) -> String? {
-        return keychain.get(account.address.address)
+        return keychain.get(account.address.address.lowercased())
     }
 
     func setPassword(_ password: String, for account: Account) -> Bool {
-        return keychain.set(password, forKey: account.address.address)
+        return keychain.set(password, forKey: account.address.address.lowercased())
     }
 
     func getGethAccount(for address: Address) -> GethAccount {
