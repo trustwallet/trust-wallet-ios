@@ -26,10 +26,11 @@ platform :ios do
   desc "Deploy a new version to the App Store"
   lane :release do
     ensure_git_branch(branch: 'master')
+    increment_version_number(bump_type: "patch")
     snapshot
     frameit(white: true)
     gym(scheme: "Trust")
-    commit_version_bump(message: "Version Bump")
+    commit_version_bump(message: "Version Bump", force: true)
     deliver(force: true)
   end
 
