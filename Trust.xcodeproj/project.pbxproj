@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1D2831CD94641E5166E3A798 /* Pods_TrustUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */; };
+		290FD8BB1F7BFE7400548896 /* GetBlockByNumberRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290FD8BA1F7BFE7400548896 /* GetBlockByNumberRequest.swift */; };
 		2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CCF81F6A830700C6CBE3 /* AppDelegate.swift */; };
 		2912CD021F6A830700C6CBE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2912CD011F6A830700C6CBE3 /* Assets.xcassets */; };
 		2912CD101F6A830700C6CBE3 /* TrustTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD0F1F6A830700C6CBE3 /* TrustTests.swift */; };
@@ -135,6 +136,7 @@
 
 /* Begin PBXFileReference section */
 		0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		290FD8BA1F7BFE7400548896 /* GetBlockByNumberRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockByNumberRequest.swift; sourceTree = "<group>"; };
 		2912CCF51F6A830700C6CBE3 /* Trust.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trust.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2912CCF81F6A830700C6CBE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2912CD011F6A830700C6CBE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 				291ED08E1F6F613200E7E93A /* GetTransactionRequest.swift */,
 				296AF9A81F737F6F0058AF78 /* SendRawTransactionRequest.swift */,
 				296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */,
+				290FD8BA1F7BFE7400548896 /* GetBlockByNumberRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -1078,6 +1081,7 @@
 				29BB94951F6FC54C009B09CC /* EthereumUnit.swift in Sources */,
 				29A0E1871F706D0700BAAAED /* EthereumConverter.swift in Sources */,
 				2912CD2D1F6A839700C6CBE3 /* CreateWalletViewController.swift in Sources */,
+				290FD8BB1F7BFE7400548896 /* GetBlockByNumberRequest.swift in Sources */,
 				291F52B71F6B870400B369AB /* CastError.swift in Sources */,
 				291F52BC1F6B8D0600B369AB /* Account.swift in Sources */,
 				2912CD321F6A83EE00C6CBE3 /* WelcomeViewController.swift in Sources */,
