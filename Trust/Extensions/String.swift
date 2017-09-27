@@ -7,11 +7,20 @@ extension String {
         let data = self.data(using: .utf8)!
         return data.map { String(format:"%02x", $0) }.joined()
     }
+
+    var hexEncoded: String {
+        let data = self.data(using: .utf8)!
+        return data.hexEncoded
+    }
 }
 
 extension Data {
     var hex: String {
         return map { String(format: "%02hhx", $0) }.joined()
+    }
+
+    var hexEncoded: String {
+        return "0x" + self.hex
     }
 }
 
