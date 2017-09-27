@@ -40,15 +40,8 @@ class SendViewController: FormViewController {
         view.backgroundColor = viewModel.backgroundColor
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Send", style: .done, target: self, action: #selector(send))
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = viewModel.title
-        view.backgroundColor = .white
 
         form = Section()
-
             +++ Section("")
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
@@ -77,11 +70,11 @@ class SendViewController: FormViewController {
     }
 
     func clear() {
-        addressRow?.value = ""
-        addressRow?.reload()
-
-        amountRow?.value = ""
-        amountRow?.reload()
+        let fields = [addressRow, amountRow]
+        for field in fields {
+            field?.value = ""
+            field?.reload()
+        }
     }
 
     func send() {
@@ -91,13 +84,8 @@ class SendViewController: FormViewController {
         let addressString = addressRow?.value ?? ""
         let amountString = amountRow?.value ?? ""
         let address = Address(address: addressString)
-
-        let decimalAmount: NSDecimalNumber = {
-            let result: NSDecimalNumber = NSDecimalNumber(value: Double(amountString) ?? 0)
-            let mutiplier: NSDecimalNumber = NSDecimalNumber(value: EthereumUnit.ether.rawValue)
-            return result.multiplying(by: mutiplier)
-        }()
-        let amount = GethBigInt.from(decimal: decimalAmount)
+        let amountDouble = BDouble(floatLiteral: Double(amountString) ?? 0) * BDouble(integerLiteral: EthereumUnit.ether.rawValue)
+        let amount = GethBigInt.from(double: amountDouble)
 
         confirm(message: "Confirm to send \(amountString) \(transferType.symbol) to \(address.address) address") { result in
             switch result {

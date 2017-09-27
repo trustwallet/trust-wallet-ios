@@ -16,8 +16,8 @@ extension GethBigInt {
         return value
     }
 
-    static func from(decimal: NSDecimalNumber) -> GethBigInt {
-        let bignum = Bignum(decimal.description(withLocale: nil))
+    static func from(double: BDouble) -> GethBigInt {
+        let bignum = Bignum(double.description)
         return GethBigInt.from(hex: bignum.asString(withBase: 16))
     }
 }

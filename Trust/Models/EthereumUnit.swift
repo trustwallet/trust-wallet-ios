@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum EthereumUnit: Int64 {
+enum EthereumUnit: Int {
     case wei = 1
     case kwei = 1000
     case gwei = 1000000000
