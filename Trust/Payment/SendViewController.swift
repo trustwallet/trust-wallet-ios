@@ -23,6 +23,13 @@ class SendViewController: FormViewController {
     let account: Account
     let transferType: TransferType
 
+    var addressRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.address) as? TextFloatLabelRow
+    }
+    var amountRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
+    }
+
     init(account: Account, transferType: TransferType = .ether) {
         self.account = account
         self.transferType = transferType
@@ -70,9 +77,6 @@ class SendViewController: FormViewController {
     }
 
     func clear() {
-        let addressRow = (form.rowBy(tag: Values.address) as? TextFloatLabelRow)
-        let amountRow = (form.rowBy(tag: Values.amount) as? TextFloatLabelRow)
-
         addressRow?.value = ""
         addressRow?.reload()
 
@@ -84,19 +88,18 @@ class SendViewController: FormViewController {
         let errors = form.validate()
         guard errors.isEmpty else { return }
 
-        let addressString = (form.rowBy(tag: Values.address) as? TextFloatLabelRow)?.value ?? ""
-        let amountString = (form.rowBy(tag: Values.amount) as? TextFloatLabelRow)?.value ?? ""
+        let addressString = addressRow?.value ?? ""
+        let amountString = amountRow?.value ?? ""
         let address = Address(address: addressString)
-        let amountDouble = Double(amountString) ?? 0
 
         let decimalAmount: NSDecimalNumber = {
-            let result: NSDecimalNumber = NSDecimalNumber(value: amountDouble)
+            let result: NSDecimalNumber = NSDecimalNumber(value: Double(amountString) ?? 0)
             let mutiplier: NSDecimalNumber = NSDecimalNumber(value: EthereumUnit.ether.rawValue)
             return result.multiplying(by: mutiplier)
         }()
         let amount = GethBigInt.from(decimal: decimalAmount)
 
-        confirm(message: "Confirm to send \(amountString) ETH to \(address.address) address") { result in
+        confirm(message: "Confirm to send \(amountString) \(transferType.symbol) to \(address.address) address") { result in
             switch result {
             case .success:
                 self.sendPayment(to: address, amount: amount, amountString: amountString)
@@ -132,15 +135,16 @@ class SendViewController: FormViewController {
             let sendData = "0x" + data.hex
             let request = EtherServiceRequest(batch: BatchFactory().create(SendRawTransactionRequest(signedTransaction: sendData)))
             Session.send(request) { [weak self] result in
+                guard let `self` = self else { return }
                 switch result {
                 case .success(let transactionID):
-                    self?.displaySuccess(
-                        title: "Sent \(amountString) to \(self?.account.address.address ?? "")",
+                    self.displaySuccess(
+                        title: "Sent \(amountString) \(self.transferType.symbol) to \(self.account.address.address)",
                         message: "TransactionID: \(transactionID)"
                     )
-                    self?.clear()
+                    self.clear()
                 case .failure(let error):
-                    self?.displayError(error: error)
+                    self.displayError(error: error)
                 }
             }
         case .failure(let error):
