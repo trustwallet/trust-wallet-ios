@@ -113,21 +113,20 @@ class SendViewController: FormViewController {
 
     func sign(address: Address, nonce: Int64 = 0, amount: Int64) {
 
-        let tempAmount = GethNewBigInt(amount)!
+        let amountString = Int64(Double(EthereumUnit.ether.rawValue) / Double(amount))
 
-        let amount = GethNewBigInt(amount)!
-        amount.setBytes(tempAmount.getBytes())
+        let tempAmount = GethNewBigInt(amount)!
+        let amountBigInt = GethNewBigInt(amount)!
+        amountBigInt.setBytes(tempAmount.getBytes())
 
         let config = Config()
         let res = keystore.signTransaction(
-            amount: amount,
+            amount: amountBigInt,
             account: account,
             address: address,
             nonce: nonce,
             chainID: GethNewBigInt(Int64(config.chainID))
         )
-
-        let amountString = Int64(Double(EthereumUnit.ether.rawValue) / Double(amount))
 
         switch res {
         case .success(let data):
