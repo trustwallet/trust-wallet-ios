@@ -143,14 +143,14 @@ extension WelcomeViewController {
 
 extension AppCoordinator: TransactionsViewControllerDelegate {
     func didPressSend(for account: Account, in viewController: TransactionsViewController) {
-        let controller = SendViewController(account: account)
+        let controller = SendAndRequestViewContainer(flow: .send, account: account)
         let nav = NavigationController(rootViewController: controller)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         rootNavigationController.present(nav, animated: true, completion: nil)
     }
 
     func didPressRequest(for account: Account, in viewController: TransactionsViewController) {
-        let controller = RequestViewController(account: account)
+        let controller = SendAndRequestViewContainer(flow: .request, account: account)
         let nav = NavigationController(rootViewController: controller)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         rootNavigationController.present(nav, animated: true, completion: nil)

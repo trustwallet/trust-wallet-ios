@@ -85,6 +85,7 @@
 		29A13E2C1F6A955700E432A2 /* CreateWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E2B1F6A955700E432A2 /* CreateWalletViewModel.swift */; };
 		29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E321F6B1B7A00E432A2 /* AppStyle.swift */; };
 		29A13E351F6B1E8E00E432A2 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29A13E341F6B1E8E00E432A2 /* Welcome.storyboard */; };
+		29B6AECB1F7C5FA900EC6DE3 /* SendAndRequestViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B6AECA1F7C5FA900EC6DE3 /* SendAndRequestViewContainer.swift */; };
 		29BB94931F6FC380009B09CC /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94921F6FC380009B09CC /* BalanceViewModel.swift */; };
 		29BB94951F6FC54C009B09CC /* EthereumUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94941F6FC54C009B09CC /* EthereumUnit.swift */; };
 		29BB94971F6FCD60009B09CC /* SendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94961F6FCD60009B09CC /* SendViewModel.swift */; };
@@ -219,6 +220,7 @@
 		29A13E2B1F6A955700E432A2 /* CreateWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWalletViewModel.swift; sourceTree = "<group>"; };
 		29A13E321F6B1B7A00E432A2 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
 		29A13E341F6B1E8E00E432A2 /* Welcome.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
+		29B6AECA1F7C5FA900EC6DE3 /* SendAndRequestViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAndRequestViewContainer.swift; sourceTree = "<group>"; };
 		29BB94921F6FC380009B09CC /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
 		29BB94941F6FC54C009B09CC /* EthereumUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumUnit.swift; sourceTree = "<group>"; };
 		29BB94961F6FCD60009B09CC /* SendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewModel.swift; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 				29CA4B761F6FBBFB0032313D /* RequestViewModel.swift */,
 				29BB94961F6FCD60009B09CC /* SendViewModel.swift */,
 				296106CF1F778A8D0006164B /* TransferType.swift */,
+				29B6AECA1F7C5FA900EC6DE3 /* SendAndRequestViewContainer.swift */,
 			);
 			path = Payment;
 			sourceTree = "<group>";
@@ -674,7 +677,6 @@
 				F291FF6299FBB0600050DA49 /* [CP] Embed Pods Frameworks */,
 				2909B06A324FDD6FB858F676 /* [CP] Copy Pods Resources */,
 				29282B511F7629DB0067F88D /* Run SwiftLint */,
-				29B6AEBB1F7C590600EC6DE3 /* Run bartycrouch */,
 			);
 			buildRules = (
 			);
@@ -873,20 +875,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"$PODS_ROOT/R.swift/rswift\" \"$SRCROOT/Trust\"";
 		};
-		29B6AEBB1F7C590600EC6DE3 /* Run bartycrouch */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run bartycrouch";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which bartycrouch > /dev/null; then\n# Incrementally update all Storyboards/XIBs strings files\nbartycrouch interfaces -p \"$PROJECT_DIR\"\n\n# Add new keys to Localizable.strings files from NSLocalizedString in code\nbartycrouch code -p \"$PROJECT_DIR\" -l \"$PROJECT_DIR\" -a -s\nelse\necho \"warning: BartyCrouch not installed, download it from https://github.com/Flinesoft/BartyCrouch\"\nfi";
-		};
 		558B94C30BF51EDC00493AF8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1040,6 +1028,7 @@
 				296106C81F7646590006164B /* TokensViewModel.swift in Sources */,
 				29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */,
 				291F52B41F6B814300B369AB /* SMP Core.swift in Sources */,
+				29B6AECB1F7C5FA900EC6DE3 /* SendAndRequestViewContainer.swift in Sources */,
 				2996F14A1F6C9D10005C33AE /* ExportCoordinator.swift in Sources */,
 				29BE3FD21F707DC300F6BFC2 /* TransactionCoordinator.swift in Sources */,
 				291F52B51F6B814300B369AB /* SMP String Module.swift in Sources */,
