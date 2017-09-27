@@ -5,6 +5,7 @@ import Foundation
 enum EthereumUnit: Int64 {
     case wei = 1
     case kwei = 1000
+    case gwei = 1000000000
     case ether = 1000000000000000000
 }
 
