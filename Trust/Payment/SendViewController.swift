@@ -112,9 +112,15 @@ class SendViewController: FormViewController {
     }
 
     func sign(address: Address, nonce: Int64 = 0, amount: Int64) {
+
+        let tempAmount = GethNewBigInt(amount)!
+
+        let amount = GethNewBigInt(amount)!
+        amount.setBytes(tempAmount.getBytes())
+
         let config = Config()
         let res = keystore.signTransaction(
-            amount: GethNewBigInt(amount),
+            amount: amount,
             account: account,
             address: address,
             nonce: nonce,
