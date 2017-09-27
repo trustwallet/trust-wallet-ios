@@ -87,6 +87,7 @@
 		29BB94931F6FC380009B09CC /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94921F6FC380009B09CC /* BalanceViewModel.swift */; };
 		29BB94951F6FC54C009B09CC /* EthereumUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94941F6FC54C009B09CC /* EthereumUnit.swift */; };
 		29BB94971F6FCD60009B09CC /* SendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94961F6FCD60009B09CC /* SendViewModel.swift */; };
+		29BBB36B1F7BCEDD006BC91B /* GethBigInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BBB36A1F7BCEDD006BC91B /* GethBigInt.swift */; };
 		29BE3FCE1F706D8800F6BFC2 /* EthereumConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE3FCD1F706D8800F6BFC2 /* EthereumConverterTests.swift */; };
 		29BE3FD01F7071A200F6BFC2 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE3FCF1F7071A200F6BFC2 /* UIColor.swift */; };
 		29BE3FD21F707DC300F6BFC2 /* TransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE3FD11F707DC300F6BFC2 /* TransactionCoordinator.swift */; };
@@ -219,6 +220,7 @@
 		29BB94921F6FC380009B09CC /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
 		29BB94941F6FC54C009B09CC /* EthereumUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumUnit.swift; sourceTree = "<group>"; };
 		29BB94961F6FCD60009B09CC /* SendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewModel.swift; sourceTree = "<group>"; };
+		29BBB36A1F7BCEDD006BC91B /* GethBigInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GethBigInt.swift; sourceTree = "<group>"; };
 		29BE3FCD1F706D8800F6BFC2 /* EthereumConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumConverterTests.swift; sourceTree = "<group>"; };
 		29BE3FCF1F7071A200F6BFC2 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		29BE3FD11F707DC300F6BFC2 /* TransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCoordinator.swift; sourceTree = "<group>"; };
@@ -565,6 +567,7 @@
 				29FF12F71F747D6C00AFD326 /* Error.swift */,
 				29358DA81F79FD1C00925D61 /* CALayer.swift */,
 				29E2E3391F7A008C000CF94A /* UIView.swift */,
+				29BBB36A1F7BCEDD006BC91B /* GethBigInt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1057,6 +1060,7 @@
 				2912CD341F6A849C00C6CBE3 /* WelcomeViewModel.swift in Sources */,
 				291F52A21F6B6DCF00B369AB /* EtherClient.swift in Sources */,
 				2912CD2B1F6A833E00C6CBE3 /* TransactionsViewController.swift in Sources */,
+				29BBB36B1F7BCEDD006BC91B /* GethBigInt.swift in Sources */,
 				294FE5661F72442D00754F31 /* Address.swift in Sources */,
 				2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */,
 				29A0E1851F706B8C00BAAAED /* String.swift in Sources */,

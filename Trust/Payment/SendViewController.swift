@@ -88,40 +88,39 @@ class SendViewController: FormViewController {
         let amountString = (form.rowBy(tag: Values.amount) as? TextFloatLabelRow)?.value ?? ""
         let address = Address(address: addressString)
         let amountDouble = Double(amountString) ?? 0
-        let amount = Int64(Double(EthereumUnit.ether.rawValue) * amountDouble)
+
+        let decimalAmount: NSDecimalNumber = {
+            let result: NSDecimalNumber = NSDecimalNumber(value: amountDouble)
+            let mutiplier: NSDecimalNumber = NSDecimalNumber(value: EthereumUnit.ether.rawValue)
+            return result.multiplying(by: mutiplier)
+        }()
+        let amount = GethBigInt.from(decimal: decimalAmount)
 
         confirm(message: "Confirm to send \(amountString) ETH to \(address.address) address") { result in
             switch result {
             case .success:
-                self.sendPayment(to: address, amount: amount)
+                self.sendPayment(to: address, amount: amount, amountString: amountString)
             case .failure: break
             }
         }
     }
 
-    func sendPayment(to address: Address, amount: Int64) {
+    func sendPayment(to address: Address, amount: GethBigInt, amountString: String) {
         let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: account.address.address)))
         Session.send(request) { [weak self] result in
             switch result {
             case .success(let count):
-                self?.sign(address: address, nonce: count, amount: amount)
+                self?.sign(address: address, nonce: count, amount: amount, amountString: amountString)
             case .failure(let error):
                 self?.displayError(error: error)
             }
         }
     }
 
-    func sign(address: Address, nonce: Int64 = 0, amount: Int64) {
-
-        let amountString = Int64(Double(EthereumUnit.ether.rawValue) / Double(amount))
-
-        let tempAmount = GethNewBigInt(amount)!
-        let amountBigInt = GethNewBigInt(amount)!
-        amountBigInt.setBytes(tempAmount.getBytes())
-
+    func sign(address: Address, nonce: Int64 = 0, amount: GethBigInt, amountString: String) {
         let config = Config()
         let res = keystore.signTransaction(
-            amount: amountBigInt,
+            amount: amount,
             account: account,
             address: address,
             nonce: nonce,
@@ -150,8 +149,6 @@ class SendViewController: FormViewController {
     }
 
     @objc func openReader() {
-        // Or by using the closure pattern
-
         let controller = QRCodeReaderViewController()
         controller.delegate = self
 
