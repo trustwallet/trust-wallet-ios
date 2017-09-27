@@ -30,9 +30,23 @@ extension UIViewController {
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
             completion(.success())
         }))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: { _ in
             completion(.failure(ConfirmationError.cancel))
         }))
         self.present(alertController, animated: true, completion: nil)
+    }
+
+    func add(asChildViewController viewController: UIViewController) {
+        addChildViewController(viewController)
+        view.addSubview(viewController.view)
+        viewController.view.frame = view.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        viewController.didMove(toParentViewController: self)
+    }
+
+    func remove(asChildViewController viewController: UIViewController) {
+        viewController.willMove(toParentViewController: nil)
+        viewController.view.removeFromSuperview()
+        viewController.removeFromParentViewController()
     }
 }
