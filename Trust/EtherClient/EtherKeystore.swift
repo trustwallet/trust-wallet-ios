@@ -115,7 +115,7 @@ class EtherKeystore: Keystore {
         account: Account,
         address: Address,
         nonce: Int64,
-        cost: TransactionCost,
+        cost: TransactionSpeed,
         data: Data = Data(),
         chainID: GethBigInt = GethNewBigInt(1)
     ) -> Result<Data, KeyStoreError> {
