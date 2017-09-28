@@ -24,17 +24,20 @@ class SendAndRequestViewContainer: UIViewController {
     lazy var requestController: RequestViewController = {
         return RequestViewController(account: self.account)
     }()
-    let segment = UISegmentedControl(frame: .zero)
+
+    lazy var  segment: UISegmentedControl = {
+        let segment =  UISegmentedControl(frame: .zero)
+        segment.insertSegment(withTitle: "Send", at: 0, animated: false)
+        segment.insertSegment(withTitle: "Request", at: 1, animated: false)
+        segment.addTarget(self, action: #selector(segmentChange), for: .valueChanged)
+        return segment
+    }()
 
     init(flow: PaymentFlow, account: Account) {
         self.flow = flow
         self.account = account
         super.init(nibName: nil, bundle: nil)
 
-        segment.insertSegment(withTitle: "Send", at: 0, animated: false)
-        segment.insertSegment(withTitle: "Request", at: 1, animated: false)
-        
-        segment.addTarget(self, action: #selector(segmentChange), for: .valueChanged)
         navigationItem.titleView = segment
         view.backgroundColor = .white
 
