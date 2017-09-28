@@ -39,8 +39,6 @@ class SendViewController: FormViewController {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Send", style: .done, target: self, action: #selector(send))
-
         form = Section()
             +++ Section("")
 

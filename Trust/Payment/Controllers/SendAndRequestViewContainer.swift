@@ -55,9 +55,16 @@ class SendAndRequestViewContainer: UIViewController {
         case .send:
             add(asChildViewController: sendController)
             remove(asChildViewController: requestController)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: "Send",
+                style: .done,
+                target: sendController,
+                action: #selector(SendViewController.send)
+            )
         case .request:
             add(asChildViewController: requestController)
             remove(asChildViewController: sendController)
+            navigationItem.rightBarButtonItem = nil
         }
         segment.selectedSegmentIndex = flow.selectedSegmentIndex
     }
