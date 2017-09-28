@@ -24,7 +24,7 @@
     {
       "filter": "CreateWallet",
       "title": {
-        "text": "Create Wallet in one tap"
+        "text": "Wallet in One Tap"
       }
     },
     {
@@ -36,13 +36,13 @@
     {
       "filter": "Transactions",
       "title": {
-        "text": "See your transactions"
+        "text": "See Transactions"
       }
     },
     {
       "filter": "Tokens",
       "title": {
-        "text": "Track your tokens"
+        "text": "Track Tokens"
       }
     }
   ]
