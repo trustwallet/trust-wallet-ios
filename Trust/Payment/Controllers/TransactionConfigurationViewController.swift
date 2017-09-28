@@ -31,8 +31,11 @@ class TransactionConfigurationViewController: FormViewController {
 
         title = "Configuration"
 
-        form = Section()
-            +++ Section(footer: configuration.speed.timeTitle)
+        form = Section { $0.hidden = true }
+            +++ Section(
+                header: "Transaction",
+                footer: configuration.speed.timeTitle
+            )
             <<< SegmentedRow<String>(Values.speed) {
                 $0.title = "Processing speed"
                 $0.options = [
