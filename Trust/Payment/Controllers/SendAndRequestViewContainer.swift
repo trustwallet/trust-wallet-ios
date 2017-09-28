@@ -24,7 +24,8 @@ class SendAndRequestViewContainer: UIViewController {
     }()
 
     lazy var requestController: RequestViewController = {
-        return RequestViewController(account: self.account)
+        let controller = RequestViewController(account: self.account)
+        return controller
     }()
 
     lazy var  segment: UISegmentedControl = {
@@ -72,7 +73,12 @@ class SendAndRequestViewContainer: UIViewController {
         case .request:
             add(asChildViewController: requestController)
             remove(asChildViewController: sendController)
-            navigationItem.rightBarButtonItem = nil
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: "Share",
+                style: .done,
+                target: self,
+                action: #selector(share)
+            )
         }
         segment.selectedSegmentIndex = flow.selectedSegmentIndex
     }
@@ -84,6 +90,17 @@ class SendAndRequestViewContainer: UIViewController {
         let nav = NavigationController(rootViewController: controller)
         controller.delegate = self
         present(nav, animated: true, completion: nil)
+    }
+
+    @objc func share() {
+        let address = account.address.address
+        let activityViewController = UIActivityViewController(
+            activityItems: [
+                "My Ethereum address is: \(address)",
+            ],
+            applicationActivities: nil
+        )
+        present(activityViewController, animated: true, completion: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
