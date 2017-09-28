@@ -18,7 +18,9 @@ class SendAndRequestViewContainer: UIViewController {
     let account: Account
 
     lazy var sendController: SendViewController = {
-        return SendViewController(account: self.account)
+        let controller = SendViewController(account: self.account)
+        controller.delegate = self
+        return controller
     }()
 
     lazy var requestController: RequestViewController = {
@@ -32,6 +34,8 @@ class SendAndRequestViewContainer: UIViewController {
         segment.addTarget(self, action: #selector(segmentChange), for: .valueChanged)
         return segment
     }()
+
+    var configuration = TransactionConfiguration()
 
     init(flow: PaymentFlow, account: Account) {
         self.flow = flow
@@ -69,8 +73,30 @@ class SendAndRequestViewContainer: UIViewController {
         segment.selectedSegmentIndex = flow.selectedSegmentIndex
     }
 
+    @objc func openConfiguration() {
+        let controller = TransactionConfigurationViewController(
+            configuration: configuration
+        )
+        let nav = NavigationController(rootViewController: controller)
+        controller.delegate = self
+        present(nav, animated: true, completion: nil)
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension SendAndRequestViewContainer: SendViewControllerDelegate {
+    func didPressConfiguration(in viewController: SendViewController) {
+        openConfiguration()
+    }
+}
+
+extension SendAndRequestViewContainer: TransactionConfigurationViewControllerDelegate {
+    func didUpdate(configuration: TransactionConfiguration, in viewController: TransactionConfigurationViewController) {
+        self.configuration = configuration
+        viewController.dismiss(animated: true, completion: nil)
     }
 }
 

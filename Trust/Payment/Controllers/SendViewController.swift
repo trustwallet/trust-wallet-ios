@@ -8,17 +8,21 @@ import JSONRPCKit
 import APIKit
 import QRCodeReaderViewController
 
+protocol SendViewControllerDelegate: class {
+    func didPressConfiguration(in viewController: SendViewController)
+}
+
 class SendViewController: FormViewController {
 
     private lazy var viewModel: SendViewModel = {
         return .init(transferType: self.transferType)
     }()
     private let keystore = EtherKeystore()
+    weak var delegate: SendViewControllerDelegate?
 
     struct Values {
         static let address = "address"
         static let amount = "amount"
-        static let processingSpeed = "speed"
     }
 
     let account: Account
@@ -29,9 +33,6 @@ class SendViewController: FormViewController {
     }
     var amountRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
-    }
-    var speedRow: SegmentedRow<String>? {
-        return form.rowBy(tag: Values.processingSpeed) as? SegmentedRow
     }
 
     init(account: Account, transferType: TransferType = .ether) {
@@ -70,26 +71,16 @@ class SendViewController: FormViewController {
                 cell.textField.keyboardType = .decimalPad
             }
 
-            +++ Section(footer: TransactionSpeed.fast.timeTitle) { section in
-                section.hidden = true
-//                section.hidden = Eureka.Condition.function([Values.amount], { _ in
-//                    return self.amountRow?.value?.isEmpty ?? true
-//                })
+            +++ Section {
+                $0.hidden = Eureka.Condition.function([Values.amount], { _ in
+                    return self.amountRow?.value?.isEmpty ?? true
+                })
             }
 
-            <<< SegmentedRow<String>(Values.processingSpeed) {
-                $0.title = "Processing speed"
-                $0.options = [
-                    TransactionSpeed.fast.title,
-                    TransactionSpeed.regular.title,
-                ]
-                $0.value = TransactionSpeed.fast.title
-                $0.selectorTitle = TransactionSpeed.fast.title
-                $0.onChange { row in
-                    let speed = TransactionSpeed(title: row.value ?? "")
-                    row.section?.footer = HeaderFooterView(title: speed.timeTitle)
-                    row.section?.reload(with: .none)
-                }
+            <<< AppFormAppearance.button("Additional configuration") {
+                $0.title = $0.tag
+            }.onCellSelection { [unowned self] (_, _) in
+                self.delegate?.didPressConfiguration(in: self)
             }
     }
 
@@ -204,31 +195,5 @@ extension SendViewController: QRCodeReaderDelegate {
         let address = result.substring(with: 9..<51)
         addressRow?.value = address
         addressRow?.reload()
-    }
-}
-
-extension TransactionSpeed {
-    var title: String {
-        switch self {
-        case .fast: return "Fast"
-        case .regular: return "Regular"
-        case .custom: return "Custom"
-        }
-    }
-
-    var timeTitle: String {
-        switch self {
-        case .fast: return "Estimated delivery: 1-2 minutes."
-        case .regular: return "Estimated delivery: 2-5 minutes."
-        case .custom: return "Custom"
-        }
-    }
-
-    init(title: String) {
-        switch title {
-        case TransactionSpeed.fast.title: self = .fast
-        case TransactionSpeed.regular.title: self = .regular
-        default: self = .fast
-        }
     }
 }
