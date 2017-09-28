@@ -35,6 +35,8 @@ class SendViewController: FormViewController {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
     }
 
+    var configuration = TransactionConfiguration()
+
     init(account: Account, transferType: TransferType = .ether) {
         self.account = account
         self.transferType = transferType
@@ -109,23 +111,23 @@ class SendViewController: FormViewController {
         let address = Address(address: addressString)
         let amountDouble = BDouble(floatLiteral: Double(amountString) ?? 0) * BDouble(integerLiteral: EthereumUnit.ether.rawValue)
         let amount = GethBigInt.from(double: amountDouble)
+        let speed = configuration.speed
 
         confirm(message: "Confirm to send \(amountString) \(transferType.symbol) to \(address.address) address") { result in
             switch result {
             case .success:
-                self.sendPayment(to: address, amount: amount, amountString: amountString)
+                self.sendPayment(to: address, amount: amount, speed: speed, amountString: amountString)
             case .failure: break
             }
         }
     }
 
-    func sendPayment(to address: Address, amount: GethBigInt, amountString: String) {
-        let cost = TransactionSpeed.fast
+    func sendPayment(to address: Address, amount: GethBigInt, speed: TransactionSpeed, amountString: String) {
         let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: account.address.address)))
         Session.send(request) { [weak self] result in
             switch result {
             case .success(let count):
-                self?.sign(address: address, nonce: count, amount: amount, cost: cost, amountString: amountString)
+                self?.sign(address: address, nonce: count, amount: amount, speed: speed, amountString: amountString)
             case .failure(let error):
                 self?.displayError(error: error)
             }
@@ -136,7 +138,7 @@ class SendViewController: FormViewController {
         address: Address,
         nonce: Int64 = 0,
         amount: GethBigInt,
-        cost: TransactionSpeed,
+        speed: TransactionSpeed,
         amountString: String
     ) {
         let config = Config()
@@ -145,7 +147,7 @@ class SendViewController: FormViewController {
             account: account,
             address: address,
             nonce: nonce,
-            cost: cost,
+            speed: speed,
             chainID: GethNewBigInt(Int64(config.chainID))
         )
 

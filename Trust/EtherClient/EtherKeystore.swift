@@ -115,13 +115,13 @@ class EtherKeystore: Keystore {
         account: Account,
         address: Address,
         nonce: Int64,
-        cost: TransactionSpeed,
+        speed: TransactionSpeed,
         data: Data = Data(),
         chainID: GethBigInt = GethNewBigInt(1)
     ) -> Result<Data, KeyStoreError> {
 
         let gethAddress = GethNewAddressFromHex(address.address, nil)
-        let transaction = GethNewTransaction(nonce, gethAddress, amount, cost.gasLimit, cost.gasPrice, data)
+        let transaction = GethNewTransaction(nonce, gethAddress, amount, speed.gasLimit, speed.gasPrice, data)
         let password = getPassword(for: account)
 
         let gethAccount = getGethAccount(for: account.address)

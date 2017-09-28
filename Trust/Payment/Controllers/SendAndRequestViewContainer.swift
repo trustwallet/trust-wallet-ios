@@ -35,7 +35,11 @@ class SendAndRequestViewContainer: UIViewController {
         return segment
     }()
 
-    var configuration = TransactionConfiguration()
+    var configuration = TransactionConfiguration() {
+        didSet {
+            sendController.configuration = configuration
+        }
+    }
 
     init(flow: PaymentFlow, account: Account) {
         self.flow = flow
