@@ -18,6 +18,7 @@ class SendViewController: FormViewController {
     struct Values {
         static let address = "address"
         static let amount = "amount"
+        static let processingSpeed = "speed"
     }
 
     let account: Account
@@ -28,6 +29,9 @@ class SendViewController: FormViewController {
     }
     var amountRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
+    }
+    var speedRow: SegmentedRow<String>? {
+        return form.rowBy(tag: Values.processingSpeed) as? SegmentedRow
     }
 
     init(account: Account, transferType: TransferType = .ether) {
@@ -65,6 +69,36 @@ class SendViewController: FormViewController {
                 cell.textField.placeholder = "ETH Amount"
                 cell.textField.keyboardType = .decimalPad
             }
+
+            +++ Section(footer: TransactionSpeed.fast.timeTitle) { section in
+                section.hidden = true
+//                section.hidden = Eureka.Condition.function([Values.amount], { _ in
+//                    return self.amountRow?.value?.isEmpty ?? true
+//                })
+            }
+
+            <<< SegmentedRow<String>(Values.processingSpeed) {
+                $0.title = "Processing speed"
+                $0.options = [
+                    TransactionSpeed.fast.title,
+                    TransactionSpeed.regular.title,
+                ]
+                $0.value = TransactionSpeed.fast.title
+                $0.selectorTitle = TransactionSpeed.fast.title
+                $0.onChange { row in
+                    let speed = TransactionSpeed(title: row.value ?? "")
+                    row.section?.footer = HeaderFooterView(title: speed.timeTitle)
+                    row.section?.reload(with: .none)
+                }
+            }
+    }
+
+    override func insertAnimation(forSections sections: [Section]) -> UITableViewRowAnimation {
+        return .none
+    }
+
+    override func deleteAnimation(forSections sections: [Section]) -> UITableViewRowAnimation {
+        return .none
     }
 
     func clear() {
@@ -95,7 +129,7 @@ class SendViewController: FormViewController {
     }
 
     func sendPayment(to address: Address, amount: GethBigInt, amountString: String) {
-        let cost = TransactionCost.fast
+        let cost = TransactionSpeed.fast
         let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: account.address.address)))
         Session.send(request) { [weak self] result in
             switch result {
@@ -111,7 +145,7 @@ class SendViewController: FormViewController {
         address: Address,
         nonce: Int64 = 0,
         amount: GethBigInt,
-        cost: TransactionCost,
+        cost: TransactionSpeed,
         amountString: String
     ) {
         let config = Config()
@@ -168,8 +202,33 @@ extension SendViewController: QRCodeReaderDelegate {
 
         //Move login into parser
         let address = result.substring(with: 9..<51)
-        let row = (form.rowBy(tag: Values.address) as? TextFloatLabelRow)!
-        row.value = address
-        row.reload()
+        addressRow?.value = address
+        addressRow?.reload()
+    }
+}
+
+extension TransactionSpeed {
+    var title: String {
+        switch self {
+        case .fast: return "Fast"
+        case .regular: return "Regular"
+        case .custom: return "Custom"
+        }
+    }
+
+    var timeTitle: String {
+        switch self {
+        case .fast: return "Estimated delivery: 1-2 minutes."
+        case .regular: return "Estimated delivery: 2-5 minutes."
+        case .custom: return "Custom"
+        }
+    }
+
+    init(title: String) {
+        switch title {
+        case TransactionSpeed.fast.title: self = .fast
+        case TransactionSpeed.regular.title: self = .regular
+        default: self = .fast
+        }
     }
 }
