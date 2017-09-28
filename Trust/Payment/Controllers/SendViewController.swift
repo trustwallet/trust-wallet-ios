@@ -97,24 +97,32 @@ class SendViewController: FormViewController {
     }
 
     func sendPayment(to address: Address, amount: GethBigInt, amountString: String) {
+        let cost = TransactionCost.fast
         let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: account.address.address)))
         Session.send(request) { [weak self] result in
             switch result {
             case .success(let count):
-                self?.sign(address: address, nonce: count, amount: amount, amountString: amountString)
+                self?.sign(address: address, nonce: count, amount: amount, cost: cost, amountString: amountString)
             case .failure(let error):
                 self?.displayError(error: error)
             }
         }
     }
 
-    func sign(address: Address, nonce: Int64 = 0, amount: GethBigInt, amountString: String) {
+    func sign(
+        address: Address,
+        nonce: Int64 = 0,
+        amount: GethBigInt,
+        cost: TransactionCost,
+        amountString: String
+    ) {
         let config = Config()
         let res = keystore.signTransaction(
             amount: amount,
             account: account,
             address: address,
             nonce: nonce,
+            cost: cost,
             chainID: GethNewBigInt(Int64(config.chainID))
         )
 
