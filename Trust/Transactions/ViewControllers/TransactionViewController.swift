@@ -1,7 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import UIKit
-import ActiveLabel
 import StackViewController
 
 class TransactionViewController: UIViewController {
@@ -86,16 +85,13 @@ class TransactionViewController: UIViewController {
         titleLabel.textAlignment = .left
         titleLabel.textColor = Colors.gray
 
-        let ethereumAddress = ActiveType.ethereumAddress()
-        let subTitleLabel = ActiveLabel(frame: .zero)
+        let subTitleLabel = UILabel(frame: .zero)
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subTitleLabel.text = subTitle
         subTitleLabel.textAlignment = .left
         subTitleLabel.textColor = Colors.black
         subTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFontWeightLight)
         subTitleLabel.adjustsFontSizeToFitWidth = true
-        subTitleLabel.enabledTypes = [ethereumAddress]
-        subTitleLabel.handleCustomTap(for: ethereumAddress) { _ in }
 
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false

@@ -17,7 +17,6 @@ target 'Trust' do
   pod 'QRCodeReaderViewController'
   pod 'KeychainSwift'
   pod 'SwiftLint'
-  pod 'ActiveLabel'
   pod 'SeedStackViewController', :git=>'https://github.com/seedco/StackViewController.git', :branch=>'swift32'
 
   target 'TrustTests' do
