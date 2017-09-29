@@ -8,6 +8,7 @@ class LoadingView: UIView {
 
     let label = UILabel()
     let imageView = UIImageView()
+    let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
     let insets: UIEdgeInsets
 
@@ -27,7 +28,14 @@ class LoadingView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = image
 
-        let stackView = UIStackView(arrangedSubviews: [label, imageView])
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        loadingIndicator.startAnimating()
+
+        let stackView = UIStackView(arrangedSubviews: [
+            loadingIndicator,
+            label,
+            imageView,
+        ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .center
         stackView.axis = .vertical
