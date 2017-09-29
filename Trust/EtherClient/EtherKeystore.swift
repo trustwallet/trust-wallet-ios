@@ -8,17 +8,21 @@ import KeychainSwift
 class EtherKeystore: Keystore {
 
     struct Keys {
+        static let keychainKeyPrefix = "trustwallet"
         static let recentlyUsedAddress: String = "recentlyUsedAddress"
     }
 
-    private let keychain = KeychainSwift(keyPrefix: "trustwallet")
+    private let keychain: KeychainSwift
     let datadir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-    lazy var ks: GethKeyStore = {
-        return GethNewKeyStore(self.datadir + "/keystore", GethLightScryptN, GethLightScryptP)
-    }()
 
-    init() {
+    let gethKeyStorage: GethKeyStore
 
+    public init(
+        keychain: KeychainSwift = KeychainSwift(keyPrefix: Keys.keychainKeyPrefix),
+        keyStoreSubfolder: String = "/keystore"
+    ) {
+        self.keychain = keychain
+        self.gethKeyStorage = GethNewKeyStore(self.datadir + keyStoreSubfolder, GethLightScryptN, GethLightScryptP)
     }
 
     var hasAccounts: Bool {
@@ -36,7 +40,7 @@ class EtherKeystore: Keystore {
     }
 
     func createAccout(password: String) -> Account {
-        let gethAccount = try! ks.newAccount(password)
+        let gethAccount = try! gethKeyStorage.newAccount(password)
         let account: Account = .from(account: gethAccount)
         let _ = setPassword(password, for: account)
         return account
@@ -45,7 +49,7 @@ class EtherKeystore: Keystore {
     func importKeystore(value: String, password: String) -> Result<Account, KeyStoreError> {
         let data = value.data(using: .utf8)
         do {
-            let gethAccount = try ks.importKey(data, passphrase: password, newPassphrase: password)
+            let gethAccount = try gethKeyStorage.importKey(data, passphrase: password, newPassphrase: password)
             let account: Account = .from(account: gethAccount)
             let _ = setPassword(password, for: account)
             return (.success(account))
@@ -67,7 +71,7 @@ class EtherKeystore: Keystore {
 
     var gethAccounts: [GethAccount] {
         var finalAccounts: [GethAccount] = []
-        let allAccounts = ks.getAccounts()
+        let allAccounts = gethKeyStorage.getAccounts()
         let size = allAccounts?.size() ?? 0
 
         for i in 0..<size {
@@ -93,21 +97,21 @@ class EtherKeystore: Keystore {
     func exportData(account: Account, password: String) -> Result<Data, KeyStoreError> {
         let gethAccount = getGethAccount(for: account.address)
         do {
-            let data = try ks.exportKey(gethAccount, passphrase: password, newPassphrase: password)
+            let data = try gethKeyStorage.exportKey(gethAccount, passphrase: password, newPassphrase: password)
             return (.success(data))
         } catch {
             return (.failure(.failedToDecryptKey))
         }
     }
 
-    func delete(account: Account, password: String, completion: (Result<Void, KeyStoreError>) -> Void) {
+    func delete(account: Account, password: String) -> Result<Void, KeyStoreError> {
         let gethAccount = getGethAccount(for: account.address)
 
         do {
-            try ks.delete(gethAccount, passphrase: password)
-            completion(.success())
+            try gethKeyStorage.delete(gethAccount, passphrase: password)
+            return (.success())
         } catch {
-            completion(.failure(.failedToDeleteAccount))
+            return (.failure(.failedToDeleteAccount))
         }
     }
 
@@ -128,8 +132,8 @@ class EtherKeystore: Keystore {
         let gethAccount = getGethAccount(for: account.address)
 
         do {
-            try ks.unlock(gethAccount, passphrase: password)
-            let signedTransaction = try ks.signTx(gethAccount, tx: transaction, chainID: chainID)
+            try gethKeyStorage.unlock(gethAccount, passphrase: password)
+            let signedTransaction = try gethKeyStorage.signTx(gethAccount, tx: transaction, chainID: chainID)
             let rlp = try signedTransaction.encodeRLP()
             return (.success(rlp))
         } catch {
@@ -141,6 +145,7 @@ class EtherKeystore: Keystore {
         return keychain.get(account.address.address.lowercased())
     }
 
+    @discardableResult
     func setPassword(_ password: String, for account: Account) -> Bool {
         return keychain.set(password, forKey: account.address.address.lowercased())
     }
