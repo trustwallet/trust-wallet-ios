@@ -8,7 +8,9 @@ class AppCoordinator: NSObject {
     let rootNavigationController: UINavigationController
 
     lazy var welcomeViewController: WelcomeViewController = {
-        return WelcomeViewController()
+        let controller = WelcomeViewController()
+        controller.delegate = self
+        return controller
     }()
 
     lazy var walletCoordinator: WalletCoordinator = {
