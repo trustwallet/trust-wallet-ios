@@ -8,7 +8,7 @@ class AppCoordinator: NSObject {
     let rootNavigationController: UINavigationController
 
     lazy var welcomeViewController: WelcomeViewController = {
-        return WelcomeViewController.make(delegate: self)
+        return WelcomeViewController()
     }()
 
     lazy var walletCoordinator: WalletCoordinator = {
@@ -130,14 +130,6 @@ extension AppCoordinator: AccountsCoordinatorDelegate {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         rootNavigationController.dismiss(animated: true, completion: nil)
         reset()
-    }
-}
-
-extension WelcomeViewController {
-    static func make(delegate: WelcomeViewControllerDelegate? = .none) -> WelcomeViewController {
-        let controller = R.storyboard.welcome.welcome()!
-        controller.delegate = delegate
-        return controller
     }
 }
 
