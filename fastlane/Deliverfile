@@ -12,7 +12,7 @@ username "thetrustwallet@gmail.com" # your Apple ID user
 force true
 
 submit_for_review true
-automatic_release false
+automatic_release true
 
 submission_information({
   add_id_info_serves_ads: false,
