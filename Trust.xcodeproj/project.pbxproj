@@ -19,6 +19,7 @@
 		2912CD321F6A83EE00C6CBE3 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD311F6A83EE00C6CBE3 /* WelcomeViewController.swift */; };
 		2912CD341F6A849C00C6CBE3 /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD331F6A849C00C6CBE3 /* WelcomeViewModel.swift */; };
 		2912CD361F6A853300C6CBE3 /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD351F6A853300C6CBE3 /* TransactionsViewModel.swift */; };
+		291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291E8FBE1F7DEA85003F0ECF /* EtherKeystoreTests.swift */; };
 		291EC9DD1F704D340004EDD0 /* TransactionDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC9DC1F704D340004EDD0 /* TransactionDataStore.swift */; };
 		291EC9DF1F7053C50004EDD0 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC9DE1F7053C50004EDD0 /* NavigationController.swift */; };
 		291EC9E21F70565A0004EDD0 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC9E11F70565A0004EDD0 /* Transaction.swift */; };
@@ -71,6 +72,7 @@
 		296AF9A71F736EC70058AF78 /* RPCServers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9A61F736EC70058AF78 /* RPCServers.swift */; };
 		296AF9A91F737F6F0058AF78 /* SendRawTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9A81F737F6F0058AF78 /* SendRawTransactionRequest.swift */; };
 		296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */; };
+		2977CAE01F7DEEB0009682A0 /* FakeEtherKeystore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2977CADF1F7DEEB0009682A0 /* FakeEtherKeystore.swift */; };
 		297800521F71FDCF003185C1 /* FormAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297800511F71FDCF003185C1 /* FormAppearance.swift */; };
 		29850D251F6B27A800791A49 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29850D241F6B27A800791A49 /* R.generated.swift */; };
 		29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29850D2A1F6B30FF00791A49 /* TransactionViewController.swift */; };
@@ -157,6 +159,7 @@
 		2912CD311F6A83EE00C6CBE3 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		2912CD331F6A849C00C6CBE3 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		2912CD351F6A853300C6CBE3 /* TransactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewModel.swift; sourceTree = "<group>"; };
+		291E8FBE1F7DEA85003F0ECF /* EtherKeystoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherKeystoreTests.swift; sourceTree = "<group>"; };
 		291EC9DC1F704D340004EDD0 /* TransactionDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataStore.swift; sourceTree = "<group>"; };
 		291EC9DE1F7053C50004EDD0 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		291EC9E11F70565A0004EDD0 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
@@ -208,6 +211,7 @@
 		296AF9A61F736EC70058AF78 /* RPCServers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCServers.swift; sourceTree = "<group>"; };
 		296AF9A81F737F6F0058AF78 /* SendRawTransactionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRawTransactionRequest.swift; sourceTree = "<group>"; };
 		296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionCountRequest.swift; sourceTree = "<group>"; };
+		2977CADF1F7DEEB0009682A0 /* FakeEtherKeystore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeEtherKeystore.swift; sourceTree = "<group>"; };
 		297800511F71FDCF003185C1 /* FormAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormAppearance.swift; sourceTree = "<group>"; };
 		29850D241F6B27A800791A49 /* R.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		29850D2A1F6B30FF00791A49 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
@@ -344,6 +348,7 @@
 		2912CD0E1F6A830700C6CBE3 /* TrustTests */ = {
 			isa = PBXGroup;
 			children = (
+				291E8FBD1F7DEA72003F0ECF /* EtherClient */,
 				29FF13041F75F08000AFD326 /* Coordinators */,
 				29FF12FF1F75EAC800AFD326 /* Factories */,
 				29BE3FCC1F706D7100F6BFC2 /* Models */,
@@ -414,6 +419,14 @@
 				296AF9A21F733AB30058AF78 /* WalletCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		291E8FBD1F7DEA72003F0ECF /* EtherClient */ = {
+			isa = PBXGroup;
+			children = (
+				291E8FBE1F7DEA85003F0ECF /* EtherKeystoreTests.swift */,
+			);
+			path = EtherClient;
 			sourceTree = "<group>";
 		};
 		291EC9E01F7053C80004EDD0 /* UI */ = {
@@ -667,6 +680,7 @@
 				29FF13021F75EB7500AFD326 /* Account.swift */,
 				29FF13091F75F67200AFD326 /* Address.swift */,
 				29FF130C1F7626E800AFD326 /* FakeNavigationController.swift */,
+				2977CADF1F7DEEB0009682A0 /* FakeEtherKeystore.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -1156,8 +1170,10 @@
 				2912CD101F6A830700C6CBE3 /* TrustTests.swift in Sources */,
 				29FF130D1F7626E800AFD326 /* FakeNavigationController.swift in Sources */,
 				296106CC1F776FD00006164B /* WalletCoordinatorTests.swift in Sources */,
+				291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */,
 				29FF13011F75EAD900AFD326 /* FakeKeystore.swift in Sources */,
 				29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */,
+				2977CAE01F7DEEB0009682A0 /* FakeEtherKeystore.swift in Sources */,
 				29FF130A1F75F67200AFD326 /* Address.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
