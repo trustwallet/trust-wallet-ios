@@ -106,14 +106,13 @@ class AccountsViewController: UITableViewController {
     }
 
     func delete(account: Account, password: String) {
-        self.keystore.delete(account: account, password: password) { result in
-            switch result {
-            case .success:
-                self.fetch()
-                self.delegate?.didDeleteAccount(account: account, in: self)
-            case .failure(let error):
-                self.displayError(error: error)
-            }
+        let result = self.keystore.delete(account: account, password: password)
+        switch result {
+        case .success:
+            self.fetch()
+            self.delegate?.didDeleteAccount(account: account, in: self)
+        case .failure(let error):
+            self.displayError(error: error)
         }
     }
 
