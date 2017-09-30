@@ -4,10 +4,10 @@ import Foundation
 import JSONRPCKit
 
 struct GetBlockByNumberRequest: JSONRPCKit.Request {
-    typealias Response = AnyObject
+    typealias Response = Block
 
     let block: String
-    let includeTransactions: Bool
+    let includeTransactions: Bool = true
 
     var method: String {
         return "eth_getBlockByNumber"
@@ -15,14 +15,16 @@ struct GetBlockByNumberRequest: JSONRPCKit.Request {
 
     var parameters: Any? {
         return [
-            block,
+            "pending",
             includeTransactions,
         ]
     }
 
     func response(from resultObject: Any) throws -> Response {
-        if let response = resultObject as? AnyObject {
-            return response
+        if
+            let response = resultObject as? [String: AnyObject],
+            let block: Block = .from(json: response) {
+            return block
         } else {
             throw CastError(actualValue: resultObject, expectedType: Response.self)
         }

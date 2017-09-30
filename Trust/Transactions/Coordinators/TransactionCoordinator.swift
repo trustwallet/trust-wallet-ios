@@ -48,8 +48,12 @@ class TransactionCoordinator {
 
     func start() {
         fetchTransactions()
+        fetchPendingTransactions()
+        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.timerTrigger), userInfo: nil, repeats: true)
+    }
 
-        timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.timerTrigger), userInfo: nil, repeats: true)
+    func fetch() {
+        fetchPendingTransactions()
     }
 
     func fetchTransactions() {
@@ -65,15 +69,16 @@ class TransactionCoordinator {
     }
 
     func fetchPendingTransactions() {
-        Session.send(EtherServiceRequest(batch: BatchFactory().create(BlockNumberRequest()))) { result in
+        Session.send(EtherServiceRequest(batch: BatchFactory().create(GetBlockByNumberRequest(block: "pending")))) { result in
             switch result {
-            case .success(let blockNumber):
-                Session.send(EtherServiceRequest(batch: BatchFactory().create(GetBlockByNumberRequest(block: blockNumber, includeTransactions: true)))) { result in
-                    switch result {
-                    case .success(let transactions):
-                        NSLog("transactions \(transactions)")
-                    case .failure:
-                        break
+            case .success(let block):
+                //NSLog("transactions \(block)")
+                for item in block.transactions {
+                    NSLog("item \(item.hash)")
+                    if item.to == self.account.address.address.lowercased() || item.from == self.account.address.address.lowercased() {
+                        self.update(owner: self.account.address, items: [item])
+                    } else {
+                        self.update(owner: self.account.address, items: [])
                     }
                 }
             case .failure:
@@ -94,7 +99,7 @@ class TransactionCoordinator {
     }
 
     func print() {
-        NSLog("objects \(storage.objects)")
+        NSLog("objects \(storage.count)")
     }
 
     func stop() {

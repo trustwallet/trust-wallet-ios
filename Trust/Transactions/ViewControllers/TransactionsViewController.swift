@@ -139,8 +139,7 @@ class TransactionsViewController: UIViewController {
     }
 
     func fetch() {
-        startLoading()
-        fetchBalance()
+        transactionCoordinator.fetch()
     }
 
     func fetchBalance() {

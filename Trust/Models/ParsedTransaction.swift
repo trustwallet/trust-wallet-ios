@@ -31,7 +31,7 @@ struct ParsedTransaction {
 }
 
 extension ParsedTransaction {
-    static func from(address: String, json: [String: AnyObject]) -> ParsedTransaction {
+    static func from(address: String = "", json: [String: AnyObject]) -> ParsedTransaction {
         let blockHash = json["blockHash"] as? String ?? ""
         let blockNumber = json["blockNumber"] as? String ?? ""
         let confirmation = json["confirmations"] as? String ?? ""
