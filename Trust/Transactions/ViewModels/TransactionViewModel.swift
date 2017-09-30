@@ -28,7 +28,7 @@ struct TransactionViewModel {
     }
 
     var amount: String {
-        let value = EthereumConverter.from(value: transaction.value, to: .ether, minimumFractionDigits: 3)
+        let value = EthereumConverter.from(value: BInt(transaction.value), to: .ether, minimumFractionDigits: 3)
         switch transaction.direction {
         case .incoming: return "+\(value)"
         case .outgoing: return "-\(value)"
@@ -62,6 +62,6 @@ struct TransactionViewModel {
     }
 
     var createdAt: String {
-        return TransactionViewModel.formatter.string(from: transaction.time)
+        return TransactionViewModel.formatter.string(from: transaction.date)
     }
 }

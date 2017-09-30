@@ -7,7 +7,7 @@ enum TransactionDirection {
     case outgoing
 }
 
-struct Transaction {
+struct ParsedTransaction {
 
     let blockHash: String
     let blockNumber: String
@@ -20,33 +20,18 @@ struct Transaction {
     let gasPrice: String
     let gasUsed: String
     let hash: String
-    let value: BInt
+    let value: String
+    let nonce: String
     let timestamp: String
     let isError: Bool
-
-    var amount: String {
-        return EthereumConverter.from(value: value, to: .ether, minimumFractionDigits: 2)
-    }
-
-    var direction: TransactionDirection {
-        if owner == from { return .outgoing }
-        return .incoming
-    }
-
-    var state: TransactionState {
-        if isError {
-            return .error
-        }
-        return .completed
-    }
 
     var time: Date {
         return NSDate(timeIntervalSince1970: TimeInterval(timestamp) ?? 0) as Date
     }
 }
 
-extension Transaction {
-    static func from(address: String, json: [String: AnyObject]) -> Transaction {
+extension ParsedTransaction {
+    static func from(address: String, json: [String: AnyObject]) -> ParsedTransaction {
         let blockHash = json["blockHash"] as? String ?? ""
         let blockNumber = json["blockNumber"] as? String ?? ""
         let confirmation = json["confirmations"] as? String ?? ""
@@ -59,9 +44,9 @@ extension Transaction {
         let hash = json["hash"] as? String ?? ""
         let isError = Bool(json["isError"] as? String ?? "") ?? false
         let timestamp = (json["timeStamp"] as? String ?? "")
-        let hex = (json["value"] as? String ?? "")
-        let value = BInt(hex)
-        return Transaction(
+        let value = (json["value"] as? String ?? "")
+        let nonce = (json["nonce"] as? String ?? "")
+        return ParsedTransaction(
             blockHash: blockHash,
             blockNumber: blockNumber,
             confirmations: confirmation,
@@ -74,6 +59,7 @@ extension Transaction {
             gasUsed: gasUsed,
             hash: hash,
             value: value,
+            nonce: nonce,
             timestamp: timestamp,
             isError: isError
         )

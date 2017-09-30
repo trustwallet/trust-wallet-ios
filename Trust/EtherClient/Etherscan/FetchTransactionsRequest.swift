@@ -4,7 +4,7 @@ import Foundation
 import APIKit
 
 struct FetchTransactionsRequest: APIKit.Request {
-    typealias Response = [Transaction]
+    typealias Response = [ParsedTransaction]
 
     let address: String
 

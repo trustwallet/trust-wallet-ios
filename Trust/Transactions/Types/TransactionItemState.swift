@@ -2,8 +2,8 @@
 
 import Foundation
 
-enum TransactionState {
+enum TransactionState: Int {
+    case completed
     case pending
     case error
-    case completed
 }

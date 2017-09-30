@@ -17,10 +17,6 @@ class TransactionsViewController: UIViewController {
 
     var viewModel: TransactionsViewModel = TransactionsViewModel(transactions: [])
 
-    private lazy var dataStore: TransactionDataStore = {
-        return .init(account: self.account)
-    }()
-
     let account: Account
     let tableView: UITableView
     let sendButton: UIButton
@@ -35,6 +31,12 @@ class TransactionsViewController: UIViewController {
 
     weak var delegate: TransactionsViewControllerDelegate?
 
+    lazy var transactionCoordinator: TransactionCoordinator = {
+        let coordinator = TransactionCoordinator(account: self.account)
+        coordinator.delegate = self
+        return coordinator
+    }()
+
     init(account: Account) {
         self.account = account
         tableView = UITableView(frame: .zero, style: .plain)
@@ -42,8 +44,6 @@ class TransactionsViewController: UIViewController {
         requestButton = Button(size: .extraLarge, style: .squared)
 
         super.init(nibName: nil, bundle: nil)
-
-        dataStore.delegate = self
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -116,6 +116,8 @@ class TransactionsViewController: UIViewController {
         super.viewWillAppear(animated)
 
         fetch()
+
+        transactionCoordinator.start()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -137,7 +139,6 @@ class TransactionsViewController: UIViewController {
     }
 
     func fetch() {
-        dataStore.fetch()
         startLoading()
         fetchBalance()
     }
@@ -166,6 +167,10 @@ class TransactionsViewController: UIViewController {
         delegate?.didPressTokens(for: account, in: self)
     }
 
+    func configure(viewModel: TransactionsViewModel) {
+        self.viewModel = viewModel
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -185,18 +190,15 @@ extension TransactionsViewController: UITableViewDelegate {
     }
 }
 
-extension TransactionsViewController: TransactionDataStoreDelegate {
-    func didUpdate(result: Result<TokensViewModel, TokenError>) {
-
-    }
-
-    func didUpdate(result: Result<TransactionsViewModel, TransactionError>) {
+extension TransactionsViewController: TransactionCoordinatorDelegate {
+    func didUpdate(result: Result<[Transaction], TransactionError>) {
         switch result {
-        case .success(let viewModel):
-            self.viewModel = viewModel
-            endLoading()
-        case .failure(let error):
-            endLoading(error: error)
+            case .success(let items):
+            let viewModel = TransactionsViewModel(transactions: items)
+                configure(viewModel: viewModel)
+                endLoading()
+            case .failure(let error):
+                endLoading(error: error)
         }
         tableView.reloadData()
 

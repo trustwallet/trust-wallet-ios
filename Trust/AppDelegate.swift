@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import UIKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -10,6 +11,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow()
         self.window = window
+
+        let config = Realm.Configuration(
+            schemaVersion: 3,
+            migrationBlock: { _, _ in }
+        )
+        Realm.Configuration.defaultConfiguration = config
+        let _ = try! Realm()
+
         coordinator = AppCoordinator(window: window)
         window.makeKeyAndVisible()
         applyStyle()
