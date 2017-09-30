@@ -61,6 +61,9 @@ extension Transaction {
     }
 
     var transactionState: TransactionState {
+        if confirmations == 0 {
+            return .pending
+        }
         return .completed
     }
 }

@@ -51,6 +51,7 @@
 		293B8B411F707F4600356286 /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293B8B401F707F4600356286 /* TransactionViewModel.swift */; };
 		293B8B431F70815900356286 /* BalanceTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293B8B421F70815900356286 /* BalanceTitleView.swift */; };
 		293B8B451F70A20200356286 /* TransactionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293B8B441F70A20200356286 /* TransactionViewCell.swift */; };
+		293E66421F8026F10052973D /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E66411F8026F10052973D /* Block.swift */; };
 		294FE5661F72442D00754F31 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294FE5651F72442D00754F31 /* Address.swift */; };
 		295A59381F71C1B90092F0FC /* AccountsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A59371F71C1B90092F0FC /* AccountsCoordinator.swift */; };
 		296106BF1F7639250006164B /* FetchTransactionsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296106BE1F7639250006164B /* FetchTransactionsRequest.swift */; };
@@ -191,6 +192,7 @@
 		293B8B401F707F4600356286 /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
 		293B8B421F70815900356286 /* BalanceTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceTitleView.swift; sourceTree = "<group>"; };
 		293B8B441F70A20200356286 /* TransactionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewCell.swift; sourceTree = "<group>"; };
+		293E66411F8026F10052973D /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		294FE5651F72442D00754F31 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		295A59371F71C1B90092F0FC /* AccountsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsCoordinator.swift; sourceTree = "<group>"; };
 		296106BE1F7639250006164B /* FetchTransactionsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTransactionsRequest.swift; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 				29A0E1861F706D0700BAAAED /* EthereumConverter.swift */,
 				294FE5651F72442D00754F31 /* Address.swift */,
 				29282B521F7630970067F88D /* Token.swift */,
+				293E66411F8026F10052973D /* Block.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1258,6 +1261,7 @@
 				291ED08B1F6F5D2100E7E93A /* Bundle.swift in Sources */,
 				296106BF1F7639250006164B /* FetchTransactionsRequest.swift in Sources */,
 				293B8B451F70A20200356286 /* TransactionViewCell.swift in Sources */,
+				293E66421F8026F10052973D /* Block.swift in Sources */,
 				296106C61F7645CC0006164B /* TokensViewController.swift in Sources */,
 				29282B531F7630970067F88D /* Token.swift in Sources */,
 				29C9F5FB1F720C050025C494 /* FloatLabelTextField.swift in Sources */,
