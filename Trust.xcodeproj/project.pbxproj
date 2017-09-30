@@ -19,10 +19,10 @@
 		2912CD321F6A83EE00C6CBE3 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD311F6A83EE00C6CBE3 /* WelcomeViewController.swift */; };
 		2912CD341F6A849C00C6CBE3 /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD331F6A849C00C6CBE3 /* WelcomeViewModel.swift */; };
 		2912CD361F6A853300C6CBE3 /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD351F6A853300C6CBE3 /* TransactionsViewModel.swift */; };
+		291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291D73C51F7F500D00A8AB56 /* TransactionItemState.swift */; };
 		291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291E8FBE1F7DEA85003F0ECF /* EtherKeystoreTests.swift */; };
-		291EC9DD1F704D340004EDD0 /* TransactionDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC9DC1F704D340004EDD0 /* TransactionDataStore.swift */; };
 		291EC9DF1F7053C50004EDD0 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC9DE1F7053C50004EDD0 /* NavigationController.swift */; };
-		291EC9E21F70565A0004EDD0 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC9E11F70565A0004EDD0 /* Transaction.swift */; };
+		291EC9E21F70565A0004EDD0 /* ParsedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC9E11F70565A0004EDD0 /* ParsedTransaction.swift */; };
 		291ED08B1F6F5D2100E7E93A /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ED08A1F6F5D2100E7E93A /* Bundle.swift */; };
 		291ED08D1F6F5F0A00E7E93A /* KeyStoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ED08C1F6F5F0A00E7E93A /* KeyStoreError.swift */; };
 		291ED08F1F6F613200E7E93A /* GetTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ED08E1F6F613200E7E93A /* GetTransactionRequest.swift */; };
@@ -100,9 +100,13 @@
 		29CA4B771F6FBBFB0032313D /* RequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA4B761F6FBBFB0032313D /* RequestViewModel.swift */; };
 		29CA4B791F6FBFD50032313D /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA4B781F6FBFD50032313D /* Balance.swift */; };
 		29CAEB8E1F70A2FB00F7357D /* TransactionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CAEB8D1F70A2FB00F7357D /* TransactionViewCellViewModel.swift */; };
-		29CAEB901F70A3DC00F7357D /* TransactionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CAEB8F1F70A3DC00F7357D /* TransactionState.swift */; };
 		29D03F1D1F712183006E548C /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D03F1C1F712183006E548C /* Button.swift */; };
 		29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D72A291F6A8D1500CE9209 /* AppCoordinator.swift */; };
+		29E14FD11F7F457D00185568 /* TransactionsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E14FD01F7F457D00185568 /* TransactionsStorage.swift */; };
+		29E14FD51F7F470C00185568 /* TransactionsStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E14FD41F7F470C00185568 /* TransactionsStorageTests.swift */; };
+		29E14FD71F7F490000185568 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E14FD61F7F490000185568 /* Transaction.swift */; };
+		29E14FD91F7F4D4E00185568 /* FakeTransactionsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E14FD81F7F4D4E00185568 /* FakeTransactionsStorage.swift */; };
+		29E14FDB1F7F4F3D00185568 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E14FDA1F7F4F3D00185568 /* Transaction.swift */; };
 		29E2E33A1F7A008C000CF94A /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E3391F7A008C000CF94A /* UIView.swift */; };
 		29E2E33E1F7A2423000CF94A /* TransactionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */; };
 		29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */; };
@@ -156,10 +160,10 @@
 		2912CD311F6A83EE00C6CBE3 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		2912CD331F6A849C00C6CBE3 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		2912CD351F6A853300C6CBE3 /* TransactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewModel.swift; sourceTree = "<group>"; };
+		291D73C51F7F500D00A8AB56 /* TransactionItemState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionItemState.swift; sourceTree = "<group>"; };
 		291E8FBE1F7DEA85003F0ECF /* EtherKeystoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherKeystoreTests.swift; sourceTree = "<group>"; };
-		291EC9DC1F704D340004EDD0 /* TransactionDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataStore.swift; sourceTree = "<group>"; };
 		291EC9DE1F7053C50004EDD0 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
-		291EC9E11F70565A0004EDD0 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		291EC9E11F70565A0004EDD0 /* ParsedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedTransaction.swift; sourceTree = "<group>"; };
 		291ED08A1F6F5D2100E7E93A /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		291ED08C1F6F5F0A00E7E93A /* KeyStoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreError.swift; sourceTree = "<group>"; };
 		291ED08E1F6F613200E7E93A /* GetTransactionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionRequest.swift; sourceTree = "<group>"; };
@@ -237,9 +241,13 @@
 		29CA4B761F6FBBFB0032313D /* RequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestViewModel.swift; sourceTree = "<group>"; };
 		29CA4B781F6FBFD50032313D /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
 		29CAEB8D1F70A2FB00F7357D /* TransactionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewCellViewModel.swift; sourceTree = "<group>"; };
-		29CAEB8F1F70A3DC00F7357D /* TransactionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionState.swift; sourceTree = "<group>"; };
 		29D03F1C1F712183006E548C /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		29D72A291F6A8D1500CE9209 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		29E14FD01F7F457D00185568 /* TransactionsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsStorage.swift; sourceTree = "<group>"; };
+		29E14FD41F7F470C00185568 /* TransactionsStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsStorageTests.swift; sourceTree = "<group>"; };
+		29E14FD61F7F490000185568 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		29E14FD81F7F4D4E00185568 /* FakeTransactionsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTransactionsStorage.swift; sourceTree = "<group>"; };
+		29E14FDA1F7F4F3D00185568 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		29E2E3391F7A008C000CF94A /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHeaderView.swift; sourceTree = "<group>"; };
 		29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonRow.swift; sourceTree = "<group>"; };
@@ -343,6 +351,7 @@
 		2912CD0E1F6A830700C6CBE3 /* TrustTests */ = {
 			isa = PBXGroup;
 			children = (
+				29E14FD21F7F46F700185568 /* Transactions */,
 				291E8FBD1F7DEA72003F0ECF /* EtherClient */,
 				29FF13041F75F08000AFD326 /* Coordinators */,
 				29FF12FF1F75EAC800AFD326 /* Factories */,
@@ -378,6 +387,7 @@
 		2912CD291F6A831D00C6CBE3 /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
+				29E14FCF1F7F456A00185568 /* Storage */,
 				2977CAED1F7E0BEC009682A0 /* Views */,
 				2977CAEC1F7E0BE2009682A0 /* ViewControllers */,
 				2977CAEB1F7E0BC3009682A0 /* ViewModels */,
@@ -486,9 +496,8 @@
 				291F52BB1F6B8D0600B369AB /* Account.swift */,
 				29CA4B781F6FBFD50032313D /* Balance.swift */,
 				29BB94941F6FC54C009B09CC /* EthereumUnit.swift */,
-				291EC9E11F70565A0004EDD0 /* Transaction.swift */,
+				291EC9E11F70565A0004EDD0 /* ParsedTransaction.swift */,
 				29A0E1861F706D0700BAAAED /* EthereumConverter.swift */,
-				29CAEB8F1F70A3DC00F7357D /* TransactionState.swift */,
 				294FE5651F72442D00754F31 /* Address.swift */,
 				29282B521F7630970067F88D /* Token.swift */,
 			);
@@ -778,7 +787,7 @@
 			isa = PBXGroup;
 			children = (
 				29B6AED01F7C881D00EC6DE3 /* TransactionCost.swift */,
-				291EC9DC1F704D340004EDD0 /* TransactionDataStore.swift */,
+				291D73C51F7F500D00A8AB56 /* TransactionItemState.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -789,6 +798,31 @@
 				29BE3FCD1F706D8800F6BFC2 /* EthereumConverterTests.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		29E14FCF1F7F456A00185568 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				29E14FD01F7F457D00185568 /* TransactionsStorage.swift */,
+				29E14FDA1F7F4F3D00185568 /* Transaction.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		29E14FD21F7F46F700185568 /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				29E14FD31F7F46FB00185568 /* Storage */,
+			);
+			path = Transactions;
+			sourceTree = "<group>";
+		};
+		29E14FD31F7F46FB00185568 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				29E14FD41F7F470C00185568 /* TransactionsStorageTests.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 		29FF12F91F74CC6C00AFD326 /* Form */ = {
@@ -808,6 +842,8 @@
 				29FF13091F75F67200AFD326 /* Address.swift */,
 				29FF130C1F7626E800AFD326 /* FakeNavigationController.swift */,
 				2977CADF1F7DEEB0009682A0 /* FakeEtherKeystore.swift */,
+				29E14FD61F7F490000185568 /* Transaction.swift */,
+				29E14FD81F7F4D4E00185568 /* FakeTransactionsStorage.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -1138,6 +1174,8 @@
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/QRCodeReaderViewController/QRCodeReaderViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SeedStackViewController/StackViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/StatefulViewController/StatefulViewController.framework",
@@ -1153,6 +1191,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReaderViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StackViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatefulViewController.framework",
@@ -1189,10 +1229,9 @@
 			files = (
 				29FF12FE1F75EA3F00AFD326 /* Keystore.swift in Sources */,
 				296106C41F7640C50006164B /* TokenViewCellViewModel.swift in Sources */,
-				291EC9E21F70565A0004EDD0 /* Transaction.swift in Sources */,
+				291EC9E21F70565A0004EDD0 /* ParsedTransaction.swift in Sources */,
 				291F52B11F6B814300B369AB /* MG Basic Math.swift in Sources */,
 				29E2E33A1F7A008C000CF94A /* UIView.swift in Sources */,
-				291EC9DD1F704D340004EDD0 /* TransactionDataStore.swift in Sources */,
 				291F52B21F6B814300B369AB /* MG Benchmark Tools.swift in Sources */,
 				291ED08F1F6F613200E7E93A /* GetTransactionRequest.swift in Sources */,
 				295A59381F71C1B90092F0FC /* AccountsCoordinator.swift in Sources */,
@@ -1204,11 +1243,13 @@
 				29BB94971F6FCD60009B09CC /* SendViewModel.swift in Sources */,
 				291F52B31F6B814300B369AB /* SMP Bignum Extensions.swift in Sources */,
 				296106D01F778A8D0006164B /* TransferType.swift in Sources */,
+				29E14FDB1F7F4F3D00185568 /* Transaction.swift in Sources */,
 				296106C81F7646590006164B /* TokensViewModel.swift in Sources */,
 				29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */,
 				291F52B41F6B814300B369AB /* SMP Core.swift in Sources */,
 				29B6AECB1F7C5FA900EC6DE3 /* SendAndRequestViewContainer.swift in Sources */,
 				2996F14A1F6C9D10005C33AE /* ExportCoordinator.swift in Sources */,
+				291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */,
 				29BE3FD21F707DC300F6BFC2 /* TransactionCoordinator.swift in Sources */,
 				291F52B51F6B814300B369AB /* SMP String Module.swift in Sources */,
 				291ED0921F6FA5D900E7E93A /* RequestViewController.swift in Sources */,
@@ -1232,6 +1273,7 @@
 				29CAEB8E1F70A2FB00F7357D /* TransactionViewCellViewModel.swift in Sources */,
 				29BE3FD01F7071A200F6BFC2 /* UIColor.swift in Sources */,
 				2996F1481F6C9AE5005C33AE /* SettingsCoordinator.swift in Sources */,
+				29E14FD11F7F457D00185568 /* TransactionsStorage.swift in Sources */,
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
@@ -1257,7 +1299,6 @@
 				2996F1461F6C98B3005C33AE /* SettingsViewController.swift in Sources */,
 				29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */,
 				296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */,
-				29CAEB901F70A3DC00F7357D /* TransactionState.swift in Sources */,
 				29A13E2C1F6A955700E432A2 /* CreateWalletViewModel.swift in Sources */,
 				29CA4B771F6FBBFB0032313D /* RequestViewModel.swift in Sources */,
 				29B6AED61F7CA4A700EC6DE3 /* TransactionConfiguration.swift in Sources */,
@@ -1291,11 +1332,14 @@
 				29FF13081F75F0AE00AFD326 /* AppCoordinatorTests.swift in Sources */,
 				2912CD101F6A830700C6CBE3 /* TrustTests.swift in Sources */,
 				29FF130D1F7626E800AFD326 /* FakeNavigationController.swift in Sources */,
+				29E14FD91F7F4D4E00185568 /* FakeTransactionsStorage.swift in Sources */,
+				29E14FD71F7F490000185568 /* Transaction.swift in Sources */,
 				296106CC1F776FD00006164B /* WalletCoordinatorTests.swift in Sources */,
 				291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */,
 				29FF13011F75EAD900AFD326 /* FakeKeystore.swift in Sources */,
 				29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */,
 				2977CAE01F7DEEB0009682A0 /* FakeEtherKeystore.swift in Sources */,
+				29E14FD51F7F470C00185568 /* TransactionsStorageTests.swift in Sources */,
 				29FF130A1F75F67200AFD326 /* Address.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

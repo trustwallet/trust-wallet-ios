@@ -42,7 +42,7 @@ class TransactionViewController: UIViewController {
             item(title: "From", subTitle: transaction.from),
             item(title: "To", subTitle: transaction.to),
             item(title: "Gas Fee", subTitle: gasFee),
-            item(title: "Confirmation", subTitle: transaction.confirmations),
+            item(title: "Confirmation", subTitle: String(transaction.confirmations)),
             divider(),
             item(title: "Transaction #", subTitle: transaction.to),
             item(title: "Transaction time", subTitle: viewModel.createdAt),

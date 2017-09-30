@@ -34,7 +34,7 @@ struct TransactionViewCellViewModel {
     }
 
     var amount: String {
-        let value = EthereumConverter.from(value: transaction.value, to: .ether, minimumFractionDigits: 3)
+        let value = EthereumConverter.from(value: BInt(transaction.value), to: .ether, minimumFractionDigits: 3)
         switch transaction.direction {
         case .incoming: return "+\(value)"
         case .outgoing: return "-\(value)"
@@ -53,7 +53,7 @@ struct TransactionViewCellViewModel {
     }
 
     var backgroundColor: UIColor {
-        switch transaction.state {
+        switch transaction.transactionState {
         case .error, .completed:
             return .white
         case .pending:
