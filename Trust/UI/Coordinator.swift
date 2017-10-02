@@ -3,7 +3,7 @@
 import Foundation
 
 protocol Coordinator: class {
-    var coordinators: [Coordinator] {get set}
+    var coordinators: [Coordinator] { get set }
 }
 
 extension Coordinator {

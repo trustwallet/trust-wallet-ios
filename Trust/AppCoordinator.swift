@@ -34,11 +34,17 @@ class AppCoordinator: NSObject, Coordinator {
     }
 
     func start() {
+        performMigration()
+
         rootNavigationController.viewControllers = [welcomeViewController]
 
         if keystore.hasAccounts {
             showTransactions(for: keystore.recentlyUsedAccount ?? keystore.accounts.first!)
         }
+    }
+
+    func performMigration() {
+        MigrationInitializer().perform()
     }
 
     func showTransactions(for account: Account) {
