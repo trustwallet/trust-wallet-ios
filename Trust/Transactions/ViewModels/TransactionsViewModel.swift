@@ -24,9 +24,11 @@ struct TransactionsViewModel {
             currentItems.insert(transaction, at: 0)
             newItems[date] = currentItems
         }
-
+        //TODO. IMPROVE perfomance
         let tuple = newItems.map { (key, values) in return (date: key, transactions: values) }
-        items = tuple.sorted { (object1, object2) -> Bool in return object1.date > object2.date }
+        items = tuple.sorted { (object1, object2) -> Bool in
+            return TransactionsViewModel.formatter.date(from: object1.date)! > TransactionsViewModel.formatter.date(from: object2.date)!
+        }
     }
 
     var title: String {

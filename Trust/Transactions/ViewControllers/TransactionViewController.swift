@@ -2,6 +2,7 @@
 
 import UIKit
 import StackViewController
+import Result
 
 class TransactionViewController: UIViewController {
 
@@ -11,7 +12,6 @@ class TransactionViewController: UIViewController {
     let stackViewController = StackViewController()
 
     let transaction: Transaction
-    let refreshControl = UIRefreshControl()
 
     init(transaction: Transaction) {
         self.transaction = transaction
@@ -52,9 +52,6 @@ class TransactionViewController: UIViewController {
         for item in items {
             stackViewController.addItem(item)
         }
-
-        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-        stackViewController.scrollView.addSubview(refreshControl)
     }
 
     override func viewDidLoad() {
@@ -67,15 +64,6 @@ class TransactionViewController: UIViewController {
         view.addSubview(stackViewController.view)
         _ = stackViewController.view.activateSuperviewHuggingConstraints()
         stackViewController.didMove(toParentViewController: self)
-    }
-
-    func pullToRefresh() {
-        fetch()
-    }
-
-    func fetch() {
-        refreshControl.beginRefreshing()
-        refreshControl.endRefreshing()
     }
 
     private func item(title: String, subTitle: String) -> UIView {

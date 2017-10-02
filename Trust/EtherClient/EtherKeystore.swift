@@ -151,7 +151,7 @@ class EtherKeystore: Keystore {
     }
 
     func getGethAccount(for address: Address) -> GethAccount {
-        return gethAccounts.filter { $0.getAddress().getHex() == address.address }.first!
+        return gethAccounts.filter { Address(address: $0.getAddress().getHex()) == address }.first!
     }
 }
 

@@ -8,6 +8,7 @@ class Transaction: Object {
     @objc dynamic var owner: String = ""
     @objc dynamic var state: Int = TransactionState.pending.rawValue
     @objc dynamic var blockNumber = ""
+    @objc dynamic var transactionIndex = ""
     @objc dynamic var from = ""
     @objc dynamic var to = ""
     @objc dynamic var value = ""
@@ -23,6 +24,7 @@ class Transaction: Object {
         owner: String,
         state: TransactionState,
         blockNumber: String,
+        transactionIndex: String,
         from: String,
         to: String,
         value: String,
@@ -38,6 +40,7 @@ class Transaction: Object {
         self.owner = owner
         self.state = state.rawValue
         self.blockNumber = blockNumber
+        self.transactionIndex = transactionIndex
         self.from = from
         self.to = to
         self.value = value
