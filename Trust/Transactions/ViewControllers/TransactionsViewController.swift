@@ -30,15 +30,11 @@ class TransactionsViewController: UIViewController {
     }()
 
     weak var delegate: TransactionsViewControllerDelegate?
+    let dataCoordinator: TransactionDataCoordinator
 
-    lazy var transactionCoordinator: TransactionCoordinator = {
-        let coordinator = TransactionCoordinator(account: self.account)
-        coordinator.delegate = self
-        return coordinator
-    }()
-
-    init(account: Account) {
+    init(account: Account, dataCoordinator: TransactionDataCoordinator) {
         self.account = account
+        self.dataCoordinator = dataCoordinator
         tableView = UITableView(frame: .zero, style: .plain)
         sendButton = Button(size: .extraLarge, style: .squared)
         requestButton = Button(size: .extraLarge, style: .squared)
@@ -93,6 +89,9 @@ class TransactionsViewController: UIViewController {
             stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
 
+        dataCoordinator.delegate = self
+        dataCoordinator.start()
+
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
 
@@ -116,8 +115,6 @@ class TransactionsViewController: UIViewController {
         super.viewWillAppear(animated)
 
         fetch()
-
-        transactionCoordinator.start()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -139,11 +136,12 @@ class TransactionsViewController: UIViewController {
     }
 
     func fetch() {
-        transactionCoordinator.fetch()
+        startLoading()
+        fetchBalance()
+        dataCoordinator.fetch()
     }
 
     func fetchBalance() {
-
         let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: account.address.address)))
         Session.send(request) { [weak self] result in
             switch result {
@@ -189,7 +187,7 @@ extension TransactionsViewController: UITableViewDelegate {
     }
 }
 
-extension TransactionsViewController: TransactionCoordinatorDelegate {
+extension TransactionsViewController: TransactionDataCoordinatorDelegate {
     func didUpdate(result: Result<[Transaction], TransactionError>) {
         switch result {
             case .success(let items):

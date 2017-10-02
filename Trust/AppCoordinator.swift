@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class AppCoordinator: NSObject {
+class AppCoordinator: NSObject, Coordinator {
 
     let rootNavigationController: UINavigationController
 
@@ -17,15 +17,9 @@ class AppCoordinator: NSObject {
         return WalletCoordinator(rootNavigationController: self.rootNavigationController)
     }()
 
-    lazy var settingsCoordinator: SettingsCoordinator = {
-        return SettingsCoordinator(navigationController: self.rootNavigationController)
-    }()
-
-    lazy var accountsCoordinator: AccountsCoordinator = {
-        return AccountsCoordinator(navigationController: self.rootNavigationController)
-    }()
-
     private var keystore: Keystore
+
+    var coordinators: [Coordinator] = []
 
     init(
         window: UIWindow,
@@ -48,8 +42,14 @@ class AppCoordinator: NSObject {
     }
 
     func showTransactions(for account: Account) {
-        let controller = makeTransactionsController(with: account)
-        rootNavigationController.viewControllers = [controller]
+        let coordinator = TransactionCoordinator(
+            account: account,
+            rootNavigationController: rootNavigationController
+        )
+        coordinator.delegate = self
+        rootNavigationController.viewControllers = [coordinator.rootViewController]
+        addCoordinator(coordinator)
+
         keystore.recentlyUsedAccount = account
     }
 
@@ -58,35 +58,9 @@ class AppCoordinator: NSObject {
         walletCoordinator.delegate = self
     }
 
-    private func makeTransactionsController(with account: Account) -> TransactionsViewController {
-        let controller = TransactionsViewController(account: account)
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.settings_icon(), landscapeImagePhone: R.image.settings_icon(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showSettings))
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.accountsSwitch(), landscapeImagePhone: R.image.accountsSwitch(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showAccounts))
-        controller.delegate = self
-        return controller
-    }
-
-    @objc func dismiss() {
-        rootNavigationController.dismiss(animated: true, completion: nil)
-    }
-
     @objc func reset() {
+        coordinators.removeAll()
         rootNavigationController.viewControllers = [welcomeViewController]
-    }
-
-    @objc func showAccounts() {
-        accountsCoordinator.start()
-        accountsCoordinator.delegate = self
-    }
-
-    @objc func showSettings() {
-        settingsCoordinator.start()
-        settingsCoordinator.delegate = self
-    }
-
-    func showTokens(for account: Account) {
-        let controller = TokensViewController(account: account)
-        rootNavigationController.pushViewController(controller, animated: true)
     }
 }
 
@@ -96,9 +70,15 @@ extension AppCoordinator: WelcomeViewControllerDelegate {
     }
 }
 
-extension AppCoordinator: SettingsCoordinatorDelegate {
-    func didCancel(in coordinator: SettingsCoordinator) {
+extension AppCoordinator: TransactionCoordinatorDelegate {
+    func didCancel(in coordinator: TransactionCoordinator) {
+        removeCoordinator(coordinator)
+        reset()
+    }
+
+    func didChangeAccount(to account: Account, in coordinator: TransactionCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        showTransactions(for: account)
     }
 }
 
@@ -114,48 +94,5 @@ extension AppCoordinator: WalletCoordinatorDelegate {
 
     func didCancel(in coordinator: WalletCoordinator) {
         coordinator.navigationViewController.dismiss(animated: true, completion: nil)
-    }
-}
-
-extension AppCoordinator: AccountsCoordinatorDelegate {
-    func didCancel(in coordinator: AccountsCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-    }
-
-    func didSelectAccount(account: Account, in coordinator: AccountsCoordinator) {
-        showTransactions(for: account)
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-    }
-
-    func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator) {
-        guard !coordinator.accountsViewController.hasAccounts else { return }
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        rootNavigationController.dismiss(animated: true, completion: nil)
-        reset()
-    }
-}
-
-extension AppCoordinator: TransactionsViewControllerDelegate {
-    func didPressSend(for account: Account, in viewController: TransactionsViewController) {
-        let controller = SendAndRequestViewContainer(flow: .send, account: account)
-        let nav = NavigationController(rootViewController: controller)
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        rootNavigationController.present(nav, animated: true, completion: nil)
-    }
-
-    func didPressRequest(for account: Account, in viewController: TransactionsViewController) {
-        let controller = SendAndRequestViewContainer(flow: .request, account: account)
-        let nav = NavigationController(rootViewController: controller)
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        rootNavigationController.present(nav, animated: true, completion: nil)
-    }
-
-    func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
-        let controller = TransactionViewController(transaction: transaction)
-        rootNavigationController.pushViewController(controller, animated: true)
-    }
-
-    func didPressTokens(for account: Account, in viewController: TransactionsViewController) {
-        showTokens(for: account)
     }
 }

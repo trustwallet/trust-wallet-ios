@@ -4,6 +4,10 @@ import Foundation
 import Result
 import APIKit
 
+enum TokenError: Error {
+    case failedToFetch
+}
+
 protocol TokensDataStoreDelegate: class {
     func didUpdate(result: Result<TokensViewModel, TokenError>)
 }

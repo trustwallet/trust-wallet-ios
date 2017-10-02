@@ -25,6 +25,9 @@ struct Balance {
 
 extension String {
     var drop0x: String {
-        return String(self.characters.dropFirst(2))
+        if self.count > 2 && self.substring(with: 0..<2) == "0x" {
+            return String(self.characters.dropFirst(2))
+        }
+        return self
     }
 }

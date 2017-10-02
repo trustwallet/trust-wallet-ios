@@ -57,7 +57,7 @@ struct TransactionViewCellViewModel {
         case .error, .completed:
             return .white
         case .pending:
-            return Colors.lightGray
+            return UIColor(hex: "f4f4f4")
         }
     }
 }

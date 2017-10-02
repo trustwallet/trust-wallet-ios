@@ -42,37 +42,7 @@ class AppCoordinatorTests: XCTestCase {
         
         XCTAssertTrue(coordinator.rootNavigationController.viewControllers[0] is WelcomeViewController)
     }
-    
-    func testShowAccounts() {
-        let coordinator = AppCoordinator(
-            window: UIWindow(),
-            keystore: FakeKeystore(
-                accounts: [.make()]
-            ),
-            rootNavigationController: FakeNavigationController()
-        )
-        coordinator.start()
-        
-        coordinator.showAccounts()
-        
-        XCTAssertTrue((coordinator.rootNavigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is AccountsViewController)
-    }
-    
-    func testShowSettings() {
-        let coordinator = AppCoordinator(
-            window: UIWindow(),
-            keystore: FakeKeystore(
-                accounts: [.make()]
-            ),
-            rootNavigationController: FakeNavigationController()
-        )
-        coordinator.start()
-        
-        coordinator.showSettings()
-        
-        XCTAssertTrue((coordinator.rootNavigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is SettingsViewController)
-    }
-    
+
     func testStartWalletCoordinator() {
         let coordinator = AppCoordinator(
             window: UIWindow(),
@@ -101,20 +71,5 @@ class AppCoordinatorTests: XCTestCase {
         coordinator.showTransactions(for: .make())
         
         XCTAssertTrue(coordinator.rootNavigationController.viewControllers[0] is TransactionsViewController)
-    }
-
-    func testShowTokens() {
-        let coordinator = AppCoordinator(
-            window: UIWindow(),
-            keystore: FakeKeystore(
-                accounts: [.make()]
-            ),
-            rootNavigationController: FakeNavigationController()
-        )
-        coordinator.start()
-
-        coordinator.showTokens(for: .make())
-
-        XCTAssertTrue(coordinator.rootNavigationController.viewControllers[1] is TokensViewController)
     }
 }

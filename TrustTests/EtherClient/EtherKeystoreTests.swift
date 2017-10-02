@@ -49,7 +49,7 @@ class EtherKeystoreTests: XCTestCase {
             return XCTFail()
         }
 
-        XCTAssertEqual("0x5E9c27156a612a2D516C74c7a80af107856F8539", account.address.address)
+        XCTAssertEqual("0x5e9c27156a612a2d516c74c7a80af107856f8539", account.address.address)
         XCTAssertEqual(1, keystore.accounts.count)
     }
 

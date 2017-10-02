@@ -2,165 +2,133 @@
 
 import Foundation
 import UIKit
-import JSONRPCKit
-import APIKit
-import RealmSwift
 import Result
 
-enum TransactionError: Error {
-    case failedToFetch
-}
-
-enum TokenError: Error {
-    case failedToFetch
-}
-
 protocol TransactionCoordinatorDelegate: class {
-    func didUpdate(result: Result<[Transaction], TransactionError>)
+    func didCancel(in coordinator: TransactionCoordinator)
+    func didChangeAccount(to account: Account, in coordinator: TransactionCoordinator)
 }
 
-class TransactionCoordinator {
+class TransactionCoordinator: Coordinator {
 
-    let storage = TransactionsStorage()
-    let account: Account
+    private let keystore: Keystore
 
-    var viewModel: TransactionsViewModel {
-        return .init(transactions: self.storage.objects)
-    }
+    lazy var rootViewController: TransactionsViewController = {
+        let controller = self.makeTransactionsController(with: self.account)
+        return controller
+    }()
+
+    lazy var dataCoordinator: TransactionDataCoordinator = {
+        let coordinator = TransactionDataCoordinator(account: self.account)
+        return coordinator
+    }()
 
     weak var delegate: TransactionCoordinatorDelegate?
-    var timer: Timer?
-    //let notificationToken: NotificationToken
 
-    init(account: Account) {
+    lazy var settingsCoordinator: SettingsCoordinator = {
+        return SettingsCoordinator(navigationController: self.navigationController)
+    }()
+
+    lazy var accountsCoordinator: AccountsCoordinator = {
+        return AccountsCoordinator(navigationController: self.navigationController)
+    }()
+
+    let account: Account
+    let navigationController: UINavigationController
+    var coordinators: [Coordinator] = []
+
+    init(
+        account: Account,
+        rootNavigationController: UINavigationController
+    ) {
         self.account = account
-
-        storage.deleteAll()
-
-//        notificationToken = storage.realm.addNotificationBlock { item, _ in
-//            switch item {
-//            case .didChange: break
-//            case .refreshRequired: break
-//            }
-//        }
-
+        self.keystore = EtherKeystore()
+        self.navigationController = rootNavigationController
     }
 
-    func start() {
-        fetchTransactions()
-        fetchPendingTransactions()
-        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.timerTrigger), userInfo: nil, repeats: true)
+    private func makeTransactionsController(with account: Account) -> TransactionsViewController {
+        let controller = TransactionsViewController(account: account, dataCoordinator: dataCoordinator)
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.settings_icon(), landscapeImagePhone: R.image.settings_icon(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showSettings))
+        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.accountsSwitch(), landscapeImagePhone: R.image.accountsSwitch(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showAccounts))
+        controller.delegate = self
+        return controller
     }
 
-    func fetch() {
-        fetchPendingTransactions()
+    @objc func showAccounts() {
+        accountsCoordinator.start()
+        accountsCoordinator.delegate = self
     }
 
-    func fetchTransactions() {
-        let request = FetchTransactionsRequest(address: account.address.address)
-        Session.send(request) { result in
-            switch result {
-            case .success(let response):
-                self.update(owner: self.account.address, items: response)
-            case .failure:
-                break
-            }
-        }
+    @objc func showSettings() {
+        settingsCoordinator.start()
+        settingsCoordinator.delegate = self
     }
 
-    func fetchPendingTransactions() {
-        Session.send(EtherServiceRequest(batch: BatchFactory().create(GetBlockByNumberRequest(block: "pending")))) { result in
-            switch result {
-            case .success(let block):
-                //NSLog("transactions \(block)")
-                for item in block.transactions {
-                    NSLog("item \(item.hash)")
-                    if item.to == self.account.address.address.lowercased() || item.from == self.account.address.address.lowercased() {
-                        self.update(owner: self.account.address, items: [item])
-                    } else {
-                        self.update(owner: self.account.address, items: [])
-                    }
-                }
-            case .failure:
-                break
-            }
-        }
-    }
-    @objc func timerTrigger() {
-        fetchPendingTransactions()
+    func showTokens(for account: Account) {
+        let controller = TokensViewController(account: account)
+        navigationController.pushViewController(controller, animated: true)
     }
 
-    func update(owner: Address, items: [ParsedTransaction]) {
-        let transactionItems: [Transaction] = items.map { .from(owner: owner, transaction: $0) }
-        storage.add(transactionItems)
-        print()
-
-        delegate?.didUpdate(result: .success(self.storage.objects))
-    }
-
-    func print() {
-        NSLog("objects \(storage.count)")
-    }
-
-    func stop() {
-        //notificationToken.stop()
+    @objc func dismiss() {
+        navigationController.dismiss(animated: true, completion: nil)
     }
 }
 
-extension Transaction {
-    static func from(owner: Address, transaction: ParsedTransaction) -> Transaction {
-        let state: TransactionState = {
-            return .pending
-        }()
+extension TransactionCoordinator: SettingsCoordinatorDelegate {
+    func didCancel(in coordinator: SettingsCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+    }
+}
 
-        return Transaction(
-            id: transaction.hash,
-            owner: owner.address, //TODO
-            state: state,
-            blockNumber: transaction.blockNumber,
-            from: transaction.from,
-            to: transaction.to,
-            value: transaction.value, //TODO
-            gas: transaction.gas,
-            gasPrice: transaction.gasPrice,
-            gasUsed: transaction.gasUsed,
-            confirmations: Int64(transaction.confirmations) ?? 0,
-            nonce: "0", // TODO
-            date: NSDate(timeIntervalSince1970: TimeInterval(transaction.timestamp) ?? 0) as Date
-        )
+extension TransactionCoordinator: TransactionsViewControllerDelegate {
+    func didPressSend(for account: Account, in viewController: TransactionsViewController) {
+        let controller = SendAndRequestViewContainer(flow: .send, account: account)
+        let nav = NavigationController(rootViewController: controller)
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        navigationController.present(nav, animated: true, completion: nil)
     }
 
-//    static func from(address: String, json: [String: AnyObject]) -> Transaction {
-//        let blockHash = json["blockHash"] as? String ?? ""
-//        let blockNumber = json["blockNumber"] as? String ?? ""
-//        let confirmation = json["confirmations"] as? String ?? ""
-//        let cumulativeGasUsed = json["cumulativeGasUsed"] as? String ?? ""
-//        let from = json["from"] as? String ?? ""
-//        let to = json["to"] as? String ?? ""
-//        let gas = json["gas"] as? String ?? ""
-//        let gasPrice = json["gasPrice"] as? String ?? ""
-//        let gasUsed = json["gasUsed"] as? String ?? ""
-//        let hash = json["hash"] as? String ?? ""
-//        let isError = Bool(json["isError"] as? String ?? "") ?? false
-//        let timestamp = (json["timeStamp"] as? String ?? "")
-//        let value = (json["value"] as? String ?? "")
-//
-//        let state: TransactionState = {
-//            return .pending
-//        }()
-//
-//        return Transaction(
-//            id: hash,
-//            state: state,
-//            blockNumber: blockNumber,
-//            from: from,
-//            to: to,
-//            value: "0x0", //TODO
-//            gas: gas,
-//            gasPrice: gasPrice,
-//            confirmations: Int64(confirmations) ?? 0,
-//            nonce: "0x0", // TODO
-//            date: NSDate(timeIntervalSince1970: TimeInterval(timestamp) ?? 0) as Date
-//        )
-//    }
+    func didPressRequest(for account: Account, in viewController: TransactionsViewController) {
+        let controller = SendAndRequestViewContainer(flow: .request, account: account)
+        let nav = NavigationController(rootViewController: controller)
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        navigationController.present(nav, animated: true, completion: nil)
+    }
+
+    func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
+        let controller = TransactionViewController(
+            transaction: transaction
+        )
+        navigationController.pushViewController(controller, animated: true)
+    }
+
+    func didPressTokens(for account: Account, in viewController: TransactionsViewController) {
+        showTokens(for: account)
+    }
+
+    func reset() {
+        clean()
+        delegate?.didCancel(in: self)
+    }
+
+    func clean() {
+        dataCoordinator.storage.deleteAll()
+    }
+}
+
+extension TransactionCoordinator: AccountsCoordinatorDelegate {
+    func didCancel(in coordinator: AccountsCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+    }
+
+    func didSelectAccount(account: Account, in coordinator: AccountsCoordinator) {
+        delegate?.didChangeAccount(to: account, in: self)
+    }
+
+    func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator) {
+        guard !coordinator.accountsViewController.hasAccounts else { return }
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        clean()
+        reset()
+    }
 }
