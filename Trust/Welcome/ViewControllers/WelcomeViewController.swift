@@ -33,7 +33,7 @@ class WelcomeViewController: UIViewController {
             ),
             constructPage(
                 title: "Fully transparent",
-                description: "Code is open sourced (MIT licence) and fully audited.",
+                description: "Code is open sourced (GPL-3.0 licence) and fully audited.",
                 image: R.image.onboarding_open_source()
             ),
             constructPage(
