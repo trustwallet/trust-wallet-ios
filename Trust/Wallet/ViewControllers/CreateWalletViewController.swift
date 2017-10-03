@@ -39,10 +39,10 @@ class CreateWalletViewController: FormViewController {
                 var header = HeaderFooterView<InfoHeaderView>(.class)
                 header.height = { 90 }
                 header.onSetupView = { (view, section) -> Void in
-                    view.label.attributedText = "Password will be used to encrypt and store your digital wallet".styled(
+                    view.label.attributedText = "Password will be used to protect your digital wallet".styled(
                         with:
                         .color(UIColor(hex: "6e6e72")),
-                        .font(UIFont.systemFont(ofSize: 15, weight: UIFontWeightRegular)),
+                        .font(UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular)),
                         .lineHeightMultiple(1.25)
                     )
                     view.logoImageView.image = R.image.create_wallet()
