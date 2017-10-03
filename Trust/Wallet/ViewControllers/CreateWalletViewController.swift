@@ -2,6 +2,7 @@
 
 import UIKit
 import Eureka
+import BonMot
 
 protocol CreateWalletViewControllerDelegate: class {
     func didPressImport(in viewController: CreateWalletViewController)
