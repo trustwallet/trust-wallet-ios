@@ -60,4 +60,17 @@ struct TransactionViewCellViewModel {
             return UIColor(hex: "f4f4f4")
         }
     }
+
+    var statusImage: UIImage? {
+        switch transaction.transactionState {
+        case .error: return R.image.transaction_error()
+        case .completed:
+            switch transaction.direction {
+            case .incoming: return R.image.transaction_received()
+            case .outgoing: return R.image.transaction_sent()
+            }
+        case .pending:
+            return R.image.transaction_pending()
+        }
+    }
 }

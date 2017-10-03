@@ -6,12 +6,16 @@ class TransactionViewCell: UITableViewCell {
 
     static let identifier = "TransactionTableViewCell"
 
+    let statusImageView = UIImageView()
     let titleLabel = UILabel()
     let amountLabel = UILabel()
     let subTitleLabel = UILabel()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        statusImageView.translatesAutoresizingMaskIntoConstraints = false
+        statusImageView.contentMode = .scaleAspectFit
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
@@ -30,12 +34,13 @@ class TransactionViewCell: UITableViewCell {
         rightStackView.translatesAutoresizingMaskIntoConstraints = false
         rightStackView.axis = .vertical
 
-        let stackView = UIStackView(arrangedSubviews: [leftStackView, rightStackView])
+        let stackView = UIStackView(arrangedSubviews: [statusImageView, leftStackView, rightStackView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.spacing = 10
-        stackView.distribution = .fillEqually
+        stackView.spacing = 15
+        stackView.distribution = .fill
 
+        statusImageView.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
         subTitleLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
         titleLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
 
@@ -45,6 +50,7 @@ class TransactionViewCell: UITableViewCell {
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
+            statusImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 44),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: Layout.sideMargin),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Layout.sideMargin),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -Layout.sideMargin),
@@ -57,6 +63,9 @@ class TransactionViewCell: UITableViewCell {
     }
 
     func configure(viewModel: TransactionViewCellViewModel) {
+
+        statusImageView.image = viewModel.statusImage
+
         titleLabel.text = viewModel.title
 
         subTitleLabel.text = viewModel.subTitle
