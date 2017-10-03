@@ -31,4 +31,7 @@ extension Error {
             return "Undefined Error"
         }
     }
+
+    var code: Int { return (self as NSError).code }
+    var domain: String { return (self as NSError).domain }
 }

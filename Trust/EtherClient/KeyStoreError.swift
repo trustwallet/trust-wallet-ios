@@ -5,7 +5,7 @@ import Foundation
 enum KeyStoreError: LocalizedError {
     case failedToDeleteAccount
     case failedToDecryptKey
-    case failedToImport
+    case failedToImport(Error)
     case failedToSignTransaction
 
     var errorDescription: String? {
@@ -14,8 +14,8 @@ enum KeyStoreError: LocalizedError {
             return "Failed to delete account"
         case .failedToDecryptKey:
             return "Could not decrypt key with given passphrase"
-        case .failedToImport:
-            return "Failed to import keystore"
+        case .failedToImport(let error):
+            return error.localizedDescription
         case .failedToSignTransaction:
             return "Failed to sign transaction"
         }

@@ -54,7 +54,7 @@ class EtherKeystore: Keystore {
             let _ = setPassword(password, for: account)
             return (.success(account))
         } catch {
-            return (.failure(.failedToImport))
+            return (.failure(.failedToImport(error)))
         }
     }
 
