@@ -12,7 +12,7 @@ class AppCoordinatorTests: XCTestCase {
         )
         
         coordinator.start()
-        
+
         XCTAssertTrue(coordinator.rootNavigationController.viewControllers[0] is WelcomeViewController)
     }
     
@@ -25,7 +25,8 @@ class AppCoordinatorTests: XCTestCase {
         )
         
         coordinator.start()
-        
+
+        XCTAssertEqual(1, coordinator.coordinators.count)
         XCTAssertTrue(coordinator.rootNavigationController.viewControllers[0] is TransactionsViewController)
     }
     
@@ -61,15 +62,14 @@ class AppCoordinatorTests: XCTestCase {
     func testShowTransactions() {
         let coordinator = AppCoordinator(
             window: UIWindow(),
-            keystore: FakeKeystore(
-                accounts: [.make()]
-            ),
+            keystore: FakeKeystore(),
             rootNavigationController: FakeNavigationController()
         )
         coordinator.start()
         
         coordinator.showTransactions(for: .make())
-        
+
+        XCTAssertEqual(1, coordinator.coordinators.count)
         XCTAssertTrue(coordinator.rootNavigationController.viewControllers[0] is TransactionsViewController)
     }
 }

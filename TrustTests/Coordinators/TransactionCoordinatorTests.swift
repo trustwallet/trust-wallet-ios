@@ -37,4 +37,32 @@ class TransactionCoordinatorTests: XCTestCase {
 
         XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is SettingsViewController)
     }
+
+    func testShowSendFlow() {
+        let coordinator = TransactionCoordinator(
+            account: .make(),
+            rootNavigationController: FakeNavigationController()
+        )
+
+        coordinator.showPaymentFlow(for: .send, account: .make())
+
+        let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
+
+        XCTAssertTrue(controller is SendAndRequestViewContainer)
+        XCTAssertTrue(controller?.childViewControllers[0] is SendViewController)
+    }
+
+    func testShowRequstFlow() {
+        let coordinator = TransactionCoordinator(
+            account: .make(),
+            rootNavigationController: FakeNavigationController()
+        )
+
+        coordinator.showPaymentFlow(for: .request, account: .make())
+
+        let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
+
+        XCTAssertTrue(controller is SendAndRequestViewContainer)
+        XCTAssertTrue(controller?.childViewControllers[0] is RequestViewController)
+    }
 }

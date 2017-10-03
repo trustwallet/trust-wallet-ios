@@ -69,6 +69,13 @@ class TransactionCoordinator: Coordinator {
         navigationController.pushViewController(controller, animated: true)
     }
 
+    func showPaymentFlow(for type: PaymentFlow, account: Account) {
+        let controller = SendAndRequestViewContainer(flow: type, account: account)
+        let nav = NavigationController(rootViewController: controller)
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        navigationController.present(nav, animated: true, completion: nil)
+    }
+
     @objc func dismiss() {
         navigationController.dismiss(animated: true, completion: nil)
     }
@@ -82,17 +89,11 @@ extension TransactionCoordinator: SettingsCoordinatorDelegate {
 
 extension TransactionCoordinator: TransactionsViewControllerDelegate {
     func didPressSend(for account: Account, in viewController: TransactionsViewController) {
-        let controller = SendAndRequestViewContainer(flow: .send, account: account)
-        let nav = NavigationController(rootViewController: controller)
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        navigationController.present(nav, animated: true, completion: nil)
+        showPaymentFlow(for: .send, account: account)
     }
 
     func didPressRequest(for account: Account, in viewController: TransactionsViewController) {
-        let controller = SendAndRequestViewContainer(flow: .request, account: account)
-        let nav = NavigationController(rootViewController: controller)
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        navigationController.present(nav, animated: true, completion: nil)
+        showPaymentFlow(for: .request, account: account)
     }
 
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
@@ -107,7 +108,6 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
     }
 
     func reset() {
-        clean()
         delegate?.didCancel(in: self)
     }
 
@@ -123,12 +123,13 @@ extension TransactionCoordinator: AccountsCoordinatorDelegate {
 
     func didSelectAccount(account: Account, in coordinator: AccountsCoordinator) {
         delegate?.didChangeAccount(to: account, in: self)
+        clean()
     }
 
     func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator) {
         guard !coordinator.accountsViewController.hasAccounts else { return }
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         clean()
-        reset()
+        dismiss()
     }
 }

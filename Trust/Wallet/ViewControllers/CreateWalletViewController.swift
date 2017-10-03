@@ -67,8 +67,8 @@ class CreateWalletViewController: FormViewController {
 
             +++ Section("")
             +++ Section("")
-            +++ Section("")
-            <<< ButtonRow("I already have a wallet") {
+            +++ Section("Already have a wallet?")
+            <<< ButtonRow("Import") {
                 $0.title = $0.tag
             }.onCellSelection { [unowned self] (_, _) in
                 self.importWallet()
