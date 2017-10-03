@@ -26,8 +26,6 @@ class ImportWalletViewController: FormViewController {
 
         form = Section()
 
-            +++ Section("Keystore")
-
             <<< AppFormAppearance.textArea(tag: Values.keystore) {
                 $0.placeholder = "Keystore JSON"
                 $0.textAreaHeight = .fixed(cellHeight: 100)
