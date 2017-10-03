@@ -1,6 +1,7 @@
 PODS:
   - APIKit (3.1.1):
     - Result (~> 3.0)
+  - BonMot (4.3.1)
   - EAIntroView (2.10.0):
     - EARestrictedScrollView (~> 1.1.0)
   - EARestrictedScrollView (1.1.0)
@@ -26,6 +27,7 @@ PODS:
 
 DEPENDENCIES:
   - APIKit
+  - BonMot
   - EAIntroView
   - Eureka (from `https://github.com/xmartlabs/Eureka.git`, branch `feature/Xcode9-Swift3_2`)
   - Geth
@@ -62,6 +64,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   APIKit: 7460983f490d3bde6aaaaa4164d18c9865a6f91d
+  BonMot: 043bb5a8834cc6d74e9d624742272b92385e0a27
   EAIntroView: 3494b7bbd1212e3a4f7e8d16194a1b00e7b9abb2
   EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
   Eureka: 5b9418d7bfdc21ca977d69d124a6409f3e9af2c7
@@ -79,6 +82,6 @@ SPEC CHECKSUMS:
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: f60095dc173a3f3ec505bb34f5229c3dfd779a54
 
-PODFILE CHECKSUM: 6db13eab07d3d92f1ba4d7cfda9b79b0921335af
+PODFILE CHECKSUM: 7cc96da942269b06d427be325c3bd15dbf19f8ab
 
 COCOAPODS: 1.3.1

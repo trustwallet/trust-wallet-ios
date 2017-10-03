@@ -19,6 +19,7 @@ target 'Trust' do
   pod 'SwiftLint'
   pod 'SeedStackViewController', :git=>'https://github.com/seedco/StackViewController.git', :branch=>'swift32'
   pod 'RealmSwift'
+  pod 'BonMot'
 
   target 'TrustTests' do
     inherit! :search_paths
