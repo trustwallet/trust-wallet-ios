@@ -123,13 +123,16 @@ class SendViewController: FormViewController {
     }
 
     func sendPayment(to address: Address, amount: GethBigInt, speed: TransactionSpeed, amountString: String) {
+        displayLoading()
         let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: account.address.address)))
         Session.send(request) { [weak self] result in
+            guard let `self` = self else { return }
+            self.hideLoading()
             switch result {
             case .success(let count):
-                self?.sign(address: address, nonce: count, amount: amount, speed: speed, amountString: amountString)
+                self.sign(address: address, nonce: count, amount: amount, speed: speed, amountString: amountString)
             case .failure(let error):
-                self?.displayError(error: error)
+                self.displayError(error: error)
             }
         }
     }

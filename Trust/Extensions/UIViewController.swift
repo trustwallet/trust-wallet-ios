@@ -3,6 +3,7 @@
 import Foundation
 import UIKit
 import Result
+import MBProgressHUD
 
 enum ConfirmationError: LocalizedError {
     case cancel
@@ -34,6 +35,16 @@ extension UIViewController {
             completion(.failure(ConfirmationError.cancel))
         }))
         self.present(alertController, animated: true, completion: nil)
+    }
+
+    func displayLoading(text: String = "Loading...") {
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.label.text = text
+        hud.hide(animated: true)
+    }
+
+    func hideLoading() {
+        MBProgressHUD.hide(for: view, animated: true)
     }
 
     func add(asChildViewController viewController: UIViewController) {
