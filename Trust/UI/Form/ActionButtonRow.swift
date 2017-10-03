@@ -15,8 +15,39 @@ public final class ActionButtonCellOf<T: Equatable>: Row<ActionButtonCell<T>>, S
 
 public class ActionButtonCell<T: Equatable> : Cell<T>, CellType {
 
+    let logoView = UIImageView(frame: .zero)
+    let label = UILabel(frame: .zero)
+
     required public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        logoView.translatesAutoresizingMaskIntoConstraints = false
+        logoView.image = R.image.accountsSwitch()
+        logoView.contentMode = .scaleAspectFit
+
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Hello"
+        label.numberOfLines = 2
+
+        contentView.addSubview(logoView)
+        contentView.addSubview(label)
+
+        NSLayoutConstraint.activate([
+            logoView.widthAnchor.constraint(equalToConstant: 44),
+            logoView.heightAnchor.constraint(equalToConstant: 44),
+            logoView.topAnchor.constraint(equalTo: topAnchor),
+            logoView.trailingAnchor.constraint(equalTo: label.leadingAnchor, constant: -15),
+            logoView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            logoView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+
+            label.trailingAnchor.constraint(equalTo: trailingAnchor),
+            label.topAnchor.constraint(equalTo: topAnchor),
+            label.bottomAnchor.constraint(equalTo: bottomAnchor),
+        ])
+
+        height = { 60 }
+
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -25,31 +56,16 @@ public class ActionButtonCell<T: Equatable> : Cell<T>, CellType {
 
     public override func update() {
         super.update()
-
-        backgroundColor = .clear
-        contentView.backgroundColor = .clear
-
-        let button = Button(size: .extraLarge, style: .solid)
-        button.setTitle("Create Wallet", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(button)
-        button.anchor(to: self, margin: 10)
-        button.addTarget(self, action: #selector(self.tap), for: .touchUpInside)
     }
 
     public override func setup() {
         super.setup()
         accessoryType = .none
-
     }
 
     public override func didSelect() {
         row.reload()
         row.select()
         row.deselect()
-    }
-
-    func tap() {
-
     }
 }
