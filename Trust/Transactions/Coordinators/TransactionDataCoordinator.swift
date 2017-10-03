@@ -32,7 +32,7 @@ class TransactionDataCoordinator {
     func start() {
         fetchTransactions()
         fetchPendingTransactions()
-        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fetchPending), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(fetchPending), userInfo: nil, repeats: true)
     }
 
     func fetch() {
