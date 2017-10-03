@@ -8,7 +8,7 @@
       "color": "#FFFFFF"
     },
     "background": "./background.jpg",
-    "padding": 50,
+    "padding": 68,
     "show_complete_frame": false,
     "stack_title" : true,
     "title_below_image": false
