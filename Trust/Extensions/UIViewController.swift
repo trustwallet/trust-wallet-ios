@@ -40,7 +40,6 @@ extension UIViewController {
     func displayLoading(text: String = "Loading...") {
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.label.text = text
-        hud.hide(animated: true)
     }
 
     func hideLoading() {
