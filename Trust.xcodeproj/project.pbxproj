@@ -54,6 +54,7 @@
 		293E66421F8026F10052973D /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E66411F8026F10052973D /* Block.swift */; };
 		294FE5661F72442D00754F31 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294FE5651F72442D00754F31 /* Address.swift */; };
 		295247DF1F8326EF007FDC31 /* AccountViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295247DE1F8326EF007FDC31 /* AccountViewCell.swift */; };
+		295247E71F835BA0007FDC31 /* InfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295247E61F835BA0007FDC31 /* InfoHeaderView.swift */; };
 		295A59381F71C1B90092F0FC /* AccountsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A59371F71C1B90092F0FC /* AccountsCoordinator.swift */; };
 		296106BF1F7639250006164B /* FetchTransactionsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296106BE1F7639250006164B /* FetchTransactionsRequest.swift */; };
 		296106C21F76403A0006164B /* TokenViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296106C11F76403A0006164B /* TokenViewCell.swift */; };
@@ -203,6 +204,7 @@
 		293E66411F8026F10052973D /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		294FE5651F72442D00754F31 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		295247DE1F8326EF007FDC31 /* AccountViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewCell.swift; sourceTree = "<group>"; };
+		295247E61F835BA0007FDC31 /* InfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderView.swift; sourceTree = "<group>"; };
 		295A59371F71C1B90092F0FC /* AccountsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsCoordinator.swift; sourceTree = "<group>"; };
 		296106BE1F7639250006164B /* FetchTransactionsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTransactionsRequest.swift; sourceTree = "<group>"; };
 		296106C11F76403A0006164B /* TokenViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenViewCell.swift; sourceTree = "<group>"; };
@@ -904,6 +906,7 @@
 			children = (
 				29FF12FA1F74CC8200AFD326 /* EthereumAddressRule.swift */,
 				29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */,
+				295247E61F835BA0007FDC31 /* InfoHeaderView.swift */,
 			);
 			path = Form;
 			sourceTree = "<group>";
@@ -1241,6 +1244,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Trust/Pods-Trust-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APIKit/APIKit.framework",
+				"${BUILT_PRODUCTS_DIR}/BonMot/BonMot.framework",
 				"${BUILT_PRODUCTS_DIR}/EAIntroView/EAIntroView.framework",
 				"${BUILT_PRODUCTS_DIR}/EARestrictedScrollView/EARestrictedScrollView.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
@@ -1258,6 +1262,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APIKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BonMot.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EAIntroView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EARestrictedScrollView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
@@ -1382,6 +1387,7 @@
 				296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */,
 				29A13E2C1F6A955700E432A2 /* CreateWalletViewModel.swift in Sources */,
 				29CA4B771F6FBBFB0032313D /* RequestViewModel.swift in Sources */,
+				295247E71F835BA0007FDC31 /* InfoHeaderView.swift in Sources */,
 				29B6AED61F7CA4A700EC6DE3 /* TransactionConfiguration.swift in Sources */,
 				293B8B411F707F4600356286 /* TransactionViewModel.swift in Sources */,
 				29BB94951F6FC54C009B09CC /* EthereumUnit.swift in Sources */,
