@@ -118,6 +118,7 @@
 		29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB51F8298820036089F /* TransactionCoordinator.swift */; };
 		29FC0CB81F8299510036089F /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB71F8299510036089F /* Coordinator.swift */; };
 		29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC9BC51F830880000209CD /* MirgrationInitializer.swift */; };
+		29FC9BCC1F831860000209CD /* SendAndRequestViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC9BCB1F831860000209CD /* SendAndRequestViewControllerTests.swift */; };
 		29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF12F51F74799D00AFD326 /* NSAttributedString.swift */; };
 		29FF12F81F747D6C00AFD326 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF12F71F747D6C00AFD326 /* Error.swift */; };
 		29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF12FA1F74CC8200AFD326 /* EthereumAddressRule.swift */; };
@@ -266,6 +267,7 @@
 		29FC0CB51F8298820036089F /* TransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCoordinator.swift; sourceTree = "<group>"; };
 		29FC0CB71F8299510036089F /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		29FC9BC51F830880000209CD /* MirgrationInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirgrationInitializer.swift; sourceTree = "<group>"; };
+		29FC9BCB1F831860000209CD /* SendAndRequestViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAndRequestViewControllerTests.swift; sourceTree = "<group>"; };
 		29FF12F51F74799D00AFD326 /* NSAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString.swift; sourceTree = "<group>"; };
 		29FF12F71F747D6C00AFD326 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		29FF12FA1F74CC8200AFD326 /* EthereumAddressRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumAddressRule.swift; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 		2912CD0E1F6A830700C6CBE3 /* TrustTests */ = {
 			isa = PBXGroup;
 			children = (
+				29FC9BCA1F831849000209CD /* ViewControllers */,
 				29E14FD21F7F46F700185568 /* Transactions */,
 				291E8FBD1F7DEA72003F0ECF /* EtherClient */,
 				29FF13041F75F08000AFD326 /* Coordinators */,
@@ -725,9 +728,8 @@
 			isa = PBXGroup;
 			children = (
 				2977CAE41F7E0B69009682A0 /* Coordinators */,
-				2996F1451F6C98B3005C33AE /* SettingsViewController.swift */,
-				296AF9A41F736BA20058AF78 /* Config.swift */,
-				296AF9A61F736EC70058AF78 /* RPCServers.swift */,
+				29FC9BC71F83144D000209CD /* ViewControllers */,
+				29FC9BC81F83145C000209CD /* Types */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -859,6 +861,31 @@
 				29FC9BC51F830880000209CD /* MirgrationInitializer.swift */,
 			);
 			path = Initializers;
+			sourceTree = "<group>";
+		};
+		29FC9BC71F83144D000209CD /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2996F1451F6C98B3005C33AE /* SettingsViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		29FC9BC81F83145C000209CD /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				296AF9A41F736BA20058AF78 /* Config.swift */,
+				296AF9A61F736EC70058AF78 /* RPCServers.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		29FC9BCA1F831849000209CD /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				29FC9BCB1F831860000209CD /* SendAndRequestViewControllerTests.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		29FF12F91F74CC6C00AFD326 /* Form */ = {
@@ -1380,6 +1407,7 @@
 				296106CC1F776FD00006164B /* WalletCoordinatorTests.swift in Sources */,
 				291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */,
 				29FF13011F75EAD900AFD326 /* FakeKeystore.swift in Sources */,
+				29FC9BCC1F831860000209CD /* SendAndRequestViewControllerTests.swift in Sources */,
 				29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */,
 				2977CAE01F7DEEB0009682A0 /* FakeEtherKeystore.swift in Sources */,
 				29E14FD51F7F470C00185568 /* TransactionsStorageTests.swift in Sources */,
