@@ -44,6 +44,8 @@ class TransactionCoordinator: Coordinator {
         self.account = account
         self.keystore = EtherKeystore()
         self.navigationController = rootNavigationController
+
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
     }
 
     private func makeTransactionsController(with account: Account) -> TransactionsViewController {
@@ -76,8 +78,16 @@ class TransactionCoordinator: Coordinator {
         navigationController.present(nav, animated: true, completion: nil)
     }
 
+    @objc func didEnterForeground() {
+        rootViewController.fetch()
+    }
+
     @objc func dismiss() {
         navigationController.dismiss(animated: true, completion: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
