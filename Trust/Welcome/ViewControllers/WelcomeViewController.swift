@@ -19,7 +19,7 @@ class WelcomeViewController: UIViewController {
         view.backgroundColor = viewModel.backgroundColor
 
         let button = Button(size: .large, style: .solid)
-        button.frame = CGRect(x: 0, y: 0, width: 300, height: 60)
+        button.frame = CGRect(x: 0, y: 0, width: 300, height: 64)
         button.setTitle("GET STARTED", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
         button.layer.cornerRadius = 5
@@ -51,7 +51,6 @@ class WelcomeViewController: UIViewController {
         introView?.skipButtonY = view.frame.height / 6
         introView?.swipeToExit = false
         introView?.skipButtonAlignment = .center
-        introView?.delegate = self
         introView?.show(in: self.view, animateDuration: 0)
 
         button.removeTarget(introView, action: nil, for: .touchUpInside)
@@ -92,15 +91,5 @@ class WelcomeViewController: UIViewController {
 
     @objc func startFlow() {
         delegate?.didPressStart(in: self)
-    }
-}
-
-extension WelcomeViewController: EAIntroDelegate {
-    func introDidFinish(_ introView: EAIntroView!, wasSkipped: Bool) {
-
-    }
-
-    func introWillFinish(_ introView: EAIntroView!, wasSkipped: Bool) {
-
     }
 }
