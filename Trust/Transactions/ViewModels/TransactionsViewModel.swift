@@ -39,6 +39,22 @@ struct TransactionsViewModel {
         return .white
     }
 
+    var headerBackgroundColor: UIColor {
+        return UIColor(hex: "fafafa")
+    }
+
+    var headerTitleTextColor: UIColor {
+        return UIColor(hex: "555357")
+    }
+
+    var headerTitleFont: UIFont {
+        return UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
+    }
+
+    var headerBorderColor: UIColor {
+        return UIColor(hex: "e1e1e1")
+    }
+
     var numberOfSections: Int {
         return items.count
     }

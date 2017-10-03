@@ -18,9 +18,7 @@ class TransactionsViewController: UIViewController {
     var viewModel: TransactionsViewModel = TransactionsViewModel(transactions: [])
 
     let account: Account
-    let tableView: UITableView
-    let sendButton: UIButton
-    let requestButton: UIButton
+    let tableView = UITableView(frame: .zero, style: .plain)
     let refreshControl = UIRefreshControl()
 
     lazy var titleView: BalanceTitleView = {
@@ -29,15 +27,30 @@ class TransactionsViewController: UIViewController {
         return view
     }()
 
+    lazy var sendButton: Button = {
+        let sendButton = Button(size: .extraLarge, style: .squared)
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+        sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
+        sendButton.setTitle("Send", for: .normal)
+        sendButton.backgroundColor = Colors.blue
+        return sendButton
+    }()
+
+    lazy var requestButton: Button = {
+        let requestButton = Button(size: .extraLarge, style: .squared)
+        requestButton.translatesAutoresizingMaskIntoConstraints = false
+        requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
+        requestButton.backgroundColor = Colors.blue
+        requestButton.setTitle("Request", for: .normal)
+        return requestButton
+    }()
+
     weak var delegate: TransactionsViewControllerDelegate?
     let dataCoordinator: TransactionDataCoordinator
 
     init(account: Account, dataCoordinator: TransactionDataCoordinator) {
         self.account = account
         self.dataCoordinator = dataCoordinator
-        tableView = UITableView(frame: .zero, style: .plain)
-        sendButton = Button(size: .extraLarge, style: .squared)
-        requestButton = Button(size: .extraLarge, style: .squared)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -52,23 +65,12 @@ class TransactionsViewController: UIViewController {
         let tokensButton = Button(size: .extraLarge, style: .borderless)
         tokensButton.setTitle("Show my tokens", for: .normal)
         tokensButton.contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
-
         tokensButton.setTitleColor(Colors.black, for: .normal)
         tokensButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium)
         tokensButton.sizeToFit()
         tokensButton.addTarget(self, action: #selector(showTokens), for: .touchUpInside)
 
         tableView.tableHeaderView = tokensButton
-
-        sendButton.translatesAutoresizingMaskIntoConstraints = false
-        sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
-        sendButton.setTitle("Send", for: .normal)
-        sendButton.backgroundColor = Colors.blue
-
-        requestButton.translatesAutoresizingMaskIntoConstraints = false
-        requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
-        requestButton.backgroundColor = Colors.blue
-        requestButton.setTitle("Request", for: .normal)
 
         let stackView = UIStackView(arrangedSubviews: [
             sendButton,
@@ -106,9 +108,7 @@ class TransactionsViewController: UIViewController {
         )
 
         navigationItem.titleView = titleView
-
         setTitlte(text: viewModel.title)
-        view.backgroundColor = viewModel.backgroundColor
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -182,7 +182,6 @@ extension TransactionsViewController: StatefulViewController {
 extension TransactionsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true )
-
         delegate?.didPressTransaction(transaction: viewModel.item(for: indexPath.row, section: indexPath.section), in: self)
     }
 }
@@ -227,11 +226,10 @@ extension TransactionsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let header = view as? UITableViewHeaderFooterView else { return }
-        header.contentView.backgroundColor = UIColor(hex: "fafafa")
-        header.textLabel?.textColor = UIColor(hex: "555357")
-        header.textLabel?.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
-
-        header.layer.addBorder(edge: .top, color: UIColor(hex: "e1e1e1"), thickness: 0.5)
-        header.layer.addBorder(edge: .bottom, color: UIColor(hex: "e1e1e1"), thickness: 0.5)
+        header.contentView.backgroundColor = viewModel.headerBackgroundColor
+        header.textLabel?.textColor = viewModel.headerTitleTextColor
+        header.textLabel?.font = viewModel.headerTitleFont
+        header.layer.addBorder(edge: .top, color: viewModel.headerBorderColor, thickness: 0.5)
+        header.layer.addBorder(edge: .bottom, color: viewModel.headerBorderColor, thickness: 0.5)
     }
 }
