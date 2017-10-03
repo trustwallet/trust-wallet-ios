@@ -6,6 +6,7 @@ import SafariServices
 
 enum SettingsAction {
     case exportPrivateKey
+    case RPCServer
 }
 
 protocol SettingsViewControllerDelegate: class {
@@ -46,6 +47,7 @@ class SettingsViewController: FormViewController {
                 $0.value = RPCServer(chainID: config.chainID).name
             }.onChange { row in
                 self.config.chainID = RPCServer(name: row.value ?? "").chainID
+                self.run(action: .RPCServer)
             }.onPresent { _, selectorController in
                 selectorController.enableDeselection = false
             }.cellSetup { cell, _ in

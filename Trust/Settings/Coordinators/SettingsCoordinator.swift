@@ -5,6 +5,7 @@ import UIKit
 
 protocol SettingsCoordinatorDelegate: class {
     func didCancel(in coordinator: SettingsCoordinator)
+    func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator)
 }
 
 class SettingsCoordinator {
@@ -52,7 +53,9 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
         switch action {
         case .exportPrivateKey:
             export()
+        case .RPCServer: break
         }
+        delegate?.didUpdate(action: action, in: self)
     }
 }
 

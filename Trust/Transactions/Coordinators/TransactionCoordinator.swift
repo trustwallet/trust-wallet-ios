@@ -82,6 +82,14 @@ class TransactionCoordinator: Coordinator {
 }
 
 extension TransactionCoordinator: SettingsCoordinatorDelegate {
+    func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator) {
+        switch action {
+        case .RPCServer:
+            clean()
+        case .exportPrivateKey: break
+        }
+    }
+
     func didCancel(in coordinator: SettingsCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
     }
