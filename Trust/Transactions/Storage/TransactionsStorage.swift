@@ -18,7 +18,7 @@ class TransactionsStorage {
     }
 
     var objects: [Transaction] {
-        return realm.objects(Transaction.self).filter { _ -> Bool in
+        return realm.objects(Transaction.self).sorted(byKeyPath: "date", ascending: true).filter { _ in
             return true
         }
     }
