@@ -24,7 +24,7 @@ class SettingsViewController: FormViewController {
 
         title = "Settings"
 
-        form = Section("Export")
+        form = Section(header:"Export", footer: "Keep it secure and never share it with anyone.")
 
             <<< AppFormAppearance.button("Export Private Key") {
                 $0.title = $0.tag
