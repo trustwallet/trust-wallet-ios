@@ -109,7 +109,7 @@ class SendViewController: FormViewController {
         let addressString = addressRow?.value ?? ""
         let amountString = amountRow?.value ?? ""
         let address = Address(address: addressString)
-        let amountDouble = BDouble(floatLiteral: Double(amountString) ?? 0) * BDouble(integerLiteral: EthereumUnit.ether.rawValue)
+        let amountDouble = BDouble(floatLiteral: amountString.doubleValue) * BDouble(integerLiteral: EthereumUnit.ether.rawValue)
         let amount = GethBigInt.from(double: amountDouble)
         let speed = configuration.speed
 
@@ -200,5 +200,22 @@ extension SendViewController: QRCodeReaderDelegate {
         let address = result.substring(with: 9..<51)
         addressRow?.value = address
         addressRow?.reload()
+    }
+}
+
+extension String {
+    var doubleValue: Double {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale.current
+        formatter.decimalSeparator = "."
+        if let result = formatter.number(from: self) {
+            return result.doubleValue
+        } else {
+            formatter.decimalSeparator = ","
+            if let result = formatter.number(from: self) {
+                return result.doubleValue
+            }
+        }
+        return 0
     }
 }
