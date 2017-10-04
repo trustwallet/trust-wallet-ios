@@ -101,11 +101,7 @@ class TransactionsViewController: UIViewController {
 
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
-        emptyView = EmptyView(
-            message: "No Transactions",
-            insets: insets,
-            onRetry: fetch
-        )
+        emptyView = TransactionsEmptyView(insets: insets, onRetry: fetch, onWalletPress: request)
 
         navigationItem.titleView = titleView
         setTitlte(text: viewModel.title)
