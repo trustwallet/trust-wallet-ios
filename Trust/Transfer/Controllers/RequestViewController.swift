@@ -39,6 +39,14 @@ class RequestViewController: UIViewController {
         return button
     }()
 
+    lazy var addressHintLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.adjustsFontSizeToFitWidth = true
+        label.text = "This is your Ethereum Wallet Address"
+        return label
+    }()
+
     lazy var addressLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -63,6 +71,8 @@ class RequestViewController: UIViewController {
         view.backgroundColor = viewModel.backgroundColor
 
         displayStackViewController()
+
+        stackViewController.addItem(addressHintLabel)
 
         stackViewController.addItem(imageView)
         stackViewController.addItem(addressLabel)
