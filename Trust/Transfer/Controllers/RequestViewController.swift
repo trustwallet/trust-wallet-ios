@@ -43,7 +43,7 @@ class RequestViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
-        label.text = "This is your Ethereum Wallet Address"
+        label.text = "My Ethereum Wallet Address"
         return label
     }()
 
