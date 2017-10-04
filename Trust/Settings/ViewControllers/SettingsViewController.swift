@@ -80,6 +80,12 @@ class SettingsViewController: FormViewController {
                 image: R.image.settings_twitter()
             )
 
+            <<< link(
+                title: "Telegram Group",
+                value: "https://t.me/joinchat/AAMtrQ_wtd918mm_mU0BRQ",
+                image: R.image.settings_telegram()
+            )
+
             +++ Section()
 
             <<< TextRow {
