@@ -63,16 +63,12 @@ class SettingsViewController: FormViewController {
             )
 
             <<< link(
-                title: "Road Map",
-                value: "https://github.com/TrustWallet/trust-wallet-ios/projects/1",
-                image: R.image.settings_road_map()
-            )
-
-            <<< link(
                 title: "Report a Bug",
                 value: "https://github.com/TrustWallet/trust-wallet-ios/issues/new",
                 image: R.image.settings_bug()
             )
+
+            +++ Section("Community")
 
             <<< link(
                 title: "Twitter",
