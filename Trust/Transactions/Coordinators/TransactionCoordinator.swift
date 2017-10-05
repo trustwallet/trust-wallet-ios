@@ -73,6 +73,7 @@ class TransactionCoordinator: Coordinator {
 
     func showPaymentFlow(for type: PaymentFlow, account: Account) {
         let controller = SendAndRequestViewContainer(flow: type, account: account)
+        controller.delegate = self
         let nav = NavigationController(rootViewController: controller)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         navigationController.present(nav, animated: true, completion: nil)
@@ -149,5 +150,11 @@ extension TransactionCoordinator: AccountsCoordinatorDelegate {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         clean()
         dismiss()
+    }
+}
+
+extension TransactionCoordinator: SendAndRequestViewContainerDelegate {
+    func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: SendAndRequestViewContainer) {
+        dataCoordinator.fetchTransaction(hash: transaction.id)
     }
 }

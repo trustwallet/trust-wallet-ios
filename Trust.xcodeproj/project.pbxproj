@@ -93,6 +93,8 @@
 		29B6AED41F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B6AED31F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift */; };
 		29B6AED61F7CA4A700EC6DE3 /* TransactionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B6AED51F7CA4A700EC6DE3 /* TransactionConfiguration.swift */; };
 		29B933F31F84BD0D009FCABB /* TransactionsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B933F21F84BD0D009FCABB /* TransactionsEmptyView.swift */; };
+		29B933F51F860074009FCABB /* SendTransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B933F41F860074009FCABB /* SendTransactionCoordinator.swift */; };
+		29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B933F71F8609FF009FCABB /* PaymentFlow.swift */; };
 		29BB94931F6FC380009B09CC /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94921F6FC380009B09CC /* BalanceViewModel.swift */; };
 		29BB94951F6FC54C009B09CC /* EthereumUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94941F6FC54C009B09CC /* EthereumUnit.swift */; };
 		29BB94971F6FCD60009B09CC /* SendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94961F6FCD60009B09CC /* SendViewModel.swift */; };
@@ -245,6 +247,8 @@
 		29B6AED31F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionConfigurationViewController.swift; sourceTree = "<group>"; };
 		29B6AED51F7CA4A700EC6DE3 /* TransactionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionConfiguration.swift; sourceTree = "<group>"; };
 		29B933F21F84BD0D009FCABB /* TransactionsEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsEmptyView.swift; sourceTree = "<group>"; };
+		29B933F41F860074009FCABB /* SendTransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransactionCoordinator.swift; sourceTree = "<group>"; };
+		29B933F71F8609FF009FCABB /* PaymentFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentFlow.swift; sourceTree = "<group>"; };
 		29BB94921F6FC380009B09CC /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
 		29BB94941F6FC54C009B09CC /* EthereumUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumUnit.swift; sourceTree = "<group>"; };
 		29BB94961F6FCD60009B09CC /* SendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewModel.swift; sourceTree = "<group>"; };
@@ -459,6 +463,7 @@
 		291ED0901F6FA5C800E7E93A /* Transfer */ = {
 			isa = PBXGroup;
 			children = (
+				29B933F61F86073E009FCABB /* Coordinators */,
 				29B6AECE1F7C880700EC6DE3 /* Types */,
 				29B6AECD1F7C87F400EC6DE3 /* ViewModels */,
 				29B6AECC1F7C87E700EC6DE3 /* Controllers */,
@@ -817,6 +822,7 @@
 			children = (
 				296106CF1F778A8D0006164B /* TransferType.swift */,
 				29B6AED51F7CA4A700EC6DE3 /* TransactionConfiguration.swift */,
+				29B933F71F8609FF009FCABB /* PaymentFlow.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -828,6 +834,14 @@
 				291D73C51F7F500D00A8AB56 /* TransactionItemState.swift */,
 			);
 			path = Types;
+			sourceTree = "<group>";
+		};
+		29B933F61F86073E009FCABB /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				29B933F41F860074009FCABB /* SendTransactionCoordinator.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		29BE3FCC1F706D7100F6BFC2 /* Models */ = {
@@ -1368,10 +1382,12 @@
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
 				29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */,
 				29FC0CB31F81D2640036089F /* TransactionReceiptRequest.swift in Sources */,
+				29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */,
 				29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */,
 				29FF12F81F747D6C00AFD326 /* Error.swift in Sources */,
 				29282B581F7636840067F88D /* GetTokensRequest.swift in Sources */,
 				29B6AED41F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift in Sources */,
+				29B933F51F860074009FCABB /* SendTransactionCoordinator.swift in Sources */,
 				291F52A51F6B762300B369AB /* EtherServiceRequest.swift in Sources */,
 				29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */,
 				296AF9A51F736BA20058AF78 /* Config.swift in Sources */,

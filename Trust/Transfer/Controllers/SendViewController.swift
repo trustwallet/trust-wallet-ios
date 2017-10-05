@@ -10,6 +10,7 @@ import QRCodeReaderViewController
 
 protocol SendViewControllerDelegate: class {
     func didPressConfiguration(in viewController: SendViewController)
+    func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: SendViewController)
 }
 
 class SendViewController: FormViewController {
@@ -36,6 +37,10 @@ class SendViewController: FormViewController {
     }
 
     var configuration = TransactionConfiguration()
+
+    lazy var sendTransactionCoordinator = {
+        return SendTransactionCoordinator(account: self.account)
+    }()
 
     init(account: Account, transferType: TransferType = .ether) {
         self.account = account
@@ -109,70 +114,28 @@ class SendViewController: FormViewController {
         let addressString = addressRow?.value ?? ""
         let amountString = amountRow?.value ?? ""
         let address = Address(address: addressString)
-        let amountDouble = BDouble(floatLiteral: amountString.doubleValue) * BDouble(integerLiteral: EthereumUnit.ether.rawValue)
-        let amount = GethBigInt.from(double: amountDouble)
-        let speed = configuration.speed
+        let value = amountString.doubleValue
 
-        confirm(message: "Confirm to send \(amountString) \(transferType.symbol) to \(address.address) address") { result in
-            switch result {
-            case .success:
-                self.sendPayment(to: address, amount: amount, speed: speed, amountString: amountString)
-            case .failure: break
-            }
-        }
-    }
-
-    func sendPayment(to address: Address, amount: GethBigInt, speed: TransactionSpeed, amountString: String) {
-        displayLoading()
-        let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: account.address.address)))
-        Session.send(request) { [weak self] result in
-            guard let `self` = self else { return }
-            self.hideLoading()
-            switch result {
-            case .success(let count):
-                self.sign(address: address, nonce: count, amount: amount, speed: speed, amountString: amountString)
-            case .failure(let error):
-                self.displayError(error: error)
-            }
-        }
-    }
-
-    func sign(
-        address: Address,
-        nonce: Int64 = 0,
-        amount: GethBigInt,
-        speed: TransactionSpeed,
-        amountString: String
-    ) {
-        let config = Config()
-        let res = keystore.signTransaction(
-            amount: amount,
-            account: account,
-            address: address,
-            nonce: nonce,
-            speed: speed,
-            chainID: GethNewBigInt(Int64(config.chainID))
-        )
-
-        switch res {
-        case .success(let data):
-            let sendData = data.hexEncoded
-            let request = EtherServiceRequest(batch: BatchFactory().create(SendRawTransactionRequest(signedTransaction: sendData)))
-            Session.send(request) { [weak self] result in
+        confirm(message: "Confirm to send \(amountString) \(transferType.symbol) to \(address.address) address") { [unowned self] result in
+            guard case .success = result else { return }
+            self.displayLoading()
+            self.sendTransactionCoordinator.send(
+                address: address,
+                value: value,
+                configuration: self.configuration
+            ) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {
-                case .success(let transactionID):
+                case .success(let transaction):
                     self.displaySuccess(
                         title: "Sent \(amountString) \(self.transferType.symbol) to \(self.account.address.address)",
-                        message: "TransactionID: \(transactionID)"
+                        message: "TransactionID: \(transaction.id)"
                     )
-                    self.clear()
                 case .failure(let error):
                     self.displayError(error: error)
                 }
+                self.hideLoading()
             }
-        case .failure(let error):
-            displayError(error: error)
         }
     }
 
