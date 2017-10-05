@@ -20,4 +20,8 @@ extension GethBigInt {
         let bignum = Bignum(double.description)
         return GethBigInt.from(hex: bignum.asString(withBase: 16))
     }
+
+    static func from(int: Int) -> GethBigInt {
+        return GethNewBigInt(Int64(int))
+    }
 }
