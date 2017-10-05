@@ -3,9 +3,8 @@
 import Foundation
 import UIKit
 
-enum PaymentFlow {
-    case send
-    case request
+protocol SendAndRequestViewContainerDelegate: class {
+    func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: SendAndRequestViewContainer)
 }
 
 class SendAndRequestViewContainer: UIViewController {
@@ -16,6 +15,7 @@ class SendAndRequestViewContainer: UIViewController {
         }
     }
     let account: Account
+    weak var delegate: SendAndRequestViewContainerDelegate?
 
     lazy var sendController: SendViewController = {
         let controller = SendViewController(account: self.account)
@@ -111,6 +111,10 @@ class SendAndRequestViewContainer: UIViewController {
 extension SendAndRequestViewContainer: SendViewControllerDelegate {
     func didPressConfiguration(in viewController: SendViewController) {
         openConfiguration()
+    }
+
+    func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: SendViewController) {
+        delegate?.didCreatePendingTransaction(transaction, in: self)
     }
 }
 
