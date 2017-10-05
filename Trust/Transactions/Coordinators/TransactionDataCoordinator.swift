@@ -23,6 +23,8 @@ class TransactionDataCoordinator {
         return .init(transactions: self.storage.objects)
     }
     var timer: Timer?
+    var updateTransactionsTimer: Timer?
+
     weak var delegate: TransactionDataCoordinatorDelegate?
 
     init(account: Account) {
@@ -33,16 +35,17 @@ class TransactionDataCoordinator {
         fetchTransactions()
         fetchPendingTransactions()
         timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(fetchPending), userInfo: nil, repeats: true)
+        updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(fetchTransactions), userInfo: nil, repeats: true)
     }
 
     func fetch() {
         fetchTransactions()
     }
 
-    func fetchTransactions() {
+    @objc func fetchTransactions() {
         let startBlock: String = {
             guard let transction = storage.objects.first else { return "0" }
-            return String(Int(transction.blockNumber) ?? 0 - 20)
+            return String(Int(transction.blockNumber) ?? 0 - 2000)
         }()
 
         let request = FetchTransactionsRequest(address: account.address.address, startBlock: startBlock)
@@ -70,6 +73,10 @@ class TransactionDataCoordinator {
                 self.handleError(error: error)
             }
         }
+    }
+
+    func fetchTransaction(hash: String) {
+
     }
 
     @objc func fetchPending() {
@@ -101,6 +108,9 @@ class TransactionDataCoordinator {
     func stop() {
         timer?.invalidate()
         timer = nil
+
+        updateTransactionsTimer?.invalidate()
+        updateTransactionsTimer = nil
     }
 }
 
