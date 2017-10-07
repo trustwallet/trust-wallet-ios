@@ -16,6 +16,7 @@ class AppCoordinator: NSObject, Coordinator {
     lazy var walletCoordinator: WalletCoordinator = {
         return WalletCoordinator(rootNavigationController: self.rootNavigationController)
     }()
+    let touchRegistrar = TouchRegistrar()
 
     private var keystore: Keystore
 
@@ -35,6 +36,7 @@ class AppCoordinator: NSObject, Coordinator {
 
     func start() {
         performMigration()
+        inializers()
 
         rootNavigationController.viewControllers = [welcomeViewController]
 
@@ -45,6 +47,10 @@ class AppCoordinator: NSObject, Coordinator {
 
     func performMigration() {
         MigrationInitializer().perform()
+    }
+
+    func inializers() {
+        touchRegistrar.register()
     }
 
     func showTransactions(for account: Account) {
@@ -65,7 +71,9 @@ class AppCoordinator: NSObject, Coordinator {
     }
 
     @objc func reset() {
+        touchRegistrar.unregister()
         coordinators.removeAll()
+        rootNavigationController.dismiss(animated: true, completion: nil)
         rootNavigationController.viewControllers = [welcomeViewController]
     }
 }
@@ -78,6 +86,7 @@ extension AppCoordinator: WelcomeViewControllerDelegate {
 
 extension AppCoordinator: TransactionCoordinatorDelegate {
     func didCancel(in coordinator: TransactionCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
         reset()
     }
