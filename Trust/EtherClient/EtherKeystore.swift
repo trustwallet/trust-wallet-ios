@@ -115,6 +115,16 @@ class EtherKeystore: Keystore {
         }
     }
 
+    func updateAccount(account: Account, password: String, newPassword: String) -> Result<Void, KeyStoreError> {
+        let gethAccount = getGethAccount(for: account.address)
+        do {
+            try gethKeyStorage.update(gethAccount, passphrase: password, newPassphrase: newPassword)
+            return (.success())
+        } catch {
+            return (.failure(.failedToUpdatePassword))
+        }
+    }
+
     func signTransaction(
         amount: GethBigInt,
         account: Account,
