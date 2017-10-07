@@ -97,7 +97,7 @@ class SettingsViewController: FormViewController {
 
             <<< link(
                 title: "Twitter",
-                value: "https://twitter.com/thetrustwallet",
+                value: "https://twitter.com/trustwalletapp",
                 image: R.image.settings_twitter()
             )
 
