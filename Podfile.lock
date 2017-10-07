@@ -22,8 +22,11 @@ PODS:
     - Realm (= 2.10.1)
   - Result (3.2.3)
   - SeedStackViewController (0.3.0)
+  - SSKeychain (1.4.1)
   - StatefulViewController (3.0)
   - SwiftLint (0.20.1)
+  - VENTouchLock (1.12.0):
+    - SSKeychain (~> 1.0)
 
 DEPENDENCIES:
   - APIKit
@@ -40,6 +43,7 @@ DEPENDENCIES:
   - SeedStackViewController (from `https://github.com/seedco/StackViewController.git`, branch `swift32`)
   - StatefulViewController
   - SwiftLint
+  - VENTouchLock
 
 EXTERNAL SOURCES:
   Eureka:
@@ -79,9 +83,11 @@ SPEC CHECKSUMS:
   RealmSwift: 505ed6c15942a2e76f5cfa78a8667cfa997ee75b
   Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
   SeedStackViewController: 9c9a0a7e1488c08872bc610926becb8865710fb1
+  SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: f60095dc173a3f3ec505bb34f5229c3dfd779a54
+  VENTouchLock: 20d378b9c6173e2c054448aeb3fb2f40822a9f3f
 
-PODFILE CHECKSUM: 7cc96da942269b06d427be325c3bd15dbf19f8ab
+PODFILE CHECKSUM: 682145df273a9cfba77ed03fcb4f34f9244e1fb7
 
 COCOAPODS: 1.3.1
