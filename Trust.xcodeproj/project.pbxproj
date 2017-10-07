@@ -44,6 +44,9 @@
 		29282B531F7630970067F88D /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282B521F7630970067F88D /* Token.swift */; };
 		29282B581F7636840067F88D /* GetTokensRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282B571F7636840067F88D /* GetTokensRequest.swift */; };
 		29285B421F6FB3E60044CF29 /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29285B411F6FB3E60044CF29 /* SendViewController.swift */; };
+		292F75A91F88865A00585F8E /* TouchRegistrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F75A81F88865A00585F8E /* TouchRegistrar.swift */; };
+		293248841F88CCD2008A9818 /* SplashState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293248831F88CCD2008A9818 /* SplashState.swift */; };
+		293248861F88CCE6008A9818 /* SplashError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293248851F88CCE6008A9818 /* SplashError.swift */; };
 		29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E271F6A903500E432A2 /* WelcomeViewModelTests.swift */; };
 		29358D991F78D1E400925D61 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29358D981F78D1E400925D61 /* SnapshotHelper.swift */; };
 		29358D9F1F78D5B700925D61 /* Screenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29358D9E1F78D5B700925D61 /* Screenshots.swift */; };
@@ -95,6 +98,7 @@
 		29B933F31F84BD0D009FCABB /* TransactionsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B933F21F84BD0D009FCABB /* TransactionsEmptyView.swift */; };
 		29B933F51F860074009FCABB /* SendTransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B933F41F860074009FCABB /* SendTransactionCoordinator.swift */; };
 		29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B933F71F8609FF009FCABB /* PaymentFlow.swift */; };
+		29B9345D1F88459C009FCABB /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B9345C1F88459C009FCABB /* SplashViewController.swift */; };
 		29BB94931F6FC380009B09CC /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94921F6FC380009B09CC /* BalanceViewModel.swift */; };
 		29BB94951F6FC54C009B09CC /* EthereumUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94941F6FC54C009B09CC /* EthereumUnit.swift */; };
 		29BB94971F6FCD60009B09CC /* SendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94961F6FCD60009B09CC /* SendViewModel.swift */; };
@@ -198,6 +202,9 @@
 		29282B521F7630970067F88D /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		29282B571F7636840067F88D /* GetTokensRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTokensRequest.swift; sourceTree = "<group>"; };
 		29285B411F6FB3E60044CF29 /* SendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewController.swift; sourceTree = "<group>"; };
+		292F75A81F88865A00585F8E /* TouchRegistrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchRegistrar.swift; sourceTree = "<group>"; };
+		293248831F88CCD2008A9818 /* SplashState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashState.swift; sourceTree = "<group>"; };
+		293248851F88CCE6008A9818 /* SplashError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashError.swift; sourceTree = "<group>"; };
 		29358D981F78D1E400925D61 /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		29358D9E1F78D5B700925D61 /* Screenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screenshots.swift; sourceTree = "<group>"; };
 		29358DA81F79FD1C00925D61 /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
@@ -249,6 +256,7 @@
 		29B933F21F84BD0D009FCABB /* TransactionsEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsEmptyView.swift; sourceTree = "<group>"; };
 		29B933F41F860074009FCABB /* SendTransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransactionCoordinator.swift; sourceTree = "<group>"; };
 		29B933F71F8609FF009FCABB /* PaymentFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentFlow.swift; sourceTree = "<group>"; };
+		29B9345C1F88459C009FCABB /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		29BB94921F6FC380009B09CC /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
 		29BB94941F6FC54C009B09CC /* EthereumUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumUnit.swift; sourceTree = "<group>"; };
 		29BB94961F6FCD60009B09CC /* SendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewModel.swift; sourceTree = "<group>"; };
@@ -350,6 +358,7 @@
 		2912CCF71F6A830700C6CBE3 /* Trust */ = {
 			isa = PBXGroup;
 			children = (
+				29B9345A1F88457C009FCABB /* Authentication */,
 				29FC9BC31F830880000209CD /* Core */,
 				291ED0901F6FA5C800E7E93A /* Transfer */,
 				2996F14E1F6CA802005C33AE /* Export */,
@@ -554,6 +563,15 @@
 				29282B571F7636840067F88D /* GetTokensRequest.swift */,
 			);
 			path = Ethplorer;
+			sourceTree = "<group>";
+		};
+		293248821F88CCC6008A9818 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				293248831F88CCD2008A9818 /* SplashState.swift */,
+				293248851F88CCE6008A9818 /* SplashError.swift */,
+			);
+			path = Types;
 			sourceTree = "<group>";
 		};
 		295247DB1F8326C8007FDC31 /* Views */ = {
@@ -844,6 +862,23 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
+		29B9345A1F88457C009FCABB /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				293248821F88CCC6008A9818 /* Types */,
+				29B9345B1F884584009FCABB /* ViewControllers */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		29B9345B1F884584009FCABB /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				29B9345C1F88459C009FCABB /* SplashViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		29BE3FCC1F706D7100F6BFC2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -889,6 +924,7 @@
 			isa = PBXGroup;
 			children = (
 				29FC9BC51F830880000209CD /* MirgrationInitializer.swift */,
+				292F75A81F88865A00585F8E /* TouchRegistrar.swift */,
 			);
 			path = Initializers;
 			sourceTree = "<group>";
@@ -1273,8 +1309,10 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/SSKeychain/SSKeychain.framework",
 				"${BUILT_PRODUCTS_DIR}/SeedStackViewController/StackViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/StatefulViewController/StatefulViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/VENTouchLock/VENTouchLock.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1291,8 +1329,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSKeychain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StackViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatefulViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VENTouchLock.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1327,6 +1367,7 @@
 				29FF12FE1F75EA3F00AFD326 /* Keystore.swift in Sources */,
 				296106C41F7640C50006164B /* TokenViewCellViewModel.swift in Sources */,
 				291EC9E21F70565A0004EDD0 /* ParsedTransaction.swift in Sources */,
+				29B9345D1F88459C009FCABB /* SplashViewController.swift in Sources */,
 				291F52B11F6B814300B369AB /* MG Basic Math.swift in Sources */,
 				29E2E33A1F7A008C000CF94A /* UIView.swift in Sources */,
 				291F52B21F6B814300B369AB /* MG Benchmark Tools.swift in Sources */,
@@ -1364,6 +1405,7 @@
 				296106C61F7645CC0006164B /* TokensViewController.swift in Sources */,
 				29282B531F7630970067F88D /* Token.swift in Sources */,
 				29C9F5FB1F720C050025C494 /* FloatLabelTextField.swift in Sources */,
+				293248861F88CCE6008A9818 /* SplashError.swift in Sources */,
 				296421951F70C1EC00EB363B /* LoadingView.swift in Sources */,
 				29285B421F6FB3E60044CF29 /* SendViewController.swift in Sources */,
 				2996F14D1F6CA743005C33AE /* UIViewController.swift in Sources */,
@@ -1416,12 +1458,14 @@
 				2912CD2D1F6A839700C6CBE3 /* CreateWalletViewController.swift in Sources */,
 				290FD8BB1F7BFE7400548896 /* GetBlockByNumberRequest.swift in Sources */,
 				291F52B71F6B870400B369AB /* CastError.swift in Sources */,
+				293248841F88CCD2008A9818 /* SplashState.swift in Sources */,
 				291F52BC1F6B8D0600B369AB /* Account.swift in Sources */,
 				2912CD321F6A83EE00C6CBE3 /* WelcomeViewController.swift in Sources */,
 				291F52A91F6B7BE100B369AB /* BlockNumber.swift in Sources */,
 				29B6AED11F7C881D00EC6DE3 /* TransactionCost.swift in Sources */,
 				296106CA1F764AB60006164B /* TokensDataStore.swift in Sources */,
 				29BB94931F6FC380009B09CC /* BalanceViewModel.swift in Sources */,
+				292F75A91F88865A00585F8E /* TouchRegistrar.swift in Sources */,
 				29D03F1D1F712183006E548C /* Button.swift in Sources */,
 				29E2E33E1F7A2423000CF94A /* TransactionHeaderView.swift in Sources */,
 				291F52BF1F6C874E00B369AB /* AccountsViewController.swift in Sources */,
