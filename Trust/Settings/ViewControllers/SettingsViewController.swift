@@ -3,6 +3,7 @@
 import UIKit
 import Eureka
 import SafariServices
+import VENTouchLock
 
 enum SettingsAction {
     case exportPrivateKey
@@ -18,6 +19,10 @@ class SettingsViewController: FormViewController {
     private var config = Config()
 
     weak var delegate: SettingsViewControllerDelegate?
+
+    var isPasscodeEnabled: Bool {
+        return VENTouchLock.sharedInstance().isPasscodeSet()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +57,26 @@ class SettingsViewController: FormViewController {
                 selectorController.enableDeselection = false
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_server()
+            }
+
+            +++ Section("Security")
+
+            <<< SwitchRow {
+                $0.title = "Passcode / Touch ID"
+                $0.value = self.isPasscodeEnabled
+            }.onChange { [unowned self] row in
+                if row.value == true {
+                    self.setPasscode { result in
+                        row.value = result
+                        row.updateCell()
+                    }
+                    VENTouchLock.setShouldUseTouchID(true)
+                    VENTouchLock.sharedInstance().backgroundLockVisible = false
+                } else {
+                    VENTouchLock.sharedInstance().deletePasscode()
+                }
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_lock()
             }
 
             +++ Section("Open source development")
@@ -89,6 +114,15 @@ class SettingsViewController: FormViewController {
                 $0.value = version()
                 $0.disabled = true
             }
+    }
+
+    func setPasscode(completion: ((Bool) -> Void)? = .none) {
+        let controller = VENTouchLockCreatePasscodeViewController()
+        controller.willFinishWithResult = { result in
+            completion?(result)
+            controller.dismiss(animated: true, completion: nil)
+        }
+        present(controller.embeddedInNavigationController(), animated: true, completion: nil)
     }
 
     private func version() -> String {
