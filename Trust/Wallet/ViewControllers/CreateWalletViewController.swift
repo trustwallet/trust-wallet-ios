@@ -3,6 +3,7 @@
 import UIKit
 import Eureka
 import BonMot
+import OnePasswordExtension
 
 protocol CreateWalletViewControllerDelegate: class {
     func didPressImport(in viewController: CreateWalletViewController)
@@ -33,6 +34,14 @@ class CreateWalletViewController: FormViewController {
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Demo", style: .done, target: self, action: #selector(self.demo))
             }
         }
+       if OnePasswordExtension.shared().isAppExtensionAvailable() {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+                image: R.image.onepasswordButton(),
+                style: .done,
+                target: self,
+                action: #selector(onePasswordCreate)
+            )
+       }
 
         form +++
             Section {
@@ -88,6 +97,10 @@ class CreateWalletViewController: FormViewController {
             }
     }
 
+    func handleCreatedAccount(account: Account) {
+        delegate?.didCreateAccount(account: account, in: self)
+    }
+
     func startImport() {
 
         let passwordRow: TextFloatLabelRow? = form.rowBy(tag: Values.password)
@@ -101,8 +114,7 @@ class CreateWalletViewController: FormViewController {
         }
 
         let account = keystore.createAccout(password: password)
-
-        delegate?.didCreateAccount(account: account, in: self)
+        handleCreatedAccount(account: account)
     }
 
     func demo() {
@@ -115,5 +127,56 @@ class CreateWalletViewController: FormViewController {
 
     func importWallet() {
         delegate?.didPressImport(in: self)
+    }
+
+    func onePasswordCreate() {
+        let newPasssword = NSUUID().uuidString
+        let account = keystore.createAccout(password: newPasssword)
+        let keystoreString: String = {
+            let value = keystore.export(account: account, password: newPasssword)
+            switch value {
+            case .success(let string):
+                return string
+            case .failure: return ""
+            }
+        }()
+
+        let formattedPassword = OnePasswordConverter.toPassword(password: newPasssword, keystore: keystoreString)
+
+        OnePasswordExtension().storeLogin(
+            forURLString: OnePasswordConfig.url,
+            loginDetails: [
+                AppExtensionUsernameKey: account.address.address,
+                AppExtensionPasswordKey: formattedPassword,
+                AppExtensionNotesKey: "Ethereum wallet has been stored here. Format: password-trust-keystore. -trust- - is a divider between password and keystore",
+            ],
+            passwordGenerationOptions: [:],
+            for: self,
+            sender: nil
+        ) { results, error in
+            let results = results ?? [:]
+            if error != nil {
+                let _ = self.keystore.delete(account: account, password: newPasssword)
+            } else {
+                let updatedPassword = results[AppExtensionPasswordKey] as? String ?? ""
+                let result = OnePasswordConverter.fromPassword(password: updatedPassword)
+                switch result {
+                case .success(let password, _):
+                    if password == newPasssword {
+                        self.handleCreatedAccount(account: account)
+                    } else {
+                        let result = self.keystore.updateAccount(account: account, password: password, newPassword: updatedPassword)
+                        switch result {
+                        case .success:
+                            self.handleCreatedAccount(account: account)
+                        case .failure(let error):
+                            self.displayError(error: error)
+                        }
+                    }
+                case .failure(let error):
+                    self.displayError(error: error)
+                }
+            }
+        }
     }
 }
