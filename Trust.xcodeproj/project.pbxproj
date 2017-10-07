@@ -47,6 +47,9 @@
 		292F75A91F88865A00585F8E /* TouchRegistrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F75A81F88865A00585F8E /* TouchRegistrar.swift */; };
 		293248841F88CCD2008A9818 /* SplashState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293248831F88CCD2008A9818 /* SplashState.swift */; };
 		293248861F88CCE6008A9818 /* SplashError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293248851F88CCE6008A9818 /* SplashError.swift */; };
+		2932488A1F88D593008A9818 /* OnePasswordConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293248891F88D593008A9818 /* OnePasswordConfig.swift */; };
+		2932488C1F88E689008A9818 /* OnePasswordConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932488B1F88E689008A9818 /* OnePasswordConverter.swift */; };
+		2932488E1F88E69F008A9818 /* OnePasswordError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932488D1F88E69F008A9818 /* OnePasswordError.swift */; };
 		29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E271F6A903500E432A2 /* WelcomeViewModelTests.swift */; };
 		29358D991F78D1E400925D61 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29358D981F78D1E400925D61 /* SnapshotHelper.swift */; };
 		29358D9F1F78D5B700925D61 /* Screenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29358D9E1F78D5B700925D61 /* Screenshots.swift */; };
@@ -205,6 +208,9 @@
 		292F75A81F88865A00585F8E /* TouchRegistrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchRegistrar.swift; sourceTree = "<group>"; };
 		293248831F88CCD2008A9818 /* SplashState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashState.swift; sourceTree = "<group>"; };
 		293248851F88CCE6008A9818 /* SplashError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashError.swift; sourceTree = "<group>"; };
+		293248891F88D593008A9818 /* OnePasswordConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordConfig.swift; sourceTree = "<group>"; };
+		2932488B1F88E689008A9818 /* OnePasswordConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordConverter.swift; sourceTree = "<group>"; };
+		2932488D1F88E69F008A9818 /* OnePasswordError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordError.swift; sourceTree = "<group>"; };
 		29358D981F78D1E400925D61 /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		29358D9E1F78D5B700925D61 /* Screenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screenshots.swift; sourceTree = "<group>"; };
 		29358DA81F79FD1C00925D61 /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
@@ -414,6 +420,7 @@
 		2912CD281F6A831700C6CBE3 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
+				293248881F88D586008A9818 /* Types */,
 				2977CAEF1F7E0C14009682A0 /* ViewModels */,
 				2977CAEE1F7E0C0D009682A0 /* ViewControllers */,
 				2977CAE81F7E0B95009682A0 /* Coordinators */,
@@ -570,6 +577,16 @@
 			children = (
 				293248831F88CCD2008A9818 /* SplashState.swift */,
 				293248851F88CCE6008A9818 /* SplashError.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		293248881F88D586008A9818 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				293248891F88D593008A9818 /* OnePasswordConfig.swift */,
+				2932488B1F88E689008A9818 /* OnePasswordConverter.swift */,
+				2932488D1F88E69F008A9818 /* OnePasswordError.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1090,6 +1107,11 @@
 					2912CCF41F6A830700C6CBE3 = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 					2912CD0A1F6A830700C6CBE3 = {
 						CreatedOnToolsVersion = 9.0;
@@ -1296,6 +1318,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Trust/Pods-Trust-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/1PasswordExtension/OnePasswordExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/APIKit/APIKit.framework",
 				"${BUILT_PRODUCTS_DIR}/BonMot/BonMot.framework",
 				"${BUILT_PRODUCTS_DIR}/EAIntroView/EAIntroView.framework",
@@ -1316,6 +1339,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OnePasswordExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APIKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BonMot.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EAIntroView.framework",
@@ -1390,6 +1414,7 @@
 				29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */,
 				29B6AECB1F7C5FA900EC6DE3 /* SendAndRequestViewContainer.swift in Sources */,
 				2996F14A1F6C9D10005C33AE /* ExportCoordinator.swift in Sources */,
+				2932488E1F88E69F008A9818 /* OnePasswordError.swift in Sources */,
 				291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */,
 				29BE3FD21F707DC300F6BFC2 /* TransactionDataCoordinator.swift in Sources */,
 				291F52B51F6B814300B369AB /* SMP String Module.swift in Sources */,
@@ -1422,6 +1447,7 @@
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
+				2932488A1F88D593008A9818 /* OnePasswordConfig.swift in Sources */,
 				29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */,
 				29FC0CB31F81D2640036089F /* TransactionReceiptRequest.swift in Sources */,
 				29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */,
@@ -1437,6 +1463,7 @@
 				291F52A21F6B6DCF00B369AB /* EtherClient.swift in Sources */,
 				2912CD2B1F6A833E00C6CBE3 /* TransactionsViewController.swift in Sources */,
 				29BBB36B1F7BCEDD006BC91B /* GethBigInt.swift in Sources */,
+				2932488C1F88E689008A9818 /* OnePasswordConverter.swift in Sources */,
 				294FE5661F72442D00754F31 /* Address.swift in Sources */,
 				2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */,
 				29A0E1851F706B8C00BAAAED /* String.swift in Sources */,
@@ -1636,6 +1663,7 @@
 			baseConfigurationReference = 4DB8204016307EAFC079EA48 /* Pods-Trust.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Trust/Trust.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 22;
@@ -1661,6 +1689,7 @@
 			baseConfigurationReference = B13A87D3BA5167741E5D0801 /* Pods-Trust.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Trust/Trust.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 22;
