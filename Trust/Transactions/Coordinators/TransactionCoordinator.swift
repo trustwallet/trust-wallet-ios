@@ -149,7 +149,7 @@ extension TransactionCoordinator: AccountsCoordinatorDelegate {
         guard !coordinator.accountsViewController.hasAccounts else { return }
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         clean()
-        dismiss()
+        reset()
     }
 }
 
