@@ -1,10 +1,11 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import Result
 
 struct OnePasswordConverter {
 
-    static let divider = "-trust-"
+    static let divider = "-divider-"
 
     static func toPassword(password: String, keystore: String) -> String {
         return password + divider + keystore
