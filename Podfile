@@ -21,6 +21,7 @@ target 'Trust' do
   pod 'RealmSwift'
   pod 'BonMot'
   pod 'VENTouchLock'
+  pod '1PasswordExtension'
 
   target 'TrustTests' do
     inherit! :search_paths
