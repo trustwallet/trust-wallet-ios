@@ -46,7 +46,21 @@ class ImportWalletViewController: FormViewController {
             )
         }
 
-        form = Section()
+        form
+            +++ Section {
+                var header = HeaderFooterView<InfoHeaderView>(.class)
+                header.height = { 100 }
+                header.onSetupView = { (view, section) -> Void in
+                    view.label.attributedText = "Importing wallet as easy as creating".styled(
+                        with:
+                        .color(UIColor(hex: "6e6e72")),
+                        .font(UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular)),
+                        .lineHeightMultiple(1.25)
+                    )
+                    view.logoImageView.image = R.image.create_wallet()
+                }
+                $0.header = header
+            }
 
             <<< AppFormAppearance.textArea(tag: Values.keystore) {
                 $0.placeholder = "Keystore JSON"
