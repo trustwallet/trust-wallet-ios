@@ -50,7 +50,7 @@ class CreateWalletViewController: FormViewController {
         form +++
             Section {
                 var header = HeaderFooterView<InfoHeaderView>(.class)
-                header.height = { 100 }
+                header.height = { 90 }
                 header.onSetupView = { (view, section) -> Void in
                     view.label.attributedText = "Password will be used to protect your digital wallet".styled(
                         with:

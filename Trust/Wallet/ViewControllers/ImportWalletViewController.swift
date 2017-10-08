@@ -49,7 +49,7 @@ class ImportWalletViewController: FormViewController {
         form
             +++ Section {
                 var header = HeaderFooterView<InfoHeaderView>(.class)
-                header.height = { 100 }
+                header.height = { 90 }
                 header.onSetupView = { (view, section) -> Void in
                     view.label.attributedText = "Importing wallet as easy as creating".styled(
                         with:
