@@ -26,6 +26,10 @@ class ImportWalletViewController: FormViewController {
         return form.rowBy(tag: Values.password)
     }
 
+    lazy var onePasswordCoordinator: OnePasswordCoordinator = {
+        return OnePasswordCoordinator(keystore: self.keystore)
+    }()
+
     weak var delegate: ImportWalletViewControllerDelegate?
 
     override func viewDidLoad() {
@@ -62,9 +66,7 @@ class ImportWalletViewController: FormViewController {
 
             <<< ButtonRow("Import") {
                 $0.title = $0.tag
-            }.onCellSelection { [unowned self] (_, row) in
-                let validatedError = row.section?.form?.validate()
-                guard let errors = validatedError, errors.isEmpty else { return }
+            }.onCellSelection { [unowned self] _, _ in
                 self.importWallet()
             }
     }
@@ -74,6 +76,8 @@ class ImportWalletViewController: FormViewController {
     }
 
     func importWallet() {
+        let validatedError = keystoreRow?.section?.form?.validate()
+        guard let errors = validatedError, errors.isEmpty else { return }
 
         let input = keystoreRow?.value ?? ""
         let password = passwordRow?.value ?? ""
@@ -88,26 +92,15 @@ class ImportWalletViewController: FormViewController {
     }
 
     func onePasswordImport() {
-
-        OnePasswordExtension().findLogin(
-            forURLString: OnePasswordConfig.url,
-            for: self,
-            sender: nil
-        ) { [weak self] results, error in
+        onePasswordCoordinator.importWallet(in: self) { [weak self] result in
             guard let `self` = self else { return }
-            if let error = error {
-                return self.displayError(error: error)
-            }
-            guard let password = results?[AppExtensionPasswordKey] as? String else { return }
-
-            let result = OnePasswordConverter.fromPassword(password: password)
-
             switch result {
             case .success(let password, let keystore):
                 self.keystoreRow?.value = keystore
                 self.keystoreRow?.reload()
                 self.passwordRow?.value = password
                 self.passwordRow?.reload()
+                self.importWallet()
             case .failure(let error):
                 self.displayError(error: error)
             }

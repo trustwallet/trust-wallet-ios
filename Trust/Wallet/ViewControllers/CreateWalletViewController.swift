@@ -21,6 +21,10 @@ class CreateWalletViewController: FormViewController {
         static let passwordRepeat = "passwordRepeat"
     }
 
+    lazy var onePasswordCoordinator: OnePasswordCoordinator = {
+        return OnePasswordCoordinator(keystore: self.keystore)
+    }()
+
     weak var delegate: CreateWalletViewControllerDelegate?
 
     override func viewDidLoad() {
@@ -130,52 +134,12 @@ class CreateWalletViewController: FormViewController {
     }
 
     func onePasswordCreate() {
-        let newPasssword = NSUUID().uuidString
-        let account = keystore.createAccout(password: newPasssword)
-        let keystoreString: String = {
-            let value = keystore.export(account: account, password: newPasssword)
-            switch value {
-            case .success(let string):
-                return string
-            case .failure: return ""
-            }
-        }()
-
-        let formattedPassword = OnePasswordConverter.toPassword(password: newPasssword, keystore: keystoreString)
-
-        OnePasswordExtension().storeLogin(
-            forURLString: OnePasswordConfig.url,
-            loginDetails: [
-                AppExtensionUsernameKey: account.address.address,
-                AppExtensionPasswordKey: formattedPassword,
-                AppExtensionNotesKey: "Ethereum wallet has been stored here. Format: password-trust-keystore. -trust- - is a divider between password and keystore",
-            ],
-            passwordGenerationOptions: [:],
-            for: self,
-            sender: nil
-        ) { results, error in
-            let results = results ?? [:]
-            if error != nil {
-                let _ = self.keystore.delete(account: account, password: newPasssword)
-            } else {
-                let updatedPassword = results[AppExtensionPasswordKey] as? String ?? ""
-                let result = OnePasswordConverter.fromPassword(password: updatedPassword)
-                switch result {
-                case .success(let password, _):
-                    if password == newPasssword {
-                        self.handleCreatedAccount(account: account)
-                    } else {
-                        let result = self.keystore.updateAccount(account: account, password: password, newPassword: updatedPassword)
-                        switch result {
-                        case .success:
-                            self.handleCreatedAccount(account: account)
-                        case .failure(let error):
-                            self.displayError(error: error)
-                        }
-                    }
-                case .failure(let error):
-                    self.displayError(error: error)
-                }
+        onePasswordCoordinator.createWallet(in: self) { result in
+            switch result {
+            case .success(let account):
+                self.handleCreatedAccount(account: account)
+            case .failure(let error):
+                self.displayError(error: error)
             }
         }
     }
