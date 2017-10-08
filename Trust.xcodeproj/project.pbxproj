@@ -50,6 +50,7 @@
 		2932488A1F88D593008A9818 /* OnePasswordConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293248891F88D593008A9818 /* OnePasswordConfig.swift */; };
 		2932488C1F88E689008A9818 /* OnePasswordConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932488B1F88E689008A9818 /* OnePasswordConverter.swift */; };
 		2932488E1F88E69F008A9818 /* OnePasswordError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932488D1F88E69F008A9818 /* OnePasswordError.swift */; };
+		293248901F897787008A9818 /* OnePasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932488F1F897787008A9818 /* OnePasswordCoordinator.swift */; };
 		29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E271F6A903500E432A2 /* WelcomeViewModelTests.swift */; };
 		29358D991F78D1E400925D61 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29358D981F78D1E400925D61 /* SnapshotHelper.swift */; };
 		29358D9F1F78D5B700925D61 /* Screenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29358D9E1F78D5B700925D61 /* Screenshots.swift */; };
@@ -211,6 +212,7 @@
 		293248891F88D593008A9818 /* OnePasswordConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordConfig.swift; sourceTree = "<group>"; };
 		2932488B1F88E689008A9818 /* OnePasswordConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordConverter.swift; sourceTree = "<group>"; };
 		2932488D1F88E69F008A9818 /* OnePasswordError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordError.swift; sourceTree = "<group>"; };
+		2932488F1F897787008A9818 /* OnePasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordCoordinator.swift; sourceTree = "<group>"; };
 		29358D981F78D1E400925D61 /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		29358D9E1F78D5B700925D61 /* Screenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screenshots.swift; sourceTree = "<group>"; };
 		29358DA81F79FD1C00925D61 /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
@@ -679,6 +681,7 @@
 			isa = PBXGroup;
 			children = (
 				296AF9A21F733AB30058AF78 /* WalletCoordinator.swift */,
+				2932488F1F897787008A9818 /* OnePasswordCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1404,6 +1407,7 @@
 				293B8B431F70815900356286 /* BalanceTitleView.swift in Sources */,
 				29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */,
 				291F52B91F6B880F00B369AB /* EtherKeystore.swift in Sources */,
+				293248901F897787008A9818 /* OnePasswordCoordinator.swift in Sources */,
 				29BB94971F6FCD60009B09CC /* SendViewModel.swift in Sources */,
 				291F52B31F6B814300B369AB /* SMP Bignum Extensions.swift in Sources */,
 				296106D01F778A8D0006164B /* TransferType.swift in Sources */,
