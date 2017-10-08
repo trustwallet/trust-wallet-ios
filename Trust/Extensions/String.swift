@@ -12,6 +12,21 @@ extension String {
         let data = self.data(using: .utf8)!
         return data.hexEncoded
     }
+
+    var doubleValue: Double {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale.current
+        formatter.decimalSeparator = "."
+        if let result = formatter.number(from: self) {
+            return result.doubleValue
+        } else {
+            formatter.decimalSeparator = ","
+            if let result = formatter.number(from: self) {
+                return result.doubleValue
+            }
+        }
+        return 0
+    }
 }
 
 extension Data {

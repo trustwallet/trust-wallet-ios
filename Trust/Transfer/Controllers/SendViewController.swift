@@ -165,20 +165,3 @@ extension SendViewController: QRCodeReaderDelegate {
         addressRow?.reload()
     }
 }
-
-extension String {
-    var doubleValue: Double {
-        let formatter = NumberFormatter()
-        formatter.locale = Locale.current
-        formatter.decimalSeparator = "."
-        if let result = formatter.number(from: self) {
-            return result.doubleValue
-        } else {
-            formatter.decimalSeparator = ","
-            if let result = formatter.number(from: self) {
-                return result.doubleValue
-            }
-        }
-        return 0
-    }
-}
