@@ -37,10 +37,11 @@ class TransactionConfigurationViewController: FormViewController {
                 footer: configuration.speed.timeTitle
             )
             <<< SegmentedRow<String>(Values.speed) {
-                $0.title = "Processing speed"
+                $0.title = "Speed"
                 $0.options = [
                     TransactionSpeed.fast.title,
                     TransactionSpeed.regular.title,
+                    TransactionSpeed.cheap.title,
                 ]
                 $0.value = configuration.speed.title
                 $0.selectorTitle = configuration.speed.title
@@ -72,14 +73,16 @@ extension TransactionSpeed {
         switch self {
         case .fast: return "Fast"
         case .regular: return "Regular"
+        case .cheap: return "Cheap"
         case .custom: return "Custom"
         }
     }
 
     var timeTitle: String {
         switch self {
-        case .fast: return "Estimated delivery: 1-2 minutes."
-        case .regular: return "Estimated delivery: 2-5 minutes."
+        case .fast: return "Estimated delivery: 1 minute."
+        case .regular: return "Estimated delivery: 1-2 minutes."
+        case .cheap: return "Estimated delivery: 5 minutes."
         case .custom: return "Custom"
         }
     }
@@ -88,7 +91,8 @@ extension TransactionSpeed {
         switch title {
         case TransactionSpeed.fast.title: self = .fast
         case TransactionSpeed.regular.title: self = .regular
-        default: self = .fast
+        case TransactionSpeed.cheap.title: self = .cheap
+        default: self = .regular
         }
     }
 }
