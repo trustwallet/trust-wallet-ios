@@ -51,6 +51,7 @@
 		2932488C1F88E689008A9818 /* OnePasswordConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932488B1F88E689008A9818 /* OnePasswordConverter.swift */; };
 		2932488E1F88E69F008A9818 /* OnePasswordError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932488D1F88E69F008A9818 /* OnePasswordError.swift */; };
 		293248901F897787008A9818 /* OnePasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932488F1F897787008A9818 /* OnePasswordCoordinator.swift */; };
+		293248941F89F3C6008A9818 /* PageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293248931F89F3C6008A9818 /* PageItem.swift */; };
 		29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E271F6A903500E432A2 /* WelcomeViewModelTests.swift */; };
 		29358D991F78D1E400925D61 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29358D981F78D1E400925D61 /* SnapshotHelper.swift */; };
 		29358D9F1F78D5B700925D61 /* Screenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29358D9E1F78D5B700925D61 /* Screenshots.swift */; };
@@ -213,6 +214,7 @@
 		2932488B1F88E689008A9818 /* OnePasswordConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordConverter.swift; sourceTree = "<group>"; };
 		2932488D1F88E69F008A9818 /* OnePasswordError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordError.swift; sourceTree = "<group>"; };
 		2932488F1F897787008A9818 /* OnePasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordCoordinator.swift; sourceTree = "<group>"; };
+		293248931F89F3C6008A9818 /* PageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageItem.swift; sourceTree = "<group>"; };
 		29358D981F78D1E400925D61 /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		29358D9E1F78D5B700925D61 /* Screenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screenshots.swift; sourceTree = "<group>"; };
 		29358DA81F79FD1C00925D61 /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
@@ -474,6 +476,7 @@
 				29C9F5F81F720BD30025C494 /* FloatLabelCell.swift */,
 				29C9F5FA1F720C050025C494 /* FloatLabelTextField.swift */,
 				29FC0CB71F8299510036089F /* Coordinator.swift */,
+				293248931F89F3C6008A9818 /* PageItem.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1442,6 +1445,7 @@
 				2996F14D1F6CA743005C33AE /* UIViewController.swift in Sources */,
 				296421991F70C1F900EB363B /* EmptyView.swift in Sources */,
 				291EC9DF1F7053C50004EDD0 /* NavigationController.swift in Sources */,
+				293248941F89F3C6008A9818 /* PageItem.swift in Sources */,
 				29C9F5F91F720BD30025C494 /* FloatLabelCell.swift in Sources */,
 				2912CD361F6A853300C6CBE3 /* TransactionsViewModel.swift in Sources */,
 				297800521F71FDCF003185C1 /* FormAppearance.swift in Sources */,
