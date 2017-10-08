@@ -57,7 +57,7 @@ class ImportWalletViewController: FormViewController {
                         .font(UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular)),
                         .lineHeightMultiple(1.25)
                     )
-                    view.logoImageView.image = R.image.create_wallet()
+                    view.logoImageView.image = R.image.create_wallet_import()
                 }
                 $0.header = header
             }
