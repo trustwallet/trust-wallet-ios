@@ -38,14 +38,14 @@ class CreateWalletViewController: FormViewController {
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Demo", style: .done, target: self, action: #selector(self.demo))
             }
         }
-       if OnePasswordExtension.shared().isAppExtensionAvailable() {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-                image: R.image.onepasswordButton(),
-                style: .done,
-                target: self,
-                action: #selector(onePasswordCreate)
-            )
-       }
+//       if OnePasswordExtension.shared().isAppExtensionAvailable() {
+//            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+//                image: R.image.onepasswordButton(),
+//                style: .done,
+//                target: self,
+//                action: #selector(onePasswordCreate)
+//            )
+//       }
 
         form +++
             Section {

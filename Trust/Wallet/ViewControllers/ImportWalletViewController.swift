@@ -37,14 +37,14 @@ class ImportWalletViewController: FormViewController {
 
         title = viewModel.title
 
-        if OnePasswordExtension.shared().isAppExtensionAvailable() {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-                image: R.image.onepasswordButton(),
-                style: .done,
-                target: self,
-                action: #selector(onePasswordImport)
-            )
-        }
+//        if OnePasswordExtension.shared().isAppExtensionAvailable() {
+//            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+//                image: R.image.onepasswordButton(),
+//                style: .done,
+//                target: self,
+//                action: #selector(onePasswordImport)
+//            )
+//        }
 
         form
             +++ Section {
