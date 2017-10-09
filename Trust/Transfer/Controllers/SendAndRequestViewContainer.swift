@@ -30,6 +30,7 @@ class SendAndRequestViewContainer: UIViewController {
 
     lazy var  segment: UISegmentedControl = {
         let segment =  UISegmentedControl(frame: .zero)
+        segment.translatesAutoresizingMaskIntoConstraints = false
         segment.insertSegment(withTitle: "Send", at: 0, animated: false)
         segment.insertSegment(withTitle: "Request", at: 1, animated: false)
         segment.addTarget(self, action: #selector(segmentChange), for: .valueChanged)
