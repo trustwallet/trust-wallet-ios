@@ -4,6 +4,12 @@ import Foundation
 import UIKit
 
 func applyStyle() {
+
+    if #available(iOS 11, *) {
+    } else {
+        UINavigationBar.appearance().isTranslucent = false
+    }
+
     UINavigationBar.appearance().tintColor = Colors.blue
 
     UINavigationBar.appearance().titleTextAttributes = [
