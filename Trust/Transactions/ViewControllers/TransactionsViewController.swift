@@ -80,6 +80,12 @@ class TransactionsViewController: UIViewController {
         stackView.distribution = .fillEqually
         view.addSubview(stackView)
 
+        let dividerLine = UIView()
+        dividerLine.translatesAutoresizingMaskIntoConstraints = false
+        dividerLine.backgroundColor = .white
+        dividerLine.alpha = 0.3
+        stackView.addSubview(dividerLine)
+
         NSLayoutConstraint.activate([
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -89,6 +95,11 @@ class TransactionsViewController: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            dividerLine.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
+            dividerLine.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 8),
+            dividerLine.widthAnchor.constraint(equalToConstant: 0.5),
+            dividerLine.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: -8),
         ])
 
         dataCoordinator.delegate = self
