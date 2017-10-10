@@ -98,6 +98,7 @@ extension TransactionCoordinator: SettingsCoordinatorDelegate {
         switch action {
         case .RPCServer:
             clean()
+            delegate?.didRestart(with: account, in: self)
         case .exportPrivateKey:
             break
         case .donate(let address):
@@ -138,7 +139,6 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
 
     func clean() {
         dataCoordinator.storage.deleteAll()
-        delegate?.didRestart(with: account, in: self)
     }
 }
 
@@ -148,8 +148,8 @@ extension TransactionCoordinator: AccountsCoordinatorDelegate {
     }
 
     func didSelectAccount(account: Account, in coordinator: AccountsCoordinator) {
-        delegate?.didChangeAccount(to: account, in: self)
         clean()
+        delegate?.didChangeAccount(to: account, in: self)
     }
 
     func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator) {
