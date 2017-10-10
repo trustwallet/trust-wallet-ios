@@ -51,6 +51,11 @@ class SendAndRequestViewContainer: UIViewController {
         navigationItem.titleView = segment
         view.backgroundColor = .white
 
+        if case let .send(destination) = flow {
+            sendController.addressRow?.value = destination?.address
+            sendController.addressRow?.updateCell()
+        }
+
         updateTo(flow: flow)
     }
 
@@ -62,8 +67,7 @@ class SendAndRequestViewContainer: UIViewController {
 
     func updateTo(flow: PaymentFlow) {
         switch flow {
-        case .send(let destination):
-            sendController.addressRow?.value = destination?.address
+        case .send:
             add(asChildViewController: sendController)
             remove(asChildViewController: requestController)
             navigationItem.rightBarButtonItem = UIBarButtonItem(
