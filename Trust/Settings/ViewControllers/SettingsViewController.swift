@@ -4,6 +4,7 @@ import UIKit
 import Eureka
 import SafariServices
 import VENTouchLock
+import StoreKit
 
 enum SettingsAction {
     case exportPrivateKey
@@ -106,6 +107,21 @@ class SettingsViewController: FormViewController {
                 value: "https://t.me/joinchat/AAMtrQ_wtd918mm_mU0BRQ",
                 image: R.image.settings_telegram()
             )
+
+            +++ Section("Support")
+
+            <<< AppFormAppearance.button { button in
+                button.title = "Rate Us on App Store"
+            }
+            .onCellSelection { _ in
+                if #available(iOS 10.3, *) {
+                    SKStoreReviewController.requestReview()
+                } else {
+                    UIApplication.shared.openURL(URL(string:"itms-apps://itunes.apple.com/app/id1288339409")!)
+                }
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_rating()
+            }
 
             +++ Section()
 
