@@ -54,6 +54,7 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
         case .exportPrivateKey:
             export()
         case .RPCServer: break
+        case .donate: break
         }
         delegate?.didUpdate(action: action, in: self)
     }

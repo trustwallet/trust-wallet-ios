@@ -62,7 +62,8 @@ class SendAndRequestViewContainer: UIViewController {
 
     func updateTo(flow: PaymentFlow) {
         switch flow {
-        case .send:
+        case .send(let destination):
+            sendController.addressRow?.value = destination?.address
             add(asChildViewController: sendController)
             remove(asChildViewController: requestController)
             navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -124,9 +125,9 @@ extension SendAndRequestViewContainer: TransactionConfigurationViewControllerDel
 extension PaymentFlow {
     init(selectedSegmentIndex: Int) {
         switch selectedSegmentIndex {
-        case 0: self = .send
+        case 0: self = .send(destination: .none)
         case 1: self = .request
-        default: self = .send
+        default: self = .send(destination: .none)
         }
     }
 

@@ -97,7 +97,12 @@ extension TransactionCoordinator: SettingsCoordinatorDelegate {
         switch action {
         case .RPCServer:
             clean()
-        case .exportPrivateKey: break
+        case .exportPrivateKey:
+            break
+        case .donate(let address):
+            coordinator.navigationController.dismiss(animated: true) {
+                self.showPaymentFlow(for: .send(destination: address), account: self.account)
+            }
         }
     }
 
@@ -108,7 +113,7 @@ extension TransactionCoordinator: SettingsCoordinatorDelegate {
 
 extension TransactionCoordinator: TransactionsViewControllerDelegate {
     func didPressSend(for account: Account, in viewController: TransactionsViewController) {
-        showPaymentFlow(for: .send, account: account)
+        showPaymentFlow(for: .send(destination: .none), account: account)
     }
 
     func didPressRequest(for account: Account, in viewController: TransactionsViewController) {

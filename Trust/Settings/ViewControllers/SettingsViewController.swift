@@ -9,6 +9,7 @@ import StoreKit
 enum SettingsAction {
     case exportPrivateKey
     case RPCServer
+    case donate(address: Address)
 }
 
 protocol SettingsViewControllerDelegate: class {
@@ -16,6 +17,10 @@ protocol SettingsViewControllerDelegate: class {
 }
 
 class SettingsViewController: FormViewController {
+
+    struct Values {
+        static let donationAddress = Address(address: "0x9f8284ce2cf0c8ce10685f537b1fff418104a317")
+    }
 
     private var config = Config()
 
@@ -112,8 +117,7 @@ class SettingsViewController: FormViewController {
 
             <<< AppFormAppearance.button { button in
                 button.title = "Rate Us on App Store"
-            }
-            .onCellSelection { _ in
+            }.onCellSelection { _ in
                 if #available(iOS 10.3, *) {
                     SKStoreReviewController.requestReview()
                 } else {
@@ -121,6 +125,14 @@ class SettingsViewController: FormViewController {
                 }
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_rating()
+            }
+
+            <<< AppFormAppearance.button { button in
+                button.title = "Donate"
+            }.onCellSelection { [unowned self] _ in
+                self.run(action: .donate(address: Values.donationAddress))
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_donate()
             }
 
             +++ Section()
