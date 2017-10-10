@@ -44,7 +44,7 @@ class TransactionCoordinatorTests: XCTestCase {
             rootNavigationController: FakeNavigationController()
         )
 
-        coordinator.showPaymentFlow(for: .send, account: .make())
+        coordinator.showPaymentFlow(for: .send(destination: .none), account: .make())
 
         let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
 
