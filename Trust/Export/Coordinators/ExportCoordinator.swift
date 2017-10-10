@@ -56,20 +56,30 @@ class ExportCoordinator {
             rootNavigationController.displayError(error: error)
         }
     }
+
+    func presentShareActivity(for account: Account, password: String) {
+        self.presentActivityViewController(for: account, password: password, completionHandler: {
+            self.finish()
+        })
+    }
 }
 
 extension ExportCoordinator: AccountsViewControllerDelegate {
     func didSelectAccount(account: Account, in viewController: AccountsViewController) {
-        let verifyController = UIAlertController.askPassword(title: "Enter password to your wallet") { result in
-            switch result {
-            case .success(let password):
-                self.presentActivityViewController(for: account, password: password, completionHandler: {
-                    self.finish()
-                })
-            case .failure: break
+
+        if let password = keystore.getPassword(for: account) {
+            self.presentShareActivity(for: account, password: password)
+        } else {
+            //TODO: Remove this part in future versions.
+            let verifyController = UIAlertController.askPassword(title: "Enter password to your wallet") { result in
+                switch result {
+                case .success(let password):
+                    self.presentShareActivity(for: account, password: password)
+                case .failure: break
+                }
             }
+            rootNavigationController.present(verifyController, animated: true, completion: nil)
         }
-        rootNavigationController.present(verifyController, animated: true, completion: nil)
     }
 
     func didDeleteAccount(account: Account, in viewController: AccountsViewController) {
