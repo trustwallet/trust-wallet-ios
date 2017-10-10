@@ -17,7 +17,15 @@ extension UIView {
         if #available(iOS 11, *) {
             return safeAreaLayoutGuide
         } else {
-            return readableContentGuide
+            return layoutMarginsGuide
+        }
+    }
+
+    var layoutInsets: UIEdgeInsets {
+        if #available(iOS 11, *) {
+            return safeAreaInsets
+        } else {
+            return layoutMargins
         }
     }
 }
