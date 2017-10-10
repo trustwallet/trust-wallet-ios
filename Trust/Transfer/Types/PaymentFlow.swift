@@ -3,6 +3,6 @@
 import Foundation
 
 enum PaymentFlow {
-    case send
+    case send(destination: Address?)
     case request
 }
