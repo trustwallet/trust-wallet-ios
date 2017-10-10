@@ -24,10 +24,8 @@ class InfoHeaderView: UIView {
 
         NSLayoutConstraint.activate([
             logoImageView.widthAnchor.constraint(equalToConstant: 70),
-            logoImageView.heightAnchor.constraint(equalToConstant: 70),
-            logoImageView.topAnchor.constraint(equalTo: topAnchor),
+            logoImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             logoImageView.trailingAnchor.constraint(equalTo: label.leadingAnchor, constant: -20),
-            logoImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             logoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
 
             label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
