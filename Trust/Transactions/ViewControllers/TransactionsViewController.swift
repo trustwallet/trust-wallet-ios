@@ -86,15 +86,26 @@ class TransactionsViewController: UIViewController {
         dividerLine.alpha = 0.3
         stackView.addSubview(dividerLine)
 
+        if #available(iOS 11, *) {
+            let guide = view.safeAreaLayoutGuide
+            NSLayoutConstraint.activate([
+                stackView.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+                stackView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
+                stackView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
+            ])
+        } else {
+            NSLayoutConstraint.activate([
+                stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
+        }
+
         NSLayoutConstraint.activate([
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: stackView.topAnchor),
-
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
             dividerLine.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
             dividerLine.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 8),
