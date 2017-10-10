@@ -95,6 +95,11 @@ extension AppCoordinator: TransactionCoordinatorDelegate {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         showTransactions(for: account)
     }
+
+    func didRestart(with account: Account, in coordinator: TransactionCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        showTransactions(for: account)
+    }
 }
 
 extension AppCoordinator: WalletCoordinatorDelegate {

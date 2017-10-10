@@ -7,6 +7,7 @@ import Result
 protocol TransactionCoordinatorDelegate: class {
     func didCancel(in coordinator: TransactionCoordinator)
     func didChangeAccount(to account: Account, in coordinator: TransactionCoordinator)
+    func didRestart(with account: Account, in coordinator: TransactionCoordinator)
 }
 
 class TransactionCoordinator: Coordinator {
@@ -137,6 +138,7 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
 
     func clean() {
         dataCoordinator.storage.deleteAll()
+        delegate?.didRestart(with: account, in: self)
     }
 }
 
