@@ -12,4 +12,12 @@ extension UIView {
             leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin),
         ])
     }
+
+    var layoutGuide: UILayoutGuide {
+        if #available(iOS 11, *) {
+            return safeAreaLayoutGuide
+        } else {
+            return readableContentGuide
+        }
+    }
 }
