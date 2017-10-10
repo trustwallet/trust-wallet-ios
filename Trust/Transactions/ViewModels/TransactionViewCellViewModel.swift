@@ -49,7 +49,7 @@ struct TransactionViewCellViewModel {
     }
 
     var amountFont: UIFont {
-        return UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+        return UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
     }
 
     var backgroundColor: UIColor {
