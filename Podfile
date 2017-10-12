@@ -23,6 +23,7 @@ target 'Trust' do
   pod 'VENTouchLock'
   pod '1PasswordExtension'
   pod 'BulletinBoard', :git=>'https://github.com/alexaubry/BulletinBoard'
+  pod 'Lokalise'
 
   target 'TrustTests' do
     inherit! :search_paths

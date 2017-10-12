@@ -12,6 +12,8 @@ PODS:
   - JSONRPCKit (2.0.0):
     - Result (~> 3.0)
   - KeychainSwift (8.0.2)
+  - Lokalise (0.6.3):
+    - zipzap (= 8.1.1)
   - MBProgressHUD (1.0.0)
   - QRCodeReaderViewController (4.0.2)
   - R.swift (3.3.0):
@@ -29,6 +31,7 @@ PODS:
   - SwiftLint (0.20.1)
   - VENTouchLock (1.12.0):
     - SSKeychain (~> 1.0)
+  - zipzap (8.1.1)
 
 DEPENDENCIES:
   - 1PasswordExtension
@@ -40,6 +43,7 @@ DEPENDENCIES:
   - Geth
   - JSONRPCKit (from `https://github.com/bricklife/JSONRPCKit.git`)
   - KeychainSwift
+  - Lokalise
   - MBProgressHUD
   - QRCodeReaderViewController
   - R.swift
@@ -86,6 +90,7 @@ SPEC CHECKSUMS:
   Geth: a2a2b98bbe0605064f1dd97b8b1cff8b5c0e2701
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
   KeychainSwift: 213db04dfe7244988e61f77c72a2afb2f775954a
+  Lokalise: cda831fccdc4c24889f6e86c572cbcaa1fe47659
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   R.swift: bde9704d50ff36820f49e266bc88ef545e1e9b36
@@ -98,7 +103,8 @@ SPEC CHECKSUMS:
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: f60095dc173a3f3ec505bb34f5229c3dfd779a54
   VENTouchLock: 20d378b9c6173e2c054448aeb3fb2f40822a9f3f
+  zipzap: 940162d9c9c60472c2eab341385e4214da0fdf1c
 
-PODFILE CHECKSUM: 7d3a2ea3d51159be38fb0f13e2c48443ef93a748
+PODFILE CHECKSUM: d682e929f8ab11010ec9c1e538f84960e7d97054
 
 COCOAPODS: 1.3.1
