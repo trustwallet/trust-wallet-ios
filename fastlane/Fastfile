@@ -17,16 +17,15 @@ default_platform :ios
 
 platform :ios do
   before_all do
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-    cocoapods
-    increment_build_number
-
   end
 
   desc "Deploy a new version to the App Store"
   lane :release do
+    cocoapods
+    increment_build_number
     ensure_git_branch()
     increment_version_number(bump_type: "patch")
+    sh "cd .. && sh scripts/localizer.sh Trust " << ENV['LOKALISE_TOKEN']
     snapshot
     frameit(white: true)
     gym(scheme: "Trust")
