@@ -50,7 +50,7 @@ struct BalanceViewModel {
     var attributedAmount: NSAttributedString {
         return NSAttributedString(
             string: amountString,
-            attributes: attributed(primary: config.isFiatPrimaryCurrency)
+            attributes: attributes(primary: config.isFiatPrimaryCurrency)
         )
     }
 
@@ -58,20 +58,33 @@ struct BalanceViewModel {
         guard let currencyAmount = currencyAmount else { return nil }
         return NSAttributedString(
             string: currencyAmount,
-            attributes: attributed(primary: !config.isFiatPrimaryCurrency)
+            attributes: attributes(primary: !config.isFiatPrimaryCurrency)
         )
     }
 
-    private func attributed(primary: Bool) -> [String: AnyObject] {
-        guard primary else {
-            return [
-                NSFontAttributeName: UIFont.systemFont(ofSize: 13, weight: UIFontWeightRegular),
-                NSForegroundColorAttributeName: Colors.darkGray,
-            ]
+    private func attributes(primary: Bool) -> [String: AnyObject] {
+        switch (primary, rate, balance) {
+        case (true, .none, .none):
+            return largeLabelAttributed
+        case (false, .none, .none), (false, .none, .some), (false, .some, .none):
+            return largeLabelAttributed
+        case (false, .some, .some):
+            return smallLabelAttributes
+        default: return largeLabelAttributed
         }
+    }
+
+    var largeLabelAttributed: [String: AnyObject] {
         return [
             NSFontAttributeName: UIFont.systemFont(ofSize: 18, weight: UIFontWeightSemibold),
             NSForegroundColorAttributeName: Colors.lightBlack,
+        ]
+    }
+
+    var smallLabelAttributes: [String: AnyObject] {
+        return [
+            NSFontAttributeName: UIFont.systemFont(ofSize: 13, weight: UIFontWeightRegular),
+            NSForegroundColorAttributeName: Colors.darkGray,
         ]
     }
 }
