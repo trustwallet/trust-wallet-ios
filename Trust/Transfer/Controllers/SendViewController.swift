@@ -131,6 +131,7 @@ class SendViewController: FormViewController {
                         title: "Sent \(amountString) \(self.transferType.symbol) to \(self.account.address.address)",
                         message: "TransactionID: \(transaction.id)"
                     )
+                    self.clear()
                 case .failure(let error):
                     self.displayError(error: error)
                 }
