@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1D2831CD94641E5166E3A798 /* Pods_TrustUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */; };
 		290B2B541F8F50030053C83E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 290B2B561F8F50030053C83E /* Localizable.strings */; };
-		290B2B591F8F52300053C83E /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B581F8F52300053C83E /* Functions.swift */; };
 		290B2B5B1F8F551E0053C83E /* LokaliseInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B5A1F8F551E0053C83E /* LokaliseInitializer.swift */; };
 		290FD8BB1F7BFE7400548896 /* GetBlockByNumberRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290FD8BA1F7BFE7400548896 /* GetBlockByNumberRequest.swift */; };
 		2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CCF81F6A830700C6CBE3 /* AppDelegate.swift */; };
@@ -173,7 +172,6 @@
 		0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		290B2B551F8F50030053C83E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		290B2B571F8F500A0053C83E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		290B2B581F8F52300053C83E /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		290B2B5A1F8F551E0053C83E /* LokaliseInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LokaliseInitializer.swift; sourceTree = "<group>"; };
 		290FD8BA1F7BFE7400548896 /* GetBlockByNumberRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockByNumberRequest.swift; sourceTree = "<group>"; };
 		2912CCF51F6A830700C6CBE3 /* Trust.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trust.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -833,7 +831,6 @@
 				29358DA81F79FD1C00925D61 /* CALayer.swift */,
 				29E2E3391F7A008C000CF94A /* UIView.swift */,
 				29BBB36A1F7BCEDD006BC91B /* GethBigInt.swift */,
-				290B2B581F8F52300053C83E /* Functions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1510,7 +1507,6 @@
 				294FE5661F72442D00754F31 /* Address.swift in Sources */,
 				2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */,
 				29A0E1851F706B8C00BAAAED /* String.swift in Sources */,
-				290B2B591F8F52300053C83E /* Functions.swift in Sources */,
 				296AF9A71F736EC70058AF78 /* RPCServers.swift in Sources */,
 				296AF9A91F737F6F0058AF78 /* SendRawTransactionRequest.swift in Sources */,
 				2912CD2F1F6A83A100C6CBE3 /* ImportWalletViewController.swift in Sources */,
