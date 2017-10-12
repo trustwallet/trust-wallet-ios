@@ -24,6 +24,10 @@ class TransactionCoordinator: Coordinator {
         return coordinator
     }()
 
+    lazy var balanceCoordinator: BalanceCoordinator = {
+        return BalanceCoordinator(account: self.account)
+    }()
+
     weak var delegate: TransactionCoordinatorDelegate?
 
     lazy var settingsCoordinator: SettingsCoordinator = {
@@ -50,7 +54,11 @@ class TransactionCoordinator: Coordinator {
     }
 
     private func makeTransactionsController(with account: Account) -> TransactionsViewController {
-        let controller = TransactionsViewController(account: account, dataCoordinator: dataCoordinator)
+        let controller = TransactionsViewController(
+            account: account,
+            dataCoordinator: dataCoordinator,
+            balanceCoordinator: balanceCoordinator
+        )
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.settings_icon(), landscapeImagePhone: R.image.settings_icon(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showSettings))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.accountsSwitch(), landscapeImagePhone: R.image.accountsSwitch(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showAccounts))
         controller.delegate = self
