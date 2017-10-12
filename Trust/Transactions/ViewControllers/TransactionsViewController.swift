@@ -47,10 +47,16 @@ class TransactionsViewController: UIViewController {
 
     weak var delegate: TransactionsViewControllerDelegate?
     let dataCoordinator: TransactionDataCoordinator
+    let balanceCoordinator: BalanceCoordinator
 
-    init(account: Account, dataCoordinator: TransactionDataCoordinator) {
+    init(
+        account: Account,
+        dataCoordinator: TransactionDataCoordinator,
+        balanceCoordinator: BalanceCoordinator
+    ) {
         self.account = account
         self.dataCoordinator = dataCoordinator
+        self.balanceCoordinator = balanceCoordinator
 
         super.init(nibName: nil, bundle: nil)
 
@@ -105,6 +111,9 @@ class TransactionsViewController: UIViewController {
         dataCoordinator.delegate = self
         dataCoordinator.start()
 
+        balanceCoordinator.delegate = self
+        balanceCoordinator.start()
+
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
 
@@ -116,7 +125,7 @@ class TransactionsViewController: UIViewController {
         emptyView = TransactionsEmptyView(insets: insets, onRetry: fetch, onWalletPress: request)
 
         navigationItem.titleView = titleView
-        setTitlte(text: viewModel.title)
+        titleView.configure(viewModel: BalanceViewModel())
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -129,15 +138,6 @@ class TransactionsViewController: UIViewController {
         super.viewDidAppear(animated)
     }
 
-    func setTitlte(text: String) {
-        titleView.title = text
-    }
-
-    func configureBalance(_ balance: Balance) {
-        let viewModel = BalanceViewModel(balance: balance)
-        setTitlte(text: viewModel.title)
-    }
-
     func pullToRefresh() {
         refreshControl.beginRefreshing()
         fetch()
@@ -146,18 +146,11 @@ class TransactionsViewController: UIViewController {
     func fetch() {
         startLoading()
         fetchBalance()
-        dataCoordinator.fetch()
     }
 
     func fetchBalance() {
-        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: account.address.address)))
-        Session.send(request) { [weak self] result in
-            switch result {
-            case .success(let balance):
-                self?.configureBalance(balance)
-            case .failure: break
-            }
-        }
+        balanceCoordinator.fetch()
+        dataCoordinator.fetch()
     }
 
     @objc func send() {
@@ -239,5 +232,11 @@ extension TransactionsViewController: UITableViewDataSource {
         header.textLabel?.font = viewModel.headerTitleFont
         header.layer.addBorder(edge: .top, color: viewModel.headerBorderColor, thickness: 0.5)
         header.layer.addBorder(edge: .bottom, color: viewModel.headerBorderColor, thickness: 0.5)
+    }
+}
+
+extension TransactionsViewController: BalanceCoordinatorDelegate {
+    func didUpdate(viewModel: BalanceViewModel) {
+        titleView.configure(viewModel: viewModel)
     }
 }
