@@ -4,3 +4,10 @@
 "Generic.Refresh" = "Refresh";
 "Request" = "Request";
 "Send" = "Send";
+"Welcome.CodeOpenSource" = "Code is open sourced (GPL-3.0 license) and fully audited.";
+"Welcome.FastExperience" = "The fastest Ethereum wallet experience on mobile";
+"Welcome.FullyTransparent" = "Fully transparent";
+"Welcome.GetStarted" = "GET STARTED";
+"Welcome.PrivateAndSecure" = "Private & Secure";
+"Welcome.PrivateKeysNeverLeaveDevice" = "Private keys never leave your device.";
+"Welcome.UltraReliable" = "Ultra Reliable";

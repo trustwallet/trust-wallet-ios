@@ -20,25 +20,25 @@ class WelcomeViewController: UIViewController {
 
         let button = Button(size: .large, style: .solid)
         button.frame = CGRect(x: 0, y: 0, width: 300, height: 64)
-        button.setTitle("GET STARTED", for: .normal)
+        button.setTitle(NSLocalizedString("Welcome.GetStarted", value: "GET STARTED", comment: ""), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
         button.layer.cornerRadius = 5
         button.backgroundColor = Colors.darkBlue
 
         let introView = EAIntroView(frame: self.view.frame, andPages: [
             constructPage(
-                title: "Private & Secure",
-                description: "Private keys never leave your device.",
+                title: NSLocalizedString("Welcome.PrivateAndSecure", value: "Private & Secure", comment: ""),
+                description: NSLocalizedString("Welcome.PrivateKeysNeverLeaveDevice", value: "Private keys never leave your device.", comment: ""),
                 image: R.image.onboarding_lock()
             ),
             constructPage(
-                title: "Fully transparent",
-                description: "Code is open sourced (GPL-3.0 license) and fully audited.",
+                title: NSLocalizedString("Welcome.FullyTransparent", value: "Fully transparent", comment: ""),
+                description: NSLocalizedString("Welcome.CodeOpenSource", value: "Code is open sourced (GPL-3.0 license) and fully audited.", comment: ""),
                 image: R.image.onboarding_open_source()
             ),
             constructPage(
-                title: "Ultra Reliable",
-                description: "The fastest Ethereum wallet experience on mobile",
+                title: NSLocalizedString("Welcome.UltraReliable", value: "Ultra Reliable", comment: ""),
+                description: NSLocalizedString("Welcome.FastExperience", value: "The fastest Ethereum wallet experience on mobile", comment: ""),
                 image: R.image.onboarding_rocket()
             ),
         ])

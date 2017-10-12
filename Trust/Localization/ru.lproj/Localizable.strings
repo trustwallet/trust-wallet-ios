@@ -4,3 +4,10 @@
 "Generic.Refresh" = "Обновить";
 "Request" = "Запросить";
 "Send" = "Отправить";
+"Welcome.CodeOpenSource" = "Код является открытым исходным кодом (лицензия GPL-3.0) и полностью проверен.";
+"Welcome.FastExperience" = "Самый быстрый опыт работы с кошельком Ethereum на мобильных устройствах";
+"Welcome.FullyTransparent" = "Полностью прозрачный";
+"Welcome.GetStarted" = "НАЧАТЬ";
+"Welcome.PrivateAndSecure" = "Конфиденциальный и Безопасный";
+"Welcome.PrivateKeysNeverLeaveDevice" = "Приватные ключи никогда не оставляйте устройство.";
+"Welcome.UltraReliable" = "Сверх надежный";
