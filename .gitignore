@@ -70,3 +70,7 @@ fastlane/test_output
 #R
 *.generated.swift
 
+#Localization
+Trust.zip
+Localizable.strings
+
