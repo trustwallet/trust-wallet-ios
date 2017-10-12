@@ -15,9 +15,6 @@ func applyStyle() {
     UINavigationBar.appearance().titleTextAttributes = [
         NSForegroundColorAttributeName: Colors.black,
     ]
-
-    BalanceTitleView.appearance().titleColor = Colors.black
-    BalanceTitleView.appearance().titleFont = UIFont.systemFont(ofSize: 17, weight: UIFontWeightSemibold)
 }
 
 struct Colors {
@@ -27,6 +24,7 @@ struct Colors {
     static let green = UIColor(hex: "2fbb4f")
     static let lightGray = UIColor.lightGray
     static let gray = UIColor.gray
+    static let darkGray = UIColor(hex: "606060")
     static let black = UIColor(hex: "313849")
     static let lightBlack = UIColor(hex: "313849")
 }
