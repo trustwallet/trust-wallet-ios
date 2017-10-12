@@ -27,17 +27,17 @@ class TransactionsEmptyView: UIView {
         backgroundColor = .white
 
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = Localized("Transactions.NoTransactions", value: "No Transactions")
+        label.text = NSLocalizedString("Transactions.NoTransactions", value: "No Transactions", comment: "")
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = nil
 
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(Localized("Generic.Refresh", value: "Refresh"), for: .normal)
+        button.setTitle(NSLocalizedString("Generic.Refresh", value: "Refresh", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(retry), for: .touchUpInside)
 
         walletButton.translatesAutoresizingMaskIntoConstraints = false
-        walletButton.setTitle(Localized("Transactions.SeeMyAddress", value: "See my address"), for: .normal)
+        walletButton.setTitle(NSLocalizedString("Transactions.SeeMyAddress", value: "See my address", comment: ""), for: .normal)
         walletButton.titleLabel?.adjustsFontSizeToFitWidth = true
         walletButton.addTarget(self, action: #selector(seeWallet), for: .touchUpInside)
 
