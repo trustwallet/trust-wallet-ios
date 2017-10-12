@@ -31,10 +31,6 @@ struct TransactionsViewModel {
         }
     }
 
-    var title: String {
-        return "~ ETH"
-    }
-
     var backgroundColor: UIColor {
         return .white
     }
