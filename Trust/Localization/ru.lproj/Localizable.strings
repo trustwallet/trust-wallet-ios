@@ -1,2 +1,6 @@
-"Generic.Cancel" = "Отмена";
+"Generic.Cancel" = "Отменить";
 "Transactions.SeeMyAddress" = "Увидеть мой адрес";
+"Transactions.NoTransactions" = "Нет транзакций";
+"Generic.Refresh" = "Обновить";
+"Request" = "Запросить";
+"Send" = "Отправить";

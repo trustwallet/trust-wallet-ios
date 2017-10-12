@@ -31,7 +31,7 @@ class TransactionsViewController: UIViewController {
         let sendButton = Button(size: .extraLarge, style: .squared)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
-        sendButton.setTitle("Send", for: .normal)
+        sendButton.setTitle(NSLocalizedString("Send", value: "Send", comment: ""), for: .normal)
         sendButton.backgroundColor = Colors.blue
         return sendButton
     }()
@@ -41,7 +41,7 @@ class TransactionsViewController: UIViewController {
         requestButton.translatesAutoresizingMaskIntoConstraints = false
         requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
         requestButton.backgroundColor = Colors.blue
-        requestButton.setTitle("Request", for: .normal)
+        requestButton.setTitle(NSLocalizedString("Request", value: "Request", comment: ""), for: .normal)
         return requestButton
     }()
 

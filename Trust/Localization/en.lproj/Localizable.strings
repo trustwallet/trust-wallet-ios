@@ -1,2 +1,6 @@
 "Generic.Cancel" = "Cancel";
 "Transactions.SeeMyAddress" = "See my address";
+"Transactions.NoTransactions" = "No Transactions";
+"Generic.Refresh" = "Refresh";
+"Request" = "Request";
+"Send" = "Send";
