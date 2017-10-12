@@ -27,17 +27,18 @@ class TransactionsEmptyView: UIView {
         backgroundColor = .white
 
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "No Transactions"
+        label.text = Localized("Transactions.NoTransactions", value: "No Transactions")
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = nil
 
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Refresh", for: .normal)
+        button.setTitle(Localized("Generic.Refresh", value: "Refresh"), for: .normal)
         button.addTarget(self, action: #selector(retry), for: .touchUpInside)
 
         walletButton.translatesAutoresizingMaskIntoConstraints = false
-        walletButton.setTitle("See my address", for: .normal)
+        walletButton.setTitle(Localized("Transactions.SeeMyAddress", value: "See my address"), for: .normal)
+        walletButton.titleLabel?.adjustsFontSizeToFitWidth = true
         walletButton.addTarget(self, action: #selector(seeWallet), for: .touchUpInside)
 
         let stackView = UIStackView(arrangedSubviews: [
@@ -59,8 +60,8 @@ class TransactionsEmptyView: UIView {
             stackView.leadingAnchor.constraint(equalTo: readableContentGuide.leadingAnchor),
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            button.widthAnchor.constraint(equalToConstant: 160),
-            walletButton.widthAnchor.constraint(equalToConstant: 160),
+            button.widthAnchor.constraint(equalToConstant: 180),
+            walletButton.widthAnchor.constraint(equalToConstant: 180),
         ])
     }
 
