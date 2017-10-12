@@ -13,7 +13,7 @@ class LoadingView: UIView {
     let insets: UIEdgeInsets
 
     init(
-        message: String = "Loading...",
+        message: String = NSLocalizedString("Generic.Loading", value: "Loading", comment: ""),
         image: UIImage? = .none,
         insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     ) {

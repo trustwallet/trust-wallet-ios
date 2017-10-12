@@ -64,7 +64,7 @@ class SendViewController: FormViewController {
                 button.addTarget(self, action: #selector(self.openReader), for: .touchUpInside)
 
                 cell.textField.textAlignment = .left
-                cell.textField.placeholder = "Ethereum address"
+                cell.textField.placeholder = "\(self.viewModel.symbol) " + NSLocalizedString("Send.AddressPlaceholder", value: "Address", comment: "")
                 cell.textField.rightView = button
                 cell.textField.rightViewMode = .always
             }
@@ -74,7 +74,7 @@ class SendViewController: FormViewController {
                 $0.validationOptions = .validatesOnDemand
             }.cellUpdate { cell, _ in
                 cell.textField.textAlignment = .left
-                cell.textField.placeholder = "ETH Amount"
+                cell.textField.placeholder = NSLocalizedString("Send.AmountPlaceholder", value: "Amount", comment: "")
                 cell.textField.keyboardType = .decimalPad
             }
 
@@ -84,7 +84,7 @@ class SendViewController: FormViewController {
                 })
             }
 
-            <<< AppFormAppearance.button("Additional configuration") {
+            <<< AppFormAppearance.button(NSLocalizedString("Send.AdditionalConfiguration", value: "Additional Configuration", comment: "")) {
                 $0.title = $0.tag
             }.onCellSelection { [unowned self] (_, _) in
                 self.delegate?.didPressConfiguration(in: self)

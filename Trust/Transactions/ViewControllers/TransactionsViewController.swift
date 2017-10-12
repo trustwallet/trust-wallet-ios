@@ -31,7 +31,7 @@ class TransactionsViewController: UIViewController {
         let sendButton = Button(size: .extraLarge, style: .squared)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
-        sendButton.setTitle(NSLocalizedString("Send", value: "Send", comment: ""), for: .normal)
+        sendButton.setTitle(NSLocalizedString("Generic.Send", value: "Send", comment: ""), for: .normal)
         sendButton.backgroundColor = Colors.blue
         return sendButton
     }()
@@ -41,7 +41,7 @@ class TransactionsViewController: UIViewController {
         requestButton.translatesAutoresizingMaskIntoConstraints = false
         requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
         requestButton.backgroundColor = Colors.blue
-        requestButton.setTitle(NSLocalizedString("Request", value: "Request", comment: ""), for: .normal)
+        requestButton.setTitle(NSLocalizedString("Generic.Request", value: "Request", comment: ""), for: .normal)
         return requestButton
     }()
 
@@ -69,7 +69,7 @@ class TransactionsViewController: UIViewController {
         view.addSubview(tableView)
 
         let tokensButton = Button(size: .extraLarge, style: .borderless)
-        tokensButton.setTitle("Show my tokens", for: .normal)
+        tokensButton.setTitle(NSLocalizedString("Transactions.ShowTokens", value: "Show my tokens", comment: ""), for: .normal)
         tokensButton.contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         tokensButton.setTitleColor(Colors.black, for: .normal)
         tokensButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium)

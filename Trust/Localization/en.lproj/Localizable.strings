@@ -2,8 +2,6 @@
 "Transactions.SeeMyAddress" = "See my address";
 "Transactions.NoTransactions" = "No Transactions";
 "Generic.Refresh" = "Refresh";
-"Request" = "Request";
-"Send" = "Send";
 "Welcome.CodeOpenSource" = "Code is open sourced (GPL-3.0 license) and fully audited.";
 "Welcome.FastExperience" = "The fastest Ethereum wallet experience on mobile";
 "Welcome.FullyTransparent" = "Fully transparent";
@@ -11,3 +9,13 @@
 "Welcome.PrivateAndSecure" = "Private & Secure";
 "Welcome.PrivateKeysNeverLeaveDevice" = "Private keys never leave your device.";
 "Welcome.UltraReliable" = "Ultra Reliable";
+"Send.AdditionalConfiguration" = "Additional Configuration";
+"Send.AddressPlaceholder" = "Address";
+"Send.AmountPlaceholder" = "Amount";
+"Generic.Request" = "Request";
+"Generic.Send" = "Send";
+"Transactions.ShowTokens" = "Show my tokens";
+"Generic.Empty" = "Empty";
+"Generic.Failed" = "Failed";
+"Generic.Retry" = "Retry";
+"Generic.Loading" = "Loading";

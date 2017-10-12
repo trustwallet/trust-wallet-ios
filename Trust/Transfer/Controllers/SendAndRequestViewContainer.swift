@@ -31,8 +31,8 @@ class SendAndRequestViewContainer: UIViewController {
     lazy var  segment: UISegmentedControl = {
         let segment =  UISegmentedControl(frame: .zero)
         segment.translatesAutoresizingMaskIntoConstraints = false
-        segment.insertSegment(withTitle: NSLocalizedString("Send", value: "Send", comment: ""), at: 0, animated: false)
-        segment.insertSegment(withTitle: NSLocalizedString("Request", value: "Request", comment: ""), at: 1, animated: false)
+        segment.insertSegment(withTitle: NSLocalizedString("Generic.Send", value: "Send", comment: ""), at: 0, animated: false)
+        segment.insertSegment(withTitle: NSLocalizedString("Generic.Request", value: "Request", comment: ""), at: 1, animated: false)
         segment.addTarget(self, action: #selector(segmentChange), for: .valueChanged)
         return segment
     }()
@@ -71,7 +71,7 @@ class SendAndRequestViewContainer: UIViewController {
             add(asChildViewController: sendController)
             remove(asChildViewController: requestController)
             navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: NSLocalizedString("Send", value: "Send", comment: ""),
+                title: NSLocalizedString("Generic.Send", value: "Send", comment: ""),
                 style: .done,
                 target: sendController,
                 action: #selector(SendViewController.send)

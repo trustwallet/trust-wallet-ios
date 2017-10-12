@@ -15,6 +15,10 @@ struct SendViewModel {
         return "Send \(transferType.symbol)"
     }
 
+    var symbol: String {
+        return transferType.symbol
+    }
+
     var backgroundColor: UIColor {
         return .white
     }
