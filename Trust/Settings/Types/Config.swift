@@ -6,6 +6,7 @@ struct Config {
 
     struct Keys {
         static let chainID = "chainID"
+        static let isFiatPrimaryCurrency = "isFiatPrimaryCurrency"
     }
 
     static let defaults = UserDefaults.standard
@@ -13,6 +14,12 @@ struct Config {
     var chainID: Int = Config.defaults.integer(forKey: Keys.chainID) {
         didSet {
             Config.defaults.set(chainID, forKey: Keys.chainID)
+        }
+    }
+
+    var isFiatPrimaryCurrency: Bool = Config.defaults.bool(forKey: Keys.isFiatPrimaryCurrency) {
+        didSet {
+            Config.defaults.set(isFiatPrimaryCurrency, forKey: Keys.isFiatPrimaryCurrency)
         }
     }
 
