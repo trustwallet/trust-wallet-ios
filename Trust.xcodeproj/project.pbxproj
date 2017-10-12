@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1D2831CD94641E5166E3A798 /* Pods_TrustUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */; };
+		290B2B541F8F50030053C83E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 290B2B561F8F50030053C83E /* Localizable.strings */; };
+		290B2B591F8F52300053C83E /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B581F8F52300053C83E /* Functions.swift */; };
+		290B2B5B1F8F551E0053C83E /* LokaliseInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B5A1F8F551E0053C83E /* LokaliseInitializer.swift */; };
 		290FD8BB1F7BFE7400548896 /* GetBlockByNumberRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290FD8BA1F7BFE7400548896 /* GetBlockByNumberRequest.swift */; };
 		2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CCF81F6A830700C6CBE3 /* AppDelegate.swift */; };
 		2912CD021F6A830700C6CBE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2912CD011F6A830700C6CBE3 /* Assets.xcassets */; };
@@ -168,6 +171,10 @@
 
 /* Begin PBXFileReference section */
 		0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		290B2B551F8F50030053C83E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		290B2B571F8F500A0053C83E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		290B2B581F8F52300053C83E /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		290B2B5A1F8F551E0053C83E /* LokaliseInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LokaliseInitializer.swift; sourceTree = "<group>"; };
 		290FD8BA1F7BFE7400548896 /* GetBlockByNumberRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockByNumberRequest.swift; sourceTree = "<group>"; };
 		2912CCF51F6A830700C6CBE3 /* Trust.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trust.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2912CCF81F6A830700C6CBE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -349,6 +356,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		290B2B511F8F4F840053C83E /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				290B2B561F8F50030053C83E /* Localizable.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		2912CCEC1F6A830700C6CBE3 = {
 			isa = PBXGroup;
 			children = (
@@ -374,6 +389,7 @@
 		2912CCF71F6A830700C6CBE3 /* Trust */ = {
 			isa = PBXGroup;
 			children = (
+				290B2B511F8F4F840053C83E /* Localization */,
 				29B9345A1F88457C009FCABB /* Authentication */,
 				29FC9BC31F830880000209CD /* Core */,
 				291ED0901F6FA5C800E7E93A /* Transfer */,
@@ -817,6 +833,7 @@
 				29358DA81F79FD1C00925D61 /* CALayer.swift */,
 				29E2E3391F7A008C000CF94A /* UIView.swift */,
 				29BBB36A1F7BCEDD006BC91B /* GethBigInt.swift */,
+				290B2B581F8F52300053C83E /* Functions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -956,6 +973,7 @@
 			children = (
 				29FC9BC51F830880000209CD /* MirgrationInitializer.swift */,
 				292F75A81F88865A00585F8E /* TouchRegistrar.swift */,
+				290B2B5A1F8F551E0053C83E /* LokaliseInitializer.swift */,
 			);
 			path = Initializers;
 			sourceTree = "<group>";
@@ -1146,7 +1164,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
+				ru,
 			);
 			mainGroup = 2912CCEC1F6A830700C6CBE3;
 			productRefGroup = 2912CCF61F6A830700C6CBE3 /* Products */;
@@ -1166,6 +1184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				296106CE1F777E410006164B /* LaunchScreen.storyboard in Resources */,
+				290B2B541F8F50030053C83E /* Localizable.strings in Resources */,
 				2912CD021F6A830700C6CBE3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1352,6 +1371,7 @@
 				"${BUILT_PRODUCTS_DIR}/SeedStackViewController/StackViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/StatefulViewController/StatefulViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/VENTouchLock/VENTouchLock.framework",
+				"${BUILT_PRODUCTS_DIR}/zipzap/zipzap.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1374,6 +1394,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StackViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatefulViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VENTouchLock.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/zipzap.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1430,6 +1451,7 @@
 				29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */,
 				291F52B41F6B814300B369AB /* SMP Core.swift in Sources */,
 				29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */,
+				290B2B5B1F8F551E0053C83E /* LokaliseInitializer.swift in Sources */,
 				29B6AECB1F7C5FA900EC6DE3 /* SendAndRequestViewContainer.swift in Sources */,
 				2996F14A1F6C9D10005C33AE /* ExportCoordinator.swift in Sources */,
 				2932488E1F88E69F008A9818 /* OnePasswordError.swift in Sources */,
@@ -1488,6 +1510,7 @@
 				294FE5661F72442D00754F31 /* Address.swift in Sources */,
 				2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */,
 				29A0E1851F706B8C00BAAAED /* String.swift in Sources */,
+				290B2B591F8F52300053C83E /* Functions.swift in Sources */,
 				296AF9A71F736EC70058AF78 /* RPCServers.swift in Sources */,
 				296AF9A91F737F6F0058AF78 /* SendRawTransactionRequest.swift in Sources */,
 				2912CD2F1F6A83A100C6CBE3 /* ImportWalletViewController.swift in Sources */,
@@ -1571,6 +1594,18 @@
 			targetProxy = 2912CD171F6A830700C6CBE3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		290B2B561F8F50030053C83E /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				290B2B551F8F50030053C83E /* en */,
+				290B2B571F8F500A0053C83E /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		2912CD1D1F6A830700C6CBE3 /* Debug */ = {

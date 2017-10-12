@@ -47,6 +47,7 @@ class AppCoordinator: NSObject, Coordinator {
 
     func performMigration() {
         MigrationInitializer().perform()
+        LokaliseInitializer().perform()
     }
 
     func inializers() {
