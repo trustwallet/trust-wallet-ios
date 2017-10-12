@@ -72,5 +72,6 @@ fastlane/test_output
 
 #Localization
 Trust.zip
+Trust-Localizable.zip
 Localizable.strings
 
