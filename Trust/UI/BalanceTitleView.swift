@@ -4,39 +4,38 @@ import UIKit
 
 class BalanceTitleView: UIView {
 
-    /// UIAppearance compatible property
-    dynamic var titleColor: UIColor {
-        get { return self.label.textColor! }
-        set { self.label.textColor = newValue }
-    }
-
-    dynamic var titleFont: UIFont {
-        get { return self.label.font! }
-        set { self.label.font = newValue }
-    }
-
-    let label: UILabel = UILabel()
-
-    var title: String = "" {
-        didSet {
-            label.text = title
-            label.sizeToFit()
-        }
-    }
+    let titleLabel = UILabel()
+    let subTitleLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: .zero)
 
-        label.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textAlignment = .center
 
-        addSubview(label)
+        subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        subTitleLabel.textAlignment = .center
+
+        let stackView = UIStackView(arrangedSubviews: [
+            titleLabel,
+            subTitleLabel,
+        ])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 2
+        addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            label.trailingAnchor.constraint(equalTo: trailingAnchor),
-            label.leadingAnchor.constraint(equalTo: leadingAnchor),
-            label.topAnchor.constraint(equalTo: topAnchor),
-            label.bottomAnchor.constraint(equalTo: bottomAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
+    }
+
+    func configure(viewModel: BalanceViewModel) {
+        titleLabel.attributedText = viewModel.attributedCurrencyAmount
+        subTitleLabel.attributedText = viewModel.attributedAmount
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -36,7 +36,7 @@ struct BalanceViewModel {
 
     var amountString: String {
         guard let balance = balance else { return "--" }
-        guard balance.isZero else { return "0.00 ETH" }
+        guard !balance.isZero else { return "0.00 ETH" }
         return "\(balance.amount) ETH"
     }
 
