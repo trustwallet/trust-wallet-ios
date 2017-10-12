@@ -46,7 +46,6 @@
 		29285B421F6FB3E60044CF29 /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29285B411F6FB3E60044CF29 /* SendViewController.swift */; };
 		292F75A91F88865A00585F8E /* TouchRegistrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F75A81F88865A00585F8E /* TouchRegistrar.swift */; };
 		293204581F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */; };
-		2932045A1F8DCC3E0095B7C1 /* CurrencyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293204591F8DCC3E0095B7C1 /* CurrencyCoordinator.swift */; };
 		2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */; };
 		2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */; };
 		293248841F88CCD2008A9818 /* SplashState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293248831F88CCD2008A9818 /* SplashState.swift */; };
@@ -213,7 +212,6 @@
 		29285B411F6FB3E60044CF29 /* SendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewController.swift; sourceTree = "<group>"; };
 		292F75A81F88865A00585F8E /* TouchRegistrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchRegistrar.swift; sourceTree = "<group>"; };
 		293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateCoordinator.swift; sourceTree = "<group>"; };
-		293204591F8DCC3E0095B7C1 /* CurrencyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCoordinator.swift; sourceTree = "<group>"; };
 		2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRate.swift; sourceTree = "<group>"; };
 		2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceCoordinator.swift; sourceTree = "<group>"; };
 		293248831F88CCD2008A9818 /* SplashState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashState.swift; sourceTree = "<group>"; };
@@ -662,7 +660,6 @@
 			children = (
 				2996F1471F6C9AE5005C33AE /* SettingsCoordinator.swift */,
 				293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */,
-				293204591F8DCC3E0095B7C1 /* CurrencyCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1430,7 +1427,6 @@
 				296106D01F778A8D0006164B /* TransferType.swift in Sources */,
 				29E14FDB1F7F4F3D00185568 /* Transaction.swift in Sources */,
 				296106C81F7646590006164B /* TokensViewModel.swift in Sources */,
-				2932045A1F8DCC3E0095B7C1 /* CurrencyCoordinator.swift in Sources */,
 				29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */,
 				291F52B41F6B814300B369AB /* SMP Core.swift in Sources */,
 				29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */,
