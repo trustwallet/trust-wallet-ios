@@ -94,11 +94,13 @@ extension AppCoordinator: TransactionCoordinatorDelegate {
 
     func didChangeAccount(to account: Account, in coordinator: TransactionCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
         showTransactions(for: account)
     }
 
     func didRestart(with account: Account, in coordinator: TransactionCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
         showTransactions(for: account)
     }
 }
