@@ -69,7 +69,7 @@ class AccountsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let account = self.account(for: indexPath)
         let cell = AccountViewCell(style: .default, reuseIdentifier: AccountViewCell.identifier)
-        cell.textLabel?.text = account.address.address
+        cell.configure(viewModel: AccountViewModel(account: account))
         return cell
     }
 

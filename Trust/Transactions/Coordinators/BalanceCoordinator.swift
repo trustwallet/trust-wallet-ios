@@ -64,7 +64,7 @@ class BalanceCoordinator {
     }
 
     func stop() {
-        
+
     }
 }
 
