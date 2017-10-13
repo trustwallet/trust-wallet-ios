@@ -62,6 +62,10 @@ class BalanceCoordinator {
 
         delegate?.didUpdate(viewModel: viewModel)
     }
+
+    func stop() {
+        
+    }
 }
 
 extension BalanceCoordinator: ExchangeRateCoordinatorDelegate {

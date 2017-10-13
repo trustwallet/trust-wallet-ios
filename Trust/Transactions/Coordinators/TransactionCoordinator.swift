@@ -96,6 +96,11 @@ class TransactionCoordinator: Coordinator {
         navigationController.dismiss(animated: true, completion: nil)
     }
 
+    func stop() {
+        dataCoordinator.stop()
+        balanceCoordinator.stop()
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }

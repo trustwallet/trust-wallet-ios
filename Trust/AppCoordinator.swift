@@ -88,18 +88,21 @@ extension AppCoordinator: WelcomeViewControllerDelegate {
 extension AppCoordinator: TransactionCoordinatorDelegate {
     func didCancel(in coordinator: TransactionCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        coordinator.stop()
         removeCoordinator(coordinator)
         reset()
     }
 
     func didChangeAccount(to account: Account, in coordinator: TransactionCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        coordinator.stop()
         removeCoordinator(coordinator)
         showTransactions(for: account)
     }
 
     func didRestart(with account: Account, in coordinator: TransactionCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        coordinator.stop()
         removeCoordinator(coordinator)
         showTransactions(for: account)
     }
