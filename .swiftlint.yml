@@ -28,6 +28,8 @@ function_parameter_count:
 line_length:
   warning: 250
   error: 450
+large_tuple:
+  warning: 4
 type_body_length:
   warning: 450
   error: 650
