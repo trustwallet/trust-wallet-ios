@@ -23,7 +23,7 @@ class Screenshots: XCTestCase {
         app.navigationBars["New Wallet"].buttons["Demo"].tap()
 
         app.buttons["Send"].tap()
-        XCUIApplication().tables/*@START_MENU_TOKEN@*/.textFields["ETH Amount"]/*[[".cells.textFields[\"ETH Amount\"]",".textFields[\"ETH Amount\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.tables.textFields["Amount"].tap()
         snapshot("2SendRequest")
 
         app.navigationBars["Trust.SendAndRequestViewContainer"].buttons["Cancel"].tap()
