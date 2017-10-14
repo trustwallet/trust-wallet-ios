@@ -6,12 +6,6 @@ import SafariServices
 import VENTouchLock
 import StoreKit
 
-enum SettingsAction {
-    case exportPrivateKey
-    case RPCServer
-    case donate(address: Address)
-}
-
 protocol SettingsViewControllerDelegate: class {
     func didAction(action: SettingsAction, in viewController: SettingsViewController)
 }
