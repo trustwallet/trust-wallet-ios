@@ -33,11 +33,14 @@ class SettingsViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Settings"
+        title = NSLocalizedString("Settings.Title", value: "Settings", comment: "")
 
-        form = Section(header:"Export", footer: "Keep it secure and never share it with anyone.")
+        form = Section(
+                header: NSLocalizedString("Settings.Export", value: "Export", comment: ""),
+                footer: NSLocalizedString("Settings.KeepItSecure", value: "Keep it secure and never share it with anyone.", comment: "")
+            )
 
-            <<< AppFormAppearance.button("Export Private Key") {
+            <<< AppFormAppearance.button(NSLocalizedString("Settings.ExportPrivateKey", value: "Export Private Key", comment: "")) {
                 $0.title = $0.tag
             }.onCellSelection { [unowned self] (_, _) in
                 self.run(action: .exportPrivateKey)
@@ -48,7 +51,7 @@ class SettingsViewController: FormViewController {
             +++ Section()
 
             <<< PushRow<String> {
-                $0.title = "RPC Server"
+                $0.title = NSLocalizedString("Settings.RPCServer", value: "RPC Server", comment: "")
                 $0.options = [
                     RPCServer.main.name,
                     RPCServer.ropsten.name,
@@ -65,10 +68,10 @@ class SettingsViewController: FormViewController {
                 cell.imageView?.image = R.image.settings_server()
             }
 
-            +++ Section("Security")
+            +++ Section(NSLocalizedString("Settings.Security", value: "Security", comment: ""))
 
             <<< SwitchRow {
-                $0.title = "Passcode / Touch ID"
+                $0.title = NSLocalizedString("Settings.Biometrics", value: "Passcode / Biometrics", comment: "")
                 $0.value = self.isPasscodeEnabled
             }.onChange { [unowned self] row in
                 if row.value == true {
@@ -85,21 +88,21 @@ class SettingsViewController: FormViewController {
                 cell.imageView?.image = R.image.settings_lock()
             }
 
-            +++ Section("Open source development")
+            +++ Section(NSLocalizedString("Settings.OpenSourceDevelopment", value: "Open Source Development", comment: ""))
 
             <<< link(
-                title: "Source Code",
+                title: NSLocalizedString("Settings.SourceCode", value: "Source Code", comment: ""),
                 value: "https://github.com/TrustWallet/trust-wallet-ios",
                 image: R.image.settings_open_source()
             )
 
             <<< link(
-                title: "Report a Bug",
+                title: NSLocalizedString("Settings.ReportABug", value: "Report a Bug", comment: ""),
                 value: "https://github.com/TrustWallet/trust-wallet-ios/issues/new",
                 image: R.image.settings_bug()
             )
 
-            +++ Section("Community")
+            +++ Section(NSLocalizedString("Settings.Community", value: "Community", comment: ""))
 
             <<< link(
                 title: "Twitter",
@@ -113,14 +116,12 @@ class SettingsViewController: FormViewController {
                 image: R.image.settings_telegram()
             )
 
-            +++ Section("Support")
+            +++ Section(NSLocalizedString("Settings.Support", value: "Support", comment: ""))
 
             <<< AppFormAppearance.button { button in
-                button.title = "Rate Us on App Store"
+                button.title = NSLocalizedString("Settings.RateUsAppStore", value: "Rate Us on App Store", comment: "")
             }.onCellSelection { _ in
-                if #available(iOS 10.3, *) {
-                    SKStoreReviewController.requestReview()
-                } else {
+                if #available(iOS 10.3, *) { SKStoreReviewController.requestReview() } else {
                     UIApplication.shared.openURL(URL(string:"itms-apps://itunes.apple.com/app/id1288339409")!)
                 }
             }.cellSetup { cell, _ in
@@ -128,7 +129,7 @@ class SettingsViewController: FormViewController {
             }
 
             <<< AppFormAppearance.button { button in
-                button.title = "Donate"
+                button.title = NSLocalizedString("Settings.Donate", value: "Donate", comment: "")
             }.onCellSelection { [unowned self] _ in
                 self.run(action: .donate(address: Values.donationAddress))
             }.cellSetup { cell, _ in
@@ -138,7 +139,7 @@ class SettingsViewController: FormViewController {
             +++ Section()
 
             <<< TextRow {
-                $0.title = "Version"
+                $0.title = NSLocalizedString("Settings.Version", value: "Version", comment: "")
                 $0.value = version()
                 $0.disabled = true
             }
