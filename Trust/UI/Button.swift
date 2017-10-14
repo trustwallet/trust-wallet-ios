@@ -37,6 +37,16 @@ enum ButtonStyle: Int {
         }
     }
 
+    var font: UIFont {
+        switch self {
+        case .solid,
+             .squared,
+             .border,
+             .borderless:
+            return UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium)
+        }
+    }
+
     var textColor: UIColor {
         switch self {
         case .solid, .squared: return .white
@@ -80,6 +90,7 @@ class Button: UIButton {
         layer.borderColor = style.borderColor.cgColor
         layer.borderWidth = style.borderWidth
         titleLabel?.textColor = style.textColor
+        titleLabel?.font = style.font
         setTitleColor(style.textColor, for: .normal)
         setTitleColor(style.textColorHighlighted, for: .highlighted)
         titleEdgeInsets = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 15)

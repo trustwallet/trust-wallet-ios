@@ -15,7 +15,7 @@ class TransactionsFooterView: UIView {
     }()
 
     lazy var requestButton: Button = {
-        let requestButton = Button(size: .large, style: .squared)
+        let requestButton = Button(size: .normal, style: .squared)
         requestButton.translatesAutoresizingMaskIntoConstraints = false
         requestButton.layer.cornerRadius = 6
         requestButton.backgroundColor = Colors.blue
