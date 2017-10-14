@@ -6,21 +6,27 @@ struct Config {
 
     struct Keys {
         static let chainID = "chainID"
-        static let isFiatPrimaryCurrency = "isFiatPrimaryCurrency"
+        static let isCryptoPrimaryCurrency = "isCryptoPrimaryCurrency"
     }
 
-    static let defaults = UserDefaults.standard
+    let defaults: UserDefaults
 
-    var chainID: Int = Config.defaults.integer(forKey: Keys.chainID) {
-        didSet {
-            Config.defaults.set(chainID, forKey: Keys.chainID)
-        }
+    init(defaults: UserDefaults = UserDefaults.standard) {
+        self.defaults = defaults
     }
 
-    var isFiatPrimaryCurrency: Bool = Config.defaults.bool(forKey: Keys.isFiatPrimaryCurrency) {
-        didSet {
-            Config.defaults.set(isFiatPrimaryCurrency, forKey: Keys.isFiatPrimaryCurrency)
+    var chainID: Int {
+        get {
+            let id = defaults.integer(forKey: Keys.chainID)
+            guard id > 0 else { return RPCServer.main.chainID }
+            return id
         }
+        set { defaults.set(newValue, forKey: Keys.chainID) }
+    }
+
+    var isCryptoPrimaryCurrency: Bool {
+        get { return defaults.bool(forKey: Keys.isCryptoPrimaryCurrency) }
+        set { defaults.set(newValue, forKey: Keys.isCryptoPrimaryCurrency) }
     }
 
     var server: RPCServer {
