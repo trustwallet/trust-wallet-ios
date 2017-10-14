@@ -13,6 +13,7 @@
 		290B2B5D1F9176D80053C83E /* PFColorHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B5C1F9176D80053C83E /* PFColorHash.swift */; };
 		290B2B5F1F9177860053C83E /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B5E1F9177860053C83E /* UIImage.swift */; };
 		290B2B611F9179880053C83E /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B601F9179880053C83E /* AccountViewModel.swift */; };
+		290B2B651F91A4880053C83E /* TransactionsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B641F91A4880053C83E /* TransactionsFooterView.swift */; };
 		290FD8BB1F7BFE7400548896 /* GetBlockByNumberRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290FD8BA1F7BFE7400548896 /* GetBlockByNumberRequest.swift */; };
 		2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CCF81F6A830700C6CBE3 /* AppDelegate.swift */; };
 		2912CD021F6A830700C6CBE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2912CD011F6A830700C6CBE3 /* Assets.xcassets */; };
@@ -179,6 +180,7 @@
 		290B2B5C1F9176D80053C83E /* PFColorHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFColorHash.swift; sourceTree = "<group>"; };
 		290B2B5E1F9177860053C83E /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		290B2B601F9179880053C83E /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
+		290B2B641F91A4880053C83E /* TransactionsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsFooterView.swift; sourceTree = "<group>"; };
 		290FD8BA1F7BFE7400548896 /* GetBlockByNumberRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockByNumberRequest.swift; sourceTree = "<group>"; };
 		2912CCF51F6A830700C6CBE3 /* Trust.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trust.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2912CCF81F6A830700C6CBE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -761,6 +763,7 @@
 				29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */,
 				293B8B441F70A20200356286 /* TransactionViewCell.swift */,
 				29B933F21F84BD0D009FCABB /* TransactionsEmptyView.swift */,
+				290B2B641F91A4880053C83E /* TransactionsFooterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1446,6 +1449,7 @@
 				296421971F70C1F200EB363B /* ErrorView.swift in Sources */,
 				29358DA91F79FD1C00925D61 /* CALayer.swift in Sources */,
 				29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */,
+				290B2B651F91A4880053C83E /* TransactionsFooterView.swift in Sources */,
 				293B8B431F70815900356286 /* BalanceTitleView.swift in Sources */,
 				29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */,
 				291F52B91F6B880F00B369AB /* EtherKeystore.swift in Sources */,

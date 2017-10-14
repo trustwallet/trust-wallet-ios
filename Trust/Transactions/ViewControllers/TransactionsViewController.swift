@@ -27,27 +27,17 @@ class TransactionsViewController: UIViewController {
         return view
     }()
 
-    lazy var sendButton: Button = {
-        let sendButton = Button(size: .extraLarge, style: .squared)
-        sendButton.translatesAutoresizingMaskIntoConstraints = false
-        sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
-        sendButton.setTitle(NSLocalizedString("Generic.Send", value: "Send", comment: ""), for: .normal)
-        sendButton.backgroundColor = Colors.blue
-        return sendButton
-    }()
-
-    lazy var requestButton: Button = {
-        let requestButton = Button(size: .extraLarge, style: .squared)
-        requestButton.translatesAutoresizingMaskIntoConstraints = false
-        requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
-        requestButton.backgroundColor = Colors.blue
-        requestButton.setTitle(NSLocalizedString("Generic.Request", value: "Request", comment: ""), for: .normal)
-        return requestButton
-    }()
-
     weak var delegate: TransactionsViewControllerDelegate?
     let dataCoordinator: TransactionDataCoordinator
     let balanceCoordinator: BalanceCoordinator
+
+    lazy var footerView: TransactionsFooterView = {
+        let footerView = TransactionsFooterView(frame: .zero)
+        footerView.translatesAutoresizingMaskIntoConstraints = false
+        footerView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
+        footerView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
+        return footerView
+    }()
 
     init(
         account: Account,
@@ -60,6 +50,7 @@ class TransactionsViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
+        view.backgroundColor = viewModel.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -67,6 +58,7 @@ class TransactionsViewController: UIViewController {
         tableView.backgroundColor = .white
         tableView.rowHeight = 68
         view.addSubview(tableView)
+        view.addSubview(footerView)
 
         let tokensButton = Button(size: .extraLarge, style: .borderless)
         tokensButton.setTitle(NSLocalizedString("Transactions.ShowTokens", value: "Show my tokens", comment: ""), for: .normal)
@@ -78,34 +70,15 @@ class TransactionsViewController: UIViewController {
 
         tableView.tableHeaderView = tokensButton
 
-        let stackView = UIStackView(arrangedSubviews: [
-            sendButton,
-            requestButton,
-        ])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .fillEqually
-        view.addSubview(stackView)
-
-        let dividerLine = UIView()
-        dividerLine.translatesAutoresizingMaskIntoConstraints = false
-        dividerLine.backgroundColor = .white
-        dividerLine.alpha = 0.3
-        stackView.addSubview(dividerLine)
-
         NSLayoutConstraint.activate([
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: stackView.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
 
-            stackView.leadingAnchor.constraint(equalTo: view.layoutGuide.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: view.layoutGuide.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
-
-            dividerLine.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
-            dividerLine.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 8),
-            dividerLine.widthAnchor.constraint(equalToConstant: 0.5),
-            dividerLine.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: -8),
+            footerView.trailingAnchor.constraint(equalTo: view.layoutGuide.trailingAnchor),
+            footerView.leadingAnchor.constraint(equalTo: view.layoutGuide.leadingAnchor),
+            footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
 
         dataCoordinator.delegate = self
@@ -118,7 +91,7 @@ class TransactionsViewController: UIViewController {
         tableView.addSubview(refreshControl)
 
         //TODO: Find a way to fix hardcoded 32px value. Use bottom safe inset instead.
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: ButtonSize.extraLarge.height + 32, right: 0)
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: ButtonSize.extraLarge.height + 50, right: 0)
 
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
