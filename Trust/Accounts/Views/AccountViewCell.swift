@@ -13,17 +13,14 @@ class AccountViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         walletImageView.translatesAutoresizingMaskIntoConstraints = false
-        walletImageView.layer.cornerRadius = 6
-        walletImageView.layer.masksToBounds = true
-
         walletLabel.translatesAutoresizingMaskIntoConstraints = false
 
         contentView.addSubview(walletImageView)
         contentView.addSubview(walletLabel)
 
         NSLayoutConstraint.activate([
-            walletImageView.widthAnchor.constraint(equalToConstant: 34),
-            walletImageView.heightAnchor.constraint(equalToConstant: 34),
+            walletImageView.widthAnchor.constraint(equalToConstant: 18),
+            walletImageView.heightAnchor.constraint(equalToConstant: 18),
             walletImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             walletImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Layout.sideMargin),
 

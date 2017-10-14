@@ -6,10 +6,12 @@ import UIKit
 struct AccountViewModel {
 
     let account: Account
+    let current: Account?
     let colorHash = PFColorHash()
 
-    init(account: Account) {
+    init(account: Account, current: Account? = EtherKeystore.current) {
         self.account = account
+        self.current = current
     }
 
     var title: String {
@@ -17,7 +19,13 @@ struct AccountViewModel {
     }
 
     var image: UIImage? {
-        let color = UIColor(hex: colorHash.hex(account.address.address))
-        return UIImage.filled(with: color)
+        if isActive {
+            return R.image.accounts_active()
+        }
+        return nil
+    }
+
+    var isActive: Bool {
+        return account == current
     }
 }

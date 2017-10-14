@@ -50,7 +50,7 @@ struct BalanceViewModel {
     var attributedAmount: NSAttributedString {
         return NSAttributedString(
             string: amountString,
-            attributes: attributes(primary: config.isFiatPrimaryCurrency)
+            attributes: attributes(primary: config.isCryptoPrimaryCurrency)
         )
     }
 
@@ -58,7 +58,7 @@ struct BalanceViewModel {
         guard let currencyAmount = currencyAmount else { return nil }
         return NSAttributedString(
             string: currencyAmount,
-            attributes: attributes(primary: !config.isFiatPrimaryCurrency)
+            attributes: attributes(primary: !config.isCryptoPrimaryCurrency)
         )
     }
 

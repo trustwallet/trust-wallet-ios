@@ -39,6 +39,10 @@ class EtherKeystore: Keystore {
         }
     }
 
+    static var current: Account? {
+        return EtherKeystore().recentlyUsedAccount
+    }
+
     func createAccout(password: String) -> Account {
         let gethAccount = try! gethKeyStorage.newAccount(password)
         let account: Account = .from(account: gethAccount)
