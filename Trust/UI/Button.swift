@@ -30,6 +30,14 @@ enum ButtonStyle: Int {
         }
     }
 
+    var backgroundColorHighlighted: UIColor {
+        switch self {
+        case .solid, .squared: return Colors.blue
+        case .border: return Colors.blue
+        case .borderless: return .white
+        }
+    }
+
     var cornerRadius: CGFloat {
         switch self {
         case .solid, .border: return 5
@@ -57,7 +65,8 @@ enum ButtonStyle: Int {
     var textColorHighlighted: UIColor {
         switch self {
         case .solid, .squared: return UIColor(white: 1, alpha: 0.8)
-        case .border, .borderless: return Colors.darkBlue
+        case .border: return .white
+        case .borderless: return Colors.blue
         }
     }
 
@@ -89,10 +98,12 @@ class Button: UIButton {
         layer.cornerRadius = style.cornerRadius
         layer.borderColor = style.borderColor.cgColor
         layer.borderWidth = style.borderWidth
+        layer.masksToBounds = true
         titleLabel?.textColor = style.textColor
         titleLabel?.font = style.font
         setTitleColor(style.textColor, for: .normal)
         setTitleColor(style.textColorHighlighted, for: .highlighted)
+        setBackgroundColor(style.backgroundColorHighlighted, forState: .highlighted)
         titleEdgeInsets = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 15)
     }
 
