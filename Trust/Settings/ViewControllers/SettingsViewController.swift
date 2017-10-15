@@ -24,6 +24,14 @@ class SettingsViewController: FormViewController {
         return VENTouchLock.sharedInstance().isPasscodeSet()
     }
 
+    static var isPushNotificationEnabled: Bool {
+        guard let settings = UIApplication.shared.currentUserNotificationSettings
+            else {
+                return false
+        }
+        return UIApplication.shared.isRegisteredForRemoteNotifications && !settings.types.isEmpty
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -80,6 +88,15 @@ class SettingsViewController: FormViewController {
                 }
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_lock()
+            }
+
+            <<< SwitchRow {
+                $0.title = NSLocalizedString("Settings.PushNotifications", value: "Push Notifications", comment: "")
+                $0.value = SettingsViewController.isPushNotificationEnabled
+            }.onChange { [unowned self] _ in
+                //
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_push_notifications()
             }
 
             +++ Section(NSLocalizedString("Settings.OpenSourceDevelopment", value: "Open Source Development", comment: ""))
