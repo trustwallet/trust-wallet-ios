@@ -51,10 +51,10 @@ class TokenViewCell: UITableViewCell {
 
         NSLayoutConstraint.activate([
             symbolImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 40),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: Layout.sideMargin),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Layout.sideMargin),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -Layout.sideMargin),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Layout.sideMargin),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
+            stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -StyleLayout.sideMargin),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: StyleLayout.sideMargin),
         ])
     }
 

@@ -30,7 +30,7 @@ class WalletSession {
     }
 
     func stop() {
-        balanceCoordinator.stop()
+
     }
 }
 

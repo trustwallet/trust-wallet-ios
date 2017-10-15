@@ -19,7 +19,7 @@ struct AccountViewModel {
 
     var image: UIImage? {
         if isActive {
-            return R.image.accounts_active()
+            return UIImage.filled(with: Colors.lightBlack)
         }
         return nil
     }
