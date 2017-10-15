@@ -49,7 +49,7 @@ extension PushNotificationsService: TargetType {
 
 class PushNotificationsClient {
 
-    var provider: MoyaProvider<PushNotificationsService>!
+    let provider = MoyaProvider<PushNotificationsService>()
 
     func register(device: PushDevice) {
         provider.request(.register(device: device)) { _ in }

@@ -93,8 +93,9 @@ class SettingsViewController: FormViewController {
             <<< SwitchRow {
                 $0.title = NSLocalizedString("Settings.PushNotifications", value: "Push Notifications", comment: "")
                 $0.value = SettingsViewController.isPushNotificationEnabled
-            }.onChange { [unowned self] _ in
-                //
+            }.onChange { [unowned self] row in
+                let enabled = row.value ?? false
+                self.run(action: .pushNotifications(enabled: enabled))
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_push_notifications()
             }

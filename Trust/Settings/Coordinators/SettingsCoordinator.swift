@@ -23,6 +23,8 @@ class SettingsCoordinator {
         return nav
     }()
 
+    let pushNotificationsRegistrar = PushNotificationsRegistrar()
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
@@ -55,6 +57,13 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
             export()
         case .RPCServer: break
         case .donate: break
+        case .pushNotifications(let enabled):
+            switch enabled {
+            case true:
+                pushNotificationsRegistrar.register()
+            case false:
+                pushNotificationsRegistrar.unregister()
+            }
         }
         delegate?.didUpdate(action: action, in: self)
     }

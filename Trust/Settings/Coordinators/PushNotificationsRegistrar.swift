@@ -30,19 +30,15 @@ class PushNotificationsRegistrar {
     }
 
     func didRegister(with deviceToken: Data, addresses: [Address]) {
-        let tokenParts = deviceToken.map { data -> String in
+        let token = deviceToken.map { data -> String in
             return String(format: "%02.2hhx", data)
-        }
-        let token = tokenParts.joined()
-
-        print("Device Token: \(token)")
+        }.joined()
 
         let device = PushDevice(
             deviceID: UIDevice.current.identifierForVendor!.uuidString,
             token: token,
             wallets: []
         )
-
         client.register(device: device)
     }
 }
