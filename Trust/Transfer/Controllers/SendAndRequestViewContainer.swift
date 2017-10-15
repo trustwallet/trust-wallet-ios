@@ -92,6 +92,7 @@ class SendAndRequestViewContainer: UIViewController {
             ],
             applicationActivities: nil
         )
+        activityViewController.popoverPresentationController?.sourceView = view
         present(activityViewController, animated: true, completion: nil)
     }
 
