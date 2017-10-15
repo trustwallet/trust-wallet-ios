@@ -17,7 +17,7 @@ class SendAndRequestViewContainer: UIViewController {
     let session: WalletSession
     weak var delegate: SendAndRequestViewContainerDelegate?
 
-    lazy var sendController: SendViewController = {
+    lazy var sendViewController: SendViewController = {
         let controller = SendViewController(account: self.session.account)
         controller.delegate = self
         return controller
@@ -32,9 +32,22 @@ class SendAndRequestViewContainer: UIViewController {
         return controller
     }()
 
+    lazy var sendButtonItem: UIBarButtonItem = {
+        return UIBarButtonItem(
+            title: NSLocalizedString("Generic.Send", value: "Send", comment: ""),
+            style: .done,
+            target: self.sendViewController,
+            action: #selector(SendViewController.send)
+        )
+    }()
+
+    lazy var shareButton: UIBarButtonItem = {
+        return UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
+    }()
+
     var configuration = TransactionConfiguration() {
         didSet {
-            sendController.configuration = configuration
+            sendViewController.configuration = configuration
         }
     }
 
@@ -50,8 +63,8 @@ class SendAndRequestViewContainer: UIViewController {
         view.backgroundColor = .white
 
         if case let .send(destination) = flow {
-            sendController.addressRow?.value = destination?.address
-            sendController.addressRow?.updateCell()
+            sendViewController.addressRow?.value = destination?.address
+            sendViewController.addressRow?.updateCell()
         }
 
         updateTo(flow: flow)
@@ -60,18 +73,13 @@ class SendAndRequestViewContainer: UIViewController {
     func updateTo(flow: PaymentFlow) {
         switch flow {
         case .send:
-            add(asChildViewController: sendController)
+            add(asChildViewController: sendViewController)
             remove(asChildViewController: requestController)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: NSLocalizedString("Generic.Send", value: "Send", comment: ""),
-                style: .done,
-                target: sendController,
-                action: #selector(SendViewController.send)
-            )
+            navigationItem.rightBarButtonItem = sendButtonItem
         case .request:
             add(asChildViewController: requestController)
-            remove(asChildViewController: sendController)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
+            remove(asChildViewController: sendViewController)
+            navigationItem.rightBarButtonItem = shareButton
         }
     }
 
