@@ -42,3 +42,15 @@ class BalanceTitleView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension BalanceTitleView {
+    static func make(from session: WalletSession) -> BalanceTitleView {
+        let view = BalanceTitleView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        session.balanceViewModel.subscribe { viewModel in
+            guard let viewModel = viewModel else { return }
+            view.configure(viewModel: viewModel)
+        }
+        return view
+    }
+}

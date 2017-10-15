@@ -7,7 +7,7 @@ class TransactionCoordinatorTests: XCTestCase {
     
     func testShowTokens() {
         let coordinator = TransactionCoordinator(
-            account: .make(),
+            session: .make(),
             rootNavigationController: FakeNavigationController()
         )
 
@@ -18,7 +18,7 @@ class TransactionCoordinatorTests: XCTestCase {
 
     func testShowAccounts() {
         let coordinator = TransactionCoordinator(
-            account: .make(),
+            session: .make(),
             rootNavigationController: FakeNavigationController()
         )
 
@@ -29,7 +29,7 @@ class TransactionCoordinatorTests: XCTestCase {
 
     func testShowSettings() {
         let coordinator = TransactionCoordinator(
-            account: .make(),
+            session: .make(),
             rootNavigationController: FakeNavigationController()
         )
 
@@ -40,11 +40,11 @@ class TransactionCoordinatorTests: XCTestCase {
 
     func testShowSendFlow() {
         let coordinator = TransactionCoordinator(
-            account: .make(),
+            session: .make(),
             rootNavigationController: FakeNavigationController()
         )
 
-        coordinator.showPaymentFlow(for: .send(destination: .none), account: .make())
+        coordinator.showPaymentFlow(for: .send(destination: .none), session: .make())
 
         let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
 
@@ -54,11 +54,11 @@ class TransactionCoordinatorTests: XCTestCase {
 
     func testShowRequstFlow() {
         let coordinator = TransactionCoordinator(
-            account: .make(),
+            session: .make(),
             rootNavigationController: FakeNavigationController()
         )
 
-        coordinator.showPaymentFlow(for: .request, account: .make())
+        coordinator.showPaymentFlow(for: .request, session: .make())
 
         let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
 

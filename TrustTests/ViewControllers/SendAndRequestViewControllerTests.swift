@@ -6,43 +6,38 @@ import XCTest
 class SendAndRequestViewControllerTests: XCTestCase {
     
     func testSendFlow() {
-        let controller = SendAndRequestViewContainer(flow: .send(destination: .none), account: .make())
+        let controller = SendAndRequestViewContainer(flow: .send(destination: .none), session: .make())
 
-        XCTAssertEqual(0, controller.segment.selectedSegmentIndex)
         XCTAssertTrue(controller.childViewControllers[0] is SendViewController)
     }
 
     func testSendFlowDestination() {
         let address: Address = .make()
-        let controller = SendAndRequestViewContainer(flow: .send(destination: address), account: .make())
+        let controller = SendAndRequestViewContainer(flow: .send(destination: address), session: .make())
 
         XCTAssertEqual(address.address, controller.sendController.addressRow?.value)
-        XCTAssertEqual(0, controller.segment.selectedSegmentIndex)
         XCTAssertTrue(controller.childViewControllers[0] is SendViewController)
     }
 
     func testRequestFlow() {
-        let controller = SendAndRequestViewContainer(flow: .request, account: .make())
+        let controller = SendAndRequestViewContainer(flow: .request, session: .make())
 
-        XCTAssertEqual(1, controller.segment.selectedSegmentIndex)
         XCTAssertTrue(controller.childViewControllers[0] is RequestViewController)
     }
 
     func testUpdateFlowFromSendToRequest() {
-        let controller = SendAndRequestViewContainer(flow: .send(destination: .none), account: .make())
+        let controller = SendAndRequestViewContainer(flow: .send(destination: .none), session: .make())
 
         controller.updateTo(flow: .request)
 
-        XCTAssertEqual(1, controller.segment.selectedSegmentIndex)
         XCTAssertTrue(controller.childViewControllers[0] is RequestViewController)
     }
 
     func testUpdateFlowFromRequestToSend() {
-        let controller = SendAndRequestViewContainer(flow: .request, account: .make())
+        let controller = SendAndRequestViewContainer(flow: .request, session: .make())
 
         controller.updateTo(flow: .send(destination: .none))
 
-        XCTAssertEqual(0, controller.segment.selectedSegmentIndex)
         XCTAssertTrue(controller.childViewControllers[0] is SendViewController)
     }
 }

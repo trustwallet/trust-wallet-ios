@@ -15,17 +15,13 @@ class TransactionCoordinator: Coordinator {
     private let keystore: Keystore
 
     lazy var rootViewController: TransactionsViewController = {
-        let controller = self.makeTransactionsController(with: self.account)
+        let controller = self.makeTransactionsController(with: self.session.account)
         return controller
     }()
 
     lazy var dataCoordinator: TransactionDataCoordinator = {
-        let coordinator = TransactionDataCoordinator(account: self.account)
+        let coordinator = TransactionDataCoordinator(account: self.session.account)
         return coordinator
-    }()
-
-    lazy var balanceCoordinator: BalanceCoordinator = {
-        return BalanceCoordinator(account: self.account)
     }()
 
     weak var delegate: TransactionCoordinatorDelegate?
@@ -38,15 +34,15 @@ class TransactionCoordinator: Coordinator {
         return AccountsCoordinator(navigationController: self.navigationController)
     }()
 
-    let account: Account
+    let session: WalletSession
     let navigationController: UINavigationController
     var coordinators: [Coordinator] = []
 
     init(
-        account: Account,
+        session: WalletSession,
         rootNavigationController: UINavigationController
     ) {
-        self.account = account
+        self.session = session
         self.keystore = EtherKeystore()
         self.navigationController = rootNavigationController
 
@@ -57,7 +53,7 @@ class TransactionCoordinator: Coordinator {
         let controller = TransactionsViewController(
             account: account,
             dataCoordinator: dataCoordinator,
-            balanceCoordinator: balanceCoordinator
+            session: session
         )
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.settings_icon(), landscapeImagePhone: R.image.settings_icon(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showSettings))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.accountsSwitch(), landscapeImagePhone: R.image.accountsSwitch(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showAccounts))
@@ -80,8 +76,11 @@ class TransactionCoordinator: Coordinator {
         navigationController.pushViewController(controller, animated: true)
     }
 
-    func showPaymentFlow(for type: PaymentFlow, account: Account) {
-        let controller = SendAndRequestViewContainer(flow: type, account: account)
+    func showPaymentFlow(for type: PaymentFlow, session: WalletSession) {
+        let controller = SendAndRequestViewContainer(
+            flow: type,
+            session: session
+        )
         controller.delegate = self
         let nav = NavigationController(rootViewController: controller)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
@@ -98,7 +97,7 @@ class TransactionCoordinator: Coordinator {
 
     func stop() {
         dataCoordinator.stop()
-        balanceCoordinator.stop()
+        session.stop()
     }
 
     deinit {
@@ -111,12 +110,12 @@ extension TransactionCoordinator: SettingsCoordinatorDelegate {
         switch action {
         case .RPCServer:
             clean()
-            delegate?.didRestart(with: account, in: self)
+            delegate?.didRestart(with: session.account, in: self)
         case .exportPrivateKey:
             break
         case .donate(let address):
             coordinator.navigationController.dismiss(animated: true) {
-                self.showPaymentFlow(for: .send(destination: address), account: self.account)
+                self.showPaymentFlow(for: .send(destination: address), session: self.session)
             }
         }
     }
@@ -127,12 +126,12 @@ extension TransactionCoordinator: SettingsCoordinatorDelegate {
 }
 
 extension TransactionCoordinator: TransactionsViewControllerDelegate {
-    func didPressSend(for account: Account, in viewController: TransactionsViewController) {
-        showPaymentFlow(for: .send(destination: .none), account: account)
+    func didPressSend(in viewController: TransactionsViewController) {
+        showPaymentFlow(for: .send(destination: .none), session: session)
     }
 
-    func didPressRequest(for account: Account, in viewController: TransactionsViewController) {
-        showPaymentFlow(for: .request, account: account)
+    func didPressRequest(in viewController: TransactionsViewController) {
+        showPaymentFlow(for: .request, session: session)
     }
 
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
@@ -142,8 +141,8 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
         navigationController.pushViewController(controller, animated: true)
     }
 
-    func didPressTokens(for account: Account, in viewController: TransactionsViewController) {
-        showTokens(for: account)
+    func didPressTokens(in viewController: TransactionsViewController) {
+        showTokens(for: session.account)
     }
 
     func reset() {

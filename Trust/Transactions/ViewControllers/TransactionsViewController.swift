@@ -7,10 +7,10 @@ import StatefulViewController
 import Result
 
 protocol TransactionsViewControllerDelegate: class {
-    func didPressSend(for account: Account, in viewController: TransactionsViewController)
-    func didPressRequest(for account: Account, in viewController: TransactionsViewController)
+    func didPressSend(in viewController: TransactionsViewController)
+    func didPressRequest(in viewController: TransactionsViewController)
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController)
-    func didPressTokens(for account: Account, in viewController: TransactionsViewController)
+    func didPressTokens(in viewController: TransactionsViewController)
 }
 
 class TransactionsViewController: UIViewController {
@@ -22,14 +22,12 @@ class TransactionsViewController: UIViewController {
     let refreshControl = UIRefreshControl()
 
     lazy var titleView: BalanceTitleView = {
-        let view = BalanceTitleView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+        return BalanceTitleView.make(from: self.session)
     }()
 
     weak var delegate: TransactionsViewControllerDelegate?
     let dataCoordinator: TransactionDataCoordinator
-    let balanceCoordinator: BalanceCoordinator
+    let session: WalletSession
 
     lazy var footerView: TransactionsFooterView = {
         let footerView = TransactionsFooterView(frame: .zero)
@@ -42,11 +40,11 @@ class TransactionsViewController: UIViewController {
     init(
         account: Account,
         dataCoordinator: TransactionDataCoordinator,
-        balanceCoordinator: BalanceCoordinator
+        session: WalletSession
     ) {
         self.account = account
         self.dataCoordinator = dataCoordinator
-        self.balanceCoordinator = balanceCoordinator
+        self.session = session
 
         super.init(nibName: nil, bundle: nil)
 
@@ -84,9 +82,6 @@ class TransactionsViewController: UIViewController {
         dataCoordinator.delegate = self
         dataCoordinator.start()
 
-        balanceCoordinator.delegate = self
-        balanceCoordinator.start()
-
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
 
@@ -122,20 +117,20 @@ class TransactionsViewController: UIViewController {
     }
 
     func fetchBalance() {
-        balanceCoordinator.fetch()
+        session.refresh(.balance)
         dataCoordinator.fetch()
     }
 
     @objc func send() {
-        delegate?.didPressSend(for: account, in: self)
+        delegate?.didPressSend(in: self)
     }
 
     @objc func request() {
-        delegate?.didPressRequest(for: account, in: self)
+        delegate?.didPressRequest(in: self)
     }
 
     @objc func showTokens() {
-        delegate?.didPressTokens(for: account, in: self)
+        delegate?.didPressTokens(in: self)
     }
 
     func configure(viewModel: TransactionsViewModel) {
@@ -205,11 +200,5 @@ extension TransactionsViewController: UITableViewDataSource {
         header.textLabel?.font = viewModel.headerTitleFont
         header.layer.addBorder(edge: .top, color: viewModel.headerBorderColor, thickness: 0.5)
         header.layer.addBorder(edge: .bottom, color: viewModel.headerBorderColor, thickness: 0.5)
-    }
-}
-
-extension TransactionsViewController: BalanceCoordinatorDelegate {
-    func didUpdate(viewModel: BalanceViewModel) {
-        titleView.configure(viewModel: viewModel)
     }
 }

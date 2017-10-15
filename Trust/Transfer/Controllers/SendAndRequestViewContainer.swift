@@ -14,27 +14,22 @@ class SendAndRequestViewContainer: UIViewController {
             updateTo(flow: flow)
         }
     }
-    let account: Account
+    let session: WalletSession
     weak var delegate: SendAndRequestViewContainerDelegate?
 
     lazy var sendController: SendViewController = {
-        let controller = SendViewController(account: self.account)
+        let controller = SendViewController(account: self.session.account)
         controller.delegate = self
         return controller
     }()
 
-    lazy var requestController: RequestViewController = {
-        let controller = RequestViewController(account: self.account)
-        return controller
+    lazy var titleView: BalanceTitleView = {
+        return BalanceTitleView.make(from: self.session)
     }()
 
-    lazy var  segment: UISegmentedControl = {
-        let segment =  UISegmentedControl(frame: .zero)
-        segment.translatesAutoresizingMaskIntoConstraints = false
-        segment.insertSegment(withTitle: NSLocalizedString("Generic.Send", value: "Send", comment: ""), at: 0, animated: false)
-        segment.insertSegment(withTitle: NSLocalizedString("Generic.Request", value: "Request", comment: ""), at: 1, animated: false)
-        segment.addTarget(self, action: #selector(segmentChange), for: .valueChanged)
-        return segment
+    lazy var requestController: RequestViewController = {
+        let controller = RequestViewController(account: self.session.account)
+        return controller
     }()
 
     var configuration = TransactionConfiguration() {
@@ -43,12 +38,15 @@ class SendAndRequestViewContainer: UIViewController {
         }
     }
 
-    init(flow: PaymentFlow, account: Account) {
+    init(
+        flow: PaymentFlow,
+        session: WalletSession
+    ) {
         self.flow = flow
-        self.account = account
+        self.session = session
         super.init(nibName: nil, bundle: nil)
 
-        navigationItem.titleView = segment
+        navigationItem.titleView = titleView
         view.backgroundColor = .white
 
         if case let .send(destination) = flow {
@@ -57,12 +55,6 @@ class SendAndRequestViewContainer: UIViewController {
         }
 
         updateTo(flow: flow)
-    }
-
-    func segmentChange() {
-        flow = PaymentFlow(
-            selectedSegmentIndex: segment.selectedSegmentIndex
-        )
     }
 
     func updateTo(flow: PaymentFlow) {
@@ -81,7 +73,6 @@ class SendAndRequestViewContainer: UIViewController {
             remove(asChildViewController: sendController)
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
         }
-        segment.selectedSegmentIndex = flow.selectedSegmentIndex
     }
 
     @objc func openConfiguration() {
@@ -94,7 +85,7 @@ class SendAndRequestViewContainer: UIViewController {
     }
 
     @objc func share() {
-        let address = account.address.address
+        let address = session.account.address.address
         let activityViewController = UIActivityViewController(
             activityItems: [
                 "My Ethereum address is: \(address)",
@@ -126,19 +117,3 @@ extension SendAndRequestViewContainer: TransactionConfigurationViewControllerDel
     }
 }
 
-extension PaymentFlow {
-    init(selectedSegmentIndex: Int) {
-        switch selectedSegmentIndex {
-        case 0: self = .send(destination: .none)
-        case 1: self = .request
-        default: self = .send(destination: .none)
-        }
-    }
-
-    var selectedSegmentIndex: Int {
-        switch self {
-        case .send: return 0
-        case .request: return 1
-        }
-    }
-}
