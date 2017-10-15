@@ -17,6 +17,7 @@ class AppCoordinator: NSObject, Coordinator {
         return WalletCoordinator(rootNavigationController: self.rootNavigationController)
     }()
     let touchRegistrar = TouchRegistrar()
+    let pushNotificationRegistrar = PushNotificationsRegistrar()
 
     private var keystore: Keystore
 
@@ -73,9 +74,17 @@ class AppCoordinator: NSObject, Coordinator {
 
     @objc func reset() {
         touchRegistrar.unregister()
+        pushNotificationRegistrar.unregister()
         coordinators.removeAll()
         rootNavigationController.dismiss(animated: true, completion: nil)
         rootNavigationController.viewControllers = [welcomeViewController]
+    }
+
+    func didRegisterForRemoteNotificationsWithDeviceToken(deviceToken: Data) {
+        pushNotificationRegistrar.didRegister(
+            with: deviceToken,
+            addresses: keystore.accounts.map { $0.address }
+        )
     }
 }
 
