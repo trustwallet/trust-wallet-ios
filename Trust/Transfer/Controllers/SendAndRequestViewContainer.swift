@@ -116,4 +116,3 @@ extension SendAndRequestViewContainer: TransactionConfigurationViewControllerDel
         viewController.dismiss(animated: true, completion: nil)
     }
 }
-
