@@ -7,7 +7,6 @@ struct AccountViewModel {
 
     let account: Account
     let current: Account?
-    let colorHash = PFColorHash()
 
     init(account: Account, current: Account? = EtherKeystore.current) {
         self.account = account
