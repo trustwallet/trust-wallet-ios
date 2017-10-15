@@ -96,7 +96,7 @@ class SendAndRequestViewContainer: UIViewController {
         let address = session.account.address.address
         let activityViewController = UIActivityViewController(
             activityItems: [
-                "My Ethereum address is: \(address)",
+                NSLocalizedString("Send.MyEthereumAddressIs", value: "My Ethereum address is:", comment: "") + address,
             ],
             applicationActivities: nil
         )
