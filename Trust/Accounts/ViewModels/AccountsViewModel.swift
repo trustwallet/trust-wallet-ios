@@ -11,6 +11,6 @@ struct AccountsViewModel {
     }
 
     var title: String {
-        return "Accounts (\(accounts.count))"
+        return NSLocalizedString("Wallet.Wallets", value: "Wallets", comment: "")
     }
 }
