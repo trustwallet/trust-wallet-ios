@@ -110,6 +110,9 @@
 		29A0E1871F706D0700BAAAED /* EthereumConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A0E1861F706D0700BAAAED /* EthereumConverter.swift */; };
 		29A13E2C1F6A955700E432A2 /* CreateWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E2B1F6A955700E432A2 /* CreateWalletViewModel.swift */; };
 		29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E321F6B1B7A00E432A2 /* AppStyle.swift */; };
+		29AD8A021F93D5CE008E10E7 /* PushNotificationsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD8A011F93D5CE008E10E7 /* PushNotificationsClient.swift */; };
+		29AD8A041F93D6CD008E10E7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD8A031F93D6CD008E10E7 /* Constants.swift */; };
+		29AD8A061F93DC8C008E10E7 /* PushDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD8A051F93DC8C008E10E7 /* PushDevice.swift */; };
 		29B6AECB1F7C5FA900EC6DE3 /* SendAndRequestViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B6AECA1F7C5FA900EC6DE3 /* SendAndRequestViewContainer.swift */; };
 		29B6AED11F7C881D00EC6DE3 /* TransactionCost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B6AED01F7C881D00EC6DE3 /* TransactionCost.swift */; };
 		29B6AED41F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B6AED31F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift */; };
@@ -288,6 +291,9 @@
 		29A13E271F6A903500E432A2 /* WelcomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModelTests.swift; sourceTree = "<group>"; };
 		29A13E2B1F6A955700E432A2 /* CreateWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWalletViewModel.swift; sourceTree = "<group>"; };
 		29A13E321F6B1B7A00E432A2 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
+		29AD8A011F93D5CE008E10E7 /* PushNotificationsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsClient.swift; sourceTree = "<group>"; };
+		29AD8A031F93D6CD008E10E7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		29AD8A051F93DC8C008E10E7 /* PushDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushDevice.swift; sourceTree = "<group>"; };
 		29B6AECA1F7C5FA900EC6DE3 /* SendAndRequestViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAndRequestViewContainer.swift; sourceTree = "<group>"; };
 		29B6AED01F7C881D00EC6DE3 /* TransactionCost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCost.swift; sourceTree = "<group>"; };
 		29B6AED31F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionConfigurationViewController.swift; sourceTree = "<group>"; };
@@ -603,6 +609,7 @@
 				294FE5651F72442D00754F31 /* Address.swift */,
 				29282B521F7630970067F88D /* Token.swift */,
 				293E66411F8026F10052973D /* Block.swift */,
+				29AD8A051F93DC8C008E10E7 /* PushDevice.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -704,6 +711,7 @@
 				2996F1471F6C9AE5005C33AE /* SettingsCoordinator.swift */,
 				293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */,
 				290B2B6F1F930AB90053C83E /* PushNotificationsRegistrar.swift */,
+				29AD8A011F93D5CE008E10E7 /* PushNotificationsClient.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1023,6 +1031,7 @@
 				296AF9A61F736EC70058AF78 /* RPCServers.swift */,
 				2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */,
 				290B2B661F9266630053C83E /* SettingsAction.swift */,
+				29AD8A031F93D6CD008E10E7 /* Constants.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1386,6 +1395,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Trust/Pods-Trust-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/1PasswordExtension/OnePasswordExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/APIKit/APIKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BonMot/BonMot.framework",
 				"${BUILT_PRODUCTS_DIR}/BulletinBoard/BulletinBoard.framework",
 				"${BUILT_PRODUCTS_DIR}/EAIntroView/EAIntroView.framework",
@@ -1394,6 +1404,7 @@
 				"${BUILT_PRODUCTS_DIR}/JSONRPCKit/JSONRPCKit.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/QRCodeReaderViewController/QRCodeReaderViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/R.swift.Library/Rswift.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -1409,6 +1420,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OnePasswordExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APIKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BonMot.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BulletinBoard.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EAIntroView.framework",
@@ -1417,6 +1429,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSONRPCKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReaderViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Rswift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
@@ -1458,6 +1471,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29AD8A041F93D6CD008E10E7 /* Constants.swift in Sources */,
 				29FF12FE1F75EA3F00AFD326 /* Keystore.swift in Sources */,
 				296106C41F7640C50006164B /* TokenViewCellViewModel.swift in Sources */,
 				291EC9E21F70565A0004EDD0 /* ParsedTransaction.swift in Sources */,
@@ -1507,6 +1521,7 @@
 				293248861F88CCE6008A9818 /* SplashError.swift in Sources */,
 				296421951F70C1EC00EB363B /* LoadingView.swift in Sources */,
 				29285B421F6FB3E60044CF29 /* SendViewController.swift in Sources */,
+				29AD8A021F93D5CE008E10E7 /* PushNotificationsClient.swift in Sources */,
 				2996F14D1F6CA743005C33AE /* UIViewController.swift in Sources */,
 				296421991F70C1F900EB363B /* EmptyView.swift in Sources */,
 				291EC9DF1F7053C50004EDD0 /* NavigationController.swift in Sources */,
@@ -1531,6 +1546,7 @@
 				29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */,
 				29FF12F81F747D6C00AFD326 /* Error.swift in Sources */,
 				29282B581F7636840067F88D /* GetTokensRequest.swift in Sources */,
+				29AD8A061F93DC8C008E10E7 /* PushDevice.swift in Sources */,
 				29B6AED41F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift in Sources */,
 				29B933F51F860074009FCABB /* SendTransactionCoordinator.swift in Sources */,
 				2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */,

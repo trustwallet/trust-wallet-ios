@@ -6,6 +6,8 @@ import UIKit
 
 class PushNotificationsRegistrar {
 
+    let client = PushNotificationsClient()
+
     func register() {
         if #available(iOS 10, *) {
             UNUserNotificationCenter.current().requestAuthorization(options:[.badge, .alert, .sound]) { _ in }
@@ -17,6 +19,13 @@ class PushNotificationsRegistrar {
     }
 
     func unregister() {
+        let device = PushDevice(
+            deviceID: UIDevice.current.identifierForVendor!.uuidString,
+            token: "",
+            wallets: []
+        )
+
+        client.unregister(device: device)
         UIApplication.shared.unregisterForRemoteNotifications()
     }
 
@@ -27,13 +36,13 @@ class PushNotificationsRegistrar {
         let token = tokenParts.joined()
 
         print("Device Token: \(token)")
-    }
 
-    private func registerRemote() {
+        let device = PushDevice(
+            deviceID: UIDevice.current.identifierForVendor!.uuidString,
+            token: token,
+            wallets: []
+        )
 
-    }
-
-    private func unregisterRemote() {
-
+        client.register(device: device)
     }
 }
