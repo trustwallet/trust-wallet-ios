@@ -15,7 +15,7 @@ class SendAndRequestViewControllerTests: XCTestCase {
         let address: Address = .make()
         let controller = SendAndRequestViewContainer(flow: .send(destination: address), session: .make())
 
-        XCTAssertEqual(address.address, controller.sendController.addressRow?.value)
+        XCTAssertEqual(address.address, controller.sendViewController.addressRow?.value)
         XCTAssertTrue(controller.childViewControllers[0] is SendViewController)
     }
 
