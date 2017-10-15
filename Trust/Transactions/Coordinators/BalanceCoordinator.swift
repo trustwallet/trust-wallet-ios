@@ -58,15 +58,7 @@ class BalanceCoordinator {
     }
 
     func update() {
-        guard let balance = balance else {
-            return
-        }
-
         delegate?.didUpdate(viewModel: viewModel)
-    }
-
-    func stop() {
-
     }
 }
 
