@@ -9,11 +9,6 @@ protocol SendAndRequestViewContainerDelegate: class {
 
 class SendAndRequestViewContainer: UIViewController {
 
-    var flow: PaymentFlow {
-        didSet {
-            updateTo(flow: flow)
-        }
-    }
     let session: WalletSession
     weak var delegate: SendAndRequestViewContainerDelegate?
 
@@ -55,7 +50,6 @@ class SendAndRequestViewContainer: UIViewController {
         flow: PaymentFlow,
         session: WalletSession
     ) {
-        self.flow = flow
         self.session = session
         super.init(nibName: nil, bundle: nil)
 
