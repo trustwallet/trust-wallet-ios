@@ -24,6 +24,7 @@ target 'Trust' do
   pod '1PasswordExtension'
   pod 'BulletinBoard', :git=>'https://github.com/alexaubry/BulletinBoard'
   pod 'Lokalise'
+  pod 'Moya'
 
   target 'TrustTests' do
     inherit! :search_paths
