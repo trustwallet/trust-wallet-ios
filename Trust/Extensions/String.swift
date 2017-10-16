@@ -5,7 +5,7 @@ import Foundation
 extension String {
     var hex: String {
         let data = self.data(using: .utf8)!
-        return data.map { String(format:"%02x", $0) }.joined()
+        return data.map { String(format: "%02x", $0) }.joined()
     }
 
     var hexEncoded: String {

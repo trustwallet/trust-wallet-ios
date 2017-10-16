@@ -24,6 +24,15 @@ class SettingsViewController: FormViewController {
         return VENTouchLock.sharedInstance().isPasscodeSet()
     }
 
+    static var isPushNotificationEnabled: Bool {
+        guard let settings = UIApplication.shared.currentUserNotificationSettings
+            else {
+                return false
+        }
+        return UIApplication.shared.isRegisteredForRemoteNotifications && !settings.types.isEmpty
+    }
+
+    // swiftlint:disable:next function_body_length
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -82,6 +91,16 @@ class SettingsViewController: FormViewController {
                 cell.imageView?.image = R.image.settings_lock()
             }
 
+            <<< SwitchRow {
+                $0.title = NSLocalizedString("Settings.PushNotifications", value: "Push Notifications", comment: "")
+                $0.value = SettingsViewController.isPushNotificationEnabled
+            }.onChange { [unowned self] row in
+                let enabled = row.value ?? false
+                self.run(action: .pushNotifications(enabled: enabled))
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_push_notifications()
+            }
+
             +++ Section(NSLocalizedString("Settings.OpenSourceDevelopment", value: "Open Source Development", comment: ""))
 
             <<< link(
@@ -116,7 +135,7 @@ class SettingsViewController: FormViewController {
                 button.title = NSLocalizedString("Settings.RateUsAppStore", value: "Rate Us on App Store", comment: "")
             }.onCellSelection { _ in
                 if #available(iOS 10.3, *) { SKStoreReviewController.requestReview() } else {
-                    UIApplication.shared.openURL(URL(string:"itms-apps://itunes.apple.com/app/id1288339409")!)
+                    UIApplication.shared.openURL(URL(string: "itms-apps://itunes.apple.com/app/id1288339409")!)
                 }
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_rating()

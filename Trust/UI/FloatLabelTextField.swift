@@ -71,12 +71,12 @@ import Eureka
 
     // MARK: - Init
     required public init?(coder aDecoder: NSCoder) {
-        super.init(coder:aDecoder)
+        super.init(coder: aDecoder)
         setup()
     }
 
     override init(frame: CGRect) {
-        super.init(frame:frame)
+        super.init(frame: frame)
         setup()
     }
 
@@ -125,7 +125,7 @@ import Eureka
         if !(text?.isEmpty ?? true) {
             var top = ceil(title.font.lineHeight + hintYPadding)
             top = min(top, maxTopInset())
-            r = CGRect(x:r.origin.x, y:r.origin.y + (top * 0.5), width:r.size.width, height:r.size.height)
+            r = CGRect(x: r.origin.x, y: r.origin.y + (top * 0.5), width: r.size.width, height: r.size.height)
         }
         return r.integral
     }
@@ -159,12 +159,12 @@ import Eureka
         } else if textAlignment == .right {
             x = r.origin.x + r.size.width - title.frame.size.width
         }
-        title.frame = CGRect(x:x, y:title.frame.origin.y, width:title.frame.size.width, height:title.frame.size.height)
+        title.frame = CGRect(x: x, y: title.frame.origin.y, width: title.frame.size.width, height: title.frame.size.height)
     }
 
     private func showTitle(_ animated: Bool) {
         let dur = animated ? animationDuration : 0
-        UIView.animate(withDuration: dur, delay:0, options: UIViewAnimationOptions.beginFromCurrentState.union(.curveEaseOut), animations: {
+        UIView.animate(withDuration: dur, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState.union(.curveEaseOut), animations: {
             // Animation
             self.title.alpha = 1.0
             var r = self.title.frame
@@ -175,7 +175,7 @@ import Eureka
 
     private func hideTitle(_ animated: Bool) {
         let dur = animated ? animationDuration : 0
-        UIView.animate(withDuration: dur, delay:0, options: UIViewAnimationOptions.beginFromCurrentState.union(.curveEaseIn), animations: {
+        UIView.animate(withDuration: dur, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState.union(.curveEaseIn), animations: {
             // Animation
             self.title.alpha = 0.0
             var r = self.title.frame
