@@ -37,7 +37,7 @@ class PushNotificationsRegistrar {
         let device = PushDevice(
             deviceID: UIDevice.current.identifierForVendor!.uuidString,
             token: token,
-            wallets: []
+            wallets: addresses.map { $0.address }
         )
         client.register(device: device)
     }

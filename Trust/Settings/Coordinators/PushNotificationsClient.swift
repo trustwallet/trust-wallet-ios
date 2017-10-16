@@ -24,8 +24,10 @@ extension PushNotificationsService: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .register, .unregister:
+        case .register:
             return .post
+        case .unregister:
+            return .delete
         }
     }
 

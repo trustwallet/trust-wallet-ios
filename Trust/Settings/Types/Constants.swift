@@ -3,5 +3,5 @@
 import Foundation
 
 struct Constants {
-    static let pushNotificationsEndpoint: URL = URL(string: "https://trustwallet.herokuapp.com/")!
+    static let pushNotificationsEndpoint: URL = URL(string: "https://trustwallet.herokuapp.com")!
 }

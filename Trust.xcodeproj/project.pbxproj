@@ -421,7 +421,6 @@
 		2912CCF71F6A830700C6CBE3 /* Trust */ = {
 			isa = PBXGroup;
 			children = (
-				29AD8A071F93E1F0008E10E7 /* Trust.entitlements */,
 				290B2B511F8F4F840053C83E /* Localization */,
 				29B9345A1F88457C009FCABB /* Authentication */,
 				29FC9BC31F830880000209CD /* Core */,
@@ -444,6 +443,7 @@
 				29850D241F6B27A800791A49 /* R.generated.swift */,
 				2912CD011F6A830700C6CBE3 /* Assets.xcassets */,
 				2912CD061F6A830700C6CBE3 /* Info.plist */,
+				29AD8A071F93E1F0008E10E7 /* Trust.entitlements */,
 				296106CD1F777E410006164B /* LaunchScreen.storyboard */,
 			);
 			path = Trust;
