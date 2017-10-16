@@ -22,6 +22,13 @@ class BalanceCoordinator {
         didSet { update() }
     }
 
+    var viewModel: BalanceViewModel {
+        return BalanceViewModel(
+            balance: balance,
+            rate: currencyRate
+        )
+    }
+
     init(account: Account) {
         self.account = account
     }
@@ -51,20 +58,7 @@ class BalanceCoordinator {
     }
 
     func update() {
-        guard let balance = balance else {
-            return
-        }
-
-        let viewModel = BalanceViewModel(
-            balance: balance,
-            rate: currencyRate
-        )
-
         delegate?.didUpdate(viewModel: viewModel)
-    }
-
-    func stop() {
-
     }
 }
 

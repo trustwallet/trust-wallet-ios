@@ -6,7 +6,7 @@ import UIKit
 class TransactionsFooterView: UIView {
 
     lazy var sendButton: Button = {
-        let sendButton = Button(size: .large, style: .squared)
+        let sendButton = Button(size: .normal, style: .squared)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.layer.cornerRadius = 6
         sendButton.setTitle(NSLocalizedString("Generic.Send", value: "Send", comment: ""), for: .normal)
@@ -30,10 +30,9 @@ class TransactionsFooterView: UIView {
             sendButton,
             requestButton,
         ])
-
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 15)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fillEqually
         stackView.spacing = 15
         addSubview(stackView)

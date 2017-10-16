@@ -29,6 +29,6 @@ struct Colors {
     static let lightBlack = UIColor(hex: "313849")
 }
 
-struct Layout {
+struct StyleLayout {
     static let sideMargin: CGFloat = 15
 }

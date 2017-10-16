@@ -15,12 +15,16 @@ class ExportCoordinator {
     weak var delegate: ExportCoordinatorDelegate?
     let keystore = EtherKeystore()
 
-    lazy var rootNavigationController: UINavigationController = {
+    lazy var accountViewController: AccountsViewController = {
         let controller = AccountsViewController()
         controller.headerTitle = "Select Account to Export"
         controller.delegate = self
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        return NavigationController(rootViewController: controller)
+        return controller
+    }()
+
+    lazy var rootNavigationController: UINavigationController = {
+        return NavigationController(rootViewController: self.accountViewController)
     }()
 
     init(navigationController: UINavigationController) {
@@ -51,6 +55,7 @@ class ExportCoordinator {
             activityViewController.completionWithItemsHandler = { result in
                 completionHandler()
             }
+            activityViewController.popoverPresentationController?.sourceView = self.accountViewController.view
             rootNavigationController.present(activityViewController, animated: true, completion: nil)
         case .failure(let error):
             rootNavigationController.displayError(error: error)
