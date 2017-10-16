@@ -12,7 +12,7 @@ struct PushDevice: JSONable {
     let token: String
     let wallets: [String]
 
-    var dict: [String : Any] {
+    var dict: [String: Any] {
         return [
             "deviceID": deviceID,
             "token": token,

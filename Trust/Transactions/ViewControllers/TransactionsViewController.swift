@@ -158,12 +158,12 @@ extension TransactionsViewController: UITableViewDelegate {
 extension TransactionsViewController: TransactionDataCoordinatorDelegate {
     func didUpdate(result: Result<[Transaction], TransactionError>) {
         switch result {
-            case .success(let items):
-            let viewModel = TransactionsViewModel(transactions: items)
-                configure(viewModel: viewModel)
-                endLoading()
-            case .failure(let error):
-                endLoading(error: error)
+        case .success(let items):
+        let viewModel = TransactionsViewModel(transactions: items)
+            configure(viewModel: viewModel)
+            endLoading()
+        case .failure(let error):
+            endLoading(error: error)
         }
         tableView.reloadData()
 

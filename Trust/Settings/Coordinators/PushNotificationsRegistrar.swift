@@ -10,7 +10,7 @@ class PushNotificationsRegistrar {
 
     func register() {
         if #available(iOS 10, *) {
-            UNUserNotificationCenter.current().requestAuthorization(options:[.badge, .alert, .sound]) { _ in }
+            UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _ in }
             UIApplication.shared.registerForRemoteNotifications()
         } else if #available(iOS 9, *) {
             UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil))
