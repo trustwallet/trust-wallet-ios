@@ -110,7 +110,7 @@ extension TransactionCoordinator: SettingsCoordinatorDelegate {
         switch action {
         case .RPCServer:
             clean()
-            delegate?.didRestart(with: account, in: self)
+            delegate?.didRestart(with: session.account, in: self)
         case .exportPrivateKey, .pushNotifications:
             break
         case .donate(let address):
