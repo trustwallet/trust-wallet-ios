@@ -6,7 +6,6 @@ import Result
 
 protocol TransactionCoordinatorDelegate: class {
     func didCancel(in coordinator: TransactionCoordinator)
-    func didChangeAccount(to account: Account, in coordinator: TransactionCoordinator)
     func didRestart(with account: Account, in coordinator: TransactionCoordinator)
 }
 
@@ -100,6 +99,11 @@ class TransactionCoordinator: Coordinator {
         session.stop()
     }
 
+    func restart(for account: Account) {
+        clean()
+        delegate?.didRestart(with: account, in: self)
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -109,8 +113,7 @@ extension TransactionCoordinator: SettingsCoordinatorDelegate {
     func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator) {
         switch action {
         case .RPCServer:
-            clean()
-            delegate?.didRestart(with: session.account, in: self)
+            restart(for: session.account)
         case .exportPrivateKey, .pushNotifications:
             break
         case .donate(let address):
@@ -160,8 +163,7 @@ extension TransactionCoordinator: AccountsCoordinatorDelegate {
     }
 
     func didSelectAccount(account: Account, in coordinator: AccountsCoordinator) {
-        clean()
-        delegate?.didChangeAccount(to: account, in: self)
+        restart(for: account)
     }
 
     func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator) {
