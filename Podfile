@@ -25,6 +25,7 @@ target 'Trust' do
   pod 'BulletinBoard', :git=>'https://github.com/alexaubry/BulletinBoard'
   pod 'Lokalise'
   pod 'Moya'
+  pod 'JavaScriptKit'
 
   target 'TrustTests' do
     inherit! :search_paths
@@ -37,3 +38,13 @@ target 'Trust' do
   end
 
 end
+
+post_install do |installer|
+      installer.pods_project.targets.each do |target|
+          if ['JavaScriptKit'].include? target.name
+              target.build_configurations.each do |config|
+                  config.build_settings['SWIFT_VERSION'] = '4.0'
+              end
+          end
+      end
+  end

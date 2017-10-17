@@ -56,7 +56,9 @@ class AppCoordinator: NSObject, Coordinator {
     }
 
     func showTransactions(for account: Account) {
-        let session = WalletSession(account: account)
+        let session = WalletSession(
+            account: account
+        )
         let coordinator = TransactionCoordinator(
             session: session,
             rootNavigationController: rootNavigationController

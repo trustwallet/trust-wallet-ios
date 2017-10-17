@@ -11,7 +11,7 @@ protocol BalanceCoordinatorDelegate: class {
 class BalanceCoordinator {
 
     let exchangeRateCoordinator = ExchangeRateCoordinator()
-    let account: Account
+    let session: WalletSession
 
     weak var delegate: BalanceCoordinatorDelegate?
 
@@ -29,8 +29,8 @@ class BalanceCoordinator {
         )
     }
 
-    init(account: Account) {
-        self.account = account
+    init(session: WalletSession) {
+        self.session = session
     }
 
     func start() {
@@ -46,13 +46,12 @@ class BalanceCoordinator {
     }
 
     func fetchBalance() {
-        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: account.address.address)))
+        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: session.account.address.address)))
         Session.send(request) { [weak self] result in
             switch result {
             case .success(let balance):
                 self?.balance = balance
-            case .failure:
-                break
+            case .failure: break
             }
         }
     }
