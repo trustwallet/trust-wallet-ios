@@ -7,7 +7,7 @@ struct Token {
     let name: String
     let symbol: String
     let totalSupply: String
-    let balance: Int64
+    let balance: Double
     let decimals: Int64
 }
 
@@ -19,7 +19,7 @@ extension Token {
             name: tokenInfo["name"] as? String ?? "",
             symbol: tokenInfo["symbol"] as? String ?? "",
             totalSupply: tokenInfo["symbol"] as? String ?? "",
-            balance: json["balance"] as? Int64 ?? 0,
+            balance: json["balance"] as? Double ?? 0,
             decimals: tokenInfo["decimals"] as? Int64 ??  Int64(tokenInfo["decimals"] as? String ?? "") ?? 0
         )
     }
