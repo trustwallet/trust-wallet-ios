@@ -34,7 +34,6 @@
 		291794FF1F95F5CE00539A30 /* Web3Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291794FE1F95F5CE00539A30 /* Web3Request.swift */; };
 		291795011F95F5E200539A30 /* GetBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291795001F95F5E200539A30 /* GetBalance.swift */; };
 		291795051F95F60100539A30 /* Web3RequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291795041F95F60100539A30 /* Web3RequestType.swift */; };
-		291795071F9602B500539A30 /* ConfirmSendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291795061F9602B500539A30 /* ConfirmSendViewController.swift */; };
 		291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291D73C51F7F500D00A8AB56 /* TransactionItemState.swift */; };
 		291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291E8FBE1F7DEA85003F0ECF /* EtherKeystoreTests.swift */; };
 		291EC9DF1F7053C50004EDD0 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC9DE1F7053C50004EDD0 /* NavigationController.swift */; };
@@ -223,7 +222,6 @@
 		291794FE1F95F5CE00539A30 /* Web3Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3Request.swift; sourceTree = "<group>"; };
 		291795001F95F5E200539A30 /* GetBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBalance.swift; sourceTree = "<group>"; };
 		291795041F95F60100539A30 /* Web3RequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3RequestType.swift; sourceTree = "<group>"; };
-		291795061F9602B500539A30 /* ConfirmSendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSendViewController.swift; sourceTree = "<group>"; };
 		291D73C51F7F500D00A8AB56 /* TransactionItemState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionItemState.swift; sourceTree = "<group>"; };
 		291E8FBE1F7DEA85003F0ECF /* EtherKeystoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherKeystoreTests.swift; sourceTree = "<group>"; };
 		291EC9DE1F7053C50004EDD0 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -980,7 +978,6 @@
 				29285B411F6FB3E60044CF29 /* SendViewController.swift */,
 				29B6AECA1F7C5FA900EC6DE3 /* SendAndRequestViewContainer.swift */,
 				29B6AED31F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift */,
-				291795061F9602B500539A30 /* ConfirmSendViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1561,7 +1558,6 @@
 				29E2E33A1F7A008C000CF94A /* UIView.swift in Sources */,
 				291795051F95F60100539A30 /* Web3RequestType.swift in Sources */,
 				290B2B5F1F9177860053C83E /* UIImage.swift in Sources */,
-				291795071F9602B500539A30 /* ConfirmSendViewController.swift in Sources */,
 				291F52B21F6B814300B369AB /* MG Benchmark Tools.swift in Sources */,
 				29FC0CB11F81CED10036089F /* TransactionByHashRequest.swift in Sources */,
 				291ED08F1F6F613200E7E93A /* GetTransactionRequest.swift in Sources */,
@@ -1869,7 +1865,7 @@
 				CODE_SIGN_ENTITLEMENTS = Trust/Trust.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Trust/Info.plist;
@@ -1895,7 +1891,7 @@
 				CODE_SIGN_ENTITLEMENTS = Trust/Trust.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Trust/Info.plist;
