@@ -13,19 +13,17 @@ class WelcomeViewController: UIViewController {
     private let viewModel = WelcomeViewModel()
     weak var delegate: WelcomeViewControllerDelegate?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        title = viewModel.title
-        view.backgroundColor = viewModel.backgroundColor
-
+    lazy var getStartedButton: UIButton = {
         let getStartedButton = Button(size: .large, style: .solid)
         getStartedButton.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
         getStartedButton.setTitle(NSLocalizedString("welcome.createWallet", value: "CREATE WALLET", comment: ""), for: .normal)
         getStartedButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
         getStartedButton.layer.cornerRadius = 5
         getStartedButton.backgroundColor = Colors.darkBlue
+        return getStartedButton
+    }()
 
+    lazy var importButton: UIButton = {
         let importButton = Button(size: .large, style: .solid)
         importButton.frame = CGRect(x: 0, y: 60, width: 300, height: 50)
         importButton.setTitle(NSLocalizedString("welcome.importWallet", value: "IMPORT WALLET", comment: ""), for: .normal)
@@ -33,10 +31,19 @@ class WelcomeViewController: UIViewController {
         importButton.layer.cornerRadius = 5
         importButton.setBackgroundColor(Colors.gray, forState: .normal)
         importButton.setBackgroundColor(Colors.lightGray, forState: .highlighted)
+        return importButton
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        title = viewModel.title
+        view.backgroundColor = viewModel.backgroundColor
 
         let skipPlaceholder = UIButton()
         skipPlaceholder.translatesAutoresizingMaskIntoConstraints = false
         skipPlaceholder.frame = CGRect(x: 0, y: 0, width: 300, height: 110)
+        skipPlaceholder.backgroundColor = .clear
 
         NSLayoutConstraint.activate([
             skipPlaceholder.heightAnchor.constraint(equalToConstant: 110),
