@@ -4,7 +4,8 @@ import UIKit
 import EAIntroView
 
 protocol WelcomeViewControllerDelegate: class {
-    func didPressStart(in viewController: WelcomeViewController)
+    func didPressCreateWallet(in viewController: WelcomeViewController)
+    func didPressImportWallet(in viewController: WelcomeViewController)
 }
 
 class WelcomeViewController: UIViewController {
@@ -18,12 +19,31 @@ class WelcomeViewController: UIViewController {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
-        let button = Button(size: .large, style: .solid)
-        button.frame = CGRect(x: 0, y: 0, width: 300, height: 64)
-        button.setTitle(NSLocalizedString("Welcome.GetStarted", value: "GET STARTED", comment: ""), for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
-        button.layer.cornerRadius = 5
-        button.backgroundColor = Colors.darkBlue
+        let getStartedButton = Button(size: .large, style: .solid)
+        getStartedButton.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
+        getStartedButton.setTitle(NSLocalizedString("welcome.createWallet", value: "CREATE WALLET", comment: ""), for: .normal)
+        getStartedButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
+        getStartedButton.layer.cornerRadius = 5
+        getStartedButton.backgroundColor = Colors.darkBlue
+
+        let importButton = Button(size: .large, style: .solid)
+        importButton.frame = CGRect(x: 0, y: 60, width: 300, height: 50)
+        importButton.setTitle(NSLocalizedString("welcome.importWallet", value: "IMPORT WALLET", comment: ""), for: .normal)
+        importButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
+        importButton.layer.cornerRadius = 5
+        importButton.setBackgroundColor(Colors.gray, forState: .normal)
+        importButton.setBackgroundColor(Colors.lightGray, forState: .highlighted)
+
+        let skipPlaceholder = UIButton()
+        skipPlaceholder.translatesAutoresizingMaskIntoConstraints = false
+        skipPlaceholder.frame = CGRect(x: 0, y: 0, width: 300, height: 110)
+
+        NSLayoutConstraint.activate([
+            skipPlaceholder.heightAnchor.constraint(equalToConstant: 110),
+        ])
+
+        skipPlaceholder.addSubview(getStartedButton)
+        skipPlaceholder.addSubview(importButton)
 
         let introView = EAIntroView(frame: self.view.frame, andPages: [
             constructPage(
@@ -44,17 +64,20 @@ class WelcomeViewController: UIViewController {
         ])
         let height = view.frame.height
         introView?.backgroundColor = .white
-        introView?.pageControlY = height / 4.2
+        introView?.pageControlY = height / 3.6
         introView?.pageControl.pageIndicatorTintColor = viewModel.pageIndicatorTintColor
         introView?.pageControl.currentPageIndicatorTintColor = viewModel.currentPageIndicatorTintColor
-        introView?.skipButton = button
-        introView?.skipButtonY = view.frame.height / 6
+        introView?.skipButton = skipPlaceholder
+        introView?.skipButtonY = view.frame.height / 4.7
         introView?.swipeToExit = false
         introView?.skipButtonAlignment = .center
         introView?.show(in: self.view, animateDuration: 0)
 
-        button.removeTarget(introView, action: nil, for: .touchUpInside)
-        button.addTarget(self, action: #selector(startFlow), for: .touchUpInside)
+        getStartedButton.removeTarget(introView, action: nil, for: .touchUpInside)
+        getStartedButton.addTarget(self, action: #selector(start), for: .touchUpInside)
+
+        importButton.removeTarget(introView, action: nil, for: .touchUpInside)
+        importButton.addTarget(self, action: #selector(importFlow), for: .touchUpInside)
     }
 
     func constructPage(
@@ -67,8 +90,8 @@ class WelcomeViewController: UIViewController {
         let page = EAIntroPage()
         page.title = title
         page.desc = description
-        page.titleIconPositionY = height / 6
-        page.descPositionY = height / 3
+        page.titleIconPositionY = height / 8.6
+        page.descPositionY = height / 2.7
         page.titleFont = viewModel.pageTitleFont
         page.titleColor = viewModel.pageTitleColor
         page.descFont = viewModel.pageDescriptionFont
@@ -77,19 +100,11 @@ class WelcomeViewController: UIViewController {
         return page
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        navigationController?.setNavigationBarHidden(true, animated: false)
+    @objc func start() {
+        delegate?.didPressCreateWallet(in: self)
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        navigationController?.setNavigationBarHidden(false, animated: false)
-    }
-
-    @objc func startFlow() {
-        delegate?.didPressStart(in: self)
+    @objc func importFlow() {
+        delegate?.didPressImportWallet(in: self)
     }
 }

@@ -92,21 +92,17 @@ class AccountsViewController: UITableViewController {
     }
 
     func confirmDelete(account: Account) {
-        let askController = UIAlertController.askPassword(
-            title: "Please enter your password to delete you account",
-            message: "Make sure you export your account before deleting"
-        ) { result in
+        confirm(title: "Are you sure you would like to delete this wallet?", message: "Make sure you have backup of your wallet") { result in
             switch result {
-            case .success(let password):
-                self.delete(account: account, password: password)
+            case .success:
+                self.delete(account: account)
             case .failure: break
             }
         }
-        present(askController, animated: true, completion: nil)
     }
 
-    func delete(account: Account, password: String) {
-        let result = self.keystore.delete(account: account, password: password)
+    func delete(account: Account) {
+        let result = self.keystore.delete(account: account)
         switch result {
         case .success:
             self.fetch()

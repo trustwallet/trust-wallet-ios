@@ -6,7 +6,7 @@ import BonMot
 import OnePasswordExtension
 
 protocol CreateWalletViewControllerDelegate: class {
-    func didPressImport(in viewController: CreateWalletViewController)
+    func didPressImportWallet(in viewController: CreateWalletViewController)
     func didCreateAccount(account: Account, in viewController: CreateWalletViewController)
     func didCancel(in viewController: CreateWalletViewController)
 }
@@ -117,6 +117,10 @@ class CreateWalletViewController: FormViewController {
             return
         }
 
+        createAccount(for: password)
+    }
+
+    func createAccount(for password: String) {
         let account = keystore.createAccout(password: password)
         handleCreatedAccount(account: account)
     }
@@ -130,7 +134,7 @@ class CreateWalletViewController: FormViewController {
     }
 
     func importWallet() {
-        delegate?.didPressImport(in: self)
+        delegate?.didPressImportWallet(in: self)
     }
 
     func onePasswordCreate() {

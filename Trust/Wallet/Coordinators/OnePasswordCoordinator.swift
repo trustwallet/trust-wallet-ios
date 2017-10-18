@@ -41,7 +41,7 @@ class OnePasswordCoordinator {
         ) { results, error in
             let results = results ?? [:]
             if error != nil {
-                let _ = self.keystore.delete(account: account, password: newPasssword)
+                let _ = self.keystore.delete(account: account)
             } else {
                 let updatedPassword = results[AppExtensionPasswordKey] as? String ?? ""
                 let result = OnePasswordConverter.fromPassword(password: updatedPassword)

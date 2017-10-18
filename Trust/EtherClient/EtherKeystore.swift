@@ -108,9 +108,9 @@ class EtherKeystore: Keystore {
         }
     }
 
-    func delete(account: Account, password: String) -> Result<Void, KeyStoreError> {
+    func delete(account: Account) -> Result<Void, KeyStoreError> {
         let gethAccount = getGethAccount(for: account.address)
-
+        let password = getPassword(for: account)
         do {
             try gethKeyStorage.delete(gethAccount, passphrase: password)
             return (.success())

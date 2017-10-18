@@ -12,27 +12,59 @@ protocol WalletCoordinatorDelegate: class {
 class WalletCoordinator {
 
     let presenterViewController: UINavigationController
-    let navigationViewController: UINavigationController = NavigationController()
+    let navigationViewController: UINavigationController
     weak var delegate: WalletCoordinatorDelegate?
+    var entryPoint: WalletEntryPoint?
+    private let keystore: EtherKeystore
 
-    init(rootNavigationController: UINavigationController) {
-        self.presenterViewController = rootNavigationController
+    init(
+        presenterViewController: UINavigationController,
+        navigationViewController: UINavigationController = NavigationController(),
+        keystore: EtherKeystore = EtherKeystore()
+    ) {
+        self.presenterViewController = presenterViewController
+        self.navigationViewController = navigationViewController
+        self.keystore = EtherKeystore()
     }
 
-    func start() {
-        showCreateWallet()
+    func start(_ entryPoint: WalletEntryPoint) {
+        self.entryPoint = entryPoint
+        switch entryPoint {
+        case .createWallet:
+            presentCreateWallet()
+        case .importWallet:
+            presentImportWallet()
+        case .createInstantWallet:
+            createInstantWallet()
+        }
     }
 
-    func showCreateWallet() {
-        let controller: CreateWalletViewController = .make(delegate: self)
+    func presentCreateWallet() {
+        let controller = WelcomeViewController()
+        controller.delegate = self
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         navigationViewController.viewControllers = [controller]
         presenterViewController.present(navigationViewController, animated: true, completion: nil)
     }
 
-    func showImportWallet() {
+    func presentImportWallet() {
+        let controller: ImportWalletViewController = .make(delegate: self)
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        navigationViewController.viewControllers = [controller]
+        presenterViewController.present(navigationViewController, animated: true, completion: nil)
+    }
+
+    func pushImportWallet() {
         let controller: ImportWalletViewController = .make(delegate: self)
         navigationViewController.pushViewController(controller, animated: true)
+    }
+
+    func createInstantWallet() {
+        presenterViewController.displayLoading(animated: false)
+        let password = UUID().uuidString
+        let account = keystore.createAccout(password: password)
+        presenterViewController.hideLoading(animated: false)
+        didCreateAccount(account: account)
     }
 
     @objc func dismiss() {
@@ -44,31 +76,19 @@ class WalletCoordinator {
     }
 }
 
-extension WalletCoordinator: CreateWalletViewControllerDelegate {
-    func didPressImport(in viewController: CreateWalletViewController) {
-        showImportWallet()
+extension WalletCoordinator: WelcomeViewControllerDelegate {
+    func didPressImportWallet(in viewController: WelcomeViewController) {
+        pushImportWallet()
     }
 
-    func didCreateAccount(account: Account, in viewController: CreateWalletViewController) {
-        didCreateAccount(account: account)
-    }
-
-    func didCancel(in viewController: CreateWalletViewController) {
-        viewController.dismiss(animated: true, completion: nil)
+    func didPressCreateWallet(in viewController: WelcomeViewController) {
+        createInstantWallet()
     }
 }
 
 extension WalletCoordinator: ImportWalletViewControllerDelegate {
     func didImportAccount(account: Account, in viewController: ImportWalletViewController) {
         didCreateAccount(account: account)
-    }
-}
-
-extension CreateWalletViewController {
-    static func make(delegate: CreateWalletViewControllerDelegate? = .none) -> CreateWalletViewController {
-        let controller = CreateWalletViewController()
-        controller.delegate = delegate
-        return controller
     }
 }
 

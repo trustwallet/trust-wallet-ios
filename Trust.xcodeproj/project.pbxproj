@@ -34,6 +34,7 @@
 		291794FF1F95F5CE00539A30 /* Web3Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291794FE1F95F5CE00539A30 /* Web3Request.swift */; };
 		291795011F95F5E200539A30 /* GetBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291795001F95F5E200539A30 /* GetBalance.swift */; };
 		291795051F95F60100539A30 /* Web3RequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291795041F95F60100539A30 /* Web3RequestType.swift */; };
+		291A1B651F974E8600ADEC80 /* WalletEntryPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291A1B641F974E8600ADEC80 /* WalletEntryPoint.swift */; };
 		291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291D73C51F7F500D00A8AB56 /* TransactionItemState.swift */; };
 		291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291E8FBE1F7DEA85003F0ECF /* EtherKeystoreTests.swift */; };
 		291EC9DF1F7053C50004EDD0 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291EC9DE1F7053C50004EDD0 /* NavigationController.swift */; };
@@ -222,6 +223,7 @@
 		291794FE1F95F5CE00539A30 /* Web3Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3Request.swift; sourceTree = "<group>"; };
 		291795001F95F5E200539A30 /* GetBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBalance.swift; sourceTree = "<group>"; };
 		291795041F95F60100539A30 /* Web3RequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3RequestType.swift; sourceTree = "<group>"; };
+		291A1B641F974E8600ADEC80 /* WalletEntryPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletEntryPoint.swift; sourceTree = "<group>"; };
 		291D73C51F7F500D00A8AB56 /* TransactionItemState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionItemState.swift; sourceTree = "<group>"; };
 		291E8FBE1F7DEA85003F0ECF /* EtherKeystoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherKeystoreTests.swift; sourceTree = "<group>"; };
 		291EC9DE1F7053C50004EDD0 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -710,6 +712,7 @@
 				293248891F88D593008A9818 /* OnePasswordConfig.swift */,
 				2932488B1F88E689008A9818 /* OnePasswordConverter.swift */,
 				2932488D1F88E69F008A9818 /* OnePasswordError.swift */,
+				291A1B641F974E8600ADEC80 /* WalletEntryPoint.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1671,6 +1674,7 @@
 				290B2B701F930AB90053C83E /* PushNotificationsRegistrar.swift in Sources */,
 				29B6AED11F7C881D00EC6DE3 /* TransactionCost.swift in Sources */,
 				296106CA1F764AB60006164B /* TokensDataStore.swift in Sources */,
+				291A1B651F974E8600ADEC80 /* WalletEntryPoint.swift in Sources */,
 				29BB94931F6FC380009B09CC /* BalanceViewModel.swift in Sources */,
 				292F75A91F88865A00585F8E /* TouchRegistrar.swift in Sources */,
 				29D03F1D1F712183006E548C /* Button.swift in Sources */,

@@ -37,13 +37,13 @@ extension UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
 
-    func displayLoading(text: String = "Loading...") {
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+    func displayLoading(text: String = "Loading...", animated: Bool = true) {
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: animated)
         hud.label.text = text
     }
 
-    func hideLoading() {
-        MBProgressHUD.hide(for: view, animated: true)
+    func hideLoading(animated: Bool = true) {
+        MBProgressHUD.hide(for: view, animated: animated)
     }
 
     func add(asChildViewController viewController: UIViewController) {

@@ -54,9 +54,9 @@ class AppCoordinatorTests: XCTestCase {
         )
         coordinator.start()
         
-        coordinator.showCreateWallet()
+        coordinator.showCreateWallet(entryPoint: .createWallet)
         
-        XCTAssertTrue((coordinator.rootNavigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is CreateWalletViewController)
+        XCTAssertTrue((coordinator.rootNavigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is WelcomeViewController)
     }
     
     func testShowTransactions() {

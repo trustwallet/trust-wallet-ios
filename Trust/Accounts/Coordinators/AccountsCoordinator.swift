@@ -31,7 +31,7 @@ class AccountsCoordinator {
     weak var delegate: AccountsCoordinatorDelegate?
 
     lazy var walletCoordinator: WalletCoordinator = {
-        return WalletCoordinator(rootNavigationController: self.rootNavigationController)
+        return WalletCoordinator(presenterViewController: self.rootNavigationController)
     }()
 
     init(navigationController: UINavigationController) {
@@ -51,7 +51,7 @@ class AccountsCoordinator {
     }
 
     func showCreateWallet() {
-        walletCoordinator.start()
+        walletCoordinator.start(.createWallet)
         walletCoordinator.delegate = self
     }
 }

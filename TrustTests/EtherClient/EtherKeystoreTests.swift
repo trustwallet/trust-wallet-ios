@@ -126,29 +126,13 @@ class EtherKeystoreTests: XCTestCase {
 
         XCTAssertEqual(1, keystore.accounts.count)
 
-        let result = keystore.delete(account: account, password: password)
+        let result = keystore.delete(account: account)
 
         guard case .success = result else {
             return XCTFail()
         }
 
         XCTAssertEqual(0, keystore.accounts.count)
-    }
-
-    func testDeleteAccountFail() {
-        let keystore = FakeEtherKeystore()
-        let password = "test"
-        let account = keystore.createAccout(password: password)
-
-        XCTAssertEqual(1, keystore.accounts.count)
-
-        let result = keystore.delete(account: account, password: "invalidPassword")
-
-        guard case .failure = result else {
-            return XCTFail()
-        }
-
-        XCTAssertEqual(1, keystore.accounts.count)
     }
 }
 
