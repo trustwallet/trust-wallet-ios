@@ -35,6 +35,13 @@ class ImportWalletViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //Demo purpose
+        if isDebug() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.4) {
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Demo", style: .done, target: self, action: #selector(self.demo))
+            }
+        }
+
         title = viewModel.title
 
 //        if OnePasswordExtension.shared().isAppExtensionAvailable() {
@@ -119,5 +126,13 @@ class ImportWalletViewController: FormViewController {
                 self.displayError(error: error)
             }
         }
+    }
+
+    func demo() {
+        //Used for taking screenshots to the App Store by snapshot
+        let demoAccount = Account(
+            address: Address(address: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")
+        )
+        delegate?.didImportAccount(account: demoAccount, in: self)
     }
 }

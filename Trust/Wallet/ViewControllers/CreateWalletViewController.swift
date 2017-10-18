@@ -32,12 +32,6 @@ class CreateWalletViewController: FormViewController {
         title = viewModel.title
         view.backgroundColor = .white
 
-        //Demo purpose
-        if isDebug() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.4) {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Demo", style: .done, target: self, action: #selector(self.demo))
-            }
-        }
 //       if OnePasswordExtension.shared().isAppExtensionAvailable() {
 //            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
 //                image: R.image.onepasswordButton(),
@@ -123,14 +117,6 @@ class CreateWalletViewController: FormViewController {
     func createAccount(for password: String) {
         let account = keystore.createAccout(password: password)
         handleCreatedAccount(account: account)
-    }
-
-    func demo() {
-        //Used for taking screenshots to the App Store by snapshot
-        let demoAccount = Account(
-            address: Address(address: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")
-        )
-        delegate?.didCreateAccount(account: demoAccount, in: self)
     }
 
     func importWallet() {
