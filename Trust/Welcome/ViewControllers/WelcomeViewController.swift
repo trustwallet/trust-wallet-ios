@@ -44,6 +44,7 @@ class WelcomeViewController: UIViewController {
         skipPlaceholder.translatesAutoresizingMaskIntoConstraints = false
         skipPlaceholder.frame = CGRect(x: 0, y: 0, width: 300, height: 110)
         skipPlaceholder.backgroundColor = .clear
+        skipPlaceholder.isAccessibilityElement = false
 
         NSLayoutConstraint.activate([
             skipPlaceholder.heightAnchor.constraint(equalToConstant: 110),

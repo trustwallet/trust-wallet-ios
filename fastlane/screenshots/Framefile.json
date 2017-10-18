@@ -22,9 +22,9 @@
       }
     },
     {
-      "filter": "CreateWallet",
+      "filter": "ImportWallet",
       "title": {
-        "text": "Create Wallet"
+        "text": "Import Wallet"
       }
     },
     {
