@@ -75,3 +75,7 @@ Trust.zip
 Trust-Localizable.zip
 Localizable.strings
 
+
+*.mobileprovision
+
+*.cer
