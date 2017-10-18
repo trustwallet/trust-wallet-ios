@@ -74,7 +74,7 @@ class SendViewController: FormViewController {
                 $0.validationOptions = .validatesOnDemand
             }.cellUpdate { cell, _ in
                 cell.textField.textAlignment = .left
-                cell.textField.placeholder = NSLocalizedString("Send.AmountPlaceholder", value: "Amount", comment: "")
+                cell.textField.placeholder = "\(self.viewModel.symbol) " + NSLocalizedString("Send.AmountPlaceholder", value: "Amount", comment: "")
                 cell.textField.keyboardType = .decimalPad
             }
 

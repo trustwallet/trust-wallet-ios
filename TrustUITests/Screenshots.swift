@@ -23,7 +23,7 @@ class Screenshots: XCTestCase {
         app.navigationBars["Import Wallet"].buttons["Demo"].tap()
 
         app.buttons["Send"].tap()
-        app.tables.textFields["Amount"].tap()
+        app.tables.textFields["ETH Amount"].tap()
         snapshot("2SendRequest")
 
         app.navigationBars["Trust.SendAndRequestViewContainer"].buttons["Cancel"].tap()
