@@ -11,7 +11,7 @@
 
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
-fastlane_version "2.60.0"
+fastlane_version "2.62.0"
 
 default_platform :ios
 
@@ -28,6 +28,8 @@ platform :ios do
     sh "cd .. && sh scripts/localizer.sh Trust " << ENV['LOKALISE_TOKEN']
     snapshot
     frameit(white: true)
+    cert
+    match(type: "appstore", readonly: true)
     gym(scheme: "Trust")
     commit_version_bump(message: "Version Bump", force: true)
     deliver(force: true)
