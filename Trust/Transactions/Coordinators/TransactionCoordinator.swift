@@ -76,14 +76,13 @@ class TransactionCoordinator: Coordinator {
     }
 
     func showPaymentFlow(for type: PaymentFlow, session: WalletSession) {
-        let controller = SendAndRequestViewContainer(
+        let coordinator = PaymentCoordinator(
             flow: type,
             session: session
         )
-        controller.delegate = self
-        let nav = NavigationController(rootViewController: controller)
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        navigationController.present(nav, animated: true, completion: nil)
+        coordinator.delegate = self
+        rootViewController.present(coordinator.navigationController, animated: true, completion: nil)
+        addCoordinator(coordinator)
     }
 
     @objc func didEnterForeground() {
@@ -174,8 +173,12 @@ extension TransactionCoordinator: AccountsCoordinatorDelegate {
     }
 }
 
-extension TransactionCoordinator: SendAndRequestViewContainerDelegate {
-    func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: SendAndRequestViewContainer) {
+extension TransactionCoordinator: PaymentCoordinatorDelegate {
+    func didCancel(in coordinator: PaymentCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+    }
+
+    func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: PaymentCoordinator) {
         dataCoordinator.fetchTransaction(hash: transaction.id)
     }
 }

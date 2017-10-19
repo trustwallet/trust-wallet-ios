@@ -9,12 +9,12 @@ protocol ExportCoordinatorDelegate: class {
     func didCancel(in coordinator: ExportCoordinator)
 }
 
-class ExportCoordinator {
+class ExportCoordinator: Coordinator {
 
-    let navigationController: UIViewController
+    let presenterViewController: UIViewController
     weak var delegate: ExportCoordinatorDelegate?
     let keystore = EtherKeystore()
-
+    var coordinators: [Coordinator] = []
     lazy var accountViewController: AccountsViewController = {
         let controller = AccountsViewController()
         controller.headerTitle = "Select Account to Export"
@@ -27,12 +27,12 @@ class ExportCoordinator {
         return NavigationController(rootViewController: self.accountViewController)
     }()
 
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    init(presenterViewController: UIViewController) {
+        self.presenterViewController = presenterViewController
     }
 
     func start() {
-        navigationController.present(rootNavigationController, animated: true, completion: nil)
+        presenterViewController.present(rootNavigationController, animated: true, completion: nil)
     }
 
     @objc func dismiss() {

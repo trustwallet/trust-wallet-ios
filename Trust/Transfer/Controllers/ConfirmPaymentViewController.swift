@@ -36,6 +36,8 @@ class ConfirmPaymentViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         view.backgroundColor = .white
+        stackViewController.view.backgroundColor = .white
+
         navigationItem.title = NSLocalizedString("confirmPayment.title", value: "Confirm", comment: "")
 
         let fee = EthereumConverter.from(value: BInt(configuration.speed.gasPrice.string()), to: .ether, minimumFractionDigits: 9)
@@ -63,12 +65,12 @@ class ConfirmPaymentViewController: UIViewController {
         stackViewController.view.addSubview(submitButton)
 
         NSLayoutConstraint.activate([
-            submitButton.bottomAnchor.constraint(equalTo: stackViewController.view.bottomAnchor),
-            submitButton.trailingAnchor.constraint(equalTo: stackViewController.view.trailingAnchor),
-            submitButton.leadingAnchor.constraint(equalTo: stackViewController.view.leadingAnchor),
+            submitButton.bottomAnchor.constraint(equalTo: stackViewController.view.layoutGuide.bottomAnchor),
+            submitButton.trailingAnchor.constraint(equalTo: stackViewController.view.trailingAnchor, constant: -15),
+            submitButton.leadingAnchor.constraint(equalTo: stackViewController.view.leadingAnchor, constant: 15),
         ])
 
-        displayChildViewController(viewController: stackViewController)
+        add(asChildViewController: stackViewController)
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -8,29 +8,26 @@ protocol SettingsCoordinatorDelegate: class {
     func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator)
 }
 
-class SettingsCoordinator {
+class SettingsCoordinator: Coordinator {
 
     let navigationController: UINavigationController
     weak var delegate: SettingsCoordinatorDelegate?
 
-    lazy var exportCoordinator: ExportCoordinator = {
-        return ExportCoordinator(navigationController: self.rootNavigationController)
-    }()
-
-    lazy var rootNavigationController: UINavigationController = {
-        let controller = self.makeSettingsController()
-        let nav = NavigationController(rootViewController: controller)
-        return nav
-    }()
-
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
+    var coordinators: [Coordinator] = []
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
     func start() {
-        navigationController.present(rootNavigationController, animated: true, completion: nil)
+        navigationController.present(
+            NavigationController(
+                rootViewController: self.makeSettingsController()
+            ),
+            animated: true,
+            completion: nil
+        )
     }
 
     private func makeSettingsController() -> SettingsViewController {
@@ -44,9 +41,11 @@ class SettingsCoordinator {
         delegate?.didCancel(in: self)
     }
 
-    @objc func export() {
-        exportCoordinator.start()
-        exportCoordinator.delegate = self
+    @objc func export(in viewController: UIViewController) {
+        let coordinator = ExportCoordinator(presenterViewController: viewController)
+        coordinator.start()
+        coordinator.delegate = self
+        addCoordinator(coordinator)
     }
 }
 
@@ -54,7 +53,7 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
     func didAction(action: SettingsAction, in viewController: SettingsViewController) {
         switch action {
         case .exportPrivateKey:
-            export()
+            export(in: viewController)
         case .RPCServer: break
         case .donate: break
         case .pushNotifications(let enabled):
@@ -71,10 +70,12 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
 
 extension SettingsCoordinator: ExportCoordinatorDelegate {
     func didFinish(in coordinator: ExportCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+        coordinator.presenterViewController.dismiss(animated: true, completion: nil)
     }
 
     func didCancel(in coordinator: ExportCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+        coordinator.presenterViewController.dismiss(animated: true, completion: nil)
     }
 }

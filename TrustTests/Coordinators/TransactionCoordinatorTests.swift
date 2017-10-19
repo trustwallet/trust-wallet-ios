@@ -48,7 +48,7 @@ class TransactionCoordinatorTests: XCTestCase {
 
         let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
 
-        XCTAssertTrue(controller is SendAndRequestViewContainer)
+        XCTAssertTrue(controller is PaymentCoordinator)
         XCTAssertTrue(controller?.childViewControllers[0] is SendViewController)
     }
 
@@ -62,7 +62,7 @@ class TransactionCoordinatorTests: XCTestCase {
 
         let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
 
-        XCTAssertTrue(controller is SendAndRequestViewContainer)
+        XCTAssertTrue(controller is PaymentCoordinator)
         XCTAssertTrue(controller?.childViewControllers[0] is RequestViewController)
     }
 }
