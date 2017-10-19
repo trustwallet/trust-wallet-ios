@@ -33,83 +33,32 @@ class TransactionViewController: UIViewController {
             maximumFractionDigits: 5
         )
 
-        displayStackViewController()
+        displayChildViewController(viewController: stackViewController)
+
+        let value = EthereumConverter.from(value: BInt(transaction.value), to: .ether, minimumFractionDigits: 5)
 
         let items: [UIView] = [
-            spacer(),
-            header(),
-            divider(),
-            item(title: "From", subTitle: transaction.from),
-            item(title: "To", subTitle: transaction.to),
-            item(title: "Gas Fee", subTitle: gasFee),
-            item(title: "Confirmation", subTitle: String(transaction.confirmations)),
-            divider(),
-            item(title: "Transaction #", subTitle: transaction.to),
-            item(title: "Transaction time", subTitle: viewModel.createdAt),
-            item(title: "Block #", subTitle: transaction.blockNumber),
+            TransactionAppearance.spacer(),
+            TransactionAppearance.header(
+                viewModel: TransactionHeaderViewModel(
+                    amount: Double(value) ?? 0,
+                    direction: transaction.direction
+                )
+            ),
+            TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
+            TransactionAppearance.item(title: "From", subTitle: transaction.from),
+            TransactionAppearance.item(title: "To", subTitle: transaction.to),
+            TransactionAppearance.item(title: "Gas Fee", subTitle: gasFee),
+            TransactionAppearance.item(title: "Confirmation", subTitle: String(transaction.confirmations)),
+            TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
+            TransactionAppearance.item(title: "Transaction #", subTitle: transaction.to),
+            TransactionAppearance.item(title: "Transaction time", subTitle: viewModel.createdAt),
+            TransactionAppearance.item(title: "Block #", subTitle: transaction.blockNumber),
         ]
 
         for item in items {
             stackViewController.addItem(item)
         }
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
-
-    private func displayStackViewController() {
-        addChildViewController(stackViewController)
-        view.addSubview(stackViewController.view)
-        _ = stackViewController.view.activateSuperviewHuggingConstraints()
-        stackViewController.didMove(toParentViewController: self)
-    }
-
-    private func item(title: String, subTitle: String) -> UIView {
-        let titleLabel = UILabel(frame: .zero)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = title
-        titleLabel.textAlignment = .left
-        titleLabel.textColor = Colors.gray
-
-        let subTitleLabel = UILabel(frame: .zero)
-        subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subTitleLabel.text = subTitle
-        subTitleLabel.textAlignment = .left
-        subTitleLabel.textColor = Colors.black
-        subTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFontWeightLight)
-        subTitleLabel.adjustsFontSizeToFitWidth = true
-
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        stackView.isLayoutMarginsRelativeArrangement = true
-        return stackView
-    }
-
-    private func divider() -> UIView {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = Colors.lightGray
-        view.alpha = 0.3
-        view.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        return view
-    }
-
-    private func spacer() -> UIView {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }
-
-    private func header() -> UIView {
-        let view = TransactionHeaderView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.amountLabel.attributedText = viewModel.amountAttributedString
-        return view
     }
 
     required init?(coder aDecoder: NSCoder) {
