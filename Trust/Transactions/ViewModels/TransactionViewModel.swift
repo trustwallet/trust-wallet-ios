@@ -35,32 +35,6 @@ struct TransactionViewModel {
         }
     }
 
-    var amountTextColor: UIColor {
-        switch transaction.direction {
-        case .incoming: return Colors.green
-        case .outgoing: return Colors.red
-        }
-    }
-
-    var amountAttributedString: NSAttributedString {
-        let amount = NSAttributedString(
-            string: self.amount,
-            attributes: [
-                NSFontAttributeName: UIFont.systemFont(ofSize: 20),
-                NSForegroundColorAttributeName: amountTextColor,
-            ]
-        )
-
-        let currency = NSAttributedString(
-            string: " ether",
-            attributes: [
-                NSFontAttributeName: UIFont.systemFont(ofSize: 14),
-            ]
-        )
-
-        return amount + currency
-    }
-
     var createdAt: String {
         return TransactionViewModel.formatter.string(from: transaction.date)
     }
