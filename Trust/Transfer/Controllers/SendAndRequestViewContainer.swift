@@ -27,9 +27,9 @@ class SendAndRequestViewContainer: UIViewController {
         return controller
     }()
 
-    lazy var sendButtonItem: UIBarButtonItem = {
+    lazy var nextButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(
-            title: NSLocalizedString("Generic.Send", value: "Send", comment: ""),
+            title: NSLocalizedString("Generic.Next", value: "Next", comment: ""),
             style: .done,
             target: self.sendViewController,
             action: #selector(SendViewController.send)
@@ -39,12 +39,6 @@ class SendAndRequestViewContainer: UIViewController {
     lazy var shareButton: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
     }()
-
-    var configuration = TransactionConfiguration() {
-        didSet {
-            sendViewController.configuration = configuration
-        }
-    }
 
     init(
         flow: PaymentFlow,
@@ -69,7 +63,7 @@ class SendAndRequestViewContainer: UIViewController {
         case .send:
             add(asChildViewController: sendViewController)
             remove(asChildViewController: requestController)
-            navigationItem.rightBarButtonItem = sendButtonItem
+            navigationItem.rightBarButtonItem = nextButtonItem
         case .request:
             add(asChildViewController: requestController)
             remove(asChildViewController: sendViewController)
@@ -77,20 +71,11 @@ class SendAndRequestViewContainer: UIViewController {
         }
     }
 
-    @objc func openConfiguration() {
-        let controller = TransactionConfigurationViewController(
-            configuration: configuration
-        )
-        let nav = NavigationController(rootViewController: controller)
-        controller.delegate = self
-        present(nav, animated: true, completion: nil)
-    }
-
     @objc func share() {
         let address = session.account.address.address
         let activityViewController = UIActivityViewController(
             activityItems: [
-                NSLocalizedString("Send.MyEthereumAddressIs", value: "My Ethereum address is:", comment: "") + address,
+                NSLocalizedString("Send.MyEthereumAddressIs", value: "My Ethereum address is: ", comment: "") + address,
             ],
             applicationActivities: nil
         )
@@ -104,18 +89,27 @@ class SendAndRequestViewContainer: UIViewController {
 }
 
 extension SendAndRequestViewContainer: SendViewControllerDelegate {
-    func didPressConfiguration(in viewController: SendViewController) {
-        openConfiguration()
-    }
-
     func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: SendViewController) {
         delegate?.didCreatePendingTransaction(transaction, in: self)
     }
+
+    func didPressConfirm(transaction: UnconfirmedTransaction, in viewController: SendViewController) {
+        let controller = ConfirmPaymentViewController(
+            account: session.account,
+            transaction: transaction
+        )
+        controller.delegate = self
+        navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
-extension SendAndRequestViewContainer: TransactionConfigurationViewControllerDelegate {
-    func didUpdate(configuration: TransactionConfiguration, in viewController: TransactionConfigurationViewController) {
-        self.configuration = configuration
-        viewController.dismiss(animated: true, completion: nil)
+extension SendAndRequestViewContainer: ConfirmPaymentViewControllerDelegate {
+    func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController) {
+        viewController.navigationController?.popViewController(animated: true)
+        sendViewController.clear()
+        displaySuccess(
+            title: "Sent! TransactionID: \(transaction.id)",
+            message: ""
+        )
     }
 }

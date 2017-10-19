@@ -9,7 +9,7 @@ import APIKit
 import QRCodeReaderViewController
 
 protocol SendViewControllerDelegate: class {
-    func didPressConfiguration(in viewController: SendViewController)
+    func didPressConfirm(transaction: UnconfirmedTransaction, in viewController: SendViewController)
     func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: SendViewController)
 }
 
@@ -35,12 +35,6 @@ class SendViewController: FormViewController {
     var amountRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
     }
-
-    var configuration = TransactionConfiguration()
-
-    lazy var sendTransactionCoordinator = {
-        return SendTransactionCoordinator(account: self.account)
-    }()
 
     init(account: Account, transferType: TransferType = .ether) {
         self.account = account
@@ -83,12 +77,6 @@ class SendViewController: FormViewController {
                     return self.amountRow?.value?.isEmpty ?? true
                 })
             }
-
-            <<< AppFormAppearance.button(NSLocalizedString("Send.AdditionalConfiguration", value: "Additional Configuration", comment: "")) {
-                $0.title = $0.tag
-            }.onCellSelection { [unowned self] (_, _) in
-                self.delegate?.didPressConfiguration(in: self)
-            }
     }
 
     override func insertAnimation(forSections sections: [Section]) -> UITableViewRowAnimation {
@@ -113,31 +101,16 @@ class SendViewController: FormViewController {
 
         let addressString = addressRow?.value ?? ""
         let amountString = amountRow?.value ?? ""
-        let address = Address(address: addressString)
-        let value = amountString.doubleValue
 
-        confirm(message: "Confirm to send \(amountString) \(transferType.symbol) to \(address.address) address") { [unowned self] result in
-            guard case .success = result else { return }
-            self.displayLoading()
-            self.sendTransactionCoordinator.send(
-                address: address,
-                value: value,
-                configuration: self.configuration
-            ) { [weak self] result in
-                guard let `self` = self else { return }
-                switch result {
-                case .success(let transaction):
-                    self.displaySuccess(
-                        title: "Sent \(amountString) \(self.transferType.symbol) to \(self.account.address.address)",
-                        message: "TransactionID: \(transaction.id)"
-                    )
-                    self.clear()
-                case .failure(let error):
-                    self.displayError(error: error)
-                }
-                self.hideLoading()
-            }
-        }
+        let address = Address(address: addressString)
+        let amount = amountString.doubleValue
+
+        let transaction = UnconfirmedTransaction(
+            transferType: transferType,
+            amount: amount,
+            address: address
+        )
+        self.delegate?.didPressConfirm(transaction: transaction, in: self)
     }
 
     @objc func openReader() {
