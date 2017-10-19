@@ -32,7 +32,7 @@ class SettingsCoordinator: Coordinator {
 
     private func makeSettingsController() -> SettingsViewController {
         let controller = SettingsViewController()
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss))
         controller.delegate = self
         return controller
     }
