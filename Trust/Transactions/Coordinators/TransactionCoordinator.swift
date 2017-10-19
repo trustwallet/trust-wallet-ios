@@ -72,7 +72,29 @@ class TransactionCoordinator: Coordinator {
 
     func showTokens(for account: Account) {
         let controller = TokensViewController(account: account)
-        navigationController.pushViewController(controller, animated: true)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .formSheet
+            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+            navigationController.present(nav, animated: true, completion: nil)
+        } else {
+            navigationController.pushViewController(controller, animated: true)
+        }
+    }
+
+    func showTransaction(_ transaction: Transaction) {
+        let controller = TransactionViewController(
+            transaction: transaction
+        )
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .formSheet
+            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+            navigationController.present(nav, animated: true, completion: nil)
+        } else {
+            navigationController.pushViewController(controller, animated: true)
+        }
     }
 
     func showPaymentFlow(for type: PaymentFlow, session: WalletSession) {
@@ -137,17 +159,7 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
     }
 
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
-        let controller = TransactionViewController(
-            transaction: transaction
-        )
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            let nav = UINavigationController(rootViewController: controller)
-            nav.modalPresentationStyle = .formSheet
-            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-            navigationController.present(nav, animated: true, completion: nil)
-        } else {
-            navigationController.pushViewController(controller, animated: true)
-        }
+        showTransaction(transaction)
     }
 
     func didPressTokens(in viewController: TransactionsViewController) {
