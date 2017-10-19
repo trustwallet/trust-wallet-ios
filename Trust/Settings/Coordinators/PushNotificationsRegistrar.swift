@@ -7,6 +7,7 @@ import UIKit
 class PushNotificationsRegistrar {
 
     let client = PushNotificationsClient()
+    let config = Config()
 
     func register() {
         if #available(iOS 10, *) {
@@ -22,7 +23,8 @@ class PushNotificationsRegistrar {
         let device = PushDevice(
             deviceID: UIDevice.current.identifierForVendor!.uuidString,
             token: "",
-            wallets: []
+            wallets: [],
+            chainID: config.chainID
         )
 
         client.unregister(device: device)
@@ -37,7 +39,8 @@ class PushNotificationsRegistrar {
         let device = PushDevice(
             deviceID: UIDevice.current.identifierForVendor!.uuidString,
             token: token,
-            wallets: addresses.map { $0.address }
+            wallets: addresses.map { $0.address },
+            chainID: config.chainID
         )
         client.register(device: device)
     }
