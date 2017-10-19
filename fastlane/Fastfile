@@ -19,13 +19,17 @@ platform :ios do
   before_all do
   end
 
+  def localize
+    sh "cd .. && sh scripts/localizer.sh Trust " << ENV['LOKALISE_TOKEN']
+  end
+
   desc "Deploy a new version to the App Store"
   lane :release do
     cocoapods
     increment_build_number
     ensure_git_branch()
     increment_version_number(bump_type: "patch")
-    sh "cd .. && sh scripts/localizer.sh Trust " << ENV['LOKALISE_TOKEN']
+    localize
     snapshot
     frameit(white: true)
     cert
@@ -34,6 +38,11 @@ platform :ios do
     commit_version_bump(message: "Version Bump", force: true)
     deliver(force: true)
     push_to_git_remote
+  end
+
+  desc "Localize"
+  lane :localize do
+    localize
   end
 
   # You can define as many lanes as you want
