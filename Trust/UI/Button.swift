@@ -104,6 +104,7 @@ class Button: UIButton {
         setTitleColor(style.textColor, for: .normal)
         setTitleColor(style.textColorHighlighted, for: .highlighted)
         setBackgroundColor(style.backgroundColorHighlighted, forState: .highlighted)
+        setBackgroundColor(style.backgroundColorHighlighted, forState: .selected)
         titleEdgeInsets = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 15)
     }
 

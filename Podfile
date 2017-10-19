@@ -22,7 +22,6 @@ target 'Trust' do
   pod 'BonMot'
   pod 'VENTouchLock'
   pod '1PasswordExtension'
-  pod 'BulletinBoard', :git=>'https://github.com/alexaubry/BulletinBoard'
   pod 'Lokalise'
   pod 'Moya'
   pod 'JavaScriptKit'
