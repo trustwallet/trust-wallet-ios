@@ -17,7 +17,7 @@ class ConfirmPaymentViewController: UIViewController {
         return SendTransactionCoordinator(account: self.account)
     }()
     lazy var submitButton: UIButton = {
-        let button = Button(size: .large, style: .squared)
+        let button = Button(size: .large, style: .solid)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(NSLocalizedString("confirmPayment.send", value: "Send", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(send), for: .touchUpInside)
@@ -65,12 +65,12 @@ class ConfirmPaymentViewController: UIViewController {
         stackViewController.view.addSubview(submitButton)
 
         NSLayoutConstraint.activate([
-            submitButton.bottomAnchor.constraint(equalTo: stackViewController.view.layoutGuide.bottomAnchor),
+            submitButton.bottomAnchor.constraint(equalTo: stackViewController.view.layoutGuide.bottomAnchor, constant: -15),
             submitButton.trailingAnchor.constraint(equalTo: stackViewController.view.trailingAnchor, constant: -15),
             submitButton.leadingAnchor.constraint(equalTo: stackViewController.view.leadingAnchor, constant: 15),
         ])
 
-        add(asChildViewController: stackViewController)
+        displayChildViewController(viewController: stackViewController)
     }
 
     required init?(coder aDecoder: NSCoder) {

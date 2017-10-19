@@ -33,8 +33,6 @@ class TransactionViewController: UIViewController {
             maximumFractionDigits: 5
         )
 
-        displayChildViewController(viewController: stackViewController)
-
         let value = EthereumConverter.from(value: BInt(transaction.value), to: .ether, minimumFractionDigits: 5)
 
         let items: [UIView] = [
@@ -59,6 +57,8 @@ class TransactionViewController: UIViewController {
         for item in items {
             stackViewController.addItem(item)
         }
+
+        displayChildViewController(viewController: stackViewController)
     }
 
     required init?(coder aDecoder: NSCoder) {
