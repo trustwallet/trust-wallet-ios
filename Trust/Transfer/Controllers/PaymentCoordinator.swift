@@ -44,6 +44,7 @@ class PaymentCoordinator: Coordinator {
         session: WalletSession
     ) {
         self.navigationController = navigationController
+        self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
         self.flow = flow
 

@@ -76,7 +76,7 @@ class AccountsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return allowsAccountDeletion && (current != viewModel.accounts[indexPath.row])
+        return allowsAccountDeletion && (current != viewModel.accounts[indexPath.row] || viewModel.accounts.count == 1)
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

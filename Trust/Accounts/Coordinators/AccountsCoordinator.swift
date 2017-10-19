@@ -25,6 +25,7 @@ class AccountsCoordinator {
     lazy var rootNavigationController: UINavigationController = {
         let controller = self.accountsViewController
         let nav = NavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .formSheet
         return nav
     }()
 

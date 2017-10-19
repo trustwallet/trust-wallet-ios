@@ -21,10 +21,12 @@ class SettingsCoordinator: Coordinator {
     }
 
     func start() {
+        let nav = NavigationController(
+            rootViewController: self.makeSettingsController()
+        )
+        nav.modalPresentationStyle = .formSheet
         navigationController.present(
-            NavigationController(
-                rootViewController: self.makeSettingsController()
-            ),
+            nav,
             animated: true,
             completion: nil
         )
@@ -34,6 +36,7 @@ class SettingsCoordinator: Coordinator {
         let controller = SettingsViewController()
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss))
         controller.delegate = self
+        controller.modalPresentationStyle = .pageSheet
         return controller
     }
 

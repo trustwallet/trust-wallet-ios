@@ -24,6 +24,7 @@ class WalletCoordinator {
     ) {
         self.presenterViewController = presenterViewController
         self.navigationViewController = navigationViewController
+        self.navigationViewController.modalPresentationStyle = .formSheet
         self.keystore = EtherKeystore()
     }
 

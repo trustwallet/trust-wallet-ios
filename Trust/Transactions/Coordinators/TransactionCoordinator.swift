@@ -81,7 +81,7 @@ class TransactionCoordinator: Coordinator {
             session: session
         )
         coordinator.delegate = self
-        rootViewController.present(coordinator.navigationController, animated: true, completion: nil)
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
         addCoordinator(coordinator)
     }
 
@@ -140,7 +140,14 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
         let controller = TransactionViewController(
             transaction: transaction
         )
-        navigationController.pushViewController(controller, animated: true)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .formSheet
+            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+            navigationController.present(nav, animated: true, completion: nil)
+        } else {
+            navigationController.pushViewController(controller, animated: true)
+        }
     }
 
     func didPressTokens(in viewController: TransactionsViewController) {
