@@ -19,7 +19,7 @@ class ConfirmPaymentViewController: UIViewController {
     lazy var submitButton: UIButton = {
         let button = Button(size: .large, style: .squared)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Send", for: .normal)
+        button.setTitle(NSLocalizedString("confirmPayment.send", value: "Send", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(send), for: .touchUpInside)
         return button
     }()
@@ -36,7 +36,7 @@ class ConfirmPaymentViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         view.backgroundColor = .white
-        navigationItem.title = "Confirm"
+        navigationItem.title = NSLocalizedString("confirmPayment.title", value: "Confirm", comment: "")
 
         let fee = EthereumConverter.from(value: BInt(configuration.speed.gasPrice.string()), to: .ether, minimumFractionDigits: 9)
 
@@ -49,9 +49,9 @@ class ConfirmPaymentViewController: UIViewController {
                 )
             ),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
-            TransactionAppearance.item(title: "From", subTitle: account.address.address),
-            TransactionAppearance.item(title: "To", subTitle: transaction.address.address),
-            TransactionAppearance.item(title: "Fee", subTitle: fee + " ETH"),
+            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.from", value: "From", comment: ""), subTitle: account.address.address),
+            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.to", value: "To", comment: ""), subTitle: transaction.address.address),
+            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.fee", value: "Fee", comment: ""), subTitle: fee + " ETH"),
         ]
 
         for item in items {
