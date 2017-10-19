@@ -26,7 +26,8 @@ extension Error {
                     default: return "Undefined error"
                     }
                 }
-            default: return error.description
+            default:
+                return error.errorDescription ?? error.description
             }
         case let error as LocalizedError:
             return error.errorDescription ?? "An unknown error occurred."
