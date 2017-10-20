@@ -9,8 +9,8 @@ enum RefreshType {
 class WalletSession {
 
     let account: Account
-    //let web3: Web3Swift
-    //let config = Config()
+    let web3: Web3Swift
+    let config = Config()
 
     private lazy var balanceCoordinator: BalanceCoordinator = {
         return BalanceCoordinator(session: self)
@@ -20,8 +20,8 @@ class WalletSession {
 
     init(account: Account) {
         self.account = account
-        //self.web3 = Web3Swift(url: config.rpcURL)
-        //self.web3.start()
+        self.web3 = Web3Swift(url: config.rpcURL)
+        self.web3.start()
         self.balanceCoordinator.start()
         self.balanceCoordinator.delegate = self
     }
