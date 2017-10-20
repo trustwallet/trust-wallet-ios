@@ -35,3 +35,16 @@
 "Settings.Title" = "Settings";
 "Settings.Version" = "Version";
 "Wallet.Wallets" = "Wallets";
+"confirmPayment.fee" = "Fee";
+"confirmPayment.from" = "From";
+"confirmPayment.send" = "Send";
+"confirmPayment.title" = "Confirm";
+"confirmPayment.to" = "To";
+"Generic.Next" = "Next";
+"Send.MyEthereumAddressIs" = "My Ethereum address is: ";
+"Settings.PushNotifications" = "Push Notifications";
+"welcome.createWallet" = "CREATE WALLET";
+"welcome.importWallet" = "IMPORT WALLET";
+"Settings.PrivacyPolicy" = "Privacy Policy";
+"welcome.erc20description" = "Trust wallet has support for ERC20 tokens by default. ";
+"welcome.erc20title" = "ERC20 Compatible";

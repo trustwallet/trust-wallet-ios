@@ -35,3 +35,16 @@
 "Settings.Title" = "Настройки";
 "Settings.Version" = "Версия";
 "Wallet.Wallets" = "Кошельки";
+"confirmPayment.fee" = "Комиссия";
+"confirmPayment.from" = "От";
+"confirmPayment.send" = "Отправить";
+"confirmPayment.title" = "Подтвердить";
+"confirmPayment.to" = "Кому";
+"Generic.Next" = "Далее";
+"Send.MyEthereumAddressIs" = "Мой адрес Ethereum: ";
+"Settings.PushNotifications" = "Push-Уведомления";
+"welcome.createWallet" = "СОЗДАТЬ КОШЕЛЕК";
+"welcome.importWallet" = "ИМПОРТИРОВАТЬ КОШЕЛЕК";
+"Settings.PrivacyPolicy" = "Политика Конфиденциальности";
+"welcome.erc20description" = "Имеет поддержку токенов ERC20 по умолчанию.";
+"welcome.erc20title" = "ERC20 совместимость";
