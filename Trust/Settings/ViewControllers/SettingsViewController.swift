@@ -149,13 +149,11 @@ class SettingsViewController: FormViewController {
                 cell.imageView?.image = R.image.settings_donate()
             }
 
-            <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("Settings.PrivacyPolicy", value: "Privacy Policy", comment: "")
-            }.onCellSelection { _ in
-                UIApplication.shared.openURL(URL(string: "http://trustwalletapp.com/privacy-policy.html")!)
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_privacy_policy()
-            }
+            <<< link(
+                title: NSLocalizedString("Settings.PrivacyPolicy", value: "Privacy Policy", comment: ""),
+                value: "http://trustwalletapp.com/privacy-policy.html",
+                image: R.image.settings_privacy_policy()
+            )
 
             +++ Section()
 
