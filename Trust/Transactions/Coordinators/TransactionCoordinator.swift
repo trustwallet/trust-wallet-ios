@@ -86,7 +86,6 @@ class TransactionCoordinator: Coordinator {
         let controller = TransactionViewController(
             transaction: transaction
         )
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         if UIDevice.current.userInterfaceIdiom == .pad {
             let nav = UINavigationController(rootViewController: controller)
             nav.modalPresentationStyle = .formSheet
