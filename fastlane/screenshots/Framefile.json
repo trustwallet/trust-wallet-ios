@@ -42,7 +42,7 @@
     {
       "filter": "Tokens",
       "title": {
-        "text": "Track Tokens"
+        "text": "ERC20 Compatible"
       }
     }
   ]
