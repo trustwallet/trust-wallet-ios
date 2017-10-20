@@ -1,1 +1,3 @@
 Trust - fast and secure Ethereum wallet that’s easy to use.
+
+- ERC20 Compatible wallet
