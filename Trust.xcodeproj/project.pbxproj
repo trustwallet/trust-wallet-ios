@@ -100,6 +100,7 @@
 		2963B6B61F9A7E49003063C1 /* CoinMarketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6B51F9A7E49003063C1 /* CoinMarketClient.swift */; };
 		2963B6B91F9A7EEA003063C1 /* CoinTicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6B81F9A7EEA003063C1 /* CoinTicker.swift */; };
 		2963B6BB1F9A899A003063C1 /* CoinTickerID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6BA1F9A899A003063C1 /* CoinTickerID.swift */; };
+		2963B6BD1F9A9834003063C1 /* GetCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6BC1F9A9834003063C1 /* GetCodeRequest.swift */; };
 		296421951F70C1EC00EB363B /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296421941F70C1EC00EB363B /* LoadingView.swift */; };
 		296421971F70C1F200EB363B /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296421961F70C1F200EB363B /* ErrorView.swift */; };
 		296421991F70C1F900EB363B /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296421981F70C1F900EB363B /* EmptyView.swift */; };
@@ -296,6 +297,7 @@
 		2963B6B51F9A7E49003063C1 /* CoinMarketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinMarketClient.swift; sourceTree = "<group>"; };
 		2963B6B81F9A7EEA003063C1 /* CoinTicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTicker.swift; sourceTree = "<group>"; };
 		2963B6BA1F9A899A003063C1 /* CoinTickerID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTickerID.swift; sourceTree = "<group>"; };
+		2963B6BC1F9A9834003063C1 /* GetCodeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCodeRequest.swift; sourceTree = "<group>"; };
 		296421941F70C1EC00EB363B /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		296421961F70C1F200EB363B /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		296421981F70C1F900EB363B /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
@@ -653,6 +655,7 @@
 				290FD8BA1F7BFE7400548896 /* GetBlockByNumberRequest.swift */,
 				29FC0CB01F81CED10036089F /* TransactionByHashRequest.swift */,
 				29FC0CB21F81D2640036089F /* TransactionReceiptRequest.swift */,
+				2963B6BC1F9A9834003063C1 /* GetCodeRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -1648,6 +1651,7 @@
 				29AD8A021F93D5CE008E10E7 /* PushNotificationsClient.swift in Sources */,
 				2996F14D1F6CA743005C33AE /* UIViewController.swift in Sources */,
 				2963B6BB1F9A899A003063C1 /* CoinTickerID.swift in Sources */,
+				2963B6BD1F9A9834003063C1 /* GetCodeRequest.swift in Sources */,
 				296421991F70C1F900EB363B /* EmptyView.swift in Sources */,
 				2963B6B61F9A7E49003063C1 /* CoinMarketClient.swift in Sources */,
 				291A1B671F98092F00ADEC80 /* ConfirmPaymentViewController.swift in Sources */,
