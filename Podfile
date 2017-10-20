@@ -23,8 +23,8 @@ target 'Trust' do
   pod 'VENTouchLock'
   pod '1PasswordExtension'
   pod 'Lokalise'
-  pod 'Moya'
-  pod 'JavaScriptKit'
+  pod 'Moya', '10.0.0-beta.1'
+  pod 'JavaScriptKit' 
 
   target 'TrustTests' do
     inherit! :search_paths

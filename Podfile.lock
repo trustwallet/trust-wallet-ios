@@ -17,9 +17,9 @@ PODS:
   - Lokalise (0.6.3):
     - zipzap (= 8.1.1)
   - MBProgressHUD (1.0.0)
-  - Moya (9.0.0):
-    - Moya/Core (= 9.0.0)
-  - Moya/Core (9.0.0):
+  - Moya (10.0.0-beta.1):
+    - Moya/Core (= 10.0.0-beta.1)
+  - Moya/Core (10.0.0-beta.1):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
   - QRCodeReaderViewController (4.0.2)
@@ -52,7 +52,7 @@ DEPENDENCIES:
   - KeychainSwift
   - Lokalise
   - MBProgressHUD
-  - Moya
+  - Moya (= 10.0.0-beta.1)
   - QRCodeReaderViewController
   - R.swift
   - RealmSwift
@@ -96,7 +96,7 @@ SPEC CHECKSUMS:
   KeychainSwift: 3ab1d428d0dbff59cd056f1d0bfc640b36c2b081
   Lokalise: cda831fccdc4c24889f6e86c572cbcaa1fe47659
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
-  Moya: cf5e6ee93af526532f92614004b8ad2ea60fd845
+  Moya: 7fb3c51aa9b3fdf5ea7d9412e03b63edb9559fb3
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
@@ -110,6 +110,6 @@ SPEC CHECKSUMS:
   VENTouchLock: 20d378b9c6173e2c054448aeb3fb2f40822a9f3f
   zipzap: 940162d9c9c60472c2eab341385e4214da0fdf1c
 
-PODFILE CHECKSUM: ac2e35db14313615c79e407a02ca61480aea6341
+PODFILE CHECKSUM: a5475588cd865cc4a32b26b3e890ac0e209ffd61
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0.beta.1
