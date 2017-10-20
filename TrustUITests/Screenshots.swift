@@ -18,7 +18,7 @@ class Screenshots: XCTestCase {
 
         app.buttons["IMPORT WALLET"].tap()
 
-        snapshot("1ImportWallet")
+        snapshot("4ImportWallet")
         sleep(4)
         app.navigationBars["Import Wallet"].buttons["Demo"].tap()
 
@@ -32,6 +32,6 @@ class Screenshots: XCTestCase {
         
         app.tables.buttons["Show my tokens"].tap()
         sleep(12)
-        snapshot("4Tokens")
+        snapshot("2Tokens")
     }
 }
