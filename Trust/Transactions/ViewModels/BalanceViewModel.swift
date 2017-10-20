@@ -42,8 +42,8 @@ struct BalanceViewModel {
 
     var currencyAmount: String? {
         guard let rate = rate else { return nil }
-        guard let currentRate = (rate.rates.filter { $0.code == "ETH" }.first) else { return nil }
-        let totalAmount = amount / currentRate.price
+        guard let currentRate = (rate.rates.filter { $0.code == "ETH" }.first), currentRate.price > 0 else { return nil }
+        let totalAmount = amount * currentRate.price
         return BalanceViewModel.formatter.string(from: NSNumber(value: totalAmount))
     }
 
@@ -63,7 +63,7 @@ struct BalanceViewModel {
     }
 
     private func attributes(primary: Bool) -> [String: AnyObject] {
-        switch (primary, rate, balance) {
+        switch (primary, currencyAmount, balance) {
         case (true, .none, .none):
             return largeLabelAttributed
         case (false, .none, .none), (false, .none, .some), (false, .some, .none):
