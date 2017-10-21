@@ -99,13 +99,14 @@ class WelcomeViewController: UIViewController {
         image: UIImage?
     ) -> EAIntroPage {
         let height = view.frame.height
-        let titleHeight = height <= 568 ? height / 8.6 : height / 5.6
+        let titleIconPositionY = height <= 568 ? height / 8.6 : height / 5.6
+        let descPositionY = height <= 568 ? height / 2.7 : height / 2.6
 
         let page = EAIntroPage()
         page.title = title
         page.desc = description
-        page.titleIconPositionY = titleHeight
-        page.descPositionY = height / 2.7
+        page.titleIconPositionY = titleIconPositionY
+        page.descPositionY = descPositionY
         page.titleFont = viewModel.pageTitleFont
         page.titleColor = viewModel.pageTitleColor
         page.descFont = viewModel.pageDescriptionFont
