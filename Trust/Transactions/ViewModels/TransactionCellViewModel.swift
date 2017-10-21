@@ -12,9 +12,18 @@ struct TransactionCellViewModel {
     }
 
     var title: String {
-        switch transaction.direction {
-        case .incoming: return "Received"
-        case .outgoing: return "Sent"
+        switch transaction.transactionState {
+        case .completed:
+            switch transaction.direction {
+            case .incoming: return "Received"
+            case .outgoing: return "Sent"
+            }
+        case .error: return "Error"
+        case .pending:
+            switch transaction.direction {
+            case .incoming: return "Receiving"
+            case .outgoing: return "Sending"
+            }
         }
     }
 
