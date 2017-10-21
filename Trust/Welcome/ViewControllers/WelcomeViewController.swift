@@ -60,6 +60,11 @@ class WelcomeViewController: UIViewController {
                 image: R.image.onboarding_lock()
             ),
             constructPage(
+                title: NSLocalizedString("welcome.erc20title", value: "ERC20 Compatible", comment: ""),
+                description: NSLocalizedString("welcome.erc20description", value: "Support for ERC20 tokens by default. ", comment: ""),
+                image: R.image.onboarding_erc20()
+            ),
+            constructPage(
                 title: NSLocalizedString("Welcome.FullyTransparent", value: "Fully transparent", comment: ""),
                 description: NSLocalizedString("Welcome.CodeOpenSource", value: "Code is open sourced (GPL-3.0 license) and fully audited.", comment: ""),
                 image: R.image.onboarding_open_source()
