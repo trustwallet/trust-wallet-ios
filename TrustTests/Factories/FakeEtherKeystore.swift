@@ -6,9 +6,10 @@ import KeychainSwift
 
 class FakeEtherKeystore: EtherKeystore {
     convenience init() {
+        let uniqueString = NSUUID().uuidString
         self.init(
-            keychain: KeychainSwift(keyPrefix: "fake"),
-            keyStoreSubfolder: "/" + NSUUID().uuidString
+            keychain: KeychainSwift(keyPrefix: "fake" + uniqueString),
+            keyStoreSubfolder: "/" + uniqueString
         )
     }
 }

@@ -37,6 +37,14 @@ class EtherKeystoreTests: XCTestCase {
         XCTAssertEqual(retrivedPassword, password)
     }
 
+    func testEmptyPassword() {
+        let keystore = FakeEtherKeystore()
+
+        let password = keystore.getPassword(for: .make())
+
+        XCTAssertNil(password)
+    }
+
     func testImport() {
         let keystore = FakeEtherKeystore()
 
@@ -74,7 +82,7 @@ class EtherKeystoreTests: XCTestCase {
 
         let account = keystore.createAccout(password: password)
 
-        let result = keystore.export(account: account, password: password)
+        let result = keystore.export(account: account, password: password, newPassword: password)
 
         guard case .success = result else {
             return XCTAssertFalse(true)

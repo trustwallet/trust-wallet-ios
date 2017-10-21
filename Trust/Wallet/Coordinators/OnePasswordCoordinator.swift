@@ -18,7 +18,7 @@ class OnePasswordCoordinator {
         let newPasssword = NSUUID().uuidString
         let account = keystore.createAccout(password: newPasssword)
         let keystoreString: String = {
-            let value = keystore.export(account: account, password: newPasssword)
+            let value = keystore.export(account: account, password: newPasssword, newPassword: newPasssword)
             switch value {
             case .success(let string):
                 return string

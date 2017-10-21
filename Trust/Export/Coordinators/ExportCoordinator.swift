@@ -43,8 +43,8 @@ class ExportCoordinator: Coordinator {
         delegate?.didFinish(in: self)
     }
 
-    func presentActivityViewController(for account: Account, password: String, completionHandler: @escaping () -> Void) {
-        let result = keystore.export(account: account, password: password)
+    func presentActivityViewController(for account: Account, password: String, newPassword: String, completion: @escaping () -> Void) {
+        let result = keystore.export(account: account, password: password, newPassword: newPassword)
 
         switch result {
         case .success(let value):
@@ -53,7 +53,7 @@ class ExportCoordinator: Coordinator {
                 applicationActivities: nil
             )
             activityViewController.completionWithItemsHandler = { result in
-                completionHandler()
+                completion()
             }
             activityViewController.popoverPresentationController?.sourceView = self.accountViewController.view
             rootNavigationController.present(activityViewController, animated: true, completion: nil)
@@ -62,24 +62,43 @@ class ExportCoordinator: Coordinator {
         }
     }
 
-    func presentShareActivity(for account: Account, password: String) {
-        self.presentActivityViewController(for: account, password: password, completionHandler: {
+    func presentShareActivity(for account: Account, password: String, newPassword: String) {
+        self.presentActivityViewController(for: account, password: password, newPassword: newPassword) {
             self.finish()
-        })
+        }
     }
 }
 
 extension ExportCoordinator: AccountsViewControllerDelegate {
     func didSelectAccount(account: Account, in viewController: AccountsViewController) {
 
-        if let password = keystore.getPassword(for: account) {
-            self.presentShareActivity(for: account, password: password)
-        } else {
-            //TODO: Remove this part in future versions.
-            let verifyController = UIAlertController.askPassword(title: "Enter password to your wallet") { result in
+        if let currentPassword = keystore.getPassword(for: account) {
+            let verifyController = UIAlertController.askPassword(
+                title: NSLocalizedString("export.enterNewPasswordWallet", value: "Enter new password to export your wallet", comment: "")
+            ) { result in
                 switch result {
-                case .success(let password):
-                    self.presentShareActivity(for: account, password: password)
+                case .success(let newPassword):
+                    self.presentShareActivity(
+                        for: account,
+                        password: currentPassword,
+                        newPassword: newPassword
+                    )
+                case .failure: break
+                }
+            }
+            rootNavigationController.present(verifyController, animated: true, completion: nil)
+        } else {
+            //FIXME: remove later. for old version, when password were missing in the keychain
+            let verifyController = UIAlertController.askPassword(
+                title: NSLocalizedString("export.enterCurrentPasswordWallet", value: "Enter current password to export your wallet", comment: "")
+            ) { result in
+                switch result {
+                case .success(let newPassword):
+                    self.presentShareActivity(
+                        for: account,
+                        password: newPassword,
+                        newPassword: newPassword
+                    )
                 case .failure: break
                 }
             }

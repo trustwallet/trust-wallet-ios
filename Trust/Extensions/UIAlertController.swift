@@ -12,7 +12,7 @@ extension UIAlertController {
         completion: @escaping (Result<String, ConfirmationError>) -> Void
     ) -> UIAlertController {
         let alertController = UIAlertController(
-            title: "Enter password for you wallet",
+            title: title,
             message: message,
             preferredStyle: .alert
         )
@@ -25,7 +25,8 @@ extension UIAlertController {
             completion(.failure(ConfirmationError.cancel))
         }))
         alertController.addTextField(configurationHandler: {(textField: UITextField!) -> Void in
-            textField.placeholder = "Enter Password"
+            textField.placeholder = "Password"
+            textField.isSecureTextEntry = true
         })
         return alertController
     }

@@ -87,8 +87,8 @@ class EtherKeystore: Keystore {
         return finalAccounts
     }
 
-    func export(account: Account, password: String) -> Result<String, KeyStoreError> {
-        let result = exportData(account: account, password: password)
+    func export(account: Account, password: String, newPassword: String) -> Result<String, KeyStoreError> {
+        let result = exportData(account: account, password: password, newPassword: newPassword)
         switch result {
         case .success(let data):
             let string = String(data: data, encoding: .utf8) ?? ""
@@ -98,10 +98,10 @@ class EtherKeystore: Keystore {
         }
     }
 
-    func exportData(account: Account, password: String) -> Result<Data, KeyStoreError> {
+    func exportData(account: Account, password: String, newPassword: String) -> Result<Data, KeyStoreError> {
         let gethAccount = getGethAccount(for: account.address)
         do {
-            let data = try gethKeyStorage.exportKey(gethAccount, passphrase: password, newPassphrase: password)
+            let data = try gethKeyStorage.exportKey(gethAccount, passphrase: password, newPassphrase: newPassword)
             return (.success(data))
         } catch {
             return (.failure(.failedToDecryptKey))
