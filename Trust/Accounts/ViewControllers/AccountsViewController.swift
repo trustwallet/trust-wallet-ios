@@ -107,8 +107,8 @@ class AccountsViewController: UITableViewController {
         let result = self.keystore.delete(account: account)
         switch result {
         case .success:
-            self.delegate?.didDeleteAccount(account: account, in: self)
             self.fetch()
+            self.delegate?.didDeleteAccount(account: account, in: self)
         case .failure(let error):
             self.displayError(error: error)
         }
