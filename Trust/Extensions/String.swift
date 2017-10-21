@@ -29,16 +29,6 @@ extension String {
     }
 }
 
-extension Data {
-    var hex: String {
-        return map { String(format: "%02hhx", $0) }.joined()
-    }
-
-    var hexEncoded: String {
-        return "0x" + self.hex
-    }
-}
-
 extension String {
     func index(from: Int) -> Index {
         return self.index(startIndex, offsetBy: from)

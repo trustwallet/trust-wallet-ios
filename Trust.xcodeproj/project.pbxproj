@@ -102,6 +102,7 @@
 		2963B6BB1F9A899A003063C1 /* CoinTickerID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6BA1F9A899A003063C1 /* CoinTickerID.swift */; };
 		2963B6BD1F9A9834003063C1 /* GetCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6BC1F9A9834003063C1 /* GetCodeRequest.swift */; };
 		2963B6BF1F9AB9A2003063C1 /* CallFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6BE1F9AB9A2003063C1 /* CallFunction.swift */; };
+		2963B6C11F9AE0E4003063C1 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6C01F9AE0E4003063C1 /* Data.swift */; };
 		296421951F70C1EC00EB363B /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296421941F70C1EC00EB363B /* LoadingView.swift */; };
 		296421971F70C1F200EB363B /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296421961F70C1F200EB363B /* ErrorView.swift */; };
 		296421991F70C1F900EB363B /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296421981F70C1F900EB363B /* EmptyView.swift */; };
@@ -300,6 +301,7 @@
 		2963B6BA1F9A899A003063C1 /* CoinTickerID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTickerID.swift; sourceTree = "<group>"; };
 		2963B6BC1F9A9834003063C1 /* GetCodeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCodeRequest.swift; sourceTree = "<group>"; };
 		2963B6BE1F9AB9A2003063C1 /* CallFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallFunction.swift; sourceTree = "<group>"; };
+		2963B6C01F9AE0E4003063C1 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		296421941F70C1EC00EB363B /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		296421961F70C1F200EB363B /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		296421981F70C1F900EB363B /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
@@ -979,6 +981,7 @@
 				290B2B5E1F9177860053C83E /* UIImage.swift */,
 				291A1B681F980E3400ADEC80 /* StackViewController.swift */,
 				2963B6B01F9891F5003063C1 /* UIButton.swift */,
+				2963B6C01F9AE0E4003063C1 /* Data.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1721,6 +1724,7 @@
 				291F52BC1F6B8D0600B369AB /* Account.swift in Sources */,
 				291794FB1F95DC2200539A30 /* Web3Swift.swift in Sources */,
 				290B2B611F9179880053C83E /* AccountViewModel.swift in Sources */,
+				2963B6C11F9AE0E4003063C1 /* Data.swift in Sources */,
 				2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */,
 				2912CD321F6A83EE00C6CBE3 /* WelcomeViewController.swift in Sources */,
 				291F52A91F6B7BE100B369AB /* BlockNumber.swift in Sources */,
