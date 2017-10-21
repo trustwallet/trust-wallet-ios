@@ -105,7 +105,7 @@ extension PaymentCoordinator: SendViewControllerDelegate {
 
     func didPressConfirm(transaction: UnconfirmedTransaction, in viewController: SendViewController) {
         let controller = ConfirmPaymentViewController(
-            account: session.account,
+            session: session,
             transaction: transaction
         )
         controller.delegate = self

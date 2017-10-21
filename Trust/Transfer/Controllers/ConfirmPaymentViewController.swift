@@ -11,10 +11,10 @@ protocol ConfirmPaymentViewControllerDelegate: class {
 class ConfirmPaymentViewController: UIViewController {
 
     let transaction: UnconfirmedTransaction
-    let account: Account
+    let session: WalletSession
     let stackViewController = StackViewController()
     lazy var sendTransactionCoordinator = {
-        return SendTransactionCoordinator(account: self.account)
+        return SendTransactionCoordinator(session: self.session)
     }()
     lazy var submitButton: UIButton = {
         let button = Button(size: .large, style: .solid)
@@ -27,10 +27,10 @@ class ConfirmPaymentViewController: UIViewController {
     let configuration = TransactionConfiguration()
 
     init(
-        account: Account,
+        session: WalletSession,
         transaction: UnconfirmedTransaction
     ) {
-        self.account = account
+        self.session = session
         self.transaction = transaction
 
         super.init(nibName: nil, bundle: nil)
@@ -51,7 +51,7 @@ class ConfirmPaymentViewController: UIViewController {
                 )
             ),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
-            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.from", value: "From", comment: ""), subTitle: account.address.address),
+            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.from", value: "From", comment: ""), subTitle: session.account.address.address),
             TransactionAppearance.item(title: NSLocalizedString("confirmPayment.to", value: "To", comment: ""), subTitle: transaction.address.address),
             TransactionAppearance.item(title: NSLocalizedString("confirmPayment.fee", value: "Fee", comment: ""), subTitle: fee + " ETH"),
         ]
