@@ -100,7 +100,7 @@
 		2963B6B61F9A7E49003063C1 /* CoinMarketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6B51F9A7E49003063C1 /* CoinMarketClient.swift */; };
 		2963B6B91F9A7EEA003063C1 /* CoinTicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6B81F9A7EEA003063C1 /* CoinTicker.swift */; };
 		2963B6BB1F9A899A003063C1 /* CoinTickerID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6BA1F9A899A003063C1 /* CoinTickerID.swift */; };
-		2963B6BF1F9AB9A2003063C1 /* CallFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6BE1F9AB9A2003063C1 /* CallFunction.swift */; };
+		2963B6BF1F9AB9A2003063C1 /* ContractERC20Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6BE1F9AB9A2003063C1 /* ContractERC20Transfer.swift */; };
 		2963B6C11F9AE0E4003063C1 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6C01F9AE0E4003063C1 /* Data.swift */; };
 		296421951F70C1EC00EB363B /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296421941F70C1EC00EB363B /* LoadingView.swift */; };
 		296421971F70C1F200EB363B /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296421961F70C1F200EB363B /* ErrorView.swift */; };
@@ -298,7 +298,7 @@
 		2963B6B51F9A7E49003063C1 /* CoinMarketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinMarketClient.swift; sourceTree = "<group>"; };
 		2963B6B81F9A7EEA003063C1 /* CoinTicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTicker.swift; sourceTree = "<group>"; };
 		2963B6BA1F9A899A003063C1 /* CoinTickerID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTickerID.swift; sourceTree = "<group>"; };
-		2963B6BE1F9AB9A2003063C1 /* CallFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallFunction.swift; sourceTree = "<group>"; };
+		2963B6BE1F9AB9A2003063C1 /* ContractERC20Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractERC20Transfer.swift; sourceTree = "<group>"; };
 		2963B6C01F9AE0E4003063C1 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		296421941F70C1EC00EB363B /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		296421961F70C1F200EB363B /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -572,7 +572,7 @@
 			isa = PBXGroup;
 			children = (
 				291795001F95F5E200539A30 /* GetBalance.swift */,
-				2963B6BE1F9AB9A2003063C1 /* CallFunction.swift */,
+				2963B6BE1F9AB9A2003063C1 /* ContractERC20Transfer.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -1676,7 +1676,7 @@
 				293204581F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift in Sources */,
 				29FC0CB31F81D2640036089F /* TransactionReceiptRequest.swift in Sources */,
 				29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */,
-				2963B6BF1F9AB9A2003063C1 /* CallFunction.swift in Sources */,
+				2963B6BF1F9AB9A2003063C1 /* ContractERC20Transfer.swift in Sources */,
 				29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */,
 				29FF12F81F747D6C00AFD326 /* Error.swift in Sources */,
 				29282B581F7636840067F88D /* GetTokensRequest.swift in Sources */,
