@@ -48,3 +48,6 @@
 "Settings.PrivacyPolicy" = "Политика Конфиденциальности";
 "welcome.erc20description" = "Имеет поддержку токенов ERC20 по умолчанию.";
 "welcome.erc20title" = "ERC20 совместимость";
+"export.enterCurrentPasswordWallet" = "";
+"export.enterNewPasswordWallet" = "";
+"generic.Ok" = "";

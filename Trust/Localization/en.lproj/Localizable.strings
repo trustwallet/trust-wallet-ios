@@ -1,6 +1,6 @@
 "Generic.Cancel" = "Cancel";
 "Transactions.SeeMyAddress" = "See my address";
-"Transactions.NoTransactions" = "No Transactions";
+"Transactions.NoTransactions" = "No Transactions Yet!";
 "Generic.Refresh" = "Refresh";
 "Welcome.CodeOpenSource" = "Code is open sourced (GPL-3.0 license) and fully audited.";
 "Welcome.FastExperience" = "The fastest Ethereum wallet experience on mobile";
@@ -48,3 +48,6 @@
 "Settings.PrivacyPolicy" = "Privacy Policy";
 "welcome.erc20description" = "Trust wallet has support for ERC20 tokens by default. ";
 "welcome.erc20title" = "ERC20 Compatible";
+"export.enterCurrentPasswordWallet" = "Enter current password to export your wallet";
+"export.enterNewPasswordWallet" = "Enter new password to export your wallet";
+"generic.Ok" = "Ok";

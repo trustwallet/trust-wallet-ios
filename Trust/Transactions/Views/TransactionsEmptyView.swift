@@ -27,7 +27,7 @@ class TransactionsEmptyView: UIView {
         backgroundColor = .white
 
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = NSLocalizedString("Transactions.NoTransactions", value: "No Transactions", comment: "")
+        label.text = NSLocalizedString("Transactions.NoTransactions", value: "No Transactions Yet!", comment: "")
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = nil
