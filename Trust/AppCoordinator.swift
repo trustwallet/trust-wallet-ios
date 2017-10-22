@@ -38,6 +38,7 @@ class AppCoordinator: NSObject, Coordinator {
     func start() {
         performMigration()
         inializers()
+        handleNotifications()
 
         resetToWelcomeScreen()
 
@@ -53,6 +54,10 @@ class AppCoordinator: NSObject, Coordinator {
 
     func inializers() {
         touchRegistrar.register()
+    }
+    
+    func handleNotifications() {
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
 
     func showTransactions(for account: Account) {
