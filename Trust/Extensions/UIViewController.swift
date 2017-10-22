@@ -25,10 +25,12 @@ extension UIViewController {
     func confirm(
         title: String? = .none,
         message: String? = .none,
+        okTitle: String = NSLocalizedString("generic.Ok", value: "Ok", comment: ""),
+        okStyle: UIAlertActionStyle = .default,
         completion: @escaping (Result<Void, ConfirmationError>) -> Void
     ) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+        alertController.addAction(UIAlertAction(title: okTitle, style: okStyle, handler: { _ in
             completion(.success())
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Generic.Cancel", comment: ""), style: .cancel, handler: { _ in

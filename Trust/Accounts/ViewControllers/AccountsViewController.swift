@@ -94,7 +94,12 @@ class AccountsViewController: UITableViewController {
     }
 
     func confirmDelete(account: Account) {
-        confirm(title: "Are you sure you would like to delete this wallet?", message: "Make sure you have backup of your wallet") { result in
+        confirm(
+            title: "Are you sure you would like to delete this wallet?",
+            message: "Make sure you have backup of your wallet",
+            okTitle: "Delete",
+            okStyle: .destructive
+        ) { result in
             switch result {
             case .success:
                 self.delete(account: account)
