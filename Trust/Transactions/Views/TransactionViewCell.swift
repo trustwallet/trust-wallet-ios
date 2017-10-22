@@ -62,7 +62,7 @@ class TransactionViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(viewModel: TransactionViewCellViewModel) {
+    func configure(viewModel: TransactionCellViewModel) {
 
         statusImageView.image = viewModel.statusImage
 

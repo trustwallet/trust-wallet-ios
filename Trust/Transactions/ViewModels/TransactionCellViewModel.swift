@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-struct TransactionViewCellViewModel {
+struct TransactionCellViewModel {
 
     let transaction: Transaction
 
