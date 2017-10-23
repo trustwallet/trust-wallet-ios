@@ -28,4 +28,15 @@ extension UIView {
             return layoutMargins
         }
     }
+
+    static func spacer(height: CGFloat = 1) -> UIView {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            view.heightAnchor.constraint(equalToConstant: height),
+        ])
+
+        return view
+    }
 }

@@ -5,12 +5,6 @@ import UIKit
 
 struct TransactionAppearance {
 
-    static func spacer() -> UIView {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }
-
     static func divider(color: UIColor, alpha: Double) -> UIView {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
