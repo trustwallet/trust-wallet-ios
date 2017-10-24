@@ -6,7 +6,8 @@ import StatefulViewController
 
 class ErrorView: UIView {
 
-    let label = UILabel()
+    let titleLabel = UILabel()
+    let descriptionLabel = UILabel()
     let imageView = UIImageView()
     let button = Button(size: .normal, style: .solid)
     let insets: UIEdgeInsets
@@ -14,7 +15,8 @@ class ErrorView: UIView {
     var onRetry: (() -> Void)? = .none
 
     init(
-        message: String = NSLocalizedString("Generic.Failed", value: "Failed", comment: ""),
+        title: String = NSLocalizedString("errorView.titleLabel", value: "Oops!", comment: ""),
+        description: String = NSLocalizedString("errorView.descriptionLabel", value: "Something went wrong... Try again.", comment: ""),
         image: UIImage? = .none,
         insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
         onRetry: (() -> Void)? = .none
@@ -25,8 +27,15 @@ class ErrorView: UIView {
 
         backgroundColor = .white
 
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = message
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.text = title
+        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
+        titleLabel.textColor = Colors.lightBlack
+
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        descriptionLabel.text = description
+        descriptionLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular)
+        descriptionLabel.textColor = Colors.gray
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = image
@@ -35,7 +44,13 @@ class ErrorView: UIView {
         button.setTitle(NSLocalizedString("Generic.Retry", value: "Retry", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(retry), for: .touchUpInside)
 
-        let stackView = UIStackView(arrangedSubviews: [label, imageView, button])
+        let stackView = UIStackView(arrangedSubviews: [
+            titleLabel,
+            imageView,
+            descriptionLabel,
+            .spacer(),
+            button,
+        ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .center
         stackView.axis = .vertical
