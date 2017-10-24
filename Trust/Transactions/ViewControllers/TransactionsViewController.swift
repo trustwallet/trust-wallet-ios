@@ -86,7 +86,7 @@ class TransactionsViewController: UIViewController {
         tableView.addSubview(refreshControl)
 
         //TODO: Find a way to fix hardcoded 32px value. Use bottom safe inset instead.
-        let insets = UIEdgeInsets(top: 124, left: 0, bottom: ButtonSize.extraLarge.height + 50, right: 0)
+        let insets = UIEdgeInsets(top: 130, left: 0, bottom: ButtonSize.extraLarge.height + 50, right: 0)
 
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
