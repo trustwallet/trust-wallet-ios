@@ -40,7 +40,8 @@ class ConfirmPaymentViewController: UIViewController {
 
         navigationItem.title = NSLocalizedString("confirmPayment.title", value: "Confirm", comment: "")
 
-        let fee = EthereumConverter.from(value: BInt(configuration.speed.gasPrice.string()), to: .ether, minimumFractionDigits: 9)
+        let totalFee = BInt(configuration.speed.gasPrice.string()) * BInt(configuration.speed.gasLimit.string())
+        let fee = EthereumConverter.from(value: totalFee, to: .ether, minimumFractionDigits: 6)
 
         let items: [UIView] = [
             .spacer(),
