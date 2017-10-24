@@ -9,8 +9,8 @@ class LoadingView: UIView {
     let label = UILabel()
     let imageView = UIImageView()
     let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-
     let insets: UIEdgeInsets
+    private let viewModel = StateViewModel()
 
     init(
         message: String = NSLocalizedString("Generic.Loading", value: "Loading", comment: ""),
@@ -24,6 +24,8 @@ class LoadingView: UIView {
 
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = message
+        label.font = viewModel.titleFont
+        label.textColor = viewModel.titleTextColor
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = image
@@ -39,7 +41,7 @@ class LoadingView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .center
         stackView.axis = .vertical
-        stackView.spacing = 30
+        stackView.spacing = viewModel.stackSpacing
 
         addSubview(stackView)
 

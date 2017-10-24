@@ -90,7 +90,10 @@ class TransactionsViewController: UIViewController {
 
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
-        emptyView = TransactionsEmptyView(insets: insets, onRetry: fetch)
+        emptyView = EmptyView(
+            title: NSLocalizedString("Transactions.NoTransactions", value: "No Transactions Yet!", comment: ""),
+            insets: insets
+        )
 
         navigationItem.titleView = titleView
         titleView.configure(viewModel: BalanceViewModel())

@@ -10,11 +10,12 @@ class EmptyView: UIView {
     let imageView = UIImageView()
     let button = Button(size: .normal, style: .solid)
     let insets: UIEdgeInsets
-    var onRetry: (() -> Void)? = .none
+    private var onRetry: (() -> Void)? = .none
+    private let viewModel = StateViewModel()
 
     init(
         title: String = NSLocalizedString("Generic.Empty", value: "Empty", comment: ""),
-        image: UIImage? = R.image.no_transaction(),
+        image: UIImage? = R.image.no_transactions_mascot(),
         insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
         onRetry: (() -> Void)? = .none
     ) {
@@ -26,8 +27,8 @@ class EmptyView: UIView {
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
-        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
-        titleLabel.textColor = Colors.lightBlack
+        titleLabel.font = viewModel.descriptionFont
+        titleLabel.textColor = viewModel.descriptionTextColor
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = image
@@ -39,12 +40,15 @@ class EmptyView: UIView {
         let stackView = UIStackView(arrangedSubviews: [
             imageView,
             titleLabel,
-            button,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .center
         stackView.axis = .vertical
         stackView.spacing = 30
+
+        if let _ = onRetry {
+            stackView.addArrangedSubview(button)
+        }
 
         addSubview(stackView)
 

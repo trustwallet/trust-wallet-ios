@@ -17,7 +17,7 @@ class ExportCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     lazy var accountViewController: AccountsViewController = {
         let controller = AccountsViewController()
-        controller.headerTitle = "Select Account to Export"
+        controller.headerTitle = "Select Account to Backup"
         controller.delegate = self
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         return controller

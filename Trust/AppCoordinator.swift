@@ -74,7 +74,7 @@ class AppCoordinator: NSObject, Coordinator {
     }
 
     func showCreateWallet() {
-        let coordinator = WalletCoordinator()
+        let coordinator = WalletCoordinator(navigationController: self.rootNavigationController)
         coordinator.delegate = self
         coordinator.start(.createInstantWallet)
         addCoordinator(coordinator)
