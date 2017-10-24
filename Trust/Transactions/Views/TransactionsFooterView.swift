@@ -19,7 +19,7 @@ class TransactionsFooterView: UIView {
         requestButton.translatesAutoresizingMaskIntoConstraints = false
         requestButton.layer.cornerRadius = 6
         requestButton.backgroundColor = Colors.blue
-        requestButton.setTitle(NSLocalizedString("Generic.Request", value: "Request", comment: ""), for: .normal)
+        requestButton.setTitle(NSLocalizedString("transactions.myAddress", value: "My Address", comment: ""), for: .normal)
         return requestButton
     }()
 

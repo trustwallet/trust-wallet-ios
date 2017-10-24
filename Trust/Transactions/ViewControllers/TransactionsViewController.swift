@@ -90,7 +90,7 @@ class TransactionsViewController: UIViewController {
 
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
-        emptyView = TransactionsEmptyView(insets: insets, onRetry: fetch, onWalletPress: request)
+        emptyView = TransactionsEmptyView(insets: insets, onRetry: fetch)
 
         navigationItem.titleView = titleView
         titleView.configure(viewModel: BalanceViewModel())

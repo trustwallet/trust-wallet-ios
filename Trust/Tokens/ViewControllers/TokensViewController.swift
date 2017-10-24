@@ -47,7 +47,7 @@ class TokensViewController: UIViewController {
         errorView = ErrorView(onRetry: fetch)
         loadingView = LoadingView()
         emptyView = EmptyView(
-            message: "No tokens",
+            title: "No tokens",
             onRetry: fetch
         )
 
