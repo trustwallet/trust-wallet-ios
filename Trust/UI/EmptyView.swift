@@ -6,14 +6,14 @@ import StatefulViewController
 
 class EmptyView: UIView {
 
-    let label = UILabel()
+    let titleLabel = UILabel()
     let imageView = UIImageView()
     let button = Button(size: .normal, style: .solid)
     let insets: UIEdgeInsets
     var onRetry: (() -> Void)? = .none
 
     init(
-        message: String = NSLocalizedString("Generic.Empty", value: "Empty", comment: ""),
+        title: String = NSLocalizedString("Generic.Empty", value: "Empty", comment: ""),
         image: UIImage? = .none,
         insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
         onRetry: (() -> Void)? = .none
@@ -24,8 +24,10 @@ class EmptyView: UIView {
 
         backgroundColor = .white
 
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = message
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.text = title
+        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
+        titleLabel.textColor = Colors.lightBlack
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = image
@@ -34,7 +36,7 @@ class EmptyView: UIView {
         button.setTitle(NSLocalizedString("Generic.Refresh", value: "Refresh", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(retry), for: .touchUpInside)
 
-        let stackView = UIStackView(arrangedSubviews: [label, imageView, button])
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, imageView, button])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .center
         stackView.axis = .vertical
