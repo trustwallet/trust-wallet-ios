@@ -3,7 +3,7 @@
 import Foundation
 
 enum WalletEntryPoint {
+    case welcome
     case createInstantWallet
-    case createWallet
     case importWallet
 }
