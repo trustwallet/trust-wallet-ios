@@ -54,7 +54,7 @@ class ConfirmPaymentViewController: UIViewController {
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(title: NSLocalizedString("confirmPayment.from", value: "From", comment: ""), subTitle: session.account.address.address),
             TransactionAppearance.item(title: NSLocalizedString("confirmPayment.to", value: "To", comment: ""), subTitle: transaction.address.address),
-            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.fee", value: "Fee", comment: ""), subTitle: fee + " ETH"),
+            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.gasFee", value: "Gas Fee", comment: ""), subTitle: fee + " ETH"),
         ]
 
         for item in items {
