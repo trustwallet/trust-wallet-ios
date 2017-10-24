@@ -43,11 +43,26 @@ class EtherKeystore: Keystore {
         return EtherKeystore().recentlyUsedAccount
     }
 
+    // Async
     func createAccount(with password: String, completion: @escaping (Result<Account, KeyStoreError>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let account = self.createAccout(password: password)
             DispatchQueue.main.async {
                 completion(.success(account))
+            }
+        }
+    }
+
+    func importKeystore(value: String, password: String, completion: @escaping (Result<Account, KeyStoreError>) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let result = self.importKeystore(value: value, password: password)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let account):
+                    completion(.success(account))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
             }
         }
     }

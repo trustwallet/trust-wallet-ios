@@ -104,12 +104,15 @@ class ImportWalletViewController: FormViewController {
         let input = keystoreRow?.value ?? ""
         let password = passwordRow?.value ?? ""
 
-        let result = keystore.importKeystore(value: input, password: password)
-        switch result {
-        case .success(let account):
-            didImport(account: account)
-        case .failure(let error):
-            displayError(error: error)
+        displayLoading(text: NSLocalizedString("importWallet.importingIndicatorTitle", value: "Importing wallet...", comment: ""), animated: false)
+        keystore.importKeystore(value: input, password: password) { result in
+            switch result {
+            case .success(let account):
+                self.didImport(account: account)
+            case .failure(let error):
+                self.displayError(error: error)
+            }
+            self.hideLoading(animated: false)
         }
     }
 
