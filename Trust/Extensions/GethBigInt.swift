@@ -16,7 +16,13 @@ extension GethBigInt {
         return value
     }
 
-    static func from(double: BDouble) -> GethBigInt {
+    static func from(string: String) -> GethBigInt {
+        let value = GethNewBigInt(0)!
+        value.setString(string, base: 10)
+        return value
+    }
+
+    static func from(bDouble: BDouble) -> GethBigInt {
         let bignum = Bignum(double.description)
         return GethBigInt.from(hex: bignum.asString(withBase: 16))
     }
