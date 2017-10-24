@@ -35,6 +35,11 @@ xcode-select --install
 fastlane ios release
 ```
 Deploy a new version to the App Store
+### ios screenshots
+```
+fastlane ios screenshots
+```
+Screenshots
 ### ios localize
 ```
 fastlane ios localize

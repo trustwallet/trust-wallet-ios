@@ -26,7 +26,7 @@ class Screenshots: XCTestCase {
         app.tables.textFields["ETH Amount"].tap()
         snapshot("2SendRequest")
 
-        app.navigationBars["SendViewController"].buttons["Cancel"].tap()
+        app.navigationBars["Send ETH"].buttons["Cancel"].tap()
 
         snapshot("3Transactions")
         

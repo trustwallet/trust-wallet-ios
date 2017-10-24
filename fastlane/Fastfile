@@ -23,6 +23,11 @@ platform :ios do
     sh "cd .. && sh scripts/localizer.sh Trust " << ENV['LOKALISE_TOKEN']
   end
 
+  def screenshots
+    snapshot
+    frameit(white: true)
+  end
+
   desc "Deploy a new version to the App Store"
   lane :release do
     cocoapods
@@ -30,14 +35,18 @@ platform :ios do
     ensure_git_branch()
     increment_version_number(bump_type: "patch")
     localize
-    snapshot
-    frameit(white: true)
+    screenshots
     cert
     match(type: "appstore", readonly: true)
     gym(scheme: "Trust")
     commit_version_bump(message: "Version Bump", force: true)
     deliver(force: true)
     push_to_git_remote
+  end
+
+  desc "Screenshots"
+  lane :screenshots do
+    screenshots
   end
 
   desc "Localize"
