@@ -30,8 +30,8 @@ struct BalanceViewModel {
     }
 
     var amount: Double {
-        guard let balance = balance, let amount = Double(balance.amount) else { return 0.00 }
-        return amount
+        guard let balance = balance else { return 0.00 }
+        return balance.amount.doubleValue
     }
 
     var amountString: String {
@@ -75,16 +75,22 @@ struct BalanceViewModel {
     }
 
     var largeLabelAttributed: [String: AnyObject] {
+        let style = NSMutableParagraphStyle()
+        style.alignment = NSTextAlignment.center
         return [
             NSFontAttributeName: UIFont.systemFont(ofSize: 18, weight: UIFontWeightSemibold),
             NSForegroundColorAttributeName: Colors.lightBlack,
+            NSParagraphStyleAttributeName: style,
         ]
     }
 
     var smallLabelAttributes: [String: AnyObject] {
+        let style = NSMutableParagraphStyle()
+        style.alignment = NSTextAlignment.center
         return [
             NSFontAttributeName: UIFont.systemFont(ofSize: 13, weight: UIFontWeightRegular),
             NSForegroundColorAttributeName: Colors.darkGray,
+            NSParagraphStyleAttributeName: style,
         ]
     }
 }
