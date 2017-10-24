@@ -51,3 +51,17 @@
 "export.enterCurrentPasswordWallet" = "Enter current password to export your wallet";
 "export.enterNewPasswordWallet" = "Enter new password to export your wallet";
 "generic.Ok" = "Ok";
+"emptyView.noTokens" = "No tokens yet!";
+"errorView.descriptionLabel" = "Something went wrong... Try again.";
+"export.backupButton.title" = "Backup Wallet";
+"export.controlYourMoney.title" = "Since only you control your money, you'll need to save your backup keystore in case this app is deleted.";
+"export.doItLater.title" = "Do it later";
+"export.neverStored.title" = "Your wallet is never saved to cloud storage or standart device backups.";
+"export.noBackup.title" = "No backup, no Ethereum.";
+"settings.Backup" = "Backup";
+"settings.exportPrivateKey" = "Backup Private Key";
+"settings.TermsOfService" = "Terms of Service";
+"transactions.myAddress" = "My Address";
+"settings.backupKeystore" = "Backup Private Key";
+"export.enterPasswordWallet" = "Enter password to backup your wallet";
+"settings.backup" = "Backup";

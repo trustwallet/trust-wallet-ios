@@ -39,7 +39,7 @@ class SettingsViewController: FormViewController {
         title = NSLocalizedString("Settings.Title", value: "Settings", comment: "")
 
         form = Section(
-                header: NSLocalizedString("settings.Backup", value: "Backup", comment: ""),
+                header: NSLocalizedString("settings.backup", value: "Backup", comment: ""),
                 footer: NSLocalizedString("Settings.KeepItSecure", value: "Keep it secure and never share it with anyone.", comment: "")
             )
 

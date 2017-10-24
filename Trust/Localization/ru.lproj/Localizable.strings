@@ -51,3 +51,17 @@
 "export.enterCurrentPasswordWallet" = "";
 "export.enterNewPasswordWallet" = "";
 "generic.Ok" = "";
+"emptyView.noTokens" = "";
+"errorView.descriptionLabel" = "";
+"export.backupButton.title" = "";
+"export.controlYourMoney.title" = "";
+"export.doItLater.title" = "";
+"export.neverStored.title" = "";
+"export.noBackup.title" = "";
+"settings.Backup" = "";
+"settings.exportPrivateKey" = "";
+"settings.TermsOfService" = "";
+"transactions.myAddress" = "";
+"settings.backupKeystore" = "";
+"export.enterPasswordWallet" = "";
+"settings.backup" = "";
