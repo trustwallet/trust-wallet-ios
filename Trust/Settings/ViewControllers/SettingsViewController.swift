@@ -155,6 +155,12 @@ class SettingsViewController: FormViewController {
                 image: R.image.settings_privacy_policy()
             )
 
+            <<< link(
+                title: NSLocalizedString("settings.TermsOfService", value: "Terms of Service", comment: ""),
+                value: "http://trustwalletapp.com/terms.html",
+                image: R.image.settings_terms()
+            )
+
             +++ Section()
 
             <<< TextRow {
