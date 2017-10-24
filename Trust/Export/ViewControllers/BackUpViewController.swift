@@ -20,12 +20,13 @@ class BackupViewController: UIViewController {
 
         let warningImageView = UIImageView()
         warningImageView.translatesAutoresizingMaskIntoConstraints = false
-        warningImageView.image = R.image.export_warning()
+        warningImageView.image = R.image.backup_warning()
 
         let noBackupLabel = UILabel()
         noBackupLabel.translatesAutoresizingMaskIntoConstraints = false
         noBackupLabel.text = NSLocalizedString("export.noBackup.title", value: "No backup, no Ethereum.", comment: "")
-        noBackupLabel.font = UIFont.systemFont(ofSize: 22, weight: UIFontWeightMedium)
+        noBackupLabel.font = UIFont.systemFont(ofSize: 24, weight: UIFontWeightMedium)
+        noBackupLabel.textColor = Colors.lightBlack
 
         let controlMoneyLabel = UILabel()
         controlMoneyLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -56,10 +57,10 @@ class BackupViewController: UIViewController {
                 warningImageView,
                 .spacer(),
                 noBackupLabel,
-                .spacer(height: 20),
+                .spacer(height: 15),
                 controlMoneyLabel,
                 neverStoredLabel,
-                .spacer(height: 20),
+                .spacer(height: 15),
                 backupButton,
                 doItLaterButton,
             ]
@@ -70,7 +71,6 @@ class BackupViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         view.backgroundColor = .white
-        navigationItem.title = "Backup"
         view.addSubview(stackView)
 
         NSLayoutConstraint.activate([
