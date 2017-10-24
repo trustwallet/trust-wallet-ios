@@ -43,7 +43,7 @@ class SettingsViewController: FormViewController {
                 footer: NSLocalizedString("Settings.KeepItSecure", value: "Keep it secure and never share it with anyone.", comment: "")
             )
 
-            <<< AppFormAppearance.button(NSLocalizedString("settings.exportPrivateKey", value: "Backup Private Key", comment: "")) {
+            <<< AppFormAppearance.button(NSLocalizedString("settings.backupKeystore", value: "Backup Private Key", comment: "")) {
                 $0.title = $0.tag
             }.onCellSelection { [unowned self] (_, _) in
                 self.run(action: .exportPrivateKey)
