@@ -153,6 +153,9 @@
 		29CAEB8E1F70A2FB00F7357D /* TransactionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CAEB8D1F70A2FB00F7357D /* TransactionCellViewModel.swift */; };
 		29D03F1D1F712183006E548C /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D03F1C1F712183006E548C /* Button.swift */; };
 		29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D72A291F6A8D1500CE9209 /* AppCoordinator.swift */; };
+		29DBF2A11F9DA6EF00327C60 /* BackupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DBF2A01F9DA6EF00327C60 /* BackupViewController.swift */; };
+		29DBF2A31F9DBFF400327C60 /* BackupCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DBF2A21F9DBFF400327C60 /* BackupCoordinator.swift */; };
+		29DBF2A51F9EB75E00327C60 /* BackupCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DBF2A41F9EB75E00327C60 /* BackupCoordinatorTests.swift */; };
 		29E14FD11F7F457D00185568 /* TransactionsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E14FD01F7F457D00185568 /* TransactionsStorage.swift */; };
 		29E14FD51F7F470C00185568 /* TransactionsStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E14FD41F7F470C00185568 /* TransactionsStorageTests.swift */; };
 		29E14FD71F7F490000185568 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E14FD61F7F490000185568 /* Transaction.swift */; };
@@ -353,6 +356,9 @@
 		29CAEB8D1F70A2FB00F7357D /* TransactionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCellViewModel.swift; sourceTree = "<group>"; };
 		29D03F1C1F712183006E548C /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		29D72A291F6A8D1500CE9209 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		29DBF2A01F9DA6EF00327C60 /* BackupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupViewController.swift; sourceTree = "<group>"; };
+		29DBF2A21F9DBFF400327C60 /* BackupCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupCoordinator.swift; sourceTree = "<group>"; };
+		29DBF2A41F9EB75E00327C60 /* BackupCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupCoordinatorTests.swift; sourceTree = "<group>"; };
 		29E14FD01F7F457D00185568 /* TransactionsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsStorage.swift; sourceTree = "<group>"; };
 		29E14FD41F7F470C00185568 /* TransactionsStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsStorageTests.swift; sourceTree = "<group>"; };
 		29E14FD61F7F490000185568 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
@@ -787,6 +793,7 @@
 			isa = PBXGroup;
 			children = (
 				2996F1491F6C9D10005C33AE /* ExportCoordinator.swift */,
+				29DBF2A21F9DBFF400327C60 /* BackupCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -986,6 +993,8 @@
 		2996F14E1F6CA802005C33AE /* Export */ = {
 			isa = PBXGroup;
 			children = (
+				29DBF29F1F9DA6E200327C60 /* ViewControllers */,
+				29DBF29E1F9DA6DF00327C60 /* New Group */,
 				2977CAE21F7E0B2D009682A0 /* Types */,
 				2977CAE11F7E0B17009682A0 /* Coordinators */,
 			);
@@ -1089,6 +1098,21 @@
 				29BE3FCD1F706D8800F6BFC2 /* EthereumConverterTests.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		29DBF29E1F9DA6DF00327C60 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		29DBF29F1F9DA6E200327C60 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				29DBF2A01F9DA6EF00327C60 /* BackupViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		29E14FCF1F7F456A00185568 /* Storage */ = {
@@ -1196,6 +1220,7 @@
 				29FF13071F75F0AE00AFD326 /* AppCoordinatorTests.swift */,
 				296106CB1F776FD00006164B /* WalletCoordinatorTests.swift */,
 				2981F4721F8303E600CA6590 /* TransactionCoordinatorTests.swift */,
+				29DBF2A41F9EB75E00327C60 /* BackupCoordinatorTests.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1615,6 +1640,7 @@
 				29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */,
 				290B2B651F91A4880053C83E /* TransactionsFooterView.swift in Sources */,
 				293B8B431F70815900356286 /* BalanceTitleView.swift in Sources */,
+				29DBF2A11F9DA6EF00327C60 /* BackupViewController.swift in Sources */,
 				29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */,
 				2963B6AB1F9818C7003063C1 /* TransactionHeaderViewModel.swift in Sources */,
 				29AD8A091F93F8B2008E10E7 /* Session.swift in Sources */,
@@ -1719,6 +1745,7 @@
 				293248841F88CCD2008A9818 /* SplashState.swift in Sources */,
 				291F52BC1F6B8D0600B369AB /* Account.swift in Sources */,
 				291794FB1F95DC2200539A30 /* Web3Swift.swift in Sources */,
+				29DBF2A31F9DBFF400327C60 /* BackupCoordinator.swift in Sources */,
 				290B2B611F9179880053C83E /* AccountViewModel.swift in Sources */,
 				2963B6C11F9AE0E4003063C1 /* Data.swift in Sources */,
 				2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */,
@@ -1762,6 +1789,7 @@
 				290B2B6E1F92C3980053C83E /* UserDefaults.swift in Sources */,
 				29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */,
 				2977CAE01F7DEEB0009682A0 /* FakeEtherKeystore.swift in Sources */,
+				29DBF2A51F9EB75E00327C60 /* BackupCoordinatorTests.swift in Sources */,
 				29E14FD51F7F470C00185568 /* TransactionsStorageTests.swift in Sources */,
 				29FF130A1F75F67200AFD326 /* Address.swift in Sources */,
 				2981F4731F8303E600CA6590 /* TransactionCoordinatorTests.swift in Sources */,
