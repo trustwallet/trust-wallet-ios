@@ -39,11 +39,11 @@ class SettingsViewController: FormViewController {
         title = NSLocalizedString("Settings.Title", value: "Settings", comment: "")
 
         form = Section(
-                header: NSLocalizedString("Settings.Export", value: "Export", comment: ""),
+                header: NSLocalizedString("settings.Backup", value: "Backup", comment: ""),
                 footer: NSLocalizedString("Settings.KeepItSecure", value: "Keep it secure and never share it with anyone.", comment: "")
             )
 
-            <<< AppFormAppearance.button(NSLocalizedString("Settings.ExportPrivateKey", value: "Export Private Key", comment: "")) {
+            <<< AppFormAppearance.button(NSLocalizedString("settings.exportPrivateKey", value: "Backup keystore", comment: "")) {
                 $0.title = $0.tag
             }.onCellSelection { [unowned self] (_, _) in
                 self.run(action: .exportPrivateKey)
