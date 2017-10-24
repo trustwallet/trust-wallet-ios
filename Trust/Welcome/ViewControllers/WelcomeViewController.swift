@@ -91,6 +91,8 @@ class WelcomeViewController: UIViewController {
 
         importButton.removeTarget(introView, action: nil, for: .touchUpInside)
         importButton.addTarget(self, action: #selector(importFlow), for: .touchUpInside)
+
+        skipPlaceholder.removeTarget(introView, action: nil, for: .touchUpInside)
     }
 
     func constructPage(
