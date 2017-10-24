@@ -39,7 +39,7 @@ class LoadingView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .center
         stackView.axis = .vertical
-        stackView.spacing = 10
+        stackView.spacing = 30
 
         addSubview(stackView)
 

@@ -29,21 +29,21 @@ class TransactionsEmptyView: UIView {
         titleLabel.textColor = Colors.lightBlack
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = nil
+        imageView.image = R.image.no_transaction()
 
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(NSLocalizedString("Generic.Refresh", value: "Refresh", comment: ""), for: .normal)
         button.addTarget(self, action: #selector(retry), for: .touchUpInside)
 
         let stackView = UIStackView(arrangedSubviews: [
-            titleLabel,
             imageView,
+            titleLabel,
             button,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .center
         stackView.axis = .vertical
-        stackView.spacing = 12
+        stackView.spacing = 30
 
         addSubview(stackView)
 
