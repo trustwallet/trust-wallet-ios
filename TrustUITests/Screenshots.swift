@@ -32,6 +32,6 @@ class Screenshots: XCTestCase {
         
         app.tables.buttons["Show my tokens"].tap()
         sleep(12)
-        snapshot("2Tokens")
+        snapshot("1Tokens")
     }
 }
