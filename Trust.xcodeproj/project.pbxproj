@@ -24,7 +24,6 @@
 		2912CD101F6A830700C6CBE3 /* TrustTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD0F1F6A830700C6CBE3 /* TrustTests.swift */; };
 		2912CD1B1F6A830700C6CBE3 /* TrustUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD1A1F6A830700C6CBE3 /* TrustUITests.swift */; };
 		2912CD2B1F6A833E00C6CBE3 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD2A1F6A833E00C6CBE3 /* TransactionsViewController.swift */; };
-		2912CD2D1F6A839700C6CBE3 /* CreateWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD2C1F6A839700C6CBE3 /* CreateWalletViewController.swift */; };
 		2912CD2F1F6A83A100C6CBE3 /* ImportWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD2E1F6A83A100C6CBE3 /* ImportWalletViewController.swift */; };
 		2912CD321F6A83EE00C6CBE3 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD311F6A83EE00C6CBE3 /* WelcomeViewController.swift */; };
 		2912CD341F6A849C00C6CBE3 /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2912CD331F6A849C00C6CBE3 /* WelcomeViewModel.swift */; };
@@ -226,7 +225,6 @@
 		2912CD1A1F6A830700C6CBE3 /* TrustUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustUITests.swift; sourceTree = "<group>"; };
 		2912CD1C1F6A830700C6CBE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2912CD2A1F6A833E00C6CBE3 /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
-		2912CD2C1F6A839700C6CBE3 /* CreateWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWalletViewController.swift; sourceTree = "<group>"; };
 		2912CD2E1F6A83A100C6CBE3 /* ImportWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportWalletViewController.swift; sourceTree = "<group>"; };
 		2912CD311F6A83EE00C6CBE3 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		2912CD331F6A849C00C6CBE3 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
@@ -911,7 +909,6 @@
 		2977CAEE1F7E0C0D009682A0 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				2912CD2C1F6A839700C6CBE3 /* CreateWalletViewController.swift */,
 				2912CD2E1F6A83A100C6CBE3 /* ImportWalletViewController.swift */,
 			);
 			path = ViewControllers;
@@ -1739,7 +1736,6 @@
 				29A0E1871F706D0700BAAAED /* EthereumConverter.swift in Sources */,
 				29AD8A0C1F93FBBF008E10E7 /* Subscribable.swift in Sources */,
 				295247DF1F8326EF007FDC31 /* AccountViewCell.swift in Sources */,
-				2912CD2D1F6A839700C6CBE3 /* CreateWalletViewController.swift in Sources */,
 				290FD8BB1F7BFE7400548896 /* GetBlockByNumberRequest.swift in Sources */,
 				291F52B71F6B870400B369AB /* CastError.swift in Sources */,
 				293248841F88CCD2008A9818 /* SplashState.swift in Sources */,
