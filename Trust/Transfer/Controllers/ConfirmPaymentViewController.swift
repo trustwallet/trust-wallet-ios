@@ -43,7 +43,7 @@ class ConfirmPaymentViewController: UIViewController {
         let fee = EthereumConverter.from(value: BInt(configuration.speed.gasPrice.string()), to: .ether, minimumFractionDigits: 9)
 
         let items: [UIView] = [
-            TransactionAppearance.spacer(),
+            .spacer(),
             TransactionAppearance.header(
                 viewModel: TransactionHeaderViewModel(
                     amount: transaction.amount,

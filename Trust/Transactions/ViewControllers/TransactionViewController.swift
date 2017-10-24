@@ -36,7 +36,7 @@ class TransactionViewController: UIViewController {
         let value = EthereumConverter.from(value: BInt(transaction.value), to: .ether, minimumFractionDigits: 5)
 
         let items: [UIView] = [
-            TransactionAppearance.spacer(),
+            .spacer(),
             TransactionAppearance.header(
                 viewModel: TransactionHeaderViewModel(
                     amount: Double(value) ?? 0,
