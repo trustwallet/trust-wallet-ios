@@ -9,9 +9,10 @@ protocol AccountsCoordinatorDelegate: class {
     func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator)
 }
 
-class AccountsCoordinator {
+class AccountsCoordinator: Coordinator {
 
     let navigationController: UINavigationController
+    var coordinators: [Coordinator] = []
 
     lazy var accountsViewController: AccountsViewController = {
         let controller = AccountsViewController()
@@ -31,10 +32,6 @@ class AccountsCoordinator {
 
     weak var delegate: AccountsCoordinatorDelegate?
 
-    lazy var walletCoordinator: WalletCoordinator = {
-        return WalletCoordinator(presenterViewController: self.rootNavigationController)
-    }()
-
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
@@ -52,8 +49,11 @@ class AccountsCoordinator {
     }
 
     func showCreateWallet() {
-        walletCoordinator.start(.createWallet)
-        walletCoordinator.delegate = self
+        let coordinator = WalletCoordinator()
+        coordinator.delegate = self
+        addCoordinator(coordinator)
+        coordinator.start(.welcome)
+        rootNavigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 }
 
@@ -70,14 +70,17 @@ extension AccountsCoordinator: AccountsViewControllerDelegate {
 extension AccountsCoordinator: WalletCoordinatorDelegate {
     func didFinish(with account: Account, in coordinator: WalletCoordinator) {
         accountsViewController.fetch()
-        coordinator.navigationViewController.dismiss(animated: true, completion: nil)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 
     func didFail(with error: Error, in coordinator: WalletCoordinator) {
-        coordinator.navigationViewController.dismiss(animated: true, completion: nil)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 
     func didCancel(in coordinator: WalletCoordinator) {
-        coordinator.navigationViewController.dismiss(animated: true, completion: nil)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 }
