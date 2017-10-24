@@ -44,7 +44,20 @@ class AppCoordinatorTests: XCTestCase {
         XCTAssertTrue(coordinator.rootNavigationController.viewControllers[0] is WelcomeViewController)
     }
 
-    func testStartWalletCoordinator() {
+    func testStartWelcomeWalletCoordinator() {
+        let coordinator = AppCoordinator(
+            window: UIWindow(),
+            keystore: FakeKeystore(),
+            rootNavigationController: FakeNavigationController()
+        )
+        coordinator.start()
+        
+        coordinator.showCreateWallet()
+        
+        XCTAssertTrue(coordinator.rootNavigationController.viewControllers[0] is WelcomeViewController)
+    }
+
+    func testImportWalletCoordinator() {
         let coordinator = AppCoordinator(
             window: UIWindow(),
             keystore: FakeKeystore(
@@ -53,12 +66,11 @@ class AppCoordinatorTests: XCTestCase {
             rootNavigationController: FakeNavigationController()
         )
         coordinator.start()
-        
-        coordinator.showCreateWallet(entryPoint: .createWallet)
-        
-        XCTAssertTrue((coordinator.rootNavigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is WelcomeViewController)
+        coordinator.presentImportWallet()
+
+        XCTAssertTrue((coordinator.rootNavigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is ImportWalletViewController)
     }
-    
+
     func testShowTransactions() {
         let coordinator = AppCoordinator(
             window: UIWindow(),

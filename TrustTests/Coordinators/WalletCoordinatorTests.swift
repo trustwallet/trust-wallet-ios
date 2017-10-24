@@ -5,70 +5,49 @@ import XCTest
 
 class WalletCoordinatorTests: XCTestCase {
     
-    func testCreateWallet() {
+    func testWelcome() {
         let coordinator = WalletCoordinator(
-            presenterViewController: FakeNavigationController()
+            navigationController: FakeNavigationController()
         )
 
-        coordinator.start(.createWallet)
+        coordinator.start(.welcome)
 
-        XCTAssertTrue(coordinator.navigationViewController.viewControllers[0] is WelcomeViewController)
+        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is WelcomeViewController)
     }
 
     func testImportWallet() {
         let coordinator = WalletCoordinator(
-            presenterViewController: FakeNavigationController()
+            navigationController: FakeNavigationController()
         )
 
         coordinator.start(.importWallet)
 
-        XCTAssertTrue(coordinator.navigationViewController.viewControllers[0] is ImportWalletViewController)
+        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is ImportWalletViewController)
     }
 
     func testCreateInstantWallet() {
         let delegate = FakeWalletCoordinatorDelegate()
         let coordinator = WalletCoordinator(
-            presenterViewController: FakeNavigationController(),
+            navigationController: FakeNavigationController(),
             keystore: FakeEtherKeystore()
         )
         coordinator.delegate = delegate
 
         coordinator.start(.createInstantWallet)
 
-        XCTAssertNotNil(delegate.didFinishAccount)
-    }
-
-    func testPresentCreateWallet() {
-        let coordinator = WalletCoordinator(
-            presenterViewController: FakeNavigationController()
-        )
-
-        coordinator.presentCreateWallet()
-
-        XCTAssertTrue(coordinator.navigationViewController.viewControllers[0] is WelcomeViewController)
-    }
-
-    func testPresentImportWallet() {
-        let coordinator = WalletCoordinator(
-            presenterViewController: FakeNavigationController()
-        )
-
-        coordinator.presentImportWallet()
-
-        XCTAssertTrue(coordinator.navigationViewController.viewControllers[0] is ImportWalletViewController)
+        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is BackupViewController)
     }
 
     func testPushImportWallet() {
         let coordinator = WalletCoordinator(
-            presenterViewController: FakeNavigationController(),
-            navigationViewController: FakeNavigationController()
+            navigationController: FakeNavigationController()
         )
 
-        coordinator.start(.createWallet)
+        coordinator.start(.welcome)
 
         coordinator.pushImportWallet()
 
-        XCTAssertTrue(coordinator.navigationViewController.viewControllers[1] is ImportWalletViewController)
+        XCTAssertTrue(coordinator.navigationController.viewControllers[1] is ImportWalletViewController)
     }
 }
 
