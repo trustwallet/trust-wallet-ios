@@ -18,11 +18,12 @@ struct EthereumConverter {
 
         let number = NSNumber(value: third)
         let formatter = NumberFormatter()
-        formatter.numberStyle = .none
+        formatter.numberStyle = .currency
         formatter.maximumFractionDigits = max(maximumFractionDigits, minimumFractionDigits)
         formatter.minimumFractionDigits = minimumFractionDigits
         formatter.roundingMode = .floor
-        formatter.decimalSeparator = "."
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.currencySymbol = ""
 
         let formattedAmount = formatter.string(from: number)!
         return formattedAmount
