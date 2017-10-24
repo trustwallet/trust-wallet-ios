@@ -3,6 +3,7 @@
 import UIKit
 import Eureka
 import OnePasswordExtension
+import BonMot
 
 protocol ImportWalletViewControllerDelegate: class {
     func didImportAccount(account: Account, in viewController: ImportWalletViewController)

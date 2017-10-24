@@ -49,11 +49,17 @@ class WalletCoordinator: Coordinator {
     }
 
     func createInstantWallet() {
-        navigationController.displayLoading(animated: false)
+        navigationController.displayLoading(text: "Creating wallet...", animated: false)
         let password = UUID().uuidString
-        let account = keystore.createAccout(password: password)
-        navigationController.hideLoading(animated: false)
-        pushBackup(for: account)
+        keystore.createAccount(with: password) { result in
+            switch result {
+            case .success(let account):
+                self.pushBackup(for: account)
+            case .failure(let error):
+                self.navigationController.displayError(error: error)
+            }
+            self.navigationController.hideLoading(animated: false)
+        }
     }
 
     func pushBackup(for account: Account) {

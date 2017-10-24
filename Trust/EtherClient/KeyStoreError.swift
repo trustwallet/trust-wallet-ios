@@ -8,6 +8,7 @@ enum KeyStoreError: LocalizedError {
     case failedToImport(Error)
     case failedToSignTransaction
     case failedToUpdatePassword
+    case failedToCreateWallet
 
     var errorDescription: String? {
         switch self {
@@ -21,6 +22,8 @@ enum KeyStoreError: LocalizedError {
             return "Failed to sign transaction"
         case .failedToUpdatePassword:
             return "Failed to update password"
+        case .failedToCreateWallet:
+            return "Failed to create wallet"
         }
     }
 }

@@ -43,6 +43,15 @@ class EtherKeystore: Keystore {
         return EtherKeystore().recentlyUsedAccount
     }
 
+    func createAccount(with password: String, completion: @escaping (Result<Account, KeyStoreError>) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let account = self.createAccout(password: password)
+            DispatchQueue.main.async {
+                completion(.success(account))
+            }
+        }
+    }
+
     func createAccout(password: String) -> Account {
         let gethAccount = try! gethKeyStorage.newAccount(password)
         let account: Account = .from(account: gethAccount)
