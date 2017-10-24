@@ -6,19 +6,21 @@ import UIKit
 class TransactionsFooterView: UIView {
 
     lazy var sendButton: Button = {
-        let sendButton = Button(size: .normal, style: .squared)
+        let sendButton = Button(size: .large, style: .squared)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.layer.cornerRadius = 6
         sendButton.setTitle(NSLocalizedString("Generic.Send", value: "Send", comment: ""), for: .normal)
         sendButton.backgroundColor = Colors.blue
+        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
         return sendButton
     }()
 
     lazy var requestButton: Button = {
-        let requestButton = Button(size: .normal, style: .squared)
+        let requestButton = Button(size: .large, style: .squared)
         requestButton.translatesAutoresizingMaskIntoConstraints = false
         requestButton.layer.cornerRadius = 6
         requestButton.backgroundColor = Colors.blue
+        requestButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
         requestButton.setTitle(NSLocalizedString("transactions.myAddress", value: "My Address", comment: ""), for: .normal)
         return requestButton
     }()
