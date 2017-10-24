@@ -42,7 +42,11 @@ struct BalanceViewModel {
 
     var currencyAmount: String? {
         guard let rate = rate else { return nil }
-        guard let currentRate = (rate.rates.filter { $0.code == "ETH" }.first), currentRate.price > 0 else { return nil }
+        guard
+            let currentRate = (rate.rates.filter { $0.code == "ETH" }.first),
+            currentRate.price > 0,
+            amount > 0
+        else { return nil }
         let totalAmount = amount * currentRate.price
         return BalanceViewModel.formatter.string(from: NSNumber(value: totalAmount))
     }

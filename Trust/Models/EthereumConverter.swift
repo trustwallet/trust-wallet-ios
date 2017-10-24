@@ -18,12 +18,13 @@ struct EthereumConverter {
 
         let number = NSNumber(value: third)
         let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
+        formatter.numberStyle = .none
         formatter.maximumFractionDigits = max(maximumFractionDigits, minimumFractionDigits)
         formatter.minimumFractionDigits = minimumFractionDigits
         formatter.roundingMode = .floor
-        let formattedAmount = formatter.string(from: number)!
+        formatter.decimalSeparator = "."
 
+        let formattedAmount = formatter.string(from: number)!
         return formattedAmount
     }
 }
