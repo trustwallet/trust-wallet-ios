@@ -13,9 +13,6 @@ class AppCoordinator: NSObject, Coordinator {
         return controller
     }()
 
-    lazy var walletCoordinator: WalletCoordinator = {
-        return WalletCoordinator(presenterViewController: self.rootNavigationController)
-    }()
     let touchRegistrar = TouchRegistrar()
     let pushNotificationRegistrar = PushNotificationsRegistrar()
 
@@ -55,7 +52,7 @@ class AppCoordinator: NSObject, Coordinator {
     func inializers() {
         touchRegistrar.register()
     }
-    
+
     func handleNotifications() {
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
@@ -76,9 +73,19 @@ class AppCoordinator: NSObject, Coordinator {
         keystore.recentlyUsedAccount = account
     }
 
-    func showCreateWallet(entryPoint: WalletEntryPoint) {
-        walletCoordinator.delegate = self
-        walletCoordinator.start(entryPoint)
+    func showCreateWallet() {
+        let coordinator = WalletCoordinator()
+        coordinator.delegate = self
+        coordinator.start(.createInstantWallet)
+        addCoordinator(coordinator)
+    }
+
+    func presentImportWallet() {
+        let coordinator = WalletCoordinator()
+        coordinator.delegate = self
+        coordinator.start(.importWallet)
+        rootNavigationController.present(coordinator.navigationController, animated: true, completion: nil)
+        addCoordinator(coordinator)
     }
 
     func resetToWelcomeScreen() {
@@ -104,11 +111,11 @@ class AppCoordinator: NSObject, Coordinator {
 
 extension AppCoordinator: WelcomeViewControllerDelegate {
     func didPressCreateWallet(in viewController: WelcomeViewController) {
-        showCreateWallet(entryPoint: .createInstantWallet)
+        showCreateWallet()
     }
 
     func didPressImportWallet(in viewController: WelcomeViewController) {
-        showCreateWallet(entryPoint: .importWallet)
+        presentImportWallet()
     }
 }
 
@@ -130,15 +137,18 @@ extension AppCoordinator: TransactionCoordinatorDelegate {
 
 extension AppCoordinator: WalletCoordinatorDelegate {
     func didFinish(with account: Account, in coordinator: WalletCoordinator) {
-        coordinator.navigationViewController.dismiss(animated: true, completion: nil)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
         showTransactions(for: account)
+        removeCoordinator(coordinator)
     }
 
     func didFail(with error: Error, in coordinator: WalletCoordinator) {
-        coordinator.navigationViewController.dismiss(animated: true, completion: nil)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 
     func didCancel(in coordinator: WalletCoordinator) {
-        coordinator.navigationViewController.dismiss(animated: true, completion: nil)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 }
