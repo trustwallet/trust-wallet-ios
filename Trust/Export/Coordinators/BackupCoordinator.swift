@@ -64,7 +64,7 @@ class BackupCoordinator: Coordinator {
     func export(for account: Account) {
         if let currentPassword = keystore.getPassword(for: account) {
             let verifyController = UIAlertController.askPassword(
-                title: NSLocalizedString("export.enterNewPasswordWallet", value: "Enter new password to export your wallet", comment: "")
+                title: NSLocalizedString("export.enterNewPasswordWallet", value: "Enter password to backup your wallet", comment: "")
             ) { result in
                 switch result {
                 case .success(let newPassword):
