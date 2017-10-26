@@ -28,6 +28,7 @@ class AccountsCoordinator: Coordinator {
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+        self.navigationController.modalPresentationStyle = .formSheet
     }
 
     func start() {
