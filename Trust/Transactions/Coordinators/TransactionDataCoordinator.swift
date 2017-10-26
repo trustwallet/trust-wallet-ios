@@ -53,7 +53,7 @@ class TransactionDataCoordinator {
         }()
 
         let request = FetchTransactionsRequest(address: account.address.address, startBlock: startBlock)
-        Session.send(request) { result in
+        Session.send(request) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .success(let response):

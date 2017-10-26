@@ -163,24 +163,28 @@ class EtherKeystore: Keystore {
     }
 
     func signTransaction(
-        amount: GethBigInt,
-        account: Account,
-        address: Address,
-        nonce: Int64,
-        speed: TransactionSpeed,
-        data: Data = Data(),
-        chainID: GethBigInt = GethNewBigInt(1)
+        _ signTransaction: SignTransaction
     ) -> Result<Data, KeyStoreError> {
+        let gethAddress = GethNewAddressFromHex(signTransaction.address.address, nil)
+        let transaction = GethNewTransaction(
+            signTransaction.nonce,
+            gethAddress,
+            signTransaction.amount,
+            signTransaction.speed.gasLimit,
+            signTransaction.speed.gasPrice,
+            signTransaction.data
+        )
+        let password = getPassword(for: signTransaction.account)
 
-        let gethAddress = GethNewAddressFromHex(address.address, nil)
-        let transaction = GethNewTransaction(nonce, gethAddress, amount, speed.gasLimit, speed.gasPrice, data)
-        let password = getPassword(for: account)
-
-        let gethAccount = getGethAccount(for: account.address)
+        let gethAccount = getGethAccount(for: signTransaction.account.address)
 
         do {
             try gethKeyStorage.unlock(gethAccount, passphrase: password)
-            let signedTransaction = try gethKeyStorage.signTx(gethAccount, tx: transaction, chainID: chainID)
+            let signedTransaction = try gethKeyStorage.signTx(
+                gethAccount,
+                tx: transaction,
+                chainID: signTransaction.chainID
+            )
             let rlp = try signedTransaction.encodeRLP()
             return (.success(rlp))
         } catch {

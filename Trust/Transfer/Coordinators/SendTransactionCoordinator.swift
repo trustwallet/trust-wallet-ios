@@ -86,7 +86,7 @@ class SendTransactionCoordinator {
         configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
-        let signedTransaction = keystore.signTransaction(
+        let signTransaction = SignTransaction(
             amount: amount,
             account: session.account,
             address: address,
@@ -95,6 +95,7 @@ class SendTransactionCoordinator {
             data: data,
             chainID: GethBigInt.from(int: config.chainID)
         )
+        let signedTransaction = keystore.signTransaction(signTransaction)
 
         switch signedTransaction {
         case .success(let data):

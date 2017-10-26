@@ -137,15 +137,19 @@ class EtherKeystoreTests: XCTestCase {
         let keystore = FakeEtherKeystore()
         let account = keystore.createAccout(password: "test")
 
-        let transaction = keystore.signTransaction(
+        let signTransaction = SignTransaction(
             amount: GethNewBigInt(1),
             account: account,
             address: .make(),
             nonce: 0,
-            speed: .regular
+            speed: .regular,
+            data: Data(),
+            chainID: GethNewBigInt(1)
         )
 
-        guard case .success = transaction else {
+        let signedTransaction = keystore.signTransaction(signTransaction)
+
+        guard case .success = signedTransaction else {
             return XCTAssertFalse(true)
         }
 
