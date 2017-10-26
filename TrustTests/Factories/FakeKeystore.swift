@@ -2,6 +2,7 @@
 
 import Foundation
 @testable import Trust
+import Result
 
 struct FakeKeystore: Keystore {
     var hasAccounts: Bool {
@@ -16,6 +17,10 @@ struct FakeKeystore: Keystore {
     ) {
         self.accounts = accounts
         self.recentlyUsedAccount = recentlyUsedAccount
+    }
+
+    func createAccount(with password: String, completion: @escaping (Result<Account, KeyStoreError>) -> Void) {
+        completion(.success(.make()))
     }
 }
 

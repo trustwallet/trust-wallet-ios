@@ -3,6 +3,7 @@
 import Foundation
 @testable import Trust
 import KeychainSwift
+import Result
 
 class FakeEtherKeystore: EtherKeystore {
     convenience init() {
@@ -11,5 +12,9 @@ class FakeEtherKeystore: EtherKeystore {
             keychain: KeychainSwift(keyPrefix: "fake" + uniqueString),
             keyStoreSubfolder: "/" + uniqueString
         )
+    }
+
+    override func createAccount(with password: String, completion: @escaping (Result<Account, KeyStoreError>) -> Void) {
+        completion(.success(.make()))
     }
 }
