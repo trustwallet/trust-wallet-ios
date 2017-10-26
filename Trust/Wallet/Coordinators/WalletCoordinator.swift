@@ -23,7 +23,7 @@ class WalletCoordinator: Coordinator {
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
-        self.keystore = EtherKeystore()
+        self.keystore = keystore
     }
 
     func start(_ entryPoint: WalletEntryPoint) {

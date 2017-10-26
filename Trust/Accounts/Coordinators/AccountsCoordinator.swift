@@ -6,6 +6,7 @@ import UIKit
 protocol AccountsCoordinatorDelegate: class {
     func didCancel(in coordinator: AccountsCoordinator)
     func didSelectAccount(account: Account, in coordinator: AccountsCoordinator)
+    func didAddAccount(account: Account, in coordinator: AccountsCoordinator)
     func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator)
 }
 
@@ -23,13 +24,6 @@ class AccountsCoordinator: Coordinator {
         return controller
     }()
 
-    lazy var rootNavigationController: UINavigationController = {
-        let controller = self.accountsViewController
-        let nav = NavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .formSheet
-        return nav
-    }()
-
     weak var delegate: AccountsCoordinatorDelegate?
 
     init(navigationController: UINavigationController) {
@@ -37,7 +31,7 @@ class AccountsCoordinator: Coordinator {
     }
 
     func start() {
-        navigationController.present(rootNavigationController, animated: true, completion: nil)
+        navigationController.pushViewController(accountsViewController, animated: false)
     }
 
     @objc func dismiss() {
@@ -53,7 +47,7 @@ class AccountsCoordinator: Coordinator {
         coordinator.delegate = self
         addCoordinator(coordinator)
         coordinator.start(.welcome)
-        rootNavigationController.present(coordinator.navigationController, animated: true, completion: nil)
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 }
 
@@ -69,6 +63,7 @@ extension AccountsCoordinator: AccountsViewControllerDelegate {
 
 extension AccountsCoordinator: WalletCoordinatorDelegate {
     func didFinish(with account: Account, in coordinator: WalletCoordinator) {
+        delegate?.didAddAccount(account: account, in: self)
         accountsViewController.fetch()
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)

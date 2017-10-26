@@ -5,7 +5,7 @@ import UIKit
 
 class AppCoordinator: NSObject, Coordinator {
 
-    let rootNavigationController: UINavigationController
+    let navigationController: UINavigationController
 
     lazy var welcomeViewController: WelcomeViewController = {
         let controller = WelcomeViewController()
@@ -18,17 +18,21 @@ class AppCoordinator: NSObject, Coordinator {
 
     private var keystore: Keystore
 
+    lazy var storage: TransactionsStorage = {
+        return TransactionsStorage()
+    }()
+
     var coordinators: [Coordinator] = []
 
     init(
         window: UIWindow,
         keystore: Keystore = EtherKeystore(),
-        rootNavigationController: UINavigationController = NavigationController()
+        navigationController: UINavigationController = NavigationController()
     ) {
         self.keystore = keystore
-        self.rootNavigationController = rootNavigationController
+        self.navigationController = navigationController
         super.init()
-        window.rootViewController = rootNavigationController
+        window.rootViewController = navigationController
         window.makeKeyAndVisible()
     }
 
@@ -42,6 +46,8 @@ class AppCoordinator: NSObject, Coordinator {
         if keystore.hasAccounts {
             showTransactions(for: keystore.recentlyUsedAccount ?? keystore.accounts.first!)
         }
+
+        pushNotificationRegistrar.reRegister()
     }
 
     func performMigration() {
@@ -63,18 +69,19 @@ class AppCoordinator: NSObject, Coordinator {
         )
         let coordinator = TransactionCoordinator(
             session: session,
-            rootNavigationController: rootNavigationController
+            rootNavigationController: navigationController,
+            storage: storage
         )
         coordinator.delegate = self
-        rootNavigationController.viewControllers = [coordinator.rootViewController]
-        rootNavigationController.setNavigationBarHidden(false, animated: false)
+        navigationController.viewControllers = [coordinator.rootViewController]
+        navigationController.setNavigationBarHidden(false, animated: false)
         addCoordinator(coordinator)
 
         keystore.recentlyUsedAccount = account
     }
 
     func showCreateWallet() {
-        let coordinator = WalletCoordinator(navigationController: self.rootNavigationController)
+        let coordinator = WalletCoordinator(navigationController: self.navigationController)
         coordinator.delegate = self
         coordinator.start(.createInstantWallet)
         addCoordinator(coordinator)
@@ -84,20 +91,20 @@ class AppCoordinator: NSObject, Coordinator {
         let coordinator = WalletCoordinator()
         coordinator.delegate = self
         coordinator.start(.importWallet)
-        rootNavigationController.present(coordinator.navigationController, animated: true, completion: nil)
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
         addCoordinator(coordinator)
     }
 
     func resetToWelcomeScreen() {
-        rootNavigationController.setNavigationBarHidden(true, animated: false)
-        rootNavigationController.viewControllers = [welcomeViewController]
+        navigationController.setNavigationBarHidden(true, animated: false)
+        navigationController.viewControllers = [welcomeViewController]
     }
 
     @objc func reset() {
         touchRegistrar.unregister()
         pushNotificationRegistrar.unregister()
         coordinators.removeAll()
-        rootNavigationController.dismiss(animated: true, completion: nil)
+        navigationController.dismiss(animated: true, completion: nil)
         resetToWelcomeScreen()
     }
 
@@ -106,6 +113,19 @@ class AppCoordinator: NSObject, Coordinator {
             with: deviceToken,
             addresses: keystore.accounts.map { $0.address }
         )
+    }
+
+    func showAccounts() {
+        let nav = NavigationController()
+        let coordinator = AccountsCoordinator(navigationController: nav)
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+    }
+
+    func cleanStorage(for account: Account) {
+        storage.deleteAll()
     }
 }
 
@@ -121,6 +141,7 @@ extension AppCoordinator: WelcomeViewControllerDelegate {
 
 extension AppCoordinator: TransactionCoordinatorDelegate {
     func didCancel(in coordinator: TransactionCoordinator) {
+        pushNotificationRegistrar.reRegister()
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         coordinator.stop()
         removeCoordinator(coordinator)
@@ -132,6 +153,10 @@ extension AppCoordinator: TransactionCoordinatorDelegate {
         coordinator.stop()
         removeCoordinator(coordinator)
         showTransactions(for: account)
+    }
+
+    func didPressAccounts(in coordinator: TransactionCoordinator) {
+        showAccounts()
     }
 }
 
@@ -150,5 +175,30 @@ extension AppCoordinator: WalletCoordinatorDelegate {
     func didCancel(in coordinator: WalletCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
+    }
+}
+
+extension AppCoordinator: AccountsCoordinatorDelegate {
+    func didAddAccount(account: Account, in coordinator: AccountsCoordinator) {
+        pushNotificationRegistrar.reRegister()
+    }
+
+    func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator) {
+        pushNotificationRegistrar.reRegister()
+        guard !coordinator.accountsViewController.hasAccounts else { return }
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        cleanStorage(for: account)
+    }
+
+    func didCancel(in coordinator: AccountsCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+    }
+
+    func didSelectAccount(account: Account, in coordinator: AccountsCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        cleanStorage(for: account)
+        removeCoordinator(coordinator)
+        showTransactions(for: account)
     }
 }

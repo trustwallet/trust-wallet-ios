@@ -9,6 +9,15 @@ class PushNotificationsRegistrar {
     let client = PushNotificationsClient()
     let config = Config()
 
+    var isRegisteredForRemoteNotifications: Bool {
+        return UIApplication.shared.isRegisteredForRemoteNotifications
+    }
+
+    func reRegister() {
+        guard isRegisteredForRemoteNotifications else { return }
+        register()
+    }
+
     func register() {
         if #available(iOS 10, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _ in }
@@ -42,6 +51,7 @@ class PushNotificationsRegistrar {
             wallets: addresses.map { $0.address },
             chainID: config.chainID
         )
+
         client.register(device: device)
     }
 }

@@ -17,7 +17,7 @@ protocol TransactionDataCoordinatorDelegate: class {
 
 class TransactionDataCoordinator {
 
-    let storage = TransactionsStorage()
+    let storage: TransactionsStorage
     let account: Account
     var viewModel: TransactionsViewModel {
         return .init(transactions: self.storage.objects)
@@ -27,8 +27,12 @@ class TransactionDataCoordinator {
 
     weak var delegate: TransactionDataCoordinatorDelegate?
 
-    init(account: Account) {
+    init(
+        account: Account,
+        storage: TransactionsStorage = TransactionsStorage()
+    ) {
         self.account = account
+        self.storage = storage
     }
 
     func start() {

@@ -13,7 +13,7 @@ class AppCoordinatorTests: XCTestCase {
         
         coordinator.start()
 
-        XCTAssertTrue(coordinator.rootNavigationController.viewControllers[0] is WelcomeViewController)
+        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is WelcomeViewController)
     }
     
     func testStartWithAccounts() {
@@ -27,7 +27,7 @@ class AppCoordinatorTests: XCTestCase {
         coordinator.start()
 
         XCTAssertEqual(1, coordinator.coordinators.count)
-        XCTAssertTrue(coordinator.rootNavigationController.viewControllers[0] is TransactionsViewController)
+        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is TransactionsViewController)
     }
     
     func testReset() {
@@ -41,20 +41,20 @@ class AppCoordinatorTests: XCTestCase {
         
         coordinator.reset()
         
-        XCTAssertTrue(coordinator.rootNavigationController.viewControllers[0] is WelcomeViewController)
+        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is WelcomeViewController)
     }
 
     func testStartWelcomeWalletCoordinator() {
         let coordinator = AppCoordinator(
             window: UIWindow(),
             keystore: FakeKeystore(),
-            rootNavigationController: FakeNavigationController()
+            navigationController: FakeNavigationController()
         )
         coordinator.start()
         
         coordinator.showCreateWallet()
         
-        XCTAssertTrue(coordinator.rootNavigationController.viewControllers[0] is WelcomeViewController)
+        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is WelcomeViewController)
     }
 
     func testImportWalletCoordinator() {
@@ -63,25 +63,38 @@ class AppCoordinatorTests: XCTestCase {
             keystore: FakeKeystore(
                 accounts: [.make()]
             ),
-            rootNavigationController: FakeNavigationController()
+            navigationController: FakeNavigationController()
         )
         coordinator.start()
         coordinator.presentImportWallet()
 
-        XCTAssertTrue((coordinator.rootNavigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is ImportWalletViewController)
+        XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is ImportWalletViewController)
     }
 
     func testShowTransactions() {
         let coordinator = AppCoordinator(
             window: UIWindow(),
             keystore: FakeKeystore(),
-            rootNavigationController: FakeNavigationController()
+            navigationController: FakeNavigationController()
         )
         coordinator.start()
         
         coordinator.showTransactions(for: .make())
 
         XCTAssertEqual(1, coordinator.coordinators.count)
-        XCTAssertTrue(coordinator.rootNavigationController.viewControllers[0] is TransactionsViewController)
+        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is TransactionsViewController)
+    }
+
+    func testShowAccounts() {
+        let coordinator = AppCoordinator(
+            window: UIWindow(),
+            keystore: FakeKeystore(),
+            navigationController: FakeNavigationController()
+        )
+        coordinator.start()
+
+        coordinator.showAccounts()
+
+        XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is AccountsViewController)
     }
 }

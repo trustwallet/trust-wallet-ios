@@ -7,19 +7,23 @@ import Result
 protocol TransactionCoordinatorDelegate: class {
     func didCancel(in coordinator: TransactionCoordinator)
     func didRestart(with account: Account, in coordinator: TransactionCoordinator)
+    func didPressAccounts(in coordinator: TransactionCoordinator)
 }
 
 class TransactionCoordinator: Coordinator {
 
     private let keystore: Keystore
-
+    private let storage: TransactionsStorage
     lazy var rootViewController: TransactionsViewController = {
         let controller = self.makeTransactionsController(with: self.session.account)
         return controller
     }()
 
     lazy var dataCoordinator: TransactionDataCoordinator = {
-        let coordinator = TransactionDataCoordinator(account: self.session.account)
+        let coordinator = TransactionDataCoordinator(
+            account: self.session.account,
+            storage: self.storage
+        )
         return coordinator
     }()
 
@@ -29,21 +33,19 @@ class TransactionCoordinator: Coordinator {
         return SettingsCoordinator(navigationController: self.navigationController)
     }()
 
-    lazy var accountsCoordinator: AccountsCoordinator = {
-        return AccountsCoordinator(navigationController: self.navigationController)
-    }()
-
     let session: WalletSession
     let navigationController: UINavigationController
     var coordinators: [Coordinator] = []
 
     init(
         session: WalletSession,
-        rootNavigationController: UINavigationController
+        rootNavigationController: UINavigationController,
+        storage: TransactionsStorage = TransactionsStorage()
     ) {
         self.session = session
         self.keystore = EtherKeystore()
         self.navigationController = rootNavigationController
+        self.storage = storage
 
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
     }
@@ -61,8 +63,7 @@ class TransactionCoordinator: Coordinator {
     }
 
     @objc func showAccounts() {
-        accountsCoordinator.start()
-        accountsCoordinator.delegate = self
+        delegate?.didPressAccounts(in: self)
     }
 
     @objc func showSettings() {
@@ -120,7 +121,6 @@ class TransactionCoordinator: Coordinator {
     }
 
     func restart(for account: Account) {
-        clean()
         delegate?.didRestart(with: account, in: self)
     }
 
@@ -167,27 +167,6 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
 
     func reset() {
         delegate?.didCancel(in: self)
-    }
-
-    func clean() {
-        dataCoordinator.storage.deleteAll()
-    }
-}
-
-extension TransactionCoordinator: AccountsCoordinatorDelegate {
-    func didCancel(in coordinator: AccountsCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-    }
-
-    func didSelectAccount(account: Account, in coordinator: AccountsCoordinator) {
-        restart(for: account)
-    }
-
-    func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator) {
-        guard !coordinator.accountsViewController.hasAccounts else { return }
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        clean()
-        reset()
     }
 }
 
