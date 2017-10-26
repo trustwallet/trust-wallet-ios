@@ -44,6 +44,7 @@ class ImportWalletViewController: FormViewController {
         }
 
         title = viewModel.title
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.import_options(), style: .done, target: self, action: #selector(importOptions))
 
 //        if OnePasswordExtension.shared().isAppExtensionAvailable() {
 //            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -138,5 +139,31 @@ class ImportWalletViewController: FormViewController {
             address: Address(address: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")
         )
         delegate?.didImportAccount(account: demoAccount, in: self)
+    }
+
+    func importOptions() {
+        let alertController = UIAlertController(title: "Import Wallet Options", message: .none, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "iCloud/Dropbox/Google Cloud", style: .default) { _ in
+            self.showDocumentPicker()
+        })
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .destructive) { _ in })
+        present(alertController, animated: true)
+    }
+
+    func showDocumentPicker() {
+        let types = ["public.text", "public.content", "public.item", "public.data"]
+        let controller = UIDocumentPickerViewController(documentTypes: types, in: .import)
+        controller.delegate = self
+        present(controller, animated: true, completion: nil)
+    }
+}
+
+extension ImportWalletViewController: UIDocumentPickerDelegate {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        if controller.documentPickerMode == UIDocumentPickerMode.import {
+            let text = try? String(contentsOfFile: url.path)
+            keystoreRow?.value = text
+            keystoreRow?.reload()
+        }
     }
 }
