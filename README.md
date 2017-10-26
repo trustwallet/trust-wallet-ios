@@ -1,6 +1,7 @@
 # Trust - Ethereum Wallet for iOS
 
 [![Build Status](https://travis-ci.org/TrustWallet/trust-wallet-ios.svg?branch=master)](https://travis-ci.org/TrustWallet/trust-wallet-ios)
+[![codebeat badge](https://codebeat.co/badges/85e77485-ab60-4b53-9c40-de96b5ee9b75)](https://codebeat.co/projects/github-com-trustwallet-trust-wallet-ios-master)
 [![License](https://img.shields.io/badge/license-GPL3-green.svg?style=flat)](https://github.com/fastlane/fastlane/blob/master/LICENSE)
 
 Welcome to Trust's open source iOS app!
