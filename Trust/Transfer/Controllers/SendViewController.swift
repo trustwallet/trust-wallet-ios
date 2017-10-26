@@ -133,9 +133,8 @@ extension SendViewController: QRCodeReaderDelegate {
     func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
         reader.dismiss(animated: true, completion: nil)
 
-        //Move login into parser
-        let address = result.substring(with: 9..<51)
-        addressRow?.value = address
+        guard let result = QRURLParser.from(string: result) else { return }
+        addressRow?.value = result.address
         addressRow?.reload()
     }
 }
