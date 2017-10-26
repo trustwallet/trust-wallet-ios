@@ -65,3 +65,5 @@
 "settings.backupKeystore" = "";
 "export.enterPasswordWallet" = "";
 "settings.backup" = "";
+"confirmPayment.gasFee" = "";
+"importWallet.importingIndicatorTitle" = "";

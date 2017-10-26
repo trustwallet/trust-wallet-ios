@@ -6,6 +6,7 @@ enum KeyStoreError: LocalizedError {
     case failedToDeleteAccount
     case failedToDecryptKey
     case failedToImport(Error)
+    case duplicateAccount
     case failedToSignTransaction
     case failedToUpdatePassword
     case failedToCreateWallet
@@ -18,6 +19,8 @@ enum KeyStoreError: LocalizedError {
             return "Could not decrypt key with given passphrase"
         case .failedToImport(let error):
             return error.localizedDescription
+        case .duplicateAccount:
+            return "You already added this address to wallets"
         case .failedToSignTransaction:
             return "Failed to sign transaction"
         case .failedToUpdatePassword:

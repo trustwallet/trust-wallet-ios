@@ -116,6 +116,7 @@
 		29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29850D2A1F6B30FF00791A49 /* TransactionViewController.swift */; };
 		2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2995739E1FA1F294006F17FD /* QRURLParser.swift */; };
 		299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A11FA1F369006F17FD /* QRURLParserTests.swift */; };
+		299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A31FA27A15006F17FD /* TestKeyStore.swift */; };
 		2996F1431F6C96FF005C33AE /* ImportWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2996F1421F6C96FF005C33AE /* ImportWalletViewModel.swift */; };
 		2996F1461F6C98B3005C33AE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2996F1451F6C98B3005C33AE /* SettingsViewController.swift */; };
 		2996F1481F6C9AE5005C33AE /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2996F1471F6C9AE5005C33AE /* SettingsCoordinator.swift */; };
@@ -318,6 +319,7 @@
 		29850D2A1F6B30FF00791A49 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		2995739E1FA1F294006F17FD /* QRURLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParser.swift; sourceTree = "<group>"; };
 		299573A11FA1F369006F17FD /* QRURLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParserTests.swift; sourceTree = "<group>"; };
+		299573A31FA27A15006F17FD /* TestKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestKeyStore.swift; sourceTree = "<group>"; };
 		2996F1421F6C96FF005C33AE /* ImportWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportWalletViewModel.swift; sourceTree = "<group>"; };
 		2996F1451F6C98B3005C33AE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2996F1471F6C9AE5005C33AE /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
@@ -1221,6 +1223,7 @@
 				29E14FD81F7F4D4E00185568 /* FakeTransactionsStorage.swift */,
 				290B2B6D1F92C3980053C83E /* UserDefaults.swift */,
 				29AD8A0D1F93FF28008E10E7 /* WalletSession.swift */,
+				299573A31FA27A15006F17FD /* TestKeyStore.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -1790,6 +1793,7 @@
 				29FF13081F75F0AE00AFD326 /* AppCoordinatorTests.swift in Sources */,
 				2912CD101F6A830700C6CBE3 /* TrustTests.swift in Sources */,
 				29FF130D1F7626E800AFD326 /* FakeNavigationController.swift in Sources */,
+				299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */,
 				299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */,
 				29E14FD91F7F4D4E00185568 /* FakeTransactionsStorage.swift in Sources */,
 				29E14FD71F7F490000185568 /* Transaction.swift in Sources */,

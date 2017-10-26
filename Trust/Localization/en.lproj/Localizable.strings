@@ -65,3 +65,5 @@
 "settings.backupKeystore" = "Backup Private Key";
 "export.enterPasswordWallet" = "Enter password to backup your wallet";
 "settings.backup" = "Backup";
+"confirmPayment.gasFee" = "Gas Fee";
+"importWallet.importingIndicatorTitle" = "Importing wallet...";

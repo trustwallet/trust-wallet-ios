@@ -49,7 +49,7 @@ class EtherKeystoreTests: XCTestCase {
         let keystore = FakeEtherKeystore()
 
         let result = keystore.importKeystore(
-            value: "{\"address\":\"5e9c27156a612a2d516c74c7a80af107856f8539\",\"crypto\":{\"cipher\":\"aes-128-ctr\",\"ciphertext\":\"5eb0c790d1fb27824c78acac9233241b340c329b46aba08c6533b70ab67ea74f\",\"cipherparams\":{\"iv\":\"e5ab559977af075eda00a97c8f0ce506\"},\"kdf\":\"scrypt\",\"kdfparams\":{\"dklen\":32,\"n\":4096,\"p\":6,\"r\":8,\"salt\":\"b43142f34caf2b3b39c16f52344701f800711589f799cdae1827ac2f844f9602\"},\"mac\":\"c6ccaecca7896974dacac91a8116216ec287930bc74bfd7694a94f08bd992095\"},\"id\":\"e3554f73-4d0a-40a0-b721-fc801623d5ba\",\"version\":3}",
+            value: TestKeyStore.keystore,
             password: "test"
         )
 
@@ -61,11 +61,36 @@ class EtherKeystoreTests: XCTestCase {
         XCTAssertEqual(1, keystore.accounts.count)
     }
 
+    func testImportDuplicate() {
+        let keystore = FakeEtherKeystore()
+
+        let result1 = keystore.importKeystore(
+            value: TestKeyStore.keystore,
+            password: TestKeyStore.password
+        )
+
+        let result2 = keystore.importKeystore(
+            value: TestKeyStore.keystore,
+            password: TestKeyStore.password
+        )
+
+        guard case let .success(account) = result1 else {
+            return XCTFail()
+        }
+
+        guard case .failure(KeyStoreError.duplicateAccount) = result2 else {
+            return XCTFail()
+        }
+
+        XCTAssertEqual("0x5e9c27156a612a2d516c74c7a80af107856f8539", account.address.address)
+        XCTAssertEqual(1, keystore.accounts.count)
+    }
+
     func testImportFailInvalidPassword() {
         let keystore = FakeEtherKeystore()
 
         let result = keystore.importKeystore(
-            value: "{\"address\":\"5e9c27156a612a2d516c74c7a80af107856f8539\",\"crypto\":{\"cipher\":\"aes-128-ctr\",\"ciphertext\":\"5eb0c790d1fb27824c78acac9233241b340c329b46aba08c6533b70ab67ea74f\",\"cipherparams\":{\"iv\":\"e5ab559977af075eda00a97c8f0ce506\"},\"kdf\":\"scrypt\",\"kdfparams\":{\"dklen\":32,\"n\":4096,\"p\":6,\"r\":8,\"salt\":\"b43142f34caf2b3b39c16f52344701f800711589f799cdae1827ac2f844f9602\"},\"mac\":\"c6ccaecca7896974dacac91a8116216ec287930bc74bfd7694a94f08bd992095\"},\"id\":\"e3554f73-4d0a-40a0-b721-fc801623d5ba\",\"version\":3}",
+            value: TestKeyStore.keystore,
             password: "invalidPassword"
         )
 
