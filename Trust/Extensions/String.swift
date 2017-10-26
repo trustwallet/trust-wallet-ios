@@ -27,6 +27,10 @@ extension String {
         }
         return 0
     }
+
+    var trimmed: String {
+        return self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+    }
 }
 
 extension String {

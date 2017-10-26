@@ -79,14 +79,6 @@ class SendViewController: FormViewController {
             }
     }
 
-    override func insertAnimation(forSections sections: [Section]) -> UITableViewRowAnimation {
-        return .none
-    }
-
-    override func deleteAnimation(forSections sections: [Section]) -> UITableViewRowAnimation {
-        return .none
-    }
-
     func clear() {
         let fields = [addressRow, amountRow]
         for field in fields {
@@ -99,8 +91,8 @@ class SendViewController: FormViewController {
         let errors = form.validate()
         guard errors.isEmpty else { return }
 
-        let addressString = addressRow?.value ?? ""
-        let amountString = amountRow?.value ?? ""
+        let addressString = addressRow?.value?.trimmed ?? ""
+        let amountString = amountRow?.value?.trimmed ?? ""
 
         let address = Address(address: addressString)
         let amount = amountString.doubleValue
