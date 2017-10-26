@@ -173,6 +173,7 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
 extension TransactionCoordinator: PaymentCoordinatorDelegate {
     func didCancel(in coordinator: PaymentCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 
     func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: PaymentCoordinator) {
