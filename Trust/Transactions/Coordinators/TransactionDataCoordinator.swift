@@ -54,6 +54,7 @@ class TransactionDataCoordinator {
 
         let request = FetchTransactionsRequest(address: account.address.address, startBlock: startBlock)
         Session.send(request) { result in
+            guard let `self` = self else { return }
             switch result {
             case .success(let response):
                 let transactions: [Transaction] = response.map { .from(owner: self.account.address, transaction: $0) }
@@ -65,7 +66,8 @@ class TransactionDataCoordinator {
     }
 
     func fetchPendingTransactions() {
-        Session.send(EtherServiceRequest(batch: BatchFactory().create(GetBlockByNumberRequest(block: "pending")))) { result in
+        Session.send(EtherServiceRequest(batch: BatchFactory().create(GetBlockByNumberRequest(block: "pending")))) { [weak self] result in
+            guard let `self` = self else { return }
             switch result {
             case .success(let block):
                 for item in block.transactions {

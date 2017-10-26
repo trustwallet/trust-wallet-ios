@@ -4,8 +4,8 @@ import XCTest
 
 class TrustUITests: XCTestCase {
         
-    override func setUp() {
-        super.setUp()
-        
+    func testCreateWallet() {
+
+
     }
 }
