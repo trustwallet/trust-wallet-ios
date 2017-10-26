@@ -43,11 +43,6 @@ class SplashViewController: VENTouchLockSplashViewController {
     }
 
     override func showUnlock(animated: Bool) {
-
-        NSLog("showUnlock \(VENTouchLock.canUseTouchID())")
-
-        NSLog("shouldUseTouchID \(VENTouchLock.shouldUseTouchID())")
-
         transition(to: .new)
         if VENTouchLock.shouldUseTouchID() {
             showTouchID()
