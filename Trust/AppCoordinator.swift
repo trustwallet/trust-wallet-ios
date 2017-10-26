@@ -188,6 +188,7 @@ extension AppCoordinator: AccountsCoordinatorDelegate {
         guard !coordinator.accountsViewController.hasAccounts else { return }
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         cleanStorage(for: account)
+        reset()
     }
 
     func didCancel(in coordinator: AccountsCoordinator) {
