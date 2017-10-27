@@ -25,6 +25,7 @@ target 'Trust' do
   pod 'Lokalise'
   pod 'Moya', '10.0.0-beta.1'
   pod 'JavaScriptKit' 
+  pod 'CryptoSwift'
 
   target 'TrustTests' do
     inherit! :search_paths
@@ -40,7 +41,7 @@ end
 
 post_install do |installer|
       installer.pods_project.targets.each do |target|
-          if ['JavaScriptKit'].include? target.name
+          if ['JavaScriptKit', 'CryptoSwift'].include? target.name
               target.build_configurations.each do |config|
                   config.build_settings['SWIFT_VERSION'] = '4.0'
               end
