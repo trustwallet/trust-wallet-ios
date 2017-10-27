@@ -56,4 +56,16 @@ class TransactionCoordinatorTests: XCTestCase {
 
         XCTAssertTrue(controller is RequestViewController)
     }
+
+    func testShowAccounts() {
+        let coordinator = TransactionCoordinator(
+            session: .make(),
+            rootNavigationController: FakeNavigationController(),
+            storage: FakeTransactionsStorage()
+        )
+
+        coordinator.showAccounts()
+
+        XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is AccountsViewController)
+    }
 }

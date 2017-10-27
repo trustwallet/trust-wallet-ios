@@ -31,7 +31,6 @@ extension String {
         return self
     }
 
-
     var add0x: String {
         return "0x" + self
     }

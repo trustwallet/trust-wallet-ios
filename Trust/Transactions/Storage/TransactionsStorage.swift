@@ -51,4 +51,11 @@ class TransactionsStorage {
             realm.delete(objects)
         }
     }
+
+    func delete(for account: Account) {
+        let objects = realm.objects(Transaction.self).filter { $0.owner == account.address.address }
+        try! realm.write {
+            realm.delete(objects)
+        }
+    }
 }

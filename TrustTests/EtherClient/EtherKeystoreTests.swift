@@ -140,7 +140,7 @@ class EtherKeystoreTests: XCTestCase {
         let signTransaction = SignTransaction(
             amount: GethNewBigInt(1),
             account: account,
-            address: .make(),
+            address: .make(address: "0x123f681646d4a755815f9cb19e1acc8565a0c2ac"),
             nonce: 0,
             speed: .regular,
             data: Data(),

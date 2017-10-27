@@ -84,17 +84,4 @@ class AppCoordinatorTests: XCTestCase {
         XCTAssertEqual(1, coordinator.coordinators.count)
         XCTAssertTrue(coordinator.navigationController.viewControllers[0] is TransactionsViewController)
     }
-
-    func testShowAccounts() {
-        let coordinator = AppCoordinator(
-            window: UIWindow(),
-            keystore: FakeKeystore(),
-            navigationController: FakeNavigationController()
-        )
-        coordinator.start()
-
-        coordinator.showAccounts()
-
-        XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is AccountsViewController)
-    }
 }

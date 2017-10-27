@@ -87,6 +87,22 @@ class TransactionsStorageTests: XCTestCase {
         XCTAssertEqual(two, storage.objects.first)
     }
 
+    func testDeleteForOwner() {
+        let storage = FakeTransactionsStorage()
+        let owner: Account = .make()
+
+        storage.add([
+            .make(id: "0x1", owner: owner.address.address),
+            .make(id: "0x2", owner: owner.address.address)
+        ])
+
+        XCTAssertEqual(2, storage.count)
+
+        storage.delete(for: owner)
+
+        XCTAssertEqual(0, storage.count)
+    }
+
     func testDeleteAll() {
         let storage = FakeTransactionsStorage()
 

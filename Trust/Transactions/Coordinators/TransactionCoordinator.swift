@@ -7,13 +7,13 @@ import Result
 protocol TransactionCoordinatorDelegate: class {
     func didCancel(in coordinator: TransactionCoordinator)
     func didRestart(with account: Account, in coordinator: TransactionCoordinator)
-    func didPressAccounts(in coordinator: TransactionCoordinator)
+    func didUpdateAccounts(in coordinator: TransactionCoordinator)
 }
 
 class TransactionCoordinator: Coordinator {
 
     private let keystore: Keystore
-    private let storage: TransactionsStorage
+    let storage: TransactionsStorage
     lazy var rootViewController: TransactionsViewController = {
         let controller = self.makeTransactionsController(with: self.session.account)
         return controller
@@ -60,10 +60,6 @@ class TransactionCoordinator: Coordinator {
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.accountsSwitch(), landscapeImagePhone: R.image.accountsSwitch(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showAccounts))
         controller.delegate = self
         return controller
-    }
-
-    @objc func showAccounts() {
-        delegate?.didPressAccounts(in: self)
     }
 
     @objc func showSettings() {
@@ -127,6 +123,15 @@ class TransactionCoordinator: Coordinator {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+
+    @objc func showAccounts() {
+        let nav = NavigationController()
+        let coordinator = AccountsCoordinator(navigationController: nav)
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+    }
 }
 
 extension TransactionCoordinator: SettingsCoordinatorDelegate {
@@ -178,5 +183,30 @@ extension TransactionCoordinator: PaymentCoordinatorDelegate {
 
     func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: PaymentCoordinator) {
         dataCoordinator.fetchTransaction(hash: transaction.id)
+    }
+}
+
+extension TransactionCoordinator: AccountsCoordinatorDelegate {
+    func didAddAccount(account: Account, in coordinator: AccountsCoordinator) {
+        delegate?.didUpdateAccounts(in: self)
+    }
+
+    func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator) {
+        storage.delete(for: account)
+        delegate?.didUpdateAccounts(in: self)
+        guard !coordinator.accountsViewController.hasAccounts else { return }
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        delegate?.didCancel(in: self)
+    }
+
+    func didCancel(in coordinator: AccountsCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+    }
+
+    func didSelectAccount(account: Account, in coordinator: AccountsCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+        delegate?.didRestart(with: account, in: self)
     }
 }
