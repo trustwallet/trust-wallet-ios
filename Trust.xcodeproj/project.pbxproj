@@ -172,6 +172,7 @@
 		29E2E33E1F7A2423000CF94A /* TransactionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */; };
 		29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */; };
 		29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB10291F6CBD23000907A4 /* UIAlertController.swift */; };
+		29F114E91FA3EC9E00114A29 /* InCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114E81FA3EC9E00114A29 /* InCoordinatorTests.swift */; };
 		29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB51F8298820036089F /* TransactionCoordinator.swift */; };
 		29FC0CB81F8299510036089F /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB71F8299510036089F /* Coordinator.swift */; };
 		29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC9BC51F830880000209CD /* MirgrationInitializer.swift */; };
@@ -380,6 +381,7 @@
 		29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHeaderView.swift; sourceTree = "<group>"; };
 		29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonRow.swift; sourceTree = "<group>"; };
 		29EB10291F6CBD23000907A4 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
+		29F114E81FA3EC9E00114A29 /* InCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InCoordinatorTests.swift; sourceTree = "<group>"; };
 		29FC0CB51F8298820036089F /* TransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCoordinator.swift; sourceTree = "<group>"; };
 		29FC0CB71F8299510036089F /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		29FC9BC51F830880000209CD /* MirgrationInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirgrationInitializer.swift; sourceTree = "<group>"; };
@@ -1252,6 +1254,7 @@
 				2981F4721F8303E600CA6590 /* TransactionCoordinatorTests.swift */,
 				29DBF2A41F9EB75E00327C60 /* BackupCoordinatorTests.swift */,
 				293E62721FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift */,
+				29F114E81FA3EC9E00114A29 /* InCoordinatorTests.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1830,6 +1833,7 @@
 				29E14FD51F7F470C00185568 /* TransactionsStorageTests.swift in Sources */,
 				293E62731FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift in Sources */,
 				29FF130A1F75F67200AFD326 /* Address.swift in Sources */,
+				29F114E91FA3EC9E00114A29 /* InCoordinatorTests.swift in Sources */,
 				2981F4731F8303E600CA6590 /* TransactionCoordinatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
