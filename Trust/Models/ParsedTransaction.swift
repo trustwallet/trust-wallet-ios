@@ -2,11 +2,6 @@
 
 import Foundation
 
-enum TransactionDirection {
-    case incoming
-    case outgoing
-}
-
 struct ParsedTransaction {
     let blockHash: String
     let blockNumber: String
@@ -95,6 +90,36 @@ extension ParsedTransaction {
             nonce: BInt(hex: nonce.drop0x).dec,
             timestamp: BInt(hex: timestamp.drop0x).dec,
             isError: isError
+        )
+    }
+}
+
+extension Transaction {
+    static func from(
+        chainID: Int,
+        owner: Address,
+        transaction: ParsedTransaction
+    ) -> Transaction {
+        let state: TransactionState = {
+            return .pending
+        }()
+
+        return Transaction(
+            id: transaction.hash,
+            owner: owner.address,
+            chainID: chainID,
+            state: state,
+            blockNumber: transaction.blockNumber,
+            transactionIndex: transaction.transactionIndex,
+            from: transaction.from,
+            to: transaction.to,
+            value: transaction.value,
+            gas: transaction.gas,
+            gasPrice: transaction.gasPrice,
+            gasUsed: transaction.gasUsed,
+            confirmations: Int64(transaction.confirmations) ?? 0,
+            nonce: transaction.nonce,
+            date: NSDate(timeIntervalSince1970: TimeInterval(transaction.timestamp) ?? 0) as Date
         )
     }
 }

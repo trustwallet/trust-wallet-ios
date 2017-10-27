@@ -18,10 +18,6 @@ class AppCoordinator: NSObject, Coordinator {
 
     private var keystore: Keystore
 
-    lazy var storage: TransactionsStorage = {
-        return TransactionsStorage()
-    }()
-
     var coordinators: [Coordinator] = []
 
     init(
@@ -67,10 +63,14 @@ class AppCoordinator: NSObject, Coordinator {
         let session = WalletSession(
             account: account
         )
+        let config = Config()
         let coordinator = TransactionCoordinator(
             session: session,
             rootNavigationController: navigationController,
-            storage: storage
+            storage: TransactionsStorage(
+                current: account,
+                chainID: config.chainID
+            )
         )
         coordinator.delegate = self
         navigationController.viewControllers = [coordinator.rootViewController]
@@ -122,10 +122,6 @@ class AppCoordinator: NSObject, Coordinator {
         coordinator.start()
         addCoordinator(coordinator)
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
-    }
-
-    func cleanStorage(for account: Account) {
-        storage.deleteAll()
     }
 }
 
@@ -187,7 +183,6 @@ extension AppCoordinator: AccountsCoordinatorDelegate {
         pushNotificationRegistrar.reRegister()
         guard !coordinator.accountsViewController.hasAccounts else { return }
         coordinator.navigationController.dismiss(animated: true, completion: nil)
-        cleanStorage(for: account)
         reset()
     }
 
@@ -198,7 +193,6 @@ extension AppCoordinator: AccountsCoordinatorDelegate {
 
     func didSelectAccount(account: Account, in coordinator: AccountsCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
-        cleanStorage(for: account)
         removeCoordinator(coordinator)
         showTransactions(for: account)
     }

@@ -84,6 +84,7 @@
 		295247E71F835BA0007FDC31 /* InfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295247E61F835BA0007FDC31 /* InfoHeaderView.swift */; };
 		295A59381F71C1B90092F0FC /* AccountsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A59371F71C1B90092F0FC /* AccountsCoordinator.swift */; };
 		296105931FA2AA2100292494 /* SignTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296105921FA2AA2100292494 /* SignTransaction.swift */; };
+		296105951FA2DEF000292494 /* TransactionDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296105941FA2DEF000292494 /* TransactionDirection.swift */; };
 		296106BF1F7639250006164B /* FetchTransactionsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296106BE1F7639250006164B /* FetchTransactionsRequest.swift */; };
 		296106C21F76403A0006164B /* TokenViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296106C11F76403A0006164B /* TokenViewCell.swift */; };
 		296106C41F7640C50006164B /* TokenViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296106C31F7640C50006164B /* TokenViewCellViewModel.swift */; };
@@ -168,8 +169,6 @@
 		29E2E33E1F7A2423000CF94A /* TransactionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */; };
 		29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */; };
 		29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB10291F6CBD23000907A4 /* UIAlertController.swift */; };
-		29FC0CB11F81CED10036089F /* TransactionByHashRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB01F81CED10036089F /* TransactionByHashRequest.swift */; };
-		29FC0CB31F81D2640036089F /* TransactionReceiptRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB21F81D2640036089F /* TransactionReceiptRequest.swift */; };
 		29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB51F8298820036089F /* TransactionCoordinator.swift */; };
 		29FC0CB81F8299510036089F /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB71F8299510036089F /* Coordinator.swift */; };
 		29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC9BC51F830880000209CD /* MirgrationInitializer.swift */; };
@@ -288,6 +287,7 @@
 		295247E61F835BA0007FDC31 /* InfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderView.swift; sourceTree = "<group>"; };
 		295A59371F71C1B90092F0FC /* AccountsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsCoordinator.swift; sourceTree = "<group>"; };
 		296105921FA2AA2100292494 /* SignTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignTransaction.swift; sourceTree = "<group>"; };
+		296105941FA2DEF000292494 /* TransactionDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDirection.swift; sourceTree = "<group>"; };
 		296106BE1F7639250006164B /* FetchTransactionsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTransactionsRequest.swift; sourceTree = "<group>"; };
 		296106C11F76403A0006164B /* TokenViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenViewCell.swift; sourceTree = "<group>"; };
 		296106C31F7640C50006164B /* TokenViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -374,8 +374,6 @@
 		29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHeaderView.swift; sourceTree = "<group>"; };
 		29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonRow.swift; sourceTree = "<group>"; };
 		29EB10291F6CBD23000907A4 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
-		29FC0CB01F81CED10036089F /* TransactionByHashRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionByHashRequest.swift; sourceTree = "<group>"; };
-		29FC0CB21F81D2640036089F /* TransactionReceiptRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionReceiptRequest.swift; sourceTree = "<group>"; };
 		29FC0CB51F8298820036089F /* TransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCoordinator.swift; sourceTree = "<group>"; };
 		29FC0CB71F8299510036089F /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		29FC9BC51F830880000209CD /* MirgrationInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirgrationInitializer.swift; sourceTree = "<group>"; };
@@ -670,8 +668,6 @@
 				296AF9A81F737F6F0058AF78 /* SendRawTransactionRequest.swift */,
 				296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */,
 				290FD8BA1F7BFE7400548896 /* GetBlockByNumberRequest.swift */,
-				29FC0CB01F81CED10036089F /* TransactionByHashRequest.swift */,
-				29FC0CB21F81D2640036089F /* TransactionReceiptRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -1087,6 +1083,7 @@
 			children = (
 				29B6AED01F7C881D00EC6DE3 /* TransactionCost.swift */,
 				291D73C51F7F500D00A8AB56 /* TransactionItemState.swift */,
+				296105941FA2DEF000292494 /* TransactionDirection.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1657,7 +1654,6 @@
 				291795051F95F60100539A30 /* Web3RequestType.swift in Sources */,
 				290B2B5F1F9177860053C83E /* UIImage.swift in Sources */,
 				291F52B21F6B814300B369AB /* MG Benchmark Tools.swift in Sources */,
-				29FC0CB11F81CED10036089F /* TransactionByHashRequest.swift in Sources */,
 				291ED08F1F6F613200E7E93A /* GetTransactionRequest.swift in Sources */,
 				295A59381F71C1B90092F0FC /* AccountsCoordinator.swift in Sources */,
 				296421971F70C1F200EB363B /* ErrorView.swift in Sources */,
@@ -1691,6 +1687,7 @@
 				296106C21F76403A0006164B /* TokenViewCell.swift in Sources */,
 				29850D251F6B27A800791A49 /* R.generated.swift in Sources */,
 				296105931FA2AA2100292494 /* SignTransaction.swift in Sources */,
+				296105951FA2DEF000292494 /* TransactionDirection.swift in Sources */,
 				291ED08B1F6F5D2100E7E93A /* Bundle.swift in Sources */,
 				296106BF1F7639250006164B /* FetchTransactionsRequest.swift in Sources */,
 				293B8B451F70A20200356286 /* TransactionViewCell.swift in Sources */,
@@ -1727,7 +1724,6 @@
 				29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */,
 				290B2B671F9266630053C83E /* SettingsAction.swift in Sources */,
 				293204581F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift in Sources */,
-				29FC0CB31F81D2640036089F /* TransactionReceiptRequest.swift in Sources */,
 				29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */,
 				2963B6BF1F9AB9A2003063C1 /* ContractERC20Transfer.swift in Sources */,
 				29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */,

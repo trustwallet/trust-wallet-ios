@@ -19,6 +19,7 @@ class TransactionDataCoordinator {
 
     let storage: TransactionsStorage
     let account: Account
+    let config = Config()
     var viewModel: TransactionsViewModel {
         return .init(transactions: self.storage.objects)
     }
@@ -29,7 +30,7 @@ class TransactionDataCoordinator {
 
     init(
         account: Account,
-        storage: TransactionsStorage = TransactionsStorage()
+        storage: TransactionsStorage
     ) {
         self.account = account
         self.storage = storage
@@ -57,8 +58,13 @@ class TransactionDataCoordinator {
             guard let `self` = self else { return }
             switch result {
             case .success(let response):
-                let transactions: [Transaction] = response.map { .from(owner: self.account.address, transaction: $0) }
-                self.update(owner: self.account.address, items: transactions)
+                let chainID = self.config.chainID
+                let transactions: [Transaction] = response.map { .from(
+                        chainID: chainID,
+                        owner: self.account.address, transaction: $0
+                    )
+                }
+                self.update(items: transactions)
             case .failure(let error):
                 self.handleError(error: error)
             }
@@ -72,7 +78,7 @@ class TransactionDataCoordinator {
             case .success(let block):
                 for item in block.transactions {
                     if item.to == self.account.address.address || item.from == self.account.address.address {
-                        self.update(owner: self.account.address, items: [item])
+                        self.update(chainID: self.config.chainID, owner: self.account.address, items: [item])
                     }
                 }
             case .failure(let error):
@@ -93,12 +99,12 @@ class TransactionDataCoordinator {
         fetchTransactions()
     }
 
-    func update(owner: Address, items: [ParsedTransaction]) {
-        let transactionItems: [Transaction] = items.map { .from(owner: owner, transaction: $0) }
-        update(owner: owner, items: transactionItems)
+    func update(chainID: Int, owner: Address, items: [ParsedTransaction]) {
+        let transactionItems: [Transaction] = items.map { .from(chainID: chainID, owner: owner, transaction: $0) }
+        update(items: transactionItems)
     }
 
-    func update(owner: Address, items: [Transaction]) {
+    func update(items: [Transaction]) {
         storage.add(items)
         handleUpdateItems()
     }
@@ -117,55 +123,5 @@ class TransactionDataCoordinator {
 
         updateTransactionsTimer?.invalidate()
         updateTransactionsTimer = nil
-    }
-}
-
-extension Transaction {
-    static func from(owner: Address, transaction: ParsedTransaction) -> Transaction {
-        let state: TransactionState = {
-            return .pending
-        }()
-
-        return Transaction(
-            id: transaction.hash,
-            owner: owner.address,
-            state: state,
-            blockNumber: transaction.blockNumber,
-            transactionIndex: transaction.transactionIndex,
-            from: transaction.from,
-            to: transaction.to,
-            value: transaction.value,
-            gas: transaction.gas,
-            gasPrice: transaction.gasPrice,
-            gasUsed: transaction.gasUsed,
-            confirmations: Int64(transaction.confirmations) ?? 0,
-            nonce: transaction.nonce,
-            date: NSDate(timeIntervalSince1970: TimeInterval(transaction.timestamp) ?? 0) as Date
-        )
-    }
-}
-
-extension Transaction {
-    static func from(owner: Address, transaction: EtherScanTransaction) -> Transaction {
-        let state: TransactionState = {
-            return .pending
-        }()
-
-        return Transaction(
-            id: transaction.hash,
-            owner: owner.address,
-            state: state,
-            blockNumber: transaction.blockNumber,
-            transactionIndex: transaction.transactionIndex,
-            from: transaction.from,
-            to: transaction.to,
-            value: transaction.value,
-            gas: transaction.gas,
-            gasPrice: transaction.gasPrice,
-            gasUsed: transaction.gasUsed,
-            confirmations: Int64(transaction.confirmations) ?? 0,
-            nonce: transaction.nonce,
-            date: NSDate(timeIntervalSince1970: TimeInterval(transaction.timestamp) ?? 0) as Date
-        )
     }
 }

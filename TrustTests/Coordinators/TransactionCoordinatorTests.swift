@@ -8,7 +8,8 @@ class TransactionCoordinatorTests: XCTestCase {
     func testShowTokens() {
         let coordinator = TransactionCoordinator(
             session: .make(),
-            rootNavigationController: FakeNavigationController()
+            rootNavigationController: FakeNavigationController(),
+            storage: FakeTransactionsStorage()
         )
 
         coordinator.showTokens(for: .make())
@@ -19,7 +20,8 @@ class TransactionCoordinatorTests: XCTestCase {
     func testShowSettings() {
         let coordinator = TransactionCoordinator(
             session: .make(),
-            rootNavigationController: FakeNavigationController()
+            rootNavigationController: FakeNavigationController(),
+            storage: FakeTransactionsStorage()
         )
 
         coordinator.showSettings()
@@ -30,7 +32,8 @@ class TransactionCoordinatorTests: XCTestCase {
     func testShowSendFlow() {
         let coordinator = TransactionCoordinator(
             session: .make(),
-            rootNavigationController: FakeNavigationController()
+            rootNavigationController: FakeNavigationController(),
+            storage: FakeTransactionsStorage()
         )
 
         coordinator.showPaymentFlow(for: .send(destination: .none), session: .make())
@@ -43,7 +46,8 @@ class TransactionCoordinatorTests: XCTestCase {
     func testShowRequstFlow() {
         let coordinator = TransactionCoordinator(
             session: .make(),
-            rootNavigationController: FakeNavigationController()
+            rootNavigationController: FakeNavigationController(),
+            storage: FakeTransactionsStorage()
         )
 
         coordinator.showPaymentFlow(for: .request, session: .make())

@@ -6,21 +6,25 @@ import RealmSwift
 class TransactionsStorage {
 
     let realm: Realm
+    let current: Account
+    let chainID: Int
 
     init(
-        configuration: Realm.Configuration = .defaultConfiguration
+        configuration: Realm.Configuration = .defaultConfiguration,
+        current: Account,
+        chainID: Int
     ) {
         self.realm = try! Realm(configuration: configuration)
+        self.current = current
+        self.chainID = chainID
     }
 
     var count: Int {
-        return realm.objects(Transaction.self).count
+        return objects.count
     }
 
     var objects: [Transaction] {
-        return realm.objects(Transaction.self).sorted(byKeyPath: "date", ascending: true).filter { _ in
-            return true
-        }
+        return realm.objects(Transaction.self).sorted(byKeyPath: "date", ascending: true).filter { $0.owner == current.address.address && chainID == $0.chainID }
     }
 
     func get(forPrimaryKey: String) -> Transaction? {
