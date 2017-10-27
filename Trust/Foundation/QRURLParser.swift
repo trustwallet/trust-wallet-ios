@@ -11,6 +11,14 @@ struct ParserResult {
 struct QRURLParser {
 
     static func from(string: String) -> ParserResult? {
+        if string.count == 42 {
+            return ParserResult(
+                protocolName: "",
+                address: string,
+                params: [:]
+            )
+        }
+
         guard string.count >= 51 else { return .none }
 
         return ParserResult(
