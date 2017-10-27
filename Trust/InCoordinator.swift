@@ -55,6 +55,7 @@ class InCoordinator: Coordinator {
 
 extension InCoordinator: TransactionCoordinatorDelegate {
     func didCancel(in coordinator: TransactionCoordinator) {
+        delegate?.didCancel(in: self)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         coordinator.stop()
         removeCoordinator(coordinator)

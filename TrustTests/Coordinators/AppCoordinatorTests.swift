@@ -52,7 +52,7 @@ class AppCoordinatorTests: XCTestCase {
         )
         coordinator.start()
         
-        coordinator.showCreateWallet()
+        coordinator.showInitialWalletCoordinator(entryPoint: .createInstantWallet)
         
         XCTAssertTrue(coordinator.navigationController.viewControllers[0] is WelcomeViewController)
     }
@@ -66,7 +66,7 @@ class AppCoordinatorTests: XCTestCase {
             navigationController: FakeNavigationController()
         )
         coordinator.start()
-        coordinator.presentImportWallet()
+        coordinator.showInitialWalletCoordinator(entryPoint: .importWallet)
 
         XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is ImportWalletViewController)
     }

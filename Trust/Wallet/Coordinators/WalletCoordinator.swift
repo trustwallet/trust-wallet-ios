@@ -5,7 +5,6 @@ import UIKit
 
 protocol WalletCoordinatorDelegate: class {
     func didFinish(with account: Account, in coordinator: WalletCoordinator)
-    func didFail(with error: Error, in coordinator: WalletCoordinator)
     func didCancel(in coordinator: WalletCoordinator)
 }
 
