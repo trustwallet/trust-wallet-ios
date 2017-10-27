@@ -217,7 +217,7 @@ class EtherKeystore: Keystore {
             
             // encrypt
             let iv: Array<UInt8> = AES.randomIV(AES.blockSize)
-            let aes = try AES(key: Array(derivedKey[..<16]), blockMode: .CBC(iv: iv), padding: .pkcs7)
+            let aes = try AES(key: Array(derivedKey[..<16]), blockMode: .CTR(iv: iv), padding: .pkcs7)
             let ciphertext = try aes.encrypt(password);
             
             // calculate the mac
