@@ -171,5 +171,26 @@ class EtherKeystoreTests: XCTestCase {
 
         XCTAssertEqual(0, keystore.accounts.count)
     }
+
+    func testConvertPrivateKeyToKeyStore() {
+        let keystore = FakeEtherKeystore()
+        let privateKey = "9cdb5cab19aec3bd0fcd614c5f185e7a1d97634d4225730eba22497dc89a716c"
+        let result = keystore.convertPrivateKeyToKeystoreFile(privateKey: privateKey)
+        
+        guard case .success(let dict) = result else {
+            return XCTFail()
+        }
+
+        let importResult = keystore.importKeystore(
+            value: dict.jsonString ?? "",
+            password: privateKey
+        )
+
+        guard case .success = importResult else {
+            return XCTFail()
+        }
+
+        XCTAssertEqual(1, keystore.accounts.count)
+    }
 }
 

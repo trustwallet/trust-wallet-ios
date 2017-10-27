@@ -205,38 +205,39 @@ class EtherKeystore: Keystore {
     func getGethAccount(for address: Address) -> GethAccount {
         return gethAccounts.filter { Address(address: $0.getAddress().getHex()) == address }.first!
     }
-    
-    func convertPrivateKeyToKeystoreFile(privateKey: String) {
-        
-        let password: Array<UInt8> = Array(privateKey.utf8)
+
+    func convertPrivateKeyToKeystoreFile(privateKey: String) -> Result<[String: Any], KeyStoreError> {
+        let password: [UInt8] = Array(privateKey.utf8)
         let numberOfIterations = 4096
         do {
             // derive key
-            let salt: Array<UInt8> = Array("tkmlidnonknkqgvapjrpdcductebsozn".utf8) // TODO: create random 32 bit salt
+            let salt: [UInt8] = Array("tkmlidnonknkqgvapjrpdcductebsozn".utf8) // TODO: create random 32 bit salt
             let derivedKey = try PKCS5.PBKDF2(password: password, salt: salt, iterations: numberOfIterations, variant: .sha256).calculate()
-            
+
             // encrypt
-            let iv: Array<UInt8> = AES.randomIV(AES.blockSize)
+            let iv: [UInt8] = AES.randomIV(AES.blockSize)
             let aes = try AES(key: Array(derivedKey[..<16]), blockMode: .CTR(iv: iv), padding: .pkcs7)
-            let ciphertext = try aes.encrypt(password);
-            
+            let ciphertext = try aes.encrypt(password)
+
             // calculate the mac
             let macData = Array(derivedKey[16...]) + ciphertext
             let mac = SHA3(variant: .keccak256).calculate(for: macData)
-            
+
             /* convert to JSONv3 */
-            
+
             // KDF params
-            var kdfParams = [String: String]()
-            kdfParams["prf"] = "hmac-sha256"
-            kdfParams["c"] = String(numberOfIterations)
-            kdfParams["salt"] = salt.toHexString()
-            kdfParams["dklen"] = "32"
-            
+            let kdfParams: [String: String] = [
+                "prf": "hmac-sha256",
+                "c": String(numberOfIterations),
+                "salt": salt.toHexString(),
+                "dklen": "32",
+            ]
+
             // cipher params
-            var cipherParams = [String: String]()
-            cipherParams["iv"] = iv.toHexString()
-            
+            let cipherParams: [String: String] = [
+                "iv": iv.toHexString()
+            ]
+
             // crypto struct (combines KDF and cipher params
             var cryptoStruct = [String: Any]()
             cryptoStruct["cipher"] = "aes-128-ctr"
@@ -244,21 +245,18 @@ class EtherKeystore: Keystore {
             cryptoStruct["cipherparams"] = kdfParams
             cryptoStruct["kdf"] = "pbkdf2"
             cryptoStruct["mac"] = mac.toHexString()
-            
+
             // encrypted key json v3
-            var encryptedKeyJSONV3 = [String: Any]()
-            encryptedKeyJSONV3["crypto"] = cryptoStruct
-            encryptedKeyJSONV3["version"] = 3
-            encryptedKeyJSONV3["id"] = 0;  // TODO: where to get ID from?
-            
-            // TODO: convert to required structure
-            
+            let encryptedKeyJSONV3 = [String: Any] = [
+                "crypto": cryptoStruct,
+                "version": 3,
+                "id": "",
+            ]
+
+            return .success(encryptedKeyJSONV3)
         } catch {
-            
-            // TODO: proper error management
-            print(error)
+            return .failure(KeyStoreError.failedToImportPrivateKey)
         }
-        
     }
 }
 
