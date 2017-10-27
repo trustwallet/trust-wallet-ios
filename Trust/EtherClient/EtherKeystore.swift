@@ -247,7 +247,7 @@ class EtherKeystore: Keystore {
             cryptoStruct["mac"] = mac.toHexString()
 
             // encrypted key json v3
-            let encryptedKeyJSONV3 = [String: Any] = [
+            let encryptedKeyJSONV3: [String: Any] = [
                 "crypto": cryptoStruct,
                 "version": 3,
                 "id": "",
