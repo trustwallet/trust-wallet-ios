@@ -206,18 +206,19 @@ class EtherKeystore: Keystore {
         return gethAccounts.filter { Address(address: $0.getAddress().getHex()) == address }.first!
     }
 
-    func convertPrivateKeyToKeystoreFile(privateKey: String) -> Result<[String: Any], KeyStoreError> {
-        let password: [UInt8] = Array(Data(fromHexEncodedString: privateKey)!)
+    func convertPrivateKeyToKeystoreFile(privateKey: String, passphrase: String) -> Result<[String: Any], KeyStoreError> {
+        let privateKeyBytes: [UInt8] = Array(Data(fromHexEncodedString: privateKey)!)
+        let passphraseBytes: [UInt8] = Array(passphrase.utf8)
         let numberOfIterations = 262144
         do {
             // derive key
             let salt: [UInt8] = Array("tkmlidnonknkqgvapjrpdcductebsozn".utf8) // TODO: create random 32 bit salt
-            let derivedKey = try PKCS5.PBKDF2(password: password, salt: salt, iterations: numberOfIterations, variant: .sha256).calculate()
+            let derivedKey = try PKCS5.PBKDF2(password: passphraseBytes, salt: salt, iterations: numberOfIterations, variant: .sha256).calculate()
 
             // encrypt
             let iv: [UInt8] = AES.randomIV(AES.blockSize)
             let aes = try AES(key: Array(derivedKey[..<16]), blockMode: .CTR(iv: iv), padding: .pkcs7)
-            let ciphertext = try aes.encrypt(password)
+            let ciphertext = try aes.encrypt(privateKeyBytes)
 
             // calculate the mac
             let macData = Array(derivedKey[16...]) + ciphertext
@@ -226,11 +227,11 @@ class EtherKeystore: Keystore {
             /* convert to JSONv3 */
 
             // KDF params
-            let kdfParams: [String: String] = [
+            let kdfParams: [String: Any] = [
                 "prf": "hmac-sha256",
-                "c": String(numberOfIterations),
+                "c": numberOfIterations,
                 "salt": salt.toHexString(),
-                "dklen": "32",
+                "dklen": 32,
             ]
 
             // cipher params
