@@ -33,8 +33,17 @@ class PaymentCoordinator: Coordinator {
         switch self.flow {
         case .request:
             return self.requestViewController
-        case .send(let destination):
+        case .send(let type):
             return self.sendViewController
+        }
+    }()
+
+    lazy var transferType: TransferType = {
+        switch self.flow {
+        case .send(let type):
+            return type
+        case .request:
+            return .ether(destination: .none)
         }
     }()
 
@@ -52,7 +61,10 @@ class PaymentCoordinator: Coordinator {
     }
 
     func makeSendViewController() -> SendViewController {
-        let controller = SendViewController(account: self.session.account)
+        let controller = SendViewController(
+            account: session.account,
+            transferType: transferType
+        )
         controller.navigationItem.titleView = titleView
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -61,10 +73,16 @@ class PaymentCoordinator: Coordinator {
             target: controller,
             action: #selector(SendViewController.send)
         )
-        if case .send(let destination) = flow {
-            controller.addressRow?.value = destination?.address
-            controller.addressRow?.cell.row.updateCell()
+        if case .send(let type) = flow {
+            switch type {
+            case .ether(let destination):
+                controller.addressRow?.value = destination?.address
+                controller.addressRow?.cell.row.updateCell()
+            case .token:
+                break
+            }
         }
+
         controller.delegate = self
         return controller
     }
@@ -103,10 +121,11 @@ extension PaymentCoordinator: SendViewControllerDelegate {
         delegate?.didCreatePendingTransaction(transaction, in: self)
     }
 
-    func didPressConfirm(transaction: UnconfirmedTransaction, in viewController: SendViewController) {
+    func didPressConfirm(transaction: UnconfirmedTransaction, transferType: TransferType, in viewController: SendViewController) {
         let controller = ConfirmPaymentViewController(
             session: session,
-            transaction: transaction
+            transaction: transaction,
+            transferType: transferType
         )
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)

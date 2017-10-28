@@ -69,10 +69,15 @@ class TransactionCoordinator: Coordinator {
 
     func showTokens(for account: Account) {
         let controller = TokensViewController(account: account)
+        controller.delegate = self
         if UIDevice.current.userInterfaceIdiom == .pad {
             let nav = UINavigationController(rootViewController: controller)
             nav.modalPresentationStyle = .formSheet
-            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .cancel,
+                target: self,
+                action: #selector(dismiss)
+            )
             navigationController.present(nav, animated: true, completion: nil)
         } else {
             navigationController.pushViewController(controller, animated: true)
@@ -143,7 +148,7 @@ extension TransactionCoordinator: SettingsCoordinatorDelegate {
             break
         case .donate(let address):
             coordinator.navigationController.dismiss(animated: true) {
-                self.showPaymentFlow(for: .send(destination: address), session: self.session)
+                self.showPaymentFlow(for: .send(type: .ether(destination: address)), session: self.session)
             }
         }
     }
@@ -155,7 +160,7 @@ extension TransactionCoordinator: SettingsCoordinatorDelegate {
 
 extension TransactionCoordinator: TransactionsViewControllerDelegate {
     func didPressSend(in viewController: TransactionsViewController) {
-        showPaymentFlow(for: .send(destination: .none), session: session)
+        showPaymentFlow(for: .send(type: .ether(destination: .none)), session: session)
     }
 
     func didPressRequest(in viewController: TransactionsViewController) {
@@ -208,5 +213,14 @@ extension TransactionCoordinator: AccountsCoordinatorDelegate {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
         delegate?.didRestart(with: account, in: self)
+    }
+}
+
+extension TransactionCoordinator: TokensViewControllerDelegate {
+    func didSelect(token: Token, in viewController: UIViewController) {
+        showPaymentFlow(for: .send(
+            type: .token(token)),
+            session: session
+        )
     }
 }

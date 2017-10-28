@@ -59,7 +59,7 @@ class RequestViewController: UIViewController {
 
     let transferType: TransferType
 
-    init(account: Account, transferType: TransferType = .ether) {
+    init(account: Account, transferType: TransferType = .ether(destination: .none)) {
         self.account = account
         self.transferType = transferType
 

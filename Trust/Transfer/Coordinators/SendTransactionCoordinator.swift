@@ -51,22 +51,17 @@ class SendTransactionCoordinator {
         decimals: Int64,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
-        //let contract = "0x47c5a08256065306216b3e7cd82b599937540d1f"
-        //let to = "0x0039f22efb07a647557c7c5d17854cfd6d489ef3"
-
         session.web3.request(request: ContractERC20Transfer(amount: amount, decimals: decimals, address: to.address)) { result in
             switch result {
             case .success(let res):
-
                 NSLog("result \(res)")
-
                 self.send(
                     address: contract,
                     value: 0,
                     data: Data(hex: res.drop0x),
                     configuration: TransactionConfiguration(
                         speed: TransactionSpeed.custom(
-                            gasPrice: TransactionSpeed.regular.gasPrice,
+                            gasPrice: TransactionSpeed.cheap.gasPrice,
                             gasLimit: GethNewBigInt(2900000)
                         )
                     ),

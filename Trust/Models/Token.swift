@@ -15,7 +15,7 @@ extension Token {
     static func from(address: String, json: [String: AnyObject]) -> Token {
         let tokenInfo = json["tokenInfo"] as? [String: AnyObject] ?? [:]
         return Token(
-            address: Address(address: address),
+            address: Address(address: tokenInfo["address"] as? String ?? ""),
             name: tokenInfo["name"] as? String ?? "",
             symbol: tokenInfo["symbol"] as? String ?? "",
             totalSupply: tokenInfo["symbol"] as? String ?? "",

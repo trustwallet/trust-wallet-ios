@@ -9,7 +9,7 @@ import APIKit
 import QRCodeReaderViewController
 
 protocol SendViewControllerDelegate: class {
-    func didPressConfirm(transaction: UnconfirmedTransaction, in viewController: SendViewController)
+    func didPressConfirm(transaction: UnconfirmedTransaction, transferType: TransferType, in viewController: SendViewController)
     func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: SendViewController)
 }
 
@@ -36,7 +36,7 @@ class SendViewController: FormViewController {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
     }
 
-    init(account: Account, transferType: TransferType = .ether) {
+    init(account: Account, transferType: TransferType = .ether(destination: .none)) {
         self.account = account
         self.transferType = transferType
 
@@ -58,7 +58,7 @@ class SendViewController: FormViewController {
                 button.addTarget(self, action: #selector(self.openReader), for: .touchUpInside)
 
                 cell.textField.textAlignment = .left
-                cell.textField.placeholder = "\(self.viewModel.symbol) " + NSLocalizedString("Send.AddressPlaceholder", value: "Address", comment: "")
+                cell.textField.placeholder = "Ethereum " + NSLocalizedString("Send.AddressPlaceholder", value: "Address", comment: "")
                 cell.textField.rightView = button
                 cell.textField.rightViewMode = .always
             }
@@ -102,7 +102,7 @@ class SendViewController: FormViewController {
             amount: amount,
             address: address
         )
-        self.delegate?.didPressConfirm(transaction: transaction, in: self)
+        self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, in: self)
     }
 
     @objc func openReader() {

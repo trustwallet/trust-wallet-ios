@@ -5,6 +5,10 @@ import UIKit
 import StatefulViewController
 import Result
 
+protocol TokensViewControllerDelegate: class {
+    func didSelect(token: Token, in viewController: UIViewController)
+}
+
 class TokensViewController: UIViewController {
 
     private lazy var dataStore: TokensDataStore = {
@@ -15,6 +19,7 @@ class TokensViewController: UIViewController {
     let account: Account
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
+    weak var delegate: TokensViewControllerDelegate?
 
     init(
         account: Account
@@ -84,7 +89,10 @@ extension TokensViewController: StatefulViewController {
 
 extension TokensViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true )
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        let token = viewModel.item(for: indexPath.row, section: indexPath.section)
+        delegate?.didSelect(token: token, in: self)
     }
 }
 

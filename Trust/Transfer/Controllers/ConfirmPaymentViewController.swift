@@ -12,6 +12,7 @@ class ConfirmPaymentViewController: UIViewController {
 
     let transaction: UnconfirmedTransaction
     let session: WalletSession
+    let transferType: TransferType
     let stackViewController = StackViewController()
     lazy var sendTransactionCoordinator = {
         return SendTransactionCoordinator(session: self.session)
@@ -28,10 +29,12 @@ class ConfirmPaymentViewController: UIViewController {
 
     init(
         session: WalletSession,
-        transaction: UnconfirmedTransaction
+        transaction: UnconfirmedTransaction,
+        transferType: TransferType
     ) {
         self.session = session
         self.transaction = transaction
+        self.transferType = transferType
 
         super.init(nibName: nil, bundle: nil)
 
@@ -80,19 +83,39 @@ class ConfirmPaymentViewController: UIViewController {
 
     func send() {
         self.displayLoading()
-        self.sendTransactionCoordinator.send(
-            address: transaction.address,
-            value: transaction.amount,
-            configuration: self.configuration
-        ) { [weak self] result in
-            guard let `self` = self else { return }
-            switch result {
-            case .success(let transaction):
-                self.delegate?.didCompleted(transaction: transaction, in: self)
-            case .failure(let error):
-                self.displayError(error: error)
+
+        switch transferType {
+        case .ether:
+            self.sendTransactionCoordinator.send(
+                address: transaction.address,
+                value: transaction.amount,
+                configuration: self.configuration
+            ) { [weak self] result in
+                guard let `self` = self else { return }
+                switch result {
+                case .success(let transaction):
+                    self.delegate?.didCompleted(transaction: transaction, in: self)
+                case .failure(let error):
+                    self.displayError(error: error)
+                }
+                self.hideLoading()
             }
-            self.hideLoading()
+        case .token(let token):
+            self.sendTransactionCoordinator.send(
+                contract: token.address,
+                to: transaction.address,
+                amount: transaction.amount,
+                decimals: token.decimals
+            ) { [weak self] result in
+                guard let `self` = self else { return }
+                switch result {
+                case .success(let transaction):
+                    self.delegate?.didCompleted(transaction: transaction, in: self)
+                case .failure(let error):
+                    self.displayError(error: error)
+                }
+                self.hideLoading()
+            }
         }
     }
 }

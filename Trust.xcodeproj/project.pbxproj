@@ -173,6 +173,7 @@
 		29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */; };
 		29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB10291F6CBD23000907A4 /* UIAlertController.swift */; };
 		29F114E91FA3EC9E00114A29 /* InCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114E81FA3EC9E00114A29 /* InCoordinatorTests.swift */; };
+		29F114EC1FA448F400114A29 /* TokensCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114EB1FA448F400114A29 /* TokensCoordinator.swift */; };
 		29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB51F8298820036089F /* TransactionCoordinator.swift */; };
 		29FC0CB81F8299510036089F /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB71F8299510036089F /* Coordinator.swift */; };
 		29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC9BC51F830880000209CD /* MirgrationInitializer.swift */; };
@@ -382,6 +383,7 @@
 		29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonRow.swift; sourceTree = "<group>"; };
 		29EB10291F6CBD23000907A4 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		29F114E81FA3EC9E00114A29 /* InCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InCoordinatorTests.swift; sourceTree = "<group>"; };
+		29F114EB1FA448F400114A29 /* TokensCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCoordinator.swift; sourceTree = "<group>"; };
 		29FC0CB51F8298820036089F /* TransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCoordinator.swift; sourceTree = "<group>"; };
 		29FC0CB71F8299510036089F /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		29FC9BC51F830880000209CD /* MirgrationInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirgrationInitializer.swift; sourceTree = "<group>"; };
@@ -784,6 +786,7 @@
 		296106C01F7640240006164B /* Tokens */ = {
 			isa = PBXGroup;
 			children = (
+				29F114EA1FA448DE00114A29 /* Coordinator */,
 				2977CAF31F7E0C5D009682A0 /* Types */,
 				2977CAF21F7E0C3A009682A0 /* ViewModels */,
 				2977CAF11F7E0C33009682A0 /* ViewControllers */,
@@ -1170,6 +1173,14 @@
 				29E14FD41F7F470C00185568 /* TransactionsStorageTests.swift */,
 			);
 			path = Storage;
+			sourceTree = "<group>";
+		};
+		29F114EA1FA448DE00114A29 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				29F114EB1FA448F400114A29 /* TokensCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		29FC9BC31F830880000209CD /* Core */ = {
@@ -1692,6 +1703,7 @@
 				290B2B5B1F8F551E0053C83E /* LokaliseInitializer.swift in Sources */,
 				29B6AECB1F7C5FA900EC6DE3 /* PaymentCoordinator.swift in Sources */,
 				2963B6B91F9A7EEA003063C1 /* CoinTicker.swift in Sources */,
+				29F114EC1FA448F400114A29 /* TokensCoordinator.swift in Sources */,
 				2996F14A1F6C9D10005C33AE /* ExportCoordinator.swift in Sources */,
 				2932488E1F88E69F008A9818 /* OnePasswordError.swift in Sources */,
 				293E62711FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift in Sources */,

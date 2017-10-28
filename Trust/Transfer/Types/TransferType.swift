@@ -3,7 +3,7 @@
 import Foundation
 
 enum TransferType {
-    case ether
+    case ether(destination: Address?)
     case token(Token)
 }
 
