@@ -212,7 +212,7 @@ class EtherKeystore: Keystore {
         let numberOfIterations = 262144
         do {
             // derive key
-            let salt: [UInt8] = Array("tkmlidnonknkqgvapjrpdcductebsozn".utf8) // TODO: create random 32 bit salt
+            let salt: [UInt8] = AES.randomIV(32)
             let derivedKey = try PKCS5.PBKDF2(password: passphraseBytes, salt: salt, iterations: numberOfIterations, variant: .sha256).calculate()
 
             // encrypt
