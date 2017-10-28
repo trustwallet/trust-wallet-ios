@@ -242,8 +242,9 @@ class EtherKeystore: Keystore {
             var cryptoStruct = [String: Any]()
             cryptoStruct["cipher"] = "aes-128-ctr"
             cryptoStruct["ciphertext"] = ciphertext.toHexString()
-            cryptoStruct["cipherparams"] = kdfParams
+            cryptoStruct["cipherparams"] = cipherParams
             cryptoStruct["kdf"] = "pbkdf2"
+            cryptoStruct["kdfparams"] = kdfParams
             cryptoStruct["mac"] = mac.toHexString()
 
             // encrypted key json v3
