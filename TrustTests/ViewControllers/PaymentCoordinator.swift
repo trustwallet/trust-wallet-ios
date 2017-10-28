@@ -8,7 +8,7 @@ class PaymentCoordinatorTests: XCTestCase {
     func testSendFlow() {
         let coordinator = PaymentCoordinator(
             navigationController: FakeNavigationController(),
-            flow: .send(destination: .make()),
+            flow: .send(type: .ether(destination: .none)),
             session: .make()
         )
 
@@ -19,7 +19,7 @@ class PaymentCoordinatorTests: XCTestCase {
         let address: Address = .make()
         let coordinator = PaymentCoordinator(
             navigationController: FakeNavigationController(),
-            flow: .send(destination: address),
+            flow: .send(type: .ether(destination: address)),
             session: .make()
         )
 

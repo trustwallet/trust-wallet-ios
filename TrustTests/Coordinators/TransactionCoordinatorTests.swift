@@ -36,7 +36,7 @@ class TransactionCoordinatorTests: XCTestCase {
             storage: FakeTransactionsStorage()
         )
 
-        coordinator.showPaymentFlow(for: .send(destination: .none), session: .make())
+        coordinator.showPaymentFlow(for: .send(type: .ether(destination: .none)), session: .make())
 
         let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
 
