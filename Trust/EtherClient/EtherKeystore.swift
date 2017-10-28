@@ -208,7 +208,7 @@ class EtherKeystore: Keystore {
 
     func convertPrivateKeyToKeystoreFile(privateKey: String) -> Result<[String: Any], KeyStoreError> {
         let password: [UInt8] = Array(privateKey.utf8)
-        let numberOfIterations = 4096
+        let numberOfIterations = 262144
         do {
             // derive key
             let salt: [UInt8] = Array("tkmlidnonknkqgvapjrpdcductebsozn".utf8) // TODO: create random 32 bit salt
