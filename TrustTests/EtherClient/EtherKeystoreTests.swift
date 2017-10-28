@@ -175,7 +175,8 @@ class EtherKeystoreTests: XCTestCase {
     func testConvertPrivateKeyToKeyStore() {
         let keystore = FakeEtherKeystore()
         let privateKey = "9cdb5cab19aec3bd0fcd614c5f185e7a1d97634d4225730eba22497dc89a716c"
-        let result = keystore.convertPrivateKeyToKeystoreFile(privateKey: privateKey)
+        let passphrase = "MyHardPassword!"
+        let result = keystore.convertPrivateKeyToKeystoreFile(privateKey: privateKey, passphrase: passphrase)
         
         guard case .success(let dict) = result else {
             return XCTFail()
@@ -183,7 +184,7 @@ class EtherKeystoreTests: XCTestCase {
 
         let importResult = keystore.importKeystore(
             value: dict.jsonString ?? "",
-            password: privateKey
+            password: passphrase
         )
 
         guard case .success = importResult else {
