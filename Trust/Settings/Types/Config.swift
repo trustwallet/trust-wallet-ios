@@ -45,7 +45,7 @@ struct Config {
         return URL(string: urlString)!
     }
 
-    var etherScanURL: URL {
+    var etherScanAPIURL: URL {
         let urlString: String = {
             switch server {
             case .main: return "https://api.etherscan.io/api"

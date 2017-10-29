@@ -18,7 +18,7 @@ struct FetchTransactionsRequest: APIKit.Request {
 
     var baseURL: URL {
         let config = Config()
-        return config.etherScanURL
+        return config.etherScanAPIURL
     }
 
     var method: HTTPMethod {
