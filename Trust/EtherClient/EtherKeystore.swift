@@ -54,6 +54,47 @@ class EtherKeystore: Keystore {
         }
     }
 
+    func importWallet(type: ImportType, completion: @escaping (Result<Account, KeyStoreError>) -> Void) {
+        switch type {
+        case .keystore(let string, let password):
+            importKeystore(
+                value: string,
+                password: password,
+                completion: completion
+            )
+        case .privateKey(let privateKey, let password):
+            self.keystore(for: privateKey, password: password) { result in
+                switch result {
+                case .success(let value):
+                    self.importKeystore(
+                        value: value,
+                        password: password,
+                        completion: completion
+                    )
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+
+    func keystore(for privateKey: String, password: String, completion: @escaping (Result<String, KeyStoreError>) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let keystore = self.convertPrivateKeyToKeystoreFile(
+                privateKey: privateKey,
+                passphrase: password
+            )
+            DispatchQueue.main.async {
+                switch keystore {
+                case .success(let result):
+                    completion(.success(result.jsonString ?? ""))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+
     func importKeystore(value: String, password: String, completion: @escaping (Result<Account, KeyStoreError>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let result = self.importKeystore(value: value, password: password)
@@ -94,13 +135,6 @@ class EtherKeystore: Keystore {
         } catch {
             return (.failure(.failedToImport(error)))
         }
-    }
-
-    func importPrivateKey() -> Account? {
-        return nil
-//        return Account(
-//            address: ""
-//        )
     }
 
     var accounts: [Account] {
@@ -207,11 +241,15 @@ class EtherKeystore: Keystore {
     }
 
     func convertPrivateKeyToKeystoreFile(privateKey: String, passphrase: String) -> Result<[String: Any], KeyStoreError> {
-        let privateKeyBytes: [UInt8] = Array(Data(fromHexEncodedString: privateKey)!)
-        let passphraseBytes: [UInt8] = Array(passphrase.utf8)
-        // reduce this number for higher speed. This is the default value, though.
-        let numberOfIterations = 262144
+        guard let privateKeyData = Data(fromHexEncodedString: privateKey) else {
+            return .failure(KeyStoreError.failedToImportPrivateKey)
+        }
+        let privateKeyBytes: [UInt8] = Array(privateKeyData)
         do {
+            let passphraseBytes: [UInt8] = Array(passphrase.utf8)
+            // reduce this number for higher speed. This is the default value, though.
+            let numberOfIterations = 2214
+
             // derive key
             let salt: [UInt8] = AES.randomIV(32)
             let derivedKey = try PKCS5.PBKDF2(password: passphraseBytes, salt: salt, iterations: numberOfIterations, variant: .sha256).calculate()
@@ -237,7 +275,7 @@ class EtherKeystore: Keystore {
 
             // cipher params
             let cipherParams: [String: String] = [
-                "iv": iv.toHexString()
+                "iv": iv.toHexString(),
             ]
 
             // crypto struct (combines KDF and cipher params
@@ -255,7 +293,6 @@ class EtherKeystore: Keystore {
                 "version": 3,
                 "id": "",
             ]
-
             return .success(encryptedKeyJSONV3)
         } catch {
             return .failure(KeyStoreError.failedToImportPrivateKey)
@@ -276,7 +313,7 @@ extension Data {
         // Convert 0 ... 9, a ... f, A ...F to their decimal value,
         // return nil for all other input characters
         func decodeNibble(u: UInt16) -> UInt8? {
-            switch(u) {
+            switch u {
             case 0x30 ... 0x39:
                 return UInt8(u - 0x30)
             case 0x41 ... 0x46:
@@ -287,7 +324,7 @@ extension Data {
                 return nil
             }
         }
-        
+
         self.init(capacity: string.utf16.count/2)
         var even = true
         var byte: UInt8 = 0
