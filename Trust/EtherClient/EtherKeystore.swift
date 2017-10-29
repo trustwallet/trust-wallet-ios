@@ -209,6 +209,7 @@ class EtherKeystore: Keystore {
     func convertPrivateKeyToKeystoreFile(privateKey: String, passphrase: String) -> Result<[String: Any], KeyStoreError> {
         let privateKeyBytes: [UInt8] = Array(Data(fromHexEncodedString: privateKey)!)
         let passphraseBytes: [UInt8] = Array(passphrase.utf8)
+        // reduce this number for higher speed. This is the default value, though.
         let numberOfIterations = 262144
         do {
             // derive key
@@ -217,7 +218,7 @@ class EtherKeystore: Keystore {
 
             // encrypt
             let iv: [UInt8] = AES.randomIV(AES.blockSize)
-            let aes = try AES(key: Array(derivedKey[..<16]), blockMode: .CTR(iv: iv), padding: .pkcs7)
+            let aes = try AES(key: Array(derivedKey[..<16]), blockMode: .CTR(iv: iv), padding: .noPadding)
             let ciphertext = try aes.encrypt(privateKeyBytes)
 
             // calculate the mac
