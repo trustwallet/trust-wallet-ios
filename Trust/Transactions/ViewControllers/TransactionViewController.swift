@@ -3,6 +3,7 @@
 import UIKit
 import StackViewController
 import Result
+import SafariServices
 
 class TransactionViewController: UIViewController {
 
@@ -12,6 +13,7 @@ class TransactionViewController: UIViewController {
     let stackViewController = StackViewController()
 
     let transaction: Transaction
+    let config = Config()
 
     init(transaction: Transaction) {
         self.transaction = transaction
@@ -52,6 +54,7 @@ class TransactionViewController: UIViewController {
             TransactionAppearance.item(title: "Transaction #", subTitle: transaction.to),
             TransactionAppearance.item(title: "Transaction time", subTitle: viewModel.createdAt),
             TransactionAppearance.item(title: "Block #", subTitle: transaction.blockNumber),
+            moreDetails(),
         ]
 
         for item in items {
@@ -59,6 +62,28 @@ class TransactionViewController: UIViewController {
         }
 
         displayChildViewController(viewController: stackViewController)
+    }
+
+    private func moreDetails() -> UIView {
+        let button = Button(size: .large, style: .border)
+        button.setTitle("More Details", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(more), for: .touchUpInside)
+
+        let stackView = UIStackView(arrangedSubviews: [button])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        stackView.layoutMargins = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        stackView.isLayoutMarginsRelativeArrangement = true
+
+        return stackView
+    }
+
+    func more() {
+        let url = config.etherScanURL.absoluteString + "/tx/" + transaction.id
+        let controller = SFSafariViewController(url: URL(string: url)!)
+        present(controller, animated: true, completion: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
