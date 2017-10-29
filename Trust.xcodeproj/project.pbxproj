@@ -174,6 +174,7 @@
 		29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EB10291F6CBD23000907A4 /* UIAlertController.swift */; };
 		29F114E91FA3EC9E00114A29 /* InCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114E81FA3EC9E00114A29 /* InCoordinatorTests.swift */; };
 		29F114EC1FA448F400114A29 /* TokensCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114EB1FA448F400114A29 /* TokensCoordinator.swift */; };
+		29F114EE1FA65DEF00114A29 /* ImportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114ED1FA65DEF00114A29 /* ImportType.swift */; };
 		29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB51F8298820036089F /* TransactionCoordinator.swift */; };
 		29FC0CB81F8299510036089F /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB71F8299510036089F /* Coordinator.swift */; };
 		29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC9BC51F830880000209CD /* MirgrationInitializer.swift */; };
@@ -211,7 +212,6 @@
 /* Begin PBXFileReference section */
 		0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		290B2B551F8F50030053C83E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		290B2B571F8F500A0053C83E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		290B2B5A1F8F551E0053C83E /* LokaliseInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LokaliseInitializer.swift; sourceTree = "<group>"; };
 		290B2B5E1F9177860053C83E /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		290B2B601F9179880053C83E /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
@@ -384,6 +384,7 @@
 		29EB10291F6CBD23000907A4 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		29F114E81FA3EC9E00114A29 /* InCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InCoordinatorTests.swift; sourceTree = "<group>"; };
 		29F114EB1FA448F400114A29 /* TokensCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCoordinator.swift; sourceTree = "<group>"; };
+		29F114ED1FA65DEF00114A29 /* ImportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportType.swift; sourceTree = "<group>"; };
 		29FC0CB51F8298820036089F /* TransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCoordinator.swift; sourceTree = "<group>"; };
 		29FC0CB71F8299510036089F /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		29FC9BC51F830880000209CD /* MirgrationInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirgrationInitializer.swift; sourceTree = "<group>"; };
@@ -666,6 +667,7 @@
 				291F52B81F6B880F00B369AB /* EtherKeystore.swift */,
 				291ED08C1F6F5F0A00E7E93A /* KeyStoreError.swift */,
 				29FF12FD1F75EA3F00AFD326 /* Keystore.swift */,
+				29F114ED1FA65DEF00114A29 /* ImportType.swift */,
 			);
 			path = EtherClient;
 			sourceTree = "<group>";
@@ -1744,6 +1746,7 @@
 				29BE3FD01F7071A200F6BFC2 /* UIColor.swift in Sources */,
 				2996F1481F6C9AE5005C33AE /* SettingsCoordinator.swift in Sources */,
 				29E14FD11F7F457D00185568 /* TransactionsStorage.swift in Sources */,
+				29F114EE1FA65DEF00114A29 /* ImportType.swift in Sources */,
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
@@ -1880,7 +1883,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				290B2B551F8F50030053C83E /* en */,
-				290B2B571F8F500A0053C83E /* ru */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
