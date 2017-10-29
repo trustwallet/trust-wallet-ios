@@ -37,7 +37,7 @@ class BackupViewController: UIViewController {
 
         let neverStoredLabel = UILabel()
         neverStoredLabel.translatesAutoresizingMaskIntoConstraints = false
-        neverStoredLabel.text = NSLocalizedString("export.neverStored.title", value: "Your wallet is never saved to cloud storage or standart device backups.", comment: "")
+        neverStoredLabel.text = NSLocalizedString("export.neverStored.title", value: "Your wallet is never saved to cloud storage or standard device backups.", comment: "")
         neverStoredLabel.numberOfLines = 0
         neverStoredLabel.textAlignment = .center
         neverStoredLabel.textColor = Colors.darkGray
