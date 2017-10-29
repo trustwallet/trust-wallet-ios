@@ -57,6 +57,18 @@ struct Config {
         return URL(string: urlString)!
     }
 
+    var etherScanURL: URL {
+        let urlString: String = {
+            switch server {
+            case .main: return "https://etherscan.io"
+            case .ropsten: return "https://ropsten.etherscan.io"
+            case .kovan: return "https://kovan.etherscan.io"
+            case .rinkeby: return "https://rinkeby.etherscan.io"
+            }
+        }()
+        return URL(string: urlString)!
+    }
+
     var ethplorerURL: URL {
         return URL(string: "https://api.ethplorer.io/")!
     }
