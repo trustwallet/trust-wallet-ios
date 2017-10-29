@@ -30,6 +30,7 @@ configuration "Debug"
 # clean true
 
 skip_open_summary false
+ios_version '11.0.1'
 
 # Choose which project/workspace to use
 # project "./Project.xcodeproj"
