@@ -56,7 +56,7 @@
 "export.backupButton.title" = "Backup Wallet";
 "export.controlYourMoney.title" = "Since only you control your money, you'll need to save your backup keystore in case this app is deleted.";
 "export.doItLater.title" = "Do it later";
-"export.neverStored.title" = "Your wallet is never saved to cloud storage or standard device backups.";
+"export.neverStored.title" = "Your wallet is never saved to cloud storage or standart device backups.";
 "export.noBackup.title" = "No backup, no Ethereum.";
 "settings.Backup" = "Backup";
 "settings.exportPrivateKey" = "Backup Private Key";
