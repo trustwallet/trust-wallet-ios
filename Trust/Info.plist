@@ -33,12 +33,12 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>QR Scan</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Access your wallet</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Sending QR Code to your contacts</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Sending QR Code to your contacts</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Access your wallet</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -60,8 +60,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
