@@ -103,7 +103,7 @@ class ImportWalletViewController: FormViewController {
                 $0.placeholder = "Private Key"
                 $0.textAreaHeight = .fixed(cellHeight: 140)
                 $0.add(rule: RuleRequired())
-
+                $0.add(rule: PrivateKeyRule())
                 $0.hidden = Eureka.Condition.function([Values.segment], { _ in
                     return self.segmentRow?.value != ImportSelectionType.privateKey.title
                 })
