@@ -119,16 +119,19 @@ class EtherKeystore: Keystore {
     func importKeystore(value: String, password: String) -> Result<Account, KeyStoreError> {
         let data = value.data(using: .utf8)
         do {
-            //Check if this account already been imported
-            let json = try JSONSerialization.jsonObject(with: data!, options: [])
-            if let dict = json as? [String: AnyObject], let address = dict["address"] as? String {
-                var error: NSError? = nil
-                if gethKeyStorage.hasAddress(GethNewAddressFromHex(address.add0x, &error)) {
-                    return (.failure(.duplicateAccount))
+            let gethAccount = try gethKeyStorage.importKey(data, passphrase: password, newPassphrase: password)
+
+            //Hack to avoid duplicate accounts
+            let accounts = gethAccounts.filter { $0.getAddress().getHex() == gethAccount.getAddress().getHex() }
+            if accounts.count >= 2 {
+                do {
+                    try gethKeyStorage.delete(gethAccount, passphrase: password)
+                } catch {
+                    return (.failure(.failedToImport(error)))
                 }
+                return (.failure(.duplicateAccount))
             }
 
-            let gethAccount = try gethKeyStorage.importKey(data, passphrase: password, newPassphrase: password)
             let account: Account = .from(account: gethAccount)
             let _ = setPassword(password, for: account)
             return (.success(account))
