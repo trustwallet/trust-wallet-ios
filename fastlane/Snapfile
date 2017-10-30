@@ -27,7 +27,8 @@ output_directory "./fastlane/screenshots"
 clear_previous_screenshots true # remove the '#' to clear all previously generated screenshots before creating new ones
 
 configuration "Debug"
-# clean true
+clean true
+erase_simulator true
 
 skip_open_summary false
 ios_version '11.0.1'
