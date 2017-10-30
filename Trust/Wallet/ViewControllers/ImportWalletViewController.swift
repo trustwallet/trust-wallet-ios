@@ -9,38 +9,6 @@ protocol ImportWalletViewControllerDelegate: class {
     func didImportAccount(account: Account, in viewController: ImportWalletViewController)
 }
 
-enum ImportSelectionType {
-    case keystore
-    case privateKey
-
-    var title: String {
-        switch self {
-        case .keystore:
-            return "Keystore"
-        case .privateKey:
-            return "Private Key"
-        }
-    }
-
-    init(title: String?) {
-        switch title {
-        case ImportSelectionType.privateKey.title?:
-            self = .privateKey
-        default:
-            self = .keystore
-        }
-    }
-
-    var placeholder: String {
-        switch self {
-        case .keystore:
-            return "Keystore JSON"
-        case .privateKey:
-            return "Private Key"
-        }
-    }
-}
-
 class ImportWalletViewController: FormViewController {
 
     private let keystore = EtherKeystore()
@@ -49,6 +17,7 @@ class ImportWalletViewController: FormViewController {
     struct Values {
         static let segment = "segment"
         static let keystore = "keystore"
+        static let privateKey = "privateKey"
         static let password = "password"
     }
 
@@ -58,6 +27,10 @@ class ImportWalletViewController: FormViewController {
 
     var keystoreRow: TextAreaRow? {
         return form.rowBy(tag: Values.keystore)
+    }
+
+    var privateKeyRow: TextAreaRow? {
+        return form.rowBy(tag: Values.privateKey)
     }
 
     var passwordRow: TextFloatLabelRow? {
@@ -114,16 +87,26 @@ class ImportWalletViewController: FormViewController {
                     ImportSelectionType.privateKey.title,
                 ]
                 $0.value = ImportSelectionType.keystore.title
-            }.onChange {
-                let type = ImportSelectionType(title: $0.value)
-                self.keystoreRow?.placeholder = type.placeholder
-                self.keystoreRow?.updateCell()
             }
 
             <<< AppFormAppearance.textArea(tag: Values.keystore) {
                 $0.placeholder = "Keystore JSON"
                 $0.textAreaHeight = .fixed(cellHeight: 140)
                 $0.add(rule: RuleRequired())
+
+                $0.hidden = Eureka.Condition.function([Values.segment], { _ in
+                    return self.segmentRow?.value != ImportSelectionType.keystore.title
+                })
+            }
+
+            <<< AppFormAppearance.textArea(tag: Values.privateKey) {
+                $0.placeholder = "Private Key"
+                $0.textAreaHeight = .fixed(cellHeight: 140)
+                $0.add(rule: RuleRequired())
+
+                $0.hidden = Eureka.Condition.function([Values.segment], { _ in
+                    return self.segmentRow?.value != ImportSelectionType.privateKey.title
+                })
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.password) {
@@ -154,7 +137,8 @@ class ImportWalletViewController: FormViewController {
         let validatedError = keystoreRow?.section?.form?.validate()
         guard let errors = validatedError, errors.isEmpty else { return }
 
-        let input = keystoreRow?.value ?? ""
+        let keystoreInput = keystoreRow?.value ?? ""
+        let privateKeyInput = privateKeyRow?.value ?? ""
         let password = passwordRow?.value ?? ""
 
         displayLoading(text: NSLocalizedString("importWallet.importingIndicatorTitle", value: "Importing wallet...", comment: ""), animated: false)
@@ -163,9 +147,9 @@ class ImportWalletViewController: FormViewController {
         let importType: ImportType = {
             switch type {
             case .keystore:
-                return .keystore(string: input, password: password)
+                return .keystore(string: keystoreInput, password: password)
             case .privateKey:
-                return .privateKey(privateKey: input, password: UUID().uuidString)
+                return .privateKey(privateKey: privateKeyInput, password: UUID().uuidString)
             }
         }()
 
