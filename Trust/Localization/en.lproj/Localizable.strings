@@ -23,7 +23,6 @@
 "Settings.Community" = "Community";
 "Settings.Donate" = "Donate";
 "Settings.Export" = "Export";
-"Settings.ExportPrivateKey" = "Export Private Key";
 "Settings.KeepItSecure" = "Keep it secure and never share it with anyone.";
 "Settings.OpenSourceDevelopment" = "Open Source Development";
 "Settings.RateUsAppStore" = "Rate Us on App Store";
@@ -58,7 +57,6 @@
 "export.doItLater.title" = "Do it later";
 "export.neverStored.title" = "Your wallet is never saved to cloud storage or standart device backups.";
 "export.noBackup.title" = "No backup, no Ethereum.";
-"settings.Backup" = "Backup";
 "settings.exportPrivateKey" = "Backup Private Key";
 "settings.TermsOfService" = "Terms of Service";
 "transactions.myAddress" = "My Address";
