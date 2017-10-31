@@ -14,12 +14,8 @@ class SendCoordinator: Coordinator {
     let navigationController: UINavigationController
     var coordinators: [Coordinator] = []
     weak var delegate: SendCoordinatorDelegate?
-    
     lazy var sendViewController: SendViewController = {
         return self.makeSendViewController()
-    }()
-    lazy var titleView: BalanceTitleView = {
-        return BalanceTitleView.make(from: self.session)
     }()
 
     init(
@@ -42,7 +38,7 @@ class SendCoordinator: Coordinator {
             account: session.account,
             transferType: transferType
         )
-        controller.navigationItem.titleView = titleView
+        controller.navigationItem.titleView = BalanceTitleView.make(from: self.session)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: NSLocalizedString("Generic.Next", value: "Next", comment: ""),
@@ -54,10 +50,8 @@ class SendCoordinator: Coordinator {
         case .ether(let destination):
             controller.addressRow?.value = destination?.address
             controller.addressRow?.cell.row.updateCell()
-        case .token:
-            break
+        case .token: break
         }
-
         controller.delegate = self
         return controller
     }
@@ -68,10 +62,6 @@ class SendCoordinator: Coordinator {
 }
 
 extension SendCoordinator: SendViewControllerDelegate {
-    func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: SendViewController) {
-
-    }
-
     func didPressConfirm(transaction: UnconfirmedTransaction, transferType: TransferType, in viewController: SendViewController) {
         let controller = ConfirmPaymentViewController(
             session: session,
@@ -80,6 +70,10 @@ extension SendCoordinator: SendViewControllerDelegate {
         )
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)
+    }
+
+    func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: SendViewController) {
+
     }
 }
 

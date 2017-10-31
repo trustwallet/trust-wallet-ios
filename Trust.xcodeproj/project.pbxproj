@@ -178,6 +178,7 @@
 		29F114F01FA6D53700114A29 /* ImportSelectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114EF1FA6D53700114A29 /* ImportSelectionType.swift */; };
 		29F114F21FA7966300114A29 /* PrivateKeyRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114F11FA7966300114A29 /* PrivateKeyRule.swift */; };
 		29F114F41FA8117C00114A29 /* SendCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114F31FA8117C00114A29 /* SendCoordinator.swift */; };
+		29F114F61FA8147300114A29 /* RequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114F51FA8147300114A29 /* RequestCoordinator.swift */; };
 		29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB51F8298820036089F /* TransactionCoordinator.swift */; };
 		29FC0CB81F8299510036089F /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB71F8299510036089F /* Coordinator.swift */; };
 		29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC9BC51F830880000209CD /* MirgrationInitializer.swift */; };
@@ -391,6 +392,7 @@
 		29F114EF1FA6D53700114A29 /* ImportSelectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportSelectionType.swift; sourceTree = "<group>"; };
 		29F114F11FA7966300114A29 /* PrivateKeyRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyRule.swift; sourceTree = "<group>"; };
 		29F114F31FA8117C00114A29 /* SendCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoordinator.swift; sourceTree = "<group>"; };
+		29F114F51FA8147300114A29 /* RequestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCoordinator.swift; sourceTree = "<group>"; };
 		29FC0CB51F8298820036089F /* TransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCoordinator.swift; sourceTree = "<group>"; };
 		29FC0CB71F8299510036089F /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		29FC9BC51F830880000209CD /* MirgrationInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirgrationInitializer.swift; sourceTree = "<group>"; };
@@ -1115,6 +1117,7 @@
 				29B933F41F860074009FCABB /* SendTransactionCoordinator.swift */,
 				29B6AECA1F7C5FA900EC6DE3 /* PaymentCoordinator.swift */,
 				29F114F31FA8117C00114A29 /* SendCoordinator.swift */,
+				29F114F51FA8147300114A29 /* RequestCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1815,6 +1818,7 @@
 				2963B6C11F9AE0E4003063C1 /* Data.swift in Sources */,
 				2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */,
 				2912CD321F6A83EE00C6CBE3 /* WelcomeViewController.swift in Sources */,
+				29F114F61FA8147300114A29 /* RequestCoordinator.swift in Sources */,
 				291F52A91F6B7BE100B369AB /* BlockNumber.swift in Sources */,
 				290B2B701F930AB90053C83E /* PushNotificationsRegistrar.swift in Sources */,
 				29B6AED11F7C881D00EC6DE3 /* TransactionCost.swift in Sources */,

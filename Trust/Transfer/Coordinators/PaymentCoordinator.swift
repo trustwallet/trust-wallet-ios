@@ -14,12 +14,7 @@ class PaymentCoordinator: Coordinator {
 
     let flow: PaymentFlow
     var coordinators: [Coordinator] = []
-
     let navigationController: UINavigationController
-
-    lazy var requestViewController: RequestViewController = {
-        return self.makeRequestViewController()
-    }()
 
     lazy var transferType: TransferType = {
         switch self.flow {
@@ -53,32 +48,14 @@ class PaymentCoordinator: Coordinator {
             coordinator.start()
             addCoordinator(coordinator)
         case .request:
-            navigationController.viewControllers = [requestViewController]
+            let coordinator = RequestCoordinator(
+                navigationController: navigationController,
+                session: session
+            )
+            coordinator.delegate = self
+            coordinator.start()
+            addCoordinator(coordinator)
         }
-    }
-
-    func makeRequestViewController() -> RequestViewController {
-        let controller = RequestViewController(account: self.session.account)
-        controller.navigationItem.titleView = BalanceTitleView.make(from: self.session)
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
-        return controller
-    }
-
-    @objc func share() {
-        let address = session.account.address.address
-        let activityViewController = UIActivityViewController(
-            activityItems: [
-                NSLocalizedString("Send.MyEthereumAddressIs", value: "My Ethereum address is: ", comment: "") + address,
-            ],
-            applicationActivities: nil
-        )
-        activityViewController.popoverPresentationController?.sourceView = requestViewController.view
-        navigationController.present(activityViewController, animated: true, completion: nil)
-    }
-
-    @objc func dismiss() {
-        delegate?.didCancel(in: self)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -92,6 +69,13 @@ class PaymentCoordinator: Coordinator {
 
 extension PaymentCoordinator: SendCoordinatorDelegate {
     func didCancel(in coordinator: SendCoordinator) {
+        removeCoordinator(coordinator)
+        cancel()
+    }
+}
+
+extension PaymentCoordinator: RequestCoordinatorDelegate {
+    func didCancel(in coordinator: RequestCoordinator) {
         removeCoordinator(coordinator)
         cancel()
     }
