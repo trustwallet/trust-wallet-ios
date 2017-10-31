@@ -137,8 +137,8 @@ class ImportWalletViewController: FormViewController {
         let validatedError = keystoreRow?.section?.form?.validate()
         guard let errors = validatedError, errors.isEmpty else { return }
 
-        let keystoreInput = keystoreRow?.value ?? ""
-        let privateKeyInput = privateKeyRow?.value ?? ""
+        let keystoreInput = keystoreRow?.value?.trimmed ?? ""
+        let privateKeyInput = privateKeyRow?.value?.trimmed ?? ""
         let password = passwordRow?.value ?? ""
 
         displayLoading(text: NSLocalizedString("importWallet.importingIndicatorTitle", value: "Importing wallet...", comment: ""), animated: false)
