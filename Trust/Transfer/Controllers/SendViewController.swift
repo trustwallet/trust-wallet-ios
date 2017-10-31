@@ -58,7 +58,7 @@ class SendViewController: FormViewController {
                 button.addTarget(self, action: #selector(self.openReader), for: .touchUpInside)
 
                 cell.textField.textAlignment = .left
-                cell.textField.placeholder = "Ethereum " + NSLocalizedString("Send.AddressPlaceholder", value: "Address", comment: "")
+                cell.textField.placeholder = NSLocalizedString("send.recipientAddress", value: "Recipient Address", comment: "")
                 cell.textField.rightView = button
                 cell.textField.rightViewMode = .always
             }
