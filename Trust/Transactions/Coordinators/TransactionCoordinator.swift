@@ -14,7 +14,7 @@ class TransactionCoordinator: Coordinator {
 
     private let keystore: Keystore
     let storage: TransactionsStorage
-    lazy var transactionsViewController: TransactionsViewController = {
+    lazy var rootViewController: TransactionsViewController = {
         return self.makeTransactionsController(with: self.session.account)
     }()
 
@@ -108,7 +108,7 @@ class TransactionCoordinator: Coordinator {
     }
 
     @objc func didEnterForeground() {
-        transactionsViewController.fetch()
+        rootViewController.fetch()
     }
 
     @objc func dismiss() {

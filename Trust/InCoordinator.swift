@@ -45,7 +45,9 @@ class InCoordinator: Coordinator {
             )
         )
         coordinator.delegate = self
-        navigationController.viewControllers = [coordinator.rootViewController]
+        navigationController.viewControllers = [
+            coordinator.rootViewController,
+        ]
         navigationController.setNavigationBarHidden(false, animated: false)
         addCoordinator(coordinator)
 
