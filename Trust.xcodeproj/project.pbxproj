@@ -179,6 +179,8 @@
 		29F114F21FA7966300114A29 /* PrivateKeyRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114F11FA7966300114A29 /* PrivateKeyRule.swift */; };
 		29F114F41FA8117C00114A29 /* SendCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114F31FA8117C00114A29 /* SendCoordinator.swift */; };
 		29F114F61FA8147300114A29 /* RequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114F51FA8147300114A29 /* RequestCoordinator.swift */; };
+		29F114F81FA8165200114A29 /* SendCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114F71FA8165200114A29 /* SendCoordinatorTests.swift */; };
+		29F114FA1FA817A800114A29 /* RequestCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F114F91FA817A800114A29 /* RequestCoordinatorTests.swift */; };
 		29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB51F8298820036089F /* TransactionCoordinator.swift */; };
 		29FC0CB81F8299510036089F /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB71F8299510036089F /* Coordinator.swift */; };
 		29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC9BC51F830880000209CD /* MirgrationInitializer.swift */; };
@@ -393,6 +395,8 @@
 		29F114F11FA7966300114A29 /* PrivateKeyRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyRule.swift; sourceTree = "<group>"; };
 		29F114F31FA8117C00114A29 /* SendCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoordinator.swift; sourceTree = "<group>"; };
 		29F114F51FA8147300114A29 /* RequestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCoordinator.swift; sourceTree = "<group>"; };
+		29F114F71FA8165200114A29 /* SendCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoordinatorTests.swift; sourceTree = "<group>"; };
+		29F114F91FA817A800114A29 /* RequestCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCoordinatorTests.swift; sourceTree = "<group>"; };
 		29FC0CB51F8298820036089F /* TransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCoordinator.swift; sourceTree = "<group>"; };
 		29FC0CB71F8299510036089F /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		29FC9BC51F830880000209CD /* MirgrationInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirgrationInitializer.swift; sourceTree = "<group>"; };
@@ -1280,6 +1284,8 @@
 				29DBF2A41F9EB75E00327C60 /* BackupCoordinatorTests.swift */,
 				293E62721FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift */,
 				29F114E81FA3EC9E00114A29 /* InCoordinatorTests.swift */,
+				29F114F71FA8165200114A29 /* SendCoordinatorTests.swift */,
+				29F114F91FA817A800114A29 /* RequestCoordinatorTests.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1849,6 +1855,7 @@
 				2912CD101F6A830700C6CBE3 /* TrustTests.swift in Sources */,
 				29FF130D1F7626E800AFD326 /* FakeNavigationController.swift in Sources */,
 				299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */,
+				29F114F81FA8165200114A29 /* SendCoordinatorTests.swift in Sources */,
 				299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */,
 				29E14FD91F7F4D4E00185568 /* FakeTransactionsStorage.swift in Sources */,
 				29E14FD71F7F490000185568 /* Transaction.swift in Sources */,
@@ -1859,6 +1866,7 @@
 				29FC9BCC1F831860000209CD /* PaymentCoordinator.swift in Sources */,
 				290B2B6E1F92C3980053C83E /* UserDefaults.swift in Sources */,
 				29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */,
+				29F114FA1FA817A800114A29 /* RequestCoordinatorTests.swift in Sources */,
 				2977CAE01F7DEEB0009682A0 /* FakeEtherKeystore.swift in Sources */,
 				29DBF2A51F9EB75E00327C60 /* BackupCoordinatorTests.swift in Sources */,
 				29E14FD51F7F470C00185568 /* TransactionsStorageTests.swift in Sources */,
