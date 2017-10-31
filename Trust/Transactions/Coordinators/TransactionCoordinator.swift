@@ -30,7 +30,7 @@ class TransactionCoordinator: Coordinator {
     weak var delegate: TransactionCoordinatorDelegate?
 
     lazy var settingsCoordinator: SettingsCoordinator = {
-        return SettingsCoordinator(navigationController: self.navigationController)
+        return SettingsCoordinator()
     }()
 
     let session: WalletSession
@@ -65,6 +65,7 @@ class TransactionCoordinator: Coordinator {
     @objc func showSettings() {
         settingsCoordinator.start()
         settingsCoordinator.delegate = self
+        navigationController.present(settingsCoordinator.navigationController, animated: true, completion: nil)
     }
 
     func showTokens(for account: Account) {

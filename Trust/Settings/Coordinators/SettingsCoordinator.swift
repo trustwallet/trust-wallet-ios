@@ -16,20 +16,15 @@ class SettingsCoordinator: Coordinator {
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
     var coordinators: [Coordinator] = []
 
-    init(navigationController: UINavigationController) {
+    init(
+        navigationController: UINavigationController = NavigationController()
+    ) {
         self.navigationController = navigationController
+        self.navigationController.modalPresentationStyle = .formSheet
     }
 
     func start() {
-        let nav = NavigationController(
-            rootViewController: self.makeSettingsController()
-        )
-        nav.modalPresentationStyle = .formSheet
-        navigationController.present(
-            nav,
-            animated: true,
-            completion: nil
-        )
+        navigationController.viewControllers = [makeSettingsController()]
     }
 
     private func makeSettingsController() -> SettingsViewController {
@@ -45,10 +40,11 @@ class SettingsCoordinator: Coordinator {
     }
 
     @objc func export(in viewController: UIViewController) {
-        let coordinator = ExportCoordinator(presenterViewController: viewController)
+        let coordinator = ExportCoordinator()
         coordinator.start()
         coordinator.delegate = self
         addCoordinator(coordinator)
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 }
 
@@ -74,11 +70,11 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
 extension SettingsCoordinator: ExportCoordinatorDelegate {
     func didFinish(in coordinator: ExportCoordinator) {
         removeCoordinator(coordinator)
-        coordinator.presenterViewController.dismiss(animated: true, completion: nil)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
     }
 
     func didCancel(in coordinator: ExportCoordinator) {
         removeCoordinator(coordinator)
-        coordinator.presenterViewController.dismiss(animated: true, completion: nil)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
     }
 }

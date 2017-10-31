@@ -11,7 +11,7 @@ protocol ExportCoordinatorDelegate: class {
 
 class ExportCoordinator: Coordinator {
 
-    let presenterViewController: UIViewController
+    let navigationController: UINavigationController
     weak var delegate: ExportCoordinatorDelegate?
     let keystore = EtherKeystore()
     var coordinators: [Coordinator] = []
@@ -23,16 +23,15 @@ class ExportCoordinator: Coordinator {
         return controller
     }()
 
-    lazy var rootNavigationController: UINavigationController = {
-        return NavigationController(rootViewController: self.accountViewController)
-    }()
-
-    init(presenterViewController: UIViewController) {
-        self.presenterViewController = presenterViewController
+    init(
+        navigationController: UINavigationController = NavigationController()
+    ) {
+        self.navigationController = navigationController
+        self.navigationController.modalPresentationStyle = .formSheet
     }
 
     func start() {
-        presenterViewController.present(rootNavigationController, animated: true, completion: nil)
+        navigationController.viewControllers = [accountViewController]
     }
 
     @objc func dismiss() {
@@ -45,7 +44,7 @@ class ExportCoordinator: Coordinator {
 
     func export(for account: Account) {
         let coordinator = BackupCoordinator(
-            navigationController: rootNavigationController,
+            navigationController: navigationController,
             account: account
         )
         addCoordinator(coordinator)
