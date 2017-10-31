@@ -105,6 +105,7 @@ class TransactionCoordinator: Coordinator {
         )
         coordinator.delegate = self
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+        coordinator.start()
         addCoordinator(coordinator)
     }
 
@@ -184,10 +185,6 @@ extension TransactionCoordinator: PaymentCoordinatorDelegate {
     func didCancel(in coordinator: PaymentCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
-    }
-
-    func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: PaymentCoordinator) {
-        dataCoordinator.fetchTransaction(hash: transaction.id)
     }
 }
 
