@@ -201,6 +201,7 @@ class ImportWalletViewController: FormViewController {
         let types = ["public.text", "public.content", "public.item", "public.data"]
         let controller = UIDocumentPickerViewController(documentTypes: types, in: .import)
         controller.delegate = self
+        controller.modalPresentationStyle = .formSheet
         present(controller, animated: true, completion: nil)
     }
 }
