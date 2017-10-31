@@ -492,7 +492,6 @@
 			children = (
 				29AD8A0A1F93FBB7008E10E7 /* Foundation */,
 				290B2B511F8F4F840053C83E /* Localization */,
-				29B9345A1F88457C009FCABB /* Authentication */,
 				29FC9BC31F830880000209CD /* Core */,
 				291ED0901F6FA5C800E7E93A /* Transfer */,
 				2996F14E1F6CA802005C33AE /* Export */,
@@ -752,15 +751,6 @@
 				29282B571F7636840067F88D /* GetTokensRequest.swift */,
 			);
 			path = Ethplorer;
-			sourceTree = "<group>";
-		};
-		293248821F88CCC6008A9818 /* Types */ = {
-			isa = PBXGroup;
-			children = (
-				293248831F88CCD2008A9818 /* SplashState.swift */,
-				293248851F88CCE6008A9818 /* SplashError.swift */,
-			);
-			path = Types;
 			sourceTree = "<group>";
 		};
 		293248881F88D586008A9818 /* Types */ = {
@@ -1126,23 +1116,6 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
-		29B9345A1F88457C009FCABB /* Authentication */ = {
-			isa = PBXGroup;
-			children = (
-				293248821F88CCC6008A9818 /* Types */,
-				29B9345B1F884584009FCABB /* ViewControllers */,
-			);
-			path = Authentication;
-			sourceTree = "<group>";
-		};
-		29B9345B1F884584009FCABB /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				29B9345C1F88459C009FCABB /* SplashViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
 		29BE3FCC1F706D7100F6BFC2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1221,6 +1194,7 @@
 		29FC9BC71F83144D000209CD /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				29B9345C1F88459C009FCABB /* SplashViewController.swift */,
 				2996F1451F6C98B3005C33AE /* SettingsViewController.swift */,
 			);
 			path = ViewControllers;
@@ -1229,6 +1203,8 @@
 		29FC9BC81F83145C000209CD /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				293248831F88CCD2008A9818 /* SplashState.swift */,
+				293248851F88CCE6008A9818 /* SplashError.swift */,
 				296AF9A41F736BA20058AF78 /* Config.swift */,
 				296AF9A61F736EC70058AF78 /* RPCServers.swift */,
 				2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */,
