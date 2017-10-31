@@ -14,9 +14,8 @@ class TransactionCoordinator: Coordinator {
 
     private let keystore: Keystore
     let storage: TransactionsStorage
-    lazy var rootViewController: TransactionsViewController = {
-        let controller = self.makeTransactionsController(with: self.session.account)
-        return controller
+    lazy var transactionsViewController: TransactionsViewController = {
+        return self.makeTransactionsController(with: self.session.account)
     }()
 
     lazy var dataCoordinator: TransactionDataCoordinator = {
@@ -28,10 +27,6 @@ class TransactionCoordinator: Coordinator {
     }()
 
     weak var delegate: TransactionCoordinatorDelegate?
-
-    lazy var settingsCoordinator: SettingsCoordinator = {
-        return SettingsCoordinator()
-    }()
 
     let session: WalletSession
     let navigationController: UINavigationController
@@ -63,9 +58,11 @@ class TransactionCoordinator: Coordinator {
     }
 
     @objc func showSettings() {
-        settingsCoordinator.start()
-        settingsCoordinator.delegate = self
-        navigationController.present(settingsCoordinator.navigationController, animated: true, completion: nil)
+        let coordinator = SettingsCoordinator()
+        coordinator.start()
+        coordinator.delegate = self
+        addCoordinator(coordinator)
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
     func showTokens(for account: Account) {
@@ -111,7 +108,7 @@ class TransactionCoordinator: Coordinator {
     }
 
     @objc func didEnterForeground() {
-        rootViewController.fetch()
+        transactionsViewController.fetch()
     }
 
     @objc func dismiss() {
@@ -143,6 +140,7 @@ class TransactionCoordinator: Coordinator {
 
 extension TransactionCoordinator: SettingsCoordinatorDelegate {
     func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator) {
+        removeCoordinator(coordinator)
         switch action {
         case .RPCServer:
             restart(for: session.account)
@@ -156,6 +154,7 @@ extension TransactionCoordinator: SettingsCoordinatorDelegate {
     }
 
     func didCancel(in coordinator: SettingsCoordinator) {
+        removeCoordinator(coordinator)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
     }
 }

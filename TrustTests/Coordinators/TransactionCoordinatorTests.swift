@@ -26,6 +26,7 @@ class TransactionCoordinatorTests: XCTestCase {
 
         coordinator.showSettings()
 
+        XCTAssertTrue(coordinator.coordinators.first is SettingsCoordinator)
         XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is SettingsViewController)
     }
 
@@ -40,6 +41,7 @@ class TransactionCoordinatorTests: XCTestCase {
 
         let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
 
+        XCTAssertTrue(coordinator.coordinators.first is PaymentCoordinator)
         XCTAssertTrue(controller is SendViewController)
     }
 
@@ -54,6 +56,7 @@ class TransactionCoordinatorTests: XCTestCase {
 
         let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
 
+        XCTAssertTrue(coordinator.coordinators.first is PaymentCoordinator)
         XCTAssertTrue(controller is RequestViewController)
     }
 
@@ -66,6 +69,7 @@ class TransactionCoordinatorTests: XCTestCase {
 
         coordinator.showAccounts()
 
+        XCTAssertTrue(coordinator.coordinators.first is AccountsCoordinator)
         XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is AccountsViewController)
     }
 }
