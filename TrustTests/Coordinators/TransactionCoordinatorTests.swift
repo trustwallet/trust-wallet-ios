@@ -9,7 +9,8 @@ class TransactionCoordinatorTests: XCTestCase {
         let coordinator = TransactionCoordinator(
             session: .make(),
             rootNavigationController: FakeNavigationController(),
-            storage: FakeTransactionsStorage()
+            storage: FakeTransactionsStorage(),
+            keystore: FakeEtherKeystore()
         )
 
         coordinator.showTokens(for: .make())
@@ -21,7 +22,8 @@ class TransactionCoordinatorTests: XCTestCase {
         let coordinator = TransactionCoordinator(
             session: .make(),
             rootNavigationController: FakeNavigationController(),
-            storage: FakeTransactionsStorage()
+            storage: FakeTransactionsStorage(),
+            keystore: FakeEtherKeystore()
         )
 
         coordinator.showSettings()
@@ -34,7 +36,8 @@ class TransactionCoordinatorTests: XCTestCase {
         let coordinator = TransactionCoordinator(
             session: .make(),
             rootNavigationController: FakeNavigationController(),
-            storage: FakeTransactionsStorage()
+            storage: FakeTransactionsStorage(),
+            keystore: FakeEtherKeystore()
         )
 
         coordinator.showPaymentFlow(for: .send(type: .ether(destination: .none)), session: .make())
@@ -49,7 +52,8 @@ class TransactionCoordinatorTests: XCTestCase {
         let coordinator = TransactionCoordinator(
             session: .make(),
             rootNavigationController: FakeNavigationController(),
-            storage: FakeTransactionsStorage()
+            storage: FakeTransactionsStorage(),
+            keystore: FakeEtherKeystore()
         )
 
         coordinator.showPaymentFlow(for: .request, session: .make())
@@ -64,7 +68,8 @@ class TransactionCoordinatorTests: XCTestCase {
         let coordinator = TransactionCoordinator(
             session: .make(),
             rootNavigationController: FakeNavigationController(),
-            storage: FakeTransactionsStorage()
+            storage: FakeTransactionsStorage(),
+            keystore: FakeEtherKeystore()
         )
 
         coordinator.showAccounts()
