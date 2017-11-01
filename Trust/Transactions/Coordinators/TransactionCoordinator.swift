@@ -35,10 +35,11 @@ class TransactionCoordinator: Coordinator {
     init(
         session: WalletSession,
         rootNavigationController: UINavigationController,
-        storage: TransactionsStorage
+        storage: TransactionsStorage,
+        keystore: Keystore
     ) {
         self.session = session
-        self.keystore = EtherKeystore()
+        self.keystore = keystore
         self.navigationController = rootNavigationController
         self.storage = storage
 

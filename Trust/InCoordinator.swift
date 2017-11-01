@@ -42,7 +42,8 @@ class InCoordinator: Coordinator {
             storage: TransactionsStorage(
                 current: account,
                 chainID: config.chainID
-            )
+            ),
+            keystore: keystore
         )
         coordinator.delegate = self
         navigationController.viewControllers = [
