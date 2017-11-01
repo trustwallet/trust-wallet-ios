@@ -67,20 +67,15 @@ class TransactionCoordinator: Coordinator {
     }
 
     func showTokens(for account: Account) {
-        let controller = TokensViewController(account: account)
-        controller.delegate = self
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            let nav = UINavigationController(rootViewController: controller)
-            nav.modalPresentationStyle = .formSheet
-            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(
-                barButtonSystemItem: .cancel,
-                target: self,
-                action: #selector(dismiss)
-            )
-            navigationController.present(nav, animated: true, completion: nil)
-        } else {
-            navigationController.pushViewController(controller, animated: true)
-        }
+        let nav = NavigationController()
+        let coordinator = TokensCoordinator(
+            navigationController: nav,
+            session: session
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
     func showTransaction(_ transaction: Transaction) {
@@ -214,11 +209,9 @@ extension TransactionCoordinator: AccountsCoordinatorDelegate {
     }
 }
 
-extension TransactionCoordinator: TokensViewControllerDelegate {
-    func didSelect(token: Token, in viewController: UIViewController) {
-        showPaymentFlow(for: .send(
-            type: .token(token)),
-            session: session
-        )
+extension TransactionCoordinator: TokensCoordinatorDelegate {
+    func didCancel(in coordinator: TokensCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 }

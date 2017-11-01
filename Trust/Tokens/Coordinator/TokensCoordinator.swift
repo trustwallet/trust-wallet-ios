@@ -10,16 +10,17 @@ protocol TokensCoordinatorDelegate: class {
 class TokensCoordinator: Coordinator {
 
     let navigationController: UINavigationController
-    let account: Account
+    let session: WalletSession
     var coordinators: [Coordinator] = []
     weak var delegate: TokensCoordinatorDelegate?
 
     init(
         navigationController: UINavigationController,
-        account: Account
+        session: WalletSession
     ) {
         self.navigationController = navigationController
-        self.account = account
+        self.navigationController.modalPresentationStyle = .formSheet
+        self.session = session
     }
 
     func start() {
@@ -27,30 +28,41 @@ class TokensCoordinator: Coordinator {
     }
 
     func showTokens() {
-        let controller = TokensViewController(account: account)
+        let controller = TokensViewController(account: session.account)
         controller.delegate = self
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            let nav = UINavigationController(rootViewController: controller)
-            nav.modalPresentationStyle = .formSheet
-            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(
-                barButtonSystemItem: .cancel,
-                target: self,
-                action: #selector(dismiss)
-            )
-            navigationController.present(nav, animated: true, completion: nil)
-        } else {
-            navigationController.pushViewController(controller, animated: true)
-        }
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(dismiss)
+        )
+        navigationController.viewControllers = [controller]
     }
 
     @objc func dismiss() {
-        navigationController.dismiss(animated: true, completion: nil)
         delegate?.didCancel(in: self)
+    }
+
+    func showPaymentFlow(for type: PaymentFlow, session: WalletSession) {
+        let coordinator = PaymentCoordinator(
+            flow: type,
+            session: session
+        )
+        coordinator.delegate = self
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+        coordinator.start()
+        addCoordinator(coordinator)
     }
 }
 
 extension TokensCoordinator: TokensViewControllerDelegate {
     func didSelect(token: Token, in viewController: UIViewController) {
-        //
+        showPaymentFlow(for: .send(type: .token(token)), session: session)
+    }
+}
+
+extension TokensCoordinator: PaymentCoordinatorDelegate {
+    func didCancel(in coordinator: PaymentCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 }

@@ -85,6 +85,7 @@
 		294FE5661F72442D00754F31 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294FE5651F72442D00754F31 /* Address.swift */; };
 		295247DF1F8326EF007FDC31 /* AccountViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295247DE1F8326EF007FDC31 /* AccountViewCell.swift */; };
 		295247E71F835BA0007FDC31 /* InfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295247E61F835BA0007FDC31 /* InfoHeaderView.swift */; };
+		295996031FAA865800DB66A8 /* TokensCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295996021FAA865800DB66A8 /* TokensCoordinatorTests.swift */; };
 		295A59381F71C1B90092F0FC /* AccountsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A59371F71C1B90092F0FC /* AccountsCoordinator.swift */; };
 		296105931FA2AA2100292494 /* SignTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296105921FA2AA2100292494 /* SignTransaction.swift */; };
 		296105951FA2DEF000292494 /* TransactionDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296105941FA2DEF000292494 /* TransactionDirection.swift */; };
@@ -299,6 +300,7 @@
 		294FE5651F72442D00754F31 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		295247DE1F8326EF007FDC31 /* AccountViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewCell.swift; sourceTree = "<group>"; };
 		295247E61F835BA0007FDC31 /* InfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderView.swift; sourceTree = "<group>"; };
+		295996021FAA865800DB66A8 /* TokensCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCoordinatorTests.swift; sourceTree = "<group>"; };
 		295A59371F71C1B90092F0FC /* AccountsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsCoordinator.swift; sourceTree = "<group>"; };
 		296105921FA2AA2100292494 /* SignTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignTransaction.swift; sourceTree = "<group>"; };
 		296105941FA2DEF000292494 /* TransactionDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDirection.swift; sourceTree = "<group>"; };
@@ -1262,6 +1264,7 @@
 				29F114E81FA3EC9E00114A29 /* InCoordinatorTests.swift */,
 				29F114F71FA8165200114A29 /* SendCoordinatorTests.swift */,
 				29F114F91FA817A800114A29 /* RequestCoordinatorTests.swift */,
+				295996021FAA865800DB66A8 /* TokensCoordinatorTests.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1844,6 +1847,7 @@
 				29FF13011F75EAD900AFD326 /* FakeKeystore.swift in Sources */,
 				29FC9BCC1F831860000209CD /* PaymentCoordinator.swift in Sources */,
 				290B2B6E1F92C3980053C83E /* UserDefaults.swift in Sources */,
+				295996031FAA865800DB66A8 /* TokensCoordinatorTests.swift in Sources */,
 				29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */,
 				29F114FA1FA817A800114A29 /* RequestCoordinatorTests.swift in Sources */,
 				2977CAE01F7DEEB0009682A0 /* FakeEtherKeystore.swift in Sources */,

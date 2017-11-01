@@ -15,7 +15,8 @@ class TransactionCoordinatorTests: XCTestCase {
 
         coordinator.showTokens(for: .make())
 
-        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is TokensViewController)
+        XCTAssertTrue(coordinator.coordinators.first is TokensCoordinator)
+        XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is TokensViewController)
     }
 
     func testShowSettings() {
