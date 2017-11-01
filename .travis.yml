@@ -20,3 +20,4 @@ script:
 
 notifications:
   slack: trust-wallet:33Vj3pGpKoBMTBAHTB8dF79n
+  email: false
