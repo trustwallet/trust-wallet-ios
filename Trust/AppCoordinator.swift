@@ -36,7 +36,7 @@ class AppCoordinator: NSObject, Coordinator {
         performMigration()
         inializers()
         handleNotifications()
-
+        applyStyle()
         resetToWelcomeScreen()
 
         if keystore.hasAccounts {

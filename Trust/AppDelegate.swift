@@ -6,14 +6,11 @@ import Lokalise
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
-    var window: UIWindow?
+    private let window: UIWindow? = UIWindow()
     var coordinator: AppCoordinator!
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let window = UIWindow()
-        self.window = window
-        coordinator = AppCoordinator(window: window)
-        window.makeKeyAndVisible()
-        applyStyle()
+        coordinator = AppCoordinator(window: window!)
+        window?.makeKeyAndVisible()
         coordinator.start()
         return true
     }
