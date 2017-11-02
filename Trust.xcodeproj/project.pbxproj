@@ -86,6 +86,10 @@
 		295247DF1F8326EF007FDC31 /* AccountViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295247DE1F8326EF007FDC31 /* AccountViewCell.swift */; };
 		295247E71F835BA0007FDC31 /* InfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295247E61F835BA0007FDC31 /* InfoHeaderView.swift */; };
 		295996031FAA865800DB66A8 /* TokensCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295996021FAA865800DB66A8 /* TokensCoordinatorTests.swift */; };
+		2959960C1FAB03EC00DB66A8 /* CoinbaseBuyWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2959960B1FAB03EC00DB66A8 /* CoinbaseBuyWidget.swift */; };
+		2959960E1FAB05C200DB66A8 /* TransactionsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2959960D1FAB05C100DB66A8 /* TransactionsEmptyView.swift */; };
+		295996121FAB067600DB66A8 /* DepositCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295996111FAB067600DB66A8 /* DepositCoordinator.swift */; };
+		295996141FAB09A200DB66A8 /* DepositCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295996131FAB09A200DB66A8 /* DepositCoordinatorTests.swift */; };
 		295A59381F71C1B90092F0FC /* AccountsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A59371F71C1B90092F0FC /* AccountsCoordinator.swift */; };
 		296105931FA2AA2100292494 /* SignTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296105921FA2AA2100292494 /* SignTransaction.swift */; };
 		296105951FA2DEF000292494 /* TransactionDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296105941FA2DEF000292494 /* TransactionDirection.swift */; };
@@ -301,6 +305,10 @@
 		295247DE1F8326EF007FDC31 /* AccountViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewCell.swift; sourceTree = "<group>"; };
 		295247E61F835BA0007FDC31 /* InfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderView.swift; sourceTree = "<group>"; };
 		295996021FAA865800DB66A8 /* TokensCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensCoordinatorTests.swift; sourceTree = "<group>"; };
+		2959960B1FAB03EC00DB66A8 /* CoinbaseBuyWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinbaseBuyWidget.swift; sourceTree = "<group>"; };
+		2959960D1FAB05C100DB66A8 /* TransactionsEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsEmptyView.swift; sourceTree = "<group>"; };
+		295996111FAB067600DB66A8 /* DepositCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositCoordinator.swift; sourceTree = "<group>"; };
+		295996131FAB09A200DB66A8 /* DepositCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositCoordinatorTests.swift; sourceTree = "<group>"; };
 		295A59371F71C1B90092F0FC /* AccountsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsCoordinator.swift; sourceTree = "<group>"; };
 		296105921FA2AA2100292494 /* SignTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignTransaction.swift; sourceTree = "<group>"; };
 		296105941FA2DEF000292494 /* TransactionDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDirection.swift; sourceTree = "<group>"; };
@@ -492,6 +500,7 @@
 		2912CCF71F6A830700C6CBE3 /* Trust */ = {
 			isa = PBXGroup;
 			children = (
+				2959960F1FAB065700DB66A8 /* Deposit */,
 				29AD8A0A1F93FBB7008E10E7 /* Foundation */,
 				290B2B511F8F4F840053C83E /* Localization */,
 				29FC9BC31F830880000209CD /* Core */,
@@ -701,6 +710,7 @@
 		291F52AA1F6B805400B369AB /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				295996041FAAFC9400DB66A8 /* Coinbase */,
 				291794F51F95DBE900539A30 /* Web3Swift */,
 				291F52AB1F6B805F00B369AB /* BigInt */,
 			);
@@ -773,6 +783,30 @@
 				295247DE1F8326EF007FDC31 /* AccountViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		295996041FAAFC9400DB66A8 /* Coinbase */ = {
+			isa = PBXGroup;
+			children = (
+				2959960B1FAB03EC00DB66A8 /* CoinbaseBuyWidget.swift */,
+			);
+			path = Coinbase;
+			sourceTree = "<group>";
+		};
+		2959960F1FAB065700DB66A8 /* Deposit */ = {
+			isa = PBXGroup;
+			children = (
+				295996101FAB066500DB66A8 /* Coordinators */,
+			);
+			path = Deposit;
+			sourceTree = "<group>";
+		};
+		295996101FAB066500DB66A8 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				295996111FAB067600DB66A8 /* DepositCoordinator.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		296105911FA2A92700292494 /* Views */ = {
@@ -935,6 +969,7 @@
 				29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */,
 				293B8B441F70A20200356286 /* TransactionViewCell.swift */,
 				290B2B641F91A4880053C83E /* TransactionsFooterView.swift */,
+				2959960D1FAB05C100DB66A8 /* TransactionsEmptyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1265,6 +1300,7 @@
 				29F114F71FA8165200114A29 /* SendCoordinatorTests.swift */,
 				29F114F91FA817A800114A29 /* RequestCoordinatorTests.swift */,
 				295996021FAA865800DB66A8 /* TokensCoordinatorTests.swift */,
+				295996131FAB09A200DB66A8 /* DepositCoordinatorTests.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1670,6 +1706,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				295996121FAB067600DB66A8 /* DepositCoordinator.swift in Sources */,
 				29AD8A041F93D6CD008E10E7 /* Constants.swift in Sources */,
 				29FF12FE1F75EA3F00AFD326 /* Keystore.swift in Sources */,
 				2963B6B11F9891F5003063C1 /* UIButton.swift in Sources */,
@@ -1735,6 +1772,7 @@
 				2963B6BB1F9A899A003063C1 /* CoinTickerID.swift in Sources */,
 				296421991F70C1F900EB363B /* EmptyView.swift in Sources */,
 				2963B6B61F9A7E49003063C1 /* CoinMarketClient.swift in Sources */,
+				2959960C1FAB03EC00DB66A8 /* CoinbaseBuyWidget.swift in Sources */,
 				291A1B671F98092F00ADEC80 /* ConfirmPaymentViewController.swift in Sources */,
 				291EC9DF1F7053C50004EDD0 /* NavigationController.swift in Sources */,
 				291795011F95F5E200539A30 /* GetBalance.swift in Sources */,
@@ -1812,6 +1850,7 @@
 				29B6AED11F7C881D00EC6DE3 /* TransactionCost.swift in Sources */,
 				296106CA1F764AB60006164B /* TokensDataStore.swift in Sources */,
 				291A1B651F974E8600ADEC80 /* WalletEntryPoint.swift in Sources */,
+				2959960E1FAB05C200DB66A8 /* TransactionsEmptyView.swift in Sources */,
 				29BB94931F6FC380009B09CC /* BalanceViewModel.swift in Sources */,
 				292F75A91F88865A00585F8E /* TouchRegistrar.swift in Sources */,
 				29D03F1D1F712183006E548C /* Button.swift in Sources */,
@@ -1855,6 +1894,7 @@
 				29E14FD51F7F470C00185568 /* TransactionsStorageTests.swift in Sources */,
 				293E62731FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift in Sources */,
 				29FF130A1F75F67200AFD326 /* Address.swift in Sources */,
+				295996141FAB09A200DB66A8 /* DepositCoordinatorTests.swift in Sources */,
 				29F114E91FA3EC9E00114A29 /* InCoordinatorTests.swift in Sources */,
 				2981F4731F8303E600CA6590 /* TransactionCoordinatorTests.swift in Sources */,
 			);

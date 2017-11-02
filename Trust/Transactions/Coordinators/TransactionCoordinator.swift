@@ -172,6 +172,14 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
         showTokens(for: session.account)
     }
 
+    func didPressDeposit(for account: Account, in viewController: TransactionsViewController) {
+        let coordinator = DepositCoordinator(
+            navigationController: navigationController,
+            account: account
+        )
+        coordinator.start()
+    }
+
     func reset() {
         delegate?.didCancel(in: self)
     }

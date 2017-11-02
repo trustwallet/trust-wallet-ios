@@ -11,6 +11,7 @@ protocol TransactionsViewControllerDelegate: class {
     func didPressRequest(in viewController: TransactionsViewController)
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController)
     func didPressTokens(in viewController: TransactionsViewController)
+    func didPressDeposit(for account: Account, in viewController: TransactionsViewController)
 }
 
 class TransactionsViewController: UIViewController {
@@ -90,9 +91,11 @@ class TransactionsViewController: UIViewController {
 
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
-        emptyView = EmptyView(
-            title: NSLocalizedString("Transactions.NoTransactions", value: "No Transactions Yet!", comment: ""),
-            insets: insets
+        emptyView = TransactionsEmptyView(
+            insets: insets,
+            onDeposit: { [unowned self] in
+                self.showDeposit()
+            }
         )
 
         navigationItem.titleView = titleView
@@ -134,6 +137,10 @@ class TransactionsViewController: UIViewController {
 
     @objc func showTokens() {
         delegate?.didPressTokens(in: self)
+    }
+
+    func showDeposit() {
+        delegate?.didPressDeposit(for: account, in: self)
     }
 
     func configure(viewModel: TransactionsViewModel) {
