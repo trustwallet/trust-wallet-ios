@@ -2,7 +2,6 @@
 
 import UIKit
 import Eureka
-import SafariServices
 import VENTouchLock
 import StoreKit
 
@@ -203,10 +202,5 @@ class SettingsViewController: FormViewController {
 
     func run(action: SettingsAction) {
         delegate?.didAction(action: action, in: self)
-    }
-
-    func openURL(_ url: URL) {
-        let controller = SFSafariViewController(url: url)
-        present(controller, animated: true, completion: nil)
     }
 }

@@ -4,6 +4,7 @@ import Foundation
 import UIKit
 import Result
 import MBProgressHUD
+import SafariServices
 
 enum ConfirmationError: LocalizedError {
     case cancel
@@ -46,5 +47,10 @@ extension UIViewController {
 
     func hideLoading(animated: Bool = true) {
         MBProgressHUD.hide(for: view, animated: animated)
+    }
+
+    func openURL(_ url: URL) {
+        let controller = SFSafariViewController(url: url)
+        present(controller, animated: true, completion: nil)
     }
 }
