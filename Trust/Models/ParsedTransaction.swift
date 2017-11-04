@@ -119,7 +119,8 @@ extension Transaction {
             gasUsed: transaction.gasUsed,
             confirmations: Int64(transaction.confirmations) ?? 0,
             nonce: transaction.nonce,
-            date: NSDate(timeIntervalSince1970: TimeInterval(transaction.timestamp) ?? 0) as Date
+            date: NSDate(timeIntervalSince1970: TimeInterval(transaction.timestamp) ?? 0) as Date,
+            actionJSON: ""
         )
     }
 }
