@@ -9,7 +9,7 @@ enum TransactionAction {
 
 extension TransactionAction {
     static func from(dict: [String: AnyObject]) -> TransactionAction {
-        guard let type = dict["type"] as? String else { return .unknown  }
+        guard let type = dict["type"] as? String else { return .unknown }
         let actionType = TransactionActionType(string: type)
         switch actionType {
         case .tokenTransfer:

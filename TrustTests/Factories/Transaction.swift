@@ -19,7 +19,8 @@ extension Transaction {
         gasUsed: String = "0x1",
         confirmations: Int64 = 64,
         nonce: String = "0",
-        date: Date = Date()
+        date: Date = Date(),
+        actionJSON: String = ""
     ) -> Transaction {
         return Transaction(
             id: id,
@@ -36,7 +37,8 @@ extension Transaction {
             gasUsed: gasUsed,
             confirmations: confirmations,
             nonce: nonce,
-            date: date
+            date: date,
+            actionJSON: actionJSON
         )
     }
 }
