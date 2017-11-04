@@ -37,9 +37,7 @@ struct Config {
         let urlString: String = {
             switch server {
             case .main: return "https://mainnet.infura.io/llyrtzQ3YhkdESt2Fzrk"
-            case .ropsten: return "https://ropsten.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .kovan: return "https://kovan.infura.io/llyrtzQ3YhkdESt2Fzrk"
-            case .rinkeby: return "https://rinkeby.infura.io/llyrtzQ3YhkdESt2Fzrk"
             }
         }()
         return URL(string: urlString)!
@@ -49,9 +47,7 @@ struct Config {
         let urlString: String = {
             switch server {
             case .main: return "https://api.etherscan.io/api"
-            case .ropsten: return "https://ropsten.etherscan.io/api"
             case .kovan: return "https://kovan.etherscan.io/api"
-            case .rinkeby: return "https://rinkeby.etherscan.io/api"
             }
         }()
         return URL(string: urlString)!
@@ -61,9 +57,7 @@ struct Config {
         let urlString: String = {
             switch server {
             case .main: return "https://etherscan.io"
-            case .ropsten: return "https://ropsten.etherscan.io"
             case .kovan: return "https://kovan.etherscan.io"
-            case .rinkeby: return "https://rinkeby.etherscan.io"
             }
         }()
         return URL(string: urlString)!

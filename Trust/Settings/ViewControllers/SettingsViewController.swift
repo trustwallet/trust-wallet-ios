@@ -56,9 +56,7 @@ class SettingsViewController: FormViewController {
                 $0.title = NSLocalizedString("Settings.RPCServer", value: "RPC Server", comment: "")
                 $0.options = [
                     RPCServer.main.name,
-                    RPCServer.ropsten.name,
                     RPCServer.kovan.name,
-                    RPCServer.rinkeby.name,
                 ]
                 $0.value = RPCServer(chainID: config.chainID).name
             }.onChange { row in
