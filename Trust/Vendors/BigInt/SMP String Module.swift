@@ -25,7 +25,7 @@ private func convert(number: String, fromBase: Int, toBase: Int) -> String
 	if number[0] == "-"
 	{
 		res = "-"
-		number = number[1..<number.characters.count]
+		number = number[1..<number.count]
 	}
 
 	var sum = BInt(0)
@@ -140,7 +140,7 @@ private func digitsToString(_ digits: Digits) -> String
 
 		var paddingZeros = String(
 			repeating: "0",
-			count: DigitZeros - str.characters.count
+			count: DigitZeros - str.count
 		)
 
 		paddingZeros.append(str)

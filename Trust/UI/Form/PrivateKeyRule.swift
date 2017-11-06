@@ -14,7 +14,7 @@ public struct PrivateKeyRule<T: Equatable>: RuleType {
 
     public func isValid(value: T?) -> ValidationError? {
         if let str = value as? String {
-            return (str.characters.count != 64) ? validationError : nil
+            return (str.count != 64) ? validationError : nil
         }
         return value != nil ? nil : validationError
     }
