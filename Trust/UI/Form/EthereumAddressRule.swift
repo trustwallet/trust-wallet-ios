@@ -14,7 +14,7 @@ public struct EthereumAddressRule<T: Equatable>: RuleType {
 
     public func isValid(value: T?) -> ValidationError? {
         if let str = value as? String {
-            return (str.characters.count != 42) ? validationError : nil
+            return (str.count != 42) ? validationError : nil
         }
         return value != nil ? nil : validationError
     }
