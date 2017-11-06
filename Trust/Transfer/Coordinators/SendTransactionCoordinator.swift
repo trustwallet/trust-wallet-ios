@@ -29,7 +29,7 @@ class SendTransactionCoordinator {
         configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
-        let amountDouble = BDouble(floatLiteral: value) * BDouble(integerLiteral: EthereumUnit.ether.rawValue)
+        let amountDouble = BDouble(floatLiteral: value) * BDouble(Double(EthereumUnit.ether.rawValue) ?? 0)
         let amount = GethBigInt.from(double: amountDouble)
 
         let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: session.account.address.address)))

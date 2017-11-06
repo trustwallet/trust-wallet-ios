@@ -6,6 +6,7 @@ import JSONRPCKit
 import APIKit
 import RealmSwift
 import Result
+import Moya
 
 enum TransactionError: Error {
     case failedToFetch
@@ -28,6 +29,8 @@ class TransactionDataCoordinator {
 
     weak var delegate: TransactionDataCoordinatorDelegate?
 
+    private let provider = MoyaProvider<TrustService>()
+
     init(
         account: Account,
         storage: TransactionsStorage
@@ -48,43 +51,31 @@ class TransactionDataCoordinator {
     }
 
     @objc func fetchTransactions() {
-        let startBlock: String = {
-            guard let transction = storage.objects.first else { return "0" }
-            return String(Int(transction.blockNumber) ?? 0 - 2000)
+        let startBlock: Int = {
+            guard let transction = storage.objects.first else { return 0 }
+            return Int(transction.blockNumber) ?? 0 - 2000
         }()
 
-        let request = FetchTransactionsRequest(address: account.address.address, startBlock: startBlock)
-        Session.send(request) { [weak self] result in
-            guard let `self` = self else { return }
-            switch result {
-            case .success(let response):
+        provider.request(.transactions(address: account.address.address, startBlock: startBlock)) { result in
+            guard  case .success(let response) = result else { return }
+            do {
+                let transactions = try response.map(RawTransactionResponse.self).docs
                 let chainID = self.config.chainID
-                let transactions: [Transaction] = response.map { .from(
+                let transactions2: [Transaction] = transactions.map { .from(
                         chainID: chainID,
-                        owner: self.account.address, transaction: $0
+                        owner: self.account.address,
+                        transaction: $0
                     )
                 }
-                self.update(items: transactions)
-            case .failure(let error):
-                self.handleError(error: error)
+                self.update(items: transactions2)
+            } catch {
+                NSLog("error \(error)")
             }
         }
     }
 
     func fetchPendingTransactions() {
-        Session.send(EtherServiceRequest(batch: BatchFactory().create(GetBlockByNumberRequest(block: "pending")))) { [weak self] result in
-            guard let `self` = self else { return }
-            switch result {
-            case .success(let block):
-                for item in block.transactions {
-                    if item.to == self.account.address.address || item.from == self.account.address.address {
-                        self.update(chainID: self.config.chainID, owner: self.account.address, items: [item])
-                    }
-                }
-            case .failure(let error):
-                self.handleError(error: error)
-            }
-        }
+        //Implement fetching pending transactions
     }
 
     func fetchTransaction(hash: String) {
@@ -97,11 +88,6 @@ class TransactionDataCoordinator {
 
     @objc func fetchLatest() {
         fetchTransactions()
-    }
-
-    func update(chainID: Int, owner: Address, items: [ParsedTransaction]) {
-        let transactionItems: [Transaction] = items.map { .from(chainID: chainID, owner: owner, transaction: $0) }
-        update(items: transactionItems)
     }
 
     func update(items: [Transaction]) {
