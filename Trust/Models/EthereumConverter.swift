@@ -13,7 +13,7 @@ struct EthereumConverter {
         //TODO: Hack. Implement better solution
 
         let first = Double(value.dec)!
-        let second = Double(to.rawValue)
+        let second = Double(to.rawValue) ?? 0
         let third = first / second
 
         let number = NSNumber(value: third)

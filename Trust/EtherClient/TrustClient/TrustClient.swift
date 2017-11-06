@@ -4,7 +4,7 @@ import Foundation
 import Moya
 
 enum TrustService {
-    case transactions(address: String)
+    case transactions(address: String, startBlock: Int)
 }
 
 extension TrustService: TargetType {
@@ -26,8 +26,8 @@ extension TrustService: TargetType {
 
     var task: Task {
         switch self {
-        case .transactions(let address):
-            return .requestParameters(parameters: ["address": address], encoding: URLEncoding())
+        case .transactions(let address, let startBlock):
+            return .requestParameters(parameters: ["address": address, "startBlock": startBlock], encoding: URLEncoding())
         }
     }
 

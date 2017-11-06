@@ -53,7 +53,7 @@ class TransactionViewController: UIViewController {
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(title: "Transaction #", subTitle: transaction.to),
             TransactionAppearance.item(title: "Transaction time", subTitle: viewModel.createdAt),
-            TransactionAppearance.item(title: "Block #", subTitle: transaction.blockNumber),
+            TransactionAppearance.item(title: "Block #", subTitle: String(transaction.blockNumber)),
             moreDetails(),
         ]
 
