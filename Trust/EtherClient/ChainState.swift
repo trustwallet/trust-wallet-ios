@@ -24,14 +24,14 @@ class ChainState {
     }
     let defaults: UserDefaults
 
-    var updateTransactionsTimer: Timer?
+    var updateLatestBlock: Timer?
 
     init(
-        config: Config
+        config: Config = Config()
     ) {
         self.config = config
         self.defaults = config.defaults
-        self.updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(fetch), userInfo: nil, repeats: true)
+        self.updateLatestBlock = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(fetch), userInfo: nil, repeats: true)
     }
 
     func start() {
@@ -39,8 +39,8 @@ class ChainState {
     }
 
     func stop() {
-        updateTransactionsTimer?.invalidate()
-        updateTransactionsTimer = nil
+        updateLatestBlock?.invalidate()
+        updateLatestBlock = nil
     }
 
     @objc func fetch() {

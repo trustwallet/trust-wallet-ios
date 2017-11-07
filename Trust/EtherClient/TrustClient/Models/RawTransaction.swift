@@ -7,10 +7,10 @@ struct RawTransactionResponse: Decodable {
 }
 
 struct RawTransaction: Decodable {
-    let _id: String
-    let blockNumber: Int64
+    let hash: String
+    let blockNumber: Int
     let timeStamp: String
-    let nonce: Int64
+    let nonce: Int
     let from: String
     let to: String
     let value: String
@@ -22,14 +22,10 @@ struct RawTransaction: Decodable {
 
 extension Transaction {
     static func from(chainID: Int, owner: Address, transaction: RawTransaction) -> Transaction {
-        let state: TransactionState = {
-            return .completed
-        }()
         return Transaction(
-            id: transaction._id,
+            id: transaction.hash,
             owner: owner.address,
             chainID: chainID,
-            state: state,
             blockNumber: transaction.blockNumber,
             from: transaction.from,
             to: transaction.to,

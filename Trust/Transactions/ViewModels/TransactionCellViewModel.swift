@@ -6,13 +6,28 @@ import UIKit
 struct TransactionCellViewModel {
 
     let transaction: Transaction
+    let chainState: ChainState
 
-    init(transaction: Transaction) {
+    init(
+        transaction: Transaction,
+        chainState: ChainState = ChainState()
+    ) {
         self.transaction = transaction
+        self.chainState = chainState
+    }
+    var confirmations: Int {
+        return chainState.latestBlock - Int(transaction.blockNumber)
+    }
+
+    var state: TransactionState {
+        if confirmations == 0 {
+            return .pending
+        }
+        return .completed
     }
 
     var title: String {
-        switch transaction.transactionState {
+        switch state {
         case .completed:
             switch transaction.direction {
             case .incoming: return "Received"
@@ -62,7 +77,7 @@ struct TransactionCellViewModel {
     }
 
     var backgroundColor: UIColor {
-        switch transaction.transactionState {
+        switch state {
         case .error, .completed:
             return .white
         case .pending:
@@ -71,7 +86,7 @@ struct TransactionCellViewModel {
     }
 
     var statusImage: UIImage? {
-        switch transaction.transactionState {
+        switch state {
         case .error: return R.image.transaction_error()
         case .completed:
             switch transaction.direction {
