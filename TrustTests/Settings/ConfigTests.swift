@@ -6,14 +6,14 @@ import XCTest
 class ConfigTests: XCTestCase {
         
     func testChainIDDefault() {
-        let config = Config(defaults: .test)
+        var config: Config = .make()
 
         XCTAssertEqual(1, config.chainID)
         XCTAssertEqual(.main, config.server)
     }
 
     func testChangeChainID() {
-        var config = Config(defaults: .test)
+        var config: Config = .make()
 
         XCTAssertEqual(1, config.chainID)
 
@@ -24,7 +24,7 @@ class ConfigTests: XCTestCase {
     }
 
     func testTestDefaultisCryptoPrimaryCurrency() {
-        let config = Config(defaults: .test)
+        var config: Config = .make()
 
         XCTAssertEqual(false, config.isCryptoPrimaryCurrency)
     }

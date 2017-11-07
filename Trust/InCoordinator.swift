@@ -33,7 +33,8 @@ class InCoordinator: Coordinator {
 
     func showTransactions(for account: Account) {
         let session = WalletSession(
-            account: account
+            account: account,
+            config: config
         )
 
         let coordinator = TransactionCoordinator(

@@ -10,7 +10,8 @@ class WalletSession {
 
     let account: Account
     let web3: Web3Swift
-    let config = Config()
+    let config: Config
+    let chainState: ChainState
 
     private lazy var balanceCoordinator: BalanceCoordinator = {
         return BalanceCoordinator(session: self)
@@ -18,12 +19,19 @@ class WalletSession {
 
     var balanceViewModel: Subscribable<BalanceViewModel> = Subscribable(nil)
 
-    init(account: Account) {
+    init(
+        account: Account,
+        config: Config
+    ) {
         self.account = account
+        self.config = config
         self.web3 = Web3Swift(url: config.rpcURL)
+        self.chainState = ChainState(config: config)
         self.web3.start()
         self.balanceCoordinator.start()
         self.balanceCoordinator.delegate = self
+
+        self.chainState.start()
     }
 
     func refresh(_ type: RefreshType) {
@@ -34,7 +42,7 @@ class WalletSession {
     }
 
     func stop() {
-
+        chainState.stop()
     }
 }
 
