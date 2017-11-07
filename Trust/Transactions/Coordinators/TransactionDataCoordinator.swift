@@ -57,19 +57,23 @@ class TransactionDataCoordinator {
         }()
 
         provider.request(.transactions(address: account.address.address, startBlock: startBlock)) { result in
-            guard  case .success(let response) = result else { return }
-            do {
-                let transactions = try response.map(RawTransactionResponse.self).docs
-                let chainID = self.config.chainID
-                let transactions2: [Transaction] = transactions.map { .from(
+            switch result {
+            case .success(let response):
+                do {
+                    let transactions = try response.map(RawTransactionResponse.self).docs
+                    let chainID = self.config.chainID
+                    let transactions2: [Transaction] = transactions.map { .from(
                         chainID: chainID,
                         owner: self.account.address,
                         transaction: $0
-                    )
+                        )
+                    }
+                    self.update(items: transactions2)
+                } catch {
+                    self.handleError(error: error)
                 }
-                self.update(items: transactions2)
-            } catch {
-                NSLog("error \(error)")
+            case .failure(let error):
+                self.handleError(error: error)
             }
         }
     }

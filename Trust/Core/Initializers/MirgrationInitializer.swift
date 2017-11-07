@@ -11,7 +11,7 @@ class MigrationInitializer {
 
     func perform() {
         let config = Realm.Configuration(
-            schemaVersion: 9,
+            schemaVersion: 10,
             migrationBlock: { _, _ in }
         )
         Realm.Configuration.defaultConfiguration = config
