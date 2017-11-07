@@ -15,7 +15,6 @@ class Transaction: Object {
     @objc dynamic var gas = ""
     @objc dynamic var gasPrice = ""
     @objc dynamic var gasUsed = ""
-    @objc dynamic var confirmations: Int64 = 0
     @objc dynamic var nonce: String = ""
     @objc dynamic var date = Date()
     @objc dynamic var actionJSON: String = ""
@@ -32,7 +31,6 @@ class Transaction: Object {
         gas: String,
         gasPrice: String,
         gasUsed: String,
-        confirmations: Int64,
         nonce: String,
         date: Date,
         actionJSON: String
@@ -49,7 +47,6 @@ class Transaction: Object {
         self.gas = gas
         self.gasPrice = gasPrice
         self.gasUsed = gasUsed
-        self.confirmations = confirmations
         self.nonce = nonce
         self.date = date
         self.actionJSON = actionJSON
@@ -74,9 +71,6 @@ extension Transaction {
     }
 
     var transactionState: TransactionState {
-        if confirmations == 0 {
-            return .pending
-        }
         return .completed
     }
 }

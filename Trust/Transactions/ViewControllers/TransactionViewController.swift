@@ -12,10 +12,15 @@ class TransactionViewController: UIViewController {
     }()
     let stackViewController = StackViewController()
 
+    let session: WalletSession
     let transaction: Transaction
     let config = Config()
 
-    init(transaction: Transaction) {
+    init(
+        session: WalletSession,
+        transaction: Transaction
+    ) {
+        self.session = session
         self.transaction = transaction
 
         stackViewController.scrollView.alwaysBounceVertical = true
@@ -36,6 +41,7 @@ class TransactionViewController: UIViewController {
         )
 
         let value = EthereumConverter.from(value: BInt(transaction.value), to: .ether, minimumFractionDigits: 5)
+        let confirmation = session.chainState.latestBlock - Int(transaction.blockNumber)
 
         let items: [UIView] = [
             .spacer(),
@@ -49,7 +55,7 @@ class TransactionViewController: UIViewController {
             TransactionAppearance.item(title: "From", subTitle: transaction.from),
             TransactionAppearance.item(title: "To", subTitle: transaction.to),
             TransactionAppearance.item(title: "Gas Fee", subTitle: gasFee),
-            TransactionAppearance.item(title: "Confirmation", subTitle: String(transaction.confirmations)),
+            TransactionAppearance.item(title: "Confirmation", subTitle: String(confirmation)),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(title: "Transaction #", subTitle: transaction.to),
             TransactionAppearance.item(title: "Transaction time", subTitle: viewModel.createdAt),

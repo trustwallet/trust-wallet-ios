@@ -80,6 +80,7 @@ class TransactionCoordinator: Coordinator {
 
     func showTransaction(_ transaction: Transaction) {
         let controller = TransactionViewController(
+            session: session,
             transaction: transaction
         )
         if UIDevice.current.userInterfaceIdiom == .pad {

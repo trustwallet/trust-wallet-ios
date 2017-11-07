@@ -5,10 +5,12 @@ import Foundation
 
 extension WalletSession {
     static func make(
-        account: Account = .make()
+        account: Account = .make(),
+        config: Config = .make()
     ) -> WalletSession {
         return WalletSession(
-            account: account
+            account: account,
+            config: config
         )
     }
 }

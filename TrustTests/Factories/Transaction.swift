@@ -16,7 +16,6 @@ extension Transaction {
         gas: String = "0x1",
         gasPrice: String = "0x1",
         gasUsed: String = "0x1",
-        confirmations: Int64 = 64,
         nonce: String = "0",
         date: Date = Date(),
         actionJSON: String = ""
@@ -33,7 +32,6 @@ extension Transaction {
             gas: gas,
             gasPrice: gasPrice,
             gasUsed: gasUsed,
-            confirmations: confirmations,
             nonce: nonce,
             date: date,
             actionJSON: actionJSON
