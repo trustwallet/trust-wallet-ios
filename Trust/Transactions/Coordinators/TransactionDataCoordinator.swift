@@ -53,7 +53,9 @@ class TransactionDataCoordinator {
 
     @objc func fetchTransactions() {
         let startBlock: Int = {
-            guard let transction = storage.objects.first else { return 0 }
+            guard let transction = storage.objects.first, storage.objects.count <= 30 else {
+                return 0
+            }
             return transction.blockNumber - 2000
         }()
 
@@ -80,25 +82,19 @@ class TransactionDataCoordinator {
     }
 
     func fetchPendingTransactions() {
-        func fetchPendingTransactions() {
-            Session.send(EtherServiceRequest(batch: BatchFactory().create(GetBlockByNumberRequest(block: "pending")))) { [weak self] result in
-                guard let `self` = self else { return }
-                switch result {
-                case .success(let block):
-                    for item in block.transactions {
-                        if item.to == self.account.address.address || item.from == self.account.address.address {
-                            self.update(chainID: self.config.chainID, owner: self.account.address, items: [item])
-                        }
+        Session.send(EtherServiceRequest(batch: BatchFactory().create(GetBlockByNumberRequest(block: "pending")))) { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let block):
+                for item in block.transactions {
+                    if item.to == self.account.address.address || item.from == self.account.address.address {
+                        self.update(chainID: self.config.chainID, owner: self.account.address, items: [item])
                     }
-                case .failure(let error):
-                    self.handleError(error: error)
                 }
+            case .failure(let error):
+                self.handleError(error: error)
             }
         }
-    }
-
-    func fetchTransaction(hash: String) {
-
     }
 
     @objc func fetchPending() {

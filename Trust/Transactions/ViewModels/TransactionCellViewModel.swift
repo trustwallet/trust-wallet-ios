@@ -19,7 +19,7 @@ struct TransactionCellViewModel {
         return chainState.latestBlock - Int(transaction.blockNumber)
     }
 
-    var state: TransactionState {
+    private var state: TransactionState {
         if confirmations == 0 {
             return .pending
         }
@@ -81,10 +81,12 @@ struct TransactionCellViewModel {
 
     var backgroundColor: UIColor {
         switch state {
-        case .error, .completed:
+        case .completed:
             return .white
+        case .error:
+            return Colors.veryLightRed
         case .pending:
-            return UIColor(hex: "f4f4f4")
+            return Colors.veryLightOrange
         }
     }
 
