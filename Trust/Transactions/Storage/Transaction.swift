@@ -16,7 +16,7 @@ class Transaction: Object {
     @objc dynamic var gasUsed = ""
     @objc dynamic var nonce: String = ""
     @objc dynamic var date = Date()
-    @objc dynamic var actionJSON: String = ""
+    @objc dynamic var isError: Bool = false
 
     convenience init(
         id: String,
@@ -31,7 +31,7 @@ class Transaction: Object {
         gasUsed: String,
         nonce: String,
         date: Date,
-        actionJSON: String
+        isError: Bool
     ) {
         self.init()
         self.id = id
@@ -46,18 +46,11 @@ class Transaction: Object {
         self.gasUsed = gasUsed
         self.nonce = nonce
         self.date = date
-        self.actionJSON = actionJSON
+        self.isError = isError
     }
 
     override static func primaryKey() -> String? {
         return "id"
-    }
-
-    var action: TransactionAction? {
-        guard let dict = actionJSON.asDictionary as? [String: AnyObject] else { return .none }
-        guard let type = dict["type"] as? String else { return .none }
-
-        return .none
     }
 }
 
