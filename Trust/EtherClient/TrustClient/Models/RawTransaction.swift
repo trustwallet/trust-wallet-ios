@@ -35,7 +35,7 @@ extension Transaction {
             gasUsed: transaction.gasUsed,
             nonce: String(transaction.nonce),
             date: NSDate(timeIntervalSince1970: TimeInterval(transaction.timeStamp) ?? 0) as Date,
-            actionJSON: ""
+            isError: false
         )
     }
 }

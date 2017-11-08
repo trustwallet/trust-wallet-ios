@@ -160,6 +160,13 @@
 		29BE3FCE1F706D8800F6BFC2 /* EthereumConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE3FCD1F706D8800F6BFC2 /* EthereumConverterTests.swift */; };
 		29BE3FD01F7071A200F6BFC2 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE3FCF1F7071A200F6BFC2 /* UIColor.swift */; };
 		29BE3FD21F707DC300F6BFC2 /* TransactionDataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE3FD11F707DC300F6BFC2 /* TransactionDataCoordinator.swift */; };
+		29C80D311FB2CCC90037B1E0 /* FetchTransactionsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D301FB2CCC90037B1E0 /* FetchTransactionsRequest.swift */; };
+		29C80D331FB2CCF10037B1E0 /* GetBlockByNumberRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D321FB2CCF10037B1E0 /* GetBlockByNumberRequest.swift */; };
+		29C80D351FB2CD110037B1E0 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D341FB2CD110037B1E0 /* Block.swift */; };
+		29C80D371FB2CD230037B1E0 /* ParsedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D361FB2CD230037B1E0 /* ParsedTransaction.swift */; };
+		29C80D391FB2CD760037B1E0 /* EtherscanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D381FB2CD760037B1E0 /* EtherscanService.swift */; };
+		29C80D3C1FB2CF230037B1E0 /* EtherscanResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D3B1FB2CF230037B1E0 /* EtherscanResponse.swift */; };
+		29C80D3E1FB2CF490037B1E0 /* EtherscanTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D3D1FB2CF490037B1E0 /* EtherscanTransaction.swift */; };
 		29C9F5F91F720BD30025C494 /* FloatLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9F5F81F720BD30025C494 /* FloatLabelCell.swift */; };
 		29C9F5FB1F720C050025C494 /* FloatLabelTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9F5FA1F720C050025C494 /* FloatLabelTextField.swift */; };
 		29CA4B771F6FBBFB0032313D /* RequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA4B761F6FBBFB0032313D /* RequestViewModel.swift */; };
@@ -385,6 +392,13 @@
 		29BE3FCD1F706D8800F6BFC2 /* EthereumConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumConverterTests.swift; sourceTree = "<group>"; };
 		29BE3FCF1F7071A200F6BFC2 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		29BE3FD11F707DC300F6BFC2 /* TransactionDataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataCoordinator.swift; sourceTree = "<group>"; };
+		29C80D301FB2CCC90037B1E0 /* FetchTransactionsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTransactionsRequest.swift; sourceTree = "<group>"; };
+		29C80D321FB2CCF10037B1E0 /* GetBlockByNumberRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockByNumberRequest.swift; sourceTree = "<group>"; };
+		29C80D341FB2CD110037B1E0 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
+		29C80D361FB2CD230037B1E0 /* ParsedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedTransaction.swift; sourceTree = "<group>"; };
+		29C80D381FB2CD760037B1E0 /* EtherscanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanService.swift; sourceTree = "<group>"; };
+		29C80D3B1FB2CF230037B1E0 /* EtherscanResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanResponse.swift; sourceTree = "<group>"; };
+		29C80D3D1FB2CF490037B1E0 /* EtherscanTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanTransaction.swift; sourceTree = "<group>"; };
 		29C9F5F81F720BD30025C494 /* FloatLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatLabelCell.swift; sourceTree = "<group>"; };
 		29C9F5FA1F720C050025C494 /* FloatLabelTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatLabelTextField.swift; sourceTree = "<group>"; };
 		29CA4B761F6FBBFB0032313D /* RequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestViewModel.swift; sourceTree = "<group>"; };
@@ -712,6 +726,7 @@
 				291ED08E1F6F613200E7E93A /* GetTransactionRequest.swift */,
 				296AF9A81F737F6F0058AF78 /* SendRawTransactionRequest.swift */,
 				296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */,
+				29C80D321FB2CCF10037B1E0 /* GetBlockByNumberRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -749,6 +764,8 @@
 				29282B521F7630970067F88D /* Token.swift */,
 				29AD8A051F93DC8C008E10E7 /* PushDevice.swift */,
 				296105921FA2AA2100292494 /* SignTransaction.swift */,
+				29C80D341FB2CD110037B1E0 /* Block.swift */,
+				29C80D361FB2CD230037B1E0 /* ParsedTransaction.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -835,6 +852,9 @@
 		296106BD1F76391B0006164B /* Etherscan */ = {
 			isa = PBXGroup;
 			children = (
+				29C80D3A1FB2CF160037B1E0 /* Models */,
+				29C80D301FB2CCC90037B1E0 /* FetchTransactionsRequest.swift */,
+				29C80D381FB2CD760037B1E0 /* EtherscanService.swift */,
 			);
 			path = Etherscan;
 			sourceTree = "<group>";
@@ -1175,6 +1195,15 @@
 			isa = PBXGroup;
 			children = (
 				29BE3FCD1F706D8800F6BFC2 /* EthereumConverterTests.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		29C80D3A1FB2CF160037B1E0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				29C80D3B1FB2CF230037B1E0 /* EtherscanResponse.swift */,
+				29C80D3D1FB2CF490037B1E0 /* EtherscanTransaction.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1777,8 +1806,10 @@
 				291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */,
 				29BE3FD21F707DC300F6BFC2 /* TransactionDataCoordinator.swift in Sources */,
 				291F52B51F6B814300B369AB /* SMP String Module.swift in Sources */,
+				29C80D351FB2CD110037B1E0 /* Block.swift in Sources */,
 				291ED0921F6FA5D900E7E93A /* RequestViewController.swift in Sources */,
 				296106C21F76403A0006164B /* TokenViewCell.swift in Sources */,
+				29C80D3C1FB2CF230037B1E0 /* EtherscanResponse.swift in Sources */,
 				29F114F01FA6D53700114A29 /* ImportSelectionType.swift in Sources */,
 				29850D251F6B27A800791A49 /* R.generated.swift in Sources */,
 				296105931FA2AA2100292494 /* SignTransaction.swift in Sources */,
@@ -1792,6 +1823,7 @@
 				293248861F88CCE6008A9818 /* SplashError.swift in Sources */,
 				296421951F70C1EC00EB363B /* LoadingView.swift in Sources */,
 				2961BD071FB146EB00C4B840 /* ChainState.swift in Sources */,
+				29C80D311FB2CCC90037B1E0 /* FetchTransactionsRequest.swift in Sources */,
 				29285B421F6FB3E60044CF29 /* SendViewController.swift in Sources */,
 				29AD8A021F93D5CE008E10E7 /* PushNotificationsClient.swift in Sources */,
 				2996F14D1F6CA743005C33AE /* UIViewController.swift in Sources */,
@@ -1813,15 +1845,19 @@
 				29CAEB8E1F70A2FB00F7357D /* TransactionCellViewModel.swift in Sources */,
 				29BE3FD01F7071A200F6BFC2 /* UIColor.swift in Sources */,
 				2996F1481F6C9AE5005C33AE /* SettingsCoordinator.swift in Sources */,
+				29C80D331FB2CCF10037B1E0 /* GetBlockByNumberRequest.swift in Sources */,
 				29E14FD11F7F457D00185568 /* TransactionsStorage.swift in Sources */,
 				29F114EE1FA65DEF00114A29 /* ImportType.swift in Sources */,
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
+				29C80D391FB2CD760037B1E0 /* EtherscanService.swift in Sources */,
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
 				2932488A1F88D593008A9818 /* OnePasswordConfig.swift in Sources */,
 				29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */,
 				290B2B671F9266630053C83E /* SettingsAction.swift in Sources */,
 				293E626F1FA2ED1400CB0A66 /* InCoordinator.swift in Sources */,
+				29C80D371FB2CD230037B1E0 /* ParsedTransaction.swift in Sources */,
+				29C80D3E1FB2CF490037B1E0 /* EtherscanTransaction.swift in Sources */,
 				293204581F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift in Sources */,
 				29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */,
 				2963B6BF1F9AB9A2003063C1 /* ContractERC20Transfer.swift in Sources */,

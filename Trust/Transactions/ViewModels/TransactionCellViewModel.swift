@@ -23,6 +23,9 @@ struct TransactionCellViewModel {
         if confirmations == 0 {
             return .pending
         }
+        if transaction.isError {
+            return .error
+        }
         return .completed
     }
 
