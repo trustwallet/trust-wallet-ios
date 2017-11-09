@@ -6,7 +6,7 @@
 
 Welcome to Trust's open source iOS app!
 
-![Trust - Ethereum Wallet iOS Cover](https://raw.githubusercontent.com/TrustWallet/trust-wallet-ios/master/resources/iphone_cover.png)
+[<img src="https://raw.githubusercontent.com/TrustWallet/trust-wallet-ios/master/resources/iphone_cover.png">](https://itunes.apple.com/us/app/trust-ethereum-wallet/id1288339409)
 
 ## Getting Started
 
