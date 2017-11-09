@@ -41,10 +41,10 @@ class SettingsCoordinator: Coordinator {
 
     @objc func export(in viewController: UIViewController) {
         let coordinator = ExportCoordinator()
-        coordinator.start()
         coordinator.delegate = self
+        coordinator.start()
         addCoordinator(coordinator)
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+        viewController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 }
 
@@ -69,12 +69,12 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
 
 extension SettingsCoordinator: ExportCoordinatorDelegate {
     func didFinish(in coordinator: ExportCoordinator) {
-        removeCoordinator(coordinator)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 
     func didCancel(in coordinator: ExportCoordinator) {
-        removeCoordinator(coordinator)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 }

@@ -19,7 +19,7 @@ class ExportCoordinator: Coordinator {
         let controller = AccountsViewController()
         controller.headerTitle = "Select Account to Backup"
         controller.delegate = self
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         return controller
     }()
 
@@ -34,7 +34,7 @@ class ExportCoordinator: Coordinator {
         navigationController.viewControllers = [accountViewController]
     }
 
-    @objc func dismiss() {
+    @objc func cancel() {
         delegate?.didCancel(in: self)
     }
 
@@ -47,8 +47,9 @@ class ExportCoordinator: Coordinator {
             navigationController: navigationController,
             account: account
         )
-        addCoordinator(coordinator)
+        coordinator.delegate = self
         coordinator.start()
+        addCoordinator(coordinator)
     }
 }
 
@@ -65,11 +66,11 @@ extension ExportCoordinator: AccountsViewControllerDelegate {
 extension ExportCoordinator: BackupCoordinatorDelegate {
     func didFinish(account: Account, in coordinator: BackupCoordinator) {
         removeCoordinator(coordinator)
-        delegate?.didFinish(in: self)
+        finish()
     }
 
     func didCancel(coordinator: BackupCoordinator) {
         removeCoordinator(coordinator)
-        delegate?.didCancel(in: self)
+        cancel()
     }
 }

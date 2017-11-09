@@ -60,8 +60,8 @@ class TransactionCoordinator: Coordinator {
 
     @objc func showSettings() {
         let coordinator = SettingsCoordinator()
-        coordinator.start()
         coordinator.delegate = self
+        coordinator.start()
         addCoordinator(coordinator)
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
@@ -137,9 +137,9 @@ class TransactionCoordinator: Coordinator {
 
 extension TransactionCoordinator: SettingsCoordinatorDelegate {
     func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator) {
-        removeCoordinator(coordinator)
         switch action {
         case .RPCServer:
+            removeCoordinator(coordinator)
             restart(for: session.account)
         case .exportPrivateKey, .pushNotifications:
             break
@@ -147,6 +147,7 @@ extension TransactionCoordinator: SettingsCoordinatorDelegate {
             coordinator.navigationController.dismiss(animated: true) {
                 self.showPaymentFlow(for: .send(type: .ether(destination: address)), session: self.session)
             }
+            removeCoordinator(coordinator)
         }
     }
 
