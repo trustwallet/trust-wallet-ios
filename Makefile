@@ -1,7 +1,7 @@
 install: 
 	pod install
 	
-boostrap: install
+bootstrap: install
 
 release:
 	fastlane release
