@@ -3,12 +3,15 @@
 import Foundation
 import UIKit
 
-struct TransactionHeaderViewModel {
+struct TransactionHeaderViewModel: TransactionHeaderBaseViewModel {
 
     private let amount: Double
     private let direction: TransactionDirection
 
-    init(amount: Double, direction: TransactionDirection) {
+    init(
+        amount: Double,
+        direction: TransactionDirection
+    ) {
         self.amount = amount
         self.direction = direction
     }
