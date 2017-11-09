@@ -31,7 +31,7 @@ clean true
 erase_simulator true
 
 skip_open_summary false
-ios_version '11.0.1'
+concurrent_simulators true
 
 # Choose which project/workspace to use
 # project "./Project.xcodeproj"
