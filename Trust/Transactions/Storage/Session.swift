@@ -7,7 +7,6 @@ enum RefreshType {
 }
 
 class WalletSession {
-
     let account: Account
     let web3: Web3Swift
     let config: Config

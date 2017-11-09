@@ -13,14 +13,16 @@ class ChainState {
     let config: Config
 
     private var latestBlockKey: String {
-        return Keys.latestBlock + "-\(config.chainID)"
+        return "\(config.chainID)-" + Keys.latestBlock
     }
 
     var latestBlock: Int {
         get {
             return defaults.integer(forKey: latestBlockKey)
         }
-        set { defaults.set(newValue, forKey: latestBlockKey) }
+        set {
+            defaults.set(newValue, forKey: latestBlockKey)
+        }
     }
     let defaults: UserDefaults
 
@@ -31,7 +33,7 @@ class ChainState {
     ) {
         self.config = config
         self.defaults = config.defaults
-        self.updateLatestBlock = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(fetch), userInfo: nil, repeats: true)
+        self.updateLatestBlock = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(fetch), userInfo: nil, repeats: true)
     }
 
     func start() {
@@ -49,6 +51,7 @@ class ChainState {
             switch result {
             case .success(let number):
                 self.latestBlock = number
+
             case .failure: break
             }
         }

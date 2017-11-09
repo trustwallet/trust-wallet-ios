@@ -10,7 +10,7 @@ struct TransactionCellViewModel {
 
     init(
         transaction: Transaction,
-        chainState: ChainState = ChainState()
+        chainState: ChainState
     ) {
         self.transaction = transaction
         self.chainState = chainState
