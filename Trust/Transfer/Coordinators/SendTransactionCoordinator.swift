@@ -48,10 +48,12 @@ class SendTransactionCoordinator {
         contract: Address,
         to: Address,
         amount: Double,
-        decimals: Int64,
+        decimals: Int,
+        configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
-        session.web3.request(request: ContractERC20Transfer(amount: amount, decimals: decimals, address: to.address)) { result in
+        let amountToSend = (BDouble(floatLiteral: amount) * BDouble(pow(10, decimals).doubleValue)).description
+        session.web3.request(request: ContractERC20Transfer(amount: amountToSend, address: to.address)) { result in
             switch result {
             case .success(let res):
                 NSLog("result \(res)")
@@ -59,12 +61,7 @@ class SendTransactionCoordinator {
                     address: contract,
                     value: 0,
                     data: Data(hex: res.drop0x),
-                    configuration: TransactionConfiguration(
-                        speed: TransactionSpeed.custom(
-                            gasPrice: TransactionSpeed.cheap.gasPrice,
-                            gasLimit: GethNewBigInt(2900000)
-                        )
-                    ),
+                    configuration: configuration,
                     completion: completion
                 )
             case .failure(let error):
