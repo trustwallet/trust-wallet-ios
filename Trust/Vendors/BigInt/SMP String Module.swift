@@ -31,7 +31,7 @@ private func convert(number: String, fromBase: Int, toBase: Int) -> String
 	var sum = BInt(0)
 	var multiplier = BInt(1)
 
-	for char in number.characters.reversed()
+	for char in number.reversed()
 	{
 		if let digit = chars.index(of: String(char))
 		{
@@ -136,7 +136,7 @@ private func digitsToString(_ digits: Digits) -> String
 	var i = digits.count - 2
 	while i >= 0
 	{
-		var str = String(digits[i])
+		let str = String(digits[i])
 
 		var paddingZeros = String(
 			repeating: "0",

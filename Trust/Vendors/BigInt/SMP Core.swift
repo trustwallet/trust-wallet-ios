@@ -2063,7 +2063,7 @@ public struct BDouble:
 
 		if let exp = nStr[Character("e")]
 		{
-			let beforeExp = String(nStr[0..<exp].characters.filter{ $0 != "." })
+			let beforeExp = String(nStr[0..<exp].filter{ $0 != "." })
 			var afterExp = nStr[(exp + 1)..<nStr.count]
 			var sign = false
 
@@ -2314,9 +2314,9 @@ public extension String
 	/// If possible, returns index of first ocurrence of char.
 	subscript(char: Character) -> Int?
 	{
-		if let idx = self.characters.index(of: char)
+		if let idx = self.index(of: char)
 		{
-			return self.characters.distance(from: self.startIndex, to: idx)
+			return self.distance(from: self.startIndex, to: idx)
 		}
 		return nil
 	}
