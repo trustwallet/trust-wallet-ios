@@ -3,6 +3,7 @@
 import Foundation
 import UIKit
 import StackViewController
+import Geth
 
 protocol ConfirmPaymentViewControllerDelegate: class {
     func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController)
@@ -25,7 +26,20 @@ class ConfirmPaymentViewController: UIViewController {
         return button
     }()
     weak var delegate: ConfirmPaymentViewControllerDelegate?
-    let configuration = TransactionConfiguration()
+
+    lazy var configuration: TransactionConfiguration = {
+        switch self.transferType {
+        case .token:
+            return TransactionConfiguration(
+                speed: TransactionSpeed.custom(
+                    gasPrice: TransactionSpeed.cheap.gasPrice,
+                    gasLimit: GethNewBigInt(124000)
+                )
+            )
+        case .ether:
+            return TransactionConfiguration()
+        }
+    }()
 
     init(
         session: WalletSession,
@@ -49,9 +63,8 @@ class ConfirmPaymentViewController: UIViewController {
         let items: [UIView] = [
             .spacer(),
             TransactionAppearance.header(
-                viewModel: TransactionHeaderViewModel(
-                    amount: transaction.amount,
-                    direction: .outgoing
+                viewModel: ConfirmTransactionHeaderViewModel(
+                    transaction: transaction
                 )
             ),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
@@ -105,7 +118,8 @@ class ConfirmPaymentViewController: UIViewController {
                 contract: token.address,
                 to: transaction.address,
                 amount: transaction.amount,
-                decimals: token.decimals
+                decimals: token.decimals,
+                configuration: self.configuration
             ) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {

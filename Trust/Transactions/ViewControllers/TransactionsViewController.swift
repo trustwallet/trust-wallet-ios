@@ -191,7 +191,11 @@ extension TransactionsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let transaction = viewModel.item(for: indexPath.row, section: indexPath.section)
         let cell = TransactionViewCell(style: .default, reuseIdentifier: TransactionViewCell.identifier)
-        cell.configure(viewModel: .init(transaction: transaction))
+        cell.configure(viewModel: .init(
+                transaction: transaction,
+                chainState: session.chainState
+            )
+        )
         return cell
     }
 

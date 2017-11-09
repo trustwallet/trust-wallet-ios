@@ -168,6 +168,10 @@
 		29C80D3C1FB2CF230037B1E0 /* EtherscanResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D3B1FB2CF230037B1E0 /* EtherscanResponse.swift */; };
 		29C80D3E1FB2CF490037B1E0 /* EtherscanTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D3D1FB2CF490037B1E0 /* EtherscanTransaction.swift */; };
 		29C80D411FB2E1610037B1E0 /* EthplorerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D401FB2E1610037B1E0 /* EthplorerService.swift */; };
+		29C80D451FB51B1A0037B1E0 /* TransactionHeaderBaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D441FB51B1A0037B1E0 /* TransactionHeaderBaseViewModel.swift */; };
+		29C80D471FB51B680037B1E0 /* ConfirmTransactionHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D461FB51B680037B1E0 /* ConfirmTransactionHeaderViewModel.swift */; };
+		29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D481FB51C380037B1E0 /* Dictionary.swift */; };
+		29C80D4B1FB51C460037B1E0 /* Decimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D4A1FB51C460037B1E0 /* Decimal.swift */; };
 		29C9F5F91F720BD30025C494 /* FloatLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9F5F81F720BD30025C494 /* FloatLabelCell.swift */; };
 		29C9F5FB1F720C050025C494 /* FloatLabelTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9F5FA1F720C050025C494 /* FloatLabelTextField.swift */; };
 		29CA4B771F6FBBFB0032313D /* RequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA4B761F6FBBFB0032313D /* RequestViewModel.swift */; };
@@ -401,6 +405,10 @@
 		29C80D3B1FB2CF230037B1E0 /* EtherscanResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanResponse.swift; sourceTree = "<group>"; };
 		29C80D3D1FB2CF490037B1E0 /* EtherscanTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanTransaction.swift; sourceTree = "<group>"; };
 		29C80D401FB2E1610037B1E0 /* EthplorerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthplorerService.swift; sourceTree = "<group>"; };
+		29C80D441FB51B1A0037B1E0 /* TransactionHeaderBaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHeaderBaseViewModel.swift; sourceTree = "<group>"; };
+		29C80D461FB51B680037B1E0 /* ConfirmTransactionHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmTransactionHeaderViewModel.swift; sourceTree = "<group>"; };
+		29C80D481FB51C380037B1E0 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
+		29C80D4A1FB51C460037B1E0 /* Decimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decimal.swift; sourceTree = "<group>"; };
 		29C9F5F81F720BD30025C494 /* FloatLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatLabelCell.swift; sourceTree = "<group>"; };
 		29C9F5FA1F720C050025C494 /* FloatLabelTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatLabelTextField.swift; sourceTree = "<group>"; };
 		29CA4B761F6FBBFB0032313D /* RequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestViewModel.swift; sourceTree = "<group>"; };
@@ -1098,6 +1106,8 @@
 				291A1B681F980E3400ADEC80 /* StackViewController.swift */,
 				2963B6B01F9891F5003063C1 /* UIButton.swift */,
 				2963B6C01F9AE0E4003063C1 /* Data.swift */,
+				29C80D481FB51C380037B1E0 /* Dictionary.swift */,
+				29C80D4A1FB51C460037B1E0 /* Decimal.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1154,7 +1164,9 @@
 			children = (
 				29CA4B761F6FBBFB0032313D /* RequestViewModel.swift */,
 				29BB94961F6FCD60009B09CC /* SendViewModel.swift */,
+				29C80D441FB51B1A0037B1E0 /* TransactionHeaderBaseViewModel.swift */,
 				2963B6AA1F9818C7003063C1 /* TransactionHeaderViewModel.swift */,
+				29C80D461FB51B680037B1E0 /* ConfirmTransactionHeaderViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1782,6 +1794,7 @@
 				295A59381F71C1B90092F0FC /* AccountsCoordinator.swift in Sources */,
 				296421971F70C1F200EB363B /* ErrorView.swift in Sources */,
 				29358DA91F79FD1C00925D61 /* CALayer.swift in Sources */,
+				29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */,
 				29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */,
 				290B2B651F91A4880053C83E /* TransactionsFooterView.swift in Sources */,
 				293B8B431F70815900356286 /* BalanceTitleView.swift in Sources */,
@@ -1815,6 +1828,7 @@
 				29C80D3C1FB2CF230037B1E0 /* EtherscanResponse.swift in Sources */,
 				29F114F01FA6D53700114A29 /* ImportSelectionType.swift in Sources */,
 				29850D251F6B27A800791A49 /* R.generated.swift in Sources */,
+				29C80D451FB51B1A0037B1E0 /* TransactionHeaderBaseViewModel.swift in Sources */,
 				296105931FA2AA2100292494 /* SignTransaction.swift in Sources */,
 				296105951FA2DEF000292494 /* TransactionDirection.swift in Sources */,
 				291ED08B1F6F5D2100E7E93A /* Bundle.swift in Sources */,
@@ -1843,6 +1857,7 @@
 				29C9F5F91F720BD30025C494 /* FloatLabelCell.swift in Sources */,
 				29DBF2A71F9F145900327C60 /* StateViewModel.swift in Sources */,
 				2912CD361F6A853300C6CBE3 /* TransactionsViewModel.swift in Sources */,
+				29C80D4B1FB51C460037B1E0 /* Decimal.swift in Sources */,
 				297800521F71FDCF003185C1 /* FormAppearance.swift in Sources */,
 				291F52C11F6C8A1F00B369AB /* AccountsViewModel.swift in Sources */,
 				29CAEB8E1F70A2FB00F7357D /* TransactionCellViewModel.swift in Sources */,
@@ -1856,6 +1871,7 @@
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
 				2932488A1F88D593008A9818 /* OnePasswordConfig.swift in Sources */,
+				29C80D471FB51B680037B1E0 /* ConfirmTransactionHeaderViewModel.swift in Sources */,
 				29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */,
 				290B2B671F9266630053C83E /* SettingsAction.swift in Sources */,
 				293E626F1FA2ED1400CB0A66 /* InCoordinator.swift in Sources */,
