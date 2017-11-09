@@ -19,7 +19,7 @@ extension TransactionAction {
                 symbol: dict["symbol"] as? String ?? "",
                 totalSupply: dict["totalSupply"] as? String ?? "",
                 balance: dict["balance"] as? Double ?? 0,
-                decimals: dict["decimals"] as? Int64 ?? 0
+                decimals: dict["decimals"] as? Int ?? 0
             )
             let tokenTransfer = TokenTransfer(
                 value: dict["value"] as? String ?? "",
