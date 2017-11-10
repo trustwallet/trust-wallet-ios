@@ -695,7 +695,6 @@
 				297800511F71FDCF003185C1 /* FormAppearance.swift */,
 				29C9F5F81F720BD30025C494 /* FloatLabelCell.swift */,
 				29C9F5FA1F720C050025C494 /* FloatLabelTextField.swift */,
-				29FC0CB71F8299510036089F /* Coordinator.swift */,
 				29DBF2A61F9F145900327C60 /* StateViewModel.swift */,
 			);
 			path = UI;
@@ -1148,6 +1147,7 @@
 		29AD8A0A1F93FBB7008E10E7 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				29FC0CB71F8299510036089F /* Coordinator.swift */,
 				29AD8A0B1F93FBBF008E10E7 /* Subscribable.swift */,
 				2995739E1FA1F294006F17FD /* QRURLParser.swift */,
 			);
