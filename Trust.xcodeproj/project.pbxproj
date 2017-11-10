@@ -697,8 +697,6 @@
 				29C9F5FA1F720C050025C494 /* FloatLabelTextField.swift */,
 				29FC0CB71F8299510036089F /* Coordinator.swift */,
 				29DBF2A61F9F145900327C60 /* StateViewModel.swift */,
-				29C80D4C1FB5202C0037B1E0 /* BalanceBaseViewModel.swift */,
-				29C80D4E1FB520AF0037B1E0 /* BalanceTokenViewModel.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -999,9 +997,11 @@
 			isa = PBXGroup;
 			children = (
 				2912CD351F6A853300C6CBE3 /* TransactionsViewModel.swift */,
-				29BB94921F6FC380009B09CC /* BalanceViewModel.swift */,
 				29CAEB8D1F70A2FB00F7357D /* TransactionCellViewModel.swift */,
 				293B8B401F707F4600356286 /* TransactionViewModel.swift */,
+				29C80D4C1FB5202C0037B1E0 /* BalanceBaseViewModel.swift */,
+				29BB94921F6FC380009B09CC /* BalanceViewModel.swift */,
+				29C80D4E1FB520AF0037B1E0 /* BalanceTokenViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";

@@ -48,7 +48,7 @@ class TransactionsEmptyView: UIView {
         let stackView = UIStackView(arrangedSubviews: [
             imageView,
             titleLabel,
-            depositButton,
+            //depositButton,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .center
