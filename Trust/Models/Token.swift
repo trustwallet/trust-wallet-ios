@@ -12,6 +12,21 @@ struct Token {
 }
 
 extension Token {
+    private static let numberFormatter: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.minimumFractionDigits = 3
+        numberFormatter.maximumFractionDigits = 3
+        return numberFormatter
+    }()
+
+    var amount: String {
+        let res = pow(10.0, Double(decimals))
+        let double = NSNumber(value: balance / res)
+        return Token.numberFormatter.string(from: double)!
+    }
+}
+
+extension Token {
     static func from(address: String, json: [String: AnyObject]) -> Token {
         let tokenInfo = json["tokenInfo"] as? [String: AnyObject] ?? [:]
         return Token(

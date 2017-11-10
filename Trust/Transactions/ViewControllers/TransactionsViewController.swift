@@ -23,7 +23,7 @@ class TransactionsViewController: UIViewController {
     let refreshControl = UIRefreshControl()
 
     lazy var titleView: BalanceTitleView = {
-        return BalanceTitleView.make(from: self.session)
+        return BalanceTitleView.make(from: self.session, .ether(destination: .none))
     }()
 
     weak var delegate: TransactionsViewControllerDelegate?

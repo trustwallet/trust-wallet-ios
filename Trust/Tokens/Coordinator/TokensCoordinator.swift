@@ -15,7 +15,7 @@ class TokensCoordinator: Coordinator {
     weak var delegate: TokensCoordinatorDelegate?
 
     init(
-        navigationController: UINavigationController,
+        navigationController: UINavigationController = NavigationController(),
         session: WalletSession
     ) {
         self.navigationController = navigationController
@@ -48,8 +48,8 @@ class TokensCoordinator: Coordinator {
             session: session
         )
         coordinator.delegate = self
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
         coordinator.start()
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
         addCoordinator(coordinator)
     }
 }

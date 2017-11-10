@@ -67,9 +67,7 @@ class TransactionCoordinator: Coordinator {
     }
 
     func showTokens(for account: Account) {
-        let nav = NavigationController()
         let coordinator = TokensCoordinator(
-            navigationController: nav,
             session: session
         )
         coordinator.delegate = self

@@ -33,7 +33,7 @@ class BalanceTitleView: UIView {
         ])
     }
 
-    func configure(viewModel: BalanceViewModel) {
+    func configure(viewModel: BalanceBaseViewModel) {
         titleLabel.attributedText = viewModel.attributedCurrencyAmount
         subTitleLabel.attributedText = viewModel.attributedAmount
     }
@@ -44,12 +44,17 @@ class BalanceTitleView: UIView {
 }
 
 extension BalanceTitleView {
-    static func make(from session: WalletSession) -> BalanceTitleView {
+    static func make(from session: WalletSession, _ transferType: TransferType) -> BalanceTitleView {
         let view = BalanceTitleView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
-        session.balanceViewModel.subscribe { viewModel in
-            guard let viewModel = viewModel else { return }
-            view.configure(viewModel: viewModel)
+        switch transferType {
+        case .ether:
+            session.balanceViewModel.subscribe { viewModel in
+                guard let viewModel = viewModel else { return }
+                view.configure(viewModel: viewModel)
+            }
+        case .token(let token):
+            view.configure(viewModel: BalanceTokenViewModel(token: token))
         }
         return view
     }

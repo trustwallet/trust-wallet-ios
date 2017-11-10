@@ -5,13 +5,6 @@ import UIKit
 
 struct TokenViewCellViewModel {
 
-    static let numberFormatter: NumberFormatter = {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.minimumFractionDigits = 3
-        numberFormatter.maximumFractionDigits = 3
-        return numberFormatter
-    }()
-
     let token: Token
 
     init(token: Token) {
@@ -23,9 +16,7 @@ struct TokenViewCellViewModel {
     }
 
     var amount: String {
-        let res = pow(10.0, Double(token.decimals))
-        let double = NSNumber(value: token.balance / res)
-        return TokenViewCellViewModel.numberFormatter.string(from: double)!
+        return token.amount
     }
 
     var amountTextColor: UIColor {

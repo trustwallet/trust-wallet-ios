@@ -38,7 +38,7 @@ class SendCoordinator: Coordinator {
             account: session.account,
             transferType: transferType
         )
-        controller.navigationItem.titleView = BalanceTitleView.make(from: self.session)
+        controller.navigationItem.titleView = BalanceTitleView.make(from: self.session, transferType)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: NSLocalizedString("Generic.Next", value: "Next", comment: ""),

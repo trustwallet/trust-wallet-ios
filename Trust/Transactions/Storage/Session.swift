@@ -16,7 +16,7 @@ class WalletSession {
         return BalanceCoordinator(session: self)
     }()
 
-    var balanceViewModel: Subscribable<BalanceViewModel> = Subscribable(nil)
+    var balanceViewModel: Subscribable<BalanceBaseViewModel> = Subscribable(nil)
 
     init(
         account: Account,

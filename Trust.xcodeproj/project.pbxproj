@@ -172,6 +172,8 @@
 		29C80D471FB51B680037B1E0 /* ConfirmTransactionHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D461FB51B680037B1E0 /* ConfirmTransactionHeaderViewModel.swift */; };
 		29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D481FB51C380037B1E0 /* Dictionary.swift */; };
 		29C80D4B1FB51C460037B1E0 /* Decimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D4A1FB51C460037B1E0 /* Decimal.swift */; };
+		29C80D4D1FB5202C0037B1E0 /* BalanceBaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D4C1FB5202C0037B1E0 /* BalanceBaseViewModel.swift */; };
+		29C80D4F1FB520AF0037B1E0 /* BalanceTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D4E1FB520AF0037B1E0 /* BalanceTokenViewModel.swift */; };
 		29C9F5F91F720BD30025C494 /* FloatLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9F5F81F720BD30025C494 /* FloatLabelCell.swift */; };
 		29C9F5FB1F720C050025C494 /* FloatLabelTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C9F5FA1F720C050025C494 /* FloatLabelTextField.swift */; };
 		29CA4B771F6FBBFB0032313D /* RequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA4B761F6FBBFB0032313D /* RequestViewModel.swift */; };
@@ -409,6 +411,8 @@
 		29C80D461FB51B680037B1E0 /* ConfirmTransactionHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmTransactionHeaderViewModel.swift; sourceTree = "<group>"; };
 		29C80D481FB51C380037B1E0 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		29C80D4A1FB51C460037B1E0 /* Decimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decimal.swift; sourceTree = "<group>"; };
+		29C80D4C1FB5202C0037B1E0 /* BalanceBaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceBaseViewModel.swift; sourceTree = "<group>"; };
+		29C80D4E1FB520AF0037B1E0 /* BalanceTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceTokenViewModel.swift; sourceTree = "<group>"; };
 		29C9F5F81F720BD30025C494 /* FloatLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatLabelCell.swift; sourceTree = "<group>"; };
 		29C9F5FA1F720C050025C494 /* FloatLabelTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatLabelTextField.swift; sourceTree = "<group>"; };
 		29CA4B761F6FBBFB0032313D /* RequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestViewModel.swift; sourceTree = "<group>"; };
@@ -693,6 +697,8 @@
 				29C9F5FA1F720C050025C494 /* FloatLabelTextField.swift */,
 				29FC0CB71F8299510036089F /* Coordinator.swift */,
 				29DBF2A61F9F145900327C60 /* StateViewModel.swift */,
+				29C80D4C1FB5202C0037B1E0 /* BalanceBaseViewModel.swift */,
+				29C80D4E1FB520AF0037B1E0 /* BalanceTokenViewModel.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1863,6 +1869,7 @@
 				29CAEB8E1F70A2FB00F7357D /* TransactionCellViewModel.swift in Sources */,
 				29BE3FD01F7071A200F6BFC2 /* UIColor.swift in Sources */,
 				2996F1481F6C9AE5005C33AE /* SettingsCoordinator.swift in Sources */,
+				29C80D4D1FB5202C0037B1E0 /* BalanceBaseViewModel.swift in Sources */,
 				29C80D331FB2CCF10037B1E0 /* GetBlockByNumberRequest.swift in Sources */,
 				29E14FD11F7F457D00185568 /* TransactionsStorage.swift in Sources */,
 				29F114EE1FA65DEF00114A29 /* ImportType.swift in Sources */,
@@ -1910,6 +1917,7 @@
 				29C80D411FB2E1610037B1E0 /* EthplorerService.swift in Sources */,
 				296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */,
 				29A13E2C1F6A955700E432A2 /* CreateWalletViewModel.swift in Sources */,
+				29C80D4F1FB520AF0037B1E0 /* BalanceTokenViewModel.swift in Sources */,
 				29CA4B771F6FBBFB0032313D /* RequestViewModel.swift in Sources */,
 				291A1B691F980E3400ADEC80 /* StackViewController.swift in Sources */,
 				2959961A1FADB79300DB66A8 /* TokenTransfer.swift in Sources */,

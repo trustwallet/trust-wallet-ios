@@ -32,7 +32,7 @@ class RequestCoordinator: Coordinator {
 
     func makeRequestViewController() -> RequestViewController {
         let controller = RequestViewController(account: self.session.account)
-        controller.navigationItem.titleView = BalanceTitleView.make(from: self.session)
+        controller.navigationItem.titleView = BalanceTitleView.make(from: self.session, .ether(destination: .none))
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
         return controller

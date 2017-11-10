@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-struct BalanceViewModel {
+struct BalanceViewModel: BalanceBaseViewModel {
 
     static var formatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -76,25 +76,5 @@ struct BalanceViewModel {
             return smallLabelAttributes
         default: return largeLabelAttributed
         }
-    }
-
-    var largeLabelAttributed: [String: AnyObject] {
-        let style = NSMutableParagraphStyle()
-        style.alignment = NSTextAlignment.center
-        return [
-            NSFontAttributeName: UIFont.systemFont(ofSize: 18, weight: UIFontWeightSemibold),
-            NSForegroundColorAttributeName: Colors.lightBlack,
-            NSParagraphStyleAttributeName: style,
-        ]
-    }
-
-    var smallLabelAttributes: [String: AnyObject] {
-        let style = NSMutableParagraphStyle()
-        style.alignment = NSTextAlignment.center
-        return [
-            NSFontAttributeName: UIFont.systemFont(ofSize: 13, weight: UIFontWeightRegular),
-            NSForegroundColorAttributeName: Colors.darkGray,
-            NSParagraphStyleAttributeName: style,
-        ]
     }
 }
