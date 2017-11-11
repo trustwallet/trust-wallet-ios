@@ -2,10 +2,6 @@
 
 import Foundation
 
-struct RawTransactionResponse: Decodable {
-    let docs: [RawTransaction]
-}
-
 struct RawTransaction: Decodable {
     let hash: String
     let blockNumber: Int
