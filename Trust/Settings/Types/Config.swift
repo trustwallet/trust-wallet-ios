@@ -56,8 +56,8 @@ struct Config {
     var remoteURL: URL {
         let urlString: String = {
             switch server {
-            case .main: return "https://trust-wallet.herokuapp.com"
-            case .kovan: return "https://trust-wallet-kovan.herokuapp.com"
+            case .main: return "https://api.trustwalletapp.com"
+            case .kovan: return "https://kovan.trustwalletapp.com"
             }
         }()
         return URL(string: urlString)!
