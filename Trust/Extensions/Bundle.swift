@@ -9,6 +9,10 @@ extension Bundle {
     var buildNumber: String? {
         return infoDictionary?["CFBundleVersion"] as? String
     }
+
+    var buildNumberInt: Int {
+        return Int(Bundle.main.buildNumber ?? "-1") ?? -1
+    }
 }
 
 func isDebug() -> Bool {
