@@ -33,7 +33,7 @@ class ConfirmPaymentViewController: UIViewController {
             return TransactionConfiguration(
                 speed: TransactionSpeed.custom(
                     gasPrice: TransactionSpeed.cheap.gasPrice,
-                    gasLimit: GethNewBigInt(124000)
+                    gasLimit: GethNewBigInt(144000)
                 )
             )
         case .ether:
