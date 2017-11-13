@@ -16,7 +16,7 @@ struct TransactionCellViewModel {
         self.chainState = chainState
     }
     var confirmations: Int {
-        return chainState.latestBlock - Int(transaction.blockNumber)
+        return max(chainState.latestBlock - Int(transaction.blockNumber), 0)
     }
 
     private var state: TransactionState {
