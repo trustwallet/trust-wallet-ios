@@ -14,6 +14,20 @@ struct RawTransaction: Decodable {
     let gasPrice: String
     let input: String
     let gasUsed: String
+
+    enum CodingKeys: String, CodingKey {
+        case hash = "_id"
+        case blockNumber
+        case timeStamp
+        case nonce
+        case from
+        case to
+        case value
+        case gas
+        case gasPrice
+        case input
+        case gasUsed
+    }
 }
 
 extension Transaction {
