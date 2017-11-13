@@ -59,11 +59,11 @@ class TransactionDataCoordinator {
             return transction.blockNumber - 2000
         }()
 
-        etherscanProvider.request(.transactions(address: account.address.address, startBlock: startBlock, endBlock: 999999999)) { result in
+        trustProvider.request(.getTransactions(address: account.address.address, startBlock: startBlock)) { result in
             switch result {
             case .success(let response):
                 do {
-                    let transactions = try response.map(EtherscanArrayResponse<EtherscanTransaction>.self).result
+                    let transactions = try response.map(ArrayResponse<RawTransaction>.self).docs
                     let chainID = self.config.chainID
                     let transactions2: [Transaction] = transactions.map { .from(
                         chainID: chainID,
