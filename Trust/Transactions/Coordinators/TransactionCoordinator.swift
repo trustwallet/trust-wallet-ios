@@ -52,8 +52,14 @@ class TransactionCoordinator: Coordinator {
             dataCoordinator: dataCoordinator,
             session: session
         )
+
+        let rightItems = [
+            UIBarButtonItem(image: R.image.accountsSwitch(), landscapeImagePhone: R.image.accountsSwitch(), style: .done, target: self, action: #selector(showAccounts)),
+            UIBarButtonItem(image: R.image.deposit(), landscapeImagePhone: R.image.deposit(), style: .done, target: self, action: #selector(deposit)),
+        ]
+
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.settings_icon(), landscapeImagePhone: R.image.settings_icon(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showSettings))
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.accountsSwitch(), landscapeImagePhone: R.image.accountsSwitch(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showAccounts))
+        controller.navigationItem.rightBarButtonItems = rightItems
         controller.delegate = self
         return controller
     }
@@ -131,6 +137,18 @@ class TransactionCoordinator: Coordinator {
         addCoordinator(coordinator)
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
+
+    @objc func deposit() {
+        showDeposit(for: session.account)
+    }
+
+    func showDeposit(for account: Account) {
+        let coordinator = DepositCoordinator(
+            navigationController: navigationController,
+            account: account
+        )
+        coordinator.start()
+    }
 }
 
 extension TransactionCoordinator: SettingsCoordinatorDelegate {
@@ -173,11 +191,7 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
     }
 
     func didPressDeposit(for account: Account, in viewController: TransactionsViewController) {
-        let coordinator = DepositCoordinator(
-            navigationController: navigationController,
-            account: account
-        )
-        coordinator.start()
+        showDeposit(for: account)
     }
 
     func reset() {

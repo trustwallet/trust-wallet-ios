@@ -18,6 +18,26 @@ class DepositCoordinator: Coordinator {
     }
 
     func start() {
+        showAlertSheet()
+    }
+
+    func showAlertSheet() {
+        let alertController = UIAlertController(
+            title: nil,
+            message: "How would you like to deposit?",
+            preferredStyle: .actionSheet
+        )
+        let coinbaseAction = UIAlertAction(title: "via Coinbase", style: .default) { _ in
+            self.showCoinbase()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
+
+        alertController.addAction(coinbaseAction)
+        alertController.addAction(cancelAction)
+        navigationController.present(alertController, animated: true, completion: nil)
+    }
+
+    func showCoinbase() {
         let widget = CoinbaseBuyWidget(
             address: account.address.address
         )
