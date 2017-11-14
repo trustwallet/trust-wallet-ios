@@ -117,3 +117,31 @@ extension Transaction {
         )
     }
 }
+
+extension Transaction {
+    static func from(
+        chainID: Int,
+        owner: Address,
+        transaction: EtherscanTransaction
+    ) -> Transaction {
+        let isError: Bool = {
+            if Int(transaction.isError) ?? 0 >= 1 { return true }
+            return false
+        }()
+        return Transaction(
+            id: transaction.hash,
+            owner: owner.address,
+            chainID: chainID,
+            blockNumber: Int(transaction.blockNumber) ?? 0,
+            from: transaction.from,
+            to: transaction.to,
+            value: transaction.value,
+            gas: transaction.gas,
+            gasPrice: transaction.gasPrice,
+            gasUsed: transaction.gasUsed,
+            nonce: transaction.nonce,
+            date: NSDate(timeIntervalSince1970: TimeInterval(transaction.timeStamp) ?? 0) as Date,
+            isError: Bool(isError)
+        )
+    }
+}
