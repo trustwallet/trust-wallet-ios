@@ -12,9 +12,9 @@ before_install:
   - gem install xcpretty -N
   - brew update
   - brew install swiftlint || true
+  - pod repo update master
 script:
   - set -o pipefail
-  - pod repo update
   - pod install
   - swiftlint
   - xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
