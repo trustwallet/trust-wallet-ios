@@ -27,4 +27,15 @@ class DepositCoordinatorTests: XCTestCase {
 
         XCTAssertTrue(coordinator.navigationController.presentedViewController is SFSafariViewController)
     }
+
+    func testDepositShapeShift() {
+        let coordinator = DepositCoordinator(
+            navigationController: FakeNavigationController(),
+            account: .make()
+        )
+
+        coordinator.showShapeShift()
+
+        XCTAssertTrue(coordinator.navigationController.presentedViewController is SFSafariViewController)
+    }
 }

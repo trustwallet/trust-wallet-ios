@@ -42,7 +42,7 @@ class TransactionsEmptyView: UIView {
         button.addTarget(self, action: #selector(retry), for: .touchUpInside)
 
         depositButton.translatesAutoresizingMaskIntoConstraints = false
-        depositButton.setTitle(NSLocalizedString("transactionsEmpty.deposit", value: "Deposit", comment: ""), for: .normal)
+        depositButton.setTitle(NSLocalizedString("transactionsEmpty.deposit", value: "Buy", comment: ""), for: .normal)
         depositButton.addTarget(self, action: #selector(deposit), for: .touchUpInside)
 
         let stackView = UIStackView(arrangedSubviews: [
