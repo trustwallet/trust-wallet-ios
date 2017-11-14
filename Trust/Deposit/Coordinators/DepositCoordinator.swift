@@ -27,7 +27,7 @@ class DepositCoordinator: Coordinator {
             message: NSLocalizedString("deposit.alertSheetMessage", value: "How would you like to deposit?", comment: ""),
             preferredStyle: .actionSheet
         )
-        let coinbaseAction = UIAlertAction(title: NSLocalizedString("deposit.coinbaseOption", value: "via Coinbase", comment: ""), style: .default) { _ in
+        let coinbaseAction = UIAlertAction(title: NSLocalizedString("deposit.viaCoinbase", value: "via Coinbase", comment: ""), style: .default) { _ in
             self.showCoinbase()
         }
         let cancelAction = UIAlertAction(title: NSLocalizedString("generic.cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
