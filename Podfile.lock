@@ -14,7 +14,7 @@ PODS:
     - Result (~> 3.1)
   - JSONRPCKit (2.0.0):
     - Result (~> 3.0)
-  - KeychainSwift (9.0.2)
+  - KeychainSwift (10.0.0)
   - Lokalise (0.6.3):
     - zipzap (= 8.1.1)
   - MBProgressHUD (1.0.0)
@@ -96,7 +96,7 @@ SPEC CHECKSUMS:
   Geth: a2a2b98bbe0605064f1dd97b8b1cff8b5c0e2701
   JavaScriptKit: 9ff565209e6efe21bcb9c6d6ca3e863a67a8ecf7
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
-  KeychainSwift: 3ab1d428d0dbff59cd056f1d0bfc640b36c2b081
+  KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
   Lokalise: cda831fccdc4c24889f6e86c572cbcaa1fe47659
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   Moya: 7fb3c51aa9b3fdf5ea7d9412e03b63edb9559fb3
