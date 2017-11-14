@@ -14,9 +14,10 @@ before_install:
   - brew install swiftlint || true
 script:
   - set -o pipefail
-  - pod install --repo-update
-  - xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
+  - pod repo update
+  - pod install
   - swiftlint
+  - xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
 
 notifications:
   slack: trust-wallet:33Vj3pGpKoBMTBAHTB8dF79n
