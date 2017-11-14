@@ -30,7 +30,6 @@ class TransactionDataCoordinator {
     weak var delegate: TransactionDataCoordinatorDelegate?
 
     private let trustProvider = MoyaProvider<TrustService>()
-    private let etherscanProvider = MoyaProvider<EtherscanService>()
 
     init(
         account: Account,
