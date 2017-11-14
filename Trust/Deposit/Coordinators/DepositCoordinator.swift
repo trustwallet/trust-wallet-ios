@@ -24,13 +24,13 @@ class DepositCoordinator: Coordinator {
     func showAlertSheet() {
         let alertController = UIAlertController(
             title: nil,
-            message: "How would you like to deposit?",
+            message: NSLocalizedString("deposit.alertSheetMessage", value: "How would you like to deposit?", comment: ""),
             preferredStyle: .actionSheet
         )
-        let coinbaseAction = UIAlertAction(title: "via Coinbase", style: .default) { _ in
+        let coinbaseAction = UIAlertAction(title: NSLocalizedString("deposit.coinbaseOption", value: "via Coinbase", comment: ""), style: .default) { _ in
             self.showCoinbase()
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
+        let cancelAction = UIAlertAction(title: NSLocalizedString("generic.cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
 
         alertController.addAction(coinbaseAction)
         alertController.addAction(cancelAction)
