@@ -129,6 +129,10 @@
 		29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29850D2A1F6B30FF00791A49 /* TransactionViewController.swift */; };
 		298542E31FBA722F00CB5081 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542E21FBA722F00CB5081 /* ContainerView.swift */; };
 		298542E51FBA9B0700CB5081 /* ShapeShift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542E41FBA9B0700CB5081 /* ShapeShift.swift */; };
+		298542E81FBAD0B200CB5081 /* OperationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542E71FBAD0B200CB5081 /* OperationType.swift */; };
+		298542EA1FBAD12200CB5081 /* TokenTransferOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542E91FBAD12200CB5081 /* TokenTransferOperation.swift */; };
+		298542EC1FBAD16800CB5081 /* ERC20Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542EB1FBAD16800CB5081 /* ERC20Contract.swift */; };
+		298542EE1FBAD32500CB5081 /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542ED1FBAD32500CB5081 /* Operation.swift */; };
 		2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2995739E1FA1F294006F17FD /* QRURLParser.swift */; };
 		299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A11FA1F369006F17FD /* QRURLParserTests.swift */; };
 		299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A31FA27A15006F17FD /* TestKeyStore.swift */; };
@@ -364,6 +368,10 @@
 		29850D2A1F6B30FF00791A49 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		298542E21FBA722F00CB5081 /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
 		298542E41FBA9B0700CB5081 /* ShapeShift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeShift.swift; sourceTree = "<group>"; };
+		298542E71FBAD0B200CB5081 /* OperationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationType.swift; sourceTree = "<group>"; };
+		298542E91FBAD12200CB5081 /* TokenTransferOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenTransferOperation.swift; sourceTree = "<group>"; };
+		298542EB1FBAD16800CB5081 /* ERC20Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERC20Contract.swift; sourceTree = "<group>"; };
+		298542ED1FBAD32500CB5081 /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
 		2995739E1FA1F294006F17FD /* QRURLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParser.swift; sourceTree = "<group>"; };
 		299573A11FA1F369006F17FD /* QRURLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParserTests.swift; sourceTree = "<group>"; };
 		299573A31FA27A15006F17FD /* TestKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestKeyStore.swift; sourceTree = "<group>"; };
@@ -1261,6 +1269,10 @@
 			children = (
 				2959961E1FAE759700DB66A8 /* RawTransaction.swift */,
 				29C80D501FB67A110037B1E0 /* ArrayResponse.swift */,
+				298542E71FBAD0B200CB5081 /* OperationType.swift */,
+				298542E91FBAD12200CB5081 /* TokenTransferOperation.swift */,
+				298542EB1FBAD16800CB5081 /* ERC20Contract.swift */,
+				298542ED1FBAD32500CB5081 /* Operation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1794,6 +1806,7 @@
 				29DBF2A11F9DA6EF00327C60 /* BackupViewController.swift in Sources */,
 				29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */,
 				2963B6AB1F9818C7003063C1 /* TransactionHeaderViewModel.swift in Sources */,
+				298542EC1FBAD16800CB5081 /* ERC20Contract.swift in Sources */,
 				29AD8A091F93F8B2008E10E7 /* Session.swift in Sources */,
 				291F52B91F6B880F00B369AB /* EtherKeystore.swift in Sources */,
 				293248901F897787008A9818 /* OnePasswordCoordinator.swift in Sources */,
@@ -1854,6 +1867,7 @@
 				291F52C11F6C8A1F00B369AB /* AccountsViewModel.swift in Sources */,
 				298542E31FBA722F00CB5081 /* ContainerView.swift in Sources */,
 				29CAEB8E1F70A2FB00F7357D /* TransactionCellViewModel.swift in Sources */,
+				298542E81FBAD0B200CB5081 /* OperationType.swift in Sources */,
 				29BE3FD01F7071A200F6BFC2 /* UIColor.swift in Sources */,
 				2996F1481F6C9AE5005C33AE /* SettingsCoordinator.swift in Sources */,
 				29C80D4D1FB5202C0037B1E0 /* BalanceBaseViewModel.swift in Sources */,
@@ -1892,12 +1906,14 @@
 				2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */,
 				29A0E1851F706B8C00BAAAED /* String.swift in Sources */,
 				296AF9A71F736EC70058AF78 /* RPCServers.swift in Sources */,
+				298542EA1FBAD12200CB5081 /* TokenTransferOperation.swift in Sources */,
 				296AF9A91F737F6F0058AF78 /* SendRawTransactionRequest.swift in Sources */,
 				2912CD2F1F6A83A100C6CBE3 /* ImportWalletViewController.swift in Sources */,
 				2996F1501F6CA80C005C33AE /* ExportError.swift in Sources */,
 				2996F1461F6C98B3005C33AE /* SettingsViewController.swift in Sources */,
 				2963B6AD1F981A96003063C1 /* TransactionAppearance.swift in Sources */,
 				29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */,
+				298542EE1FBAD32500CB5081 /* Operation.swift in Sources */,
 				29C80D411FB2E1610037B1E0 /* EthplorerService.swift in Sources */,
 				296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */,
 				29A13E2C1F6A955700E432A2 /* CreateWalletViewModel.swift in Sources */,
