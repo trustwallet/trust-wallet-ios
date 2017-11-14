@@ -10,18 +10,18 @@ class CoinbaseBuyWidget {
     private let cryptoCurrency: String
 
     var url: URL {
-        return URL(string: "https://buy.coinbase.com/widget?code=88d6141a-ff60-536c-841c-8f830adaacfd&amount=\(amount)&address=\(address)&crypto_currency=\(cryptoCurrency)")!
+        return URL(string: "https://buy.coinbase.com/widget?code=\(widgetCode)&amount=\(amount)&address=\(address)&crypto_currency=\(cryptoCurrency)")!
     }
 
     init(
         amount: Int = 0,
         address: String,
-        widgetCode: String = Constants.coinbaseWidgetCode,
+        code: String = Constants.coinbaseWidgetCode,
         cryptoCurrency: String = "ETH"
     ) {
         self.amount = amount
         self.address = address
-        self.widgetCode = widgetCode
+        self.widgetCode = code
         self.cryptoCurrency = cryptoCurrency
     }
 }
