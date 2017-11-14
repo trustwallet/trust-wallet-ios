@@ -9,7 +9,7 @@ PODS:
     - EARestrictedScrollView (~> 1.1.0)
   - EARestrictedScrollView (1.1.0)
   - Eureka (3.0.0)
-  - Geth (1.7.0)
+  - Geth (1.7.2)
   - JavaScriptKit (1.0.0):
     - Result (~> 3.1)
   - JSONRPCKit (2.0.0):
@@ -93,7 +93,7 @@ SPEC CHECKSUMS:
   EAIntroView: 3494b7bbd1212e3a4f7e8d16194a1b00e7b9abb2
   EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
   Eureka: 5b9418d7bfdc21ca977d69d124a6409f3e9af2c7
-  Geth: a2a2b98bbe0605064f1dd97b8b1cff8b5c0e2701
+  Geth: 1efbf2eb4d4c697a7232c5385da127ca386b1060
   JavaScriptKit: 9ff565209e6efe21bcb9c6d6ca3e863a67a8ecf7
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
