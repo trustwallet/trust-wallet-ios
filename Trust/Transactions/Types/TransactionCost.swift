@@ -20,7 +20,7 @@ enum TransactionSpeed {
 
     var gasLimit: GethBigInt {
         switch self {
-        case .regular, .fast, .cheap: return GethNewBigInt(121000)
+        case .regular, .fast, .cheap: return GethNewBigInt(90000)
         case .custom(_, let gasLimit): return gasLimit
         }
     }
