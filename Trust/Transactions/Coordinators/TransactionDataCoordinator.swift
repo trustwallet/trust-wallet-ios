@@ -53,10 +53,10 @@ class TransactionDataCoordinator {
 
     @objc func fetchTransactions() {
         let startBlock: Int = {
-            guard let transction = storage.objects.first, storage.objects.count <= 30 else {
-                return 0
+            guard let transaction = storage.objects.first, storage.objects.count <= 30 else {
+                return 1
             }
-            return transction.blockNumber - 2000
+            return transaction.blockNumber - 2000
         }()
 
         etherscanProvider.request(.transactions(address: account.address.address, startBlock: startBlock, endBlock: 999999999)) { result in
