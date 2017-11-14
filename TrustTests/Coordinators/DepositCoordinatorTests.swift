@@ -14,6 +14,17 @@ class DepositCoordinatorTests: XCTestCase {
 
         coordinator.start()
 
+        XCTAssertTrue(coordinator.navigationController.presentedViewController is UIAlertController)
+    }
+
+    func testDepositCoinbase() {
+        let coordinator = DepositCoordinator(
+            navigationController: FakeNavigationController(),
+            account: .make()
+        )
+
+        coordinator.showCoinbase()
+
         XCTAssertTrue(coordinator.navigationController.presentedViewController is SFSafariViewController)
     }
 }
