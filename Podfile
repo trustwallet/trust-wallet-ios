@@ -18,7 +18,7 @@ target 'Trust' do
   pod 'QRCodeReaderViewController'
   pod 'KeychainSwift'
   pod 'SwiftLint'
-  pod 'SeedStackViewController', :git=>'https://github.com/seedco/StackViewController.git', :branch=>'swift32'
+  pod 'SeedStackViewController'
   pod 'RealmSwift'
   pod 'BonMot'
   pod 'VENTouchLock'
