@@ -57,6 +57,7 @@ class SettingsViewController: FormViewController {
                 $0.options = [
                     RPCServer.main.name,
                     RPCServer.kovan.name,
+                    RPCServer.oraclesTest.name,
                 ]
                 $0.value = RPCServer(chainID: config.chainID).name
             }.onChange { row in
