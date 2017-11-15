@@ -93,12 +93,14 @@ class TransactionsViewController: UIViewController {
 
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
-        emptyView = TransactionsEmptyView(
-            insets: insets,
-            onDeposit: { [unowned self] in
-                self.showDeposit()
-            }
-        )
+        emptyView = {
+            let view = TransactionsEmptyView(
+                insets: insets,
+                onDeposit: { [unowned self] in self.showDeposit() }
+            )
+            view.isDepositAvailable = viewModel.isBuyActionAvailable
+            return view
+        }()
 
         navigationItem.titleView = titleView
         titleView.configure(viewModel: BalanceViewModel())
