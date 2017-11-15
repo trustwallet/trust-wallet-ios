@@ -9,7 +9,6 @@ import CryptoSwift
 class EtherKeystore: Keystore {
 
     struct Keys {
-        static let keychainKeyPrefix = "trustwallet"
         static let recentlyUsedAddress: String = "recentlyUsedAddress"
     }
 
@@ -19,7 +18,7 @@ class EtherKeystore: Keystore {
     let gethKeyStorage: GethKeyStore
 
     public init(
-        keychain: KeychainSwift = KeychainSwift(keyPrefix: Keys.keychainKeyPrefix),
+        keychain: KeychainSwift = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix),
         keyStoreSubfolder: String = "/keystore"
     ) {
         let keydir = datadir + keyStoreSubfolder

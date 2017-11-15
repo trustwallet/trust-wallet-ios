@@ -13,7 +13,10 @@ class AppCoordinator: NSObject, Coordinator {
         return controller
     }()
 
-    let touchRegistrar = TouchRegistrar()
+    lazy var touchRegistrar: TouchRegistrar = {
+        return TouchRegistrar(keystore: self.keystore)
+    }()
+
     let pushNotificationRegistrar = PushNotificationsRegistrar()
 
     private var keystore: Keystore

@@ -27,7 +27,10 @@ struct RawTransaction: Decodable {
         case gasPrice
         case input
         case gasUsed
+        case operations
     }
+
+    let operations: [Operation]
 }
 
 extension Transaction {
