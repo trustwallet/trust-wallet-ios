@@ -52,7 +52,7 @@ class TransactionDataCoordinator {
 
     @objc func fetchTransactions() {
         let startBlock: Int = {
-            guard let transaction = storage.objects.first, storage.objects.count <= 30 else {
+            guard let transaction = storage.objects.first, storage.objects.count >= 30 else {
                 return 1
             }
             return transaction.blockNumber - 2000
