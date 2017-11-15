@@ -16,7 +16,7 @@ protocol TransactionsViewControllerDelegate: class {
 
 class TransactionsViewController: UIViewController {
 
-    var viewModel: TransactionsViewModel = TransactionsViewModel(transactions: [])
+    var viewModel: TransactionsViewModel
 
     let account: Account
     let tableView = UITableView(frame: .zero, style: .plain)
@@ -41,11 +41,13 @@ class TransactionsViewController: UIViewController {
     init(
         account: Account,
         dataCoordinator: TransactionDataCoordinator,
-        session: WalletSession
+        session: WalletSession,
+        viewModel: TransactionsViewModel = TransactionsViewModel(transactions: [])
     ) {
         self.account = account
         self.dataCoordinator = dataCoordinator
         self.session = session
+        self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
 

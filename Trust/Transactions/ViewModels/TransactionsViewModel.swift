@@ -12,8 +12,13 @@ struct TransactionsViewModel {
     }()
 
     var items: [(date: String, transactions: [Transaction])] = []
+    let config: Config
 
-    init(transactions: [Transaction]) {
+    init(
+        transactions: [Transaction] = [],
+        config: Config = Config()
+    ) {
+        self.config = config
 
         var newItems: [String: [Transaction]] = [:]
 
@@ -69,5 +74,12 @@ struct TransactionsViewModel {
         if NSCalendar.current.isDateInToday(date) { return "Today" }
         if NSCalendar.current.isDateInYesterday(date) { return "Yesterday" }
         return value
+    }
+
+    var isBuyActionAvailable: Bool {
+        switch config.server {
+        case .main: return true
+        case .kovan, .oraclesTest: return false
+        }
     }
 }
