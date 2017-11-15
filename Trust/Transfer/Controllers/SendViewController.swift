@@ -16,7 +16,7 @@ protocol SendViewControllerDelegate: class {
 class SendViewController: FormViewController {
 
     private lazy var viewModel: SendViewModel = {
-        return .init(transferType: self.transferType)
+        return .init(transferType: self.transferType, config: Config())
     }()
     private let keystore = EtherKeystore()
     weak var delegate: SendViewControllerDelegate?

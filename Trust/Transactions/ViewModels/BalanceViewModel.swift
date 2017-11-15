@@ -36,14 +36,14 @@ struct BalanceViewModel: BalanceBaseViewModel {
 
     var amountString: String {
         guard let balance = balance else { return "--" }
-        guard !balance.isZero else { return "0.00 ETH" }
-        return "\(balance.amount) ETH"
+        guard !balance.isZero else { return "0.00 \(config.server.symbol)" }
+        return "\(balance.amount) \(config.server.symbol)"
     }
 
     var currencyAmount: String? {
         guard let rate = rate else { return nil }
         guard
-            let currentRate = (rate.rates.filter { $0.code == "ETH" }.first),
+            let currentRate = (rate.rates.filter { $0.code == config.server.symbol }.first),
             currentRate.price > 0,
             amount > 0
         else { return nil }

@@ -9,7 +9,10 @@ import StackViewController
 class RequestViewController: UIViewController {
 
     private lazy var viewModel: RequestViewModel = {
-        return .init(transferType: self.transferType)
+        return .init(
+            transferType: self.transferType,
+            config: Config()
+        )
     }()
 
     let stackViewController = StackViewController()
@@ -43,7 +46,7 @@ class RequestViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
-        label.text = "My Ethereum Wallet Address"
+        label.text = self.viewModel.headlineTitle
         return label
     }()
 
@@ -67,7 +70,6 @@ class RequestViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
         displayStackViewController()

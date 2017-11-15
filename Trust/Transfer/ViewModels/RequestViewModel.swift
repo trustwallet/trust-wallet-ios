@@ -6,15 +6,21 @@ import UIKit
 struct RequestViewModel {
 
     let transferType: TransferType
+    let config: Config
 
-    init(transferType: TransferType) {
+    init(
+        transferType: TransferType,
+        config: Config
+    ) {
         self.transferType = transferType
+        self.config = config
     }
 
-    var title: String {
-        switch transferType {
-        case .ether: return "Request ETH"
-        case .token(let token): return "Request \(token.name)"
+    var headlineTitle: String {
+        switch config.server {
+        case .main: return NSLocalizedString("request.headlineTitle", value: "My Ethereum Wallet Address", comment: "")
+        case .kovan: return NSLocalizedString("request.headlineTitle", value: "My Ethereum Wallet Address", comment: "")
+        case .oraclesTest: return NSLocalizedString("request.headlineTitle", value: "My Oracles Wallet Address", comment: "")
         }
     }
 

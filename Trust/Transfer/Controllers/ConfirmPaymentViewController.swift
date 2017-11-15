@@ -64,7 +64,8 @@ class ConfirmPaymentViewController: UIViewController {
             .spacer(),
             TransactionAppearance.header(
                 viewModel: ConfirmTransactionHeaderViewModel(
-                    transaction: transaction
+                    transaction: transaction,
+                    config: Config()
                 )
             ),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
