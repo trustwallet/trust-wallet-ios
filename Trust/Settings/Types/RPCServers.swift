@@ -23,6 +23,14 @@ enum RPCServer: String {
         }
     }
 
+    var symbol: String {
+        switch self {
+        case .main: return "ETH"
+        case .kovan: return "ETH"
+        case .oraclesTest: return "POA"
+        }
+    }
+
     init(name: String) {
         self = {
             switch name {
