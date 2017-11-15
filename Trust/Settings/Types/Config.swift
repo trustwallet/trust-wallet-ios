@@ -60,7 +60,7 @@ struct Config {
             switch server {
             case .main: return "https://api.trustwalletapp.com"
             case .kovan: return "https://kovan.trustwalletapp.com"
-            case .oraclesTest: return "https://oracles-test.trustwalletapp.com"
+            case .oraclesTest: return "https://oracles.trustwalletapp.com"
             }
         }()
         return URL(string: urlString)!
