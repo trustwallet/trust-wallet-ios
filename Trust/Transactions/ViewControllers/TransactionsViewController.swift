@@ -16,7 +16,7 @@ protocol TransactionsViewControllerDelegate: class {
 
 class TransactionsViewController: UIViewController {
 
-    var viewModel: TransactionsViewModel = TransactionsViewModel(transactions: [])
+    var viewModel: TransactionsViewModel
 
     let account: Account
     let tableView = UITableView(frame: .zero, style: .plain)
@@ -41,11 +41,13 @@ class TransactionsViewController: UIViewController {
     init(
         account: Account,
         dataCoordinator: TransactionDataCoordinator,
-        session: WalletSession
+        session: WalletSession,
+        viewModel: TransactionsViewModel = TransactionsViewModel(transactions: [])
     ) {
         self.account = account
         self.dataCoordinator = dataCoordinator
         self.session = session
+        self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
 
@@ -91,12 +93,14 @@ class TransactionsViewController: UIViewController {
 
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
-        emptyView = TransactionsEmptyView(
-            insets: insets,
-            onDeposit: { [unowned self] in
-                self.showDeposit()
-            }
-        )
+        emptyView = {
+            let view = TransactionsEmptyView(
+                insets: insets,
+                onDeposit: { [unowned self] in self.showDeposit() }
+            )
+            view.isDepositAvailable = viewModel.isBuyActionAvailable
+            return view
+        }()
 
         navigationItem.titleView = titleView
         titleView.configure(viewModel: BalanceViewModel())

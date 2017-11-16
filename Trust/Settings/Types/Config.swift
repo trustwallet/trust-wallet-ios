@@ -38,6 +38,7 @@ struct Config {
             switch server {
             case .main: return "https://mainnet.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .kovan: return "https://kovan.infura.io/llyrtzQ3YhkdESt2Fzrk"
+            case .oraclesTest: return "http://testnet.oracles.org:8545"
             }
         }()
         return URL(string: urlString)!
@@ -48,6 +49,7 @@ struct Config {
             switch server {
             case .main: return "https://etherscan.io"
             case .kovan: return "https://kovan.etherscan.io"
+            case .oraclesTest: return "https://empty.com"
             }
         }()
         return URL(string: urlString)!
@@ -58,6 +60,7 @@ struct Config {
             switch server {
             case .main: return "https://api.trustwalletapp.com"
             case .kovan: return "https://kovan.trustwalletapp.com"
+            case .oraclesTest: return "https://oracles.trustwalletapp.com"
             }
         }()
         return URL(string: urlString)!

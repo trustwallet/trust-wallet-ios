@@ -6,11 +6,14 @@ import UIKit
 struct ConfirmTransactionHeaderViewModel: TransactionHeaderBaseViewModel {
 
     private let transaction: UnconfirmedTransaction
+    let config: Config
 
     init(
-        transaction: UnconfirmedTransaction
+        transaction: UnconfirmedTransaction,
+        config: Config
     ) {
         self.transaction = transaction
+        self.config = config
     }
 
     var amountTextColor: UIColor {
@@ -27,7 +30,7 @@ struct ConfirmTransactionHeaderViewModel: TransactionHeaderBaseViewModel {
         )
 
         let currency = NSAttributedString(
-            string: " \(transaction.transferType.symbol)",
+            string: " \(transaction.transferType.symbol(server: config.server))",
             attributes: [
                 NSFontAttributeName: UIFont.systemFont(ofSize: 20),
             ]

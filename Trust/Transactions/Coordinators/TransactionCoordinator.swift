@@ -47,16 +47,26 @@ class TransactionCoordinator: Coordinator {
     }
 
     private func makeTransactionsController(with account: Account) -> TransactionsViewController {
+        let viewModel = TransactionsViewModel()
         let controller = TransactionsViewController(
             account: account,
             dataCoordinator: dataCoordinator,
-            session: session
+            session: session,
+            viewModel: viewModel
         )
 
-        let rightItems = [
-            UIBarButtonItem(image: R.image.accountsSwitch(), landscapeImagePhone: R.image.accountsSwitch(), style: .done, target: self, action: #selector(showAccounts)),
-            UIBarButtonItem(image: R.image.deposit(), landscapeImagePhone: R.image.deposit(), style: .done, target: self, action: #selector(deposit)),
-        ]
+        let accountsBarButtonItem = UIBarButtonItem(image: R.image.accountsSwitch(), landscapeImagePhone: R.image.accountsSwitch(), style: .done, target: self, action: #selector(showAccounts))
+        let rightItems: [UIBarButtonItem] = {
+            switch viewModel.isBuyActionAvailable {
+            case true:
+                return [
+                    accountsBarButtonItem,
+                    UIBarButtonItem(image: R.image.deposit(), landscapeImagePhone: R.image.deposit(), style: .done, target: self, action: #selector(deposit)),
+                ]
+            case false:
+                return [accountsBarButtonItem]
+            }
+        }()
 
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.settings_icon(), landscapeImagePhone: R.image.settings_icon(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showSettings))
         controller.navigationItem.rightBarButtonItems = rightItems

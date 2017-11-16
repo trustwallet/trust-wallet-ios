@@ -48,7 +48,8 @@ class TransactionViewController: UIViewController {
             TransactionAppearance.header(
                 viewModel: TransactionHeaderViewModel(
                     amount: Double(value) ?? 0,
-                    direction: transaction.direction
+                    direction: transaction.direction,
+                    config: config
                 )
             ),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),

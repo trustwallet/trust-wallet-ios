@@ -15,6 +15,12 @@ class TransactionsEmptyView: UIView {
     var onDeposit: (() -> Void)? = .none
     private let viewModel = StateViewModel()
 
+    var isDepositAvailable: Bool = true {
+        didSet {
+            depositButton.isHidden = !isDepositAvailable
+        }
+    }
+
     init(
         title: String = NSLocalizedString("transactions.noTransactions", value: "No Transactions Yet!", comment: ""),
         image: UIImage? = R.image.no_transactions_mascot(),

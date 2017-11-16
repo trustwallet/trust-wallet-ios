@@ -31,6 +31,10 @@ class SettingsViewController: FormViewController {
         return UIApplication.shared.isRegisteredForRemoteNotifications && !settings.types.isEmpty
     }
 
+    lazy var viewModel: SettingsViewModel = {
+        return SettingsViewModel(isDebug: isDebug())
+    }()
+
     // swiftlint:disable:next function_body_length
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,10 +58,7 @@ class SettingsViewController: FormViewController {
 
             <<< PushRow<String> {
                 $0.title = NSLocalizedString("Settings.RPCServer", value: "RPC Server", comment: "")
-                $0.options = [
-                    RPCServer.main.name,
-                    RPCServer.kovan.name,
-                ]
+                $0.options = viewModel.servers
                 $0.value = RPCServer(chainID: config.chainID).name
             }.onChange { row in
                 self.config.chainID = RPCServer(name: row.value ?? "").chainID

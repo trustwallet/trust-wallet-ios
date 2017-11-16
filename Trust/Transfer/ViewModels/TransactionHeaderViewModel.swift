@@ -7,13 +7,16 @@ struct TransactionHeaderViewModel: TransactionHeaderBaseViewModel {
 
     private let amount: Double
     private let direction: TransactionDirection
+    private let config: Config
 
     init(
         amount: Double,
-        direction: TransactionDirection
+        direction: TransactionDirection,
+        config: Config
     ) {
         self.amount = amount
         self.direction = direction
+        self.config = config
     }
 
     var amountTextColor: UIColor {
@@ -33,7 +36,7 @@ struct TransactionHeaderViewModel: TransactionHeaderBaseViewModel {
         )
 
         let currency = NSAttributedString(
-            string: " ETH",
+            string: " " + config.server.symbol,
             attributes: [
                 NSFontAttributeName: UIFont.systemFont(ofSize: 14),
             ]
