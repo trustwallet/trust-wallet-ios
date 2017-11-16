@@ -61,15 +61,17 @@ class TransactionsViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(footerView)
 
-        let tokensButton = Button(size: .extraLarge, style: .borderless)
-        tokensButton.setTitle(NSLocalizedString("Transactions.ShowTokens", value: "Show my tokens", comment: ""), for: .normal)
-        tokensButton.contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
-        tokensButton.setTitleColor(Colors.black, for: .normal)
-        tokensButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium)
-        tokensButton.sizeToFit()
-        tokensButton.addTarget(self, action: #selector(showTokens), for: .touchUpInside)
+        if viewModel.isTokensAvailable {
+            let tokensButton = Button(size: .extraLarge, style: .borderless)
+            tokensButton.setTitle(NSLocalizedString("Transactions.ShowTokens", value: "Show my tokens", comment: ""), for: .normal)
+            tokensButton.contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+            tokensButton.setTitleColor(Colors.black, for: .normal)
+            tokensButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium)
+            tokensButton.sizeToFit()
+            tokensButton.addTarget(self, action: #selector(showTokens), for: .touchUpInside)
 
-        tableView.tableHeaderView = tokensButton
+            tableView.tableHeaderView = tokensButton
+        }
 
         NSLayoutConstraint.activate([
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
