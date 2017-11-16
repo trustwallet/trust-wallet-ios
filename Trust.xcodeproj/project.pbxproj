@@ -133,6 +133,7 @@
 		298542EA1FBAD12200CB5081 /* TokenTransferOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542E91FBAD12200CB5081 /* TokenTransferOperation.swift */; };
 		298542EC1FBAD16800CB5081 /* ERC20Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542EB1FBAD16800CB5081 /* ERC20Contract.swift */; };
 		298542EE1FBAD32500CB5081 /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542ED1FBAD32500CB5081 /* Operation.swift */; };
+		298542F31FBD594D00CB5081 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F21FBD594D00CB5081 /* SettingsViewModel.swift */; };
 		2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2995739E1FA1F294006F17FD /* QRURLParser.swift */; };
 		299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A11FA1F369006F17FD /* QRURLParserTests.swift */; };
 		299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A31FA27A15006F17FD /* TestKeyStore.swift */; };
@@ -372,6 +373,7 @@
 		298542E91FBAD12200CB5081 /* TokenTransferOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenTransferOperation.swift; sourceTree = "<group>"; };
 		298542EB1FBAD16800CB5081 /* ERC20Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERC20Contract.swift; sourceTree = "<group>"; };
 		298542ED1FBAD32500CB5081 /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
+		298542F21FBD594D00CB5081 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		2995739E1FA1F294006F17FD /* QRURLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParser.swift; sourceTree = "<group>"; };
 		299573A11FA1F369006F17FD /* QRURLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParserTests.swift; sourceTree = "<group>"; };
 		299573A31FA27A15006F17FD /* TestKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestKeyStore.swift; sourceTree = "<group>"; };
@@ -1078,6 +1080,14 @@
 			path = ShapeShift;
 			sourceTree = "<group>";
 		};
+		298542F11FBD593900CB5081 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				298542F21FBD594D00CB5081 /* SettingsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		299573A01FA1F35B006F17FD /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1089,6 +1099,7 @@
 		2996F1441F6C9875005C33AE /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				298542F11FBD593900CB5081 /* ViewModels */,
 				296105911FA2A92700292494 /* Views */,
 				2977CAE41F7E0B69009682A0 /* Coordinators */,
 				29FC9BC71F83144D000209CD /* ViewControllers */,
@@ -1942,6 +1953,7 @@
 				29F114F61FA8147300114A29 /* RequestCoordinator.swift in Sources */,
 				291F52A91F6B7BE100B369AB /* BlockNumber.swift in Sources */,
 				290B2B701F930AB90053C83E /* PushNotificationsRegistrar.swift in Sources */,
+				298542F31FBD594D00CB5081 /* SettingsViewModel.swift in Sources */,
 				29B6AED11F7C881D00EC6DE3 /* TransactionCost.swift in Sources */,
 				296106CA1F764AB60006164B /* TokensDataStore.swift in Sources */,
 				291A1B651F974E8600ADEC80 /* WalletEntryPoint.swift in Sources */,
