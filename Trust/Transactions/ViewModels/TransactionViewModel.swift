@@ -14,9 +14,14 @@ struct TransactionViewModel {
     }()
 
     let transaction: Transaction
+    let config: Config
 
-    init(transaction: Transaction) {
+    init(
+        transaction: Transaction,
+        config: Config
+    ) {
         self.transaction = transaction
+        self.config = config
     }
 
     var title: String {
@@ -37,5 +42,9 @@ struct TransactionViewModel {
 
     var createdAt: String {
         return TransactionViewModel.formatter.string(from: transaction.date)
+    }
+
+    var detailsURL: URL {
+        return ConfigExplorer(server: config.server).transactionURL(for: transaction.id)
     }
 }

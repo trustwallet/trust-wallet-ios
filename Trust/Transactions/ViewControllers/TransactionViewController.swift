@@ -8,7 +8,7 @@ import SafariServices
 class TransactionViewController: UIViewController {
 
     private lazy var viewModel: TransactionViewModel = {
-        return .init(transaction: self.transaction)
+        return .init(transaction: self.transaction, config: self.config)
     }()
     let stackViewController = StackViewController()
 
@@ -88,8 +88,7 @@ class TransactionViewController: UIViewController {
     }
 
     func more() {
-        let url = config.etherScanURL.absoluteString + "/tx/" + transaction.id
-        let controller = SFSafariViewController(url: URL(string: url)!)
+        let controller = SFSafariViewController(url: viewModel.detailsURL)
         present(controller, animated: true, completion: nil)
     }
 

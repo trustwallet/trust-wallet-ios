@@ -134,6 +134,8 @@
 		298542EC1FBAD16800CB5081 /* ERC20Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542EB1FBAD16800CB5081 /* ERC20Contract.swift */; };
 		298542EE1FBAD32500CB5081 /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542ED1FBAD32500CB5081 /* Operation.swift */; };
 		298542F31FBD594D00CB5081 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F21FBD594D00CB5081 /* SettingsViewModel.swift */; };
+		298542F51FBD8E6A00CB5081 /* ConfigExplorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F41FBD8E6A00CB5081 /* ConfigExplorer.swift */; };
+		298542F71FBD8FD700CB5081 /* ConfigExplorerConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F61FBD8FD700CB5081 /* ConfigExplorerConstants.swift */; };
 		2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2995739E1FA1F294006F17FD /* QRURLParser.swift */; };
 		299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A11FA1F369006F17FD /* QRURLParserTests.swift */; };
 		299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A31FA27A15006F17FD /* TestKeyStore.swift */; };
@@ -374,6 +376,8 @@
 		298542EB1FBAD16800CB5081 /* ERC20Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERC20Contract.swift; sourceTree = "<group>"; };
 		298542ED1FBAD32500CB5081 /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
 		298542F21FBD594D00CB5081 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		298542F41FBD8E6A00CB5081 /* ConfigExplorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigExplorer.swift; sourceTree = "<group>"; };
+		298542F61FBD8FD700CB5081 /* ConfigExplorerConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigExplorerConstants.swift; sourceTree = "<group>"; };
 		2995739E1FA1F294006F17FD /* QRURLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParser.swift; sourceTree = "<group>"; };
 		299573A11FA1F369006F17FD /* QRURLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParserTests.swift; sourceTree = "<group>"; };
 		299573A31FA27A15006F17FD /* TestKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestKeyStore.swift; sourceTree = "<group>"; };
@@ -1333,6 +1337,8 @@
 				2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */,
 				290B2B661F9266630053C83E /* SettingsAction.swift */,
 				29AD8A031F93D6CD008E10E7 /* Constants.swift */,
+				298542F41FBD8E6A00CB5081 /* ConfigExplorer.swift */,
+				298542F61FBD8FD700CB5081 /* ConfigExplorerConstants.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1848,6 +1854,7 @@
 				296105931FA2AA2100292494 /* SignTransaction.swift in Sources */,
 				296105951FA2DEF000292494 /* TransactionDirection.swift in Sources */,
 				291ED08B1F6F5D2100E7E93A /* Bundle.swift in Sources */,
+				298542F71FBD8FD700CB5081 /* ConfigExplorerConstants.swift in Sources */,
 				293B8B451F70A20200356286 /* TransactionViewCell.swift in Sources */,
 				29FC0CB81F8299510036089F /* Coordinator.swift in Sources */,
 				296106C61F7645CC0006164B /* TokensViewController.swift in Sources */,
@@ -1927,6 +1934,7 @@
 				298542EE1FBAD32500CB5081 /* Operation.swift in Sources */,
 				29C80D411FB2E1610037B1E0 /* EthplorerService.swift in Sources */,
 				296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */,
+				298542F51FBD8E6A00CB5081 /* ConfigExplorer.swift in Sources */,
 				29A13E2C1F6A955700E432A2 /* CreateWalletViewModel.swift in Sources */,
 				29C80D4F1FB520AF0037B1E0 /* BalanceTokenViewModel.swift in Sources */,
 				29CA4B771F6FBBFB0032313D /* RequestViewModel.swift in Sources */,
