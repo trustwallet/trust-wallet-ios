@@ -44,17 +44,6 @@ struct Config {
         return URL(string: urlString)!
     }
 
-    var etherScanURL: URL {
-        let urlString: String = {
-            switch server {
-            case .main: return "https://etherscan.io"
-            case .kovan: return "https://kovan.etherscan.io"
-            case .oraclesTest: return "https://empty.com"
-            }
-        }()
-        return URL(string: urlString)!
-    }
-
     var remoteURL: URL {
         let urlString: String = {
             switch server {
