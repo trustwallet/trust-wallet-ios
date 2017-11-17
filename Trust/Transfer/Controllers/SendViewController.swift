@@ -45,6 +45,27 @@ class SendViewController: FormViewController {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
+        let pasteButton = Button(size: .normal, style: .borderless)
+        pasteButton.translatesAutoresizingMaskIntoConstraints = false
+        pasteButton.setTitle("Paste", for: .normal)
+        pasteButton.addTarget(self, action: #selector(pasteAction), for: .touchUpInside)
+
+        let qrButton = UIButton(type: .custom)
+        qrButton.translatesAutoresizingMaskIntoConstraints = false
+        qrButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        qrButton.setImage(R.image.qr_code_icon(), for: .normal)
+        qrButton.addTarget(self, action: #selector(openReader), for: .touchUpInside)
+
+        let rightView = UIStackView(arrangedSubviews: [
+            pasteButton,
+            qrButton,
+            .spacerWidth(1),
+        ])
+        rightView.translatesAutoresizingMaskIntoConstraints = false
+        rightView.distribution = .equalSpacing
+        rightView.spacing = 10
+        rightView.axis = .horizontal
+
         form = Section()
             +++ Section("")
 
@@ -52,14 +73,9 @@ class SendViewController: FormViewController {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
             }.cellUpdate { cell, _ in
-                let button = UIButton(type: .custom)
-                button.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-                button.setImage(R.image.qr_code_icon(), for: .normal)
-                button.addTarget(self, action: #selector(self.openReader), for: .touchUpInside)
-
                 cell.textField.textAlignment = .left
                 cell.textField.placeholder = NSLocalizedString("send.recipientAddress", value: "Recipient Address", comment: "")
-                cell.textField.rightView = button
+                cell.textField.rightView = rightView
                 cell.textField.rightViewMode = .always
             }
 
@@ -110,6 +126,23 @@ class SendViewController: FormViewController {
         controller.delegate = self
 
         present(controller, animated: true, completion: nil)
+    }
+
+    @objc func pasteAction() {
+        guard let value = UIPasteboard.general.string else {
+            return displayError(error: SendInputErrors.emptyClipBoard)
+        }
+
+        guard CryptoAddressValidator.isValidAddress(value) else {
+            return displayError(error: SendInputErrors.invalidAddress)
+        }
+
+        addressRow?.value = value
+        addressRow?.reload()
+
+        if amountRow?.value?.isEmpty == true {
+            amountRow?.cell.textField.becomeFirstResponder()
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
