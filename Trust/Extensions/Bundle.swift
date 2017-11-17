@@ -15,7 +15,7 @@ extension Bundle {
     }
 }
 
-func isDebug() -> Bool {
+var isDebug: Bool {
     #if DEBUG
         return true
     #else

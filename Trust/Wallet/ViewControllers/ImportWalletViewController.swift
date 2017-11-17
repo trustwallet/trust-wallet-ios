@@ -47,7 +47,7 @@ class ImportWalletViewController: FormViewController {
         super.viewDidLoad()
 
         //Demo purpose
-        if isDebug() {
+        if isDebug {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.4) {
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Demo", style: .done, target: self, action: #selector(self.demo))
             }
