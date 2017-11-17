@@ -56,13 +56,13 @@ class InCoordinator: Coordinator {
         tokenCoordinator.start()
         addCoordinator(tokenCoordinator)
 
-        let tabbar = UITabBarController()
-        tabbar.viewControllers = [
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [
             transactionCoordinator.navigationController,
             tokenCoordinator.navigationController,
         ]
         navigationController.setViewControllers(
-            [tabbar],
+            [tabBarController],
             animated: false
         )
         navigationController.setNavigationBarHidden(true, animated: false)
