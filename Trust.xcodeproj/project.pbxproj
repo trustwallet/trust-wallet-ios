@@ -138,6 +138,8 @@
 		298542F71FBD8FD700CB5081 /* ConfigExplorerConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F61FBD8FD700CB5081 /* ConfigExplorerConstants.swift */; };
 		298542F91FBE9A0100CB5081 /* CryptoAddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F81FBE9A0100CB5081 /* CryptoAddressValidator.swift */; };
 		298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FA1FBEA03300CB5081 /* SendInputErrors.swift */; };
+		298542FE1FBEADEF00CB5081 /* TransactionCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FD1FBEADEF00CB5081 /* TransactionCellViewModelTests.swift */; };
+		298543001FBEAE2F00CB5081 /* ChainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FF1FBEAE2F00CB5081 /* ChainState.swift */; };
 		2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2995739E1FA1F294006F17FD /* QRURLParser.swift */; };
 		299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A11FA1F369006F17FD /* QRURLParserTests.swift */; };
 		299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A31FA27A15006F17FD /* TestKeyStore.swift */; };
@@ -382,6 +384,8 @@
 		298542F61FBD8FD700CB5081 /* ConfigExplorerConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigExplorerConstants.swift; sourceTree = "<group>"; };
 		298542F81FBE9A0100CB5081 /* CryptoAddressValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoAddressValidator.swift; sourceTree = "<group>"; };
 		298542FA1FBEA03300CB5081 /* SendInputErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInputErrors.swift; sourceTree = "<group>"; };
+		298542FD1FBEADEF00CB5081 /* TransactionCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCellViewModelTests.swift; sourceTree = "<group>"; };
+		298542FF1FBEAE2F00CB5081 /* ChainState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainState.swift; sourceTree = "<group>"; };
 		2995739E1FA1F294006F17FD /* QRURLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParser.swift; sourceTree = "<group>"; };
 		299573A11FA1F369006F17FD /* QRURLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParserTests.swift; sourceTree = "<group>"; };
 		299573A31FA27A15006F17FD /* TestKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestKeyStore.swift; sourceTree = "<group>"; };
@@ -1096,6 +1100,15 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		298542FC1FBEADDF00CB5081 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				298542FD1FBEADEF00CB5081 /* TransactionCellViewModelTests.swift */,
+			);
+			name = ViewModels;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		299573A01FA1F35B006F17FD /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1271,6 +1284,7 @@
 		29E14FD21F7F46F700185568 /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
+				298542FC1FBEADDF00CB5081 /* ViewModels */,
 				29E14FD31F7F46FB00185568 /* Storage */,
 			);
 			path = Transactions;
@@ -1383,6 +1397,7 @@
 				29AD8A0D1F93FF28008E10E7 /* WalletSession.swift */,
 				299573A31FA27A15006F17FD /* TestKeyStore.swift */,
 				2961BD081FB14B6D00C4B840 /* Config.swift */,
+				298542FF1FBEAE2F00CB5081 /* ChainState.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -2004,7 +2019,9 @@
 				29E14FD91F7F4D4E00185568 /* FakeTransactionsStorage.swift in Sources */,
 				29E14FD71F7F490000185568 /* Transaction.swift in Sources */,
 				296106CC1F776FD00006164B /* WalletCoordinatorTests.swift in Sources */,
+				298542FE1FBEADEF00CB5081 /* TransactionCellViewModelTests.swift in Sources */,
 				291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */,
+				298543001FBEAE2F00CB5081 /* ChainState.swift in Sources */,
 				29AD8A0E1F93FF28008E10E7 /* WalletSession.swift in Sources */,
 				29FF13011F75EAD900AFD326 /* FakeKeystore.swift in Sources */,
 				29FC9BCC1F831860000209CD /* PaymentCoordinator.swift in Sources */,
