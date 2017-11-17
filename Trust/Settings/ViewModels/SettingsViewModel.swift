@@ -4,10 +4,10 @@ import Foundation
 
 struct SettingsViewModel {
 
-    private let isDebug: (Bool)
+    private let isDebug: Bool
 
     init(
-        isDebug: (Bool) = (false)
+        isDebug: Bool = false
     ) {
         self.isDebug = isDebug
     }

@@ -32,7 +32,7 @@ class SettingsViewController: FormViewController {
     }
 
     lazy var viewModel: SettingsViewModel = {
-        return SettingsViewModel(isDebug: isDebug())
+        return SettingsViewModel(isDebug: isDebug)
     }()
 
     // swiftlint:disable:next function_body_length
