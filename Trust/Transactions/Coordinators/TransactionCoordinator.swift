@@ -34,16 +34,20 @@ class TransactionCoordinator: Coordinator {
 
     init(
         session: WalletSession,
-        rootNavigationController: UINavigationController,
+        navigationController: UINavigationController = NavigationController(),
         storage: TransactionsStorage,
         keystore: Keystore
     ) {
         self.session = session
         self.keystore = keystore
-        self.navigationController = rootNavigationController
+        self.navigationController = navigationController
         self.storage = storage
 
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
+    }
+
+    func start() {
+        navigationController.viewControllers = [rootViewController]
     }
 
     private func makeTransactionsController(with account: Account) -> TransactionsViewController {
@@ -76,16 +80,6 @@ class TransactionCoordinator: Coordinator {
 
     @objc func showSettings() {
         let coordinator = SettingsCoordinator()
-        coordinator.delegate = self
-        coordinator.start()
-        addCoordinator(coordinator)
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
-    }
-
-    func showTokens(for account: Account) {
-        let coordinator = TokensCoordinator(
-            session: session
-        )
         coordinator.delegate = self
         coordinator.start()
         addCoordinator(coordinator)
@@ -196,10 +190,6 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
         showTransaction(transaction)
     }
 
-    func didPressTokens(in viewController: TransactionsViewController) {
-        showTokens(for: session.account)
-    }
-
     func didPressDeposit(for account: Account, in viewController: TransactionsViewController) {
         showDeposit(for: account)
     }
@@ -238,12 +228,5 @@ extension TransactionCoordinator: AccountsCoordinatorDelegate {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
         delegate?.didRestart(with: account, in: self)
-    }
-}
-
-extension TransactionCoordinator: TokensCoordinatorDelegate {
-    func didCancel(in coordinator: TokensCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
     }
 }

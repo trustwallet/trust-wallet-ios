@@ -82,11 +82,4 @@ struct TransactionsViewModel {
         case .kovan, .oraclesTest: return false
         }
     }
-
-    var isTokensAvailable: Bool {
-        switch config.server {
-        case .main: return true
-        case .kovan, .oraclesTest: return false
-        }
-    }
 }

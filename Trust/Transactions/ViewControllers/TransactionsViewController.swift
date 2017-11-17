@@ -10,7 +10,6 @@ protocol TransactionsViewControllerDelegate: class {
     func didPressSend(in viewController: TransactionsViewController)
     func didPressRequest(in viewController: TransactionsViewController)
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController)
-    func didPressTokens(in viewController: TransactionsViewController)
     func didPressDeposit(for account: Account, in viewController: TransactionsViewController)
 }
 
@@ -61,18 +60,6 @@ class TransactionsViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(footerView)
 
-        if viewModel.isTokensAvailable {
-            let tokensButton = Button(size: .extraLarge, style: .borderless)
-            tokensButton.setTitle(NSLocalizedString("Transactions.ShowTokens", value: "Show my tokens", comment: ""), for: .normal)
-            tokensButton.contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
-            tokensButton.setTitleColor(Colors.black, for: .normal)
-            tokensButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium)
-            tokensButton.sizeToFit()
-            tokensButton.addTarget(self, action: #selector(showTokens), for: .touchUpInside)
-
-            tableView.tableHeaderView = tokensButton
-        }
-
         NSLayoutConstraint.activate([
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -91,7 +78,7 @@ class TransactionsViewController: UIViewController {
         tableView.addSubview(refreshControl)
 
         //TODO: Find a way to fix hardcoded 32px value. Use bottom safe inset instead.
-        let insets = UIEdgeInsets(top: 130, left: 0, bottom: ButtonSize.extraLarge.height + 50, right: 0)
+        let insets = UIEdgeInsets(top: 130, left: 0, bottom: ButtonSize.extraLarge.height + 84, right: 0)
 
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
@@ -139,10 +126,6 @@ class TransactionsViewController: UIViewController {
 
     @objc func request() {
         delegate?.didPressRequest(in: self)
-    }
-
-    @objc func showTokens() {
-        delegate?.didPressTokens(in: self)
     }
 
     func showDeposit() {

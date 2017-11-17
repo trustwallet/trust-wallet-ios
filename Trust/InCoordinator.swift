@@ -28,30 +28,45 @@ class InCoordinator: Coordinator {
     }
 
     func start() {
-        showTransactions(for: account)
+        showTabBar(for: account)
     }
 
-    func showTransactions(for account: Account) {
+    func showTabBar(for account: Account) {
         let session = WalletSession(
             account: account,
             config: config
         )
-
-        let coordinator = TransactionCoordinator(
+        let transactionCoordinator = TransactionCoordinator(
             session: session,
-            rootNavigationController: navigationController,
             storage: TransactionsStorage(
                 current: account,
                 chainID: config.chainID
             ),
             keystore: keystore
         )
-        coordinator.delegate = self
-        navigationController.viewControllers = [
-            coordinator.rootViewController,
+        transactionCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Transactions", image: R.image.transactions(), selectedImage: nil)
+        transactionCoordinator.delegate = self
+        transactionCoordinator.start()
+        addCoordinator(transactionCoordinator)
+
+        let tokenCoordinator = TokensCoordinator(
+            session: session
+        )
+        tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Tokens", image: R.image.coins(), selectedImage: nil)
+        tokenCoordinator.start()
+        addCoordinator(tokenCoordinator)
+
+        let tabbar = UITabBarController()
+        tabbar.viewControllers = [
+            transactionCoordinator.navigationController,
+            tokenCoordinator.navigationController,
         ]
-        navigationController.setNavigationBarHidden(false, animated: false)
-        addCoordinator(coordinator)
+        navigationController.setViewControllers(
+            [tabbar],
+            animated: false
+        )
+        navigationController.setNavigationBarHidden(true, animated: false)
+        addCoordinator(transactionCoordinator)
 
         keystore.recentlyUsedAccount = account
     }
@@ -62,14 +77,14 @@ extension InCoordinator: TransactionCoordinatorDelegate {
         delegate?.didCancel(in: self)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         coordinator.stop()
-        removeCoordinator(coordinator)
+        removeAllCoordinators()
     }
 
     func didRestart(with account: Account, in coordinator: TransactionCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         coordinator.stop()
         removeCoordinator(coordinator)
-        showTransactions(for: account)
+        showTabBar(for: account)
     }
 
     func didUpdateAccounts(in coordinator: TransactionCoordinator) {

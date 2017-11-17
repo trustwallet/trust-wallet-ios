@@ -3,16 +3,15 @@
 import Foundation
 import UIKit
 
-protocol TokensCoordinatorDelegate: class {
-    func didCancel(in coordinator: TokensCoordinator)
-}
-
 class TokensCoordinator: Coordinator {
 
     let navigationController: UINavigationController
     let session: WalletSession
     var coordinators: [Coordinator] = []
-    weak var delegate: TokensCoordinatorDelegate?
+
+    lazy var rootViewController: TokensViewController = {
+        return self.makeTokensViewController()
+    }()
 
     init(
         navigationController: UINavigationController = NavigationController(),
@@ -28,18 +27,13 @@ class TokensCoordinator: Coordinator {
     }
 
     func showTokens() {
-        let controller = TokensViewController(account: session.account)
-        controller.delegate = self
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel,
-            target: self,
-            action: #selector(dismiss)
-        )
-        navigationController.viewControllers = [controller]
+        navigationController.viewControllers = [rootViewController]
     }
 
-    @objc func dismiss() {
-        delegate?.didCancel(in: self)
+    func makeTokensViewController() -> TokensViewController {
+        let controller = TokensViewController(account: session.account)
+        controller.delegate = self
+        return controller
     }
 
     func showPaymentFlow(for type: PaymentFlow, session: WalletSession) {
