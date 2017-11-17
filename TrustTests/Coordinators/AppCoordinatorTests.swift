@@ -27,7 +27,7 @@ class AppCoordinatorTests: XCTestCase {
         coordinator.start()
 
         XCTAssertEqual(1, coordinator.coordinators.count)
-        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is TransactionsViewController)
+        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is UITabBarController)
     }
     
     func testReset() {
@@ -82,6 +82,6 @@ class AppCoordinatorTests: XCTestCase {
         coordinator.showTransactions(for: .make())
 
         XCTAssertEqual(1, coordinator.coordinators.count)
-        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is TransactionsViewController)
+        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is UITabBarController)
     }
 }

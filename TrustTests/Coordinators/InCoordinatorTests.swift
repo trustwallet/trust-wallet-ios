@@ -5,7 +5,7 @@ import XCTest
 
 class InCoordinatorTests: XCTestCase {
     
-    func testShowTransactions() {
+    func testShowTabBar() {
         let coordinator = InCoordinator(
             navigationController: FakeNavigationController(),
             account: .make(),
@@ -14,7 +14,12 @@ class InCoordinatorTests: XCTestCase {
 
         coordinator.start()
 
-        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is TransactionsViewController)
+        let tabbarController = coordinator.navigationController.viewControllers[0] as? UITabBarController
+
+        XCTAssertNotNil(tabbarController)
+
+        XCTAssert((tabbarController?.viewControllers?[0] as? UINavigationController)?.viewControllers[0] is TransactionsViewController)
+        XCTAssert((tabbarController?.viewControllers?[1] as? UINavigationController)?.viewControllers[0] is TokensViewController)
     }
 
     func testChangeRecentlyUsedAccount() {
@@ -33,11 +38,11 @@ class InCoordinatorTests: XCTestCase {
             keystore: keystore
         )
 
-        coordinator.showTransactions(for: account1)
+        coordinator.showTabBar(for: account1)
 
         XCTAssertEqual(coordinator.keystore.recentlyUsedAccount, account1)
 
-        coordinator.showTransactions(for: account2)
+        coordinator.showTabBar(for: account2)
 
         XCTAssertEqual(coordinator.keystore.recentlyUsedAccount, account2)
     }

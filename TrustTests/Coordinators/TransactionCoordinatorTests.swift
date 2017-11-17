@@ -5,24 +5,10 @@ import XCTest
 
 class TransactionCoordinatorTests: XCTestCase {
     
-    func testShowTokens() {
-        let coordinator = TransactionCoordinator(
-            session: .make(),
-            rootNavigationController: FakeNavigationController(),
-            storage: FakeTransactionsStorage(),
-            keystore: FakeEtherKeystore()
-        )
-
-        coordinator.showTokens(for: .make())
-
-        XCTAssertTrue(coordinator.coordinators.first is TokensCoordinator)
-        XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is TokensViewController)
-    }
-
     func testShowSettings() {
         let coordinator = TransactionCoordinator(
             session: .make(),
-            rootNavigationController: FakeNavigationController(),
+            navigationController: FakeNavigationController(),
             storage: FakeTransactionsStorage(),
             keystore: FakeEtherKeystore()
         )
@@ -36,7 +22,7 @@ class TransactionCoordinatorTests: XCTestCase {
     func testShowSendFlow() {
         let coordinator = TransactionCoordinator(
             session: .make(),
-            rootNavigationController: FakeNavigationController(),
+            navigationController: FakeNavigationController(),
             storage: FakeTransactionsStorage(),
             keystore: FakeEtherKeystore()
         )
@@ -52,7 +38,7 @@ class TransactionCoordinatorTests: XCTestCase {
     func testShowRequstFlow() {
         let coordinator = TransactionCoordinator(
             session: .make(),
-            rootNavigationController: FakeNavigationController(),
+            navigationController: FakeNavigationController(),
             storage: FakeTransactionsStorage(),
             keystore: FakeEtherKeystore()
         )
@@ -68,7 +54,7 @@ class TransactionCoordinatorTests: XCTestCase {
     func testShowAccounts() {
         let coordinator = TransactionCoordinator(
             session: .make(),
-            rootNavigationController: FakeNavigationController(),
+            navigationController: FakeNavigationController(),
             storage: FakeTransactionsStorage(),
             keystore: FakeEtherKeystore()
         )
