@@ -32,9 +32,18 @@ extension UIView {
     static func spacer(height: CGFloat = 1) -> UIView {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             view.heightAnchor.constraint(equalToConstant: height),
+        ])
+        return view
+    }
+
+    static func spacerWidth(_ width: CGFloat = 1) -> UIView {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            view.widthAnchor.constraint(equalToConstant: width),
         ])
 
         return view
