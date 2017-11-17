@@ -136,6 +136,8 @@
 		298542F31FBD594D00CB5081 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F21FBD594D00CB5081 /* SettingsViewModel.swift */; };
 		298542F51FBD8E6A00CB5081 /* ConfigExplorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F41FBD8E6A00CB5081 /* ConfigExplorer.swift */; };
 		298542F71FBD8FD700CB5081 /* ConfigExplorerConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F61FBD8FD700CB5081 /* ConfigExplorerConstants.swift */; };
+		298542F91FBE9A0100CB5081 /* CryptoAddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F81FBE9A0100CB5081 /* CryptoAddressValidator.swift */; };
+		298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FA1FBEA03300CB5081 /* SendInputErrors.swift */; };
 		2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2995739E1FA1F294006F17FD /* QRURLParser.swift */; };
 		299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A11FA1F369006F17FD /* QRURLParserTests.swift */; };
 		299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A31FA27A15006F17FD /* TestKeyStore.swift */; };
@@ -378,6 +380,8 @@
 		298542F21FBD594D00CB5081 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		298542F41FBD8E6A00CB5081 /* ConfigExplorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigExplorer.swift; sourceTree = "<group>"; };
 		298542F61FBD8FD700CB5081 /* ConfigExplorerConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigExplorerConstants.swift; sourceTree = "<group>"; };
+		298542F81FBE9A0100CB5081 /* CryptoAddressValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoAddressValidator.swift; sourceTree = "<group>"; };
+		298542FA1FBEA03300CB5081 /* SendInputErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInputErrors.swift; sourceTree = "<group>"; };
 		2995739E1FA1F294006F17FD /* QRURLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParser.swift; sourceTree = "<group>"; };
 		299573A11FA1F369006F17FD /* QRURLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParserTests.swift; sourceTree = "<group>"; };
 		299573A31FA27A15006F17FD /* TestKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestKeyStore.swift; sourceTree = "<group>"; };
@@ -1168,6 +1172,7 @@
 				29FC0CB71F8299510036089F /* Coordinator.swift */,
 				29AD8A0B1F93FBBF008E10E7 /* Subscribable.swift */,
 				2995739E1FA1F294006F17FD /* QRURLParser.swift */,
+				298542F81FBE9A0100CB5081 /* CryptoAddressValidator.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -1339,6 +1344,7 @@
 				29AD8A031F93D6CD008E10E7 /* Constants.swift */,
 				298542F41FBD8E6A00CB5081 /* ConfigExplorer.swift */,
 				298542F61FBD8FD700CB5081 /* ConfigExplorerConstants.swift */,
+				298542FA1FBEA03300CB5081 /* SendInputErrors.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1882,6 +1888,7 @@
 				2912CD361F6A853300C6CBE3 /* TransactionsViewModel.swift in Sources */,
 				29C80D4B1FB51C460037B1E0 /* Decimal.swift in Sources */,
 				297800521F71FDCF003185C1 /* FormAppearance.swift in Sources */,
+				298542F91FBE9A0100CB5081 /* CryptoAddressValidator.swift in Sources */,
 				291F52C11F6C8A1F00B369AB /* AccountsViewModel.swift in Sources */,
 				298542E31FBA722F00CB5081 /* ContainerView.swift in Sources */,
 				29CAEB8E1F70A2FB00F7357D /* TransactionCellViewModel.swift in Sources */,
@@ -1912,6 +1919,7 @@
 				29B933F51F860074009FCABB /* SendTransactionCoordinator.swift in Sources */,
 				2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */,
 				291F52A51F6B762300B369AB /* EtherServiceRequest.swift in Sources */,
+				298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */,
 				29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */,
 				296AF9A51F736BA20058AF78 /* Config.swift in Sources */,
 				2912CD341F6A849C00C6CBE3 /* WelcomeViewModel.swift in Sources */,
