@@ -4,12 +4,14 @@ import Foundation
 import UIKit
 
 enum ButtonSize: Int {
+    case small
     case normal
     case large
     case extraLarge
 
     var height: CGFloat {
         switch self {
+        case .small: return 32
         case .normal: return 44
         case .large: return 50
         case .extraLarge: return 64
@@ -105,7 +107,7 @@ class Button: UIButton {
         setTitleColor(style.textColorHighlighted, for: .highlighted)
         setBackgroundColor(style.backgroundColorHighlighted, forState: .highlighted)
         setBackgroundColor(style.backgroundColorHighlighted, forState: .selected)
-        titleEdgeInsets = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 15)
+        contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
     }
 
     required init?(coder aDecoder: NSCoder) {
