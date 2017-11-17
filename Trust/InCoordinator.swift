@@ -44,7 +44,7 @@ class InCoordinator: Coordinator {
             ),
             keystore: keystore
         )
-        transactionCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Transactions", image: R.image.transactions(), selectedImage: nil)
+        transactionCoordinator.rootViewController.tabBarItem = UITabBarItem(title: nil, image: R.image.feed(), selectedImage: nil)
         transactionCoordinator.delegate = self
         transactionCoordinator.start()
         addCoordinator(transactionCoordinator)
@@ -52,7 +52,7 @@ class InCoordinator: Coordinator {
         let tokenCoordinator = TokensCoordinator(
             session: session
         )
-        tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Tokens", image: R.image.coins(), selectedImage: nil)
+        tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: nil, image: R.image.coins(), selectedImage: nil)
         tokenCoordinator.start()
         addCoordinator(tokenCoordinator)
 
