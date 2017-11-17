@@ -14,4 +14,8 @@ extension Coordinator {
     func removeCoordinator(_ coordinator: Coordinator) {
         coordinators = coordinators.filter { $0 !== coordinator }
     }
+
+    func removeAllCoordinators() {
+        coordinators.removeAll()
+    }
 }
