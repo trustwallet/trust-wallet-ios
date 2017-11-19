@@ -140,6 +140,8 @@
 		298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FA1FBEA03300CB5081 /* SendInputErrors.swift */; };
 		298542FE1FBEADEF00CB5081 /* TransactionCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FD1FBEADEF00CB5081 /* TransactionCellViewModelTests.swift */; };
 		298543001FBEAE2F00CB5081 /* ChainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FF1FBEAE2F00CB5081 /* ChainState.swift */; };
+		298543041FC15F6D00CB5081 /* ExchangeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298543031FC15F6D00CB5081 /* ExchangeCoordinator.swift */; };
+		298543071FC15FB500CB5081 /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298543061FC15FB500CB5081 /* ExchangeViewController.swift */; };
 		2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2995739E1FA1F294006F17FD /* QRURLParser.swift */; };
 		299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A11FA1F369006F17FD /* QRURLParserTests.swift */; };
 		299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A31FA27A15006F17FD /* TestKeyStore.swift */; };
@@ -386,6 +388,8 @@
 		298542FA1FBEA03300CB5081 /* SendInputErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInputErrors.swift; sourceTree = "<group>"; };
 		298542FD1FBEADEF00CB5081 /* TransactionCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCellViewModelTests.swift; sourceTree = "<group>"; };
 		298542FF1FBEAE2F00CB5081 /* ChainState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainState.swift; sourceTree = "<group>"; };
+		298543031FC15F6D00CB5081 /* ExchangeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeCoordinator.swift; sourceTree = "<group>"; };
+		298543061FC15FB500CB5081 /* ExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeViewController.swift; sourceTree = "<group>"; };
 		2995739E1FA1F294006F17FD /* QRURLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParser.swift; sourceTree = "<group>"; };
 		299573A11FA1F369006F17FD /* QRURLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParserTests.swift; sourceTree = "<group>"; };
 		299573A31FA27A15006F17FD /* TestKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestKeyStore.swift; sourceTree = "<group>"; };
@@ -554,6 +558,7 @@
 		2912CCF71F6A830700C6CBE3 /* Trust */ = {
 			isa = PBXGroup;
 			children = (
+				298543011FC15F5300CB5081 /* Exchange */,
 				2959960F1FAB065700DB66A8 /* Deposit */,
 				29AD8A0A1F93FBB7008E10E7 /* Foundation */,
 				290B2B511F8F4F840053C83E /* Localization */,
@@ -1107,6 +1112,31 @@
 			);
 			name = ViewModels;
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		298543011FC15F5300CB5081 /* Exchange */ = {
+			isa = PBXGroup;
+			children = (
+				298543051FC15FA200CB5081 /* ViewConrtrollers */,
+				298543021FC15F6100CB5081 /* Coordinators */,
+			);
+			path = Exchange;
+			sourceTree = "<group>";
+		};
+		298543021FC15F6100CB5081 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				298543031FC15F6D00CB5081 /* ExchangeCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		298543051FC15FA200CB5081 /* ViewConrtrollers */ = {
+			isa = PBXGroup;
+			children = (
+				298543061FC15FB500CB5081 /* ExchangeViewController.swift */,
+			);
+			path = ViewConrtrollers;
 			sourceTree = "<group>";
 		};
 		299573A01FA1F35B006F17FD /* Foundation */ = {
@@ -1951,6 +1981,7 @@
 				296AF9A91F737F6F0058AF78 /* SendRawTransactionRequest.swift in Sources */,
 				2912CD2F1F6A83A100C6CBE3 /* ImportWalletViewController.swift in Sources */,
 				2996F1501F6CA80C005C33AE /* ExportError.swift in Sources */,
+				298543041FC15F6D00CB5081 /* ExchangeCoordinator.swift in Sources */,
 				2996F1461F6C98B3005C33AE /* SettingsViewController.swift in Sources */,
 				2963B6AD1F981A96003063C1 /* TransactionAppearance.swift in Sources */,
 				29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */,
@@ -1976,6 +2007,7 @@
 				293248841F88CCD2008A9818 /* SplashState.swift in Sources */,
 				291F52BC1F6B8D0600B369AB /* Account.swift in Sources */,
 				291794FB1F95DC2200539A30 /* Web3Swift.swift in Sources */,
+				298543071FC15FB500CB5081 /* ExchangeViewController.swift in Sources */,
 				29DBF2A31F9DBFF400327C60 /* BackupCoordinator.swift in Sources */,
 				290B2B611F9179880053C83E /* AccountViewModel.swift in Sources */,
 				2963B6C11F9AE0E4003063C1 /* Data.swift in Sources */,
