@@ -61,6 +61,14 @@ class InCoordinator: Coordinator {
             transactionCoordinator.navigationController,
             tokenCoordinator.navigationController,
         ]
+
+        if isDebug {
+            let exchangeCoordinator = ExchangeCoordinator()
+            exchangeCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Exchange", image: R.image.exchange(), selectedImage: nil)
+            exchangeCoordinator.start()
+            tabBarController.viewControllers?.append(exchangeCoordinator.navigationController)
+        }
+
         navigationController.setViewControllers(
             [tabBarController],
             animated: false
