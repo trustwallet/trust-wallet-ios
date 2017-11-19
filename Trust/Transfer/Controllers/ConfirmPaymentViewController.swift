@@ -58,6 +58,7 @@ class ConfirmPaymentViewController: UIViewController {
         navigationItem.title = NSLocalizedString("confirmPayment.title", value: "Confirm", comment: "")
 
         let totalFee = BInt(configuration.speed.gasPrice.string()) * BInt(configuration.speed.gasLimit.string())
+        let gasLimit = configuration.speed.gasLimit.string() ?? "--"
         let fee = EthereumConverter.from(value: totalFee, to: .ether, minimumFractionDigits: 6)
 
         let items: [UIView] = [
@@ -71,6 +72,7 @@ class ConfirmPaymentViewController: UIViewController {
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(title: NSLocalizedString("confirmPayment.from", value: "From", comment: ""), subTitle: session.account.address.address),
             TransactionAppearance.item(title: NSLocalizedString("confirmPayment.to", value: "To", comment: ""), subTitle: transaction.address.address),
+            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.gasLimit", value: "Gas Limit", comment: ""), subTitle: gasLimit),
             TransactionAppearance.item(title: NSLocalizedString("confirmPayment.gasFee", value: "Gas Fee", comment: ""), subTitle: fee + " ETH"),
         ]
 
