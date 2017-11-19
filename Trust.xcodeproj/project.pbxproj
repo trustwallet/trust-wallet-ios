@@ -126,6 +126,7 @@
 		297800521F71FDCF003185C1 /* FormAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297800511F71FDCF003185C1 /* FormAppearance.swift */; };
 		2981C2971FC18DA500537E43 /* ExchangeTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981C2961FC18DA500537E43 /* ExchangeTokenView.swift */; };
 		2981C2991FC18E5800537E43 /* ExchangeValueInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981C2981FC18E5800537E43 /* ExchangeValueInput.swift */; };
+		2981C29C1FC18F7700537E43 /* ChangellyBuyWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981C29B1FC18F7700537E43 /* ChangellyBuyWidget.swift */; };
 		2981F4731F8303E600CA6590 /* TransactionCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981F4721F8303E600CA6590 /* TransactionCoordinatorTests.swift */; };
 		29850D251F6B27A800791A49 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29850D241F6B27A800791A49 /* R.generated.swift */; };
 		29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29850D2A1F6B30FF00791A49 /* TransactionViewController.swift */; };
@@ -379,6 +380,7 @@
 		297800511F71FDCF003185C1 /* FormAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormAppearance.swift; sourceTree = "<group>"; };
 		2981C2961FC18DA500537E43 /* ExchangeTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTokenView.swift; sourceTree = "<group>"; };
 		2981C2981FC18E5800537E43 /* ExchangeValueInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeValueInput.swift; sourceTree = "<group>"; };
+		2981C29B1FC18F7700537E43 /* ChangellyBuyWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangellyBuyWidget.swift; sourceTree = "<group>"; };
 		2981F4721F8303E600CA6590 /* TransactionCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCoordinatorTests.swift; sourceTree = "<group>"; };
 		29850D241F6B27A800791A49 /* R.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		29850D2A1F6B30FF00791A49 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
@@ -780,6 +782,7 @@
 		291F52AA1F6B805400B369AB /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				2981C29A1FC18F6000537E43 /* Changelly */,
 				298542E61FBA9BA900CB5081 /* ShapeShift */,
 				295996041FAAFC9400DB66A8 /* Coinbase */,
 				291794F51F95DBE900539A30 /* Web3Swift */,
@@ -1097,6 +1100,14 @@
 				296106C91F764AB60006164B /* TokensDataStore.swift */,
 			);
 			path = Types;
+			sourceTree = "<group>";
+		};
+		2981C29A1FC18F6000537E43 /* Changelly */ = {
+			isa = PBXGroup;
+			children = (
+				2981C29B1FC18F7700537E43 /* ChangellyBuyWidget.swift */,
+			);
+			path = Changelly;
 			sourceTree = "<group>";
 		};
 		298542E61FBA9BA900CB5081 /* ShapeShift */ = {
@@ -2038,6 +2049,7 @@
 				2959961C1FAE3EDF00DB66A8 /* TrustClient.swift in Sources */,
 				29AD8A0C1F93FBBF008E10E7 /* Subscribable.swift in Sources */,
 				295247DF1F8326EF007FDC31 /* AccountViewCell.swift in Sources */,
+				2981C29C1FC18F7700537E43 /* ChangellyBuyWidget.swift in Sources */,
 				291F52B71F6B870400B369AB /* CastError.swift in Sources */,
 				293248841F88CCD2008A9818 /* SplashState.swift in Sources */,
 				291F52BC1F6B8D0600B369AB /* Account.swift in Sources */,
