@@ -10,7 +10,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     var coordinator: AppCoordinator!
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         coordinator = AppCoordinator(window: window!)
-        window?.makeKeyAndVisible()
         coordinator.start()
         return true
     }
