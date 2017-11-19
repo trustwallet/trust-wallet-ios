@@ -124,8 +124,6 @@
 		296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */; };
 		2977CAE01F7DEEB0009682A0 /* FakeEtherKeystore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2977CADF1F7DEEB0009682A0 /* FakeEtherKeystore.swift */; };
 		297800521F71FDCF003185C1 /* FormAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297800511F71FDCF003185C1 /* FormAppearance.swift */; };
-		2981C2971FC18DA500537E43 /* ExchangeTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981C2961FC18DA500537E43 /* ExchangeTokenView.swift */; };
-		2981C2991FC18E5800537E43 /* ExchangeValueInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981C2981FC18E5800537E43 /* ExchangeValueInput.swift */; };
 		2981C29C1FC18F7700537E43 /* ChangellyBuyWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981C29B1FC18F7700537E43 /* ChangellyBuyWidget.swift */; };
 		2981F4731F8303E600CA6590 /* TransactionCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981F4721F8303E600CA6590 /* TransactionCoordinatorTests.swift */; };
 		29850D251F6B27A800791A49 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29850D241F6B27A800791A49 /* R.generated.swift */; };
@@ -378,8 +376,6 @@
 		296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionCountRequest.swift; sourceTree = "<group>"; };
 		2977CADF1F7DEEB0009682A0 /* FakeEtherKeystore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeEtherKeystore.swift; sourceTree = "<group>"; };
 		297800511F71FDCF003185C1 /* FormAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormAppearance.swift; sourceTree = "<group>"; };
-		2981C2961FC18DA500537E43 /* ExchangeTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTokenView.swift; sourceTree = "<group>"; };
-		2981C2981FC18E5800537E43 /* ExchangeValueInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeValueInput.swift; sourceTree = "<group>"; };
 		2981C29B1FC18F7700537E43 /* ChangellyBuyWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangellyBuyWidget.swift; sourceTree = "<group>"; };
 		2981F4721F8303E600CA6590 /* TransactionCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCoordinatorTests.swift; sourceTree = "<group>"; };
 		29850D241F6B27A800791A49 /* R.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
@@ -1167,8 +1163,6 @@
 			children = (
 				2985430B1FC188D200CB5081 /* ExchangeTokensField.swift */,
 				298543091FC188A700CB5081 /* ExchangeTokenInputField.swift */,
-				2981C2981FC18E5800537E43 /* ExchangeValueInput.swift */,
-				2981C2961FC18DA500537E43 /* ExchangeTokenView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1927,7 +1921,6 @@
 				296106D01F778A8D0006164B /* TransferType.swift in Sources */,
 				2985430F1FC18A4B00CB5081 /* ExchangeViewModel.swift in Sources */,
 				29E14FDB1F7F4F3D00185568 /* Transaction.swift in Sources */,
-				2981C2991FC18E5800537E43 /* ExchangeValueInput.swift in Sources */,
 				296106C81F7646590006164B /* TokensViewModel.swift in Sources */,
 				29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */,
 				291F52B41F6B814300B369AB /* SMP Core.swift in Sources */,
@@ -2078,7 +2071,6 @@
 				2996F1431F6C96FF005C33AE /* ImportWalletViewModel.swift in Sources */,
 				291ED08D1F6F5F0A00E7E93A /* KeyStoreError.swift in Sources */,
 				296AF9A31F733AB30058AF78 /* WalletCoordinator.swift in Sources */,
-				2981C2971FC18DA500537E43 /* ExchangeTokenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
