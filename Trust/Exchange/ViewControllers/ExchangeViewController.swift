@@ -15,9 +15,9 @@ class ExchangeViewController: UIViewController {
         view.addSubview(exchangeFields)
 
         NSLayoutConstraint.activate([
-            exchangeFields.topAnchor.constraint(equalTo: view.layoutGuide.topAnchor, constant: 15),
-            exchangeFields.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            exchangeFields.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
+            exchangeFields.topAnchor.constraint(equalTo: view.layoutGuide.topAnchor, constant: 20),
+            exchangeFields.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            exchangeFields.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
         ])
 
         view.backgroundColor = viewModel.backgroundColor

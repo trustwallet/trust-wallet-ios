@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 
 class ExchangeValueInput: UIView {
-    let label = UITextField()
+    let label = UILabel()
     let amountField = UITextField()
 
     init() {
@@ -16,6 +16,7 @@ class ExchangeValueInput: UIView {
 
         amountField.translatesAutoresizingMaskIntoConstraints = false
         amountField.backgroundColor = .red
+        amountField.font = UIFont.systemFont(ofSize: 20, weight: UIFontWeightMedium)
 
         let stackView = UIStackView(arrangedSubviews: [
             label,
@@ -23,6 +24,7 @@ class ExchangeValueInput: UIView {
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
+        stackView.distribution = .fillEqually
 
         addSubview(stackView)
 

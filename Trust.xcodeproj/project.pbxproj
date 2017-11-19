@@ -1165,10 +1165,10 @@
 		298543081FC1888700CB5081 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				298543091FC188A700CB5081 /* ExchangeTokenInputField.swift */,
 				2985430B1FC188D200CB5081 /* ExchangeTokensField.swift */,
-				2981C2961FC18DA500537E43 /* ExchangeTokenView.swift */,
+				298543091FC188A700CB5081 /* ExchangeTokenInputField.swift */,
 				2981C2981FC18E5800537E43 /* ExchangeValueInput.swift */,
+				2981C2961FC18DA500537E43 /* ExchangeTokenView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
