@@ -62,7 +62,7 @@ class InCoordinator: Coordinator {
             tokenCoordinator.navigationController,
         ]
 
-        if isDebug {
+        if false {
             let exchangeCoordinator = ExchangeCoordinator()
             exchangeCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Exchange", image: R.image.exchange(), selectedImage: nil)
             exchangeCoordinator.start()
