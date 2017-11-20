@@ -30,9 +30,9 @@ class Screenshots: XCTestCase {
         app.navigationBars["Send ETH"].buttons["Cancel"].tap()
 
         snapshot("4Transactions")
-        
-        app.tables.buttons["Show my tokens"].tap()
-        sleep(12)
+
+        app.tabBars.buttons["Tokens"].tap()
+        sleep(8)
         snapshot("2Tokens")
     }
 }
