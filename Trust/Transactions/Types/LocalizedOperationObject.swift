@@ -33,7 +33,8 @@ class LocalizedOperationObject: Object {
 }
 
 extension LocalizedOperationObject {
-    static func from(operations: [LocalizedOperation]) -> [LocalizedOperationObject] {
+    static func from(operations: [LocalizedOperation]?) -> [LocalizedOperationObject] {
+        guard let operations = operations else { return [] }
         return operations.map { operation in
             return LocalizedOperationObject(
                 title: operation.title,

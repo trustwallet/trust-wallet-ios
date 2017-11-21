@@ -30,7 +30,7 @@ struct RawTransaction: Decodable {
         case operationsLocalized = "operations_localized"
     }
 
-    let operationsLocalized: [LocalizedOperation]
+    let operationsLocalized: [LocalizedOperation]?
 }
 
 extension Transaction {
