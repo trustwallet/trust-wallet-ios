@@ -17,6 +17,7 @@ class Transaction: Object {
     @objc dynamic var nonce: String = ""
     @objc dynamic var date = Date()
     @objc dynamic var isError: Bool = false
+    var localizedOperations = List<LocalizedOperationObject>()
 
     convenience init(
         id: String,
@@ -31,8 +32,10 @@ class Transaction: Object {
         gasUsed: String,
         nonce: String,
         date: Date,
-        isError: Bool
+        isError: Bool,
+        localizedOperations: [LocalizedOperationObject]
     ) {
+
         self.init()
         self.id = id
         self.owner = owner
@@ -47,6 +50,13 @@ class Transaction: Object {
         self.nonce = nonce
         self.date = date
         self.isError = isError
+
+        let list = List<LocalizedOperationObject>()
+        localizedOperations.forEach { element in
+            list.append(element)
+        }
+
+        self.localizedOperations = list
     }
 
     override static func primaryKey() -> String? {
@@ -58,5 +68,9 @@ extension Transaction {
     var direction: TransactionDirection {
         if owner == from { return .outgoing }
         return .incoming
+    }
+
+    var operation: LocalizedOperationObject? {
+        return localizedOperations.first
     }
 }

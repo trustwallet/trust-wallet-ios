@@ -5,18 +5,15 @@ import UIKit
 
 struct TransactionHeaderViewModel: TransactionHeaderBaseViewModel {
 
-    private let amount: Double
+    private let value: TransactionValue
     private let direction: TransactionDirection
-    private let config: Config
 
     init(
-        amount: Double,
-        direction: TransactionDirection,
-        config: Config
+        value: TransactionValue,
+        direction: TransactionDirection
     ) {
-        self.amount = amount
+        self.value = value
         self.direction = direction
-        self.config = config
     }
 
     var amountTextColor: UIColor {
@@ -28,7 +25,7 @@ struct TransactionHeaderViewModel: TransactionHeaderBaseViewModel {
 
     var amountAttributedString: NSAttributedString {
         let amount = NSAttributedString(
-            string: String(self.amount),
+            string: String(value.amount),
             attributes: [
                 NSFontAttributeName: UIFont.systemFont(ofSize: 24),
                 NSForegroundColorAttributeName: amountTextColor,
@@ -36,7 +33,7 @@ struct TransactionHeaderViewModel: TransactionHeaderBaseViewModel {
         )
 
         let currency = NSAttributedString(
-            string: " " + config.server.symbol,
+            string: " " + value.symbol,
             attributes: [
                 NSFontAttributeName: UIFont.systemFont(ofSize: 14),
             ]

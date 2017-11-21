@@ -113,7 +113,8 @@ extension Transaction {
             gasUsed: transaction.gasUsed,
             nonce: transaction.nonce,
             date: NSDate(timeIntervalSince1970: TimeInterval(transaction.timestamp) ?? 0) as Date,
-            isError: false
+            isError: false,
+            localizedOperations: []
         )
     }
 }

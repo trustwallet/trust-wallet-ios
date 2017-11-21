@@ -2,10 +2,12 @@
 
 import Foundation
 
-struct TokenTransferOperation: Decodable {
+struct LocalizedOperation: Decodable {
+    let title: String
     let from: String
     let to: String
+    let contract: String?
     let type: OperationType
     let value: String
-    let contract: ERC20Contract
+    let symbol: String?
 }

@@ -40,16 +40,14 @@ class TransactionViewController: UIViewController {
             maximumFractionDigits: 5
         )
 
-        let value = EthereumConverter.from(value: BInt(transaction.value), to: .ether, minimumFractionDigits: 5)
         let confirmation = session.chainState.latestBlock - Int(transaction.blockNumber)
 
         let items: [UIView] = [
             .spacer(),
             TransactionAppearance.header(
                 viewModel: TransactionHeaderViewModel(
-                    amount: Double(value) ?? 0,
-                    direction: transaction.direction,
-                    config: config
+                    value: viewModel.value,
+                    direction: transaction.direction
                 )
             ),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
