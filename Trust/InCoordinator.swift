@@ -36,6 +36,7 @@ class InCoordinator: Coordinator {
             account: account,
             config: config
         )
+        let inCoordinatorViewModel = InCoordinatorViewModel(config: config)
         let transactionCoordinator = TransactionCoordinator(
             session: session,
             storage: TransactionsStorage(
@@ -49,24 +50,27 @@ class InCoordinator: Coordinator {
         transactionCoordinator.start()
         addCoordinator(transactionCoordinator)
 
-        let tokenCoordinator = TokensCoordinator(
-            session: session
-        )
-        tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Tokens", image: R.image.coins(), selectedImage: nil)
-        tokenCoordinator.start()
-        addCoordinator(tokenCoordinator)
-
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [
             transactionCoordinator.navigationController,
-            tokenCoordinator.navigationController,
         ]
         tabBarController.tabBar.isTranslucent = false
 
-        if false {
+        if inCoordinatorViewModel.tokensAvailable {
+            let tokenCoordinator = TokensCoordinator(
+                session: session
+            )
+            tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Tokens", image: R.image.coins(), selectedImage: nil)
+            tokenCoordinator.start()
+            addCoordinator(tokenCoordinator)
+            tabBarController.viewControllers?.append(tokenCoordinator.navigationController)
+        }
+
+        if inCoordinatorViewModel.exchangeAvailable {
             let exchangeCoordinator = ExchangeCoordinator()
             exchangeCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Exchange", image: R.image.exchange(), selectedImage: nil)
             exchangeCoordinator.start()
+            addCoordinator(exchangeCoordinator)
             tabBarController.viewControllers?.append(exchangeCoordinator.navigationController)
         }
 
