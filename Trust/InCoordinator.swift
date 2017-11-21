@@ -61,6 +61,7 @@ class InCoordinator: Coordinator {
             transactionCoordinator.navigationController,
             tokenCoordinator.navigationController,
         ]
+        tabBarController.tabBar.isTranslucent = false
 
         if false {
             let exchangeCoordinator = ExchangeCoordinator()
