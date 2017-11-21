@@ -71,11 +71,12 @@ struct TransactionCellViewModel {
     }
 
     var amount: String {
-        if let operationValue = operationValue {
-            return operationValue
-        }
-
-        let value = EthereumConverter.from(value: BInt(transaction.value), to: .ether, minimumFractionDigits: 3)
+        let value: String = {
+            if let operationValue = operationValue {
+                return operationValue
+            }
+            return EthereumConverter.from(value: BInt(transaction.value), to: .ether, minimumFractionDigits: 3)
+        }()
         switch transaction.direction {
         case .incoming: return "+\(value)"
         case .outgoing: return "-\(value)"
