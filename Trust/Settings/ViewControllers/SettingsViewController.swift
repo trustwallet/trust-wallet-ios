@@ -149,13 +149,13 @@ class SettingsViewController: FormViewController {
 
             <<< link(
                 title: NSLocalizedString("Settings.PrivacyPolicy", value: "Privacy Policy", comment: ""),
-                value: "http://trustwalletapp.com/privacy-policy.html",
+                value: "https://trustwalletapp.com/privacy-policy.html",
                 image: R.image.settings_privacy_policy()
             )
 
             <<< link(
                 title: NSLocalizedString("settings.TermsOfService", value: "Terms of Service", comment: ""),
-                value: "http://trustwalletapp.com/terms.html",
+                value: "https://trustwalletapp.com/terms.html",
                 image: R.image.settings_terms()
             )
 

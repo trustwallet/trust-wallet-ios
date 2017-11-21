@@ -66,8 +66,8 @@ class TransactionsViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
 
-            footerView.trailingAnchor.constraint(equalTo: view.layoutGuide.trailingAnchor),
-            footerView.leadingAnchor.constraint(equalTo: view.layoutGuide.leadingAnchor),
+            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
 

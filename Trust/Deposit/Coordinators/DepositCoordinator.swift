@@ -27,6 +27,7 @@ class DepositCoordinator: Coordinator {
             message: NSLocalizedString("deposit.alertSheetMessage", value: "How would you like to buy?", comment: ""),
             preferredStyle: .actionSheet
         )
+        alertController.popoverPresentationController?.sourceView = self.navigationController.view
         let coinbaseAction = UIAlertAction(title: NSLocalizedString("deposit.viaCoinbase", value: "via Coinbase", comment: ""), style: .default) { _ in
             self.showCoinbase()
         }
