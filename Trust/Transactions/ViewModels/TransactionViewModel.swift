@@ -3,6 +3,11 @@
 import Foundation
 import UIKit
 
+struct TransactionValue {
+    let amount: String
+    let symbol: String
+}
+
 struct TransactionViewModel {
 
     static let formatter: DateFormatter = {
@@ -32,12 +37,14 @@ struct TransactionViewModel {
         return .white
     }
 
-    var amount: String {
-        let value = EthereumConverter.from(value: BInt(transaction.value), to: .ether, minimumFractionDigits: 5)
-        switch transaction.direction {
-        case .incoming: return "+\(value)"
-        case .outgoing: return "-\(value)"
+    var value: TransactionValue {
+        if let amount = transaction.operation?.value, let symbol = transaction.operation?.symbol {
+            return TransactionValue(amount: amount, symbol: symbol)
         }
+        return TransactionValue(
+            amount: EthereumConverter.from(value: BInt(transaction.value), to: .ether, minimumFractionDigits: 5),
+            symbol: config.server.symbol
+        )
     }
 
     var createdAt: String {

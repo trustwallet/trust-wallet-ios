@@ -30,7 +30,16 @@ struct TransactionCellViewModel {
         return .completed
     }
 
+    private var operationTitle: String? {
+        return transaction.operation?.title
+    }
+
+    private var operationValue: String? {
+        return transaction.operation?.value
+    }
+
     var title: String {
+        if let operationTitle = operationTitle { return operationTitle }
         switch state {
         case .completed:
             switch transaction.direction {
@@ -62,6 +71,10 @@ struct TransactionCellViewModel {
     }
 
     var amount: String {
+        if let operationValue = operationValue {
+            return operationValue
+        }
+
         let value = EthereumConverter.from(value: BInt(transaction.value), to: .ether, minimumFractionDigits: 3)
         switch transaction.direction {
         case .incoming: return "+\(value)"
