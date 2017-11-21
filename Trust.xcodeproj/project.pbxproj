@@ -2270,7 +2270,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 63;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Trust/Info.plist;
@@ -2296,7 +2296,7 @@
 				CODE_SIGN_ENTITLEMENTS = Trust/Trust.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 63;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Trust/Info.plist;
