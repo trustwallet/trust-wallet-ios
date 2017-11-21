@@ -31,15 +31,6 @@ class TransactionViewController: UIViewController {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
-        let gasUsed = BInt(String(transaction.gasUsed))
-        let gasPrice = BInt(String(transaction.gasPrice))
-        let gasFee = EthereumConverter.from(
-            value: gasPrice * gasUsed,
-            to: .ether,
-            minimumFractionDigits: 5,
-            maximumFractionDigits: 5
-        )
-
         let confirmation = session.chainState.latestBlock - Int(transaction.blockNumber)
 
         let items: [UIView] = [
@@ -51,14 +42,14 @@ class TransactionViewController: UIViewController {
                 )
             ),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
-            TransactionAppearance.item(title: "From", subTitle: transaction.from),
-            TransactionAppearance.item(title: "To", subTitle: transaction.to),
-            TransactionAppearance.item(title: "Gas Fee", subTitle: gasFee),
+            TransactionAppearance.item(title: "From", subTitle: viewModel.from),
+            TransactionAppearance.item(title: "To", subTitle: viewModel.to),
+            TransactionAppearance.item(title: "Gas Fee", subTitle: viewModel.gasFee),
             TransactionAppearance.item(title: "Confirmation", subTitle: String(confirmation)),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
-            TransactionAppearance.item(title: "Transaction #", subTitle: transaction.to),
+            TransactionAppearance.item(title: "Transaction #", subTitle: viewModel.transactionID),
             TransactionAppearance.item(title: "Transaction time", subTitle: viewModel.createdAt),
-            TransactionAppearance.item(title: "Block #", subTitle: String(transaction.blockNumber)),
+            TransactionAppearance.item(title: "Block #", subTitle: viewModel.blockNumber),
             moreDetails(),
         ]
 

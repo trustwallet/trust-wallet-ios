@@ -54,4 +54,34 @@ struct TransactionViewModel {
     var detailsURL: URL {
         return ConfigExplorer(server: config.server).transactionURL(for: transaction.id)
     }
+
+    var transactionID: String {
+        return transaction.id
+    }
+
+    var to: String {
+        guard let to = transaction.operation?.to else {
+            return transaction.to
+        }
+        return to
+    }
+
+    var from: String {
+        return transaction.from
+    }
+
+    var gasFee: String {
+        let gasUsed = BInt(String(transaction.gasUsed))
+        let gasPrice = BInt(String(transaction.gasPrice))
+        return EthereumConverter.from(
+            value: gasPrice * gasUsed,
+            to: .ether,
+            minimumFractionDigits: 5,
+            maximumFractionDigits: 5
+        )
+    }
+
+    var blockNumber: String {
+        return String(transaction.blockNumber)
+    }
 }
