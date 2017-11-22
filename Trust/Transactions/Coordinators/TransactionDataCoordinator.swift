@@ -40,14 +40,13 @@ class TransactionDataCoordinator {
     }
 
     func start() {
-        fetchTransactions()
-        fetchPendingTransactions()
         timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(fetchPending), userInfo: nil, repeats: true)
         updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(fetchTransactions), userInfo: nil, repeats: true)
     }
 
     func fetch() {
         fetchTransactions()
+        fetchPendingTransactions()
     }
 
     @objc func fetchTransactions() {
