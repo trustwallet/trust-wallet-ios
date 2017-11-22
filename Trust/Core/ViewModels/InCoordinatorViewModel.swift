@@ -18,6 +18,6 @@ struct InCoordinatorViewModel {
     }
 
     var exchangeAvailable: Bool {
-        return false
+        return isDebug
     }
 }

@@ -62,6 +62,10 @@
 		292F75A91F88865A00585F8E /* TouchRegistrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F75A81F88865A00585F8E /* TouchRegistrar.swift */; };
 		293112101FC4ADCB00966EEA /* InCoordinatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931120F1FC4ADCB00966EEA /* InCoordinatorViewModel.swift */; };
 		293112121FC4F48400966EEA /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112111FC4F48400966EEA /* ServiceProvider.swift */; };
+		293112151FC5550000966EEA /* ExchangeTokensCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112141FC5550000966EEA /* ExchangeTokensCoordinator.swift */; };
+		293112171FC5555500966EEA /* ExchangeTokensViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112161FC5555500966EEA /* ExchangeTokensViewModel.swift */; };
+		293112191FC55E5500966EEA /* SelectTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112181FC55E5500966EEA /* SelectTokenViewController.swift */; };
+		2931121B1FC560E500966EEA /* ExchangeTokenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931121A1FC560E500966EEA /* ExchangeTokenTableViewCell.swift */; };
 		293204581F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */; };
 		2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */; };
 		2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */; };
@@ -316,6 +320,10 @@
 		292F75A81F88865A00585F8E /* TouchRegistrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchRegistrar.swift; sourceTree = "<group>"; };
 		2931120F1FC4ADCB00966EEA /* InCoordinatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InCoordinatorViewModel.swift; sourceTree = "<group>"; };
 		293112111FC4F48400966EEA /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
+		293112141FC5550000966EEA /* ExchangeTokensCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTokensCoordinator.swift; sourceTree = "<group>"; };
+		293112161FC5555500966EEA /* ExchangeTokensViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTokensViewModel.swift; sourceTree = "<group>"; };
+		293112181FC55E5500966EEA /* SelectTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTokenViewController.swift; sourceTree = "<group>"; };
+		2931121A1FC560E500966EEA /* ExchangeTokenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTokenTableViewCell.swift; sourceTree = "<group>"; };
 		293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateCoordinator.swift; sourceTree = "<group>"; };
 		2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRate.swift; sourceTree = "<group>"; };
 		2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceCoordinator.swift; sourceTree = "<group>"; };
@@ -1156,6 +1164,7 @@
 			isa = PBXGroup;
 			children = (
 				298543031FC15F6D00CB5081 /* ExchangeCoordinator.swift */,
+				293112141FC5550000966EEA /* ExchangeTokensCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1164,6 +1173,7 @@
 			isa = PBXGroup;
 			children = (
 				298543061FC15FB500CB5081 /* ExchangeViewController.swift */,
+				293112181FC55E5500966EEA /* SelectTokenViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1173,6 +1183,7 @@
 			children = (
 				2985430B1FC188D200CB5081 /* ExchangeTokensField.swift */,
 				298543091FC188A700CB5081 /* ExchangeTokenInputField.swift */,
+				2931121A1FC560E500966EEA /* ExchangeTokenTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1181,6 +1192,7 @@
 			isa = PBXGroup;
 			children = (
 				2985430E1FC18A4B00CB5081 /* ExchangeViewModel.swift */,
+				293112161FC5555500966EEA /* ExchangeTokensViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1912,6 +1924,7 @@
 				290B2B5F1F9177860053C83E /* UIImage.swift in Sources */,
 				291F52B21F6B814300B369AB /* MG Benchmark Tools.swift in Sources */,
 				291ED08F1F6F613200E7E93A /* GetTransactionRequest.swift in Sources */,
+				293112171FC5555500966EEA /* ExchangeTokensViewModel.swift in Sources */,
 				295A59381F71C1B90092F0FC /* AccountsCoordinator.swift in Sources */,
 				296421971F70C1F200EB363B /* ErrorView.swift in Sources */,
 				29358DA91F79FD1C00925D61 /* CALayer.swift in Sources */,
@@ -1978,6 +1991,7 @@
 				291795011F95F5E200539A30 /* GetBalance.swift in Sources */,
 				2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */,
 				29C9F5F91F720BD30025C494 /* FloatLabelCell.swift in Sources */,
+				293112191FC55E5500966EEA /* SelectTokenViewController.swift in Sources */,
 				29DBF2A71F9F145900327C60 /* StateViewModel.swift in Sources */,
 				2912CD361F6A853300C6CBE3 /* TransactionsViewModel.swift in Sources */,
 				29C80D4B1FB51C460037B1E0 /* Decimal.swift in Sources */,
@@ -1995,6 +2009,7 @@
 				29F114EE1FA65DEF00114A29 /* ImportType.swift in Sources */,
 				2963A28A1FC402940095447D /* LocalizedOperationObject.swift in Sources */,
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
+				2931121B1FC560E500966EEA /* ExchangeTokenTableViewCell.swift in Sources */,
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
 				2932488A1F88D593008A9818 /* OnePasswordConfig.swift in Sources */,
@@ -2017,6 +2032,7 @@
 				291F52A51F6B762300B369AB /* EtherServiceRequest.swift in Sources */,
 				298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */,
 				29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */,
+				293112151FC5550000966EEA /* ExchangeTokensCoordinator.swift in Sources */,
 				296AF9A51F736BA20058AF78 /* Config.swift in Sources */,
 				2912CD341F6A849C00C6CBE3 /* WelcomeViewModel.swift in Sources */,
 				291F52A21F6B6DCF00B369AB /* EtherClient.swift in Sources */,

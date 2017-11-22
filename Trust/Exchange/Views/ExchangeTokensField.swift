@@ -4,19 +4,23 @@ import UIKit
 
 class ExchangeTokensField: UIView {
 
-    let to = ExchangeTokenInputField()
     let from = ExchangeTokenInputField()
+    let to = ExchangeTokenInputField()
     let swapButton = UIButton()
+
+    var didPressSwap: (() -> Void)?
+    var didPressTo: (() -> Void)?
+    var didPressFrom: (() -> Void)?
 
     init() {
 
         super.init(frame: .zero)
 
-        to.translatesAutoresizingMaskIntoConstraints = false
-        to.destinationLabel.text = "You send"
-
         from.translatesAutoresizingMaskIntoConstraints = false
-        from.destinationLabel.text = "You get"
+        from.destinationLabel.text = "You send"
+
+        to.translatesAutoresizingMaskIntoConstraints = false
+        to.destinationLabel.text = "You get"
 
         swapButton.translatesAutoresizingMaskIntoConstraints = false
         swapButton.setImage(R.image.swap(), for: .normal)
@@ -25,11 +29,14 @@ class ExchangeTokensField: UIView {
         swapButton.backgroundColor = .white
 
         let stackView = UIStackView(arrangedSubviews: [
-            to,
             from,
+            to,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
+
+        from.didPress = { [unowned self] in self.didPressFrom?() }
+        to.didPress = { [unowned self] in self.didPressTo?() }
 
         addSubview(stackView)
         addSubview(swapButton)
@@ -48,7 +55,7 @@ class ExchangeTokensField: UIView {
     }
 
     func swap() {
-
+        didPressSwap?()
     }
 
     required init?(coder aDecoder: NSCoder) {

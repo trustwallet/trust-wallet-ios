@@ -10,7 +10,9 @@ class ExchangeTokenInputField: UIView {
 
     let tokenView = UIView()
     let tokenImageView = UIImageView()
-    let label = UILabel()
+    let symbolLabel = UILabel()
+
+    var didPress: (() -> Void)?
 
     init() {
 
@@ -49,9 +51,9 @@ class ExchangeTokenInputField: UIView {
 
         // token view
 
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.text = "ETH"
+        symbolLabel.translatesAutoresizingMaskIntoConstraints = false
+        symbolLabel.textAlignment = .center
+        symbolLabel.text = "ETH"
 
         tokenImageView.translatesAutoresizingMaskIntoConstraints = false
         tokenImageView.image = R.image.accounts_active()
@@ -61,7 +63,7 @@ class ExchangeTokenInputField: UIView {
 
         let tokenStackView = UIStackView(arrangedSubviews: [
             tokenImageView,
-            label,
+            symbolLabel,
         ])
         tokenStackView.translatesAutoresizingMaskIntoConstraints = false
         tokenStackView.axis = .vertical
@@ -97,6 +99,9 @@ class ExchangeTokenInputField: UIView {
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
+        stackView.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(self.tap))
+        )
 
         addSubview(stackView)
 
@@ -107,6 +112,10 @@ class ExchangeTokenInputField: UIView {
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             stackView.heightAnchor.constraint(equalToConstant: 100),
         ])
+    }
+
+    func tap() {
+        didPress?()
     }
 
     required init?(coder aDecoder: NSCoder) {
