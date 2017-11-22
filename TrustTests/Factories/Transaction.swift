@@ -17,7 +17,8 @@ extension Transaction {
         gasUsed: String = "0x1",
         nonce: String = "0",
         date: Date = Date(),
-        isError: Bool = false
+        isError: Bool = false,
+        localizedOperations: [LocalizedOperationObject] = []
     ) -> Transaction {
         return Transaction(
             id: id,
@@ -32,7 +33,8 @@ extension Transaction {
             gasUsed: gasUsed,
             nonce: nonce,
             date: date,
-            isError: isError
+            isError: isError,
+            localizedOperations: localizedOperations
         )
     }
 }
