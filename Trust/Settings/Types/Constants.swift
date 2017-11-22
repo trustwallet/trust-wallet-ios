@@ -9,4 +9,9 @@ struct Constants {
     static let changellyRefferalID = "968d4f0f0bf9"
     //
     static let keychainKeyPrefix = "trustwallet"
+
+    // social
+    static let twitterUsername = "trustwalletapp"
+    static let telegramUsername = "trustwallet"
+    static let facebookUsername = "trustwalletapp"
 }

@@ -115,17 +115,9 @@ class SettingsViewController: FormViewController {
 
             +++ Section(NSLocalizedString("Settings.Community", value: "Community", comment: ""))
 
-            <<< link(
-                title: "Twitter",
-                value: "https://twitter.com/trustwalletapp",
-                image: R.image.settings_twitter()
-            )
-
-            <<< link(
-                title: "Telegram Group",
-                value: "https://t.me/joinchat/AAMtrQ_wtd918mm_mU0BRQ",
-                image: R.image.settings_telegram()
-            )
+            <<< linkProvider(type: .twitter)
+            <<< linkProvider(type: .telegram)
+            <<< linkProvider(type: .facebook)
 
             +++ Section(NSLocalizedString("Settings.Support", value: "Support", comment: ""))
 
@@ -181,6 +173,22 @@ class SettingsViewController: FormViewController {
         let versionNumber = Bundle.main.versionNumber ?? ""
         let buildNumber = Bundle.main.buildNumber ?? ""
         return "\(versionNumber) (\(buildNumber))"
+    }
+
+    private func linkProvider(
+        type: URLServiceProvider
+    ) -> ButtonRow {
+        return AppFormAppearance.button {
+            $0.title = type.title
+        }.onCellSelection { [unowned self] _ in
+            if let localURL = type.localURL, UIApplication.shared.canOpenURL(localURL) {
+                self.openURL(localURL)
+            } else {
+                self.openURL(type.remoteURL)
+            }
+        }.cellSetup { cell, _ in
+            cell.imageView?.image = type.image
+        }
     }
 
     private func link(
