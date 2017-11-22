@@ -105,7 +105,10 @@ class RequestViewController: UIViewController {
     }
 
     func changeQRCode(value: Int) {
-        let string = "ethereum:\(account.address.address)?value=\(value)"
+        let string = "\(account.address.address)"
+        
+        // EIP67 format not being used much yet, use hex value for now
+        // let string = "ethereum:\(account.address.address)?value=\(value)"
 
         DispatchQueue.global(qos: .background).async {
             let image = self.generateQRCode(from: string)
