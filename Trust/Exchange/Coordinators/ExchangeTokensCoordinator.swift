@@ -43,19 +43,14 @@ class ExchangeToksnCoordinator {
     }
 
     func changeToken(direction: SelectTokenDirection, token: ExchangeToken) {
-        NSLog("changeToken \(direction)")
-
-        NSLog("from \(from), token: \(token)")
-
         switch direction {
         case .from:
+            if token == to { to = from }
             from = token
         case .to:
+            if token == from { from = to }
             to = token
         }
-
-        NSLog("from \(from), token: \(token)")
-
         update()
     }
 }
