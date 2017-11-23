@@ -54,11 +54,6 @@ class SelectTokenViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let token = tokens[indexPath.row]
         tableView.deselectRow(at: indexPath, animated: true)
-
-        NSLog("didSelectRowAt \(token)")
-
         delegate?.didSelect(token: token, in: self)
-
-        navigationController?.popViewController(animated: true)
     }
 }

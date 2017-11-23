@@ -1,12 +1,8 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
-
-struct ExchangeToken {
-    let name: String
-    let symbol: String
-    let balance: Double
-}
+import UIKit
+import BonMot
 
 struct ExchangeTokensViewModel {
 
@@ -27,5 +23,29 @@ struct ExchangeTokensViewModel {
 
     var toSymbol: String {
         return to.symbol
+    }
+
+    var attributedCurrency: NSAttributedString {
+        let baseStyle = StringStyle(
+            .lineHeightMultiple(1.2),
+            .font(UIFont.systemFont(ofSize: 15))
+        )
+        let greenStyle = baseStyle.byAdding(.color(Colors.green))
+
+        let conversationString = "1 \(fromSymbol) = 0.017648 \(toSymbol) ".styled(with: baseStyle)
+        let percentString = "(-%)".styled(with: greenStyle)
+
+        return (conversationString + percentString).styled(with: .alignment(.center))
+    }
+
+    var availableBalance: Double {
+        return 2.22
+    }
+
+    var attributedAvailableBalance: NSAttributedString {
+        return NSAttributedString(
+            string: "Available \(availableBalance) \(fromSymbol)",
+            attributes: [:]
+        )
     }
 }

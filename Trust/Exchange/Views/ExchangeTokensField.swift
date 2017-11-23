@@ -4,58 +4,63 @@ import UIKit
 
 class ExchangeTokensField: UIView {
 
-    let from = ExchangeTokenInputField()
-    let to = ExchangeTokenInputField()
-    let swapButton = UIButton()
+    let fromField = ExchangeTokenInputField()
+    let toField = ExchangeTokenInputField()
 
-    var didPressSwap: (() -> Void)?
-    var didPressTo: (() -> Void)?
-    var didPressFrom: (() -> Void)?
+    lazy var availableBalanceLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(self.availableBalance))
+        )
+        label.isUserInteractionEnabled = true
+        return label
+    }()
+
+    var didPress: ((SelectTokenDirection) -> Void)?
+    var didPressAvailableBalance: (() -> Void)?
 
     init() {
 
         super.init(frame: .zero)
 
-        from.translatesAutoresizingMaskIntoConstraints = false
-        from.destinationLabel.text = "You send"
-
-        to.translatesAutoresizingMaskIntoConstraints = false
-        to.destinationLabel.text = "You get"
-
-        swapButton.translatesAutoresizingMaskIntoConstraints = false
-        swapButton.setImage(R.image.swap(), for: .normal)
-        swapButton.addTarget(self, action: #selector(swap), for: .touchUpInside)
-        swapButton.layer.cornerRadius = 20
-        swapButton.backgroundColor = .white
+        fromField.translatesAutoresizingMaskIntoConstraints = false
+        toField.translatesAutoresizingMaskIntoConstraints = false
 
         let stackView = UIStackView(arrangedSubviews: [
-            from,
-            to,
+            destinationLabel(text: "From"),
+            fromField,
+            availableBalanceLabel,
+            .spacer(height: 0),
+            destinationLabel(text: "To"),
+            toField,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 10
         stackView.axis = .vertical
 
-        from.didPress = { [unowned self] in self.didPressFrom?() }
-        to.didPress = { [unowned self] in self.didPressTo?() }
+        fromField.didPress = { [unowned self] in self.didPress?(.from) }
+        toField.didPress = { [unowned self] in self.didPress?(.to) }
 
         addSubview(stackView)
-        addSubview(swapButton)
 
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-
-            swapButton.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
-            swapButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -80),
-            swapButton.widthAnchor.constraint(equalToConstant: 40),
-            swapButton.heightAnchor.constraint(equalToConstant: 40),
         ])
     }
 
-    func swap() {
-        didPressSwap?()
+    private func destinationLabel(text: String) -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = text
+        return label
+    }
+
+    func availableBalance() {
+        didPressAvailableBalance?()
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -106,7 +106,7 @@ class RequestViewController: UIViewController {
 
     func changeQRCode(value: Int) {
         let string = "\(account.address.address)"
-        
+
         // EIP67 format not being used much yet, use hex value for now
         // let string = "ethereum:\(account.address.address)?value=\(value)"
 

@@ -7,28 +7,35 @@ class ExchangeViewController: UIViewController {
 
     private let viewModel = ExchangeViewModel()
     let exchangeFields = ExchangeTokensField()
+    let currencyView = ExchangeCurrencyView()
     let coordinator = ExchangeToksnCoordinator()
 
     init() {
         super.init(nibName: nil, bundle: nil)
 
         exchangeFields.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(exchangeFields)
+
+        let stackView = UIStackView(arrangedSubviews: [
+            exchangeFields,
+            .spacer(height: 20),
+            currencyView,
+        ])
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            exchangeFields.topAnchor.constraint(equalTo: view.layoutGuide.topAnchor, constant: 20),
-            exchangeFields.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            exchangeFields.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            stackView.topAnchor.constraint(equalTo: view.layoutGuide.topAnchor, constant: 20),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -20),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
         ])
 
-        exchangeFields.didPressSwap = { [unowned self] in
-            self.coordinator.swap()
+        exchangeFields.didPress = { [unowned self] direction in
+            self.showSelectToken(direction: direction)
         }
-        exchangeFields.didPressFrom = { [unowned self] in
-            self.showSelectToken(direction: .from)
-        }
-        exchangeFields.didPressTo = { [unowned self] in
-            self.showSelectToken(direction: .to)
+        exchangeFields.didPressAvailableBalance = { [unowned self] _ in
+            self.exchangeFields.fromField.amountField.text = "\(self.coordinator.viewModel.availableBalance)"
         }
 
         coordinator.didUpdate = { [weak self] viewModel in
@@ -39,11 +46,18 @@ class ExchangeViewController: UIViewController {
 
         view.backgroundColor = viewModel.backgroundColor
         navigationItem.title = viewModel.title
+        exchangeFields.backgroundColor = .white
     }
 
     func configure(viewModel: ExchangeTokensViewModel) {
-        exchangeFields.to.symbolLabel.text = viewModel.toSymbol
-        exchangeFields.from.symbolLabel.text = viewModel.fromSymbol
+        exchangeFields.fromField.symbolLabel.text = viewModel.fromSymbol
+        exchangeFields.toField.symbolLabel.text = viewModel.toSymbol
+
+        exchangeFields.fromField.backgroundColor = Colors.veryLightGray
+        exchangeFields.toField.backgroundColor = Colors.veryLightGray
+
+        exchangeFields.availableBalanceLabel.attributedText = viewModel.attributedAvailableBalance
+        currencyView.currencyLabel.attributedText = viewModel.attributedCurrency
     }
 
     func showSelectToken(direction: SelectTokenDirection) {
@@ -63,5 +77,6 @@ class ExchangeViewController: UIViewController {
 extension ExchangeViewController: SelectTokenViewControllerDelegate {
     func didSelect(token: ExchangeToken, in viewController: SelectTokenViewController) {
         coordinator.changeToken(direction: viewController.direction, token: token)
+        navigationController?.popViewController(animated: true)
     }
 }

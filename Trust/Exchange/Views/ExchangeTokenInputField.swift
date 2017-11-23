@@ -4,13 +4,10 @@ import UIKit
 
 class ExchangeTokenInputField: UIView {
 
-    let floatLabelView = UIView()
-    let destinationLabel = UILabel()
     let amountField = UITextField()
-
-    let tokenView = UIView()
     let tokenImageView = UIImageView()
     let symbolLabel = UILabel()
+    let chevronDownImageView = UIImageView(image: R.image.chevronRight())
 
     var didPress: (() -> Void)?
 
@@ -18,100 +15,75 @@ class ExchangeTokenInputField: UIView {
 
         super.init(frame: .zero)
 
-        // value
-
-        floatLabelView.translatesAutoresizingMaskIntoConstraints = false
-
-        destinationLabel.translatesAutoresizingMaskIntoConstraints = false
-
         amountField.translatesAutoresizingMaskIntoConstraints = false
-        amountField.backgroundColor = .red
-        amountField.font = UIFont.systemFont(ofSize: 26, weight: UIFontWeightMedium)
-
-        let inputStackView = UIStackView(arrangedSubviews: [
-            destinationLabel,
-            amountField,
-        ])
-        inputStackView.translatesAutoresizingMaskIntoConstraints = false
-        inputStackView.axis = .vertical
-        inputStackView.spacing = 5
-
-        addSubview(floatLabelView)
-        floatLabelView.addSubview(inputStackView)
-
-        NSLayoutConstraint.activate([
-            inputStackView.centerYAnchor.constraint(equalTo: floatLabelView.centerYAnchor),
-            inputStackView.leadingAnchor.constraint(equalTo: floatLabelView.leadingAnchor),
-            inputStackView.trailingAnchor.constraint(equalTo: floatLabelView.trailingAnchor, constant: -15),
-
-            floatLabelView.topAnchor.constraint(equalTo: topAnchor),
-            floatLabelView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            floatLabelView.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
-
-        // token view
+        amountField.placeholder = "0"
+        amountField.font = UIFont.systemFont(ofSize: 22, weight: UIFontWeightMedium)
 
         symbolLabel.translatesAutoresizingMaskIntoConstraints = false
         symbolLabel.textAlignment = .center
-        symbolLabel.text = "ETH"
+        symbolLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium)
+        symbolLabel.adjustsFontSizeToFitWidth = true
 
         tokenImageView.translatesAutoresizingMaskIntoConstraints = false
         tokenImageView.image = R.image.accounts_active()
+        tokenImageView.contentMode = .scaleAspectFit
 
-        tokenView.translatesAutoresizingMaskIntoConstraints = false
-        tokenView.backgroundColor = .green
+        chevronDownImageView.translatesAutoresizingMaskIntoConstraints = false
+        chevronDownImageView.contentMode = .scaleAspectFit
+        chevronDownImageView.alpha = 0.5
+
+        let divider: UIView = .spacerWidth(1, backgroundColor: .lightGray)
 
         let tokenStackView = UIStackView(arrangedSubviews: [
             tokenImageView,
             symbolLabel,
+            chevronDownImageView,
         ])
         tokenStackView.translatesAutoresizingMaskIntoConstraints = false
-        tokenStackView.axis = .vertical
+        tokenStackView.axis = .horizontal
         tokenStackView.spacing = 5
 
-        tokenView.addSubview(tokenStackView)
-        addSubview(tokenView)
-
-        let chevronDownImageView = UIImageView(image: R.image.chevronDown())
-        chevronDownImageView.translatesAutoresizingMaskIntoConstraints = false
-
-        tokenView.addSubview(chevronDownImageView)
-
-        NSLayoutConstraint.activate([
-            tokenStackView.centerXAnchor.constraint(equalTo: tokenView.centerXAnchor),
-            tokenStackView.centerYAnchor.constraint(equalTo: tokenView.centerYAnchor),
-
-            tokenView.topAnchor.constraint(equalTo: topAnchor),
-            tokenView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tokenView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            tokenView.widthAnchor.constraint(equalToConstant: 100),
-            tokenView.leadingAnchor.constraint(equalTo: floatLabelView.trailingAnchor),
-
-            chevronDownImageView.leadingAnchor.constraint(equalTo: tokenStackView.trailingAnchor),
-            chevronDownImageView.centerYAnchor.constraint(equalTo: tokenStackView.centerYAnchor),
-        ])
-
-        // main stack
-
         let stackView = UIStackView(arrangedSubviews: [
-            floatLabelView,
-            tokenView,
+            amountField,
+            divider,
+            tokenStackView,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.addGestureRecognizer(
-            UITapGestureRecognizer(target: self, action: #selector(self.tap))
-        )
-
+        stackView.alignment = .center
+        stackView.spacing = 5
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: StyleLayout.sideMargin),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            stackView.heightAnchor.constraint(equalToConstant: 100),
+            stackView.heightAnchor.constraint(equalToConstant: 60),
+
+            amountField.widthAnchor.constraint(equalToConstant: 120),
+
+            symbolLabel.widthAnchor.constraint(equalToConstant: 50),
+
+            divider.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
+            divider.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -StyleLayout.sideMargin),
+
+            tokenImageView.heightAnchor.constraint(equalToConstant: 36),
+            tokenImageView.widthAnchor.constraint(equalToConstant: 36),
+
+            chevronDownImageView.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
+            chevronDownImageView.heightAnchor.constraint(equalToConstant: 12),
+            chevronDownImageView.widthAnchor.constraint(equalToConstant: 12),
         ])
+
+        // main stack
+
+        tokenStackView.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(self.tap))
+        )
+
+        layer.cornerRadius = 5
+        layer.masksToBounds = true
     }
 
     func tap() {

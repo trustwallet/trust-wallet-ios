@@ -29,18 +29,20 @@ extension UIView {
         }
     }
 
-    static func spacer(height: CGFloat = 1) -> UIView {
+    static func spacer(height: CGFloat = 1, backgroundColor: UIColor = .clear) -> UIView {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = backgroundColor
         NSLayoutConstraint.activate([
             view.heightAnchor.constraint(equalToConstant: height),
         ])
         return view
     }
 
-    static func spacerWidth(_ width: CGFloat = 1) -> UIView {
+    static func spacerWidth(_ width: CGFloat = 1, backgroundColor: UIColor = .clear) -> UIView {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = backgroundColor
 
         NSLayoutConstraint.activate([
             view.widthAnchor.constraint(equalToConstant: width),
