@@ -233,6 +233,11 @@ class EtherKeystore: Keystore {
 
         do {
             try gethKeyStorage.unlock(gethAccount, passphrase: password)
+            defer {
+                do {
+                    try gethKeyStorage.lock(gethAccount.getAddress())
+                } catch {}
+            }
             let signedTransaction = try gethKeyStorage.signTx(
                 gethAccount,
                 tx: transaction,
