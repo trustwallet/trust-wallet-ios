@@ -4,15 +4,43 @@ import UIKit
 
 class ExchangeTokenTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    let tokenImageView = UIImageView()
+    let tokenNameLabel = UILabel()
+    let balanceLabel = UILabel()
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        tokenImageView.translatesAutoresizingMaskIntoConstraints = false
+        tokenImageView.contentMode = .scaleAspectFit
+
+        tokenNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        balanceLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        let stackView = UIStackView(arrangedSubviews: [
+            tokenImageView,
+            tokenNameLabel,
+            balanceLabel,
+        ])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 10
+
+        contentView.addSubview(stackView)
+
+        NSLayoutConstraint.activate([
+            tokenImageView.widthAnchor.constraint(equalToConstant: 40),
+            tokenImageView.heightAnchor.constraint(equalToConstant: 40),
+
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            stackView.heightAnchor.constraint(equalToConstant: 70),
+        ])
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-
 }
