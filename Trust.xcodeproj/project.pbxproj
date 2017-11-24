@@ -68,6 +68,7 @@
 		2931121B1FC560E500966EEA /* ExchangeTokenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931121A1FC560E500966EEA /* ExchangeTokenTableViewCell.swift */; };
 		2931121D1FC65F2900966EEA /* ExchangeCurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931121C1FC65F2900966EEA /* ExchangeCurrencyView.swift */; };
 		293112201FC6619000966EEA /* ExchangeToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931121F1FC6619000966EEA /* ExchangeToken.swift */; };
+		293112221FC67F1300966EEA /* ExchangeTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112211FC67F1300966EEA /* ExchangeTokens.swift */; };
 		293204581F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */; };
 		2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */; };
 		2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */; };
@@ -328,6 +329,7 @@
 		2931121A1FC560E500966EEA /* ExchangeTokenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTokenTableViewCell.swift; sourceTree = "<group>"; };
 		2931121C1FC65F2900966EEA /* ExchangeCurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeCurrencyView.swift; sourceTree = "<group>"; };
 		2931121F1FC6619000966EEA /* ExchangeToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeToken.swift; sourceTree = "<group>"; };
+		293112211FC67F1300966EEA /* ExchangeTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTokens.swift; sourceTree = "<group>"; };
 		293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateCoordinator.swift; sourceTree = "<group>"; };
 		2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRate.swift; sourceTree = "<group>"; };
 		2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceCoordinator.swift; sourceTree = "<group>"; };
@@ -862,6 +864,7 @@
 			isa = PBXGroup;
 			children = (
 				2931121F1FC6619000966EEA /* ExchangeToken.swift */,
+				293112211FC67F1300966EEA /* ExchangeTokens.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1946,6 +1949,7 @@
 				29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */,
 				29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */,
 				290B2B651F91A4880053C83E /* TransactionsFooterView.swift in Sources */,
+				293112221FC67F1300966EEA /* ExchangeTokens.swift in Sources */,
 				293B8B431F70815900356286 /* BalanceTitleView.swift in Sources */,
 				29DBF2A11F9DA6EF00327C60 /* BackupViewController.swift in Sources */,
 				29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */,

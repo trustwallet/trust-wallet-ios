@@ -67,7 +67,7 @@ class InCoordinator: Coordinator {
         }
 
         if inCoordinatorViewModel.exchangeAvailable {
-            let exchangeCoordinator = ExchangeCoordinator()
+            let exchangeCoordinator = ExchangeCoordinator(session: session)
             exchangeCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Exchange", image: R.image.exchange(), selectedImage: nil)
             exchangeCoordinator.start()
             addCoordinator(exchangeCoordinator)

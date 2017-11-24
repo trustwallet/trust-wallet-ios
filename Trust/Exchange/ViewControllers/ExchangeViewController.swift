@@ -3,22 +3,42 @@
 import Foundation
 import UIKit
 
+struct SubmitExchangeToken {
+    let token: ExchangeToken
+    let amount: Double
+}
+
+protocol ExchangeViewControllerDelegate: class {
+    func didPress(from: SubmitExchangeToken, to: SubmitExchangeToken, in viewController: ExchangeViewController)
+}
+
 class ExchangeViewController: UIViewController {
 
     private let viewModel = ExchangeViewModel()
     let exchangeFields = ExchangeTokensField()
     let currencyView = ExchangeCurrencyView()
-    let coordinator = ExchangeToksnCoordinator()
+    lazy var nextButton: UIButton = {
+        let button = Button(size: .normal, style: .solid)
+        button.setTitle("Next", for: .normal)
+        button.addTarget(self, action: #selector(nextAction), for: .touchUpInside)
+        return button
+    }()
+    lazy var coordinator: ExchangeTokensCoordinator = {
+        return ExchangeTokensCoordinator(tokens: ExchangeTokens.get(for: Config().server))
+    }()
+    weak var delegate: ExchangeViewControllerDelegate?
 
     init() {
         super.init(nibName: nil, bundle: nil)
 
         exchangeFields.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.translatesAutoresizingMaskIntoConstraints = false
 
         let stackView = UIStackView(arrangedSubviews: [
             exchangeFields,
             .spacer(height: 20),
             currencyView,
+            nextButton,
         ])
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,9 +71,11 @@ class ExchangeViewController: UIViewController {
 
     func configure(viewModel: ExchangeTokensViewModel) {
         exchangeFields.fromField.symbolLabel.text = viewModel.fromSymbol
-        exchangeFields.toField.symbolLabel.text = viewModel.toSymbol
-
+        exchangeFields.fromField.tokenImageView.image = viewModel.fromImage
         exchangeFields.fromField.backgroundColor = Colors.veryLightGray
+
+        exchangeFields.toField.symbolLabel.text = viewModel.toSymbol
+        exchangeFields.toField.tokenImageView.image = viewModel.toImage
         exchangeFields.toField.backgroundColor = Colors.veryLightGray
 
         exchangeFields.availableBalanceLabel.attributedText = viewModel.attributedAvailableBalance
@@ -67,6 +89,20 @@ class ExchangeViewController: UIViewController {
         )
         controller.delegate = self
         navigationController?.pushViewController(controller, animated: true)
+    }
+
+    func nextAction() {
+        let from = coordinator.from
+        let fromAmount = (exchangeFields.fromField.amountField.text ?? "").doubleValue
+
+        let to = coordinator.to
+        let toAmount = (exchangeFields.toField.amountField.text ?? "").doubleValue
+
+        delegate?.didPress(
+            from: SubmitExchangeToken(token: from, amount: fromAmount),
+            to: SubmitExchangeToken(token: to, amount: toAmount),
+            in: self
+        )
     }
 
     required init?(coder aDecoder: NSCoder) {

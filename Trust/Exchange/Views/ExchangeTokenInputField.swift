@@ -32,7 +32,7 @@ class ExchangeTokenInputField: UIView {
         chevronDownImageView.contentMode = .scaleAspectFit
         chevronDownImageView.alpha = 0.5
 
-        let divider: UIView = .spacerWidth(1, backgroundColor: .lightGray)
+        let divider: UIView = .spacerWidth(0.5, backgroundColor: .lightGray, alpha: 0.5)
 
         let tokenStackView = UIStackView(arrangedSubviews: [
             tokenImageView,
@@ -46,6 +46,7 @@ class ExchangeTokenInputField: UIView {
         let stackView = UIStackView(arrangedSubviews: [
             amountField,
             divider,
+            .spacerWidth(),
             tokenStackView,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -68,12 +69,9 @@ class ExchangeTokenInputField: UIView {
             divider.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
             divider.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -StyleLayout.sideMargin),
 
-            tokenImageView.heightAnchor.constraint(equalToConstant: 36),
-            tokenImageView.widthAnchor.constraint(equalToConstant: 36),
+            tokenImageView.widthAnchor.constraint(equalToConstant: 32),
 
-            chevronDownImageView.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
-            chevronDownImageView.heightAnchor.constraint(equalToConstant: 12),
-            chevronDownImageView.widthAnchor.constraint(equalToConstant: 12),
+            chevronDownImageView.widthAnchor.constraint(equalToConstant: 14),
         ])
 
         // main stack

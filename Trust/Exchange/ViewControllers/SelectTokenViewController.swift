@@ -32,7 +32,6 @@ class SelectTokenViewController: UITableViewController {
         super.init(nibName: nil, bundle: nil)
 
         view.backgroundColor = .white
-
         tableView.register(ExchangeTokenTableViewCell.self, forCellReuseIdentifier: Keys.cell)
     }
 
@@ -46,8 +45,11 @@ class SelectTokenViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Keys.cell, for: indexPath as IndexPath) as? ExchangeTokenTableViewCell
+        //TODO: Move into view model
         let token = tokens[indexPath.row]
-        cell?.textLabel!.text = token.name
+        cell?.tokenImageView.image = token.image
+        cell?.tokenNameLabel.text = token.name
+        cell?.balanceLabel.text = "\(token.balance)"
         return cell ?? UITableViewCell()
     }
 
@@ -55,5 +57,9 @@ class SelectTokenViewController: UITableViewController {
         let token = tokens[indexPath.row]
         tableView.deselectRow(at: indexPath, animated: true)
         delegate?.didSelect(token: token, in: self)
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
 }

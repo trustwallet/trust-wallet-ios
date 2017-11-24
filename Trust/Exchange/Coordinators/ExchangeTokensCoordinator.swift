@@ -2,7 +2,7 @@
 
 import Foundation
 
-class ExchangeToksnCoordinator {
+class ExchangeTokensCoordinator {
 
     var didUpdate: ((ExchangeTokensViewModel) -> Void)?
 
@@ -18,17 +18,12 @@ class ExchangeToksnCoordinator {
         )
     }
 
-    init() {
+    init(tokens: [ExchangeToken]) {
 
         defer {
             update()
         }
-
-        self.tokens = [
-            ExchangeToken(name: "Ethereum", symbol: "ETH", balance: 1.123),
-            ExchangeToken(name: "OmiseGo", symbol: "OMG", balance: 23.22),
-        ]
-
+        self.tokens = tokens
         self.from = self.tokens.first!
         self.to = self.tokens.last!
     }

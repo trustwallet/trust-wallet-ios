@@ -50,7 +50,7 @@ class SendCoordinator: Coordinator {
         case .ether(let destination):
             controller.addressRow?.value = destination?.address
             controller.addressRow?.cell.row.updateCell()
-        case .token: break
+        case .token, .exchange: break
         }
         controller.delegate = self
         return controller
@@ -63,10 +63,16 @@ class SendCoordinator: Coordinator {
 
 extension SendCoordinator: SendViewControllerDelegate {
     func didPressConfirm(transaction: UnconfirmedTransaction, transferType: TransferType, in viewController: SendViewController) {
+
+        let viewModel = ConfirmTransactionHeaderViewModel(
+            transaction: transaction,
+            config: session.config
+        )
+
         let controller = ConfirmPaymentViewController(
             session: session,
             transaction: transaction,
-            transferType: transferType
+            viewModel: viewModel
         )
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)

@@ -13,7 +13,6 @@ class ConfirmPaymentViewController: UIViewController {
 
     let transaction: UnconfirmedTransaction
     let session: WalletSession
-    let transferType: TransferType
     let stackViewController = StackViewController()
     lazy var sendTransactionCoordinator = {
         return SendTransactionCoordinator(session: self.session)
@@ -28,7 +27,7 @@ class ConfirmPaymentViewController: UIViewController {
     weak var delegate: ConfirmPaymentViewControllerDelegate?
 
     lazy var configuration: TransactionConfiguration = {
-        switch self.transferType {
+        switch self.transaction.transferType {
         case .token:
             return TransactionConfiguration(
                 speed: TransactionSpeed.custom(
@@ -38,17 +37,23 @@ class ConfirmPaymentViewController: UIViewController {
             )
         case .ether:
             return TransactionConfiguration()
+        case .exchange:
+            return TransactionConfiguration(
+                speed: TransactionSpeed.custom(
+                    gasPrice: TransactionSpeed.cheap.gasPrice,
+                    gasLimit: GethNewBigInt(210000)
+                )
+            )
         }
     }()
 
     init(
         session: WalletSession,
         transaction: UnconfirmedTransaction,
-        transferType: TransferType
+        viewModel: TransactionHeaderBaseViewModel
     ) {
         self.session = session
         self.transaction = transaction
-        self.transferType = transferType
 
         super.init(nibName: nil, bundle: nil)
 
@@ -64,10 +69,7 @@ class ConfirmPaymentViewController: UIViewController {
         let items: [UIView] = [
             .spacer(),
             TransactionAppearance.header(
-                viewModel: ConfirmTransactionHeaderViewModel(
-                    transaction: transaction,
-                    config: Config()
-                )
+                viewModel: viewModel
             ),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(title: NSLocalizedString("confirmPayment.from", value: "From", comment: ""), subTitle: session.account.address.address),
@@ -100,7 +102,7 @@ class ConfirmPaymentViewController: UIViewController {
     func send() {
         self.displayLoading()
 
-        switch transferType {
+        switch transaction.transferType {
         case .ether:
             self.sendTransactionCoordinator.send(
                 address: transaction.address,
@@ -133,6 +135,8 @@ class ConfirmPaymentViewController: UIViewController {
                 }
                 self.hideLoading()
             }
+        case .exchange(let from, let to):
+            break //
         }
     }
 }

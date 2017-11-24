@@ -28,11 +28,11 @@ class ExchangeTokensField: UIView {
         toField.translatesAutoresizingMaskIntoConstraints = false
 
         let stackView = UIStackView(arrangedSubviews: [
-            destinationLabel(text: "From"),
+            destinationLabel(text: "FROM"),
             fromField,
             availableBalanceLabel,
             .spacer(height: 0),
-            destinationLabel(text: "To"),
+            destinationLabel(text: "TO"),
             toField,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false

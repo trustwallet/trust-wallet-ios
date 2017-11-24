@@ -55,6 +55,8 @@ extension BalanceTitleView {
             }
         case .token(let token):
             view.configure(viewModel: BalanceTokenViewModel(token: token))
+        case .exchange:
+            break //
         }
         return view
     }

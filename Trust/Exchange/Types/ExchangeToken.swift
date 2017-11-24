@@ -1,11 +1,14 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import UIKit
 
 struct ExchangeToken {
     let name: String
+    let address: Address
     let symbol: String
-    let balance: Double
+    let image: UIImage?
+    let balance: Double = 0
 }
 
 extension ExchangeToken: Equatable {

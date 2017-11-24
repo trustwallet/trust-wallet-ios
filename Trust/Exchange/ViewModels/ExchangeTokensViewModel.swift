@@ -21,8 +21,16 @@ struct ExchangeTokensViewModel {
         return from.symbol
     }
 
+    var fromImage: UIImage? {
+        return from.image
+    }
+
     var toSymbol: String {
         return to.symbol
+    }
+
+    var toImage: UIImage? {
+        return to.image
     }
 
     var attributedCurrency: NSAttributedString {
