@@ -69,6 +69,8 @@
 		2931121D1FC65F2900966EEA /* ExchangeCurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931121C1FC65F2900966EEA /* ExchangeCurrencyView.swift */; };
 		293112201FC6619000966EEA /* ExchangeToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931121F1FC6619000966EEA /* ExchangeToken.swift */; };
 		293112221FC67F1300966EEA /* ExchangeTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112211FC67F1300966EEA /* ExchangeTokens.swift */; };
+		293112261FC8154E00966EEA /* ContractExchangeTrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112251FC8154E00966EEA /* ContractExchangeTrade.swift */; };
+		293112281FC8174B00966EEA /* ExchangeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112271FC8174B00966EEA /* ExchangeConfig.swift */; };
 		293204581F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */; };
 		2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */; };
 		2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */; };
@@ -330,6 +332,8 @@
 		2931121C1FC65F2900966EEA /* ExchangeCurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeCurrencyView.swift; sourceTree = "<group>"; };
 		2931121F1FC6619000966EEA /* ExchangeToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeToken.swift; sourceTree = "<group>"; };
 		293112211FC67F1300966EEA /* ExchangeTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTokens.swift; sourceTree = "<group>"; };
+		293112251FC8154E00966EEA /* ContractExchangeTrade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractExchangeTrade.swift; sourceTree = "<group>"; };
+		293112271FC8174B00966EEA /* ExchangeConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeConfig.swift; sourceTree = "<group>"; };
 		293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateCoordinator.swift; sourceTree = "<group>"; };
 		2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRate.swift; sourceTree = "<group>"; };
 		2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceCoordinator.swift; sourceTree = "<group>"; };
@@ -701,6 +705,7 @@
 			children = (
 				291795001F95F5E200539A30 /* GetBalance.swift */,
 				2963B6BE1F9AB9A2003063C1 /* ContractERC20Transfer.swift */,
+				293112251FC8154E00966EEA /* ContractExchangeTrade.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -865,6 +870,7 @@
 			children = (
 				2931121F1FC6619000966EEA /* ExchangeToken.swift */,
 				293112211FC67F1300966EEA /* ExchangeTokens.swift */,
+				293112271FC8174B00966EEA /* ExchangeConfig.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2029,6 +2035,7 @@
 				2963A28A1FC402940095447D /* LocalizedOperationObject.swift in Sources */,
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
 				2931121B1FC560E500966EEA /* ExchangeTokenTableViewCell.swift in Sources */,
+				293112261FC8154E00966EEA /* ContractExchangeTrade.swift in Sources */,
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
 				2932488A1F88D593008A9818 /* OnePasswordConfig.swift in Sources */,
@@ -2047,6 +2054,7 @@
 				29AD8A061F93DC8C008E10E7 /* PushDevice.swift in Sources */,
 				29B6AED41F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift in Sources */,
 				29B933F51F860074009FCABB /* SendTransactionCoordinator.swift in Sources */,
+				293112281FC8174B00966EEA /* ExchangeConfig.swift in Sources */,
 				2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */,
 				291F52A51F6B762300B369AB /* EtherServiceRequest.swift in Sources */,
 				298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */,

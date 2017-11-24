@@ -41,7 +41,7 @@ class ConfirmPaymentViewController: UIViewController {
             return TransactionConfiguration(
                 speed: TransactionSpeed.custom(
                     gasPrice: TransactionSpeed.cheap.gasPrice,
-                    gasLimit: GethNewBigInt(210000)
+                    gasLimit: GethNewBigInt(300000)
                 )
             )
         }
@@ -136,7 +136,23 @@ class ConfirmPaymentViewController: UIViewController {
                 self.hideLoading()
             }
         case .exchange(let from, let to):
-            break //
+            let exchangeConfig = ExchangeConfig(server: Config().server)
+            self.sendTransactionCoordinator.trade(
+                contract: exchangeConfig.contract,
+                from: from,
+                to: to,
+                configuration: self.configuration,
+                completion: { [weak self] result in
+                    guard let `self` = self else { return }
+                    switch result {
+                    case .success(let transaction):
+                        self.delegate?.didCompleted(transaction: transaction, in: self)
+                    case .failure(let error):
+                        self.displayError(error: error)
+                    }
+                    self.hideLoading()
+                }
+            )
         }
     }
 }

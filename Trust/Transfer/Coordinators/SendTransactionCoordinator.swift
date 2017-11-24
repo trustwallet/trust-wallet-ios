@@ -105,4 +105,38 @@ class SendTransactionCoordinator {
             completion(.failure(AnyError(error)))
         }
     }
+
+    func trade(
+        contract: Address,
+        from: SubmitExchangeToken,
+        to: SubmitExchangeToken,
+        configuration: TransactionConfiguration,
+        completion: @escaping (Result<SentTransaction, AnyError>) -> Void
+    ) {
+        let request = ContractExchangeTrade(
+            source: from.token.address.address,
+            amount: String(100000),
+            dest: to.token.address.address,
+            destAddress: session.account.address.address,
+            maxDestAmount: "9999999",
+            minConversionRate: 1,
+            throwOnFailure: false,
+            walletId: "0x00"
+        )
+        session.web3.request(request: request) { result in
+            switch result {
+            case .success(let res):
+                NSLog("result \(res)")
+                self.send(
+                    address: contract,
+                    value: 1,
+                    data: Data(hex: res.drop0x),
+                    configuration: configuration,
+                    completion: completion
+                )
+            case .failure(let error):
+                completion(.failure(AnyError(error)))
+            }
+        }
+    }
 }

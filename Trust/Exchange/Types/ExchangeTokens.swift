@@ -7,11 +7,12 @@ struct ExchangeTokens {
         switch server {
         case .main, .oraclesTest:
             return [
-                ExchangeToken(name: "OmiseGO", address: Address(address: "0x0x6b662ffde8f1d2240eb4eefa211463be0eb258a1"), symbol: "OMG", image: R.image.token_omg()),
+                ExchangeToken(name: "Ethereum", address: Address(address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"), symbol: "ETH", image: R.image.token_eth()),
             ]
         case .kovan:
             return [
-                ExchangeToken(name: "OmiseGO", address: Address(address: "0x0x6b662ffde8f1d2240eb4eefa211463be0eb258a1"), symbol: "OMG", image: R.image.token_omg()),
+                ExchangeToken(name: "Ethereum", address: Address(address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"), symbol: "ETH", image: R.image.token_eth()),
+                ExchangeToken(name: "OmiseGO", address: Address(address: "0x6b662ffde8f1d2240eb4eefa211463be0eb258a1"), symbol: "OMG", image: R.image.token_omg()),
                 ExchangeToken(name: "DigixDAO", address: Address(address: "0xd27763c026260bb8cfcf47a3d2ca18f03cb9da55"), symbol: "DGD", image: R.image.token_dgd()),
                 ExchangeToken(name: "Civic", address: Address(address: "0x3d1bdb333d4bbd0bf84519c506c953ef869ef179"), symbol: "CVC", image: R.image.token_cvc()),
                 ExchangeToken(name: "FunFair", address: Address(address: "0x0f679d211f23764c3020e2dca0d6277b9abb5b72"), symbol: "FUN", image: R.image.token_fun()),

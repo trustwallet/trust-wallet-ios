@@ -49,6 +49,14 @@ extension ExchangeCoordinator: ExchangeViewControllerDelegate {
             transaction: transaction,
             viewModel: viewModel
         )
+        controller.delegate = self
         navigationController.pushViewController(controller, animated: true)
+    }
+}
+
+extension ExchangeCoordinator: ConfirmPaymentViewControllerDelegate {
+    func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController) {
+        navigationController.popViewController(animated: true)
+        navigationController.displaySuccess(title: "Exchange \(transaction.id)")
     }
 }
