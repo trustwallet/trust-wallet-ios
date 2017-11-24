@@ -24,7 +24,7 @@ struct TransactionCellViewModel {
         if transaction.isError {
             return .error
         }
-        if confirmations == 0 && chainState.latestBlock >= transaction.blockNumber {
+        if confirmations <= 0 && chainState.latestBlock >= transaction.blockNumber {
             return .pending
         }
         return .completed
