@@ -136,9 +136,7 @@ class ConfirmPaymentViewController: UIViewController {
                 self.hideLoading()
             }
         case .exchange(let from, let to):
-            let exchangeConfig = ExchangeConfig(server: Config().server)
             self.sendTransactionCoordinator.trade(
-                contract: exchangeConfig.contract,
                 from: from,
                 to: to,
                 configuration: self.configuration,

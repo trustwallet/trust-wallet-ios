@@ -106,27 +106,27 @@ class SendTransactionCoordinator {
     }
 
     func trade(
-        contract: Address,
         from: SubmitExchangeToken,
         to: SubmitExchangeToken,
         configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
+        let exchangeConfig = ExchangeConfig(server: config.server)
         let value: Double = {
             // if ether - pass actual value
-            if (from.token.symbol == config.server.symbol) {
-                return from.amount
-            } else {
-                return 0
-            }
+            return from.token.symbol == config.server.symbol ? from.amount : 0
         }()
+        let source = from.token.address
+        let dest = to.token.address
+        let destAddress: Address = session.account.address
+
         let amountToSend = (BDouble(floatLiteral: from.amount) * BDouble(pow(10, from.token.decimals).doubleValue)).description
         let request = ContractExchangeTrade(
-            source: from.token.address.address,
+            source: source.address,
             amount: amountToSend,
-            dest: to.token.address.address,
-            destAddress: session.account.address.address,
-            maxDestAmount: amountToSend,
+            dest: dest.address,
+            destAddress: destAddress.address,
+            maxDestAmount: "100000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             minConversionRate: 1,
             throwOnFailure: true,
             walletId: "0x00"
@@ -136,7 +136,7 @@ class SendTransactionCoordinator {
             case .success(let res):
                 NSLog("result \(res)")
                 self.send(
-                    address: contract,
+                    address: exchangeConfig.contract,
                     value: value,
                     data: Data(hex: res.drop0x),
                     configuration: configuration,
