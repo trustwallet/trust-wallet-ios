@@ -72,7 +72,7 @@ class SettingsViewController: FormViewController {
             +++ Section(NSLocalizedString("Settings.Security", value: "Security", comment: ""))
 
             <<< SwitchRow {
-                $0.title = NSLocalizedString("Settings.Biometrics", value: "Passcode / Biometrics", comment: "")
+                $0.title = NSLocalizedString("Settings.Biometrics", value: "Passcode", comment: "")
                 $0.value = self.isPasscodeEnabled
             }.onChange { [unowned self] row in
                 if row.value == true {

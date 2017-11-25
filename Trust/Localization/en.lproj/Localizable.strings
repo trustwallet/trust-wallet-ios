@@ -19,7 +19,7 @@
 "Generic.Failed" = "Failed";
 "Generic.Retry" = "Retry";
 "Generic.Loading" = "Loading";
-"Settings.Biometrics" = "Passcode / Biometrics";
+"Settings.Biometrics" = "Passcode";
 "Settings.Community" = "Community";
 "Settings.Donate" = "Donate";
 "Settings.Export" = "Export";
