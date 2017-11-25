@@ -4,6 +4,7 @@ import UIKit
 import Eureka
 import VENTouchLock
 import StoreKit
+import MessageUI
 
 protocol SettingsViewControllerDelegate: class {
     func didAction(action: SettingsAction, in viewController: SettingsViewController)
@@ -132,6 +133,14 @@ class SettingsViewController: FormViewController {
             }
 
             <<< AppFormAppearance.button { button in
+                button.title = NSLocalizedString("Settings.emailUs", value: "Email Us", comment: "")
+            }.onCellSelection { _ in
+                self.sendUsEmail()
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_email()
+            }
+
+            <<< AppFormAppearance.button { button in
                 button.title = NSLocalizedString("Settings.Donate", value: "Donate", comment: "")
             }.onCellSelection { [unowned self] _ in
                 self.run(action: .donate(address: Values.donationAddress))
@@ -209,5 +218,23 @@ class SettingsViewController: FormViewController {
 
     func run(action: SettingsAction) {
         delegate?.didAction(action: action, in: self)
+    }
+
+    func sendUsEmail() {
+        let composerController = MFMailComposeViewController()
+        composerController.mailComposeDelegate = self
+        composerController.setToRecipients([Constants.supportEmail])
+        composerController.setSubject("Hey from Trust wallet iOS app")
+        composerController.setMessageBody("", isHTML: false)
+
+        if MFMailComposeViewController.canSendMail() {
+            present(composerController, animated: true, completion: nil)
+        }
+    }
+}
+
+extension SettingsViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }

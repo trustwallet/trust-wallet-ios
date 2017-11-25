@@ -73,6 +73,7 @@
 		293112281FC8174B00966EEA /* ExchangeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112271FC8174B00966EEA /* ExchangeConfig.swift */; };
 		2931122A1FC8EE8100966EEA /* ExchangeGetPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112291FC8EE8100966EEA /* ExchangeGetPrice.swift */; };
 		2931122C1FC9407800966EEA /* ExchangeTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931122B1FC9407800966EEA /* ExchangeTokenViewModel.swift */; };
+		2931122E1FC94E4200966EEA /* SettingsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931122D1FC94E4200966EEA /* SettingsError.swift */; };
 		293204581F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */; };
 		2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */; };
 		2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */; };
@@ -338,6 +339,7 @@
 		293112271FC8174B00966EEA /* ExchangeConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeConfig.swift; sourceTree = "<group>"; };
 		293112291FC8EE8100966EEA /* ExchangeGetPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeGetPrice.swift; sourceTree = "<group>"; };
 		2931122B1FC9407800966EEA /* ExchangeTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTokenViewModel.swift; sourceTree = "<group>"; };
+		2931122D1FC94E4200966EEA /* SettingsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsError.swift; sourceTree = "<group>"; };
 		293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateCoordinator.swift; sourceTree = "<group>"; };
 		2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRate.swift; sourceTree = "<group>"; };
 		2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceCoordinator.swift; sourceTree = "<group>"; };
@@ -1477,6 +1479,7 @@
 				298542F61FBD8FD700CB5081 /* ConfigExplorerConstants.swift */,
 				298542FA1FBEA03300CB5081 /* SendInputErrors.swift */,
 				293112111FC4F48400966EEA /* ServiceProvider.swift */,
+				2931122D1FC94E4200966EEA /* SettingsError.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2019,6 +2022,7 @@
 				2959960C1FAB03EC00DB66A8 /* CoinbaseBuyWidget.swift in Sources */,
 				291A1B671F98092F00ADEC80 /* ConfirmPaymentViewController.swift in Sources */,
 				295996181FADB78200DB66A8 /* TransactionActionType.swift in Sources */,
+				2931122E1FC94E4200966EEA /* SettingsError.swift in Sources */,
 				291EC9DF1F7053C50004EDD0 /* NavigationController.swift in Sources */,
 				291795011F95F5E200539A30 /* GetBalance.swift in Sources */,
 				2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */,

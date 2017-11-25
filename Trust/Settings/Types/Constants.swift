@@ -14,4 +14,7 @@ struct Constants {
     static let twitterUsername = "trustwalletapp"
     static let telegramUsername = "trustwallet"
     static let facebookUsername = "trustwalletapp"
+
+    // support
+    static let supportEmail = "trustwalletapp@gmail.com"
 }
