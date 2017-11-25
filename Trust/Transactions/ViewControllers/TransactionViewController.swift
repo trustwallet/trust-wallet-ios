@@ -35,11 +35,6 @@ class TransactionViewController: UIViewController {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
-        struct TransactionItem {
-            let title: String
-            let subTitle: String
-        }
-
         let items: [UIView] = [
             .spacer(),
             TransactionAppearance.header(
