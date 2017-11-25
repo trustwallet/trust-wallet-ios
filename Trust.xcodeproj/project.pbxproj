@@ -77,6 +77,7 @@
 		293112311FC971B600966EEA /* ExchangeTokensCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112301FC971B600966EEA /* ExchangeTokensCoordinatorTests.swift */; };
 		293112331FC971F600966EEA /* ExchangeToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112321FC971F600966EEA /* ExchangeToken.swift */; };
 		293112351FC9A0D500966EEA /* CallRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112341FC9A0D500966EEA /* CallRequest.swift */; };
+		293112371FC9A24600966EEA /* UIGestureRecognizer+Closure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112361FC9A24600966EEA /* UIGestureRecognizer+Closure.swift */; };
 		293204581F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */; };
 		2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */; };
 		2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */; };
@@ -346,6 +347,7 @@
 		293112301FC971B600966EEA /* ExchangeTokensCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTokensCoordinatorTests.swift; sourceTree = "<group>"; };
 		293112321FC971F600966EEA /* ExchangeToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeToken.swift; sourceTree = "<group>"; };
 		293112341FC9A0D500966EEA /* CallRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallRequest.swift; sourceTree = "<group>"; };
+		293112361FC9A24600966EEA /* UIGestureRecognizer+Closure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer+Closure.swift"; sourceTree = "<group>"; };
 		293204571F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateCoordinator.swift; sourceTree = "<group>"; };
 		2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRate.swift; sourceTree = "<group>"; };
 		2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceCoordinator.swift; sourceTree = "<group>"; };
@@ -1283,6 +1285,7 @@
 				2963B6C01F9AE0E4003063C1 /* Data.swift */,
 				29C80D481FB51C380037B1E0 /* Dictionary.swift */,
 				29C80D4A1FB51C460037B1E0 /* Decimal.swift */,
+				293112361FC9A24600966EEA /* UIGestureRecognizer+Closure.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2001,6 +2004,7 @@
 				291F52B41F6B814300B369AB /* SMP Core.swift in Sources */,
 				29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */,
 				290B2B5B1F8F551E0053C83E /* LokaliseInitializer.swift in Sources */,
+				293112371FC9A24600966EEA /* UIGestureRecognizer+Closure.swift in Sources */,
 				29B6AECB1F7C5FA900EC6DE3 /* PaymentCoordinator.swift in Sources */,
 				2963B6B91F9A7EEA003063C1 /* CoinTicker.swift in Sources */,
 				29F114EC1FA448F400114A29 /* TokensCoordinator.swift in Sources */,

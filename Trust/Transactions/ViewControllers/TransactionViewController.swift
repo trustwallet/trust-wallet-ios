@@ -35,6 +35,11 @@ class TransactionViewController: UIViewController {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
+        struct TransactionItem {
+            let title: String
+            let subTitle: String
+        }
+
         let items: [UIView] = [
             .spacer(),
             TransactionAppearance.header(
@@ -44,14 +49,14 @@ class TransactionViewController: UIViewController {
                 )
             ),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
-            TransactionAppearance.item(title: "From", subTitle: viewModel.from),
-            TransactionAppearance.item(title: "To", subTitle: viewModel.to),
-            TransactionAppearance.item(title: "Gas Fee", subTitle: viewModel.gasFee),
-            TransactionAppearance.item(title: "Confirmation", subTitle: viewModel.confirmation),
+            item(title: "From", value: viewModel.from),
+            item(title: "To", value: viewModel.to),
+            item(title: "Gas Fee", value: viewModel.gasFee),
+            item(title: "Confirmation", value: viewModel.confirmation),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
-            TransactionAppearance.item(title: "Transaction #", subTitle: viewModel.transactionID),
-            TransactionAppearance.item(title: "Transaction time", subTitle: viewModel.createdAt),
-            TransactionAppearance.item(title: "Block #", subTitle: viewModel.blockNumber),
+            item(title: "Transaction #", value: viewModel.transactionID),
+            item(title: "Transaction time", value: viewModel.createdAt),
+            item(title: "Block #", value: viewModel.blockNumber),
             moreDetails(),
         ]
 
@@ -60,6 +65,15 @@ class TransactionViewController: UIViewController {
         }
 
         displayChildViewController(viewController: stackViewController)
+    }
+
+    private func item(title: String, value: String) -> UIView {
+        return TransactionAppearance.item(
+            title: title,
+            subTitle: value
+        ) { [unowned self] in
+            self.showAlertSheet(title: $0.0, value: $0.1)
+        }
     }
 
     private func moreDetails() -> UIView {
@@ -76,6 +90,22 @@ class TransactionViewController: UIViewController {
         stackView.isLayoutMarginsRelativeArrangement = true
 
         return stackView
+    }
+
+    func showAlertSheet(title: String, value: String) {
+        let alertController = UIAlertController(
+            title: nil,
+            message: value,
+            preferredStyle: .actionSheet
+        )
+        alertController.popoverPresentationController?.sourceView = self.view
+        let copyAction = UIAlertAction(title: NSLocalizedString("transactionDetails.copy", value: "Copy", comment: ""), style: .default) { _ in
+            UIPasteboard.general.string = value
+        }
+        let cancelAction = UIAlertAction(title: NSLocalizedString("generic.cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
+        alertController.addAction(copyAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
     }
 
     func more() {
