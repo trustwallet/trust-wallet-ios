@@ -26,6 +26,7 @@ class BackupViewController: UIViewController {
         noBackupLabel.translatesAutoresizingMaskIntoConstraints = false
         noBackupLabel.text = NSLocalizedString("export.noBackup.title", value: "No backup, no Ethereum.", comment: "")
         noBackupLabel.font = UIFont.systemFont(ofSize: 24, weight: UIFontWeightMedium)
+        noBackupLabel.adjustsFontSizeToFitWidth = true
         noBackupLabel.textColor = Colors.lightBlack
 
         let controlMoneyLabel = UILabel()
