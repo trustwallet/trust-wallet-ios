@@ -18,6 +18,9 @@ struct InCoordinatorViewModel {
     }
 
     var exchangeAvailable: Bool {
-        return isDebug
+        switch config.server {
+        case .main, .oraclesTest: return false
+        case .kovan: return isDebug
+        }
     }
 }
