@@ -65,14 +65,21 @@ class ExchangeViewController: UIViewController {
         }
         exchangeFields.didPressAvailableBalance = { [unowned self] _ in
             self.exchangeFields.fromField.amountField.text = "\(self.coordinator.viewModel.availableBalance)"
+            self.exchangeFields.fromField.amountDidChange(self.exchangeFields.fromField.amountField)
         }
         exchangeFields.didChangeValue = { [unowned self] (direction, value) in
+
+            func clean(value: Double) -> String {
+                if value == 0 { return "" }
+                return "\(value)"
+            }
+
             guard let rateDouble = self.coordinator.viewModel.rateDouble else { return }
             switch direction {
             case .from:
-                self.exchangeFields.toField.amountField.text = "\(value * rateDouble)"
+                self.exchangeFields.toField.amountField.text = clean(value: value * rateDouble)
             case .to:
-                self.exchangeFields.fromField.amountField.text = "\(value / rateDouble)"
+                self.exchangeFields.fromField.amountField.text = clean(value: (value / rateDouble))
             }
         }
 

@@ -21,7 +21,8 @@ class ExchangeTokensCoordinator {
             to: to,
             tokenRate: tokenRate,
             fromValue: fromValue,
-            toValue: toValue
+            toValue: toValue,
+            balance: balance
         )
     }
 
@@ -30,7 +31,11 @@ class ExchangeTokensCoordinator {
             update()
         }
     }
-
+    var balance: Balance? {
+        didSet {
+            update()
+        }
+    }
     var fromValue: Double? = 0
     var toValue: Double? = 0
 
@@ -42,6 +47,7 @@ class ExchangeTokensCoordinator {
         defer {
             update()
             getPrice()
+            getBalance()
         }
         self.session = session
         self.tokens = tokens
@@ -76,8 +82,12 @@ class ExchangeTokensCoordinator {
             to = token
         }
 
+        balance = nil
+        tokenRate = nil
+
         update()
         getPrice()
+        getBalance()
     }
 
     func getPrice() {
@@ -85,21 +95,15 @@ class ExchangeTokensCoordinator {
         session.web3.request(request: request) { result in
             switch result {
             case .success(let res):
-                NSLog("getPrice result \(res)")
                 let request2 = EtherServiceRequest(batch: BatchFactory().create(CallRequest(to: self.exchangeConfig.contract.address, data: res)))
                 Session.send(request2) { [weak self] result2 in
                     switch result2 {
                     case .success(let balance):
-                        NSLog("getPrice2 success \(balance)")
                         let request = ExchangeGetPriceDecode(data: balance)
-
                         self?.session.web3.request(request: request) { result in
                             switch result {
                             case .success(let res):
-                                NSLog("getPrice3 result \(res)")
-
                                 self?.tokenRate = ExchangeTokenRate(rate: res)
-
                             case .failure(let error):
                                 NSLog("getPrice3 error \(error)")
                             }
@@ -108,7 +112,6 @@ class ExchangeTokensCoordinator {
                         NSLog("getPrice2 error \(error)")
                     }
                 }
-
             case .failure(let error):
                 NSLog("getPrice error \(error)")
             }
@@ -116,16 +119,19 @@ class ExchangeTokensCoordinator {
     }
 
     func getBalance() {
-        let request = GetBalance(address: session.account.address.address)
-        session.web3.request(request: request) { result in
-            switch result {
-            case .success(let res):
-                NSLog("getBalance result \(res)")
-
-            case .failure(let error):
-                NSLog("getBalance error \(error)")
-                //completion(.failure(AnyError(error)))
+        if from.address == exchangeConfig.tokenAddress {
+            // get balance for ethereum
+            let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: session.account.address.address)))
+            Session.send(request) { [weak self] result in
+                switch result {
+                case .success(let balance):
+                    self?.balance = balance
+                    NSLog("balance \(balance)")
+                case .failure: break
+                }
             }
+        } else {
+            // get price for token
         }
     }
 }

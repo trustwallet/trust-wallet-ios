@@ -13,6 +13,7 @@ struct ExchangeTokensViewModel {
     let from: ExchangeToken
     let to: ExchangeToken
     private let tokenRate: ExchangeTokenRate?
+    let balance: Balance?
 
     private static let numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
@@ -27,11 +28,13 @@ struct ExchangeTokensViewModel {
         to: ExchangeToken,
         tokenRate: ExchangeTokenRate? = .none,
         fromValue: Double? = .none,
-        toValue: Double? = .none
+        toValue: Double? = .none,
+        balance: Balance? = .none
     ) {
         self.from = from
         self.to = to
         self.tokenRate = tokenRate
+        self.balance = balance
     }
 
     var fromSymbol: String {
@@ -84,11 +87,15 @@ struct ExchangeTokensViewModel {
         return (conversationString + percentString).styled(with: .alignment(.center))
     }
 
-    var availableBalance: Double {
-        return 0
+    var availableBalance: String {
+        guard let balance = balance else { return "" }
+        return balance.amount
     }
 
     var attributedAvailableBalance: NSAttributedString {
+        guard !availableBalance.isEmpty else {
+            return NSAttributedString(string: "...")
+        }
         return NSAttributedString(
             string: "Available \(availableBalance) \(fromSymbol)",
             attributes: [:]
