@@ -19,7 +19,7 @@ struct TransactionAppearance {
         return view
     }
 
-    static func item(title: String, subTitle: String) -> UIView {
+    static func item(title: String, subTitle: String, completion:((_ title: String, _ value: String) -> Void)? = .none) -> UIView {
         let titleLabel = UILabel(frame: .zero)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
@@ -40,6 +40,11 @@ struct TransactionAppearance {
         stackView.spacing = 10
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         stackView.isLayoutMarginsRelativeArrangement = true
+
+        UITapGestureRecognizer(addToView: stackView) {
+            completion?(title, subTitle)
+        }
+
         return stackView
     }
 }
