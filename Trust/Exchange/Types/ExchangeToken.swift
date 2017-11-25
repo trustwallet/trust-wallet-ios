@@ -9,6 +9,7 @@ struct ExchangeToken {
     let symbol: String
     let image: UIImage?
     let balance: Double = 0
+    let decimals: Int
 }
 
 extension ExchangeToken: Equatable {
