@@ -9,7 +9,9 @@ class ExchangeCoordinator: Coordinator {
     let session: WalletSession
 
     lazy var rootViewController: UIViewController = {
-        let controller = ExchangeViewController()
+        let controller = ExchangeViewController(
+            session: self.session
+        )
         controller.delegate = self
         return controller
     }()

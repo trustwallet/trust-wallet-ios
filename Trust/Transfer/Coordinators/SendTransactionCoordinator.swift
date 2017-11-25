@@ -56,7 +56,6 @@ class SendTransactionCoordinator {
         session.web3.request(request: ContractERC20Transfer(amount: amountToSend, address: to.address)) { result in
             switch result {
             case .success(let res):
-                NSLog("result \(res)")
                 self.send(
                     address: contract,
                     value: 0,
@@ -113,14 +112,23 @@ class SendTransactionCoordinator {
         configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
+        let value: Double = {
+            // if ether - pass actual value
+            if (from.token.symbol == config.server.symbol) {
+                return from.amount
+            } else {
+                return 0
+            }
+        }()
+        let amountToSend = (BDouble(floatLiteral: from.amount) * BDouble(pow(10, from.token.decimals).doubleValue)).description
         let request = ContractExchangeTrade(
             source: from.token.address.address,
-            amount: String(100000),
+            amount: amountToSend,
             dest: to.token.address.address,
             destAddress: session.account.address.address,
-            maxDestAmount: "9999999",
+            maxDestAmount: amountToSend,
             minConversionRate: 1,
-            throwOnFailure: false,
+            throwOnFailure: true,
             walletId: "0x00"
         )
         session.web3.request(request: request) { result in
@@ -129,7 +137,7 @@ class SendTransactionCoordinator {
                 NSLog("result \(res)")
                 self.send(
                     address: contract,
-                    value: 1,
+                    value: value,
                     data: Data(hex: res.drop0x),
                     configuration: configuration,
                     completion: completion

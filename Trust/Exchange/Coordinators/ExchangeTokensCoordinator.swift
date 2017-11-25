@@ -9,6 +9,7 @@ class ExchangeTokensCoordinator {
     var from: ExchangeToken
     var to: ExchangeToken
 
+    let session: WalletSession
     let tokens: [ExchangeToken]
 
     var viewModel: ExchangeTokensViewModel {
@@ -18,11 +19,16 @@ class ExchangeTokensCoordinator {
         )
     }
 
-    init(tokens: [ExchangeToken]) {
+    init(
+        session: WalletSession,
+        tokens: [ExchangeToken]
+    ) {
 
         defer {
             update()
+            getPrice()
         }
+        self.session = session
         self.tokens = tokens
         self.from = self.tokens.first!
         self.to = self.tokens.last!
@@ -47,5 +53,20 @@ class ExchangeTokensCoordinator {
             to = token
         }
         update()
+    }
+
+    func getPrice() {
+        let request = ExchangeGetPrice(from: from.address, to: to.address)
+
+        session.web3.request(request: request) { result in
+            switch result {
+            case .success(let res):
+                NSLog("result \(res)")
+
+            case .failure(let error):
+                NSLog("error \(error)")
+                //completion(.failure(AnyError(error)))
+            }
+        }
     }
 }

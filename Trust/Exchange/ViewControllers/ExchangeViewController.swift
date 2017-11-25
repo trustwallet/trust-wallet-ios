@@ -23,12 +23,20 @@ class ExchangeViewController: UIViewController {
         button.addTarget(self, action: #selector(nextAction), for: .touchUpInside)
         return button
     }()
+    let session: WalletSession
     lazy var coordinator: ExchangeTokensCoordinator = {
-        return ExchangeTokensCoordinator(tokens: ExchangeTokens.get(for: Config().server))
+        return ExchangeTokensCoordinator(
+            session: self.session,
+            tokens: ExchangeTokens.get(for: Config().server)
+        )
     }()
     weak var delegate: ExchangeViewControllerDelegate?
 
-    init() {
+    init(
+        session: WalletSession
+    ) {
+        self.session = session
+
         super.init(nibName: nil, bundle: nil)
 
         exchangeFields.translatesAutoresizingMaskIntoConstraints = false
