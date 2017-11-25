@@ -35,7 +35,7 @@ PODS:
   - SeedStackViewController (0.4.0)
   - SSKeychain (1.4.1)
   - StatefulViewController (3.0)
-  - SwiftLint (0.23.1)
+  - SwiftLint (0.24.0)
   - VENTouchLock (1.12.0):
     - SSKeychain (~> 1.0)
 
@@ -113,7 +113,7 @@ SPEC CHECKSUMS:
   SeedStackViewController: 45e88ca1493a610e74d661d3feced7098f72dbd3
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
-  SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
+  SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   VENTouchLock: 20d378b9c6173e2c054448aeb3fb2f40822a9f3f
 
 PODFILE CHECKSUM: 3e00dbae3e0694657adf7ffdea709cf2ba267494
