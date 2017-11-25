@@ -4,17 +4,34 @@ import Foundation
 import UIKit
 import BonMot
 
+struct ExchangeTokenRate {
+    let rate: String
+}
+
 struct ExchangeTokensViewModel {
 
     let from: ExchangeToken
     let to: ExchangeToken
+    private let tokenRate: ExchangeTokenRate?
+
+    private static let numberFormatter: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.minimumFractionDigits = 3
+        numberFormatter.maximumFractionDigits = 3
+        numberFormatter.usesSignificantDigits = true
+        return numberFormatter
+    }()
 
     init(
         from: ExchangeToken,
-        to: ExchangeToken
+        to: ExchangeToken,
+        tokenRate: ExchangeTokenRate? = .none,
+        fromValue: Double? = .none,
+        toValue: Double? = .none
     ) {
         self.from = from
         self.to = to
+        self.tokenRate = tokenRate
     }
 
     var fromSymbol: String {
@@ -33,21 +50,42 @@ struct ExchangeTokensViewModel {
         return to.image
     }
 
+    var rateDouble: Double? {
+        return rateNumber?.doubleValue
+    }
+
+    var rateNumber: NSNumber? {
+        guard let tokenRate = tokenRate else {
+            return .none
+        }
+        let res = pow(10.0, Double(from.decimals))
+        return NSNumber(value: (Double(tokenRate.rate) ?? 0) / res)
+    }
+
     var attributedCurrency: NSAttributedString {
+        guard let rateDouble = rateNumber else {
+            return NSAttributedString(string: "...")
+        }
+        guard rateDouble != 0 else {
+            return NSAttributedString(string: "Unavailable")
+        }
+        guard let rate = ExchangeTokensViewModel.numberFormatter.string(from: rateDouble) else {
+            return NSAttributedString(string: "Undefined")
+        }
         let baseStyle = StringStyle(
             .lineHeightMultiple(1.2),
             .font(UIFont.systemFont(ofSize: 15))
         )
         let greenStyle = baseStyle.byAdding(.color(Colors.green))
 
-        let conversationString = "1 \(fromSymbol) = 0.017648 \(toSymbol) ".styled(with: baseStyle)
+        let conversationString = "1 \(fromSymbol) = \(rate) \(toSymbol) ".styled(with: baseStyle)
         let percentString = "(-%)".styled(with: greenStyle)
 
         return (conversationString + percentString).styled(with: .alignment(.center))
     }
 
     var availableBalance: Double {
-        return 2.22
+        return 0
     }
 
     var attributedAvailableBalance: NSAttributedString {

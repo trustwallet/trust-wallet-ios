@@ -30,13 +30,12 @@ class ExchangeTokenTableViewCell: UITableViewCell {
 
         NSLayoutConstraint.activate([
             tokenImageView.widthAnchor.constraint(equalToConstant: 40),
-            tokenImageView.heightAnchor.constraint(equalToConstant: 40),
+            //tokenImageView.heightAnchor.constraint(equalToConstant: 40),
 
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-            stackView.heightAnchor.constraint(equalToConstant: 70),
         ])
     }
 

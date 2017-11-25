@@ -10,6 +10,7 @@ class ExchangeTokenInputField: UIView {
     let chevronDownImageView = UIImageView(image: R.image.chevronRight())
 
     var didPress: (() -> Void)?
+    var didChangeValue: ((Double) -> Void)?
 
     init() {
 
@@ -18,6 +19,8 @@ class ExchangeTokenInputField: UIView {
         amountField.translatesAutoresizingMaskIntoConstraints = false
         amountField.placeholder = "0"
         amountField.font = UIFont.systemFont(ofSize: 22, weight: UIFontWeightMedium)
+        amountField.addTarget(self, action: #selector(amountDidChange(_:)), for: .editingChanged)
+        amountField.keyboardType = .decimalPad
 
         symbolLabel.translatesAutoresizingMaskIntoConstraints = false
         symbolLabel.textAlignment = .center
@@ -86,6 +89,13 @@ class ExchangeTokenInputField: UIView {
 
     func tap() {
         didPress?()
+    }
+
+    func amountDidChange(_ textField: UITextField) {
+        guard let value = textField.text?.doubleValue else {
+            return
+        }
+        didChangeValue?(value)
     }
 
     required init?(coder aDecoder: NSCoder) {

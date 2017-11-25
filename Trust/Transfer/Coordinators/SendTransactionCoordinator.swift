@@ -126,7 +126,7 @@ class SendTransactionCoordinator {
             amount: amountToSend,
             dest: dest.address,
             destAddress: destAddress.address,
-            maxDestAmount: "100000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            maxDestAmount: "100000000000000000000000000000000000000000000000000000000000000000000000000000",
             minConversionRate: 1,
             throwOnFailure: true,
             walletId: "0x00"

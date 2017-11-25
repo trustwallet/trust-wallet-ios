@@ -19,6 +19,7 @@ class ExchangeTokensField: UIView {
 
     var didPress: ((SelectTokenDirection) -> Void)?
     var didPressAvailableBalance: (() -> Void)?
+    var didChangeValue: ((SelectTokenDirection, Double) -> Void)?
 
     init() {
 
@@ -40,7 +41,10 @@ class ExchangeTokensField: UIView {
         stackView.axis = .vertical
 
         fromField.didPress = { [unowned self] in self.didPress?(.from) }
+        fromField.didChangeValue = { [unowned self] value in self.didChangeValue?(.from, value) }
+
         toField.didPress = { [unowned self] in self.didPress?(.to) }
+        toField.didChangeValue = { [unowned self] value in self.didChangeValue?(.to, value) }
 
         addSubview(stackView)
 

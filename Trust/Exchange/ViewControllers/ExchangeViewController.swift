@@ -41,6 +41,7 @@ class ExchangeViewController: UIViewController {
 
         exchangeFields.translatesAutoresizingMaskIntoConstraints = false
         nextButton.translatesAutoresizingMaskIntoConstraints = false
+        currencyView.translatesAutoresizingMaskIntoConstraints = false
 
         let stackView = UIStackView(arrangedSubviews: [
             exchangeFields,
@@ -65,6 +66,15 @@ class ExchangeViewController: UIViewController {
         exchangeFields.didPressAvailableBalance = { [unowned self] _ in
             self.exchangeFields.fromField.amountField.text = "\(self.coordinator.viewModel.availableBalance)"
         }
+        exchangeFields.didChangeValue = { [unowned self] (direction, value) in
+            guard let rateDouble = self.coordinator.viewModel.rateDouble else { return }
+            switch direction {
+            case .from:
+                self.exchangeFields.toField.amountField.text = "\(value * rateDouble)"
+            case .to:
+                self.exchangeFields.fromField.amountField.text = "\(value / rateDouble)"
+            }
+        }
 
         coordinator.didUpdate = { [weak self] viewModel in
             guard let `self` = self else { return }
@@ -75,6 +85,12 @@ class ExchangeViewController: UIViewController {
         view.backgroundColor = viewModel.backgroundColor
         navigationItem.title = viewModel.title
         exchangeFields.backgroundColor = .white
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        coordinator.fetch()
     }
 
     func configure(viewModel: ExchangeTokensViewModel) {

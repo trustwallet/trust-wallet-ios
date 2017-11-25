@@ -22,7 +22,7 @@ struct ExchangeConfig {
     var tokenAddress: Address {
         switch server {
         case .main, .oraclesTest:
-            return Address(address: "")
+            return Address(address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         case .kovan:
             return Address(address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         }
