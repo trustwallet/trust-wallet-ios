@@ -55,7 +55,7 @@ DEPENDENCIES:
   - Lokalise
   - MBProgressHUD
   - Moya (= 10.0.0-beta.1)
-  - QRCodeReaderViewController
+  - QRCodeReaderViewController (from `https://github.com/yannickl/QRCodeReaderViewController.git`, branch `master`)
   - R.swift
   - RealmSwift
   - SeedStackViewController
@@ -72,6 +72,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/xmartlabs/Eureka.git
   JSONRPCKit:
     :git: https://github.com/bricklife/JSONRPCKit.git
+  QRCodeReaderViewController:
+    :branch: master
+    :git: https://github.com/yannickl/QRCodeReaderViewController.git
 
 CHECKOUT OPTIONS:
   CryptoSwift:
@@ -83,6 +86,9 @@ CHECKOUT OPTIONS:
   JSONRPCKit:
     :commit: 50d19a4f7ec593ac5e07cffa1e11c17f1fbe347d
     :git: https://github.com/bricklife/JSONRPCKit.git
+  QRCodeReaderViewController:
+    :commit: 80bd79cbeede842949b229f81bc6328f53701c5a
+    :git: https://github.com/yannickl/QRCodeReaderViewController.git
 
 SPEC CHECKSUMS:
   1PasswordExtension: e775a29310c65851e5a6cec1afc349ab4e334e47
@@ -113,6 +119,6 @@ SPEC CHECKSUMS:
   VENTouchLock: 20d378b9c6173e2c054448aeb3fb2f40822a9f3f
   zipzap: 940162d9c9c60472c2eab341385e4214da0fdf1c
 
-PODFILE CHECKSUM: 740c6ebbad603b95e9d635b3c1a6db4eb80adb0e
+PODFILE CHECKSUM: 3e00dbae3e0694657adf7ffdea709cf2ba267494
 
 COCOAPODS: 1.3.1

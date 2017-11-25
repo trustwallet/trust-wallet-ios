@@ -15,7 +15,7 @@ target 'Trust' do
   pod 'Eureka', :git=>'https://github.com/xmartlabs/Eureka.git', :branch=>'feature/Xcode9-Swift3_2'
   pod 'MBProgressHUD'
   pod 'StatefulViewController'
-  pod 'QRCodeReaderViewController'
+  pod 'QRCodeReaderViewController', :git=>'https://github.com/yannickl/QRCodeReaderViewController.git', :branch=>'master'
   pod 'KeychainSwift'
   pod 'SwiftLint'
   pod 'SeedStackViewController'
