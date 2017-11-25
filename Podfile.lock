@@ -5,7 +5,7 @@ PODS:
     - Result (~> 3.0)
   - BonMot (4.3.1)
   - CryptoSwift (0.8.0)
-  - EAIntroView (2.10.0):
+  - EAIntroView (2.12.0):
     - EARestrictedScrollView (~> 1.1.0)
   - EARestrictedScrollView (1.1.0)
   - Eureka (3.0.0)
@@ -15,9 +15,8 @@ PODS:
   - JSONRPCKit (2.0.0):
     - Result (~> 3.0)
   - KeychainSwift (10.0.0)
-  - Lokalise (0.6.3):
-    - zipzap (= 8.1.1)
-  - MBProgressHUD (1.0.0)
+  - Lokalise (0.7.1)
+  - MBProgressHUD (1.1.0)
   - Moya (10.0.0-beta.1):
     - Moya/Core (= 10.0.0-beta.1)
   - Moya/Core (10.0.0-beta.1):
@@ -39,7 +38,6 @@ PODS:
   - SwiftLint (0.23.1)
   - VENTouchLock (1.12.0):
     - SSKeychain (~> 1.0)
-  - zipzap (8.1.1)
 
 DEPENDENCIES:
   - 1PasswordExtension
@@ -96,15 +94,15 @@ SPEC CHECKSUMS:
   APIKit: 7460983f490d3bde6aaaaa4164d18c9865a6f91d
   BonMot: 043bb5a8834cc6d74e9d624742272b92385e0a27
   CryptoSwift: 475ae2a25439f52412686d68b854c0ca724c8dfd
-  EAIntroView: 3494b7bbd1212e3a4f7e8d16194a1b00e7b9abb2
+  EAIntroView: 249559079ddfdbe80e5bcb755c04c3b964b2ac27
   EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
   Eureka: 5b9418d7bfdc21ca977d69d124a6409f3e9af2c7
   Geth: 1efbf2eb4d4c697a7232c5385da127ca386b1060
   JavaScriptKit: 9ff565209e6efe21bcb9c6d6ca3e863a67a8ecf7
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
-  Lokalise: cda831fccdc4c24889f6e86c572cbcaa1fe47659
-  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  Lokalise: 38bda716a23f83113b16add807ac7bad4c26884c
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Moya: 7fb3c51aa9b3fdf5ea7d9412e03b63edb9559fb3
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
@@ -117,7 +115,6 @@ SPEC CHECKSUMS:
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: 1b670ce79284c76520f84060e87d645078fd32fa
   VENTouchLock: 20d378b9c6173e2c054448aeb3fb2f40822a9f3f
-  zipzap: 940162d9c9c60472c2eab341385e4214da0fdf1c
 
 PODFILE CHECKSUM: 3e00dbae3e0694657adf7ffdea709cf2ba267494
 
