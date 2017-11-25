@@ -65,14 +65,12 @@ class ExchangeTokenInputField: UIView {
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             stackView.heightAnchor.constraint(equalToConstant: 60),
 
-            amountField.widthAnchor.constraint(equalToConstant: 120),
+            amountField.widthAnchor.constraint(equalToConstant: 150),
 
             symbolLabel.widthAnchor.constraint(equalToConstant: 50),
 
             divider.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
             divider.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -StyleLayout.sideMargin),
-
-            tokenImageView.widthAnchor.constraint(equalToConstant: 32),
 
             chevronDownImageView.widthAnchor.constraint(equalToConstant: 14),
         ])
