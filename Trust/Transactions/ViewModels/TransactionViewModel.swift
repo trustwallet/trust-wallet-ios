@@ -20,13 +20,16 @@ struct TransactionViewModel {
 
     let transaction: Transaction
     let config: Config
+    let chainState: ChainState
 
     init(
         transaction: Transaction,
-        config: Config
+        config: Config,
+        chainState: ChainState
     ) {
         self.transaction = transaction
         self.config = config
+        self.chainState = chainState
     }
 
     var title: String {
@@ -79,6 +82,11 @@ struct TransactionViewModel {
             minimumFractionDigits: 5,
             maximumFractionDigits: 5
         )
+    }
+
+    var confirmation: String {
+        let confirmation = chainState.latestBlock - Int(transaction.blockNumber)
+        return String(max(0, confirmation))
     }
 
     var blockNumber: String {

@@ -8,7 +8,11 @@ import SafariServices
 class TransactionViewController: UIViewController {
 
     private lazy var viewModel: TransactionViewModel = {
-        return .init(transaction: self.transaction, config: self.config)
+        return .init(
+            transaction: self.transaction,
+            config: self.config,
+            chainState: self.session.chainState
+        )
     }()
     let stackViewController = StackViewController()
 
@@ -31,8 +35,6 @@ class TransactionViewController: UIViewController {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
-        let confirmation = session.chainState.latestBlock - Int(transaction.blockNumber)
-
         let items: [UIView] = [
             .spacer(),
             TransactionAppearance.header(
@@ -45,7 +47,7 @@ class TransactionViewController: UIViewController {
             TransactionAppearance.item(title: "From", subTitle: viewModel.from),
             TransactionAppearance.item(title: "To", subTitle: viewModel.to),
             TransactionAppearance.item(title: "Gas Fee", subTitle: viewModel.gasFee),
-            TransactionAppearance.item(title: "Confirmation", subTitle: String(confirmation)),
+            TransactionAppearance.item(title: "Confirmation", subTitle: viewModel.confirmation),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(title: "Transaction #", subTitle: viewModel.transactionID),
             TransactionAppearance.item(title: "Transaction time", subTitle: viewModel.createdAt),
