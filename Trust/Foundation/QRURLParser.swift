@@ -11,21 +11,24 @@ struct ParserResult {
 struct QRURLParser {
 
     static func from(string: String) -> ParserResult? {
-        if string.count == 42 {
+        let parts = string.components(separatedBy: ":")
+        if parts.count == 1, let address = parts.first, CryptoAddressValidator.isValidAddress(address) {
             return ParserResult(
                 protocolName: "",
-                address: string,
+                address: address,
                 params: [:]
             )
         }
 
-        guard string.count >= 51 else { return .none }
+        if parts.count == 2, let address = parts.last, CryptoAddressValidator.isValidAddress(address) {
+            return ParserResult(
+                protocolName: parts.first ?? "",
+                address: address,
+                params: [:]
+            )
+        }
 
-        return ParserResult(
-            protocolName: string.substring(with: 0..<8),
-            address: string.substring(with: 9..<51),
-            params: [:]
-        )
+        return nil
     }
 }
 
