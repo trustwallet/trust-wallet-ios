@@ -45,11 +45,9 @@ class SelectTokenViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Keys.cell, for: indexPath as IndexPath) as? ExchangeTokenTableViewCell
-        //TODO: Move into view model
-        let token = tokens[indexPath.row]
-        cell?.tokenImageView.image = token.image
-        cell?.tokenNameLabel.text = token.name
-        cell?.balanceLabel.text = "\(token.balance)"
+        cell?.configure(viewModel:
+            ExchangeTokenViewModel(token: tokens[indexPath.row])
+        )
         return cell ?? UITableViewCell()
     }
 
@@ -61,5 +59,10 @@ class SelectTokenViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
+    }
+
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        let viewModel = ExchangeTokenViewModel(token: tokens[indexPath.row])
+        return viewModel.isEnabled
     }
 }

@@ -33,14 +33,24 @@ class ExchangeTokenTableViewCell: UITableViewCell {
             tokenImageView.heightAnchor.constraint(equalToConstant: 40),
 
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
             stackView.heightAnchor.constraint(equalToConstant: 70),
         ])
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(viewModel: ExchangeTokenViewModel) {
+        tokenImageView.image = viewModel.image
+        tokenNameLabel.text = viewModel.nameText
+        balanceLabel.text = viewModel.balanceText
+
+        tokenImageView.alpha = viewModel.alpha
+        tokenNameLabel.alpha = viewModel.alpha
+        balanceLabel.alpha = viewModel.alpha
     }
 }

@@ -61,10 +61,25 @@ class ExchangeTokensCoordinator {
         session.web3.request(request: request) { result in
             switch result {
             case .success(let res):
-                NSLog("result \(res)")
+                NSLog("getPrice result \(res)")
 
             case .failure(let error):
-                NSLog("error \(error)")
+                NSLog("getPrice error \(error)")
+                //completion(.failure(AnyError(error)))
+            }
+        }
+    }
+
+    func getBalance() {
+        let request = ExchangeGetPrice(from: from.address, to: to.address)
+
+        session.web3.request(request: request) { result in
+            switch result {
+            case .success(let res):
+                NSLog("getPrice result \(res)")
+
+            case .failure(let error):
+                NSLog("getPrice error \(error)")
                 //completion(.failure(AnyError(error)))
             }
         }
