@@ -80,7 +80,7 @@ class OnePasswordCoordinator {
 
             switch result {
             case .success(let password, let keystore):
-                completion(.success(password: password, keystore: keystore))
+                completion(.success((password: password, keystore: keystore)))
             case .failure(let error):
                 completion(.failure(AnyError(error)))
             }

@@ -103,7 +103,7 @@ class SendViewController: FormViewController {
         }
     }
 
-    func send() {
+    @objc func send() {
         let errors = form.validate()
         guard errors.isEmpty else { return }
 

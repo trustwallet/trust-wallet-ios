@@ -9,7 +9,7 @@ struct AppFormAppearance {
         let textArea = TextAreaRow(tag) {
             $0.title = ""
         }.onRowValidationChanged {
-            AppFormAppearance.onRowValidationChanged(baseCell: $0.0, row: $0.1)
+            AppFormAppearance.onRowValidationChanged(baseCell: $0, row: $1)
         }
         callback(textArea)
         return textArea
@@ -23,7 +23,7 @@ struct AppFormAppearance {
                 cell.textField?.textColor = .red
             }
         }.onRowValidationChanged {
-            AppFormAppearance.onRowValidationChanged(baseCell: $0.0, row: $0.1)
+            AppFormAppearance.onRowValidationChanged(baseCell: $0, row: $1)
         }
         callback(textField)
         return textField
@@ -37,7 +37,7 @@ struct AppFormAppearance {
                 cell.textField?.textColor = .red
             }
         }.onRowValidationChanged {
-            AppFormAppearance.onRowValidationChanged(baseCell: $0.0, row: $0.1)
+            AppFormAppearance.onRowValidationChanged(baseCell: $0, row: $1)
         }
         callback(textField)
         return textField

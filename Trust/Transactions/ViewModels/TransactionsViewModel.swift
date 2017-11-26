@@ -49,7 +49,7 @@ struct TransactionsViewModel {
     }
 
     var headerTitleFont: UIFont {
-        return UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
+        return UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
     }
 
     var headerBorderColor: UIColor {

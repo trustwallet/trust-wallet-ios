@@ -14,7 +14,7 @@ struct WelcomeViewModel {
     }
 
     var pageTitleFont: UIFont {
-        return UIFont.systemFont(ofSize: 23, weight: UIFontWeightMedium)
+        return UIFont.systemFont(ofSize: 23, weight: UIFont.Weight.medium)
     }
 
     var pageTitleColor: UIColor {

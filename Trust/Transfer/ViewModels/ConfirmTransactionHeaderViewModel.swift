@@ -26,15 +26,15 @@ struct ConfirmTransactionHeaderViewModel: TransactionHeaderBaseViewModel {
             let amount = NSAttributedString(
                 string: String(transaction.amount),
                 attributes: [
-                    NSFontAttributeName: UIFont.systemFont(ofSize: 28),
-                    NSForegroundColorAttributeName: amountTextColor,
+                    .font: UIFont.systemFont(ofSize: 28),
+                    .foregroundColor: amountTextColor,
                 ]
             )
 
             let currency = NSAttributedString(
                 string: " \(transaction.transferType.symbol(server: config.server))",
                 attributes: [
-                    NSFontAttributeName: UIFont.systemFont(ofSize: 20),
+                    .font: UIFont.systemFont(ofSize: 20),
                 ]
             )
             return amount + currency
@@ -43,15 +43,15 @@ struct ConfirmTransactionHeaderViewModel: TransactionHeaderBaseViewModel {
                 let amount = NSAttributedString(
                     string: "\(from.amount)",
                     attributes: [
-                        NSFontAttributeName: UIFont.systemFont(ofSize: 24),
-                        NSForegroundColorAttributeName: Colors.red,
+                        .font: UIFont.systemFont(ofSize: 24),
+                        .foregroundColor: Colors.red,
                         ]
                 )
 
                 let currency = NSAttributedString(
                     string: " " + from.token.symbol,
                     attributes: [
-                        NSFontAttributeName: UIFont.systemFont(ofSize: 16),
+                        .font: UIFont.systemFont(ofSize: 16),
                     ]
                 )
                 return amount + currency
@@ -61,15 +61,15 @@ struct ConfirmTransactionHeaderViewModel: TransactionHeaderBaseViewModel {
                 let amount = NSAttributedString(
                     string: "\(to.amount)",
                     attributes: [
-                        NSFontAttributeName: UIFont.systemFont(ofSize: 24),
-                        NSForegroundColorAttributeName: Colors.green,
+                        .font: UIFont.systemFont(ofSize: 24),
+                        .foregroundColor: Colors.green,
                     ]
                 )
 
                 let currency = NSAttributedString(
                     string: " " + to.token.symbol,
                     attributes: [
-                        NSFontAttributeName: UIFont.systemFont(ofSize: 16),
+                        .font: UIFont.systemFont(ofSize: 16),
                     ]
                 )
                 return amount + currency
@@ -78,7 +78,7 @@ struct ConfirmTransactionHeaderViewModel: TransactionHeaderBaseViewModel {
             let amount = NSAttributedString(
                 string: String(" for "),
                 attributes: [
-                    NSFontAttributeName: UIFont.systemFont(ofSize: 14, weight: UIFontWeightLight),
+                    .font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.light),
                 ]
             )
             return fromAttributedString + amount + toAttributedString

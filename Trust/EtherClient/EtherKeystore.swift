@@ -149,9 +149,9 @@ class EtherKeystore: Keystore {
 
             let account: Account = .from(account: gethAccount)
             let _ = setPassword(password, for: account)
-            return (.success(account))
+            return .success(account)
         } catch {
-            return (.failure(.failedToImport(error)))
+            return .failure(.failedToImport(error))
         }
     }
 
@@ -178,9 +178,9 @@ class EtherKeystore: Keystore {
         switch result {
         case .success(let data):
             let string = String(data: data, encoding: .utf8) ?? ""
-            return (.success(string))
+            return .success(string)
         case .failure(let error):
-            return (.failure(error))
+            return .failure(error)
         }
     }
 
@@ -199,9 +199,9 @@ class EtherKeystore: Keystore {
         let password = getPassword(for: account)
         do {
             try gethKeyStorage.delete(gethAccount, passphrase: password)
-            return (.success())
+            return .success(())
         } catch {
-            return (.failure(.failedToDeleteAccount))
+            return .failure(.failedToDeleteAccount)
         }
     }
 
@@ -209,9 +209,9 @@ class EtherKeystore: Keystore {
         let gethAccount = getGethAccount(for: account.address)
         do {
             try gethKeyStorage.update(gethAccount, passphrase: password, newPassphrase: newPassword)
-            return (.success())
+            return .success(())
         } catch {
-            return (.failure(.failedToUpdatePassword))
+            return .failure(.failedToUpdatePassword)
         }
     }
 
@@ -244,9 +244,9 @@ class EtherKeystore: Keystore {
                 chainID: signTransaction.chainID
             )
             let rlp = try signedTransaction.encodeRLP()
-            return (.success(rlp))
+            return .success(rlp)
         } catch {
-            return (.failure(.failedToSignTransaction))
+            return .failure(.failedToSignTransaction)
         }
     }
 

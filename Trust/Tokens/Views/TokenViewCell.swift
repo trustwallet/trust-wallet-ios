@@ -41,11 +41,11 @@ class TokenViewCell: UITableViewCell {
         stackView.spacing = 10
         stackView.distribution = .fill
 
-        symbolImageView.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
-        titleLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        symbolImageView.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
+        titleLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
 
-        amountLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        stackView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        amountLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        stackView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
 
         addSubview(stackView)
 

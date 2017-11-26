@@ -66,7 +66,7 @@ class TokensViewController: UIViewController {
         fetch()
     }
 
-    func pullToRefresh() {
+    @objc func pullToRefresh() {
         refreshControl.beginRefreshing()
         fetch()
     }

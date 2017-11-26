@@ -18,13 +18,13 @@ class ExchangeTokenInputField: UIView {
 
         amountField.translatesAutoresizingMaskIntoConstraints = false
         amountField.placeholder = "0"
-        amountField.font = UIFont.systemFont(ofSize: 22, weight: UIFontWeightMedium)
+        amountField.font = UIFont.systemFont(ofSize: 22, weight: UIFont.Weight.medium)
         amountField.addTarget(self, action: #selector(amountDidChange(_:)), for: .editingChanged)
         amountField.keyboardType = .decimalPad
 
         symbolLabel.translatesAutoresizingMaskIntoConstraints = false
         symbolLabel.textAlignment = .center
-        symbolLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium)
+        symbolLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
         symbolLabel.adjustsFontSizeToFitWidth = true
 
         tokenImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -85,11 +85,11 @@ class ExchangeTokenInputField: UIView {
         layer.masksToBounds = true
     }
 
-    func tap() {
+    @objc func tap() {
         didPress?()
     }
 
-    func amountDidChange(_ textField: UITextField) {
+    @objc func amountDidChange(_ textField: UITextField) {
         guard let value = textField.text?.doubleValue else {
             return
         }

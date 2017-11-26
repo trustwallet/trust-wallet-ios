@@ -63,7 +63,7 @@ class ExchangeTokensField: UIView {
         return label
     }
 
-    func availableBalance() {
+    @objc func availableBalance() {
         didPressAvailableBalance?()
     }
 

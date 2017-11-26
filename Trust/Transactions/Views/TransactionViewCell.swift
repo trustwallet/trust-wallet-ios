@@ -40,12 +40,12 @@ class TransactionViewCell: UITableViewCell {
         stackView.spacing = 15
         stackView.distribution = .fill
 
-        statusImageView.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
-        subTitleLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
-        titleLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        statusImageView.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
+        subTitleLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
+        titleLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
 
-        amountLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        stackView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        amountLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        stackView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
 
         addSubview(stackView)
 

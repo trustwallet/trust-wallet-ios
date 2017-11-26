@@ -73,7 +73,7 @@ class ImportWalletViewController: FormViewController {
                     view.label.attributedText = "Importing wallet as easy as creating".styled(
                         with:
                         .color(UIColor(hex: "6e6e72")),
-                        .font(UIFont.systemFont(ofSize: 14, weight: UIFontWeightRegular)),
+                        .font(UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)),
                         .lineHeightMultiple(1.25)
                     )
                     view.logoImageView.image = R.image.create_wallet_import()
@@ -180,7 +180,7 @@ class ImportWalletViewController: FormViewController {
         }
     }
 
-    func demo() {
+    @objc func demo() {
         //Used for taking screenshots to the App Store by snapshot
         let demoAccount = Account(
             address: Address(address: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")
@@ -188,7 +188,7 @@ class ImportWalletViewController: FormViewController {
         delegate?.didImportAccount(account: demoAccount, in: self)
     }
 
-    func importOptions() {
+    @objc func importOptions() {
         let alertController = UIAlertController(title: "Import Wallet Options", message: .none, preferredStyle: .actionSheet)
         alertController.popoverPresentationController?.sourceView = self.view
         alertController.addAction(UIAlertAction(title: "iCloud/Dropbox/Google Cloud", style: .default) { _ in

@@ -27,15 +27,15 @@ struct TransactionHeaderViewModel: TransactionHeaderBaseViewModel {
         let amount = NSAttributedString(
             string: String(value.amount),
             attributes: [
-                NSFontAttributeName: UIFont.systemFont(ofSize: 24),
-                NSForegroundColorAttributeName: amountTextColor,
+                .font: UIFont.systemFont(ofSize: 24),
+                .foregroundColor: amountTextColor,
             ]
         )
 
         let currency = NSAttributedString(
             string: " " + value.symbol,
             attributes: [
-                NSFontAttributeName: UIFont.systemFont(ofSize: 14),
+                .font: UIFont.systemFont(ofSize: 14),
             ]
         )
 

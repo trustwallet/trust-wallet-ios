@@ -66,8 +66,8 @@ class TransactionViewController: UIViewController {
         return TransactionAppearance.item(
             title: title,
             subTitle: value
-        ) { [unowned self] in
-            self.showAlertSheet(title: $0.0, value: $0.1)
+        ) { [weak self] in
+            self?.showAlertSheet(title: $0, value: $1)
         }
     }
 
@@ -103,7 +103,7 @@ class TransactionViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
 
-    func more() {
+    @objc func more() {
         let controller = SFSafariViewController(url: viewModel.detailsURL)
         present(controller, animated: true, completion: nil)
     }

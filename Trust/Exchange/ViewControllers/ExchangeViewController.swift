@@ -63,7 +63,7 @@ class ExchangeViewController: UIViewController {
         exchangeFields.didPress = { [unowned self] direction in
             self.showSelectToken(direction: direction)
         }
-        exchangeFields.didPressAvailableBalance = { [unowned self] _ in
+        exchangeFields.didPressAvailableBalance = { [unowned self] in
             self.exchangeFields.fromField.amountField.text = "\(self.coordinator.viewModel.availableBalance)"
             self.exchangeFields.fromField.amountDidChange(self.exchangeFields.fromField.amountField)
         }
@@ -122,7 +122,7 @@ class ExchangeViewController: UIViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
 
-    func nextAction() {
+    @objc func nextAction() {
         let from = coordinator.from
         let fromAmount = (exchangeFields.fromField.amountField.text ?? "").doubleValue
 
