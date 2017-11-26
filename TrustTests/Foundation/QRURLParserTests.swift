@@ -18,6 +18,13 @@ class QRURLParserTests: XCTestCase {
         XCTAssertEqual(address, result?.address)
     }
 
+    func testJustAddressString2() {
+        let address = "0x6973dbabeb06dd60f1c50ed688fe11e742bc123e"
+        let result = QRURLParser.from(string: address)
+
+        XCTAssertEqual(address, result?.address)
+    }
+
     func testProtocolAndAddress() {
         let result = QRURLParser.from(string: "ethereum:0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c")
 
@@ -26,6 +33,12 @@ class QRURLParserTests: XCTestCase {
 
     func testEthereumAddress() {
         let result = QRURLParser.from(string: "ethereum:0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c")
+
+        XCTAssertEqual("0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c", result?.address)
+    }
+
+    func testEthereumAddressWithValue() {
+        let result = QRURLParser.from(string: "ethereum:0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c?value=1")
 
         XCTAssertEqual("0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c", result?.address)
     }

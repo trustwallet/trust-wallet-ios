@@ -20,7 +20,7 @@ struct QRURLParser {
             )
         }
 
-        if parts.count == 2, let address = parts.last, CryptoAddressValidator.isValidAddress(address) {
+        if parts.count == 2, let address = QRURLParser.getAddress(from: parts.last), CryptoAddressValidator.isValidAddress(address) {
             return ParserResult(
                 protocolName: parts.first ?? "",
                 address: address,
@@ -29,6 +29,13 @@ struct QRURLParser {
         }
 
         return nil
+    }
+
+    private static func getAddress(from: String?) -> String? {
+        guard let from = from, from.count >= AddressValidatorType.ethereum.length else {
+            return .none
+        }
+        return from.substring(to: AddressValidatorType.ethereum.length)
     }
 }
 
