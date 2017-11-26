@@ -1,5 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
+import BigInt
 import Foundation
 import UIKit
 
@@ -45,7 +46,7 @@ struct TransactionViewModel {
             return TransactionValue(amount: amount, symbol: symbol)
         }
         return TransactionValue(
-            amount: EthereumConverter.from(value: BInt(transaction.value), to: .ether, minimumFractionDigits: 5),
+            amount: EthereumConverter.from(value: BigInt(transaction.value) ?? BigInt(), to: .ether, minimumFractionDigits: 5),
             symbol: config.server.symbol
         )
     }
@@ -74,8 +75,8 @@ struct TransactionViewModel {
     }
 
     var gasFee: String {
-        let gasUsed = BInt(String(transaction.gasUsed))
-        let gasPrice = BInt(String(transaction.gasPrice))
+        let gasUsed = BigInt(transaction.gasUsed) ?? BigInt()
+        let gasPrice = BigInt(transaction.gasPrice) ?? BigInt()
         return EthereumConverter.from(
             value: gasPrice * gasUsed,
             to: .ether,

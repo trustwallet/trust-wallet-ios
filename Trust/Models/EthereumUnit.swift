@@ -2,11 +2,11 @@
 
 import Foundation
 
-enum EthereumUnit: String {
-    case wei = "1"
-    case kwei = "1000"
-    case gwei = "1000000000"
-    case ether = "1000000000000000000"
+enum EthereumUnit: Int64 {
+    case wei = 1
+    case kwei = 1_000
+    case gwei = 1_000_000_000
+    case ether = 1_000_000_000_000_000_000
 }
 
 //https://github.com/ethereumjs/ethereumjs-units/blob/master/units.json

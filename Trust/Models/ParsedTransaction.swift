@@ -1,5 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
+import BigInt
 import Foundation
 
 struct ParsedTransaction {
@@ -76,19 +77,19 @@ extension ParsedTransaction {
         let nonce = transaction["nonce"] as? String ?? "0"
         return ParsedTransaction(
             blockHash: blockHash,
-            blockNumber: BInt(hex: blockNumber.drop0x).dec,
-            transactionIndex: BInt(hex: transactionIndex.drop0x).dec,
+            blockNumber: BigInt(blockNumber.drop0x, radix: 16)?.description ?? "",
+            transactionIndex: BigInt(transactionIndex.drop0x, radix: 16)?.description ?? "",
             confirmations: confirmation,
-            cumulativeGasUsed: BInt(hex: cumulativeGasUsed.drop0x).dec,
+            cumulativeGasUsed: BigInt(cumulativeGasUsed.drop0x, radix: 16)?.description ?? "",
             from: from,
             to: to,
-            gas: BInt(hex: gas.drop0x).dec,
-            gasPrice: BInt(hex: gasPrice.drop0x).dec,
-            gasUsed: BInt(hex: gasUsed.drop0x).dec,
+            gas: BigInt(gas.drop0x, radix: 16)?.description ?? "",
+            gasPrice: BigInt(gasPrice.drop0x, radix: 16)?.description ?? "",
+            gasUsed: BigInt(gasUsed.drop0x, radix: 16)?.description ?? "",
             hash: hash,
-            value: BInt(hex: value.drop0x).dec,
-            nonce: BInt(hex: nonce.drop0x).dec,
-            timestamp: BInt(hex: timestamp.drop0x).dec,
+            value: BigInt(value.drop0x, radix: 16)?.description ?? "",
+            nonce: BigInt(nonce.drop0x, radix: 16)?.description ?? "",
+            timestamp: BigInt(timestamp.drop0x, radix: 16)?.description ?? "",
             isError: isError
         )
     }

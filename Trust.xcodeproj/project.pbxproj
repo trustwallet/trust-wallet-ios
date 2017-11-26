@@ -46,11 +46,6 @@
 		291F52A51F6B762300B369AB /* EtherServiceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52A41F6B762300B369AB /* EtherServiceRequest.swift */; };
 		291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52A61F6B766100B369AB /* BalanceRequest.swift */; };
 		291F52A91F6B7BE100B369AB /* BlockNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52A81F6B7BE100B369AB /* BlockNumber.swift */; };
-		291F52B11F6B814300B369AB /* MG Basic Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52AD1F6B80AF00B369AB /* MG Basic Math.swift */; };
-		291F52B21F6B814300B369AB /* MG Benchmark Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52AE1F6B80AF00B369AB /* MG Benchmark Tools.swift */; };
-		291F52B31F6B814300B369AB /* SMP Bignum Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52AF1F6B80AF00B369AB /* SMP Bignum Extensions.swift */; };
-		291F52B41F6B814300B369AB /* SMP Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52B01F6B80AF00B369AB /* SMP Core.swift */; };
-		291F52B51F6B814300B369AB /* SMP String Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52AC1F6B80AF00B369AB /* SMP String Module.swift */; };
 		291F52B71F6B870400B369AB /* CastError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52B61F6B870400B369AB /* CastError.swift */; };
 		291F52B91F6B880F00B369AB /* EtherKeystore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52B81F6B880F00B369AB /* EtherKeystore.swift */; };
 		291F52BC1F6B8D0600B369AB /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52BB1F6B8D0600B369AB /* Account.swift */; };
@@ -253,6 +248,8 @@
 		29FF130A1F75F67200AFD326 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF13091F75F67200AFD326 /* Address.swift */; };
 		29FF130D1F7626E800AFD326 /* FakeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF130C1F7626E800AFD326 /* FakeNavigationController.swift */; };
 		3CDDD1E2CD1B0180754B7992 /* Pods_Trust.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646C8C822C986358D7388602 /* Pods_Trust.framework */; };
+		61F8AA931FCA4A0F00488C6E /* BigInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8AA921FCA4A0F00488C6E /* BigInt.swift */; };
+		61F8AA951FCA4C9300488C6E /* BigIntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8AA941FCA4C9300488C6E /* BigIntTests.swift */; };
 		D9F052FDC5B72E024DD05F0D /* Pods_TrustTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -319,11 +316,6 @@
 		291F52A41F6B762300B369AB /* EtherServiceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherServiceRequest.swift; sourceTree = "<group>"; };
 		291F52A61F6B766100B369AB /* BalanceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceRequest.swift; sourceTree = "<group>"; };
 		291F52A81F6B7BE100B369AB /* BlockNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockNumber.swift; sourceTree = "<group>"; };
-		291F52AC1F6B80AF00B369AB /* SMP String Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SMP String Module.swift"; sourceTree = "<group>"; };
-		291F52AD1F6B80AF00B369AB /* MG Basic Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MG Basic Math.swift"; sourceTree = "<group>"; };
-		291F52AE1F6B80AF00B369AB /* MG Benchmark Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MG Benchmark Tools.swift"; sourceTree = "<group>"; };
-		291F52AF1F6B80AF00B369AB /* SMP Bignum Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SMP Bignum Extensions.swift"; sourceTree = "<group>"; };
-		291F52B01F6B80AF00B369AB /* SMP Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SMP Core.swift"; sourceTree = "<group>"; };
 		291F52B61F6B870400B369AB /* CastError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastError.swift; sourceTree = "<group>"; };
 		291F52B81F6B880F00B369AB /* EtherKeystore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherKeystore.swift; sourceTree = "<group>"; };
 		291F52BB1F6B8D0600B369AB /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
@@ -528,6 +520,8 @@
 		29FF130C1F7626E800AFD326 /* FakeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNavigationController.swift; sourceTree = "<group>"; };
 		477899BEAA4489DA423E8857 /* Pods-TrustUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4DB8204016307EAFC079EA48 /* Pods-Trust.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trust.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trust/Pods-Trust.debug.xcconfig"; sourceTree = "<group>"; };
+		61F8AA921FCA4A0F00488C6E /* BigInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigInt.swift; sourceTree = "<group>"; };
+		61F8AA941FCA4C9300488C6E /* BigIntTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigIntTests.swift; sourceTree = "<group>"; };
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -650,6 +644,7 @@
 				29FF13041F75F08000AFD326 /* Coordinators */,
 				29FF12FF1F75EAC800AFD326 /* Factories */,
 				29A13E261F6A901600E432A2 /* Welcome */,
+				61F8AA941FCA4C9300488C6E /* BigIntTests.swift */,
 				2912CD0F1F6A830700C6CBE3 /* TrustTests.swift */,
 				2912CD111F6A830700C6CBE3 /* Info.plist */,
 			);
@@ -828,21 +823,8 @@
 				298542E61FBA9BA900CB5081 /* ShapeShift */,
 				295996041FAAFC9400DB66A8 /* Coinbase */,
 				291794F51F95DBE900539A30 /* Web3Swift */,
-				291F52AB1F6B805F00B369AB /* BigInt */,
 			);
 			path = Vendors;
-			sourceTree = "<group>";
-		};
-		291F52AB1F6B805F00B369AB /* BigInt */ = {
-			isa = PBXGroup;
-			children = (
-				291F52AD1F6B80AF00B369AB /* MG Basic Math.swift */,
-				291F52AE1F6B80AF00B369AB /* MG Benchmark Tools.swift */,
-				291F52AF1F6B80AF00B369AB /* SMP Bignum Extensions.swift */,
-				291F52B01F6B80AF00B369AB /* SMP Core.swift */,
-				291F52AC1F6B80AF00B369AB /* SMP String Module.swift */,
-			);
-			path = BigInt;
 			sourceTree = "<group>";
 		};
 		291F52BA1F6B8CAF00B369AB /* Models */ = {
@@ -1295,6 +1277,7 @@
 				29C80D481FB51C380037B1E0 /* Dictionary.swift */,
 				29C80D4A1FB51C460037B1E0 /* Decimal.swift */,
 				293112361FC9A24600966EEA /* UIGestureRecognizer+Closure.swift */,
+				61F8AA921FCA4A0F00488C6E /* BigInt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1893,6 +1876,7 @@
 				"${BUILT_PRODUCTS_DIR}/1PasswordExtension/OnePasswordExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/APIKit/APIKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
 				"${BUILT_PRODUCTS_DIR}/BonMot/BonMot.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/EAIntroView/EAIntroView.framework",
@@ -1910,6 +1894,7 @@
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SSKeychain/SSKeychain.framework",
 				"${BUILT_PRODUCTS_DIR}/SeedStackViewController/StackViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
 				"${BUILT_PRODUCTS_DIR}/StatefulViewController/StatefulViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/VENTouchLock/VENTouchLock.framework",
 			);
@@ -1918,6 +1903,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OnePasswordExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APIKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BonMot.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EAIntroView.framework",
@@ -1935,6 +1921,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSKeychain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StackViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatefulViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VENTouchLock.framework",
 			);
@@ -1976,12 +1963,10 @@
 				29F114F21FA7966300114A29 /* PrivateKeyRule.swift in Sources */,
 				296106C41F7640C50006164B /* TokenViewCellViewModel.swift in Sources */,
 				29B9345D1F88459C009FCABB /* SplashViewController.swift in Sources */,
-				291F52B11F6B814300B369AB /* MG Basic Math.swift in Sources */,
 				29E2E33A1F7A008C000CF94A /* UIView.swift in Sources */,
 				291795051F95F60100539A30 /* Web3RequestType.swift in Sources */,
 				29C80D511FB67A110037B1E0 /* ArrayResponse.swift in Sources */,
 				290B2B5F1F9177860053C83E /* UIImage.swift in Sources */,
-				291F52B21F6B814300B369AB /* MG Benchmark Tools.swift in Sources */,
 				291ED08F1F6F613200E7E93A /* GetTransactionRequest.swift in Sources */,
 				2931121D1FC65F2900966EEA /* ExchangeCurrencyView.swift in Sources */,
 				293112171FC5555500966EEA /* ExchangeTokensViewModel.swift in Sources */,
@@ -2002,13 +1987,11 @@
 				2931122A1FC8EE8100966EEA /* ExchangeGetPrice.swift in Sources */,
 				293248901F897787008A9818 /* OnePasswordCoordinator.swift in Sources */,
 				29BB94971F6FCD60009B09CC /* SendViewModel.swift in Sources */,
-				291F52B31F6B814300B369AB /* SMP Bignum Extensions.swift in Sources */,
 				296106D01F778A8D0006164B /* TransferType.swift in Sources */,
 				2985430F1FC18A4B00CB5081 /* ExchangeViewModel.swift in Sources */,
 				29E14FDB1F7F4F3D00185568 /* Transaction.swift in Sources */,
 				296106C81F7646590006164B /* TokensViewModel.swift in Sources */,
 				29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */,
-				291F52B41F6B814300B369AB /* SMP Core.swift in Sources */,
 				29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */,
 				290B2B5B1F8F551E0053C83E /* LokaliseInitializer.swift in Sources */,
 				293112371FC9A24600966EEA /* UIGestureRecognizer+Closure.swift in Sources */,
@@ -2020,7 +2003,6 @@
 				293E62711FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift in Sources */,
 				291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */,
 				29BE3FD21F707DC300F6BFC2 /* TransactionDataCoordinator.swift in Sources */,
-				291F52B51F6B814300B369AB /* SMP String Module.swift in Sources */,
 				29C80D351FB2CD110037B1E0 /* Block.swift in Sources */,
 				291ED0921F6FA5D900E7E93A /* RequestViewController.swift in Sources */,
 				296106C21F76403A0006164B /* TokenViewCell.swift in Sources */,
@@ -2083,6 +2065,7 @@
 				290B2B671F9266630053C83E /* SettingsAction.swift in Sources */,
 				293E626F1FA2ED1400CB0A66 /* InCoordinator.swift in Sources */,
 				2963A2881FC401490095447D /* LocalizedOperation.swift in Sources */,
+				61F8AA931FCA4A0F00488C6E /* BigInt.swift in Sources */,
 				29C80D371FB2CD230037B1E0 /* ParsedTransaction.swift in Sources */,
 				293204581F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift in Sources */,
 				29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */,
@@ -2186,6 +2169,7 @@
 				2912CD101F6A830700C6CBE3 /* TrustTests.swift in Sources */,
 				29FF130D1F7626E800AFD326 /* FakeNavigationController.swift in Sources */,
 				293112311FC971B600966EEA /* ExchangeTokensCoordinatorTests.swift in Sources */,
+				61F8AA951FCA4C9300488C6E /* BigIntTests.swift in Sources */,
 				299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */,
 				29F114F81FA8165200114A29 /* SendCoordinatorTests.swift in Sources */,
 				293112331FC971F600966EEA /* ExchangeToken.swift in Sources */,

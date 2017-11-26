@@ -1,10 +1,11 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
+import BigInt
 import Foundation
 import JSONRPCKit
 
 struct GetTransactionCountRequest: JSONRPCKit.Request {
-    typealias Response = Int64
+    typealias Response = Int
 
     let address: String
 
@@ -21,8 +22,7 @@ struct GetTransactionCountRequest: JSONRPCKit.Request {
 
     func response(from resultObject: Any) throws -> Response {
         if let response = resultObject as? String {
-            let value = BInt(hex: response.drop0x).dec
-            return Int64(value) ?? 0
+            return BigInt(response.drop0x, radix: 16).flatMap({ numericCast($0) }) ?? 0
         } else {
             throw CastError(actualValue: resultObject, expectedType: Response.self)
         }

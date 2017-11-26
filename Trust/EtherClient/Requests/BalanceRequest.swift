@@ -1,5 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
+import BigInt
 import Foundation
 import JSONRPCKit
 
@@ -17,8 +18,8 @@ struct BalanceRequest: JSONRPCKit.Request {
     }
 
     func response(from resultObject: Any) throws -> Response {
-        if let response = resultObject as? String {
-            return Balance(value: BInt(hex: response.drop0x))
+        if let response = resultObject as? String, let value = BigInt(response.drop0x, radix: 16) {
+            return Balance(value: value)
         } else {
             throw CastError(actualValue: resultObject, expectedType: Response.self)
         }

@@ -1,5 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
+import BigInt
 import Foundation
 
 protocol BalanceProtocol {
@@ -23,14 +24,14 @@ struct TokenBalance: BalanceProtocol {
 
 struct Balance: BalanceProtocol {
 
-    let value: BInt
+    let value: BigInt
 
-    init(value: BInt) {
+    init(value: BigInt) {
         self.value = value
     }
 
     var isZero: Bool {
-        return value.isZero()
+        return value.isZero
     }
 
     var wei: String {

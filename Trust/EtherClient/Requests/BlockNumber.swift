@@ -1,5 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
+import BigInt
 import Foundation
 import JSONRPCKit
 
@@ -11,8 +12,8 @@ struct BlockNumberRequest: JSONRPCKit.Request {
     }
 
     func response(from resultObject: Any) throws -> Response {
-        if let response = resultObject as? String {
-            return Int(BInt(hex: response.drop0x).dec) ?? 0
+        if let response = resultObject as? String, let value = BigInt(response.drop0x, radix: 16) {
+            return numericCast(value)
         } else {
             throw CastError(actualValue: resultObject, expectedType: Response.self)
         }
