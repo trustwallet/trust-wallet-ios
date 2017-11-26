@@ -77,19 +77,19 @@ extension ParsedTransaction {
         let nonce = transaction["nonce"] as? String ?? "0"
         return ParsedTransaction(
             blockHash: blockHash,
-            blockNumber: BigInt(blockNumber.drop0x, radix: 16)!.description,
-            transactionIndex: BigInt(transactionIndex.drop0x, radix: 16)!.description,
+            blockNumber: BigInt(blockNumber.drop0x, radix: 16)?.description ?? "",
+            transactionIndex: BigInt(transactionIndex.drop0x, radix: 16)?.description ?? "",
             confirmations: confirmation,
-            cumulativeGasUsed: BigInt(cumulativeGasUsed.drop0x, radix: 16)!.description,
+            cumulativeGasUsed: BigInt(cumulativeGasUsed.drop0x, radix: 16)?.description ?? "",
             from: from,
             to: to,
-            gas: BigInt(gas.drop0x, radix: 16)!.description,
-            gasPrice: BigInt(gasPrice.drop0x, radix: 16)!.description,
-            gasUsed: BigInt(gasUsed.drop0x, radix: 16)!.description,
+            gas: BigInt(gas.drop0x, radix: 16)?.description ?? "",
+            gasPrice: BigInt(gasPrice.drop0x, radix: 16)?.description ?? "",
+            gasUsed: BigInt(gasUsed.drop0x, radix: 16)?.description ?? "",
             hash: hash,
-            value: BigInt(value.drop0x, radix: 16)!.description,
-            nonce: BigInt(nonce.drop0x, radix: 16)!.description,
-            timestamp: BigInt(timestamp.drop0x, radix: 16)!.description,
+            value: BigInt(value.drop0x, radix: 16)?.description ?? "",
+            nonce: BigInt(nonce.drop0x, radix: 16)?.description ?? "",
+            timestamp: BigInt(timestamp.drop0x, radix: 16)?.description ?? "",
             isError: isError
         )
     }

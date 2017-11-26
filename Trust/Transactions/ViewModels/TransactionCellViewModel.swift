@@ -76,7 +76,7 @@ struct TransactionCellViewModel {
             if let operationValue = operationValue {
                 return operationValue
             }
-            return EthereumConverter.from(value: BigInt(transaction.value)!, to: .ether, minimumFractionDigits: 3)
+            return EthereumConverter.from(value: BigInt(transaction.value) ?? BigInt(), to: .ether, minimumFractionDigits: 3)
         }()
         switch transaction.direction {
         case .incoming: return "+\(value)"
