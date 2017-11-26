@@ -8,12 +8,28 @@ struct ExchangeTokenRate {
     let rate: String
 }
 
+struct TokensFormatter {
+    static let numberFormatter: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.minimumFractionDigits = 3
+        numberFormatter.maximumFractionDigits = 3
+        numberFormatter.usesSignificantDigits = true
+        return numberFormatter
+    }()
+
+    static func from(token: ExchangeToken, amount: String) -> String? {
+        let res = pow(10.0, Double(token.decimals))
+        let number = NSNumber(value: (Double(amount) ?? 0) / res)
+        return TokensFormatter.numberFormatter.string(from: number)
+    }
+}
+
 struct ExchangeTokensViewModel {
 
     let from: ExchangeToken
     let to: ExchangeToken
     private let tokenRate: ExchangeTokenRate?
-    let balance: Balance?
+    let balance: BalanceProtocol?
 
     private static let numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
@@ -29,7 +45,7 @@ struct ExchangeTokensViewModel {
         tokenRate: ExchangeTokenRate? = .none,
         fromValue: Double? = .none,
         toValue: Double? = .none,
-        balance: Balance? = .none
+        balance: BalanceProtocol? = .none
     ) {
         self.from = from
         self.to = to

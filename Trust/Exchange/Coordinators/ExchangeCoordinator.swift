@@ -38,7 +38,7 @@ extension ExchangeCoordinator: ExchangeViewControllerDelegate {
         let transaction = UnconfirmedTransaction(
             transferType: .exchange(from: from, to: to),
             amount: from.amount,
-            address: Address(address: "0x11") // TODO FIX IT
+            address: to.token.address // TODO FIX IT
         )
 
         let viewModel = ConfirmTransactionHeaderViewModel(

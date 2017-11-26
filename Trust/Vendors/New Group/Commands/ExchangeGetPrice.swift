@@ -22,7 +22,7 @@ struct ExchangeGetPriceDecode: Web3Request {
     let data: String
 
     var type: Web3RequestType {
-        let run = "web3.eth.abi.decodeParameter('uint', '\(data)')"
+        let run = "web3.eth.abi.decodeParameter('uint256', '\(data)')"
         return .script(command: run)
     }
 }

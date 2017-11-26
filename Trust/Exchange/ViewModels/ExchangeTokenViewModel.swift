@@ -24,7 +24,7 @@ struct ExchangeTokenViewModel {
     }
 
     var isEnabled: Bool {
-        return token.balance == 0
+        return token.balance > 0
     }
 
     var alpha: CGFloat {

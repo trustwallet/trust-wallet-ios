@@ -2,7 +2,26 @@
 
 import Foundation
 
-struct Balance {
+protocol BalanceProtocol {
+    var amount: String { get }
+}
+
+struct TokenBalance: BalanceProtocol {
+
+    let token: ExchangeToken
+    let data: String
+
+    init(token: ExchangeToken, data: String) {
+        self.token = token
+        self.data = data
+    }
+
+    var amount: String {
+        return TokensFormatter.from(token: token, amount: data) ?? ""
+    }
+}
+
+struct Balance: BalanceProtocol {
 
     let value: BInt
 

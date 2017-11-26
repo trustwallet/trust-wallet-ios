@@ -12,7 +12,7 @@ class ExchangeTokensCoordinator {
     var to: ExchangeToken
 
     let session: WalletSession
-    let tokens: [ExchangeToken]
+    var tokens: [ExchangeToken]
     let exchangeConfig = ExchangeConfig(server: Config().server)
 
     var viewModel: ExchangeTokensViewModel {
@@ -31,7 +31,7 @@ class ExchangeTokensCoordinator {
             update()
         }
     }
-    var balance: Balance? {
+    var balance: BalanceProtocol? {
         didSet {
             update()
         }
@@ -57,6 +57,7 @@ class ExchangeTokensCoordinator {
 
     func fetch() {
         getBalance()
+        getBalances()
     }
 
     func update() {
@@ -88,6 +89,7 @@ class ExchangeTokensCoordinator {
         update()
         getPrice()
         getBalance()
+        getBalances()
     }
 
     func getPrice() {
@@ -118,20 +120,94 @@ class ExchangeTokensCoordinator {
         }
     }
 
+    func getBalances() {
+        let onlyTokens = tokens.filter { $0.address != exchangeConfig.tokenAddress }
+        onlyTokens.forEach { [weak self] token in
+            self?.getBalance(for: token) { balance in
+                guard let `self` = self else { return }
+                if let index = self.tokens.index(of: token) {
+                    let oldToken = self.tokens[index]
+                    let newToken = ExchangeToken(
+                        name: oldToken.name,
+                        address: oldToken.address,
+                        symbol: oldToken.symbol,
+                        image: oldToken.image,
+                        balance: Double(balance.amount) ?? 0,
+                        decimals: oldToken.decimals
+                    )
+                    self.tokens[index] = newToken
+                }
+            }
+        }
+
+        let etherTokens = tokens.filter { $0.address == exchangeConfig.tokenAddress }
+        guard let etherToken = etherTokens.first else { return }
+        getETHBalance(address: session.account.address) { [weak self] balance in
+            guard let `self` = self else { return }
+            if let index = self.tokens.index(of: etherToken) {
+                let newToken = ExchangeToken(
+                    name: etherToken.name,
+                    address: etherToken.address,
+                    symbol: etherToken.symbol,
+                    image: etherToken.image,
+                    balance: Double(balance.amount) ?? 0,
+                    decimals: etherToken.decimals
+                )
+                self.tokens[index] = newToken
+            }
+        }
+    }
+
+    func getETHBalance(address: Address, completion: ((BalanceProtocol) -> Void)? = .none) {
+        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: address.address)))
+        Session.send(request) { result in
+            switch result {
+            case .success(let balance):
+                completion?(balance)
+            case .failure: break
+            }
+        }
+    }
+
     func getBalance() {
         if from.address == exchangeConfig.tokenAddress {
-            // get balance for ethereum
-            let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: session.account.address.address)))
-            Session.send(request) { [weak self] result in
-                switch result {
-                case .success(let balance):
-                    self?.balance = balance
-                    NSLog("balance \(balance)")
-                case .failure: break
-                }
+            self.getETHBalance(address: session.account.address) { [weak self] balance in
+                self?.balance = balance
             }
         } else {
             // get price for token
+            getBalance(for: from) { balance in
+                self.balance =  balance
+            }
+        }
+    }
+
+    func getBalance(for token: ExchangeToken, completion: ((BalanceProtocol) -> Void)? = .none) {
+        let request = GetERC20BalanceEncode(address: session.account.address)
+        session.web3.request(request: request) { result in
+            switch result {
+            case .success(let res):
+                let request2 = EtherServiceRequest(batch: BatchFactory().create(CallRequest(to: token.address.address, data: res)))
+                Session.send(request2) { [weak self] result2 in
+                    switch result2 {
+                    case .success(let balance):
+                        let request = GetERC20BalanceDecode(data: balance)
+                        self?.session.web3.request(request: request) { result in
+                            switch result {
+                            case .success(let res):
+                                NSLog("res \(res)")
+                                completion?(TokenBalance(token: token, data: res))
+                            case .failure(let error):
+                                NSLog("getPrice3 error \(error)")
+                            }
+                        }
+                    case .failure(let error):
+                        NSLog("getPrice2 error \(error)")
+                    }
+                }
+            case .failure(let error):
+                NSLog("getPrice error \(error)")
+            }
         }
     }
 }

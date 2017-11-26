@@ -26,6 +26,7 @@ class SendTransactionCoordinator {
         address: Address,
         value: Double,
         data: Data = Data(),
+        extraNonce: Int = 0,
         configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
@@ -37,7 +38,8 @@ class SendTransactionCoordinator {
             guard let `self` = self else { return }
             switch result {
             case .success(let count):
-                self.sign(address: address, nonce: count, amount: amount, data: data, configuration: configuration, completion: completion)
+                let nonce: Int64 = Int64(count + extraNonce)
+                self.sign(address: address, nonce: nonce, amount: amount, data: data, configuration: configuration, completion: completion)
             case .failure(let error):
                 completion(.failure(AnyError(error)))
             }
@@ -112,6 +114,48 @@ class SendTransactionCoordinator {
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
         let exchangeConfig = ExchangeConfig(server: config.server)
+        let needsApproval: Bool = {
+            return from.token.address != exchangeConfig.tokenAddress
+        }()
+        let tradeNonce: Int = {
+            return needsApproval ? 1 : 0
+        }()
+
+        // approve amount
+        if needsApproval {
+            // ApproveERC20Encode
+            let amountToSend = (BDouble(floatLiteral: from.amount) * BDouble(pow(10, from.token.decimals).doubleValue)).description
+            let approveRequest = ApproveERC20Encode(address: exchangeConfig.contract, amount: amountToSend)
+            session.web3.request(request: approveRequest) { result in
+                switch result {
+                case .success(let res):
+                    self.send(
+                        address: from.token.address,
+                        value: 0,
+                        data: Data(hex: res.drop0x),
+                        configuration: configuration,
+                        completion: completion
+                    )
+                    self.makeTrade(from: from, to: to, configuration: configuration, tradeNonce: tradeNonce, completion: completion)
+                case .failure(let error):
+                    completion(.failure(AnyError(error)))
+                }
+            }
+        } else {
+            self.makeTrade(from: from, to: to, configuration: configuration, tradeNonce: tradeNonce, completion: completion)
+        }
+
+        //Execute trade request
+    }
+
+    private func makeTrade(
+        from: SubmitExchangeToken,
+        to: SubmitExchangeToken,
+        configuration: TransactionConfiguration,
+        tradeNonce: Int,
+        completion: @escaping (Result<SentTransaction, AnyError>) -> Void
+    ) {
+        let exchangeConfig = ExchangeConfig(server: config.server)
         let value: Double = {
             // if ether - pass actual value
             return from.token.symbol == config.server.symbol ? from.amount : 0
@@ -139,6 +183,7 @@ class SendTransactionCoordinator {
                     address: exchangeConfig.contract,
                     value: value,
                     data: Data(hex: res.drop0x),
+                    extraNonce: tradeNonce,
                     configuration: configuration,
                     completion: completion
                 )
