@@ -224,7 +224,7 @@ class SettingsViewController: FormViewController {
         let composerController = MFMailComposeViewController()
         composerController.mailComposeDelegate = self
         composerController.setToRecipients([Constants.supportEmail])
-        composerController.setSubject("Hey from Trust wallet iOS app")
+        composerController.setSubject("Trust - Ethereum Wallet app Feedback")
         composerController.setMessageBody("", isHTML: false)
 
         if MFMailComposeViewController.canSendMail() {
