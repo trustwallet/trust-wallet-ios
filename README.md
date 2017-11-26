@@ -5,6 +5,8 @@
 
 [<img src="https://raw.githubusercontent.com/TrustWallet/trust-wallet-ios/master/resources/iphone_cover.png">](https://itunes.apple.com/us/app/trust-ethereum-wallet/id1288339409)
 
+[<img src=resources/app-store-badge.png>](https://itunes.apple.com/us/app/trust-ethereum-wallet/id1288339409)
+
 Welcome to Trust's open source iOS app!
 
 ## Getting Started
