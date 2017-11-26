@@ -5,7 +5,7 @@ import Foundation
 enum AddressValidatorType {
     case ethereum
 
-    var length: Int {
+    var addressLength: Int {
         switch self {
         case .ethereum: return 42
         }
