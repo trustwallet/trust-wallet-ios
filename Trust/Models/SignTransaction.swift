@@ -7,7 +7,7 @@ public struct SignTransaction {
     let amount: GethBigInt
     let account: Account
     let address: Address
-    let nonce: Int64
+    let nonce: Int
     let speed: TransactionSpeed
     let data: Data
     let chainID: GethBigInt

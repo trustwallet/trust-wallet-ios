@@ -1,5 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
+import BigInt
 import Foundation
 import Geth
 import APIKit
@@ -30,15 +31,15 @@ class SendTransactionCoordinator {
         configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
-        let amountDouble = BDouble(floatLiteral: value) * BDouble(Double(EthereumUnit.ether.rawValue) ?? 0)
-        let amount = GethBigInt.from(double: amountDouble)
+        let amountDouble = value * Double(EthereumUnit.ether.rawValue)
+        let amount = BigInt(amountDouble)
 
         let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: session.account.address.address)))
         Session.send(request) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .success(let count):
-                let nonce: Int64 = Int64(count + extraNonce)
+                let nonce = count + extraNonce
                 self.sign(address: address, nonce: nonce, amount: amount, data: data, configuration: configuration, completion: completion)
             case .failure(let error):
                 completion(.failure(AnyError(error)))
@@ -54,7 +55,7 @@ class SendTransactionCoordinator {
         configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
-        let amountToSend = (BDouble(floatLiteral: amount) * BDouble(pow(10, decimals).doubleValue)).description
+        let amountToSend = (amount * pow(10, decimals).doubleValue).description
         session.web3.request(request: ContractERC20Transfer(amount: amountToSend, address: to.address)) { result in
             switch result {
             case .success(let res):
@@ -73,14 +74,14 @@ class SendTransactionCoordinator {
 
     func sign(
         address: Address,
-        nonce: Int64 = 0,
-        amount: GethBigInt,
+        nonce: Int = 0,
+        amount: BigInt,
         data: Data,
         configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
         let signTransaction = SignTransaction(
-            amount: amount,
+            amount: amount.gethBigInt,
             account: session.account,
             address: address,
             nonce: nonce,
@@ -124,7 +125,7 @@ class SendTransactionCoordinator {
         // approve amount
         if needsApproval {
             // ApproveERC20Encode
-            let amountToSend = (BDouble(floatLiteral: from.amount) * BDouble(pow(10, from.token.decimals).doubleValue)).description
+            let amountToSend = (from.amount * pow(10, from.token.decimals).doubleValue).description
             let approveRequest = ApproveERC20Encode(address: exchangeConfig.contract, amount: amountToSend)
             session.web3.request(request: approveRequest) { result in
                 switch result {
@@ -164,7 +165,7 @@ class SendTransactionCoordinator {
         let dest = to.token.address
         let destAddress: Address = session.account.address
 
-        let amountToSend = (BDouble(floatLiteral: from.amount) * BDouble(pow(10, from.token.decimals).doubleValue)).description
+        let amountToSend = (from.amount * pow(10, from.token.decimals).doubleValue).description
         let request = ContractExchangeTrade(
             source: source.address,
             amount: amountToSend,

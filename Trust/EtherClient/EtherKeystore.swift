@@ -220,11 +220,11 @@ class EtherKeystore: Keystore {
     ) -> Result<Data, KeyStoreError> {
         let gethAddress = GethNewAddressFromHex(signTransaction.address.address, nil)
         let transaction = GethNewTransaction(
-            signTransaction.nonce,
+            numericCast(signTransaction.nonce),
             gethAddress,
             signTransaction.amount,
-            signTransaction.speed.gasLimit,
-            signTransaction.speed.gasPrice,
+            signTransaction.speed.gasLimit.gethBigInt,
+            signTransaction.speed.gasPrice.gethBigInt,
             signTransaction.data
         )
         let password = getPassword(for: signTransaction.account)

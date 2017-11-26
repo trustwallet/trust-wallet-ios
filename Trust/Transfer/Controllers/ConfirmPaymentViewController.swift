@@ -1,5 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
+import BigInt
 import Foundation
 import UIKit
 import StackViewController
@@ -32,7 +33,7 @@ class ConfirmPaymentViewController: UIViewController {
             return TransactionConfiguration(
                 speed: TransactionSpeed.custom(
                     gasPrice: TransactionSpeed.cheap.gasPrice,
-                    gasLimit: GethNewBigInt(144000)
+                    gasLimit: 144_000
                 )
             )
         case .ether:
@@ -41,7 +42,7 @@ class ConfirmPaymentViewController: UIViewController {
             return TransactionConfiguration(
                 speed: TransactionSpeed.custom(
                     gasPrice: TransactionSpeed.cheap.gasPrice,
-                    gasLimit: GethNewBigInt(300000)
+                    gasLimit: 300_000
                 )
             )
         }
@@ -62,8 +63,8 @@ class ConfirmPaymentViewController: UIViewController {
 
         navigationItem.title = NSLocalizedString("confirmPayment.title", value: "Confirm", comment: "")
 
-        let totalFee = BInt(configuration.speed.gasPrice.string()) * BInt(configuration.speed.gasLimit.string())
-        let gasLimit = configuration.speed.gasLimit.string() ?? "--"
+        let totalFee = configuration.speed.gasPrice * configuration.speed.gasLimit
+        let gasLimit = configuration.speed.gasLimit
         let fee = EthereumConverter.from(value: totalFee, to: .ether, minimumFractionDigits: 6)
 
         let items: [UIView] = [
@@ -74,7 +75,7 @@ class ConfirmPaymentViewController: UIViewController {
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(title: NSLocalizedString("confirmPayment.from", value: "From", comment: ""), subTitle: session.account.address.address),
             TransactionAppearance.item(title: NSLocalizedString("confirmPayment.to", value: "To", comment: ""), subTitle: transaction.address.address),
-            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.gasLimit", value: "Gas Limit", comment: ""), subTitle: gasLimit),
+            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.gasLimit", value: "Gas Limit", comment: ""), subTitle: gasLimit.description),
             TransactionAppearance.item(title: NSLocalizedString("confirmPayment.gasFee", value: "Gas Fee", comment: ""), subTitle: fee + " ETH"),
         ]
 

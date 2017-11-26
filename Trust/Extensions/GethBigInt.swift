@@ -22,9 +22,8 @@ extension GethBigInt {
         return value
     }
 
-    static func from(double: BDouble) -> GethBigInt {
-        let bignum = Bignum(double.description)
-        return GethBigInt.from(hex: bignum.asString(withBase: 16))
+    static func from(double: Double) -> GethBigInt {
+        return GethBigInt.from(string: round(double).description)
     }
 
     static func from(int: Int) -> GethBigInt {
