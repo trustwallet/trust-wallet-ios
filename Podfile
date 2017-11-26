@@ -11,7 +11,7 @@ target 'Trust' do
   pod 'APIKit'
   pod 'Geth'
   pod 'EAIntroView'
-  pod 'Eureka', :git=>'https://github.com/xmartlabs/Eureka.git', :branch=>'feature/Xcode9-Swift3_2'
+  pod 'Eureka', '~> 4.0.1'
   pod 'MBProgressHUD'
   pod 'StatefulViewController'
   pod 'QRCodeReaderViewController', :git=>'https://github.com/yannickl/QRCodeReaderViewController.git', :branch=>'master'
@@ -19,11 +19,11 @@ target 'Trust' do
   pod 'SwiftLint'
   pod 'SeedStackViewController'
   pod 'RealmSwift'
-  pod 'BonMot'
+  pod 'BonMot', '~> 5.0'
   pod 'VENTouchLock'
   pod '1PasswordExtension'
   pod 'Lokalise'
-  pod 'Moya', '10.0.0-beta.1'
+  pod 'Moya', '~> 10.0.1'
   pod 'JavaScriptKit' 
   pod 'CryptoSwift', :git=>'https://github.com/krzyzanowskim/CryptoSwift', :branch=>'master'
 
@@ -41,9 +41,9 @@ end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
-    if ['JavaScriptKit', 'CryptoSwift'].include? target.name
+    if ['JSONRPCKit'].include? target.name
       target.build_configurations.each do |config|
-        config.build_settings['SWIFT_VERSION'] = '4.0'
+        config.build_settings['SWIFT_VERSION'] = '3.0'
       end
     end
   end
