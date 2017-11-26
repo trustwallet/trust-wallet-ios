@@ -124,7 +124,7 @@ class SettingsViewController: FormViewController {
 
             <<< AppFormAppearance.button { button in
                 button.title = NSLocalizedString("Settings.RateUsAppStore", value: "Rate Us on App Store", comment: "")
-            }.onCellSelection { _ in
+            }.onCellSelection { _, _  in
                 if #available(iOS 10.3, *) { SKStoreReviewController.requestReview() } else {
                     UIApplication.shared.openURL(URL(string: "itms-apps://itunes.apple.com/app/id1288339409")!)
                 }
@@ -134,7 +134,7 @@ class SettingsViewController: FormViewController {
 
             <<< AppFormAppearance.button { button in
                 button.title = NSLocalizedString("Settings.emailUs", value: "Email Us", comment: "")
-            }.onCellSelection { _ in
+            }.onCellSelection { _, _  in
                 self.sendUsEmail()
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_email()
@@ -142,7 +142,7 @@ class SettingsViewController: FormViewController {
 
             <<< AppFormAppearance.button { button in
                 button.title = NSLocalizedString("Settings.Donate", value: "Donate", comment: "")
-            }.onCellSelection { [unowned self] _ in
+            }.onCellSelection { [unowned self] _, _ in
                 self.run(action: .donate(address: Values.donationAddress))
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_donate()
@@ -189,7 +189,7 @@ class SettingsViewController: FormViewController {
     ) -> ButtonRow {
         return AppFormAppearance.button {
             $0.title = type.title
-        }.onCellSelection { [unowned self] _ in
+        }.onCellSelection { [unowned self] _, _ in
             if let localURL = type.localURL, UIApplication.shared.canOpenURL(localURL) {
                 self.openURL(localURL)
             } else {

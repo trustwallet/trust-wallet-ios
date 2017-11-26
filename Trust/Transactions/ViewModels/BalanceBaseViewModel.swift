@@ -9,23 +9,23 @@ protocol BalanceBaseViewModel {
 }
 
 extension BalanceBaseViewModel {
-    var largeLabelAttributed: [String: AnyObject] {
+    var largeLabelAttributed: [NSAttributedStringKey: Any] {
         let style = NSMutableParagraphStyle()
         style.alignment = NSTextAlignment.center
         return [
-            NSFontAttributeName: UIFont.systemFont(ofSize: 18, weight: UIFontWeightSemibold),
-            NSForegroundColorAttributeName: Colors.lightBlack,
-            NSParagraphStyleAttributeName: style,
+            .font: UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.semibold),
+            .foregroundColor: Colors.lightBlack,
+            .paragraphStyle: style,
         ]
     }
 
-    var smallLabelAttributes: [String: AnyObject] {
+    var smallLabelAttributes: [NSAttributedStringKey: Any] {
         let style = NSMutableParagraphStyle()
         style.alignment = NSTextAlignment.center
         return [
-            NSFontAttributeName: UIFont.systemFont(ofSize: 13, weight: UIFontWeightRegular),
-            NSForegroundColorAttributeName: Colors.darkGray,
-            NSParagraphStyleAttributeName: style,
+            .font: UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.regular),
+            .foregroundColor: Colors.darkGray,
+            .paragraphStyle: style,
         ]
     }
 }

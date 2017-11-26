@@ -17,7 +17,7 @@ class WelcomeViewController: UIViewController {
         let getStartedButton = Button(size: .large, style: .solid)
         getStartedButton.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
         getStartedButton.setTitle(NSLocalizedString("welcome.createWallet", value: "CREATE WALLET", comment: ""), for: .normal)
-        getStartedButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
+        getStartedButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
         getStartedButton.layer.cornerRadius = 5
         getStartedButton.backgroundColor = Colors.darkBlue
         return getStartedButton
@@ -27,7 +27,7 @@ class WelcomeViewController: UIViewController {
         let importButton = Button(size: .large, style: .solid)
         importButton.frame = CGRect(x: 0, y: 60, width: 300, height: 50)
         importButton.setTitle(NSLocalizedString("welcome.importWallet", value: "IMPORT WALLET", comment: ""), for: .normal)
-        importButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
+        importButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
         importButton.layer.cornerRadius = 5
         importButton.setBackgroundColor(Colors.gray, forState: .normal)
         importButton.setBackgroundColor(Colors.lightGray, forState: .highlighted)

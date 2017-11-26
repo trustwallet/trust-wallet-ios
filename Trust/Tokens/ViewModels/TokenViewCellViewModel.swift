@@ -24,7 +24,7 @@ struct TokenViewCellViewModel {
     }
 
     var amountFont: UIFont {
-        return UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+        return UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
     }
 
     var subTitle: String {
@@ -36,7 +36,7 @@ struct TokenViewCellViewModel {
     }
 
     var subTitleFont: UIFont {
-        return UIFont.systemFont(ofSize: 13, weight: UIFontWeightRegular)
+        return UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.regular)
     }
 
     var backgroundColor: UIColor {

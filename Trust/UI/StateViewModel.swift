@@ -10,7 +10,7 @@ struct StateViewModel {
     }
 
     var titleFont: UIFont {
-        return UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
+        return UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
     }
 
     var descriptionTextColor: UIColor {
@@ -18,7 +18,7 @@ struct StateViewModel {
     }
 
     var descriptionFont: UIFont {
-        return UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)
+        return UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
     }
 
     var stackSpacing: CGFloat {

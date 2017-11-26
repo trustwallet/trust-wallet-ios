@@ -100,7 +100,7 @@ class RequestViewController: UIViewController {
         stackViewController.stackView.isLayoutMarginsRelativeArrangement = true
     }
 
-    func textFieldDidChange(_ textField: UITextField) {
+    @objc func textFieldDidChange(_ textField: UITextField) {
         changeQRCode(value: Int(textField.text ?? "0") ?? 0)
     }
 
@@ -133,7 +133,7 @@ class RequestViewController: UIViewController {
         if let filter = CIFilter(name: "CIQRCodeGenerator") {
             filter.setValue(data, forKey: "inputMessage")
             let transform = CGAffineTransform(scaleX: 6, y: 6)
-            if let output = filter.outputImage?.applying(transform) {
+            if let output = filter.outputImage?.transformed(by: transform) {
                 return UIImage(ciImage: output)
             }
         }

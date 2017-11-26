@@ -68,7 +68,7 @@ struct TransactionCellViewModel {
     }
 
     var subTitleFont: UIFont {
-        return UIFont.systemFont(ofSize: 12, weight: UIFontWeightThin)
+        return UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.thin)
     }
 
     var amount: String {
@@ -92,7 +92,7 @@ struct TransactionCellViewModel {
     }
 
     var amountFont: UIFont {
-        return UIFont.systemFont(ofSize: 16, weight: UIFontWeightSemibold)
+        return UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
     }
 
     var backgroundColor: UIColor {

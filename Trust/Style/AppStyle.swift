@@ -13,7 +13,7 @@ func applyStyle() {
     UINavigationBar.appearance().tintColor = Colors.blue
 
     UINavigationBar.appearance().titleTextAttributes = [
-        NSForegroundColorAttributeName: Colors.black,
+        .foregroundColor: Colors.black,
     ]
 }
 

@@ -53,7 +53,7 @@ class TransactionConfigurationViewController: FormViewController {
             }
     }
 
-    func done() {
+    @objc func done() {
         let speed = TransactionSpeed(title: speedRow?.value ?? "")
 
         let configuration = TransactionConfiguration(

@@ -32,7 +32,7 @@ extension UIViewController {
     ) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: okTitle, style: okStyle, handler: { _ in
-            completion(.success())
+            completion(.success(()))
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Generic.Cancel", comment: ""), style: .cancel, handler: { _ in
             completion(.failure(ConfirmationError.cancel))

@@ -45,8 +45,8 @@ class BackupCoordinator: Coordinator {
                 activityItems: [value],
                 applicationActivities: nil
             )
-            activityViewController.completionWithItemsHandler = { result in
-                completion(result.1)
+            activityViewController.completionWithItemsHandler = { _, result, _, _ in
+                completion(result)
             }
             activityViewController.popoverPresentationController?.sourceView = navigationController.view
             navigationController.present(activityViewController, animated: true, completion: nil)

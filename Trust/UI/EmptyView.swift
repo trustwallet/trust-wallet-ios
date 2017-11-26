@@ -61,7 +61,7 @@ class EmptyView: UIView {
         ])
     }
 
-    func retry() {
+    @objc func retry() {
         onRetry?()
     }
 

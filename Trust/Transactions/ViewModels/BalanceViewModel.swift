@@ -66,7 +66,7 @@ struct BalanceViewModel: BalanceBaseViewModel {
         )
     }
 
-    private func attributes(primary: Bool) -> [String: AnyObject] {
+    private func attributes(primary: Bool) -> [NSAttributedStringKey: Any] {
         switch (primary, currencyAmount, balance) {
         case (true, .none, .none):
             return largeLabelAttributed

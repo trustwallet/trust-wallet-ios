@@ -105,7 +105,7 @@ class TransactionsViewController: UIViewController {
         super.viewDidAppear(animated)
     }
 
-    func pullToRefresh() {
+    @objc func pullToRefresh() {
         refreshControl.beginRefreshing()
         fetch()
     }

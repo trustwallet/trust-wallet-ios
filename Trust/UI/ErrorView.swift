@@ -58,7 +58,7 @@ class ErrorView: UIView {
         ])
     }
 
-    func retry() {
+    @objc func retry() {
         onRetry?()
     }
 

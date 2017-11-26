@@ -25,7 +25,7 @@ class BackupViewController: UIViewController {
         let noBackupLabel = UILabel()
         noBackupLabel.translatesAutoresizingMaskIntoConstraints = false
         noBackupLabel.text = NSLocalizedString("export.noBackup.title", value: "No backup, no Ethereum.", comment: "")
-        noBackupLabel.font = UIFont.systemFont(ofSize: 24, weight: UIFontWeightMedium)
+        noBackupLabel.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.medium)
         noBackupLabel.adjustsFontSizeToFitWidth = true
         noBackupLabel.textColor = Colors.lightBlack
 
@@ -88,11 +88,11 @@ class BackupViewController: UIViewController {
         ])
     }
 
-    func backup() {
+    @objc func backup() {
         delegate?.didPressBackup(account: account, in: self)
     }
 
-    func later() {
+    @objc func later() {
         delegate?.didPressLater(account: account, in: self)
     }
 

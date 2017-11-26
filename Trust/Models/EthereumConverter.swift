@@ -35,7 +35,7 @@ struct EthereumConverter {
 
         // Remove decimal point if there are no decimals
         if string.hasSuffix(".") {
-            string = string[string.startIndex..<string.index(before: string.endIndex)]
+            string = String(string[string.startIndex..<string.index(before: string.endIndex)])
         }
 
         return string

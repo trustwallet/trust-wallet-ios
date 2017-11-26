@@ -77,11 +77,11 @@ class TransactionsEmptyView: UIView {
         ])
     }
 
-    func retry() {
+    @objc func retry() {
         onRetry?()
     }
 
-    func deposit() {
+    @objc func deposit() {
         onDeposit?()
     }
 
