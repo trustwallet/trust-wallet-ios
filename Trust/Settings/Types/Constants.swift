@@ -16,5 +16,5 @@ struct Constants {
     static let facebookUsername = "trustwalletapp"
 
     // support
-    static let supportEmail = "thetrustwallet@gmail.com"
+    static let supportEmail = "support@trustwalletapp.com"
 }
