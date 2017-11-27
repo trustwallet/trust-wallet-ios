@@ -142,16 +142,16 @@ class TransactionCoordinator: Coordinator {
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
-    @objc func deposit() {
-        showDeposit(for: session.account)
+    @objc func deposit(sender: UIBarButtonItem) {
+        showDeposit(for: session.account, from: sender)
     }
 
-    func showDeposit(for account: Account) {
+    func showDeposit(for account: Account, from barButtonItem: UIBarButtonItem? = .none) {
         let coordinator = DepositCoordinator(
             navigationController: navigationController,
             account: account
         )
-        coordinator.start()
+        coordinator.start(from: barButtonItem)
     }
 }
 

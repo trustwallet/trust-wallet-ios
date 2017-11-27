@@ -17,17 +17,17 @@ class DepositCoordinator: Coordinator {
         self.account = account
     }
 
-    func start() {
-        showAlertSheet()
+    func start(from barButtonItem: UIBarButtonItem? = .none) {
+        showAlertSheet(from: barButtonItem)
     }
 
-    func showAlertSheet() {
+    func showAlertSheet(from barButtonItem: UIBarButtonItem? = .none) {
         let alertController = UIAlertController(
             title: nil,
             message: NSLocalizedString("deposit.alertSheetMessage", value: "How would you like to buy?", comment: ""),
             preferredStyle: .actionSheet
         )
-        alertController.popoverPresentationController?.sourceView = self.navigationController.view
+        alertController.popoverPresentationController?.barButtonItem = barButtonItem
         let coinbaseAction = UIAlertAction(title: NSLocalizedString("deposit.viaCoinbase", value: "via Coinbase", comment: ""), style: .default) { _ in
             self.showCoinbase()
         }
