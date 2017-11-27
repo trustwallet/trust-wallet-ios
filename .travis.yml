@@ -13,11 +13,14 @@ before_install:
   - brew update
   - brew install swiftlint || true
   - pod repo update master
+  - echo -e "machine bitbucket.org\n login $CI_USERNAME\n password $CI_PASSWORD" >> ~/.netrc
+
 script:
   - set -o pipefail
   - pod install
   - swiftlint
   - xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
+  - if [ "$TRAVIS_BRANCH" = "test-release" ]; then make release; fi
 
 notifications:
   slack: trust-wallet:33Vj3pGpKoBMTBAHTB8dF79n
