@@ -17,8 +17,8 @@ install:
 - bundle install
 
 script:
-  - set -o pipefail
-  - pod install
+  #- set -o pipefail
+  #- pod install
   #- swiftlint
   #- xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
   - fastlane release
