@@ -10,9 +10,9 @@ before_install:
   - rvm install ruby-2.2.2
   - gem install cocoapods
   - gem install xcpretty -N
+  - bundle update
   - brew update
   - brew install swiftlint || true
-  - brew cask install fastlane
   - pod repo update master
   - echo -e "machine bitbucket.org\n login $CI_USERNAME\n password $CI_PASSWORD" >> ~/.netrc
 
