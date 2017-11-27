@@ -18,9 +18,9 @@ before_install:
 script:
   - set -o pipefail
   - pod install
-  - swiftlint
-  - xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
-  - if [ "$TRAVIS_BRANCH" = "test-release" ]; then make release; fi
+  #- swiftlint
+  #- xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
+  - make release
 
 notifications:
   slack: trust-wallet:33Vj3pGpKoBMTBAHTB8dF79n
