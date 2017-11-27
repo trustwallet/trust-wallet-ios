@@ -172,6 +172,7 @@
 		299B5E2B1FCA9A640051361C /* ApproveERC20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E2A1FCA9A640051361C /* ApproveERC20.swift */; };
 		299B5E2D1FCBC0660051361C /* BalanceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E2C1FCBC0660051361C /* BalanceProtocol.swift */; };
 		299B5E2F1FCBC0790051361C /* TokenBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E2E1FCBC0790051361C /* TokenBalance.swift */; };
+		299B5E341FCBC5180051361C /* ConfirmPaymentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E331FCBC5180051361C /* ConfirmPaymentViewModel.swift */; };
 		29A0E1851F706B8C00BAAAED /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A0E1841F706B8C00BAAAED /* String.swift */; };
 		29A0E1871F706D0700BAAAED /* EthereumConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A0E1861F706D0700BAAAED /* EthereumConverter.swift */; };
 		29A13E2C1F6A955700E432A2 /* CreateWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E2B1F6A955700E432A2 /* CreateWalletViewModel.swift */; };
@@ -443,6 +444,7 @@
 		299B5E2A1FCA9A640051361C /* ApproveERC20.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveERC20.swift; sourceTree = "<group>"; };
 		299B5E2C1FCBC0660051361C /* BalanceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceProtocol.swift; sourceTree = "<group>"; };
 		299B5E2E1FCBC0790051361C /* TokenBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBalance.swift; sourceTree = "<group>"; };
+		299B5E331FCBC5180051361C /* ConfirmPaymentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPaymentViewModel.swift; sourceTree = "<group>"; };
 		29A0E1841F706B8C00BAAAED /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		29A0E1861F706D0700BAAAED /* EthereumConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumConverter.swift; sourceTree = "<group>"; };
 		29A13E271F6A903500E432A2 /* WelcomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModelTests.swift; sourceTree = "<group>"; };
@@ -779,10 +781,11 @@
 		291ED0901F6FA5C800E7E93A /* Transfer */ = {
 			isa = PBXGroup;
 			children = (
+				299B5E301FCBC2B90051361C /* Controllers */,
 				29B933F61F86073E009FCABB /* Coordinators */,
 				29B6AECE1F7C880700EC6DE3 /* Types */,
 				29B6AECD1F7C87F400EC6DE3 /* ViewModels */,
-				29B6AECC1F7C87E700EC6DE3 /* Controllers */,
+				29B6AECC1F7C87E700EC6DE3 /* ViewControllers */,
 			);
 			path = Transfer;
 			sourceTree = "<group>";
@@ -1299,6 +1302,13 @@
 			path = Export;
 			sourceTree = "<group>";
 		};
+		299B5E301FCBC2B90051361C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		29A13E261F6A901600E432A2 /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
@@ -1326,7 +1336,7 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
-		29B6AECC1F7C87E700EC6DE3 /* Controllers */ = {
+		29B6AECC1F7C87E700EC6DE3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				291ED0911F6FA5D900E7E93A /* RequestViewController.swift */,
@@ -1334,7 +1344,7 @@
 				29B6AED31F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift */,
 				291A1B661F98092F00ADEC80 /* ConfirmPaymentViewController.swift */,
 			);
-			path = Controllers;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		29B6AECD1F7C87F400EC6DE3 /* ViewModels */ = {
@@ -1345,6 +1355,7 @@
 				29C80D441FB51B1A0037B1E0 /* TransactionHeaderBaseViewModel.swift */,
 				2963B6AA1F9818C7003063C1 /* TransactionHeaderViewModel.swift */,
 				29C80D461FB51B680037B1E0 /* ConfirmTransactionHeaderViewModel.swift */,
+				299B5E331FCBC5180051361C /* ConfirmPaymentViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2013,6 +2024,7 @@
 				29BE3FD21F707DC300F6BFC2 /* TransactionDataCoordinator.swift in Sources */,
 				29C80D351FB2CD110037B1E0 /* Block.swift in Sources */,
 				291ED0921F6FA5D900E7E93A /* RequestViewController.swift in Sources */,
+				299B5E341FCBC5180051361C /* ConfirmPaymentViewModel.swift in Sources */,
 				296106C21F76403A0006164B /* TokenViewCell.swift in Sources */,
 				29F114F01FA6D53700114A29 /* ImportSelectionType.swift in Sources */,
 				29850D251F6B27A800791A49 /* R.generated.swift in Sources */,

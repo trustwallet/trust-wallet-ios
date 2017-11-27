@@ -49,7 +49,7 @@ extension ExchangeCoordinator: ExchangeViewControllerDelegate {
         let controller = ConfirmPaymentViewController(
             session: session,
             transaction: transaction,
-            viewModel: viewModel
+            headerViewModel: viewModel
         )
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)

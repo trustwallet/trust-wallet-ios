@@ -48,10 +48,19 @@ class ConfirmPaymentViewController: UIViewController {
         }
     }()
 
+    var viewModel: ConfirmPaymentViewModel {
+        let currentBalance = Double(session.balance?.amountFull ?? "")
+        return ConfirmPaymentViewModel(
+            transaction: transaction,
+            currentBalance: currentBalance,
+            configuration: configuration
+        )
+    }
+
     init(
         session: WalletSession,
         transaction: UnconfirmedTransaction,
-        viewModel: TransactionHeaderBaseViewModel
+        headerViewModel: TransactionHeaderBaseViewModel
     ) {
         self.session = session
         self.transaction = transaction
@@ -63,20 +72,16 @@ class ConfirmPaymentViewController: UIViewController {
 
         navigationItem.title = NSLocalizedString("confirmPayment.title", value: "Confirm", comment: "")
 
-        let totalFee = configuration.speed.gasPrice * configuration.speed.gasLimit
-        let gasLimit = configuration.speed.gasLimit
-        let fee = EthereumConverter.from(value: totalFee, to: .ether, minimumFractionDigits: 6)
-
         let items: [UIView] = [
             .spacer(),
             TransactionAppearance.header(
-                viewModel: viewModel
+                viewModel: headerViewModel
             ),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(title: NSLocalizedString("confirmPayment.from", value: "From", comment: ""), subTitle: session.account.address.address),
-            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.to", value: "To", comment: ""), subTitle: transaction.address.address),
-            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.gasLimit", value: "Gas Limit", comment: ""), subTitle: gasLimit.description),
-            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.gasFee", value: "Gas Fee", comment: ""), subTitle: fee + " ETH"),
+            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.to", value: "To", comment: ""), subTitle: viewModel.addressText),
+            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.gasLimit", value: "Gas Limit", comment: ""), subTitle: viewModel.gasLimiText),
+            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.gasFee", value: "Gas Fee", comment: ""), subTitle: viewModel.feeText),
         ]
 
         for item in items {
@@ -103,11 +108,13 @@ class ConfirmPaymentViewController: UIViewController {
     @objc func send() {
         self.displayLoading()
 
+        let amount = viewModel.amount
+
         switch transaction.transferType {
         case .ether:
             self.sendTransactionCoordinator.send(
                 address: transaction.address,
-                value: transaction.amount,
+                value: amount,
                 configuration: self.configuration
             ) { [weak self] result in
                 guard let `self` = self else { return }
@@ -123,7 +130,7 @@ class ConfirmPaymentViewController: UIViewController {
             self.sendTransactionCoordinator.send(
                 contract: token.address,
                 to: transaction.address,
-                amount: transaction.amount,
+                amount: amount,
                 decimals: token.decimals,
                 configuration: self.configuration
             ) { [weak self] result in
