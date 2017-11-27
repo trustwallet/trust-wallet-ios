@@ -35,7 +35,7 @@ class SendCoordinator: Coordinator {
 
     func makeSendViewController() -> SendViewController {
         let controller = SendViewController(
-            account: session.account,
+            session: session,
             transferType: transferType
         )
         controller.navigationItem.titleView = BalanceTitleView.make(from: self.session, transferType)

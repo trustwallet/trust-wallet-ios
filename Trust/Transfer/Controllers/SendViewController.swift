@@ -26,7 +26,7 @@ class SendViewController: FormViewController {
         static let amount = "amount"
     }
 
-    let account: Account
+    let session: WalletSession
     let transferType: TransferType
 
     var addressRow: TextFloatLabelRow? {
@@ -36,8 +36,8 @@ class SendViewController: FormViewController {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
     }
 
-    init(account: Account, transferType: TransferType = .ether(destination: .none)) {
-        self.account = account
+    init(session: WalletSession, transferType: TransferType = .ether(destination: .none)) {
+        self.session = session
         self.transferType = transferType
 
         super.init(nibName: nil, bundle: nil)
@@ -56,15 +56,28 @@ class SendViewController: FormViewController {
         qrButton.setImage(R.image.qr_code_icon(), for: .normal)
         qrButton.addTarget(self, action: #selector(openReader), for: .touchUpInside)
 
-        let rightView = UIStackView(arrangedSubviews: [
+        let recipientRightView = UIStackView(arrangedSubviews: [
             pasteButton,
             qrButton,
             .spacerWidth(1),
         ])
-        rightView.translatesAutoresizingMaskIntoConstraints = false
-        rightView.distribution = .equalSpacing
-        rightView.spacing = 10
-        rightView.axis = .horizontal
+        recipientRightView.translatesAutoresizingMaskIntoConstraints = false
+        recipientRightView.distribution = .equalSpacing
+        recipientRightView.spacing = 10
+        recipientRightView.axis = .horizontal
+
+        let maxButton = Button(size: .normal, style: .borderless)
+        maxButton.translatesAutoresizingMaskIntoConstraints = false
+        maxButton.setTitle("Max", for: .normal)
+        maxButton.addTarget(self, action: #selector(useMaxAmount), for: .touchUpInside)
+
+        let amountRightView = UIStackView(arrangedSubviews: [
+            maxButton,
+        ])
+        amountRightView.translatesAutoresizingMaskIntoConstraints = false
+        amountRightView.distribution = .equalSpacing
+        amountRightView.spacing = 10
+        amountRightView.axis = .horizontal
 
         form = Section()
             +++ Section("")
@@ -75,7 +88,7 @@ class SendViewController: FormViewController {
             }.cellUpdate { cell, _ in
                 cell.textField.textAlignment = .left
                 cell.textField.placeholder = NSLocalizedString("send.recipientAddress", value: "Recipient Address", comment: "")
-                cell.textField.rightView = rightView
+                cell.textField.rightView = recipientRightView
                 cell.textField.rightViewMode = .always
             }
 
@@ -86,6 +99,8 @@ class SendViewController: FormViewController {
                 cell.textField.textAlignment = .left
                 cell.textField.placeholder = "\(self.viewModel.symbol) " + NSLocalizedString("Send.AmountPlaceholder", value: "Amount", comment: "")
                 cell.textField.keyboardType = .decimalPad
+                cell.textField.rightView = maxButton
+                cell.textField.rightViewMode = .always
             }
 
             +++ Section {
@@ -143,6 +158,13 @@ class SendViewController: FormViewController {
         if amountRow?.value?.isEmpty == true {
             amountRow?.cell.textField.becomeFirstResponder()
         }
+    }
+
+    @objc func useMaxAmount() {
+        guard let value = session.balance?.amountFull else { return }
+
+        amountRow?.value = value
+        amountRow?.reload()
     }
 
     required init?(coder aDecoder: NSCoder) {

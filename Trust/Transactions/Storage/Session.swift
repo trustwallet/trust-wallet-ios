@@ -11,6 +11,9 @@ class WalletSession {
     let web3: Web3Swift
     let config: Config
     let chainState: ChainState
+    var balance: Balance? {
+        return balanceCoordinator.balance
+    }
 
     private lazy var balanceCoordinator: BalanceCoordinator = {
         return BalanceCoordinator(session: self)
