@@ -7,13 +7,16 @@ branches:
 env:
   - LC_CTYPE=en_US.UTF-8 LANG=en_US.UTF-8
 before_install:
-  - rvm install ruby-2.2.2
+  - rvm install ruby-2.3.1
   - gem install cocoapods
   - gem install xcpretty -N
   - bundle update
   - brew update
+  - brew upgrade openssl
   - brew install swiftlint || true
   - pod repo update master
+  - rvm osx-ssl-certs update all
+  - rvm reinstall ruby-2.3.1 --with-openssl-dir=/usr/local
   - echo -e "machine bitbucket.org\n login $CI_USERNAME\n password $CI_PASSWORD" >> ~/.netrc
 
 script:
