@@ -21,7 +21,7 @@ script:
   #- pod install
   #- swiftlint
   #- xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
-  - fastlane release
+  - bundle exec fastlane release
 
 notifications:
   slack: trust-wallet:33Vj3pGpKoBMTBAHTB8dF79n
