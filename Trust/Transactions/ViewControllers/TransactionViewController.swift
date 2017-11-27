@@ -63,11 +63,11 @@ class TransactionViewController: UIViewController {
     }
 
     private func item(title: String, value: String) -> UIView {
-        return TransactionAppearance.item(
+        return  TransactionAppearance.item(
             title: title,
             subTitle: value
         ) { [weak self] in
-            self?.showAlertSheet(title: $0, value: $1)
+            self?.showAlertSheet(title: $0, value: $1, sourceView: $2)
         }
     }
 
@@ -87,13 +87,14 @@ class TransactionViewController: UIViewController {
         return stackView
     }
 
-    func showAlertSheet(title: String, value: String) {
+    func showAlertSheet(title: String, value: String, sourceView: UIView) {
         let alertController = UIAlertController(
             title: nil,
             message: value,
             preferredStyle: .actionSheet
         )
-        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.sourceView = sourceView
+        alertController.popoverPresentationController?.sourceRect = sourceView.bounds
         let copyAction = UIAlertAction(title: NSLocalizedString("transactionDetails.copy", value: "Copy", comment: ""), style: .default) { _ in
             UIPasteboard.general.string = value
         }
