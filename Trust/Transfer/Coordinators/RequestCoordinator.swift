@@ -16,6 +16,9 @@ class RequestCoordinator: Coordinator {
     lazy var requestViewController: RequestViewController = {
         return self.makeRequestViewController()
     }()
+    private lazy var viewModel: RequestViewModel = {
+        return .init(account: session.account, config: session.config)
+    }()
 
     init(
         navigationController: UINavigationController = UINavigationController(),
@@ -31,7 +34,7 @@ class RequestCoordinator: Coordinator {
     }
 
     func makeRequestViewController() -> RequestViewController {
-        let controller = RequestViewController(account: self.session.account)
+        let controller = RequestViewController(viewModel: viewModel)
         controller.navigationItem.titleView = BalanceTitleView.make(from: self.session, .ether(destination: .none))
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
@@ -39,10 +42,9 @@ class RequestCoordinator: Coordinator {
     }
 
     @objc func share() {
-        let address = session.account.address.address
         let activityViewController = UIActivityViewController(
             activityItems: [
-                NSLocalizedString("Send.MyEthereumAddressIs", value: "My Ethereum address is: ", comment: "") + address,
+                viewModel.shareMyAddressText,
             ],
             applicationActivities: nil
         )

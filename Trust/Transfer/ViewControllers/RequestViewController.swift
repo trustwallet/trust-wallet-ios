@@ -8,25 +8,7 @@ import StackViewController
 
 class RequestViewController: UIViewController {
 
-    private lazy var viewModel: RequestViewModel = {
-        return .init(
-            transferType: self.transferType,
-            config: Config()
-        )
-    }()
-
     let stackViewController = StackViewController()
-    let account: Account
-
-    lazy var amountTextField: UITextField = {
-        let textField = UITextField(frame: .zero)
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Enter ETH amount"
-        textField.textAlignment = .center
-        textField.keyboardType = .decimalPad
-        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        return textField
-    }()
 
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -37,7 +19,7 @@ class RequestViewController: UIViewController {
     lazy var copyButton: UIButton = {
         let button = Button(size: .normal, style: .border)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Copy Wallet Address", for: .normal)
+        button.setTitle(viewModel.copyWalletText, for: .normal)
         button.addTarget(self, action: #selector(copyAddress), for: .touchUpInside)
         return button
     }()
@@ -46,25 +28,26 @@ class RequestViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
-        label.text = self.viewModel.headlineTitle
+        label.text = viewModel.headlineText
         return label
     }()
 
     lazy var addressLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = self.account.address.address
+        label.text = viewModel.myAddressText
         label.textAlignment = .center
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
 
-    let transferType: TransferType
+    let viewModel: RequestViewModel
 
-    init(account: Account, transferType: TransferType = .ether(destination: .none)) {
-        self.account = account
-        self.transferType = transferType
+    init(
+        viewModel: RequestViewModel
+    ) {
+        self.viewModel = viewModel
 
         stackViewController.scrollView.alwaysBounceVertical = true
 
@@ -105,7 +88,7 @@ class RequestViewController: UIViewController {
     }
 
     func changeQRCode(value: Int) {
-        let string = "\(account.address.address)"
+        let string = viewModel.myAddressText
 
         // EIP67 format not being used much yet, use hex value for now
         // let string = "ethereum:\(account.address.address)?value=\(value)"
@@ -119,11 +102,11 @@ class RequestViewController: UIViewController {
     }
 
     @objc func copyAddress() {
-        UIPasteboard.general.string = account.address.address
+        UIPasteboard.general.string = viewModel.myAddressText
 
         let hud = MBProgressHUD.showAdded(to: view, animated: true)
         hud.mode = .text
-        hud.label.text = "Address Copied"
+        hud.label.text = viewModel.addressCopiedText
         hud.hide(animated: true, afterDelay: 1.5)
     }
 
