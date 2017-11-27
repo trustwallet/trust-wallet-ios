@@ -10,20 +10,20 @@ before_install:
   - rvm install ruby-2.3.1
   - gem install cocoapods
   - gem install xcpretty -N
-  - bundle update
   - brew update
   - brew install swiftlint || true
   - pod repo update master
-  - rvm osx-ssl-certs update all
-  - rvm reinstall ruby-2.3.1 --with-openssl-dir=/usr/local
   - echo -e "machine bitbucket.org\n login $CI_USERNAME\n password $CI_PASSWORD" >> ~/.netrc
+
+install:
+- bundle install
 
 script:
   - set -o pipefail
   - pod install
   #- swiftlint
   #- xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
-  - make release
+  - fastlane release
 
 notifications:
   slack: trust-wallet:33Vj3pGpKoBMTBAHTB8dF79n
