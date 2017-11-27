@@ -47,10 +47,9 @@ class ImportWalletViewController: FormViewController {
         super.viewDidLoad()
 
         //Demo purpose
-        if isDebug {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.4) {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Demo", style: .done, target: self, action: #selector(self.demo))
-            }
+
+        if UserDefaults.standard.bool(forKey: "FASTLANE_SNAPSHOT") {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Demo", style: .done, target: self, action: #selector(self.demo))
         }
 
         title = viewModel.title
@@ -188,9 +187,9 @@ class ImportWalletViewController: FormViewController {
         delegate?.didImportAccount(account: demoAccount, in: self)
     }
 
-    @objc func importOptions() {
+    @objc func importOptions(sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: "Import Wallet Options", message: .none, preferredStyle: .actionSheet)
-        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.popoverPresentationController?.barButtonItem = sender
         alertController.addAction(UIAlertAction(title: "iCloud/Dropbox/Google Cloud", style: .default) { _ in
             self.showDocumentPicker()
         })
