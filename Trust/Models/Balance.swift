@@ -3,25 +3,6 @@
 import BigInt
 import Foundation
 
-protocol BalanceProtocol {
-    var amount: String { get }
-}
-
-struct TokenBalance: BalanceProtocol {
-
-    let token: ExchangeToken
-    let data: String
-
-    init(token: ExchangeToken, data: String) {
-        self.token = token
-        self.data = data
-    }
-
-    var amount: String {
-        return TokensFormatter.from(token: token, amount: data) ?? ""
-    }
-}
-
 struct Balance: BalanceProtocol {
 
     let value: BigInt
@@ -40,6 +21,11 @@ struct Balance: BalanceProtocol {
 
     var amount: String {
         return EthereumConverter.from(value: value, to: .ether, minimumFractionDigits: 4)
+    }
+
+    var amountFull: String {
+        // TODO Implement full amount
+        return amount
     }
 }
 
