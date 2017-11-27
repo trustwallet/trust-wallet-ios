@@ -4,6 +4,12 @@ osx_image: xcode9.1
 branches:
   only:
     - master
+
+cache:
+  directories:
+    - /home/travis/.rvm/
+  cocoapods: true
+  
 env:
   - LC_CTYPE=en_US.UTF-8 LANG=en_US.UTF-8
 before_install:
