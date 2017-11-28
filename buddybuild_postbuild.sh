@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
 
-rvm install ruby-2.3.1
-brew update
-
-bundler install
-bundle exec fastlane
+sudo -S gem install fastlane -v 2.66.2
+bundle exec fastlane release
