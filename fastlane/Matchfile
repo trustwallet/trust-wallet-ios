@@ -1,4 +1,4 @@
-git_url "trustwallet@bitbucket.org:trustwallet/certificates.git"
+git_url "git@bitbucket.org:trustwallet/certificates.git"
 
 type "appstore" # The default type, can be: appstore, adhoc, enterprise or development
 
