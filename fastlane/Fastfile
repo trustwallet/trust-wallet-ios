@@ -41,6 +41,7 @@ platform :ios do
       readonly: true
     )
     gym(scheme: "Trust")
+    screenshots
     commit_version_bump(message: "Version Bump", force: true)
     deliver(force: true)
     push_to_git_remote
