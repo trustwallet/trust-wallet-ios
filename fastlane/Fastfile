@@ -35,7 +35,7 @@ platform :ios do
     #ensure_git_branch()
     increment_version_number(bump_type: "patch")
     #localize
-    match(type: "appstore", readonly: true)
+    match(type: "appstore", readonly: true, verbose: true)
     gym(scheme: "Trust")
     commit_version_bump(message: "Version Bump", force: true)
     deliver(force: true)
