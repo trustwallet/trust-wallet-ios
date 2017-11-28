@@ -91,10 +91,17 @@ class Button: UIButton {
 
     init(size: ButtonSize, style: ButtonStyle) {
         super.init(frame: .zero)
+        apply(size: size, style: style)
+    }
 
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func apply(size: ButtonSize, style: ButtonStyle) {
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: size.height),
-        ])
+            ])
 
         backgroundColor = style.backgroundColor
         layer.cornerRadius = style.cornerRadius
@@ -108,10 +115,6 @@ class Button: UIButton {
         setBackgroundColor(style.backgroundColorHighlighted, forState: .highlighted)
         setBackgroundColor(style.backgroundColorHighlighted, forState: .selected)
         contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
 }

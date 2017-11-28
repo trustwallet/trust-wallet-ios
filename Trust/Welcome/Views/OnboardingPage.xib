@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Page" id="taB-t0-mOy" customClass="OnboardingPage" customModule="Trust" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="449" height="553"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="449" height="553"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Private &amp; Secure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8b-pF-a9y">
+                        <rect key="frame" x="10" y="396" width="429" height="27.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="23"/>
+                        <color key="textColor" red="0.26274509800000001" green="0.56078431370000004" blue="0.79215686269999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Private keys never leave your device." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8su-C1-3YA">
+                        <rect key="frame" x="10" y="431" width="429" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.41176470590000003" green="0.64705882349999999" blue="0.83529411760000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalHuggingPriority="249" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="onboarding_lock" translatesAutoresizingMaskIntoConstraints="NO" id="0Jj-Hz-FoH">
+                        <rect key="frame" x="0.0" y="124" width="449" height="252"/>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Ti-SU-ziA">
+                        <rect key="frame" x="224.5" y="449" width="0.0" height="104"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" id="YH8-PU-adK"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HCa-Rc-8iG">
+                        <rect key="frame" x="224.5" y="20" width="0.0" height="104"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" id="qbr-dk-v0X"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="HCa-Rc-8iG" firstAttribute="height" secondItem="2Ti-SU-ziA" secondAttribute="height" id="1ok-ZU-Y82"/>
+                <constraint firstAttribute="trailing" secondItem="8su-C1-3YA" secondAttribute="trailing" constant="10" id="8KM-32-KfV"/>
+                <constraint firstItem="0Jj-Hz-FoH" firstAttribute="top" secondItem="HCa-Rc-8iG" secondAttribute="bottom" id="C45-5W-MPd"/>
+                <constraint firstItem="x8b-pF-a9y" firstAttribute="top" secondItem="0Jj-Hz-FoH" secondAttribute="bottom" constant="20" id="KFP-HU-Uyw"/>
+                <constraint firstItem="2Ti-SU-ziA" firstAttribute="centerX" secondItem="taB-t0-mOy" secondAttribute="centerX" id="QKc-Dq-F85"/>
+                <constraint firstItem="8su-C1-3YA" firstAttribute="top" secondItem="x8b-pF-a9y" secondAttribute="bottom" constant="8" symbolic="YES" id="QzA-SC-Wia"/>
+                <constraint firstItem="2Ti-SU-ziA" firstAttribute="bottom" secondItem="taB-t0-mOy" secondAttribute="bottomMargin" id="X4Y-nX-d8O"/>
+                <constraint firstItem="x8b-pF-a9y" firstAttribute="top" secondItem="0Jj-Hz-FoH" secondAttribute="bottom" constant="20" id="XVp-07-IVL"/>
+                <constraint firstItem="8su-C1-3YA" firstAttribute="leading" secondItem="taB-t0-mOy" secondAttribute="leading" constant="10" id="d1i-zm-mXf"/>
+                <constraint firstItem="2Ti-SU-ziA" firstAttribute="top" secondItem="8su-C1-3YA" secondAttribute="bottom" id="fzT-hc-blo"/>
+                <constraint firstItem="0Jj-Hz-FoH" firstAttribute="leading" secondItem="taB-t0-mOy" secondAttribute="leading" id="jCj-2a-WXR"/>
+                <constraint firstAttribute="trailing" secondItem="0Jj-Hz-FoH" secondAttribute="trailing" id="kYU-YW-mfb"/>
+                <constraint firstItem="HCa-Rc-8iG" firstAttribute="centerX" secondItem="taB-t0-mOy" secondAttribute="centerX" id="mVj-ws-kvS"/>
+                <constraint firstItem="8su-C1-3YA" firstAttribute="top" secondItem="x8b-pF-a9y" secondAttribute="bottom" constant="8" symbolic="YES" id="nyh-Hh-8UZ"/>
+                <constraint firstItem="HCa-Rc-8iG" firstAttribute="top" secondItem="taB-t0-mOy" secondAttribute="topMargin" id="qvg-74-mOI"/>
+                <constraint firstItem="x8b-pF-a9y" firstAttribute="leading" secondItem="taB-t0-mOy" secondAttribute="leading" constant="10" id="wfi-sX-QUc"/>
+                <constraint firstAttribute="trailing" secondItem="x8b-pF-a9y" secondAttribute="trailing" constant="10" id="xqy-WK-DJq"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="SC7-VM-M0F"/>
+            <size key="customSize" width="406" height="468"/>
+            <connections>
+                <outlet property="imageView" destination="0Jj-Hz-FoH" id="Gi5-Ty-xCK"/>
+                <outlet property="subtitleLabel" destination="8su-C1-3YA" id="V7U-pt-Gd4"/>
+                <outlet property="titleLabel" destination="x8b-pF-a9y" id="347-7v-Xee"/>
+            </connections>
+            <point key="canvasLocation" x="124.5" y="7.5"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="onboarding_lock" width="252" height="252"/>
+    </resources>
+</document>

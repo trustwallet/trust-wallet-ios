@@ -8,7 +8,7 @@ class AppCoordinator: NSObject, Coordinator {
     let navigationController: UINavigationController
 
     lazy var welcomeViewController: WelcomeViewController = {
-        let controller = WelcomeViewController()
+        let controller = R.storyboard.welcome().instantiateInitialViewController() as! WelcomeViewController
         controller.delegate = self
         return controller
     }()
@@ -42,9 +42,9 @@ class AppCoordinator: NSObject, Coordinator {
         applyStyle()
         resetToWelcomeScreen()
 
-        if keystore.hasAccounts {
-            showTransactions(for: keystore.recentlyUsedAccount ?? keystore.accounts.first!)
-        }
+//        if keystore.hasAccounts {
+//            showTransactions(for: keystore.recentlyUsedAccount ?? keystore.accounts.first!)
+//        }
         pushNotificationRegistrar.reRegister()
     }
 
