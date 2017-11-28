@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
+brew update
+
 bundler install
-make release
+bundle exec fastlane
