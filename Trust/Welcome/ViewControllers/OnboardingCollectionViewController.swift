@@ -9,7 +9,7 @@ class OnboardingCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        collectionView?.register(R.nib.onboardingPage(), forCellWithReuseIdentifier: R.reuseIdentifier.page.identifier)
+        collectionView?.register(OnboardingPage.self, forCellWithReuseIdentifier: OnboardingPage.identifier)
     }
 
     override func viewDidLayoutSubviews() {
@@ -29,7 +29,7 @@ class OnboardingCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.page.identifier, for: indexPath) as! OnboardingPage
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnboardingPage.identifier, for: indexPath) as! OnboardingPage
         cell.model = pages[indexPath.row]
         return cell
     }
