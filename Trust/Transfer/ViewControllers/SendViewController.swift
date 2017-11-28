@@ -144,7 +144,7 @@ class SendViewController: FormViewController {
     }
 
     @objc func pasteAction() {
-        guard let value = UIPasteboard.general.string else {
+        guard let value = UIPasteboard.general.string?.trimmed else {
             return displayError(error: SendInputErrors.emptyClipBoard)
         }
 
