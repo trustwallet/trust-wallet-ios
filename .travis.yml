@@ -17,7 +17,7 @@ before_install:
   - gem install cocoapods
   - gem install xcpretty -N
   - pod repo update master
-  - echo -e "machine bitbucket.org\n login $CI_USERNAME\n password $CI_PASSWORD" >> ~/.netrc
+  - echo -e "machine bitbucket.org\n login $TRUST_CERTS" >> ~/.netrc
 
 install:
 - bundle install

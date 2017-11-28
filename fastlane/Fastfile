@@ -35,12 +35,7 @@ platform :ios do
     #ensure_git_branch()
     increment_version_number(bump_type: "patch")
     #localize
-    # format TRUST_CERTS: username:password
-    match(
-      git_url: "https://ENV#{['TRUST_CERTS']}@bitbucket.org:trustwallet/certificates.git",
-      type: "appstore", 
-      readonly: true
-    )
+    match(type: "appstore", readonly: true)
     gym(scheme: "Trust")
     commit_version_bump(message: "Version Bump", force: true)
     deliver(force: true)
