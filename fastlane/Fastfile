@@ -36,7 +36,7 @@ platform :ios do
     increment_version_number(bump_type: "patch")
     #localize
     match(
-      git_url: "https://#{ENV['CI_USERNAME']}:#{ENV['CI_PASSWORD']}@bitbucket.org:trustwallet/certificates.git",
+      git_url: "https://#{ENV['CI_USERNAME']}:#{ENV['CI_PASSWORD']}@bitbucket.org/trustwallet/certificates.git",
       type: "appstore", 
       readonly: true
     )
