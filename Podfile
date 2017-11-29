@@ -10,7 +10,6 @@ target 'Trust' do
   pod 'JSONRPCKit', :git=> 'https://github.com/bricklife/JSONRPCKit.git'
   pod 'APIKit'
   pod 'Geth'
-  pod 'EAIntroView'
   pod 'Eureka', '~> 4.0.1'
   pod 'MBProgressHUD'
   pod 'StatefulViewController'

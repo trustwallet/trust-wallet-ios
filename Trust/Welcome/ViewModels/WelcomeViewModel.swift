@@ -13,22 +13,6 @@ struct WelcomeViewModel {
         return .white
     }
 
-    var pageTitleFont: UIFont {
-        return UIFont.systemFont(ofSize: 23, weight: UIFont.Weight.medium)
-    }
-
-    var pageTitleColor: UIColor {
-        return UIColor(hex: "438FCA")
-    }
-
-    var pageDescriptionFont: UIFont {
-        return UIFont.systemFont(ofSize: 15)
-    }
-
-    var pageDescriptionColor: UIColor {
-        return UIColor(hex: "69A5D5")
-    }
-
     var pageIndicatorTintColor: UIColor {
         return UIColor(hex: "c3dbee")
     }
@@ -36,4 +20,7 @@ struct WelcomeViewModel {
     var currentPageIndicatorTintColor: UIColor {
         return UIColor(hex: "438FCA")
     }
+
+    var numberOfPages = 0
+    var currentPage = 0
 }
