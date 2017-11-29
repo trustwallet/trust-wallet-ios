@@ -8,7 +8,7 @@ class AppCoordinator: NSObject, Coordinator {
     let navigationController: UINavigationController
 
     lazy var welcomeViewController: WelcomeViewController = {
-        let controller = R.storyboard.welcome().instantiateInitialViewController() as! WelcomeViewController
+        let controller = WelcomeViewController()
         controller.delegate = self
         return controller
     }()

@@ -8,12 +8,11 @@ protocol WelcomeViewControllerDelegate: class {
 }
 
 class WelcomeViewController: UIViewController {
+    var welcomeView: WelcomeView {
+        return view as! WelcomeView
+    }
 
-    @IBOutlet private weak var pageControl: UIPageControl!
-    @IBOutlet private weak var createWalletButton: UIButton!
-    @IBOutlet private weak var importWalletButton: UIButton!
-
-    private let viewModel = WelcomeViewModel()
+    var viewModel = WelcomeViewModel()
     weak var delegate: WelcomeViewControllerDelegate?
 
     let pages: [OnboardingPageViewModel] = [
@@ -39,23 +38,28 @@ class WelcomeViewController: UIViewController {
         ),
     ]
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
+        viewModel.numberOfPages = pages.count
+        view = WelcomeView()
+        welcomeView.model = viewModel
 
-        title = viewModel.title
-        view.backgroundColor = viewModel.backgroundColor
-        pageControl.numberOfPages = pages.count
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0
+        layout.scrollDirection = .horizontal
 
-        createWalletButton.setTitle(NSLocalizedString("welcome.createWallet", value: "CREATE WALLET", comment: ""), for: .normal)
-        importWalletButton.setTitle(NSLocalizedString("welcome.importWallet", value: "IMPORT WALLET", comment: ""), for: .normal)
+        let collectionViewController = OnboardingCollectionViewController(collectionViewLayout: layout)
+        collectionViewController.pages = pages
+        collectionViewController.pageControl = welcomeView.pageControl
+        addChildViewController(collectionViewController)
+        welcomeView.showCollectionView(collectionViewController.view)
+
+        welcomeView.createWalletButton.addTarget(self, action: #selector(start), for: .touchUpInside)
+        welcomeView.importWalletButton.addTarget(self, action: #selector(importFlow), for: .touchUpInside)
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let collectionViewController = segue.destination as? OnboardingCollectionViewController else {
-            return
-        }
-        collectionViewController.pages = pages
-        collectionViewController.pageControl = pageControl
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = viewModel.title
     }
 
     @IBAction func start() {
