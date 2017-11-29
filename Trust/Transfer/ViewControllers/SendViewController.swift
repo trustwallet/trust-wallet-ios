@@ -99,7 +99,7 @@ class SendViewController: FormViewController {
                 cell.textField.textAlignment = .left
                 cell.textField.placeholder = "\(self.viewModel.symbol) " + NSLocalizedString("Send.AmountPlaceholder", value: "Amount", comment: "")
                 cell.textField.keyboardType = .decimalPad
-                cell.textField.rightView = maxButton
+                //cell.textField.rightView = maxButton // TODO Enable it's ready
                 cell.textField.rightViewMode = .always
             }
 
