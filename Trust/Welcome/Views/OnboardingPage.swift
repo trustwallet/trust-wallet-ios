@@ -33,14 +33,9 @@ final class OnboardingPage: UICollectionViewCell {
     }
 
     private func setup() {
-        translatesAutoresizingMaskIntoConstraints = false
-
-        let topSpacingGuide = UILayoutGuide()
-        addLayoutGuide(topSpacingGuide)
-
         imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .center
+        imageView.contentMode = .scaleAspectFit
         addSubview(imageView)
 
         titleLabel = UILabel()
@@ -58,23 +53,23 @@ final class OnboardingPage: UICollectionViewCell {
         subtitleLabel.font = style.subtitleFont
         addSubview(subtitleLabel)
 
-        let bottomSpacingGuide = UILayoutGuide()
-        addLayoutGuide(bottomSpacingGuide)
+        let stackView = UIStackView(arrangedSubviews: [
+            imageView,
+            titleLabel,
+            subtitleLabel,
+        ])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 15
+        addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            topSpacingGuide.topAnchor.constraint(equalTo: topAnchor),
-            topSpacingGuide.bottomAnchor.constraint(equalTo: imageView.topAnchor),
-            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -20),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            titleLabel.bottomAnchor.constraint(equalTo: subtitleLabel.topAnchor, constant: -8),
-            subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            subtitleLabel.bottomAnchor.constraint(equalTo: bottomSpacingGuide.topAnchor),
-            bottomSpacingGuide.bottomAnchor.constraint(equalTo: bottomAnchor),
-            topSpacingGuide.heightAnchor.constraint(equalTo: bottomSpacingGuide.heightAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -60),
+            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            imageView.heightAnchor.constraint(equalToConstant: 240),
         ])
     }
 }
