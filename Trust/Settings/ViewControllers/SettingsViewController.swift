@@ -191,7 +191,7 @@ class SettingsViewController: FormViewController {
             $0.title = type.title
         }.onCellSelection { [unowned self] _, _ in
             if let localURL = type.localURL, UIApplication.shared.canOpenURL(localURL) {
-                self.openURL(localURL)
+                UIApplication.shared.openURL(localURL)
             } else {
                 self.openURL(type.remoteURL)
             }
