@@ -1,7 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import UIKit
-import EAIntroView
 
 protocol WelcomeViewControllerDelegate: class {
     func didPressCreateWallet(in viewController: WelcomeViewController)
@@ -10,118 +9,125 @@ protocol WelcomeViewControllerDelegate: class {
 
 class WelcomeViewController: UIViewController {
 
-    private let viewModel = WelcomeViewModel()
+    var viewModel = WelcomeViewModel()
     weak var delegate: WelcomeViewControllerDelegate?
 
-    lazy var getStartedButton: UIButton = {
-        let getStartedButton = Button(size: .large, style: .solid)
-        getStartedButton.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
-        getStartedButton.setTitle(NSLocalizedString("welcome.createWallet", value: "CREATE WALLET", comment: ""), for: .normal)
-        getStartedButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
-        getStartedButton.layer.cornerRadius = 5
-        getStartedButton.backgroundColor = Colors.darkBlue
-        return getStartedButton
+    lazy var collectionViewController: OnboardingCollectionViewController = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.scrollDirection = .horizontal
+        let collectionViewController = OnboardingCollectionViewController(collectionViewLayout: layout)
+        collectionViewController.pages = pages
+        collectionViewController.pageControl = pageControl
+        collectionViewController.collectionView?.isPagingEnabled = true
+        collectionViewController.collectionView?.showsHorizontalScrollIndicator = false
+        collectionViewController.collectionView?.backgroundColor = viewModel.backgroundColor
+        return collectionViewController
     }()
-
-    lazy var importButton: UIButton = {
-        let importButton = Button(size: .large, style: .solid)
-        importButton.frame = CGRect(x: 0, y: 60, width: 300, height: 50)
-        importButton.setTitle(NSLocalizedString("welcome.importWallet", value: "IMPORT WALLET", comment: ""), for: .normal)
-        importButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
-        importButton.layer.cornerRadius = 5
-        importButton.setBackgroundColor(Colors.gray, forState: .normal)
-        importButton.setBackgroundColor(Colors.lightGray, forState: .highlighted)
-        return importButton
+    let pageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        return pageControl
     }()
+    let createWalletButton: UIButton = {
+        let button = Button(size: .large, style: .solid)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(NSLocalizedString("welcome.createWallet", value: "CREATE WALLET", comment: ""), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
+        button.backgroundColor = Colors.darkBlue
+        return button
+    }()
+    let importWalletButton: UIButton = {
+        let importWalletButton = Button(size: .large, style: .solid)
+        importWalletButton.translatesAutoresizingMaskIntoConstraints = false
+        importWalletButton.setTitle(NSLocalizedString("welcome.importWallet", value: "IMPORT WALLET", comment: ""), for: .normal)
+        importWalletButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
+        importWalletButton.setBackgroundColor(Colors.gray, forState: .normal)
+        importWalletButton.setBackgroundColor(Colors.lightGray, forState: .highlighted)
+        return importWalletButton
+    }()
+    let pages: [OnboardingPageViewModel] = [
+        OnboardingPageViewModel(
+            title: NSLocalizedString("Welcome.PrivateAndSecure", value: "Private & Secure", comment: ""),
+            subtitle: NSLocalizedString("Welcome.PrivateKeysNeverLeaveDevice", value: "Private keys never leave your device.", comment: ""),
+            image: R.image.onboarding_lock()!
+        ),
+        OnboardingPageViewModel(
+            title: NSLocalizedString("welcome.erc20title", value: "ERC20 Compatible", comment: ""),
+            subtitle: NSLocalizedString("welcome.erc20description", value: "Support for ERC20 tokens by default. ", comment: ""),
+            image: R.image.onboarding_erc20()!
+        ),
+        OnboardingPageViewModel(
+            title: NSLocalizedString("Welcome.FullyTransparent", value: "Fully transparent", comment: ""),
+            subtitle: NSLocalizedString("Welcome.CodeOpenSource", value: "Code is open sourced (GPL-3.0 license) and fully audited.", comment: ""),
+            image: R.image.onboarding_open_source()!
+        ),
+        OnboardingPageViewModel(
+            title: NSLocalizedString("Welcome.UltraReliable", value: "Ultra Reliable", comment: ""),
+            subtitle: NSLocalizedString("Welcome.FastExperience", value: "The fastest Ethereum wallet experience on mobile", comment: ""),
+            image: R.image.onboarding_rocket()!
+        ),
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.numberOfPages = pages.count
+        view.addSubview(collectionViewController.view)
 
-        title = viewModel.title
-        view.backgroundColor = viewModel.backgroundColor
+        let stackView = UIStackView(arrangedSubviews: [
+            pageControl,
+            createWalletButton,
+            importWalletButton,
+        ])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 15
+        view.addSubview(stackView)
 
-        let skipPlaceholder = UIButton()
-        skipPlaceholder.translatesAutoresizingMaskIntoConstraints = false
-        skipPlaceholder.frame = CGRect(x: 0, y: 0, width: 300, height: 110)
-        skipPlaceholder.backgroundColor = .clear
-        skipPlaceholder.isAccessibilityElement = false
+        collectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            skipPlaceholder.heightAnchor.constraint(equalToConstant: 110),
+            collectionViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            stackView.topAnchor.constraint(equalTo: collectionViewController.view.centerYAnchor, constant: 120),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.widthAnchor.constraint(equalToConstant: 300),
+
+            pageControl.heightAnchor.constraint(equalToConstant: 20),
+            pageControl.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
+
+            createWalletButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            createWalletButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+
+            importWalletButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            importWalletButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
         ])
 
-        skipPlaceholder.addSubview(getStartedButton)
-        skipPlaceholder.addSubview(importButton)
+        createWalletButton.addTarget(self, action: #selector(start), for: .touchUpInside)
+        importWalletButton.addTarget(self, action: #selector(importFlow), for: .touchUpInside)
 
-        let introView = EAIntroView(frame: self.view.frame, andPages: [
-            constructPage(
-                title: NSLocalizedString("Welcome.PrivateAndSecure", value: "Private & Secure", comment: ""),
-                description: NSLocalizedString("Welcome.PrivateKeysNeverLeaveDevice", value: "Private keys never leave your device.", comment: ""),
-                image: R.image.onboarding_lock()
-            ),
-            constructPage(
-                title: NSLocalizedString("welcome.erc20title", value: "ERC20 Compatible", comment: ""),
-                description: NSLocalizedString("welcome.erc20description", value: "Support for ERC20 tokens by default. ", comment: ""),
-                image: R.image.onboarding_erc20()
-            ),
-            constructPage(
-                title: NSLocalizedString("Welcome.FullyTransparent", value: "Fully transparent", comment: ""),
-                description: NSLocalizedString("Welcome.CodeOpenSource", value: "Code is open sourced (GPL-3.0 license) and fully audited.", comment: ""),
-                image: R.image.onboarding_open_source()
-            ),
-            constructPage(
-                title: NSLocalizedString("Welcome.UltraReliable", value: "Ultra Reliable", comment: ""),
-                description: NSLocalizedString("Welcome.FastExperience", value: "The fastest Ethereum wallet experience on mobile", comment: ""),
-                image: R.image.onboarding_rocket()
-            ),
-        ])
-        let height = view.frame.height
-        introView?.backgroundColor = .white
-        introView?.pageControlY = height / 3.6
-        introView?.pageControl.pageIndicatorTintColor = viewModel.pageIndicatorTintColor
-        introView?.pageControl.currentPageIndicatorTintColor = viewModel.currentPageIndicatorTintColor
-        introView?.skipButton = skipPlaceholder
-        introView?.skipButtonY = view.frame.height / 4.7
-        introView?.swipeToExit = false
-        introView?.skipButtonAlignment = .center
-        introView?.show(in: self.view, animateDuration: 0)
-
-        getStartedButton.removeTarget(introView, action: nil, for: .touchUpInside)
-        getStartedButton.addTarget(self, action: #selector(start), for: .touchUpInside)
-
-        importButton.removeTarget(introView, action: nil, for: .touchUpInside)
-        importButton.addTarget(self, action: #selector(importFlow), for: .touchUpInside)
-
-        skipPlaceholder.removeTarget(introView, action: nil, for: .touchUpInside)
+        configure(viewModel: viewModel)
     }
 
-    func constructPage(
-        title: String,
-        description: String,
-        image: UIImage?
-    ) -> EAIntroPage {
-        let height = view.frame.height
-        let titleIconPositionY = height <= 568 ? height / 8.6 : height / 5.6
-        let descPositionY = height <= 568 ? height / 2.7 : height / 2.6
-
-        let page = EAIntroPage()
-        page.title = title
-        page.desc = description
-        page.titleIconPositionY = titleIconPositionY
-        page.descPositionY = descPositionY
-        page.titleFont = viewModel.pageTitleFont
-        page.titleColor = viewModel.pageTitleColor
-        page.descFont = viewModel.pageDescriptionFont
-        page.descColor = viewModel.pageDescriptionColor
-        page.titleIconView = UIImageView(image: image)
-        return page
+    func configure(viewModel: WelcomeViewModel) {
+        title = viewModel.title
+        view.backgroundColor = viewModel.backgroundColor
+        pageControl.currentPageIndicatorTintColor = viewModel.currentPageIndicatorTintColor
+        pageControl.pageIndicatorTintColor = viewModel.pageIndicatorTintColor
+        pageControl.numberOfPages = viewModel.numberOfPages
+        pageControl.currentPage = viewModel.currentPage
     }
 
-    @objc func start() {
+    @IBAction func start() {
         delegate?.didPressCreateWallet(in: self)
     }
 
-    @objc func importFlow() {
+    @IBAction func importFlow() {
         delegate?.didPressImportWallet(in: self)
     }
 }

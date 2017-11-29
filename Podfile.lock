@@ -7,9 +7,6 @@ PODS:
     - SipHash (~> 1.2)
   - BonMot (5.0)
   - CryptoSwift (0.8.0)
-  - EAIntroView (2.12.0):
-    - EARestrictedScrollView (~> 1.1.0)
-  - EARestrictedScrollView (1.1.0)
   - Eureka (4.0.1)
   - Geth (1.7.2)
   - JavaScriptKit (1.0.0):
@@ -48,7 +45,6 @@ DEPENDENCIES:
   - BigInt (~> 3.0)
   - BonMot (~> 5.0)
   - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift`, branch `master`)
-  - EAIntroView
   - Eureka (~> 4.0.1)
   - Geth
   - JavaScriptKit
@@ -93,8 +89,6 @@ SPEC CHECKSUMS:
   BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
   BonMot: 3ff354572f2aa9295d3760947f7578490cb810be
   CryptoSwift: 475ae2a25439f52412686d68b854c0ca724c8dfd
-  EAIntroView: 249559079ddfdbe80e5bcb755c04c3b964b2ac27
-  EARestrictedScrollView: b0c2a3f92fb2610bb44d71c5e4893777c89e45ef
   Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
   Geth: 1efbf2eb4d4c697a7232c5385da127ca386b1060
   JavaScriptKit: 9ff565209e6efe21bcb9c6d6ca3e863a67a8ecf7
@@ -116,6 +110,6 @@ SPEC CHECKSUMS:
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   VENTouchLock: 20d378b9c6173e2c054448aeb3fb2f40822a9f3f
 
-PODFILE CHECKSUM: a6c84b38bfb41f40680b9b70d0aef68112c08cb5
+PODFILE CHECKSUM: 572bb29c83926b48dddd2c576f5b7d300f4937f4
 
 COCOAPODS: 1.3.1

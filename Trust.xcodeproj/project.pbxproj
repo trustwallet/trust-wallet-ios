@@ -252,6 +252,10 @@
 		29FF130A1F75F67200AFD326 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF13091F75F67200AFD326 /* Address.swift */; };
 		29FF130D1F7626E800AFD326 /* FakeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF130C1F7626E800AFD326 /* FakeNavigationController.swift */; };
 		3CDDD1E2CD1B0180754B7992 /* Pods_Trust.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646C8C822C986358D7388602 /* Pods_Trust.framework */; };
+		615F10561FCBEF2E008A45AF /* OnboardingPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615F10551FCBEF2E008A45AF /* OnboardingPageViewModel.swift */; };
+		615F10591FCBEF7C008A45AF /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615F10581FCBEF7C008A45AF /* OnboardingPage.swift */; };
+		615F105D1FCBF55E008A45AF /* OnboardingCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615F105C1FCBF55E008A45AF /* OnboardingCollectionViewController.swift */; };
+		615F10621FCD3F0F008A45AF /* OnboardingPageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615F10611FCD3F0F008A45AF /* OnboardingPageStyle.swift */; };
 		61F8AA931FCA4A0F00488C6E /* BigInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8AA921FCA4A0F00488C6E /* BigInt.swift */; };
 		61F8AA951FCA4C9300488C6E /* BigIntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8AA941FCA4C9300488C6E /* BigIntTests.swift */; };
 		D9F052FDC5B72E024DD05F0D /* Pods_TrustTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */; };
@@ -528,6 +532,10 @@
 		29FF130C1F7626E800AFD326 /* FakeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNavigationController.swift; sourceTree = "<group>"; };
 		477899BEAA4489DA423E8857 /* Pods-TrustUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4DB8204016307EAFC079EA48 /* Pods-Trust.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trust.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trust/Pods-Trust.debug.xcconfig"; sourceTree = "<group>"; };
+		615F10551FCBEF2E008A45AF /* OnboardingPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewModel.swift; sourceTree = "<group>"; };
+		615F10581FCBEF7C008A45AF /* OnboardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
+		615F105C1FCBF55E008A45AF /* OnboardingCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewController.swift; sourceTree = "<group>"; };
+		615F10611FCD3F0F008A45AF /* OnboardingPageStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageStyle.swift; sourceTree = "<group>"; };
 		61F8AA921FCA4A0F00488C6E /* BigInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigInt.swift; sourceTree = "<group>"; };
 		61F8AA941FCA4C9300488C6E /* BigIntTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigIntTests.swift; sourceTree = "<group>"; };
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -698,6 +706,7 @@
 		2912CD301F6A83E100C6CBE3 /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
+				615F10571FCBEF6A008A45AF /* Views */,
 				2977CAEA1F7E0BB7009682A0 /* ViewModels */,
 				2977CAE91F7E0BB0009682A0 /* ViewControllers */,
 			);
@@ -1070,6 +1079,7 @@
 			isa = PBXGroup;
 			children = (
 				2912CD311F6A83EE00C6CBE3 /* WelcomeViewController.swift */,
+				615F105C1FCBF55E008A45AF /* OnboardingCollectionViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1078,6 +1088,7 @@
 			isa = PBXGroup;
 			children = (
 				2912CD331F6A849C00C6CBE3 /* WelcomeViewModel.swift */,
+				615F10551FCBEF2E008A45AF /* OnboardingPageViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1588,6 +1599,15 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
+		615F10571FCBEF6A008A45AF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				615F10581FCBEF7C008A45AF /* OnboardingPage.swift */,
+				615F10611FCD3F0F008A45AF /* OnboardingPageStyle.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		9A0F00B2D545197C8F7691C2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1916,8 +1936,6 @@
 				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
 				"${BUILT_PRODUCTS_DIR}/BonMot/BonMot.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/EAIntroView/EAIntroView.framework",
-				"${BUILT_PRODUCTS_DIR}/EARestrictedScrollView/EARestrictedScrollView.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/JSONRPCKit/JSONRPCKit.framework",
 				"${BUILT_PRODUCTS_DIR}/JavaScriptKit/JavaScriptKit.framework",
@@ -1943,8 +1961,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BonMot.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EAIntroView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EARestrictedScrollView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSONRPCKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JavaScriptKit.framework",
@@ -2029,11 +2045,13 @@
 				2985430F1FC18A4B00CB5081 /* ExchangeViewModel.swift in Sources */,
 				29E14FDB1F7F4F3D00185568 /* Transaction.swift in Sources */,
 				296106C81F7646590006164B /* TokensViewModel.swift in Sources */,
+				615F10561FCBEF2E008A45AF /* OnboardingPageViewModel.swift in Sources */,
 				29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */,
 				29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */,
 				290B2B5B1F8F551E0053C83E /* LokaliseInitializer.swift in Sources */,
 				293112371FC9A24600966EEA /* UIGestureRecognizer+Closure.swift in Sources */,
 				29B6AECB1F7C5FA900EC6DE3 /* PaymentCoordinator.swift in Sources */,
+				615F10591FCBEF7C008A45AF /* OnboardingPage.swift in Sources */,
 				2963B6B91F9A7EEA003063C1 /* CoinTicker.swift in Sources */,
 				29F114EC1FA448F400114A29 /* TokensCoordinator.swift in Sources */,
 				2996F14A1F6C9D10005C33AE /* ExportCoordinator.swift in Sources */,
@@ -2123,6 +2141,7 @@
 				29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */,
 				293112151FC5550000966EEA /* ExchangeTokensCoordinator.swift in Sources */,
 				296AF9A51F736BA20058AF78 /* Config.swift in Sources */,
+				615F10621FCD3F0F008A45AF /* OnboardingPageStyle.swift in Sources */,
 				2912CD341F6A849C00C6CBE3 /* WelcomeViewModel.swift in Sources */,
 				291F52A21F6B6DCF00B369AB /* EtherClient.swift in Sources */,
 				2912CD2B1F6A833E00C6CBE3 /* TransactionsViewController.swift in Sources */,
@@ -2132,6 +2151,7 @@
 				299B5E291FCA8F040051361C /* GetERC20Balance.swift in Sources */,
 				294FE5661F72442D00754F31 /* Address.swift in Sources */,
 				2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */,
+				615F105D1FCBF55E008A45AF /* OnboardingCollectionViewController.swift in Sources */,
 				2931122C1FC9407800966EEA /* ExchangeTokenViewModel.swift in Sources */,
 				29A0E1851F706B8C00BAAAED /* String.swift in Sources */,
 				296AF9A71F736EC70058AF78 /* RPCServers.swift in Sources */,

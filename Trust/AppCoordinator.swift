@@ -42,9 +42,9 @@ class AppCoordinator: NSObject, Coordinator {
         applyStyle()
         resetToWelcomeScreen()
 
-        if keystore.hasAccounts {
-            showTransactions(for: keystore.recentlyUsedAccount ?? keystore.accounts.first!)
-        }
+//        if keystore.hasAccounts {
+//            showTransactions(for: keystore.recentlyUsedAccount ?? keystore.accounts.first!)
+//        }
         pushNotificationRegistrar.reRegister()
     }
 
