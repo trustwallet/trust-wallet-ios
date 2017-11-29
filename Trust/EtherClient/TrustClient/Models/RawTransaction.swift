@@ -14,6 +14,7 @@ struct RawTransaction: Decodable {
     let gasPrice: String
     let input: String
     let gasUsed: String
+    let error: String?
 
     enum CodingKeys: String, CodingKey {
         case hash = "_id"
@@ -28,6 +29,7 @@ struct RawTransaction: Decodable {
         case input
         case gasUsed
         case operationsLocalized = "operations_localized"
+        case error = "error"
     }
 
     let operationsLocalized: [LocalizedOperation]?
@@ -35,6 +37,7 @@ struct RawTransaction: Decodable {
 
 extension Transaction {
     static func from(chainID: Int, owner: Address, transaction: RawTransaction) -> Transaction {
+        let isError = transaction.error?.isEmpty == false
         return Transaction(
             id: transaction.hash,
             owner: owner.address,
@@ -48,7 +51,7 @@ extension Transaction {
             gasUsed: transaction.gasUsed,
             nonce: String(transaction.nonce),
             date: NSDate(timeIntervalSince1970: TimeInterval(transaction.timeStamp) ?? 0) as Date,
-            isError: false,
+            isError: isError,
             localizedOperations: LocalizedOperationObject.from(operations: transaction.operationsLocalized)
         )
     }
