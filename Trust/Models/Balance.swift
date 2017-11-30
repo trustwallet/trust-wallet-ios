@@ -16,15 +16,16 @@ struct Balance: BalanceProtocol {
     }
 
     var wei: String {
-        return EthereumConverter.from(value: value, to: .wei, minimumFractionDigits: 2)
+        let formatter = EtherNumberFormatter.short
+        return formatter.string(from: value, units: .wei)
     }
 
     var amount: String {
-        return EthereumConverter.from(value: value, to: .ether, minimumFractionDigits: 4)
+        let formatter = EtherNumberFormatter.full
+        return formatter.string(from: value)
     }
 
     var amountFull: String {
-        // TODO Implement full amount
         return amount
     }
 }

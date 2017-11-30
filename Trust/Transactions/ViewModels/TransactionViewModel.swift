@@ -11,7 +11,7 @@ struct TransactionValue {
 
 struct TransactionViewModel {
 
-    static let formatter: DateFormatter = {
+    static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .medium
@@ -22,6 +22,8 @@ struct TransactionViewModel {
     let transaction: Transaction
     let config: Config
     let chainState: ChainState
+    let shortFormatter = EtherNumberFormatter.short
+    let fullFormatter = EtherNumberFormatter.short
 
     init(
         transaction: Transaction,
@@ -46,13 +48,13 @@ struct TransactionViewModel {
             return TransactionValue(amount: amount, symbol: symbol)
         }
         return TransactionValue(
-            amount: EthereumConverter.from(value: BigInt(transaction.value) ?? BigInt(), to: .ether, minimumFractionDigits: 5),
+            amount: shortFormatter.string(from: BigInt(transaction.value) ?? BigInt()),
             symbol: config.server.symbol
         )
     }
 
     var createdAt: String {
-        return TransactionViewModel.formatter.string(from: transaction.date)
+        return TransactionViewModel.dateFormatter.string(from: transaction.date)
     }
 
     var detailsURL: URL {
@@ -77,12 +79,7 @@ struct TransactionViewModel {
     var gasFee: String {
         let gasUsed = BigInt(transaction.gasUsed) ?? BigInt()
         let gasPrice = BigInt(transaction.gasPrice) ?? BigInt()
-        return EthereumConverter.from(
-            value: gasPrice * gasUsed,
-            to: .ether,
-            minimumFractionDigits: 5,
-            maximumFractionDigits: 5
-        )
+        return fullFormatter.string(from: gasPrice * gasUsed)
     }
 
     var confirmation: String {
