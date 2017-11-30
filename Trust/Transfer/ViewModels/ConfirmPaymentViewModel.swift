@@ -9,6 +9,7 @@ struct ConfirmPaymentViewModel {
     let currentBalance: Double?
     let configuration: TransactionConfiguration
     let config: Config
+    let formatter = EtherNumberFormatter()
 
     init(
         transaction: UnconfirmedTransaction,
@@ -31,7 +32,7 @@ struct ConfirmPaymentViewModel {
     }
 
     private var fee: String {
-        return EthereumConverter.from(value: totalFee, to: .ether, minimumFractionDigits: 6)
+        return formatter.string(from: totalFee)
     }
 
     var amount: Double {

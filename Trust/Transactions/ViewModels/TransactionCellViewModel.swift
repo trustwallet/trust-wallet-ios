@@ -8,6 +8,7 @@ struct TransactionCellViewModel {
 
     let transaction: Transaction
     let chainState: ChainState
+    let formatter = EtherNumberFormatter.short
 
     init(
         transaction: Transaction,
@@ -76,7 +77,8 @@ struct TransactionCellViewModel {
             if let operationValue = operationValue {
                 return operationValue
             }
-            return EthereumConverter.from(value: BigInt(transaction.value) ?? BigInt(), to: .ether, minimumFractionDigits: 3)
+            let number = BigInt(transaction.value) ?? BigInt()
+            return formatter.string(from: number)
         }()
         switch transaction.direction {
         case .incoming: return "+\(value)"
