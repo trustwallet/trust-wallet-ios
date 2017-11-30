@@ -41,7 +41,7 @@ class EtherNumberFormatterTests: XCTestCase {
     func testDigits() {
         let number = BigInt("1234567890123456789012345678901")!
         XCTAssertEqual(fullFormatter.string(from: number), "1,234,567,890,123.456789012345678901")
-        XCTAssertEqual(shortFormatter.string(from: number), "1,234,567,890,123.456")
+        XCTAssertEqual(shortFormatter.string(from: number), "1,234,567,890,123.457")
     }
 
     func testNoFraction() {
@@ -58,6 +58,11 @@ class EtherNumberFormatterTests: XCTestCase {
     func testNegative() {
         let number = BigInt("-437258644730000000000")!
         XCTAssertEqual(fullFormatter.string(from: number), "-437.25864473")
-        XCTAssertEqual(shortFormatter.string(from: number), "-437.258")
+        XCTAssertEqual(shortFormatter.string(from: number), "-437.259")
+    }
+
+    func testRound() {
+        let number = BigInt("123456789012345678901")!
+        XCTAssertEqual(shortFormatter.string(from: number), "123.457")
     }
 }
