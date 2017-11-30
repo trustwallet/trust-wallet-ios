@@ -11,7 +11,7 @@ username "thetrustwallet@gmail.com" # your Apple ID user
 
 force true
 
-submit_for_review true
+submit_for_review false
 automatic_release true
 
 submission_information({

@@ -4,20 +4,30 @@ osx_image: xcode9.1
 branches:
   only:
     - master
+
+cache:
+  directories:
+    - /home/travis/.rvm/
+  cocoapods: true
+  
 env:
   - LC_CTYPE=en_US.UTF-8 LANG=en_US.UTF-8
 before_install:
-  - rvm install ruby-2.2.2
+  - rvm install ruby-2.3.1
   - gem install cocoapods
   - gem install xcpretty -N
-  - brew update
-  - brew install swiftlint || true
   - pod repo update master
+  - echo -e "machine bitbucket.org\n login $CI_USERNAME\n password $CI_PASSWORD" >> ~/.netrc
+
+install:
+- bundle install
+
 script:
-  - set -o pipefail
-  - pod install
-  - swiftlint
-  - xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
+  #- set -o pipefail
+  #- pod install
+  #- swiftlint
+  #- xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
+  - bundle exec fastlane release
 
 notifications:
   slack: trust-wallet:33Vj3pGpKoBMTBAHTB8dF79n

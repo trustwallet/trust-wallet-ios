@@ -32,12 +32,16 @@ platform :ios do
   lane :release do
     cocoapods
     increment_build_number
-    ensure_git_branch()
+    #ensure_git_branch()
     increment_version_number(bump_type: "patch")
     #localize
-    cert
-    match(type: "appstore", readonly: true)
+    match(
+      git_url: "https://#{ENV['CI_USERNAME']}:#{ENV['CI_PASSWORD']}@bitbucket.org/trustwallet/certificates.git",
+      type: "appstore", 
+      readonly: true
+    )
     gym(scheme: "Trust")
+    screenshots
     commit_version_bump(message: "Version Bump", force: true)
     deliver(force: true)
     push_to_git_remote
@@ -51,6 +55,11 @@ platform :ios do
   desc "Localize"
   lane :localize do
     localize
+  end
+
+  desc "test-release"
+  lane :restrelease do
+    screenshots
   end
 
   # You can define as many lanes as you want
