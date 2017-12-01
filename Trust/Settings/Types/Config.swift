@@ -7,6 +7,7 @@ struct Config {
     struct Keys {
         static let chainID = "chainID"
         static let isCryptoPrimaryCurrency = "isCryptoPrimaryCurrency"
+        static let isDebugEnabled = "isDebugEnabled"
     }
 
     let defaults: UserDefaults
@@ -29,6 +30,11 @@ struct Config {
     var isCryptoPrimaryCurrency: Bool {
         get { return defaults.bool(forKey: Keys.isCryptoPrimaryCurrency) }
         set { defaults.set(newValue, forKey: Keys.isCryptoPrimaryCurrency) }
+    }
+
+    var isDebugEnabled: Bool {
+        get { return defaults.bool(forKey: Keys.isDebugEnabled) }
+        set { defaults.set(newValue, forKey: Keys.isDebugEnabled) }
     }
 
     var server: RPCServer {

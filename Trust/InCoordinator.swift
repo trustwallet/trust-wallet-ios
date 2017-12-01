@@ -14,7 +14,7 @@ class InCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     let account: Account
     var keystore: Keystore
-    let config = Config()
+    var config = Config()
     weak var delegate: InCoordinatorDelegate?
 
     init(
@@ -56,6 +56,10 @@ class InCoordinator: Coordinator {
         ]
         tabBarController.tabBar.isTranslucent = false
 
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(activateDebug))
+        gesture.numberOfTapsRequired = 6
+        tabBarController.tabBar.addGestureRecognizer(gesture)
+
         if inCoordinatorViewModel.tokensAvailable {
             let tokenCoordinator = TokensCoordinator(
                 session: session
@@ -83,6 +87,22 @@ class InCoordinator: Coordinator {
 
         keystore.recentlyUsedAccount = account
     }
+
+    @objc func activateDebug() {
+        config.isDebugEnabled = !config.isDebugEnabled
+
+        let coordinators: [TransactionCoordinator] = self.coordinators.flatMap { $0 as? TransactionCoordinator }
+        if let coordinator = coordinators.first {
+            restart(for: account, in: coordinator)
+        }
+    }
+
+    func restart(for account: Account, in coordinator: TransactionCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        coordinator.stop()
+        removeCoordinator(coordinator)
+        showTabBar(for: account)
+    }
 }
 
 extension InCoordinator: TransactionCoordinatorDelegate {
@@ -94,10 +114,7 @@ extension InCoordinator: TransactionCoordinatorDelegate {
     }
 
     func didRestart(with account: Account, in coordinator: TransactionCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        coordinator.stop()
-        removeCoordinator(coordinator)
-        showTabBar(for: account)
+        restart(for: account, in: coordinator)
     }
 
     func didUpdateAccounts(in coordinator: TransactionCoordinator) {
