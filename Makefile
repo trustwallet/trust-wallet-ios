@@ -1,9 +1,9 @@
-.DEFAULT_GOAL := help
+.DEFAULT_GOAL := bootstrap
 
 exists_pod = $(shell command -v pod 2> /dev/null)
 exists_fastlane = $(shell command -v fastlane 2> /dev/null)
 
-install_env: ## Install environment
+install_env:
 
 ifeq "${exists_pod}" ""
 	sudo gem install cocoapods
@@ -13,16 +13,17 @@ ifeq "${exists_fastlane}" ""
 	brew cask install fastlane
 endif
 
-	@echo "\033[36mAll dependencies was installed\033[0m"
+	@echo "All dependencies was installed"
 
-install: ## Install libraries
+install:
+
+ifeq "${exists_pod}" ""
+	@echo "Cocopods is not installed. Use `make install_env`"
+endif
+
 	pod install
 
-bootstrap: ## Bootstrap app
-	install
+bootstrap: install
 
-release: ## Release app
+release:
 	fastlane release
-
-help:
-	@grep --extended-regexp '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
