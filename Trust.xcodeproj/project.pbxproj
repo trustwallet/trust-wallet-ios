@@ -1704,6 +1704,9 @@
 						LastSwiftMigration = 0910;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -2422,7 +2425,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sixdays.trust;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "af862a1e-c2a6-4066-a03e-cc0e5b42b7a3";
+				PROVISIONING_PROFILE = "36d4af79-beee-452d-a1eb-76d840b41c13";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.sixdays.trust";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7  armv7s";
@@ -2446,7 +2449,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sixdays.trust;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "26959335-30a5-4afd-8445-0225242be664";
+				PROVISIONING_PROFILE = "09b158f8-8b12-4ed4-8489-9514fc5e69aa";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.sixdays.trust";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7  armv7s";
