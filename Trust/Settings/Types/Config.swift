@@ -11,7 +11,9 @@ struct Config {
 
     let defaults: UserDefaults
 
-    init(defaults: UserDefaults = UserDefaults.standard) {
+    init(
+        defaults: UserDefaults = UserDefaults.standard
+    ) {
         self.defaults = defaults
     }
 

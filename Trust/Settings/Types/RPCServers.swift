@@ -17,16 +17,16 @@ enum RPCServer: String {
 
     var name: String {
         switch self {
-        case .main: return "Main"
+        case .main: return "Ethereum"
         case .kovan: return "Kovan"
-        case .oraclesTest: return "Oracles (Test network)"
+        case .oraclesTest: return "Oracles"
         }
     }
 
-    var brandName: String {
+    var isTestNetwork: Bool {
         switch self {
-        case .main, .kovan: return "Ethereum"
-        case .oraclesTest: return "Oracles"
+        case .main: return false
+        case .kovan, .oraclesTest: return true
         }
     }
 

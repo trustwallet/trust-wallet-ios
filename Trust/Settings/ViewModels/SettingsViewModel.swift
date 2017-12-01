@@ -13,16 +13,19 @@ struct SettingsViewModel {
     }
 
     var servers: [String] {
-        if isDebug {
+        let list: [RPCServer] = {
+            if isDebug {
+                return [
+                    RPCServer.main,
+                    RPCServer.kovan,
+                    RPCServer.oraclesTest,
+                ]
+            }
             return [
-                RPCServer.main.name,
-                RPCServer.kovan.name,
-                RPCServer.oraclesTest.name,
+                RPCServer.main,
+                RPCServer.kovan,
             ]
-        }
-        return [
-            RPCServer.main.name,
-            RPCServer.kovan.name,
-        ]
+        }()
+        return list.map { $0.name }
     }
 }

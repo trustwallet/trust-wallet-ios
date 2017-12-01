@@ -23,14 +23,14 @@ struct RequestViewModel {
     var shareMyAddressText: String {
         return String(
             format: NSLocalizedString("Send.MyEthereumAddressIs", value: "My %@ address is: %@", comment: ""),
-            config.server.brandName, myAddressText
+            config.server.name, myAddressText
         )
     }
 
     var headlineText: String {
         return String(
             format: NSLocalizedString("request.headlineTitle", value: "My Public %@ wallet address", comment: ""),
-            config.server.brandName
+            config.server.name
         )
     }
 

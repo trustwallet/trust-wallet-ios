@@ -17,6 +17,6 @@ class RequestViewModelTests: XCTestCase {
         let config: Config = .make()
         let viewModel = RequestViewModel(account: account, config: .make())
 
-        XCTAssertEqual("My \(config.server.brandName) address is: \(account.address.address)", viewModel.shareMyAddressText)
+        XCTAssertEqual("My \(config.server.name) address is: \(account.address.address)", viewModel.shareMyAddressText)
     }
 }

@@ -12,6 +12,7 @@ class BackupViewController: UIViewController {
 
     let account: Account
     weak var delegate: BackupViewControllerDelegate?
+    let viewModel = BackupViewModel()
 
     init(account: Account) {
         self.account = account
@@ -24,7 +25,7 @@ class BackupViewController: UIViewController {
 
         let noBackupLabel = UILabel()
         noBackupLabel.translatesAutoresizingMaskIntoConstraints = false
-        noBackupLabel.text = NSLocalizedString("export.noBackup.title", value: "No backup, no Ethereum.", comment: "")
+        noBackupLabel.text = viewModel.headlineText
         noBackupLabel.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.medium)
         noBackupLabel.adjustsFontSizeToFitWidth = true
         noBackupLabel.textColor = Colors.lightBlack
