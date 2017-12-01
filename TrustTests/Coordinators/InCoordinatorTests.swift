@@ -9,7 +9,8 @@ class InCoordinatorTests: XCTestCase {
         let coordinator = InCoordinator(
             navigationController: FakeNavigationController(),
             account: .make(),
-            keystore: FakeEtherKeystore()
+            keystore: FakeEtherKeystore(),
+            config: .make()
         )
 
         coordinator.start()
@@ -35,7 +36,8 @@ class InCoordinatorTests: XCTestCase {
         let coordinator = InCoordinator(
             navigationController: FakeNavigationController(),
             account: .make(),
-            keystore: keystore
+            keystore: keystore,
+            config: .make()
         )
 
         coordinator.showTabBar(for: account1)

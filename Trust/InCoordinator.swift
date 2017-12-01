@@ -14,17 +14,19 @@ class InCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     let account: Account
     var keystore: Keystore
-    var config = Config()
+    var config: Config
     weak var delegate: InCoordinatorDelegate?
 
     init(
         navigationController: UINavigationController = NavigationController(),
         account: Account,
-        keystore: Keystore
+        keystore: Keystore,
+        config: Config = Config()
     ) {
         self.navigationController = navigationController
         self.account = account
         self.keystore = keystore
+        self.config = config
     }
 
     func start() {
