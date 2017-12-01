@@ -3,7 +3,7 @@
 exists_pod = $(shell command -v pod 2> /dev/null)
 exists_fastlane = $(shell command -v fastlane 2> /dev/null)
 
-install_env: ## Install enviroment
+install_env: ## Install environment
 
 ifeq "${exists_pod}" ""
 	sudo gem install cocoapods
