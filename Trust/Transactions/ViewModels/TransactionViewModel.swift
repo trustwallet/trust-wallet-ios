@@ -23,7 +23,7 @@ struct TransactionViewModel {
     let config: Config
     let chainState: ChainState
     let shortFormatter = EtherNumberFormatter.short
-    let fullFormatter = EtherNumberFormatter.short
+    let fullFormatter = EtherNumberFormatter.full
 
     init(
         transaction: Transaction,
