@@ -48,7 +48,7 @@ struct TransactionViewModel {
             return TransactionValue(amount: amount, symbol: symbol)
         }
         return TransactionValue(
-            amount: shortFormatter.string(from: BigInt(transaction.value) ?? BigInt()),
+            amount: fullFormatter.string(from: BigInt(transaction.value) ?? BigInt()),
             symbol: config.server.symbol
         )
     }
