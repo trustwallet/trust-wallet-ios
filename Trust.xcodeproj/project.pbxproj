@@ -189,7 +189,6 @@
 		29AD8A0E1F93FF28008E10E7 /* WalletSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD8A0D1F93FF28008E10E7 /* WalletSession.swift */; };
 		29B6AECB1F7C5FA900EC6DE3 /* PaymentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B6AECA1F7C5FA900EC6DE3 /* PaymentCoordinator.swift */; };
 		29B6AED11F7C881D00EC6DE3 /* TransactionCost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B6AED01F7C881D00EC6DE3 /* TransactionCost.swift */; };
-		29B6AED41F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B6AED31F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift */; };
 		29B6AED61F7CA4A700EC6DE3 /* TransactionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B6AED51F7CA4A700EC6DE3 /* TransactionConfiguration.swift */; };
 		29B933F51F860074009FCABB /* SendTransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B933F41F860074009FCABB /* SendTransactionCoordinator.swift */; };
 		29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B933F71F8609FF009FCABB /* PaymentFlow.swift */; };
@@ -472,7 +471,6 @@
 		29AD8A0D1F93FF28008E10E7 /* WalletSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletSession.swift; sourceTree = "<group>"; };
 		29B6AECA1F7C5FA900EC6DE3 /* PaymentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCoordinator.swift; sourceTree = "<group>"; };
 		29B6AED01F7C881D00EC6DE3 /* TransactionCost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCost.swift; sourceTree = "<group>"; };
-		29B6AED31F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionConfigurationViewController.swift; sourceTree = "<group>"; };
 		29B6AED51F7CA4A700EC6DE3 /* TransactionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionConfiguration.swift; sourceTree = "<group>"; };
 		29B933F41F860074009FCABB /* SendTransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransactionCoordinator.swift; sourceTree = "<group>"; };
 		29B933F71F8609FF009FCABB /* PaymentFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentFlow.swift; sourceTree = "<group>"; };
@@ -1404,7 +1402,6 @@
 			children = (
 				291ED0911F6FA5D900E7E93A /* RequestViewController.swift */,
 				29285B411F6FB3E60044CF29 /* SendViewController.swift */,
-				29B6AED31F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift */,
 				291A1B661F98092F00ADEC80 /* ConfirmPaymentViewController.swift */,
 				299B5E411FD2298E0051361C /* ConfigureTransactionViewController.swift */,
 			);
@@ -2158,7 +2155,6 @@
 				29FF12F81F747D6C00AFD326 /* Error.swift in Sources */,
 				29282B581F7636840067F88D /* GetTokensRequest.swift in Sources */,
 				29AD8A061F93DC8C008E10E7 /* PushDevice.swift in Sources */,
-				29B6AED41F7CA09600EC6DE3 /* TransactionConfigurationViewController.swift in Sources */,
 				29B933F51F860074009FCABB /* SendTransactionCoordinator.swift in Sources */,
 				293112281FC8174B00966EEA /* ExchangeConfig.swift in Sources */,
 				2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */,
