@@ -10,7 +10,7 @@ final class EtherNumberFormatter {
     // Formatter that caps the number of decimal digits to 3.
     static let short: EtherNumberFormatter = {
         let formatter = EtherNumberFormatter()
-        formatter.maximumFractionDigits = 3
+        formatter.maximumFractionDigits = 4
         return formatter
     }()
 
