@@ -9,7 +9,7 @@ struct ConfirmPaymentViewModel {
     let currentBalance: Double?
     let configuration: TransactionConfiguration
     let config: Config
-    let formatter = EtherNumberFormatter()
+    private let fullFormatter = EtherNumberFormatter.full
 
     init(
         transaction: UnconfirmedTransaction,
@@ -31,10 +31,6 @@ struct ConfirmPaymentViewModel {
         return configuration.speed.gasLimit
     }
 
-    private var fee: String {
-        return formatter.string(from: totalFee)
-    }
-
     var amount: Double {
         return transaction.amount
     }
@@ -44,7 +40,13 @@ struct ConfirmPaymentViewModel {
     }
 
     var feeText: String {
-        return fee.description + " \(config.server.symbol)"
+        let fee = fullFormatter.string(from: totalFee)
+        let feeAndSymbol = fee.description + " \(config.server.symbol)"
+        let warningFee = BigInt(EthereumUnit.ether.rawValue) / BigInt(20)
+        guard totalFee <= warningFee else {
+            return feeAndSymbol + " - WARNING. HIGH FEE."
+        }
+        return feeAndSymbol
     }
 
     var gasLimiText: String {

@@ -82,6 +82,16 @@ class ConfigureTransactionViewController: FormViewController {
     @objc func save() {
         let gasPrice = BigInt(gasPriceRow?.value ?? "0", radix: 10) ?? BigInt()
         let gasLimit = BigInt(gasLimitRow?.value ?? "0", radix: 10) ?? BigInt()
+        let totalFee = gasPrice * gasLimit
+
+        guard gasLimit <= ConfigureTransaction.gasLimitMax else {
+            return displayError(error: ConfigureTransactionError.gasLimitTooHigh)
+        }
+
+        guard totalFee <= ConfigureTransaction.gasFeeMax else {
+            return displayError(error: ConfigureTransactionError.gasFeeTooHigh)
+        }
+
         let configuration = TransactionConfiguration(
             speed: .custom(
                 gasPrice: gasPrice,
