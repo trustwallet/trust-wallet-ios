@@ -15,11 +15,6 @@ struct Balance: BalanceProtocol {
         return value.isZero
     }
 
-    var wei: String {
-        let formatter = EtherNumberFormatter.short
-        return formatter.string(from: value, units: .wei)
-    }
-
     var amount: String {
         let formatter = EtherNumberFormatter.full
         return formatter.string(from: value)
@@ -27,18 +22,5 @@ struct Balance: BalanceProtocol {
 
     var amountFull: String {
         return amount
-    }
-}
-
-extension String {
-    var drop0x: String {
-        if self.count > 2 && self.substring(with: 0..<2) == "0x" {
-            return String(self.dropFirst(2))
-        }
-        return self
-    }
-
-    var add0x: String {
-        return "0x" + self
     }
 }
