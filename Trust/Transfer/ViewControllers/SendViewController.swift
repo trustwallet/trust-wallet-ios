@@ -155,9 +155,7 @@ class SendViewController: FormViewController {
         addressRow?.value = value
         addressRow?.reload()
 
-        if amountRow?.value?.isEmpty == true {
-            amountRow?.cell.textField.becomeFirstResponder()
-        }
+        activateAmountView()
     }
 
     @objc func useMaxAmount() {
@@ -165,6 +163,10 @@ class SendViewController: FormViewController {
 
         amountRow?.value = value
         amountRow?.reload()
+    }
+
+    func activateAmountView() {
+        amountRow?.cell.textField.becomeFirstResponder()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -183,5 +185,7 @@ extension SendViewController: QRCodeReaderDelegate {
         guard let result = QRURLParser.from(string: result) else { return }
         addressRow?.value = result.address
         addressRow?.reload()
+
+        activateAmountView()
     }
 }
