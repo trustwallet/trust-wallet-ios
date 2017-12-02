@@ -18,15 +18,15 @@ struct TransactionCellViewModel {
         self.chainState = chainState
     }
 
-    var confirmations: Int {
-        return max(chainState.latestBlock - Int(transaction.blockNumber), 0)
+    var confirmations: Int? {
+        return chainState.confirmations(fromBlock: transaction.blockNumber)
     }
 
     var state: TransactionState {
         if transaction.isError {
             return .error
         }
-        if confirmations <= 0 && chainState.latestBlock >= transaction.blockNumber {
+        if confirmations == 0 {
             return .pending
         }
         return .completed

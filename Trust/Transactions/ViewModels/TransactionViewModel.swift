@@ -83,8 +83,10 @@ struct TransactionViewModel {
     }
 
     var confirmation: String {
-        let confirmation = chainState.latestBlock - Int(transaction.blockNumber)
-        return String(max(0, confirmation))
+        guard let confirmation = chainState.confirmations(fromBlock: transaction.blockNumber) else {
+            return "--"
+        }
+        return String(confirmation)
     }
 
     var blockNumber: String {
