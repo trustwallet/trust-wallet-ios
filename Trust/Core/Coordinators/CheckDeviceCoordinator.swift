@@ -10,8 +10,12 @@ class CheckDeviceCoordinator: Coordinator {
 
     lazy var alertViewController: UIAlertController = {
         let controller = UIAlertController(
-            title: "DEVICE SECURITY COMPROMISED",
-            message: "Any 'jailbreak' app can access Trust's keychain data and steal your bitcoin! Wipe this wallet immediately and restore on a secure device",
+            title: NSLocalizedString("jailbrake.title", value: "DEVICE SECURITY COMPROMISED", comment: ""),
+            message: NSLocalizedString(
+                "jailbrake.message",
+                value: "Any 'jailbreak' app can access Trust's keychain data and steal your bitcoin! Wipe this wallet immediately and restore on a secure device",
+                comment: ""
+            ),
             preferredStyle: UIAlertControllerStyle.alert
         )
 
