@@ -178,6 +178,8 @@
 		299B5E3F1FD143400051361C /* BackupViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E3E1FD143400051361C /* BackupViewModelTests.swift */; };
 		299B5E421FD2298E0051361C /* ConfigureTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E411FD2298E0051361C /* ConfigureTransactionViewController.swift */; };
 		299B5E451FD22FB40051361C /* ConfigureTransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E441FD22FB40051361C /* ConfigureTransactionViewModel.swift */; };
+		299B5E471FD2C87F0051361C /* ConfigureTransactionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E461FD2C87F0051361C /* ConfigureTransactionError.swift */; };
+		299B5E491FD2C8900051361C /* ConfigureTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E481FD2C8900051361C /* ConfigureTransaction.swift */; };
 		29A0E1851F706B8C00BAAAED /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A0E1841F706B8C00BAAAED /* String.swift */; };
 		29A13E2C1F6A955700E432A2 /* CreateWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E2B1F6A955700E432A2 /* CreateWalletViewModel.swift */; };
 		29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E321F6B1B7A00E432A2 /* AppStyle.swift */; };
@@ -458,6 +460,8 @@
 		299B5E3E1FD143400051361C /* BackupViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupViewModelTests.swift; sourceTree = "<group>"; };
 		299B5E411FD2298E0051361C /* ConfigureTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureTransactionViewController.swift; sourceTree = "<group>"; };
 		299B5E441FD22FB40051361C /* ConfigureTransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureTransactionViewModel.swift; sourceTree = "<group>"; };
+		299B5E461FD2C87F0051361C /* ConfigureTransactionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureTransactionError.swift; sourceTree = "<group>"; };
+		299B5E481FD2C8900051361C /* ConfigureTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureTransaction.swift; sourceTree = "<group>"; };
 		29A0E1841F706B8C00BAAAED /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		29A13E271F6A903500E432A2 /* WelcomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModelTests.swift; sourceTree = "<group>"; };
 		29A13E2B1F6A955700E432A2 /* CreateWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWalletViewModel.swift; sourceTree = "<group>"; };
@@ -1429,6 +1433,8 @@
 				296106CF1F778A8D0006164B /* TransferType.swift */,
 				29B6AED51F7CA4A700EC6DE3 /* TransactionConfiguration.swift */,
 				29B933F71F8609FF009FCABB /* PaymentFlow.swift */,
+				299B5E461FD2C87F0051361C /* ConfigureTransactionError.swift */,
+				299B5E481FD2C8900051361C /* ConfigureTransaction.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2037,6 +2043,7 @@
 				296106C41F7640C50006164B /* TokenViewCellViewModel.swift in Sources */,
 				29B9345D1F88459C009FCABB /* SplashViewController.swift in Sources */,
 				29E2E33A1F7A008C000CF94A /* UIView.swift in Sources */,
+				299B5E491FD2C8900051361C /* ConfigureTransaction.swift in Sources */,
 				291795051F95F60100539A30 /* Web3RequestType.swift in Sources */,
 				29C80D511FB67A110037B1E0 /* ArrayResponse.swift in Sources */,
 				290B2B5F1F9177860053C83E /* UIImage.swift in Sources */,
@@ -2065,6 +2072,7 @@
 				2985430F1FC18A4B00CB5081 /* ExchangeViewModel.swift in Sources */,
 				29E14FDB1F7F4F3D00185568 /* Transaction.swift in Sources */,
 				296106C81F7646590006164B /* TokensViewModel.swift in Sources */,
+				299B5E471FD2C87F0051361C /* ConfigureTransactionError.swift in Sources */,
 				615F10561FCBEF2E008A45AF /* OnboardingPageViewModel.swift in Sources */,
 				29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */,
 				29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */,
