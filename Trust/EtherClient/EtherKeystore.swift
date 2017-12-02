@@ -17,6 +17,8 @@ class EtherKeystore: Keystore {
 
     let gethKeyStorage: GethKeyStore
 
+    private let defaultKeychainAccess: KeychainSwiftAccessOptions = .accessibleWhenUnlockedThisDeviceOnly
+
     public init(
         keychain: KeychainSwift = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix),
         keyStoreSubfolder: String = "/keystore"
@@ -34,7 +36,7 @@ class EtherKeystore: Keystore {
 
     var recentlyUsedAccount: Account? {
         set {
-            keychain.set(newValue?.address.address ?? "", forKey: Keys.recentlyUsedAddress)
+            keychain.set(newValue?.address.address ?? "", forKey: Keys.recentlyUsedAddress, withAccess: defaultKeychainAccess)
         }
         get {
             let address = keychain.get(Keys.recentlyUsedAddress)
@@ -256,7 +258,7 @@ class EtherKeystore: Keystore {
 
     @discardableResult
     func setPassword(_ password: String, for account: Account) -> Bool {
-        return keychain.set(password, forKey: account.address.address.lowercased())
+        return keychain.set(password, forKey: account.address.address.lowercased(), withAccess: defaultKeychainAccess)
     }
 
     func getGethAccount(for address: Address) -> GethAccount {
