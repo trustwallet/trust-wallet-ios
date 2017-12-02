@@ -31,6 +31,14 @@ class InCoordinator: Coordinator {
 
     func start() {
         showTabBar(for: account)
+
+        // Check on jailbrake
+        let deviceChecker = CheckDeviceCoordinator(
+            navigationController: navigationController
+        )
+        deviceChecker.start()
+
+        addCoordinator(deviceChecker)
     }
 
     func showTabBar(for account: Account) {
