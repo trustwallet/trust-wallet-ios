@@ -58,7 +58,7 @@ class SettingsViewController: FormViewController {
             +++ Section()
 
             <<< PushRow<String> {
-                $0.title = NSLocalizedString("Settings.RPCServer", value: "RPC Server", comment: "")
+                $0.title = NSLocalizedString("settings.network", value: "Network", comment: "")
                 $0.options = viewModel.servers
                 $0.value = RPCServer(chainID: config.chainID).name
             }.onChange { row in
