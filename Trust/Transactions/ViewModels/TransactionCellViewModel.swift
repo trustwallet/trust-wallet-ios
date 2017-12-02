@@ -80,6 +80,7 @@ struct TransactionCellViewModel {
             let number = BigInt(transaction.value) ?? BigInt()
             return formatter.string(from: number)
         }()
+        guard value != "0" else { return value }
         switch transaction.direction {
         case .incoming: return "+\(value)"
         case .outgoing: return "-\(value)"

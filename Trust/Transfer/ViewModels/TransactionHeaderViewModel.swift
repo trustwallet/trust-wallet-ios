@@ -23,9 +23,17 @@ struct TransactionHeaderViewModel: TransactionHeaderBaseViewModel {
         }
     }
 
+    var valueString: String {
+        guard value.amount != "0" else { return value.amount }
+        switch direction {
+        case .incoming: return "+\(value.amount)"
+        case .outgoing: return "-\(value.amount)"
+        }
+    }
+
     var amountAttributedString: NSAttributedString {
         let amount = NSAttributedString(
-            string: String(value.amount),
+            string: valueString,
             attributes: [
                 .font: UIFont.systemFont(ofSize: 24),
                 .foregroundColor: amountTextColor,
