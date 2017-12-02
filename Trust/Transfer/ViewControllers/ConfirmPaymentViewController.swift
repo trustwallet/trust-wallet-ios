@@ -27,26 +27,11 @@ class ConfirmPaymentViewController: UIViewController {
     }()
     weak var delegate: ConfirmPaymentViewControllerDelegate?
 
-    lazy var configuration: TransactionConfiguration = {
-        switch self.transaction.transferType {
-        case .token:
-            return TransactionConfiguration(
-                speed: TransactionSpeed.custom(
-                    gasPrice: TransactionSpeed.cheap.gasPrice,
-                    gasLimit: 144_000
-                )
-            )
-        case .ether:
-            return TransactionConfiguration()
-        case .exchange:
-            return TransactionConfiguration(
-                speed: TransactionSpeed.custom(
-                    gasPrice: TransactionSpeed.cheap.gasPrice,
-                    gasLimit: 300_000
-                )
-            )
+    var configuration: TransactionConfiguration {
+        didSet {
+            reloadView()
         }
-    }()
+    }
 
     var viewModel: ConfirmPaymentViewModel {
         let currentBalance = Double(session.balance?.amountFull ?? "")
@@ -57,6 +42,8 @@ class ConfirmPaymentViewController: UIViewController {
         )
     }
 
+    var headerViewModel: TransactionHeaderBaseViewModel
+
     init(
         session: WalletSession,
         transaction: UnconfirmedTransaction,
@@ -64,6 +51,8 @@ class ConfirmPaymentViewController: UIViewController {
     ) {
         self.session = session
         self.transaction = transaction
+        self.configuration = transaction.transferType.initialConfiguration
+        self.headerViewModel = headerViewModel
 
         super.init(nibName: nil, bundle: nil)
 
@@ -71,6 +60,13 @@ class ConfirmPaymentViewController: UIViewController {
         stackViewController.view.backgroundColor = .white
 
         navigationItem.title = NSLocalizedString("confirmPayment.title", value: "Confirm", comment: "")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(edit))
+
+        reloadView()
+    }
+
+    private func reloadView() {
+        stackViewController.items.forEach { stackViewController.removeItem($0) }
 
         let items: [UIView] = [
             .spacer(),
@@ -103,6 +99,15 @@ class ConfirmPaymentViewController: UIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc func edit() {
+        let controller = ConfigureTransactionViewController(
+            configuration: configuration,
+            config: session.config
+        )
+        controller.delegate = self
+        navigationController?.pushViewController(controller, animated: true)
     }
 
     @objc func send() {
@@ -158,6 +163,36 @@ class ConfirmPaymentViewController: UIViewController {
                     }
                     self.hideLoading()
                 }
+            )
+        }
+    }
+}
+
+extension ConfirmPaymentViewController: ConfigureTransactionViewControllerDelegate {
+    func didEdit(configuration: TransactionConfiguration, in viewController: ConfigureTransactionViewController) {
+        self.configuration = configuration
+        navigationController?.popViewController(animated: true)
+    }
+}
+
+private extension TransferType {
+    var initialConfiguration: TransactionConfiguration {
+        switch self {
+        case .token:
+            return TransactionConfiguration(
+                speed: TransactionSpeed.custom(
+                    gasPrice: TransactionSpeed.cheap.gasPrice,
+                    gasLimit: 144_000
+                )
+            )
+        case .ether:
+            return TransactionConfiguration()
+        case .exchange:
+            return TransactionConfiguration(
+                speed: TransactionSpeed.custom(
+                    gasPrice: TransactionSpeed.cheap.gasPrice,
+                    gasLimit: 300_000
+                )
             )
         }
     }
