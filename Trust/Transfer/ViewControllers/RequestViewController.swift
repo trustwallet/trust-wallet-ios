@@ -66,6 +66,9 @@ class RequestViewController: UIViewController {
         NSLayoutConstraint.activate([
             copyButton.trailingAnchor.constraint(equalTo: stackViewController.stackView.layoutMarginsGuide.trailingAnchor),
             copyButton.leadingAnchor.constraint(equalTo: stackViewController.stackView.layoutMarginsGuide.leadingAnchor),
+
+            imageView.widthAnchor.constraint(equalToConstant: 260),
+            imageView.heightAnchor.constraint(equalToConstant: 260),
         ])
 
         changeQRCode(value: 0)
@@ -79,7 +82,7 @@ class RequestViewController: UIViewController {
 
         stackViewController.stackView.spacing = 20
         stackViewController.stackView.alignment = .center
-        stackViewController.stackView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
+        stackViewController.stackView.layoutMargins = UIEdgeInsets(top: 20, left: 15, bottom: 0, right: 15)
         stackViewController.stackView.isLayoutMarginsRelativeArrangement = true
     }
 
@@ -115,7 +118,7 @@ class RequestViewController: UIViewController {
 
         if let filter = CIFilter(name: "CIQRCodeGenerator") {
             filter.setValue(data, forKey: "inputMessage")
-            let transform = CGAffineTransform(scaleX: 6, y: 6)
+            let transform = CGAffineTransform(scaleX: 7, y: 7)
             if let output = filter.outputImage?.transformed(by: transform) {
                 return UIImage(ciImage: output)
             }
