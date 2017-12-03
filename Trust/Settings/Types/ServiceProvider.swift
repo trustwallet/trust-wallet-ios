@@ -21,7 +21,7 @@ enum URLServiceProvider {
         case .twitter:
             return URL(string: "twitter://user?screen_name=\(Constants.twitterUsername)")!
         case .telegram:
-            return URL(string: "tg:resolve?domain=\(Constants.telegramUsername)")
+            return URL(string: "tg://resolve?domain=\(Constants.telegramUsername)")
         case .facebook:
             return URL(string: "fb://profile/\(Constants.facebookUsername)")
         }
