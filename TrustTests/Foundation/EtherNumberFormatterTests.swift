@@ -65,4 +65,14 @@ class EtherNumberFormatterTests: XCTestCase {
         let number = BigInt("123456789012345678901")!
         XCTAssertEqual(shortFormatter.string(from: number), "123.457")
     }
+
+    func testRoundNegative() {
+        let number = BigInt("-123456789012345678901")!
+        XCTAssertEqual(shortFormatter.string(from: number), "-123.457")
+    }
+
+    func testDecimals() {
+        let number = BigInt("987654321")!
+        XCTAssertEqual(shortFormatter.string(from: number, decimals: 4), "98,765.432")
+    }
 }
