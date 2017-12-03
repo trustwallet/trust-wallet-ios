@@ -39,12 +39,24 @@ final class EtherNumberFormatter {
     ///   - units: units to use
     /// - Returns: string representation
     func string(from number: BigInt, units: EthereumUnit = .ether) -> String {
+        let decimals = Int(log10(Double(units.rawValue)))
+        return string(from: number, decimals: decimals)
+    }
+
+    /// Formats a `BigInt` for displaying to the user.
+    ///
+    /// - Parameters:
+    ///   - number: number to format
+    ///   - decimals: decimal places used for scaling values.
+    /// - Returns: string representation
+    func string(from number: BigInt, decimals: Int) -> String {
         precondition(minimumFractionDigits >= 0)
         precondition(maximumFractionDigits >= 0)
 
-        let (integerPart, remainder) = number.quotientAndRemainder(dividingBy: BigInt(units.rawValue))
+        let dividend = BigInt(10).power(decimals)
+        let (integerPart, remainder) = number.quotientAndRemainder(dividingBy: dividend)
         let integerString = self.integerString(from: integerPart)
-        let fractionalString = self.fractionalString(from: BigInt(sign: .plus, magnitude: remainder.magnitude), units: units)
+        let fractionalString = self.fractionalString(from: BigInt(sign: .plus, magnitude: remainder.magnitude), decimals: decimals)
         if fractionalString.isEmpty {
             return integerString
         }
@@ -61,28 +73,27 @@ final class EtherNumberFormatter {
         return string
     }
 
-    private func fractionalString(from number: BigInt, units: EthereumUnit) -> String {
+    private func fractionalString(from number: BigInt, decimals: Int) -> String {
         var number = number
-        let decimalPlaces = Int(log10(Double(units.rawValue)))
         let digits = number.description.count
 
-        if number == 0 || decimalPlaces - digits > maximumFractionDigits {
+        if number == 0 || decimals - digits > maximumFractionDigits {
             // Value is smaller than can be represented with `maximumFractionDigits`
             return String(repeating: "0", count: minimumFractionDigits)
         }
 
-        if decimalPlaces < minimumFractionDigits {
-            number *= BigInt(10).power(minimumFractionDigits - decimalPlaces)
+        if decimals < minimumFractionDigits {
+            number *= BigInt(10).power(minimumFractionDigits - decimals)
         }
-        if decimalPlaces > maximumFractionDigits {
-            number /= BigInt(10).power(decimalPlaces - maximumFractionDigits - 1)
+        if decimals > maximumFractionDigits {
+            number /= BigInt(10).power(decimals - maximumFractionDigits - 1)
             number = (number + 5) / 10 // Make sure that the result is rounded
         }
 
         var string = number.description
-        if digits < decimalPlaces {
+        if digits < decimals {
             // Pad with zeros at the left if necessary
-            string = String(repeating: "0", count: decimalPlaces - digits) + string
+            string = String(repeating: "0", count: decimals - digits) + string
         }
 
         // Remove extra zeros after the decimal point.
