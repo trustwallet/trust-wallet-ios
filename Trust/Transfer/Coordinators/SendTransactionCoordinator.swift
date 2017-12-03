@@ -122,10 +122,11 @@ class SendTransactionCoordinator {
             return needsApproval ? 1 : 0
         }()
 
+        let amountToSend = (from.amount * pow(10, from.token.decimals).doubleValue).description
+
         // approve amount
         if needsApproval {
             // ApproveERC20Encode
-            let amountToSend = (from.amount * pow(10, from.token.decimals).doubleValue).description
             let approveRequest = ApproveERC20Encode(address: exchangeConfig.contract, amount: amountToSend)
             session.web3.request(request: approveRequest) { result in
                 switch result {
@@ -137,13 +138,13 @@ class SendTransactionCoordinator {
                         configuration: configuration,
                         completion: completion
                     )
-                    self.makeTrade(from: from, to: to, configuration: configuration, tradeNonce: tradeNonce, completion: completion)
+                    self.makeTrade(from: from, to: to, amountToSend: amountToSend, configuration: configuration, tradeNonce: tradeNonce, completion: completion)
                 case .failure(let error):
                     completion(.failure(AnyError(error)))
                 }
             }
         } else {
-            self.makeTrade(from: from, to: to, configuration: configuration, tradeNonce: tradeNonce, completion: completion)
+            self.makeTrade(from: from, to: to, amountToSend: amountToSend, configuration: configuration, tradeNonce: tradeNonce, completion: completion)
         }
 
         //Execute trade request
@@ -152,6 +153,7 @@ class SendTransactionCoordinator {
     private func makeTrade(
         from: SubmitExchangeToken,
         to: SubmitExchangeToken,
+        amountToSend: String,
         configuration: TransactionConfiguration,
         tradeNonce: Int,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
@@ -165,7 +167,6 @@ class SendTransactionCoordinator {
         let dest = to.token.address
         let destAddress: Address = session.account.address
 
-        let amountToSend = (from.amount * pow(10, from.token.decimals).doubleValue).description
         let request = ContractExchangeTrade(
             source: source.address,
             amount: amountToSend,
