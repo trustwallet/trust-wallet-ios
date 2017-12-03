@@ -8,6 +8,8 @@ class CheckDeviceCoordinator: Coordinator {
 
     let navigationController: UINavigationController
 
+    let jailbrakeChecker: JailbrakeCheckerProtocol
+
     lazy var alertViewController: UIAlertController = {
         let controller = UIAlertController(
             title: NSLocalizedString("jailbrake.title", value: "DEVICE SECURITY COMPROMISED", comment: ""),
@@ -19,36 +21,22 @@ class CheckDeviceCoordinator: Coordinator {
             preferredStyle: UIAlertControllerStyle.alert
         )
 
-        controller.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.default))
+        controller.addAction(UIAlertAction(title: NSLocalizedString("jailbrake.submit", value: "Got it", comment: ""), style: .default))
 
         return controller
     }()
 
     init(
-        navigationController: UINavigationController = NavigationController()
+        navigationController: UINavigationController,
+        jailbrakeChecker: JailbrakeCheckerProtocol
     ) {
         self.navigationController = navigationController
+        self.jailbrakeChecker = jailbrakeChecker
     }
 
     func start() {
-        if isJailbroken() {
-            navigationController.present(alertViewController, animated: true, completion: {
-                // TODO what is next step?
-                return
-            })
+        if jailbrakeChecker.isJailbroken() {
+            navigationController.present(alertViewController, animated: true, completion: nil)
         }
-    }
-
-    func isJailbroken() -> Bool {
-        if TARGET_IPHONE_SIMULATOR == 1 {
-            return false
-        }
-
-        return FileManager.default.fileExists(atPath: "/Applications/Cydia.app")
-            || FileManager.default.fileExists(atPath: "/Library/MobileSubstrate/MobileSubstrate.dylib")
-            || FileManager.default.fileExists(atPath: "/bin/bash")
-            || FileManager.default.fileExists(atPath: "/usr/sbin/sshd")
-            || FileManager.default.fileExists(atPath: "/etc/apt")
-            || FileManager.default.fileExists(atPath: "/private/var/lib/apt/")
     }
 }

@@ -32,13 +32,8 @@ class InCoordinator: Coordinator {
     func start() {
         showTabBar(for: account)
 
-        // Check on jailbrake
-        let deviceChecker = CheckDeviceCoordinator(
-            navigationController: navigationController
-        )
-        deviceChecker.start()
-
-        addCoordinator(deviceChecker)
+        // Check device on vulnerability
+        checkDevice()
     }
 
     func showTabBar(for account: Account) {
@@ -112,6 +107,18 @@ class InCoordinator: Coordinator {
         coordinator.stop()
         removeCoordinator(coordinator)
         showTabBar(for: account)
+    }
+
+    // Checks device on vulnerability
+    func checkDevice() {
+        let deviceChecker = CheckDeviceCoordinator(
+            navigationController: navigationController,
+            jailbrakeChecker: JailbrakeChecker()
+        )
+
+        deviceChecker.start()
+
+        addCoordinator(deviceChecker)
     }
 }
 
