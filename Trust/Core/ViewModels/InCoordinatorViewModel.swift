@@ -25,9 +25,6 @@ struct InCoordinatorViewModel {
     }
 
     var canActivateDebugMode: Bool {
-        switch config.server {
-        case .main, .oraclesTest: return false
-        case .kovan: return true
-        }
+        return config.server.isTestNetwork
     }
 }
