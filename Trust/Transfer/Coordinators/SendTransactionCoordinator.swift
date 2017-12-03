@@ -16,6 +16,7 @@ class SendTransactionCoordinator {
     let keystore = EtherKeystore()
     let config = Config()
     let session: WalletSession
+    let formatter = EtherNumberFormatter.full
 
     init(
         session: WalletSession
@@ -31,8 +32,7 @@ class SendTransactionCoordinator {
         configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
-        let amountDouble = value * Double(EthereumUnit.ether.rawValue)
-        let amount = BigInt(amountDouble)
+        let amount = formatter.number(from: String(value)) ?? BigInt(0) // TODO: send should take a BigInt
 
         let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: session.account.address.address)))
         Session.send(request) { [weak self] result in
