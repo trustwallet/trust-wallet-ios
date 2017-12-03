@@ -52,15 +52,16 @@ class InCoordinator: Coordinator {
         transactionCoordinator.start()
         addCoordinator(transactionCoordinator)
 
-        let tabBarController = UITabBarController()
+        let tabBarController = TabBarController()
         tabBarController.viewControllers = [
             transactionCoordinator.navigationController,
         ]
         tabBarController.tabBar.isTranslucent = false
-
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(activateDebug))
-        gesture.numberOfTapsRequired = 6
-        tabBarController.tabBar.addGestureRecognizer(gesture)
+        tabBarController.didShake = { [weak self] in
+            if inCoordinatorViewModel.canActivateDebugMode {
+                self?.activateDebug()
+            }
+        }
 
         if inCoordinatorViewModel.tokensAvailable {
             let tokenCoordinator = TokensCoordinator(

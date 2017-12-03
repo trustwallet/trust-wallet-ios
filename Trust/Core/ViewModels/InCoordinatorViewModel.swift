@@ -23,4 +23,11 @@ struct InCoordinatorViewModel {
         case .kovan: return config.isDebugEnabled
         }
     }
+
+    var canActivateDebugMode: Bool {
+        switch config.server {
+        case .main, .oraclesTest: return false
+        case .kovan: return true
+        }
+    }
 }
