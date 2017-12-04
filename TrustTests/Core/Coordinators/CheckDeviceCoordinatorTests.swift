@@ -9,7 +9,7 @@ class CheckDeviceCoordinatorTests: XCTestCase {
 
         let coordinator = CheckDeviceCoordinator(
             navigationController: navigationController,
-            jailbrakeChecker: FakeJailbrakeChecker(jailbroken: true)
+            jailbreakChecker: FakeJailbreakChecker(jailbroken: true)
         )
 
         coordinator.start()
@@ -22,7 +22,7 @@ class CheckDeviceCoordinatorTests: XCTestCase {
 
         let coordinator = CheckDeviceCoordinator(
             navigationController: navigationController,
-            jailbrakeChecker: FakeJailbrakeChecker(jailbroken: false)
+            jailbreakChecker: FakeJailbreakChecker(jailbroken: false)
         )
 
         coordinator.start()

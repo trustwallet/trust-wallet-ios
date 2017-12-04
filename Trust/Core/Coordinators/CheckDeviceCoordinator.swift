@@ -8,34 +8,34 @@ class CheckDeviceCoordinator: Coordinator {
 
     let navigationController: UINavigationController
 
-    let jailbrakeChecker: JailbreakeChecker
+    let jailbreakChecker: JailbreakChecker
 
     lazy var alertViewController: UIAlertController = {
         let controller = UIAlertController(
-            title: NSLocalizedString("jailbrake.title", value: "DEVICE SECURITY COMPROMISED", comment: ""),
+            title: NSLocalizedString("jailbreak.title", value: "DEVICE SECURITY COMPROMISED", comment: ""),
             message: NSLocalizedString(
-                "jailbrake.message",
+                "jailbreak.message",
                 value: "Any 'jailbreak' app can access Trust's keychain data and steal your bitcoin! Wipe this wallet immediately and restore on a secure device",
                 comment: ""
             ),
             preferredStyle: UIAlertControllerStyle.alert
         )
 
-        controller.addAction(UIAlertAction(title: NSLocalizedString("jailbrake.submit", value: "Got it", comment: ""), style: .default))
+        controller.addAction(UIAlertAction(title: NSLocalizedString("jailbreak.submit", value: "Got it", comment: ""), style: .default))
 
         return controller
     }()
 
     init(
         navigationController: UINavigationController,
-        jailbrakeChecker: JailbreakeChecker
+        jailbreakChecker: JailbreakChecker
     ) {
         self.navigationController = navigationController
-        self.jailbrakeChecker = jailbrakeChecker
+        self.jailbreakChecker = jailbreakChecker
     }
 
     func start() {
-        if jailbrakeChecker.isJailbroken() {
+        if jailbreakChecker.isJailbroken() {
             navigationController.present(alertViewController, animated: true, completion: nil)
         }
     }

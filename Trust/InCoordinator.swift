@@ -113,7 +113,7 @@ class InCoordinator: Coordinator {
     func checkDevice() {
         let deviceChecker = CheckDeviceCoordinator(
             navigationController: navigationController,
-            jailbrakeChecker: DeviceChecker()
+            jailbreakChecker: DeviceChecker()
         )
 
         deviceChecker.start()

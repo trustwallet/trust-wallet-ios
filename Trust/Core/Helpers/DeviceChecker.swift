@@ -2,7 +2,7 @@
 
 import Foundation
 
-class DeviceChecker: JailbreakeChecker {
+class DeviceChecker: JailbreakChecker {
     func isJailbroken() -> Bool {
         if TARGET_IPHONE_SIMULATOR == 1 {
             return false

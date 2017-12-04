@@ -3,7 +3,7 @@
 import Foundation
 @testable import Trust
 
-class FakeJailbrakeChecker: JailbreakeChecker {
+class FakeJailbreakChecker: JailbreakChecker {
     let jailbroken: Bool
 
     init(jailbroken: Bool) {
