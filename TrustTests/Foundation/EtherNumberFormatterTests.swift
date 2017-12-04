@@ -75,4 +75,24 @@ class EtherNumberFormatterTests: XCTestCase {
         let number = BigInt("987654321")!
         XCTAssertEqual(shortFormatter.string(from: number, decimals: 4), "98,765.432")
     }
+
+    func testFractionalToNumber() {
+        let input = "0.123456789012345678"
+        XCTAssertEqual(fullFormatter.number(from: input)?.description, "123456789012345678")
+    }
+
+    func testLargeNumber() {
+        let input = "1234567890123456789012345678901.123456789012345678"
+        XCTAssertEqual(fullFormatter.number(from: input)?.description, "1234567890123456789012345678901123456789012345678")
+    }
+
+    func testUnrepresentableNumber() {
+        let input = "0.123456789012345678901"
+        XCTAssertNil(fullFormatter.number(from: input))
+    }
+
+    func testInvalidNumber() {
+        let input = "A0.190268247.487754"
+        XCTAssertNil(fullFormatter.number(from: input))
+    }
 }

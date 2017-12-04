@@ -9,18 +9,10 @@ struct ExchangeTokenRate {
 }
 
 struct TokensFormatter {
-    static let numberFormatter: NumberFormatter = {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.minimumFractionDigits = 3
-        numberFormatter.maximumFractionDigits = 3
-        numberFormatter.usesSignificantDigits = true
-        return numberFormatter
-    }()
+    static let formatter = EtherNumberFormatter.full
 
     static func from(token: ExchangeToken, amount: String) -> String? {
-        let res = pow(10.0, Double(token.decimals))
-        let number = NSNumber(value: (Double(amount) ?? 0) / res)
-        return TokensFormatter.numberFormatter.string(from: number)
+        return formatter.number(from: amount, decimals: token.decimals)?.description
     }
 }
 
