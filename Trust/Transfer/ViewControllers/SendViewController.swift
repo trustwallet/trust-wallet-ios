@@ -7,6 +7,7 @@ import Eureka
 import JSONRPCKit
 import APIKit
 import QRCodeReaderViewController
+import BigInt
 
 protocol SendViewControllerDelegate: class {
     func didPressConfirm(transaction: UnconfirmedTransaction, transferType: TransferType, in viewController: SendViewController)
@@ -129,7 +130,16 @@ class SendViewController: FormViewController {
 
         let address = Address(address: addressString)
 
-        guard let value = EtherNumberFormatter.full.number(from: amountString, units: .ether) else {
+        let parsedValue: BigInt? = {
+            switch transferType {
+            case .ether, .exchange: // exchange dones't really matter here
+                return EtherNumberFormatter.full.number(from: amountString, units: .ether)
+            case .token(let token):
+                return EtherNumberFormatter.full.number(from: amountString, decimals: token.decimals)
+            }
+        }()
+
+        guard let value = parsedValue else {
             return displayError(error: SendInputErrors.wrongInput)
         }
 

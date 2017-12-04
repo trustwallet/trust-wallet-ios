@@ -51,12 +51,10 @@ class SendTransactionCoordinator {
         contract: Address,
         to: Address,
         amount: BigInt,
-        decimals: Int,
         configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
-        let amountToSend = amount.description
-        session.web3.request(request: ContractERC20Transfer(amount: amountToSend, address: to.address)) { result in
+        session.web3.request(request: ContractERC20Transfer(amount: amount, address: to.address)) { result in
             switch result {
             case .success(let res):
                 self.send(

@@ -138,7 +138,6 @@ class ConfirmPaymentViewController: UIViewController {
                 contract: token.address,
                 to: transaction.address,
                 amount: amount,
-                decimals: token.decimals,
                 configuration: self.configuration
             ) { [weak self] result in
                 guard let `self` = self else { return }
