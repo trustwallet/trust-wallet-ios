@@ -8,7 +8,7 @@ struct AccountViewModel {
     let account: Account
     let current: Account?
 
-    init(account: Account, current: Account? = EtherKeystore.current) {
+    init(account: Account, current: Account?) {
         self.account = account
         self.current = current
     }

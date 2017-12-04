@@ -25,11 +25,11 @@ class AppCoordinator: NSObject, Coordinator {
 
     init(
         window: UIWindow,
-        keystore: Keystore = EtherKeystore(),
+        keystore: Keystore,
         navigationController: UINavigationController = NavigationController()
     ) {
-        self.keystore = keystore
         self.navigationController = navigationController
+        self.keystore = keystore
         super.init()
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
@@ -95,6 +95,7 @@ class AppCoordinator: NSObject, Coordinator {
     func showInitialWalletCoordinator(entryPoint: WalletEntryPoint) {
         let coordinator = InitialWalletCreationCoordinator(
             navigationController: navigationController,
+            keystore: keystore,
             entryPoint: entryPoint
         )
         coordinator.delegate = self

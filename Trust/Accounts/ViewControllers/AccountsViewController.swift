@@ -31,11 +31,12 @@ class AccountsViewController: UITableViewController {
         }
     }
 
-    let current = EtherKeystore.current
+    private let keystore: Keystore
 
-    private lazy var keystore = EtherKeystore()
-
-    init() {
+    init(
+        keystore: Keystore
+    ) {
+        self.keystore = keystore
         super.init(style: .grouped)
         fetch()
     }
@@ -71,12 +72,12 @@ class AccountsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let account = self.account(for: indexPath)
         let cell = AccountViewCell(style: .default, reuseIdentifier: AccountViewCell.identifier)
-        cell.configure(viewModel: AccountViewModel(account: account, current: current))
+        cell.configure(viewModel: AccountViewModel(account: account, current: EtherKeystore.current))
         return cell
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return allowsAccountDeletion && (current != viewModel.accounts[indexPath.row] || viewModel.accounts.count == 1)
+        return allowsAccountDeletion && (EtherKeystore.current != viewModel.accounts[indexPath.row] || viewModel.accounts.count == 1)
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

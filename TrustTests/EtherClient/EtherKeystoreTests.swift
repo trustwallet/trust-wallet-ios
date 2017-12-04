@@ -78,7 +78,7 @@ class EtherKeystoreTests: XCTestCase {
             return XCTFail()
         }
 
-        guard case .failure(KeyStoreError.duplicateAccount) = result2 else {
+        guard case .failure(KeystoreError.duplicateAccount) = result2 else {
             return XCTFail()
         }
 

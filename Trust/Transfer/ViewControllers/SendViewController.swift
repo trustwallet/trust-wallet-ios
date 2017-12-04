@@ -18,7 +18,6 @@ class SendViewController: FormViewController {
     private lazy var viewModel: SendViewModel = {
         return .init(transferType: self.transferType, config: Config())
     }()
-    private let keystore = EtherKeystore()
     weak var delegate: SendViewControllerDelegate?
 
     struct Values {
@@ -36,7 +35,10 @@ class SendViewController: FormViewController {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
     }
 
-    init(session: WalletSession, transferType: TransferType = .ether(destination: .none)) {
+    init(
+        session: WalletSession,
+        transferType: TransferType = .ether(destination: .none)
+    ) {
         self.session = session
         self.transferType = transferType
 

@@ -13,15 +13,17 @@ struct SentTransaction {
 
 class SendTransactionCoordinator {
 
-    let keystore = EtherKeystore()
+    private let keystore: Keystore
     let config = Config()
     let session: WalletSession
     let formatter = EtherNumberFormatter.full
 
     init(
-        session: WalletSession
+        session: WalletSession,
+        keystore: Keystore
     ) {
         self.session = session
+        self.keystore = keystore
     }
 
     func send(

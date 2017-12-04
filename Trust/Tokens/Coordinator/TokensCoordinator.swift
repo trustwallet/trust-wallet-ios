@@ -7,6 +7,7 @@ class TokensCoordinator: Coordinator {
 
     let navigationController: UINavigationController
     let session: WalletSession
+    let keystore: Keystore
     var coordinators: [Coordinator] = []
 
     lazy var rootViewController: TokensViewController = {
@@ -15,11 +16,13 @@ class TokensCoordinator: Coordinator {
 
     init(
         navigationController: UINavigationController = NavigationController(),
-        session: WalletSession
+        session: WalletSession,
+        keystore: Keystore
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
+        self.keystore = keystore
     }
 
     func start() {
@@ -39,7 +42,8 @@ class TokensCoordinator: Coordinator {
     func showPaymentFlow(for type: PaymentFlow, session: WalletSession) {
         let coordinator = PaymentCoordinator(
             flow: type,
-            session: session
+            session: session,
+            keystore: keystore
         )
         coordinator.delegate = self
         coordinator.start()

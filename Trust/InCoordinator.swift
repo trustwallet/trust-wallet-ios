@@ -65,7 +65,8 @@ class InCoordinator: Coordinator {
 
         if inCoordinatorViewModel.tokensAvailable {
             let tokenCoordinator = TokensCoordinator(
-                session: session
+                session: session,
+                keystore: keystore
             )
             tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Tokens", image: R.image.coins(), selectedImage: nil)
             tokenCoordinator.start()
@@ -74,7 +75,7 @@ class InCoordinator: Coordinator {
         }
 
         if inCoordinatorViewModel.exchangeAvailable {
-            let exchangeCoordinator = ExchangeCoordinator(session: session)
+            let exchangeCoordinator = ExchangeCoordinator(session: session, keystore: keystore)
             exchangeCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Exchange", image: R.image.exchange(), selectedImage: nil)
             exchangeCoordinator.start()
             addCoordinator(exchangeCoordinator)

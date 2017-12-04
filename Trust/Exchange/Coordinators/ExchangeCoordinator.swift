@@ -7,6 +7,7 @@ class ExchangeCoordinator: Coordinator {
 
     let navigationController: UINavigationController
     let session: WalletSession
+    let keystore: Keystore
 
     lazy var rootViewController: UIViewController = {
         let controller = ExchangeViewController(
@@ -19,10 +20,12 @@ class ExchangeCoordinator: Coordinator {
 
     init(
         navigationController: UINavigationController = UINavigationController(),
-        session: WalletSession
+        session: WalletSession,
+        keystore: Keystore
     ) {
         self.navigationController = navigationController
         self.session = session
+        self.keystore = keystore
     }
 
     func start() {
@@ -48,6 +51,7 @@ extension ExchangeCoordinator: ExchangeViewControllerDelegate {
 
         let controller = ConfirmPaymentViewController(
             session: session,
+            keystore: keystore,
             transaction: transaction,
             headerViewModel: viewModel
         )

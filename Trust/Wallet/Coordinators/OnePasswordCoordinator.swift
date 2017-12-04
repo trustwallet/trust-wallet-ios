@@ -7,9 +7,9 @@ import Result
 
 class OnePasswordCoordinator {
 
-    let keystore: EtherKeystore
+    let keystore: Keystore
 
-    init(keystore: EtherKeystore) {
+    init(keystore: Keystore) {
         self.keystore = keystore
     }
 

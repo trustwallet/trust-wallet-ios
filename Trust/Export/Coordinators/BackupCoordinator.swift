@@ -12,15 +12,17 @@ class BackupCoordinator: Coordinator {
 
     let navigationController: UINavigationController
     weak var delegate: BackupCoordinatorDelegate?
-    let keystore = EtherKeystore()
+    let keystore: Keystore
     let account: Account
     var coordinators: [Coordinator] = []
 
     init(
         navigationController: UINavigationController,
+        keystore: Keystore,
         account: Account
     ) {
         self.navigationController = navigationController
+        self.keystore = keystore
         self.account = account
     }
 
