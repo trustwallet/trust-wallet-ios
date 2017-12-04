@@ -13,10 +13,11 @@ protocol AccountsCoordinatorDelegate: class {
 class AccountsCoordinator: Coordinator {
 
     let navigationController: UINavigationController
+    let keystore: Keystore
     var coordinators: [Coordinator] = []
 
     lazy var accountsViewController: AccountsViewController = {
-        let controller = AccountsViewController()
+        let controller = AccountsViewController(keystore: keystore)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add))
         controller.allowsAccountDeletion = true
@@ -26,9 +27,13 @@ class AccountsCoordinator: Coordinator {
 
     weak var delegate: AccountsCoordinatorDelegate?
 
-    init(navigationController: UINavigationController) {
+    init(
+        navigationController: UINavigationController,
+        keystore: Keystore
+    ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
+        self.keystore = keystore
     }
 
     func start() {
@@ -44,7 +49,7 @@ class AccountsCoordinator: Coordinator {
     }
 
     func showCreateWallet() {
-        let coordinator = WalletCoordinator()
+        let coordinator = WalletCoordinator(keystore: keystore)
         coordinator.delegate = self
         addCoordinator(coordinator)
         coordinator.start(.welcome)

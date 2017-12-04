@@ -12,11 +12,12 @@ protocol ConfirmPaymentViewControllerDelegate: class {
 
 class ConfirmPaymentViewController: UIViewController {
 
+    private let keystore: Keystore
     let transaction: UnconfirmedTransaction
     let session: WalletSession
     let stackViewController = StackViewController()
     lazy var sendTransactionCoordinator = {
-        return SendTransactionCoordinator(session: self.session)
+        return SendTransactionCoordinator(session: self.session, keystore: keystore)
     }()
     lazy var submitButton: UIButton = {
         let button = Button(size: .large, style: .solid)
@@ -45,10 +46,12 @@ class ConfirmPaymentViewController: UIViewController {
 
     init(
         session: WalletSession,
+        keystore: Keystore,
         transaction: UnconfirmedTransaction,
         headerViewModel: TransactionHeaderBaseViewModel
     ) {
         self.session = session
+        self.keystore = keystore
         self.transaction = transaction
         self.configuration = transaction.transferType.initialConfiguration
         self.headerViewModel = headerViewModel

@@ -79,7 +79,7 @@ class TransactionCoordinator: Coordinator {
     }
 
     @objc func showSettings() {
-        let coordinator = SettingsCoordinator()
+        let coordinator = SettingsCoordinator(keystore: keystore)
         coordinator.delegate = self
         coordinator.start()
         addCoordinator(coordinator)
@@ -104,7 +104,8 @@ class TransactionCoordinator: Coordinator {
     func showPaymentFlow(for type: PaymentFlow, session: WalletSession) {
         let coordinator = PaymentCoordinator(
             flow: type,
-            session: session
+            session: session,
+            keystore: keystore
         )
         coordinator.delegate = self
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
@@ -134,8 +135,10 @@ class TransactionCoordinator: Coordinator {
     }
 
     @objc func showAccounts() {
-        let nav = NavigationController()
-        let coordinator = AccountsCoordinator(navigationController: nav)
+        let coordinator = AccountsCoordinator(
+            navigationController: NavigationController(),
+            keystore: keystore
+        )
         coordinator.delegate = self
         coordinator.start()
         addCoordinator(coordinator)

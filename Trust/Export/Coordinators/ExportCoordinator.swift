@@ -12,11 +12,11 @@ protocol ExportCoordinatorDelegate: class {
 class ExportCoordinator: Coordinator {
 
     let navigationController: UINavigationController
+    let keystore: Keystore
     weak var delegate: ExportCoordinatorDelegate?
-    let keystore = EtherKeystore()
     var coordinators: [Coordinator] = []
     lazy var accountViewController: AccountsViewController = {
-        let controller = AccountsViewController()
+        let controller = AccountsViewController(keystore: keystore)
         controller.headerTitle = "Select Account to Backup"
         controller.delegate = self
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
@@ -24,10 +24,12 @@ class ExportCoordinator: Coordinator {
     }()
 
     init(
-        navigationController: UINavigationController = NavigationController()
+        navigationController: UINavigationController = NavigationController(),
+        keystore: Keystore
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
+        self.keystore = keystore
     }
 
     func start() {
@@ -45,6 +47,7 @@ class ExportCoordinator: Coordinator {
     func export(for account: Account) {
         let coordinator = BackupCoordinator(
             navigationController: navigationController,
+            keystore: keystore,
             account: account
         )
         coordinator.delegate = self

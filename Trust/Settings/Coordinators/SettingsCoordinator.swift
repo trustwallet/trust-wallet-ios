@@ -11,16 +11,19 @@ protocol SettingsCoordinatorDelegate: class {
 class SettingsCoordinator: Coordinator {
 
     let navigationController: UINavigationController
+    let keystore: Keystore
     weak var delegate: SettingsCoordinatorDelegate?
 
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
     var coordinators: [Coordinator] = []
 
     init(
-        navigationController: UINavigationController = NavigationController()
+        navigationController: UINavigationController = NavigationController(),
+        keystore: Keystore
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
+        self.keystore = keystore
     }
 
     func start() {
@@ -40,7 +43,7 @@ class SettingsCoordinator: Coordinator {
     }
 
     @objc func export(in viewController: UIViewController) {
-        let coordinator = ExportCoordinator()
+        let coordinator = ExportCoordinator(keystore: keystore)
         coordinator.delegate = self
         coordinator.start()
         addCoordinator(coordinator)

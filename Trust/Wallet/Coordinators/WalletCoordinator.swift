@@ -13,12 +13,12 @@ class WalletCoordinator: Coordinator {
     let navigationController: UINavigationController
     weak var delegate: WalletCoordinatorDelegate?
     var entryPoint: WalletEntryPoint?
-    private let keystore: EtherKeystore
+    let keystore: Keystore
     var coordinators: [Coordinator] = []
 
     init(
         navigationController: UINavigationController = NavigationController(),
-        keystore: EtherKeystore = EtherKeystore()
+        keystore: Keystore
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
@@ -34,7 +34,8 @@ class WalletCoordinator: Coordinator {
             controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
             navigationController.viewControllers = [controller]
         case .importWallet:
-            let controller: ImportWalletViewController = .make(delegate: self)
+            let controller = ImportWalletViewController(keystore: keystore)
+            controller.delegate = self
             controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
             navigationController.viewControllers = [controller]
         case .createInstantWallet:
@@ -43,7 +44,8 @@ class WalletCoordinator: Coordinator {
     }
 
     func pushImportWallet() {
-        let controller: ImportWalletViewController = .make(delegate: self)
+        let controller = ImportWalletViewController(keystore: keystore)
+        controller.delegate = self
         navigationController.pushViewController(controller, animated: true)
     }
 
@@ -81,6 +83,7 @@ class WalletCoordinator: Coordinator {
     func backup(account: Account) {
         let coordinator = BackupCoordinator(
             navigationController: navigationController,
+            keystore: keystore,
             account: account
         )
         coordinator.delegate = self
@@ -135,13 +138,5 @@ extension WalletCoordinator: BackupCoordinatorDelegate {
     func didFinish(account: Account, in coordinator: BackupCoordinator) {
         removeCoordinator(coordinator)
         didCreateAccount(account: account)
-    }
-}
-
-extension ImportWalletViewController {
-    static func make(delegate: ImportWalletViewControllerDelegate? = .none) -> ImportWalletViewController {
-        let controller = ImportWalletViewController()
-        controller.delegate = delegate
-        return controller
     }
 }
