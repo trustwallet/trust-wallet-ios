@@ -4,7 +4,7 @@
 devices([
   #{}"iPhone 7",
   "iPhone 7 Plus",
-  "iPhone X",
+  #"iPhone X",
   #{}"iPhone 5",
   "iPad Pro (12.9-inch)",
   #{}"iPad Pro (9.7-inch)",
