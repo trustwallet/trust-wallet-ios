@@ -15,7 +15,7 @@ enum TransactionSpeed {
         case .fast:
             return 6_000_000_000
         case .regular:
-            return 1_000_000_000
+            return 2_000_000_000
         case .cheap:
             return 1_000_000_000
         case .custom(let gasPrice, _):
