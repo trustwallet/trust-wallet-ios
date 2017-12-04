@@ -8,7 +8,7 @@ class CheckDeviceCoordinator: Coordinator {
 
     let navigationController: UINavigationController
 
-    let jailbrakeChecker: JailbrakeCheckerProtocol
+    let jailbrakeChecker: JailbreakeChecker
 
     lazy var alertViewController: UIAlertController = {
         let controller = UIAlertController(
@@ -28,7 +28,7 @@ class CheckDeviceCoordinator: Coordinator {
 
     init(
         navigationController: UINavigationController,
-        jailbrakeChecker: JailbrakeCheckerProtocol
+        jailbrakeChecker: JailbreakeChecker
     ) {
         self.navigationController = navigationController
         self.jailbrakeChecker = jailbrakeChecker

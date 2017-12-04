@@ -2,6 +2,6 @@
 
 import Foundation
 
-protocol JailbrakeCheckerProtocol {
+protocol JailbreakeChecker {
     func isJailbroken() -> Bool
 }
