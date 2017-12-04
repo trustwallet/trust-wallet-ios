@@ -32,7 +32,6 @@ class InCoordinator: Coordinator {
     func start() {
         showTabBar(for: account)
 
-        // Check device on vulnerability
         checkDevice()
     }
 
@@ -111,7 +110,6 @@ class InCoordinator: Coordinator {
         showTabBar(for: account)
     }
 
-    // Checks device on vulnerability
     func checkDevice() {
         let deviceChecker = CheckDeviceCoordinator(
             navigationController: navigationController,

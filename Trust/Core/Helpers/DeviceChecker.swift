@@ -17,6 +17,6 @@ class DeviceChecker: JailbreakeChecker {
             "/private/var/lib/apt/",
         ]
 
-        return !list.filter { return FileManager.default.fileExists(atPath: $0) }.isEmpty
+        return !list.filter { FileManager.default.fileExists(atPath: $0) }.isEmpty
     }
 }
