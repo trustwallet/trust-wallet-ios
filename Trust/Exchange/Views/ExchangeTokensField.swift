@@ -17,6 +17,13 @@ class ExchangeTokensField: UIView {
         return label
     }()
 
+    lazy var arrowImageView: UIImageView = {
+        let imageView = UIImageView(image: R.image.arrow_down())
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
     var didPress: ((SelectTokenDirection) -> Void)?
     var didPressAvailableBalance: (() -> Void)?
     var didChangeValue: ((SelectTokenDirection, Double) -> Void)?
@@ -29,15 +36,17 @@ class ExchangeTokensField: UIView {
         toField.translatesAutoresizingMaskIntoConstraints = false
 
         let stackView = UIStackView(arrangedSubviews: [
-            destinationLabel(text: "FROM"),
+            .spacer(height: 20),
             fromField,
+            .spacer(height: 5),
             availableBalanceLabel,
-            .spacer(height: 0),
-            destinationLabel(text: "TO"),
+            .spacer(height: 15),
+            arrowImageView,
+            .spacer(height: 15),
             toField,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 10
+        stackView.spacing = 0
         stackView.axis = .vertical
 
         fromField.didPress = { [unowned self] in self.didPress?(.from) }
@@ -53,14 +62,9 @@ class ExchangeTokensField: UIView {
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
-    }
 
-    private func destinationLabel(text: String) -> UILabel {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = text
-        return label
+            arrowImageView.widthAnchor.constraint(equalToConstant: 16),
+        ])
     }
 
     @objc func availableBalance() {

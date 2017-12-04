@@ -2,13 +2,14 @@
 
 import Foundation
 import UIKit
+import BigInt
 
 struct ExchangeToken {
     let name: String
     let address: Address
     let symbol: String
     let image: UIImage?
-    let balance: Double
+    let balance: BigInt?
     let decimals: Int
 
     init(
@@ -16,7 +17,7 @@ struct ExchangeToken {
         address: Address,
         symbol: String,
         image: UIImage?,
-        balance: Double = 0,
+        balance: BigInt? = nil,
         decimals: Int
     ) {
         self.name = name

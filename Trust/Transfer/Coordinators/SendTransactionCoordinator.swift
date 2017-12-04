@@ -26,21 +26,19 @@ class SendTransactionCoordinator {
 
     func send(
         address: Address,
-        value: Double,
+        value: BigInt,
         data: Data = Data(),
         extraNonce: Int = 0,
         configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
-        let amount = formatter.number(from: String(value)) ?? BigInt(0) // TODO: send should take a BigInt
-
         let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: session.account.address.address)))
         Session.send(request) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .success(let count):
                 let nonce = count + extraNonce
-                self.sign(address: address, nonce: nonce, amount: amount, data: data, configuration: configuration, completion: completion)
+                self.sign(address: address, nonce: nonce, value: value, data: data, configuration: configuration, completion: completion)
             case .failure(let error):
                 completion(.failure(AnyError(error)))
             }
@@ -50,12 +48,12 @@ class SendTransactionCoordinator {
     func send(
         contract: Address,
         to: Address,
-        amount: Double,
+        amount: BigInt,
         decimals: Int,
         configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
-        let amountToSend = (amount * pow(10, decimals).doubleValue).description
+        let amountToSend = amount.description
         session.web3.request(request: ContractERC20Transfer(amount: amountToSend, address: to.address)) { result in
             switch result {
             case .success(let res):
@@ -75,13 +73,13 @@ class SendTransactionCoordinator {
     func sign(
         address: Address,
         nonce: Int = 0,
-        amount: BigInt,
+        value: BigInt,
         data: Data,
         configuration: TransactionConfiguration,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
         let signTransaction = SignTransaction(
-            amount: amount.gethBigInt,
+            amount: value.gethBigInt,
             account: session.account,
             address: address,
             nonce: nonce,
@@ -122,12 +120,12 @@ class SendTransactionCoordinator {
             return needsApproval ? 1 : 0
         }()
 
-        let amountToSend = (from.amount * pow(10, from.token.decimals).doubleValue).description
+        let value = from.amount
 
         // approve amount
         if needsApproval {
             // ApproveERC20Encode
-            let approveRequest = ApproveERC20Encode(address: exchangeConfig.contract, amount: amountToSend)
+            let approveRequest = ApproveERC20Encode(address: exchangeConfig.contract, value: value)
             session.web3.request(request: approveRequest) { result in
                 switch result {
                 case .success(let res):
@@ -138,13 +136,13 @@ class SendTransactionCoordinator {
                         configuration: configuration,
                         completion: completion
                     )
-                    self.makeTrade(from: from, to: to, amountToSend: amountToSend, configuration: configuration, tradeNonce: tradeNonce, completion: completion)
+                    self.makeTrade(from: from, to: to, value: value, configuration: configuration, tradeNonce: tradeNonce, completion: completion)
                 case .failure(let error):
                     completion(.failure(AnyError(error)))
                 }
             }
         } else {
-            self.makeTrade(from: from, to: to, amountToSend: amountToSend, configuration: configuration, tradeNonce: tradeNonce, completion: completion)
+            self.makeTrade(from: from, to: to, value: value, configuration: configuration, tradeNonce: tradeNonce, completion: completion)
         }
 
         //Execute trade request
@@ -153,15 +151,15 @@ class SendTransactionCoordinator {
     private func makeTrade(
         from: SubmitExchangeToken,
         to: SubmitExchangeToken,
-        amountToSend: String,
+        value: BigInt,
         configuration: TransactionConfiguration,
         tradeNonce: Int,
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
         let exchangeConfig = ExchangeConfig(server: config.server)
-        let value: Double = {
+        let etherValue: BigInt = {
             // if ether - pass actual value
-            return from.token.symbol == config.server.symbol ? from.amount : 0
+            return from.token.symbol == config.server.symbol ? from.amount : BigInt(0)
         }()
         let source = from.token.address
         let dest = to.token.address
@@ -169,7 +167,7 @@ class SendTransactionCoordinator {
 
         let request = ContractExchangeTrade(
             source: source.address,
-            amount: amountToSend,
+            value: value,
             dest: dest.address,
             destAddress: destAddress.address,
             maxDestAmount: "100000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -183,7 +181,7 @@ class SendTransactionCoordinator {
                 NSLog("result \(res)")
                 self.send(
                     address: exchangeConfig.contract,
-                    value: value,
+                    value: etherValue,
                     data: Data(hex: res.drop0x),
                     extraNonce: tradeNonce,
                     configuration: configuration,

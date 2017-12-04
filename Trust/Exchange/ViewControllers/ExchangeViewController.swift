@@ -2,10 +2,11 @@
 
 import Foundation
 import UIKit
+import BigInt
 
 struct SubmitExchangeToken {
     let token: ExchangeToken
-    let amount: Double
+    let amount: BigInt
 }
 
 protocol ExchangeViewControllerDelegate: class {
@@ -19,7 +20,7 @@ class ExchangeViewController: UIViewController {
     let currencyView = ExchangeCurrencyView()
     lazy var nextButton: UIButton = {
         let button = Button(size: .normal, style: .solid)
-        button.setTitle("Next", for: .normal)
+        button.setTitle(viewModel.nextButtonText, for: .normal)
         button.addTarget(self, action: #selector(nextAction), for: .touchUpInside)
         return button
     }()
@@ -44,9 +45,9 @@ class ExchangeViewController: UIViewController {
         currencyView.translatesAutoresizingMaskIntoConstraints = false
 
         let stackView = UIStackView(arrangedSubviews: [
+            currencyView,
             exchangeFields,
             .spacer(height: 20),
-            currencyView,
             nextButton,
         ])
         stackView.axis = .vertical
@@ -92,12 +93,18 @@ class ExchangeViewController: UIViewController {
         view.backgroundColor = viewModel.backgroundColor
         navigationItem.title = viewModel.title
         exchangeFields.backgroundColor = .white
+
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         coordinator.fetch()
+    }
+
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     func configure(viewModel: ExchangeTokensViewModel) {
@@ -110,6 +117,8 @@ class ExchangeViewController: UIViewController {
         exchangeFields.toField.backgroundColor = Colors.veryLightGray
 
         exchangeFields.availableBalanceLabel.attributedText = viewModel.attributedAvailableBalance
+        exchangeFields.availableBalanceLabel.alpha = 0.7
+        exchangeFields.availableBalanceLabel.textAlignment = .left
         currencyView.currencyLabel.attributedText = viewModel.attributedCurrency
     }
 
@@ -124,10 +133,16 @@ class ExchangeViewController: UIViewController {
 
     @objc func nextAction() {
         let from = coordinator.from
-        let fromAmount = (exchangeFields.fromField.amountField.text ?? "").doubleValue
-
         let to = coordinator.to
-        let toAmount = (exchangeFields.toField.amountField.text ?? "").doubleValue
+        let fromInput = exchangeFields.fromField.amountField.text ?? ""
+        let toInput = exchangeFields.toField.amountField.text ?? ""
+
+        let formatter = EtherNumberFormatter.full
+        guard
+            let fromAmount = formatter.number(from: fromInput, decimals: from.decimals),
+            let toAmount = formatter.number(from: toInput, decimals: to.decimals) else {
+            return displayError(error: ExchangeTokenError.wrongInput)
+        }
 
         delegate?.didPress(
             from: SubmitExchangeToken(token: from, amount: fromAmount),

@@ -4,11 +4,14 @@ import Foundation
 
 enum ExchangeTokenError: LocalizedError {
     case failedToGetRates
+    case wrongInput
 
     var errorDescription: String? {
         switch self {
         case .failedToGetRates:
             return NSLocalizedString("exchange.failedToGetRates", comment: "Failed to get rates")
+        case .wrongInput:
+            return NSLocalizedString("exchange.wrongInput", comment: "Wrong input")
         }
     }
 }

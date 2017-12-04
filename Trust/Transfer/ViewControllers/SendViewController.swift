@@ -126,11 +126,14 @@ class SendViewController: FormViewController {
         let amountString = amountRow?.value?.trimmed ?? ""
 
         let address = Address(address: addressString)
-        let amount = amountString.doubleValue
+
+        guard let value = EtherNumberFormatter.full.number(from: amountString, units: .ether) else {
+            return displayError(error: SendInputErrors.wrongInput)
+        }
 
         let transaction = UnconfirmedTransaction(
             transferType: transferType,
-            amount: amount,
+            value: value,
             address: address
         )
         self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, in: self)

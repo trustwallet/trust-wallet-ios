@@ -5,6 +5,7 @@ import Foundation
 enum SendInputErrors: LocalizedError {
     case emptyClipBoard
     case invalidAddress
+    case wrongInput
 
     var errorDescription: String? {
         switch self {
@@ -12,6 +13,8 @@ enum SendInputErrors: LocalizedError {
             return NSLocalizedString("send.emptyClipBoard", value: "Empty ClipBoard", comment: "")
         case .invalidAddress:
             return NSLocalizedString("send.invalidAddress", value: "Invalid Address", comment: "")
+        case .wrongInput:
+            return NSLocalizedString("send.wrongInput", value: "Wrong Input", comment: "")
         }
     }
 }

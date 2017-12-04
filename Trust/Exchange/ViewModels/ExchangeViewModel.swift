@@ -12,4 +12,8 @@ struct ExchangeViewModel {
     var backgroundColor: UIColor {
         return .white
     }
+
+    var nextButtonText: String {
+        return "Trade now"
+    }
 }

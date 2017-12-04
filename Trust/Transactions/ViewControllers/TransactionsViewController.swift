@@ -112,7 +112,6 @@ class TransactionsViewController: UIViewController {
 
     func fetch() {
         startLoading()
-        session.refresh(.balance)
         dataCoordinator.fetch()
     }
 

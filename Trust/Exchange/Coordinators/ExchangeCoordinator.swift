@@ -37,7 +37,7 @@ extension ExchangeCoordinator: ExchangeViewControllerDelegate {
 
         let transaction = UnconfirmedTransaction(
             transferType: .exchange(from: from, to: to),
-            amount: from.amount,
+            value: from.amount,
             address: to.token.address // TODO FIX IT
         )
 
@@ -59,6 +59,6 @@ extension ExchangeCoordinator: ExchangeViewControllerDelegate {
 extension ExchangeCoordinator: ConfirmPaymentViewControllerDelegate {
     func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController) {
         navigationController.popViewController(animated: true)
-        navigationController.displaySuccess(title: "Exchange \(transaction.id)")
+        navigationController.displaySuccess(title: "Exchanged completed. Transaction ID: (\(transaction.id)")
     }
 }

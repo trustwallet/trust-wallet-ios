@@ -20,7 +20,7 @@ class TransactionCoordinator: Coordinator {
 
     lazy var dataCoordinator: TransactionDataCoordinator = {
         let coordinator = TransactionDataCoordinator(
-            account: self.session.account,
+            session: self.session,
             storage: self.storage
         )
         return coordinator
