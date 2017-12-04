@@ -12,16 +12,17 @@ protocol ConfirmPaymentViewControllerDelegate: class {
 
 class ConfirmPaymentViewController: UIViewController {
 
+    private let keystore: Keystore
     let transaction: UnconfirmedTransaction
     let session: WalletSession
     let stackViewController = StackViewController()
     lazy var sendTransactionCoordinator = {
-        return SendTransactionCoordinator(session: self.session)
+        return SendTransactionCoordinator(session: self.session, keystore: keystore)
     }()
     lazy var submitButton: UIButton = {
         let button = Button(size: .large, style: .solid)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(NSLocalizedString("confirmPayment.send", value: "Send", comment: ""), for: .normal)
+        button.setTitle(viewModel.sendButtonText, for: .normal)
         button.addTarget(self, action: #selector(send), for: .touchUpInside)
         return button
     }()
@@ -34,10 +35,9 @@ class ConfirmPaymentViewController: UIViewController {
     }
 
     var viewModel: ConfirmPaymentViewModel {
-        let currentBalance = Double(session.balance?.amountFull ?? "")
         return ConfirmPaymentViewModel(
             transaction: transaction,
-            currentBalance: currentBalance,
+            currentBalance: session.balance,
             configuration: configuration
         )
     }
@@ -46,20 +46,22 @@ class ConfirmPaymentViewController: UIViewController {
 
     init(
         session: WalletSession,
+        keystore: Keystore,
         transaction: UnconfirmedTransaction,
         headerViewModel: TransactionHeaderBaseViewModel
     ) {
         self.session = session
+        self.keystore = keystore
         self.transaction = transaction
         self.configuration = transaction.transferType.initialConfiguration
         self.headerViewModel = headerViewModel
 
         super.init(nibName: nil, bundle: nil)
 
-        view.backgroundColor = .white
-        stackViewController.view.backgroundColor = .white
+        view.backgroundColor = viewModel.backgroundColor
+        stackViewController.view.backgroundColor = viewModel.backgroundColor
 
-        navigationItem.title = NSLocalizedString("confirmPayment.title", value: "Confirm", comment: "")
+        navigationItem.title = viewModel.title
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(edit))
 
         reloadView()
@@ -113,7 +115,7 @@ class ConfirmPaymentViewController: UIViewController {
     @objc func send() {
         self.displayLoading()
 
-        let amount = viewModel.amount
+        let amount = viewModel.transaction.value
 
         switch transaction.transferType {
         case .ether:

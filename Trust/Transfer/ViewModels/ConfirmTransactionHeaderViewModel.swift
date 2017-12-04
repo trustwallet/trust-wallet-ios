@@ -7,6 +7,7 @@ struct ConfirmTransactionHeaderViewModel: TransactionHeaderBaseViewModel {
 
     private let transaction: UnconfirmedTransaction
     let config: Config
+    private let fullFormatter = EtherNumberFormatter.full
 
     init(
         transaction: UnconfirmedTransaction,
@@ -24,7 +25,7 @@ struct ConfirmTransactionHeaderViewModel: TransactionHeaderBaseViewModel {
         switch transaction.transferType {
         case .token, .ether:
             let amount = NSAttributedString(
-                string: String(transaction.amount),
+                string: fullFormatter.string(from: transaction.value),
                 attributes: [
                     .font: UIFont.systemFont(ofSize: 28),
                     .foregroundColor: amountTextColor,
@@ -41,11 +42,11 @@ struct ConfirmTransactionHeaderViewModel: TransactionHeaderBaseViewModel {
         case .exchange(let from, let to):
             let fromAttributedString: NSAttributedString = {
                 let amount = NSAttributedString(
-                    string: "\(from.amount)",
+                    string: fullFormatter.string(from: from.amount),
                     attributes: [
                         .font: UIFont.systemFont(ofSize: 24),
                         .foregroundColor: Colors.red,
-                        ]
+                    ]
                 )
 
                 let currency = NSAttributedString(
@@ -59,7 +60,7 @@ struct ConfirmTransactionHeaderViewModel: TransactionHeaderBaseViewModel {
 
             let toAttributedString: NSAttributedString = {
                 let amount = NSAttributedString(
-                    string: "\(to.amount)",
+                    string: fullFormatter.string(from: to.amount),
                     attributes: [
                         .font: UIFont.systemFont(ofSize: 24),
                         .foregroundColor: Colors.green,

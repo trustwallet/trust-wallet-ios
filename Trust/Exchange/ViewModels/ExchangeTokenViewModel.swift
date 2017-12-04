@@ -2,10 +2,13 @@
 
 import Foundation
 import UIKit
+import BigInt
 
 struct ExchangeTokenViewModel {
 
     let token: ExchangeToken
+    private let tokenFormatter = TokensFormatter()
+    private let fullFormatter = EtherNumberFormatter.full
 
     init(token: ExchangeToken) {
         self.token = token
@@ -16,7 +19,8 @@ struct ExchangeTokenViewModel {
     }
 
     var balanceText: String {
-        return "\(token.balance)"
+        guard let value = token.balance else { return "0" }
+        return fullFormatter.string(from: value, decimals: token.decimals)
     }
 
     var image: UIImage? {
@@ -24,7 +28,7 @@ struct ExchangeTokenViewModel {
     }
 
     var isEnabled: Bool {
-        return token.balance > 0
+        return true //token.balance > 0
     }
 
     var alpha: CGFloat {

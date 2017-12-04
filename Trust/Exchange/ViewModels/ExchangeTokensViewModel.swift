@@ -9,18 +9,10 @@ struct ExchangeTokenRate {
 }
 
 struct TokensFormatter {
-    static let numberFormatter: NumberFormatter = {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.minimumFractionDigits = 3
-        numberFormatter.maximumFractionDigits = 3
-        numberFormatter.usesSignificantDigits = true
-        return numberFormatter
-    }()
+    static let formatter = EtherNumberFormatter.full
 
     static func from(token: ExchangeToken, amount: String) -> String? {
-        let res = pow(10.0, Double(token.decimals))
-        let number = NSNumber(value: (Double(amount) ?? 0) / res)
-        return TokensFormatter.numberFormatter.string(from: number)
+        return formatter.number(from: amount, decimals: token.decimals)?.description
     }
 }
 
@@ -112,9 +104,16 @@ struct ExchangeTokensViewModel {
         guard !availableBalance.isEmpty else {
             return NSAttributedString(string: "...")
         }
-        return NSAttributedString(
-            string: "Available \(availableBalance) \(fromSymbol)",
-            attributes: [:]
+
+        let baseStyle = StringStyle(
+            .lineHeightMultiple(1.2),
+            .font(UIFont.systemFont(ofSize: 15))
         )
+        let balanceAvailable = EtherNumberFormatter.full.string(from: balance!.value, units: .ether)
+
+        let percentString = "Available: ".styled(with: baseStyle.byAdding(.color(Colors.black)))
+        let conversationString = "\(balanceAvailable) \(fromSymbol)".styled(with: baseStyle.byAdding(.color(Colors.green)))
+
+        return percentString + conversationString.styled(with: .alignment(.right))
     }
 }

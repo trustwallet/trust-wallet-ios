@@ -7,6 +7,7 @@ class ExchangeCoordinator: Coordinator {
 
     let navigationController: UINavigationController
     let session: WalletSession
+    let keystore: Keystore
 
     lazy var rootViewController: UIViewController = {
         let controller = ExchangeViewController(
@@ -19,10 +20,12 @@ class ExchangeCoordinator: Coordinator {
 
     init(
         navigationController: UINavigationController = UINavigationController(),
-        session: WalletSession
+        session: WalletSession,
+        keystore: Keystore
     ) {
         self.navigationController = navigationController
         self.session = session
+        self.keystore = keystore
     }
 
     func start() {
@@ -37,7 +40,7 @@ extension ExchangeCoordinator: ExchangeViewControllerDelegate {
 
         let transaction = UnconfirmedTransaction(
             transferType: .exchange(from: from, to: to),
-            amount: from.amount,
+            value: from.amount,
             address: to.token.address // TODO FIX IT
         )
 
@@ -48,6 +51,7 @@ extension ExchangeCoordinator: ExchangeViewControllerDelegate {
 
         let controller = ConfirmPaymentViewController(
             session: session,
+            keystore: keystore,
             transaction: transaction,
             headerViewModel: viewModel
         )
@@ -59,6 +63,6 @@ extension ExchangeCoordinator: ExchangeViewControllerDelegate {
 extension ExchangeCoordinator: ConfirmPaymentViewControllerDelegate {
     func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController) {
         navigationController.popViewController(animated: true)
-        navigationController.displaySuccess(title: "Exchange \(transaction.id)")
+        navigationController.displaySuccess(title: "Exchanged completed. Transaction ID: (\(transaction.id)")
     }
 }

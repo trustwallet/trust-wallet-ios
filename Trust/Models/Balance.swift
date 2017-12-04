@@ -16,8 +16,7 @@ struct Balance: BalanceProtocol {
     }
 
     var amount: String {
-        let formatter = EtherNumberFormatter.full
-        return formatter.string(from: value)
+        return EtherNumberFormatter.full.string(from: value)
     }
 
     var amountFull: String {

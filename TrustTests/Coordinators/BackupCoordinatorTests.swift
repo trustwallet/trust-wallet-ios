@@ -8,6 +8,7 @@ class BackupCoordinatorTests: XCTestCase {
     func testStart() {
         let coordinator = BackupCoordinator(
             navigationController: FakeNavigationController(),
+            keystore: FakeKeystore(),
             account: .make()
         )
         coordinator.start()

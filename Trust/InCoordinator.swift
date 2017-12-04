@@ -55,19 +55,21 @@ class InCoordinator: Coordinator {
         transactionCoordinator.start()
         addCoordinator(transactionCoordinator)
 
-        let tabBarController = UITabBarController()
+        let tabBarController = TabBarController()
         tabBarController.viewControllers = [
             transactionCoordinator.navigationController,
         ]
         tabBarController.tabBar.isTranslucent = false
-
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(activateDebug))
-        gesture.numberOfTapsRequired = 6
-        tabBarController.tabBar.addGestureRecognizer(gesture)
+        tabBarController.didShake = { [weak self] in
+            if inCoordinatorViewModel.canActivateDebugMode {
+                self?.activateDebug()
+            }
+        }
 
         if inCoordinatorViewModel.tokensAvailable {
             let tokenCoordinator = TokensCoordinator(
-                session: session
+                session: session,
+                keystore: keystore
             )
             tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Tokens", image: R.image.coins(), selectedImage: nil)
             tokenCoordinator.start()
@@ -76,7 +78,7 @@ class InCoordinator: Coordinator {
         }
 
         if inCoordinatorViewModel.exchangeAvailable {
-            let exchangeCoordinator = ExchangeCoordinator(session: session)
+            let exchangeCoordinator = ExchangeCoordinator(session: session, keystore: keystore)
             exchangeCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Exchange", image: R.image.exchange(), selectedImage: nil)
             exchangeCoordinator.start()
             addCoordinator(exchangeCoordinator)

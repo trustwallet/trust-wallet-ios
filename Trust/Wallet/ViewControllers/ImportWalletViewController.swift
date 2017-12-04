@@ -11,7 +11,7 @@ protocol ImportWalletViewControllerDelegate: class {
 
 class ImportWalletViewController: FormViewController {
 
-    private let keystore = EtherKeystore()
+    let keystore: Keystore
     private let viewModel = ImportWalletViewModel()
 
     struct Values {
@@ -42,6 +42,13 @@ class ImportWalletViewController: FormViewController {
     }()
 
     weak var delegate: ImportWalletViewControllerDelegate?
+
+    init(
+        keystore: Keystore
+    ) {
+        self.keystore = keystore
+        super.init(nibName: nil, bundle: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -203,6 +210,10 @@ class ImportWalletViewController: FormViewController {
         controller.delegate = self
         controller.modalPresentationStyle = .formSheet
         present(controller, animated: true, completion: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

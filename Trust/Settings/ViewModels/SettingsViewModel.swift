@@ -18,12 +18,14 @@ struct SettingsViewModel {
                 return [
                     RPCServer.main,
                     RPCServer.kovan,
+                    RPCServer.ropsten,
                     RPCServer.oraclesTest,
                 ]
             }
             return [
                 RPCServer.main,
                 RPCServer.kovan,
+                RPCServer.ropsten,
             ]
         }()
         return list.map { $0.name }

@@ -19,7 +19,7 @@ protocol TransactionDataCoordinatorDelegate: class {
 class TransactionDataCoordinator {
 
     let storage: TransactionsStorage
-    let account: Account
+    let session: WalletSession
     let config = Config()
     var viewModel: TransactionsViewModel {
         return .init(transactions: self.storage.objects)
@@ -32,10 +32,10 @@ class TransactionDataCoordinator {
     private let trustProvider = MoyaProvider<TrustService>()
 
     init(
-        account: Account,
+        session: WalletSession,
         storage: TransactionsStorage
     ) {
-        self.account = account
+        self.session = session
         self.storage = storage
     }
 
@@ -45,6 +45,7 @@ class TransactionDataCoordinator {
     }
 
     func fetch() {
+        session.refresh(.balance)
         fetchTransactions()
         fetchPendingTransactions()
     }
@@ -57,7 +58,7 @@ class TransactionDataCoordinator {
             return transaction.blockNumber - 2000
         }()
 
-        trustProvider.request(.getTransactions(address: account.address.address, startBlock: startBlock)) { result in
+        trustProvider.request(.getTransactions(address: session.account.address.address, startBlock: startBlock)) { result in
             switch result {
             case .success(let response):
                 do {
@@ -65,7 +66,7 @@ class TransactionDataCoordinator {
                     let chainID = self.config.chainID
                     let transactions2: [Transaction] = transactions.map { .from(
                         chainID: chainID,
-                        owner: self.account.address,
+                        owner: self.session.account.address,
                         transaction: $0
                         )
                     }
@@ -85,8 +86,8 @@ class TransactionDataCoordinator {
             switch result {
             case .success(let block):
                 for item in block.transactions {
-                    if item.to == self.account.address.address || item.from == self.account.address.address {
-                        self.update(chainID: self.config.chainID, owner: self.account.address, items: [item])
+                    if item.to == self.session.account.address.address || item.from == self.session.account.address.address {
+                        self.update(chainID: self.config.chainID, owner: self.session.account.address, items: [item])
                     }
                 }
             case .failure(let error):

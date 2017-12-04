@@ -6,14 +6,14 @@ import BigInt
 struct ConfirmPaymentViewModel {
 
     let transaction: UnconfirmedTransaction
-    let currentBalance: Double?
+    let currentBalance: BalanceProtocol?
     let configuration: TransactionConfiguration
     let config: Config
     private let fullFormatter = EtherNumberFormatter.full
 
     init(
         transaction: UnconfirmedTransaction,
-        currentBalance: Double?,
+        currentBalance: BalanceProtocol?,
         configuration: TransactionConfiguration,
         config: Config = Config()
     ) {
@@ -21,6 +21,18 @@ struct ConfirmPaymentViewModel {
         self.currentBalance = currentBalance
         self.configuration = configuration
         self.config = config
+    }
+
+    var title: String {
+        return NSLocalizedString("confirmPayment.title", value: "Confirm", comment: "")
+    }
+
+    var sendButtonText: String {
+        return NSLocalizedString("confirmPayment.send", value: "Send", comment: "")
+    }
+
+    var backgroundColor: UIColor {
+        return .white
     }
 
     private var totalFee: BigInt {
@@ -31,8 +43,8 @@ struct ConfirmPaymentViewModel {
         return configuration.speed.gasLimit
     }
 
-    var amount: Double {
-        return transaction.amount
+    var amount: String {
+        return fullFormatter.string(from: transaction.value)
     }
 
     var addressText: String {

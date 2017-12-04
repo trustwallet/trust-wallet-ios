@@ -8,6 +8,7 @@ class InitialWalletCreationCoordinatorTests: XCTestCase {
     func testImportWallet() {
         let coordinator = InitialWalletCreationCoordinator(
             navigationController: FakeNavigationController(),
+            keystore: FakeKeystore(),
             entryPoint: .importWallet
         )
 

@@ -11,15 +11,18 @@ protocol InitialWalletCreationCoordinatorDelegate: class {
 class InitialWalletCreationCoordinator: Coordinator {
 
     let navigationController: UINavigationController
+    let keystore: Keystore
     var coordinators: [Coordinator] = []
     weak var delegate: InitialWalletCreationCoordinatorDelegate?
     let entryPoint: WalletEntryPoint
 
     init(
         navigationController: UINavigationController = NavigationController(),
+        keystore: Keystore,
         entryPoint: WalletEntryPoint
     ) {
         self.navigationController = navigationController
+        self.keystore = keystore
         self.entryPoint = entryPoint
     }
 
@@ -33,14 +36,14 @@ class InitialWalletCreationCoordinator: Coordinator {
     }
 
     func showCreateWallet() {
-        let coordinator = WalletCoordinator(navigationController: self.navigationController)
+        let coordinator = WalletCoordinator(navigationController: self.navigationController, keystore: keystore)
         coordinator.delegate = self
         coordinator.start(.createInstantWallet)
         addCoordinator(coordinator)
     }
 
     func presentImportWallet() {
-        let coordinator = WalletCoordinator()
+        let coordinator = WalletCoordinator(keystore: keystore)
         coordinator.delegate = self
         coordinator.start(.importWallet)
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)

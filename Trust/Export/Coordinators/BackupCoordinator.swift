@@ -12,15 +12,17 @@ class BackupCoordinator: Coordinator {
 
     let navigationController: UINavigationController
     weak var delegate: BackupCoordinatorDelegate?
-    let keystore = EtherKeystore()
+    let keystore: Keystore
     let account: Account
     var coordinators: [Coordinator] = []
 
     init(
         navigationController: UINavigationController,
+        keystore: Keystore,
         account: Account
     ) {
         self.navigationController = navigationController
+        self.keystore = keystore
         self.account = account
     }
 
@@ -39,6 +41,10 @@ class BackupCoordinator: Coordinator {
     func presentActivityViewController(for account: Account, password: String, newPassword: String, completion: @escaping (Bool) -> Void) {
         let result = keystore.export(account: account, password: password, newPassword: newPassword)
 
+        navigationController.displayLoading(
+            text: NSLocalizedString("export.presentBackupOptions", value: "Preparing backup options...", comment: "")
+        )
+
         switch result {
         case .success(let value):
             let activityViewController = UIActivityViewController(
@@ -49,8 +55,11 @@ class BackupCoordinator: Coordinator {
                 completion(result)
             }
             activityViewController.popoverPresentationController?.sourceView = navigationController.view
-            navigationController.present(activityViewController, animated: true, completion: nil)
+            navigationController.present(activityViewController, animated: true) { [unowned self] in
+                self.navigationController.hideLoading()
+            }
         case .failure(let error):
+            navigationController.hideLoading()
             navigationController.displayError(error: error)
         }
     }

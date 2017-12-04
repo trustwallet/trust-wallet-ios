@@ -19,6 +19,8 @@ struct ConfigExplorer {
                 return ConfigExplorerConstants.etherscanMain + "/tx/" + ID
             case .kovan:
                 return ConfigExplorerConstants.etherscanKovan + "/tx/" + ID
+            case .ropsten:
+                return ConfigExplorerConstants.etherscanRopsten + "/tx/" + ID
             case .oraclesTest:
                 return ConfigExplorerConstants.oraclesMain + "/tx/" + ID
             }

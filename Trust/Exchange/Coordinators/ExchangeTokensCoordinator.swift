@@ -3,6 +3,7 @@
 import Foundation
 import JSONRPCKit
 import APIKit
+import BigInt
 
 class ExchangeTokensCoordinator {
 
@@ -132,7 +133,7 @@ class ExchangeTokensCoordinator {
                         address: oldToken.address,
                         symbol: oldToken.symbol,
                         image: oldToken.image,
-                        balance: Double(balance.amount) ?? 0,
+                        balance: balance.value,
                         decimals: oldToken.decimals
                     )
                     self.tokens[index] = newToken
@@ -150,7 +151,7 @@ class ExchangeTokensCoordinator {
                     address: etherToken.address,
                     symbol: etherToken.symbol,
                     image: etherToken.image,
-                    balance: Double(balance.amount) ?? 0,
+                    balance: balance.value,
                     decimals: etherToken.decimals
                 )
                 self.tokens[index] = newToken
@@ -196,7 +197,7 @@ class ExchangeTokensCoordinator {
                             switch result {
                             case .success(let res):
                                 NSLog("res \(res)")
-                                completion?(TokenBalance(token: token, data: res))
+                                completion?(TokenBalance(token: token, value: BigInt(res)!))
                             case .failure(let error):
                                 NSLog("getPrice3 error \(error)")
                             }

@@ -9,8 +9,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     private let window: UIWindow? = UIWindow()
     var coordinator: AppCoordinator!
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        coordinator = AppCoordinator(window: window!)
-        coordinator.start()
+        do {
+            let keystore = try EtherKeystore()
+            coordinator = AppCoordinator(window: window!, keystore: keystore)
+            coordinator.start()
+        } catch {
+            //
+        }
         return true
     }
 
