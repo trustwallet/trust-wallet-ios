@@ -13,9 +13,9 @@ enum TransactionSpeed {
     var gasPrice: BigInt {
         switch self {
         case .fast:
-            return 6_000_000_000
+            return 30_000_000_000
         case .regular:
-            return 2_000_000_000
+            return 21_000_000_000
         case .cheap:
             return 1_000_000_000
         case .custom(let gasPrice, _):
