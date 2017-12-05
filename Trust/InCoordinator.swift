@@ -31,6 +31,8 @@ class InCoordinator: Coordinator {
 
     func start() {
         showTabBar(for: account)
+
+        checkDevice()
     }
 
     func showTabBar(for account: Account) {
@@ -106,6 +108,17 @@ class InCoordinator: Coordinator {
         coordinator.stop()
         removeCoordinator(coordinator)
         showTabBar(for: account)
+    }
+
+    func checkDevice() {
+        let deviceChecker = CheckDeviceCoordinator(
+            navigationController: navigationController,
+            jailbreakChecker: DeviceChecker()
+        )
+
+        deviceChecker.start()
+
+        addCoordinator(deviceChecker)
     }
 }
 
