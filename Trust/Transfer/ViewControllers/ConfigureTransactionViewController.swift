@@ -65,6 +65,7 @@ class ConfigureTransactionViewController: FormViewController {
             $0.value = Float(gasPriceGwei) ?? 1
             $0.minimumValue = 1
             $0.maximumValue = 50
+            $0.steps = 50
             $0.displayValueFor = { (rowValue: Float?) in
                 return "\(Int(rowValue ?? 1)) (Gwei)"
             }
