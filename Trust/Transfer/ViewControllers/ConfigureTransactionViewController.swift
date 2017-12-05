@@ -28,6 +28,7 @@ class ConfigureTransactionViewController: FormViewController {
     var gasLimitRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.gasLimit) as? TextFloatLabelRow
     }
+    private let gasPriceUnit: EthereumUnit = .gwei
 
     weak var delegate: ConfigureTransactionViewControllerDelegate?
 
@@ -51,6 +52,8 @@ class ConfigureTransactionViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let gasPriceGwei = EtherNumberFormatter.full.string(from: configuration.speed.gasPrice, units: gasPriceUnit)
+
         form = Section()
 
         +++ Section(
@@ -59,10 +62,10 @@ class ConfigureTransactionViewController: FormViewController {
 
         <<< AppFormAppearance.textFieldFloat(tag: Values.gasPrice) {
             $0.validationOptions = .validatesOnDemand
-            $0.value = self.configuration.speed.gasPrice.description
+            $0.value = gasPriceGwei
         }.cellUpdate { cell, _ in
             cell.textField.textAlignment = .left
-            cell.textField.placeholder = NSLocalizedString("configureTransaction.gasPrice", value: "Gas Price", comment: "")
+            cell.textField.placeholder = NSLocalizedString("configureTransaction.gasPrice", value: "Gas Price (Gwei)", comment: "")
             cell.textField.rightViewMode = .always
         }
 
@@ -80,7 +83,8 @@ class ConfigureTransactionViewController: FormViewController {
     }
 
     @objc func save() {
-        let gasPrice = BigInt(gasPriceRow?.value ?? "0", radix: 10) ?? BigInt()
+        let gasPrice = EtherNumberFormatter.full.number(from: gasPriceRow?.value ?? "0", units: gasPriceUnit) ?? BigInt()
+
         let gasLimit = BigInt(gasLimitRow?.value ?? "0", radix: 10) ?? BigInt()
         let totalFee = gasPrice * gasLimit
 
