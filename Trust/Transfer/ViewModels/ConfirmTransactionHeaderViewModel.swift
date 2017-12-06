@@ -23,22 +23,14 @@ struct ConfirmTransactionHeaderViewModel: TransactionHeaderBaseViewModel {
 
     var amountAttributedString: NSAttributedString {
         switch transaction.transferType {
-        case .token, .ether:
-            let amount = NSAttributedString(
-                string: fullFormatter.string(from: transaction.value),
-                attributes: [
-                    .font: UIFont.systemFont(ofSize: 28),
-                    .foregroundColor: amountTextColor,
-                ]
+        case .token(let token):
+            return amountAttributedText(
+                string: fullFormatter.string(from: transaction.value, decimals: token.decimals)
             )
-
-            let currency = NSAttributedString(
-                string: " \(transaction.transferType.symbol(server: config.server))",
-                attributes: [
-                    .font: UIFont.systemFont(ofSize: 20),
-                ]
+        case .ether:
+            return amountAttributedText(
+                string: fullFormatter.string(from: transaction.value)
             )
-            return amount + currency
         case .exchange(let from, let to):
             let fromAttributedString: NSAttributedString = {
                 let amount = NSAttributedString(
@@ -84,5 +76,23 @@ struct ConfirmTransactionHeaderViewModel: TransactionHeaderBaseViewModel {
             )
             return fromAttributedString + amount + toAttributedString
         }
+    }
+
+    private func amountAttributedText(string: String) -> NSAttributedString {
+        let amount = NSAttributedString(
+            string: string,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 28),
+                .foregroundColor: amountTextColor,
+            ]
+        )
+
+        let currency = NSAttributedString(
+            string: " \(transaction.transferType.symbol(server: config.server))",
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 20),
+            ]
+        )
+        return amount + currency
     }
 }
