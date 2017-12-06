@@ -30,4 +30,16 @@ struct SettingsViewModel {
         }()
         return list.map { $0.name }
     }
+
+    var passcodeTitle: String {
+        switch BiometryAuthenticationType.current {
+        case .faceID, .touchID:
+            return String(
+                format: NSLocalizedString("settings.biometricsEnabled", value: "Passcode / %@)", comment: ""),
+                BiometryAuthenticationType.current.title
+            )
+        case .none:
+            return NSLocalizedString("settings.biometricsDisabled", value: "Passcode", comment: "")
+        }
+    }
 }

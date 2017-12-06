@@ -77,7 +77,7 @@ class SettingsViewController: FormViewController {
             +++ Section(NSLocalizedString("Settings.Security", value: "Security", comment: ""))
 
             <<< SwitchRow {
-                $0.title = NSLocalizedString("Settings.Biometrics", value: "Passcode", comment: "")
+                $0.title = viewModel.passcodeTitle
                 $0.value = self.isPasscodeEnabled
             }.onChange { [unowned self] row in
                 if row.value == true {
@@ -228,7 +228,7 @@ class SettingsViewController: FormViewController {
         let composerController = MFMailComposeViewController()
         composerController.mailComposeDelegate = self
         composerController.setToRecipients([Constants.supportEmail])
-        composerController.setSubject("Trust - Ethereum Wallet app Feedback")
+        composerController.setSubject("Trust Feedback")
         composerController.setMessageBody("", isHTML: false)
 
         if MFMailComposeViewController.canSendMail() {
