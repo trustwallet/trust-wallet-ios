@@ -61,6 +61,10 @@ class SettingsViewController: FormViewController {
                 $0.title = NSLocalizedString("settings.network", value: "Network", comment: "")
                 $0.options = viewModel.servers
                 $0.value = RPCServer(chainID: config.chainID).name
+                $0.displayValueFor = { value in
+                    let network = RPCServer(name: value ?? "")
+                    return network.name + (network.isTestNetwork ? " (Test)" : "")
+                }
             }.onChange { row in
                 self.config.chainID = RPCServer(name: row.value ?? "").chainID
                 self.run(action: .RPCServer)
