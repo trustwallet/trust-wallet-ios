@@ -11,6 +11,7 @@ class LocalizedOperationObject: Object {
     @objc dynamic var type: String = ""
     @objc dynamic var value: String = ""
     @objc dynamic var symbol: String? = .none
+    @objc dynamic var decimals: String? = .none
 
     convenience init(
         title: String,
@@ -19,7 +20,8 @@ class LocalizedOperationObject: Object {
         contract: String?,
         type: String,
         value: String,
-        symbol: String?
+        symbol: String?,
+        decimals: String?
     ) {
         self.init()
         self.title = title
@@ -29,6 +31,7 @@ class LocalizedOperationObject: Object {
         self.type = type
         self.value = value
         self.symbol = symbol
+        self.decimals = decimals
     }
 }
 
@@ -43,7 +46,8 @@ extension LocalizedOperationObject {
                 contract: operation.contract,
                 type: operation.type.rawValue,
                 value: operation.value,
-                symbol: operation.symbol
+                symbol: operation.symbol,
+                decimals: operation.decimals
             )
         }
     }

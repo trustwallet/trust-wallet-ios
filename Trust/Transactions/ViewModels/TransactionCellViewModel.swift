@@ -8,7 +8,7 @@ struct TransactionCellViewModel {
 
     let transaction: Transaction
     let chainState: ChainState
-    let formatter = EtherNumberFormatter.short
+    let shortFormatter = EtherNumberFormatter.short
 
     init(
         transaction: Transaction,
@@ -34,10 +34,6 @@ struct TransactionCellViewModel {
 
     private var operationTitle: String? {
         return transaction.operation?.title
-    }
-
-    private var operationValue: String? {
-        return transaction.operation?.value
     }
 
     var title: String {
@@ -74,11 +70,13 @@ struct TransactionCellViewModel {
 
     var amount: String {
         let value: String = {
-            if let operationValue = operationValue {
-                return operationValue
+            if let operation = transaction.operation {
+                return shortFormatter.string(
+                    from: shortFormatter.number(from: operation.value, decimals: Int(operation.decimals ?? "0") ?? 0) ?? BigInt()
+                )
             }
             let number = BigInt(transaction.value) ?? BigInt()
-            return formatter.string(from: number)
+            return shortFormatter.string(from: number)
         }()
         guard value != "0" else { return value }
         switch transaction.direction {
