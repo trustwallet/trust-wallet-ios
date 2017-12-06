@@ -18,6 +18,16 @@ class ConfigureTransactionViewController: FormViewController {
         static let gasLimit = "gasLimit"
     }
 
+    private struct Constant {
+        static let minGasPrice: Float = 1
+        static let maxGasPrice: Float = 50
+        static let gasPriceSteps: UInt = 50
+
+        static let minGasLimit: Float = 21000
+        static let maxGasLimit: Float = 300000
+        static let gasLimitSteps: UInt = 60
+    }
+
     lazy var viewModel: ConfigureTransactionViewModel = {
         return ConfigureTransactionViewModel(config: self.config)
     }()
@@ -25,8 +35,8 @@ class ConfigureTransactionViewController: FormViewController {
     var gasPriceRow: SliderRow? {
         return form.rowBy(tag: Values.gasPrice) as? SliderRow
     }
-    var gasLimitRow: TextFloatLabelRow? {
-        return form.rowBy(tag: Values.gasLimit) as? TextFloatLabelRow
+    var gasLimitRow: SliderRow? {
+        return form.rowBy(tag: Values.gasLimit) as? SliderRow
     }
     private let gasPriceUnit: EthereumUnit = .gwei
 
@@ -63,9 +73,9 @@ class ConfigureTransactionViewController: FormViewController {
         <<< SliderRow(Values.gasPrice) {
             $0.title = NSLocalizedString("configureTransaction.gasPrice", value: "Gas Price", comment: "")
             $0.value = Float(gasPriceGwei) ?? 1
-            $0.minimumValue = 1
-            $0.maximumValue = 50
-            $0.steps = 50
+            $0.minimumValue = Constant.minGasPrice
+            $0.maximumValue = Constant.maxGasPrice
+            $0.steps = Constant.gasPriceSteps
             $0.displayValueFor = { (rowValue: Float?) in
                 return "\(Int(rowValue ?? 1)) (Gwei)"
             }
@@ -74,20 +84,23 @@ class ConfigureTransactionViewController: FormViewController {
         +++ Section(
             footer: viewModel.gasLimitFooterText
         )
-        <<< AppFormAppearance.textFieldFloat(tag: Values.gasLimit) {
-            $0.validationOptions = .validatesOnDemand
-            $0.value = self.configuration.speed.gasLimit.description
-        }.cellUpdate { cell, _ in
-            cell.textField.textAlignment = .left
-            cell.textField.placeholder = NSLocalizedString("configureTransaction.gasLimit", value: "Gas Limit", comment: "")
-            cell.textField.rightViewMode = .always
+
+        <<< SliderRow(Values.gasLimit) {
+            $0.title = NSLocalizedString("configureTransaction.gasLimit", value: "Gas Limit", comment: "")
+            $0.value = Float(configuration.speed.gasLimit.description) ?? 21000
+            $0.minimumValue = Constant.minGasLimit
+            $0.maximumValue = Constant.maxGasLimit
+            $0.steps = Constant.gasLimitSteps
+            $0.displayValueFor = { (rowValue: Float?) in
+                return "\(Int(rowValue ?? 1))"
+            }
         }
     }
 
     @objc func save() {
         let gasPrice = EtherNumberFormatter.full.number(from: String(Int(gasPriceRow?.value ?? 1)), units: gasPriceUnit) ?? BigInt()
 
-        let gasLimit = BigInt(gasLimitRow?.value ?? "0", radix: 10) ?? BigInt()
+        let gasLimit = BigInt(String(Int(gasLimitRow?.value ?? 0)), radix: 10) ?? BigInt()
         let totalFee = gasPrice * gasLimit
 
         guard gasLimit <= ConfigureTransaction.gasLimitMax else {
