@@ -53,12 +53,6 @@ class ImportWalletViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //Demo purpose
-
-        if UserDefaults.standard.bool(forKey: "FASTLANE_SNAPSHOT") {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Demo", style: .done, target: self, action: #selector(self.demo))
-        }
-
         title = viewModel.title
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.import_options(), style: .done, target: self, action: #selector(importOptions))
 
@@ -70,6 +64,12 @@ class ImportWalletViewController: FormViewController {
 //                action: #selector(onePasswordImport)
 //            )
 //        }
+
+        if UserDefaults.standard.bool(forKey: "FASTLANE_SNAPSHOT") {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.demo()
+            }
+        }
 
         form
             +++ Section {

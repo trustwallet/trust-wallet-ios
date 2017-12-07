@@ -19,8 +19,7 @@ class Screenshots: XCTestCase {
         app.buttons["IMPORT WALLET"].tap()
 
         snapshot("3ImportWallet")
-        sleep(4)
-        app.navigationBars["Import Wallet"].buttons["Demo"].tap()
+        sleep(6)
 
         app.buttons["Send"].tap()
         app.tables.textFields["ETH Amount"].tap()
