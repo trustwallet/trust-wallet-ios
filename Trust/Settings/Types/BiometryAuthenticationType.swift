@@ -29,5 +29,3 @@ extension BiometryAuthenticationType {
         return .touchID
     }
 }
-
-

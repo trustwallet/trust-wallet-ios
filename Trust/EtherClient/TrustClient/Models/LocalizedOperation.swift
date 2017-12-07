@@ -10,7 +10,7 @@ struct LocalizedOperation: Decodable {
     let type: OperationType
     let value: String
     let symbol: String?
-    let decimals: String?
+    let decimals: Int?
 
     enum CodingKeys: String, CodingKey {
         case title

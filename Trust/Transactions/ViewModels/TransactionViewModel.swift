@@ -46,9 +46,7 @@ struct TransactionViewModel {
     var value: TransactionValue {
         if let operation = transaction.operation, let symbol = operation.symbol {
             return TransactionValue(
-                amount: shortFormatter.string(
-                    from: shortFormatter.number(from: operation.value, decimals: Int(operation.decimals ?? "0") ?? 0) ?? BigInt()
-                ),
+                amount: shortFormatter.string(from: BigInt(operation.value) ?? BigInt(), decimals: operation.decimals),
                 symbol: symbol
             )
         }

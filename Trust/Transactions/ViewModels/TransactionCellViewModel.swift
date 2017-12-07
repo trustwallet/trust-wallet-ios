@@ -71,9 +71,7 @@ struct TransactionCellViewModel {
     var amount: String {
         let value: String = {
             if let operation = transaction.operation {
-                return shortFormatter.string(
-                    from: shortFormatter.number(from: operation.value, decimals: Int(operation.decimals ?? "0") ?? 0) ?? BigInt()
-                )
+                return shortFormatter.string(from: BigInt(operation.value) ?? BigInt(), decimals: operation.decimals)
             }
             let number = BigInt(transaction.value) ?? BigInt()
             return shortFormatter.string(from: number)
