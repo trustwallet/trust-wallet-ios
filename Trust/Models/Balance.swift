@@ -16,7 +16,7 @@ struct Balance: BalanceProtocol {
     }
 
     var amount: String {
-        return EtherNumberFormatter.full.string(from: value)
+        return EtherNumberFormatter.short.string(from: value)
     }
 
     var amountFull: String {
