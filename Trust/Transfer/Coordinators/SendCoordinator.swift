@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import BigInt
 
 protocol SendCoordinatorDelegate: class {
     func didCancel(in coordinator: SendCoordinator)
@@ -65,7 +66,7 @@ class SendCoordinator: Coordinator {
 }
 
 extension SendCoordinator: SendViewControllerDelegate {
-    func didPressConfirm(transaction: UnconfirmedTransaction, transferType: TransferType, in viewController: SendViewController) {
+    func didPressConfirm(transaction: UnconfirmedTransaction, transferType: TransferType, gasPrice: BigInt?, in viewController: SendViewController) {
 
         let viewModel = ConfirmTransactionHeaderViewModel(
             transaction: transaction,
@@ -76,6 +77,7 @@ extension SendCoordinator: SendViewControllerDelegate {
             session: session,
             keystore: keystore,
             transaction: transaction,
+            gasPrice: gasPrice,
             headerViewModel: viewModel
         )
         controller.delegate = self

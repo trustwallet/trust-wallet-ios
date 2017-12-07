@@ -10,7 +10,12 @@ import QRCodeReaderViewController
 import BigInt
 
 protocol SendViewControllerDelegate: class {
-    func didPressConfirm(transaction: UnconfirmedTransaction, transferType: TransferType, in viewController: SendViewController)
+    func didPressConfirm(
+        transaction: UnconfirmedTransaction,
+        transferType: TransferType,
+        gasPrice: BigInt?,
+        in viewController: SendViewController
+    )
     func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: SendViewController)
 }
 
@@ -35,6 +40,7 @@ class SendViewController: FormViewController {
     var amountRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
     }
+    private var gasPrice: BigInt?
 
     init(
         session: WalletSession,
@@ -111,6 +117,19 @@ class SendViewController: FormViewController {
                     return self.amountRow?.value?.isEmpty ?? true
                 })
             }
+
+        getGasPrice()
+    }
+
+    func getGasPrice() {
+        let request = EtherServiceRequest(batch: BatchFactory().create(GasPriceRequest()))
+        Session.send(request) { [weak self] result in
+            switch result {
+            case .success(let balance):
+                self?.gasPrice = BigInt(balance.drop0x, radix: 16)
+            case .failure: break
+            }
+        }
     }
 
     func clear() {
@@ -148,7 +167,7 @@ class SendViewController: FormViewController {
             value: value,
             address: address
         )
-        self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, in: self)
+        self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, gasPrice: gasPrice, in: self)
     }
 
     @objc func openReader() {

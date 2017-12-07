@@ -44,16 +44,50 @@ class ConfirmPaymentViewController: UIViewController {
 
     var headerViewModel: TransactionHeaderBaseViewModel
 
+    private lazy var transactionSpeed: TransactionSpeed = {
+        return .regular
+    }()
+
+    private lazy var initialConfiguration: TransactionConfiguration = {
+        switch transaction.transferType {
+        case .ether:
+            return TransactionConfiguration(
+                speed: TransactionSpeed.custom(
+                    gasPrice: self.gasPrice ?? transactionSpeed.gasPrice,
+                    gasLimit: 90000
+                )
+            )
+        case .token:
+            return TransactionConfiguration(
+                speed: TransactionSpeed.custom(
+                    gasPrice: self.gasPrice ?? transactionSpeed.gasPrice,
+                    gasLimit: 144_000
+                )
+            )
+        case .exchange:
+            return TransactionConfiguration(
+                speed: TransactionSpeed.custom(
+                    gasPrice: self.gasPrice ?? transactionSpeed.gasPrice,
+                    gasLimit: 300_000
+                )
+            )
+        }
+    }()
+
+    private let gasPrice: BigInt?
+
     init(
         session: WalletSession,
         keystore: Keystore,
         transaction: UnconfirmedTransaction,
+        gasPrice: BigInt?,
         headerViewModel: TransactionHeaderBaseViewModel
     ) {
         self.session = session
         self.keystore = keystore
         self.transaction = transaction
-        self.configuration = transaction.transferType.initialConfiguration
+        self.configuration = TransactionConfiguration()
+        self.gasPrice = gasPrice
         self.headerViewModel = headerViewModel
 
         super.init(nibName: nil, bundle: nil)
@@ -65,6 +99,10 @@ class ConfirmPaymentViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(edit))
 
         reloadView()
+
+        defer {
+            configuration = initialConfiguration
+        }
     }
 
     private func reloadView() {
@@ -173,28 +211,5 @@ extension ConfirmPaymentViewController: ConfigureTransactionViewControllerDelega
     func didEdit(configuration: TransactionConfiguration, in viewController: ConfigureTransactionViewController) {
         self.configuration = configuration
         navigationController?.popViewController(animated: true)
-    }
-}
-
-private extension TransferType {
-    var initialConfiguration: TransactionConfiguration {
-        switch self {
-        case .token:
-            return TransactionConfiguration(
-                speed: TransactionSpeed.custom(
-                    gasPrice: TransactionSpeed.cheap.gasPrice,
-                    gasLimit: 144_000
-                )
-            )
-        case .ether:
-            return TransactionConfiguration()
-        case .exchange:
-            return TransactionConfiguration(
-                speed: TransactionSpeed.custom(
-                    gasPrice: TransactionSpeed.cheap.gasPrice,
-                    gasLimit: 300_000
-                )
-            )
-        }
     }
 }

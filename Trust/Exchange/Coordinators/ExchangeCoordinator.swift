@@ -53,6 +53,7 @@ extension ExchangeCoordinator: ExchangeViewControllerDelegate {
             session: session,
             keystore: keystore,
             transaction: transaction,
+            gasPrice: .none,
             headerViewModel: viewModel
         )
         controller.delegate = self
