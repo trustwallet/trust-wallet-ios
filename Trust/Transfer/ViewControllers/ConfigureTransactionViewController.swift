@@ -20,8 +20,8 @@ class ConfigureTransactionViewController: FormViewController {
 
     private struct Constant {
         static let minGasPrice: Float = 1
-        static let maxGasPrice: Float = 50
-        static let gasPriceSteps: UInt = 50
+        static let maxGasPrice: Float = 120
+        static let gasPriceSteps: UInt = 120
 
         static let minGasLimit: Float = 21000
         static let maxGasLimit: Float = 300000
