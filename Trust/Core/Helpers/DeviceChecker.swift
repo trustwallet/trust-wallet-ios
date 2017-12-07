@@ -12,7 +12,7 @@ class DeviceChecker: JailbreakChecker {
             "/Applications/Cydia.app",
             "/Library/MobileSubstrate/MobileSubstrate.dylib",
             "/bin/bash",
-            "/usr/sbin  /sshd",
+            "/usr/sbin/sshd",
             "/etc/apt",
             "/private/var/lib/apt/",
         ]
