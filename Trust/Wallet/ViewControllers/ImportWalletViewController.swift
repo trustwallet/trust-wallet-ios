@@ -197,7 +197,7 @@ class ImportWalletViewController: FormViewController {
     @objc func importOptions(sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: "Import Wallet Options", message: .none, preferredStyle: .actionSheet)
         alertController.popoverPresentationController?.barButtonItem = sender
-        alertController.addAction(UIAlertAction(title: "iCloud/Dropbox/Google Cloud", style: .default) { _ in
+        alertController.addAction(UIAlertAction(title: "iCloud/Dropbox/Google Drive", style: .default) { _ in
             self.showDocumentPicker()
         })
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in })
