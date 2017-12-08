@@ -6,7 +6,7 @@ import Security
 struct PasswordGenerator {
 
     static func generateRandom() -> String {
-        return NSUUID().uuidString + PasswordGenerator.generateRandomString(bytesCount: 16)
+        return PasswordGenerator.generateRandomString(bytesCount: 32)
     }
 
     static func generateRandomString(bytesCount: Int) -> String {

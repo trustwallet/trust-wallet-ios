@@ -54,6 +54,7 @@
 		2923D9B11FDA49D8000CF3F8 /* Initializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B01FDA49D8000CF3F8 /* Initializer.swift */; };
 		2923D9B31FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B21FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift */; };
 		2923D9B51FDA4E07000CF3F8 /* PasswordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B41FDA4E07000CF3F8 /* PasswordGenerator.swift */; };
+		2923D9B71FDA5E51000CF3F8 /* PasswordGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B61FDA5E51000CF3F8 /* PasswordGeneratorTests.swift */; };
 		29282B531F7630970067F88D /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282B521F7630970067F88D /* Token.swift */; };
 		29282B581F7636840067F88D /* GetTokensRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282B571F7636840067F88D /* GetTokensRequest.swift */; };
 		29285B421F6FB3E60044CF29 /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29285B411F6FB3E60044CF29 /* SendViewController.swift */; };
@@ -348,6 +349,7 @@
 		2923D9B01FDA49D8000CF3F8 /* Initializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializer.swift; sourceTree = "<group>"; };
 		2923D9B21FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipBackupFilesInitializer.swift; sourceTree = "<group>"; };
 		2923D9B41FDA4E07000CF3F8 /* PasswordGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordGenerator.swift; sourceTree = "<group>"; };
+		2923D9B61FDA5E51000CF3F8 /* PasswordGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordGeneratorTests.swift; sourceTree = "<group>"; };
 		29282B521F7630970067F88D /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		29282B571F7636840067F88D /* GetTokensRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTokensRequest.swift; sourceTree = "<group>"; };
 		29285B411F6FB3E60044CF29 /* SendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewController.swift; sourceTree = "<group>"; };
@@ -800,6 +802,7 @@
 			isa = PBXGroup;
 			children = (
 				291E8FBE1F7DEA85003F0ECF /* EtherKeystoreTests.swift */,
+				2923D9B61FDA5E51000CF3F8 /* PasswordGeneratorTests.swift */,
 			);
 			path = EtherClient;
 			sourceTree = "<group>";
@@ -2329,6 +2332,7 @@
 				29FF13031F75EB7500AFD326 /* Account.swift in Sources */,
 				290B2B6A1F92C0440053C83E /* ConfigTests.swift in Sources */,
 				29FF13081F75F0AE00AFD326 /* AppCoordinatorTests.swift in Sources */,
+				2923D9B71FDA5E51000CF3F8 /* PasswordGeneratorTests.swift in Sources */,
 				2912CD101F6A830700C6CBE3 /* TrustTests.swift in Sources */,
 				29FF130D1F7626E800AFD326 /* FakeNavigationController.swift in Sources */,
 				293112311FC971B600966EEA /* ExchangeTokensCoordinatorTests.swift in Sources */,
