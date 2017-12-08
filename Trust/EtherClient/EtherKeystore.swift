@@ -68,20 +68,23 @@ open class EtherKeystore: Keystore {
     }
 
     func importWallet(type: ImportType, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
+        let newPassword = PasswordGenerator.generateRandom()
         switch type {
         case .keystore(let string, let password):
             importKeystore(
                 value: string,
                 password: password,
+                newPassword: newPassword,
                 completion: completion
             )
-        case .privateKey(let privateKey, let password):
-            self.keystore(for: privateKey, password: password) { result in
+        case .privateKey(let privateKey):
+            self.keystore(for: privateKey, password: newPassword) { result in
                 switch result {
                 case .success(let value):
                     self.importKeystore(
                         value: value,
-                        password: password,
+                        password: newPassword,
+                        newPassword: newPassword,
                         completion: completion
                     )
                 case .failure(let error):
@@ -108,9 +111,9 @@ open class EtherKeystore: Keystore {
         }
     }
 
-    func importKeystore(value: String, password: String, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
+    func importKeystore(value: String, password: String, newPassword: String, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let result = self.importKeystore(value: value, password: password)
+            let result = self.importKeystore(value: value, password: password, newPassword: newPassword)
             DispatchQueue.main.async {
                 switch result {
                 case .success(let account):
@@ -129,10 +132,10 @@ open class EtherKeystore: Keystore {
         return account
     }
 
-    func importKeystore(value: String, password: String) -> Result<Account, KeystoreError> {
+    func importKeystore(value: String, password: String, newPassword: String) -> Result<Account, KeystoreError> {
         let data = value.data(using: .utf8)
         do {
-            let gethAccount = try gethKeyStorage.importKey(data, passphrase: password, newPassphrase: password)
+            let gethAccount = try gethKeyStorage.importKey(data, passphrase: password, newPassphrase: newPassword)
 
             //Hack to avoid duplicate accounts
             let accounts = gethAccounts.filter { $0.getAddress().getHex() == gethAccount.getAddress().getHex() }
@@ -146,7 +149,7 @@ open class EtherKeystore: Keystore {
             }
 
             let account: Account = .from(account: gethAccount)
-            let _ = setPassword(password, for: account)
+            let _ = setPassword(newPassword, for: account)
             return .success(account)
         } catch {
             return .failure(.failedToImport(error))

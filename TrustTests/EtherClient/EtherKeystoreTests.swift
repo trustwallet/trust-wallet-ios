@@ -50,7 +50,8 @@ class EtherKeystoreTests: XCTestCase {
 
         let result = keystore.importKeystore(
             value: TestKeyStore.keystore,
-            password: "test"
+            password: "test",
+            newPassword: "test"
         )
 
         guard case let .success(account) = result else {
@@ -66,12 +67,14 @@ class EtherKeystoreTests: XCTestCase {
 
         let result1 = keystore.importKeystore(
             value: TestKeyStore.keystore,
-            password: TestKeyStore.password
+            password: TestKeyStore.password,
+            newPassword: TestKeyStore.password
         )
 
         let result2 = keystore.importKeystore(
             value: TestKeyStore.keystore,
-            password: TestKeyStore.password
+            password: TestKeyStore.password,
+            newPassword: TestKeyStore.password
         )
 
         guard case let .success(account) = result1 else {
@@ -91,7 +94,8 @@ class EtherKeystoreTests: XCTestCase {
 
         let result = keystore.importKeystore(
             value: TestKeyStore.keystore,
-            password: "invalidPassword"
+            password: "invalidPassword",
+            newPassword: TestKeyStore.password
         )
 
         guard case .failure = result else {
@@ -99,6 +103,34 @@ class EtherKeystoreTests: XCTestCase {
         }
 
         XCTAssertEqual(0, keystore.accounts.count)
+    }
+
+    func testImportUsesNewPasswordForEncryption() {
+        let keystore = FakeEtherKeystore()
+        let password = TestKeyStore.password
+        let newPassword = "newPassword"
+
+        let result = keystore.importKeystore(
+            value: TestKeyStore.keystore,
+            password: password,
+            newPassword: newPassword
+        )
+
+        guard case let .success(account) = result else {
+            return XCTFail()
+        }
+
+        let retreivePassword = keystore.getPassword(for: account)
+
+        XCTAssertEqual(newPassword, retreivePassword)
+        XCTAssertEqual("0x5e9c27156a612a2d516c74c7a80af107856f8539", account.address.address)
+        XCTAssertEqual(1, keystore.accounts.count)
+
+        let exportResult = keystore.export(account: account, password: newPassword, newPassword: "test2")
+
+        guard case .success = exportResult else {
+            return XCTAssertFalse(true)
+        }
     }
 
     func testExport() {
@@ -183,7 +215,8 @@ class EtherKeystoreTests: XCTestCase {
 
         let importResult = keystore.importKeystore(
             value: dict.jsonString ?? "",
-            password: passphrase
+            password: passphrase,
+            newPassword: TestKeyStore.password
         )
 
         guard case .success = importResult else {

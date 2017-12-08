@@ -15,7 +15,7 @@ class OnePasswordCoordinator {
 
     func createWallet(in viewController: UIViewController, completion: @escaping (Result<Account, AnyError>) -> Void) {
 
-        let newPasssword = NSUUID().uuidString
+        let newPasssword = PasswordGenerator.generateRandom()
         let account = keystore.createAccout(password: newPasssword)
         let keystoreString: String = {
             let value = keystore.export(account: account, password: newPasssword, newPassword: newPasssword)

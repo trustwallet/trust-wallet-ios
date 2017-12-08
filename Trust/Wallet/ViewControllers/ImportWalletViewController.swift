@@ -155,7 +155,7 @@ class ImportWalletViewController: FormViewController {
             case .keystore:
                 return .keystore(string: keystoreInput, password: password)
             case .privateKey:
-                return .privateKey(privateKey: privateKeyInput, password: UUID().uuidString)
+                return .privateKey(privateKey: privateKeyInput)
             }
         }()
 

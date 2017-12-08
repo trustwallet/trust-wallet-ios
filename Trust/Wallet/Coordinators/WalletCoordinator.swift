@@ -51,7 +51,7 @@ class WalletCoordinator: Coordinator {
 
     func createInstantWallet() {
         navigationController.displayLoading(text: "Creating wallet...", animated: false)
-        let password = UUID().uuidString
+        let password = PasswordGenerator.generateRandom()
         keystore.createAccount(with: password) { result in
             switch result {
             case .success(let account):

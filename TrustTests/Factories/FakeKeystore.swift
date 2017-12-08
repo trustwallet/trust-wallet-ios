@@ -32,7 +32,7 @@ struct FakeKeystore: Keystore {
         //TODO: Implement
     }
 
-    func importKeystore(value: String, password: String, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
+    func importKeystore(value: String, password: String, newPassword: String, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
         //TODO: Implement
     }
 
@@ -41,7 +41,7 @@ struct FakeKeystore: Keystore {
         return Account(address: .make())
     }
 
-    func importKeystore(value: String, password: String) -> Result<Account, KeystoreError> {
+    func importKeystore(value: String, password: String, newPassword: String) -> Result<Account, KeystoreError> {
         //TODO: Implement
         return .failure(KeystoreError.failedToSignTransaction)
     }
