@@ -51,6 +51,8 @@
 		291F52BC1F6B8D0600B369AB /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52BB1F6B8D0600B369AB /* Account.swift */; };
 		291F52BF1F6C874E00B369AB /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52BE1F6C874E00B369AB /* AccountsViewController.swift */; };
 		291F52C11F6C8A1F00B369AB /* AccountsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52C01F6C8A1F00B369AB /* AccountsViewModel.swift */; };
+		2923D9B11FDA49D8000CF3F8 /* Initializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B01FDA49D8000CF3F8 /* Initializer.swift */; };
+		2923D9B31FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B21FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift */; };
 		29282B531F7630970067F88D /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282B521F7630970067F88D /* Token.swift */; };
 		29282B581F7636840067F88D /* GetTokensRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282B571F7636840067F88D /* GetTokensRequest.swift */; };
 		29285B421F6FB3E60044CF29 /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29285B411F6FB3E60044CF29 /* SendViewController.swift */; };
@@ -342,6 +344,8 @@
 		291F52BB1F6B8D0600B369AB /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		291F52BE1F6C874E00B369AB /* AccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
 		291F52C01F6C8A1F00B369AB /* AccountsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsViewModel.swift; sourceTree = "<group>"; };
+		2923D9B01FDA49D8000CF3F8 /* Initializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializer.swift; sourceTree = "<group>"; };
+		2923D9B21FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipBackupFilesInitializer.swift; sourceTree = "<group>"; };
 		29282B521F7630970067F88D /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		29282B571F7636840067F88D /* GetTokensRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTokensRequest.swift; sourceTree = "<group>"; };
 		29285B411F6FB3E60044CF29 /* SendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewController.swift; sourceTree = "<group>"; };
@@ -1554,6 +1558,8 @@
 				29FC9BC51F830880000209CD /* MirgrationInitializer.swift */,
 				292F75A81F88865A00585F8E /* TouchRegistrar.swift */,
 				290B2B5A1F8F551E0053C83E /* LokaliseInitializer.swift */,
+				2923D9B01FDA49D8000CF3F8 /* Initializer.swift */,
+				2923D9B21FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift */,
 			);
 			path = Initializers;
 			sourceTree = "<group>";
@@ -2184,11 +2190,13 @@
 				61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */,
 				29DBF2A71F9F145900327C60 /* StateViewModel.swift in Sources */,
 				2912CD361F6A853300C6CBE3 /* TransactionsViewModel.swift in Sources */,
+				2923D9B31FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift in Sources */,
 				29C80D4B1FB51C460037B1E0 /* Decimal.swift in Sources */,
 				297800521F71FDCF003185C1 /* FormAppearance.swift in Sources */,
 				298542F91FBE9A0100CB5081 /* CryptoAddressValidator.swift in Sources */,
 				291F52C11F6C8A1F00B369AB /* AccountsViewModel.swift in Sources */,
 				298542E31FBA722F00CB5081 /* ContainerView.swift in Sources */,
+				2923D9B11FDA49D8000CF3F8 /* Initializer.swift in Sources */,
 				29CAEB8E1F70A2FB00F7357D /* TransactionCellViewModel.swift in Sources */,
 				298542E81FBAD0B200CB5081 /* OperationType.swift in Sources */,
 				29BE3FD01F7071A200F6BFC2 /* UIColor.swift in Sources */,

@@ -33,7 +33,6 @@ open class EtherKeystore: Keystore {
         self.keychain = keychain
         self.keychain.synchronizable = false
         self.gethKeyStorage = GethNewKeyStore(keydir, GethLightScryptN, GethLightScryptP)
-        self.addSkipBackupAttributeToItemAtURL(filePath: keydir)
     }
 
     var hasAccounts: Bool {
@@ -55,19 +54,6 @@ open class EtherKeystore: Keystore {
             return try EtherKeystore().recentlyUsedAccount
         } catch {
             return .none
-        }
-    }
-
-    @discardableResult
-    func addSkipBackupAttributeToItemAtURL(filePath: String) -> Bool {
-        let url: NSURL = NSURL.fileURL(withPath: filePath) as NSURL
-        do {
-            try url.setResourceValue(true, forKey: .isExcludedFromBackupKey)
-            try url.setResourceValue(false, forKey: .isUbiquitousItemKey)
-            return true
-        } catch let error {
-            NSLog("Failed to exclude datastore from backup \(error.localizedDescription)")
-            return false
         }
     }
 

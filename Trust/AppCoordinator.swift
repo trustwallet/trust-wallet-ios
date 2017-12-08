@@ -36,7 +36,6 @@ class AppCoordinator: NSObject, Coordinator {
     }
 
     func start() {
-        performMigration()
         inializers()
         handleNotifications()
         applyStyle()
@@ -60,11 +59,17 @@ class AppCoordinator: NSObject, Coordinator {
     }
 
     func performMigration() {
-        MigrationInitializer().perform()
-        LokaliseInitializer().perform()
+
     }
 
     func inializers() {
+        let initializers: [Initializer] = [
+            MigrationInitializer(),
+            LokaliseInitializer(),
+            SkipBackupFilesInitializer(),
+        ]
+        initializers.forEach { $0.perform() }
+
         touchRegistrar.register()
     }
 

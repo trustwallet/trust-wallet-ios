@@ -3,11 +3,7 @@
 import Foundation
 import RealmSwift
 
-class MigrationInitializer {
-
-    init() {
-
-    }
+class MigrationInitializer: Initializer {
 
     func perform() {
         let config = Realm.Configuration(
