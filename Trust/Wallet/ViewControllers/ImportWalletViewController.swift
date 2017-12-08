@@ -200,7 +200,7 @@ class ImportWalletViewController: FormViewController {
         alertController.addAction(UIAlertAction(title: "iCloud/Dropbox/Google Cloud", style: .default) { _ in
             self.showDocumentPicker()
         })
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .destructive) { _ in })
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in })
         present(alertController, animated: true)
     }
 
