@@ -42,20 +42,7 @@ class SettingsViewController: FormViewController {
 
         title = NSLocalizedString("Settings.Title", value: "Settings", comment: "")
 
-        form = Section(
-                header: NSLocalizedString("settings.backup", value: "Backup", comment: ""),
-                footer: NSLocalizedString("Settings.KeepItSecure", value: "Keep it secure and never share it with anyone.", comment: "")
-            )
-
-            <<< AppFormAppearance.button(NSLocalizedString("settings.backupKeystore", value: "Backup Private Key", comment: "")) {
-                $0.title = $0.tag
-            }.onCellSelection { [unowned self] (_, _) in
-                self.run(action: .exportPrivateKey)
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_export()
-            }
-
-            +++ Section()
+        form = Section()
 
             <<< PushRow<String> {
                 $0.title = NSLocalizedString("settings.network", value: "Network", comment: "")

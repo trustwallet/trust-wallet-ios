@@ -3,7 +3,6 @@
 import Foundation
 
 enum SettingsAction {
-    case exportPrivateKey
     case RPCServer
     case donate(address: Address)
     case pushNotifications(enabled: Bool)

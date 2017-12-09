@@ -41,21 +41,11 @@ class SettingsCoordinator: Coordinator {
     @objc func dismiss() {
         delegate?.didCancel(in: self)
     }
-
-    @objc func export(in viewController: UIViewController) {
-        let coordinator = ExportCoordinator(keystore: keystore)
-        coordinator.delegate = self
-        coordinator.start()
-        addCoordinator(coordinator)
-        viewController.present(coordinator.navigationController, animated: true, completion: nil)
-    }
 }
 
 extension SettingsCoordinator: SettingsViewControllerDelegate {
     func didAction(action: SettingsAction, in viewController: SettingsViewController) {
         switch action {
-        case .exportPrivateKey:
-            export(in: viewController)
         case .RPCServer: break
         case .donate: break
         case .pushNotifications(let enabled):
@@ -67,17 +57,5 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
             }
         }
         delegate?.didUpdate(action: action, in: self)
-    }
-}
-
-extension SettingsCoordinator: ExportCoordinatorDelegate {
-    func didFinish(in coordinator: ExportCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
-    }
-
-    func didCancel(in coordinator: ExportCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
     }
 }

@@ -55,6 +55,23 @@ class AccountsCoordinator: Coordinator {
         coordinator.start(.welcome)
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
+
+    func showInfoSheet(for account: Account) {
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let actionTitle = NSLocalizedString("wallets.backup.backup-action.title", comment: "The title of the backup button in the wallet's action sheet")
+        let action = UIAlertAction(title: actionTitle, style: .default) { _ in
+            let coordinator = BackupCoordinator(
+                navigationController: self.navigationController,
+                keystore: self.keystore,
+                account: account
+            )
+            coordinator.delegate = self
+            coordinator.start()
+            self.addCoordinator(coordinator)
+        }
+        controller.addAction(action)
+        navigationController.present(controller, animated: true, completion: nil)
+    }
 }
 
 extension AccountsCoordinator: AccountsViewControllerDelegate {
@@ -64,6 +81,10 @@ extension AccountsCoordinator: AccountsViewControllerDelegate {
 
     func didDeleteAccount(account: Account, in viewController: AccountsViewController) {
         delegate?.didDeleteAccount(account: account, in: self)
+    }
+
+    func didSelectInfoForAccount(account: Account, in viewController: AccountsViewController) {
+        showInfoSheet(for: account)
     }
 }
 
@@ -82,6 +103,16 @@ extension AccountsCoordinator: WalletCoordinatorDelegate {
 
     func didCancel(in coordinator: WalletCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+    }
+}
+
+extension AccountsCoordinator: BackupCoordinatorDelegate {
+    func didCancel(coordinator: BackupCoordinator) {
+        removeCoordinator(coordinator)
+    }
+
+    func didFinish(account: Account, in coordinator: BackupCoordinator) {
         removeCoordinator(coordinator)
     }
 }

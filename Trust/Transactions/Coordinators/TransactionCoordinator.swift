@@ -164,7 +164,7 @@ extension TransactionCoordinator: SettingsCoordinatorDelegate {
         case .RPCServer:
             removeCoordinator(coordinator)
             restart(for: session.account)
-        case .exportPrivateKey, .pushNotifications:
+        case .pushNotifications:
             break
         case .donate(let address):
             coordinator.navigationController.dismiss(animated: true) {
