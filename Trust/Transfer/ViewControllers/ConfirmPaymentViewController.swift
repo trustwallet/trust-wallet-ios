@@ -96,7 +96,7 @@ class ConfirmPaymentViewController: UIViewController {
         stackViewController.view.backgroundColor = viewModel.backgroundColor
 
         navigationItem.title = viewModel.title
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(edit))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
 
         reloadView()
 
@@ -114,10 +114,32 @@ class ConfirmPaymentViewController: UIViewController {
                 viewModel: headerViewModel
             ),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
-            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.from", value: "From", comment: ""), subTitle: session.account.address.address),
-            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.to", value: "To", comment: ""), subTitle: viewModel.addressText),
-            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.gasLimit", value: "Gas Limit", comment: ""), subTitle: viewModel.gasLimiText),
-            TransactionAppearance.item(title: NSLocalizedString("confirmPayment.gasFee", value: "Gas Fee", comment: ""), subTitle: viewModel.feeText),
+            TransactionAppearance.item(
+                title: viewModel.paymentFromTitle,
+                subTitle: session.account.address.address
+            ),
+            TransactionAppearance.item(
+                title: viewModel.paymentToTitle,
+                subTitle: viewModel.paymentToText
+            ),
+            TransactionAppearance.item(
+                title: viewModel.gasLimitTitle,
+                subTitle: viewModel.gasLimitText
+            ) { [unowned self] _, _, _ in
+                self.edit()
+            },
+            TransactionAppearance.item(
+                title: viewModel.gasPriceTitle,
+                subTitle: viewModel.gasPriceText
+            ) { [unowned self] _, _, _ in
+                self.edit()
+            },
+            TransactionAppearance.item(
+                title: viewModel.feeTitle,
+                subTitle: viewModel.feeText
+            ) { [unowned self] _, _, _ in
+                self.edit()
+            },
         ]
 
         for item in items {

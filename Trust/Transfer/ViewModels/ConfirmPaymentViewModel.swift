@@ -47,13 +47,43 @@ struct ConfirmPaymentViewModel {
         return fullFormatter.string(from: transaction.value)
     }
 
-    var addressText: String {
+    var paymentFromTitle: String {
+        return NSLocalizedString("confirmPayment.from", value: "From", comment: "")
+    }
+
+    var paymentToTitle: String {
+        return NSLocalizedString("confirmPayment.to", value: "To", comment: "")
+    }
+    var paymentToText: String {
         return transaction.address.address
+    }
+
+    var gasPriceTitle: String {
+        return NSLocalizedString("confirmPayment.gasPrice", value: "Gas Price", comment: "")
+    }
+
+    var gasPriceText: String {
+        let unit = UnitConfiguration.gasPriceUnit
+        let amount = fullFormatter.string(from: configuration.speed.gasPrice, units: UnitConfiguration.gasPriceUnit)
+        return  String(
+            format: "%@ %@",
+            amount,
+            unit.name
+        )
+    }
+
+    var feeTitle: String {
+        return NSLocalizedString("confirmPayment.gasFee", value: "Network Fee", comment: "")
     }
 
     var feeText: String {
         let fee = fullFormatter.string(from: totalFee)
-        let feeAndSymbol = fee.description + " \(config.server.symbol)"
+        let feeAndSymbol = String(
+            format: "%@ %@",
+            fee.description,
+            config.server.symbol
+        )
+
         let warningFee = BigInt(EthereumUnit.ether.rawValue) / BigInt(20)
         guard totalFee <= warningFee else {
             return feeAndSymbol + " - WARNING. HIGH FEE."
@@ -61,7 +91,11 @@ struct ConfirmPaymentViewModel {
         return feeAndSymbol
     }
 
-    var gasLimiText: String {
+    var gasLimitTitle: String {
+        return NSLocalizedString("confirmPayment.gasLimit", value: "Gas Limit", comment: "")
+    }
+
+    var gasLimitText: String {
         return gasLimit.description
     }
 }

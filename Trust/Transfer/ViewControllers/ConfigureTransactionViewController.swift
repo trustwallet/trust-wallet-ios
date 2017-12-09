@@ -12,10 +12,12 @@ class ConfigureTransactionViewController: FormViewController {
 
     let configuration: TransactionConfiguration
     let config: Config
+    private let fullFormatter = EtherNumberFormatter.full
 
     struct Values {
         static let gasPrice = "gasPrice"
         static let gasLimit = "gasLimit"
+        static let totalFee = "totalFee"
     }
 
     private struct Constant {
@@ -32,13 +34,25 @@ class ConfigureTransactionViewController: FormViewController {
         return ConfigureTransactionViewModel(config: self.config)
     }()
 
-    var gasPriceRow: SliderRow? {
+    private var gasPriceRow: SliderRow? {
         return form.rowBy(tag: Values.gasPrice) as? SliderRow
     }
-    var gasLimitRow: SliderRow? {
+    private var gasLimitRow: SliderRow? {
         return form.rowBy(tag: Values.gasLimit) as? SliderRow
     }
-    private let gasPriceUnit: EthereumUnit = .gwei
+    private var totalFeeRow: TextRow? {
+        return form.rowBy(tag: Values.totalFee) as? TextRow
+    }
+
+    private var gasLimit: BigInt {
+        return BigInt(String(Int(gasLimitRow?.value ?? 0)), radix: 10) ?? BigInt()
+    }
+    private var gasPrice: BigInt {
+        return fullFormatter.number(from: String(Int(gasPriceRow?.value ?? 1)), units: UnitConfiguration.gasPriceUnit) ?? BigInt()
+    }
+    private var totalFee: BigInt {
+        return gasPrice * gasLimit
+    }
 
     weak var delegate: ConfigureTransactionViewControllerDelegate?
 
@@ -52,7 +66,7 @@ class ConfigureTransactionViewController: FormViewController {
         super.init(nibName: nil, bundle: nil)
 
         navigationItem.title = viewModel.title
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("generic.save", value: "Save", comment: ""), style: .done, target: self, action: #selector(self.save))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -62,7 +76,7 @@ class ConfigureTransactionViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let gasPriceGwei = EtherNumberFormatter.full.string(from: configuration.speed.gasPrice, units: gasPriceUnit)
+        let gasPriceGwei = EtherNumberFormatter.full.string(from: configuration.speed.gasPrice, units: UnitConfiguration.gasPriceUnit)
 
         form = Section()
 
@@ -79,6 +93,9 @@ class ConfigureTransactionViewController: FormViewController {
             $0.displayValueFor = { (rowValue: Float?) in
                 return "\(Int(rowValue ?? 1)) (Gwei)"
             }
+            $0.onChange { [unowned self] _ in
+                self.recalculateTotalFee()
+            }
         }
 
         +++ Section(
@@ -94,15 +111,27 @@ class ConfigureTransactionViewController: FormViewController {
             $0.displayValueFor = { (rowValue: Float?) in
                 return "\(Int(rowValue ?? 1))"
             }
+            $0.onChange { [unowned self] _ in
+                self.recalculateTotalFee()
+            }
         }
+
+        +++ Section()
+
+        <<< TextRow(Values.totalFee) {
+            $0.title = NSLocalizedString("configureTransaction.totalNetworkFee", value: "Total network fee", comment: "")
+            $0.disabled = true
+        }
+
+        recalculateTotalFee()
+    }
+
+    func recalculateTotalFee() {
+        totalFeeRow?.value = "\(fullFormatter.string(from: totalFee)) \(config.server.symbol)"
+        totalFeeRow?.updateCell()
     }
 
     @objc func save() {
-        let gasPrice = EtherNumberFormatter.full.number(from: String(Int(gasPriceRow?.value ?? 1)), units: gasPriceUnit) ?? BigInt()
-
-        let gasLimit = BigInt(String(Int(gasLimitRow?.value ?? 0)), radix: 10) ?? BigInt()
-        let totalFee = gasPrice * gasLimit
-
         guard gasLimit <= ConfigureTransaction.gasLimitMax else {
             return displayError(error: ConfigureTransactionError.gasLimitTooHigh)
         }

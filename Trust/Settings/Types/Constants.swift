@@ -18,3 +18,8 @@ public struct Constants {
     // support
     public static let supportEmail = "support@trustwalletapp.com"
 }
+
+public struct UnitConfiguration {
+    public static let gasPriceUnit: EthereumUnit = .gwei
+    public static let gasFeeUnit: EthereumUnit = .ether
+}
