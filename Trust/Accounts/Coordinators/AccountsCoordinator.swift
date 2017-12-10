@@ -58,7 +58,7 @@ class AccountsCoordinator: Coordinator {
 
     func showInfoSheet(for account: Account) {
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let actionTitle = NSLocalizedString("wallets.backup.backup-action.title", comment: "The title of the backup button in the wallet's action sheet")
+        let actionTitle = NSLocalizedString("wallets.backup.backup-action.title", value: "Backup Keystore", comment: "The title of the backup button in the wallet's action sheet")
         let action = UIAlertAction(title: actionTitle, style: .default) { _ in
             let coordinator = BackupCoordinator(
                 navigationController: self.navigationController,
@@ -69,7 +69,9 @@ class AccountsCoordinator: Coordinator {
             coordinator.start()
             self.addCoordinator(coordinator)
         }
+        let cancelAction = UIAlertAction(title: NSLocalizedString("generic.cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
         controller.addAction(action)
+        controller.addAction(cancelAction)
         navigationController.present(controller, animated: true, completion: nil)
     }
 }
