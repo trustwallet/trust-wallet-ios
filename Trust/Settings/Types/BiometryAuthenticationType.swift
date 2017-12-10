@@ -21,8 +21,8 @@ extension BiometryAuthenticationType {
     static var current: BiometryAuthenticationType {
         if #available(iOS 11.0, *) {
             switch LAContext().biometryType {
-            case .typeTouchID: return .touchID
-            case .typeFaceID: return .faceID
+            case .touchID: return .touchID
+            case .faceID: return .faceID
             case .none: return .none
             }
         }

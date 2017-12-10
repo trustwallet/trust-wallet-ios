@@ -5,6 +5,7 @@ import UIKit
 protocol AccountsViewControllerDelegate: class {
     func didSelectAccount(account: Account, in viewController: AccountsViewController)
     func didDeleteAccount(account: Account, in viewController: AccountsViewController)
+    func didSelectInfoForAccount(account: Account, in viewController: AccountsViewController)
 }
 
 class AccountsViewController: UITableViewController {
@@ -72,7 +73,8 @@ class AccountsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let account = self.account(for: indexPath)
         let cell = AccountViewCell(style: .default, reuseIdentifier: AccountViewCell.identifier)
-        cell.configure(viewModel: AccountViewModel(account: account, current: EtherKeystore.current))
+        cell.viewModel = AccountViewModel(account: account, current: EtherKeystore.current)
+        cell.delegate = self
         return cell
     }
 
@@ -122,5 +124,11 @@ class AccountsViewController: UITableViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension AccountsViewController: AccountViewCellDelegate {
+    func accountViewCell(_ cell: AccountViewCell, didTapInfoViewForAccount account: Account) {
+        self.delegate?.didSelectInfoForAccount(account: account, in: self)
     }
 }
