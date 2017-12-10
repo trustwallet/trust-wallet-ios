@@ -1,3 +1,17 @@
-Trust - fast and secure Ethereum wallet that’s easy to use.
+Trust - fast and secure Ethereum wallet that’s easy to use. We make it easy and securely buy, use and store Ethereum and ERC20 tokens on your device. 
 
-- ERC20 Compatible wallet
+Features include:
+- Send and request ether.
+- Store and transfer ERC20 tokens.
+- Check balance, transaction history and details.
+- Bank level security to keep your private data safe.
+- Set a passcode to protect your app. Use FaceID or Touch to authenticate.
+
+Our philosophy:
+- We never access or hold your wallet.
+- We never require users to input any personal information.
+- We offer a client-side security model with private keys.
+- We focus on building simple to use interfaces.
+- We use standards to secure your keys.
+
+If you’re having  issues with the app, or have some feedback, please send us an email at support@trustwalletapp.com or contact our community from the settings.
