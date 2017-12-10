@@ -58,6 +58,7 @@ class AccountsCoordinator: Coordinator {
 
     func showInfoSheet(for account: Account) {
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        controller.popoverPresentationController?.sourceView = navigationController.view
         let actionTitle = NSLocalizedString("wallets.backup.backup-action.title", value: "Backup Keystore", comment: "The title of the backup button in the wallet's action sheet")
         let action = UIAlertAction(title: actionTitle, style: .default) { _ in
             let coordinator = BackupCoordinator(

@@ -20,7 +20,7 @@ class CheckDeviceCoordinator: Coordinator {
             ),
             preferredStyle: UIAlertControllerStyle.alert
         )
-
+        controller.popoverPresentationController?.sourceView = navigationController.view
         controller.addAction(UIAlertAction(title: NSLocalizedString("jailbreak.submit", value: "Got it", comment: ""), style: .default))
 
         return controller
