@@ -29,7 +29,7 @@ class TransactionDataCoordinator {
 
     weak var delegate: TransactionDataCoordinatorDelegate?
 
-    private let trustProvider = MoyaProvider<TrustService>()
+    private let trustProvider = TrustProviderFactory.makeProvider()
 
     init(
         session: WalletSession,
