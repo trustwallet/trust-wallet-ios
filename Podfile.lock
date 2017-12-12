@@ -6,8 +6,11 @@ PODS:
   - BigInt (3.0.1):
     - SipHash (~> 1.2)
   - BonMot (5.0)
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
   - CryptoSwift (0.8.0)
   - Eureka (4.0.1)
+  - Fabric (1.7.2)
   - Geth (1.7.2)
   - JavaScriptKit (1.0.0):
     - Result (~> 3.1)
@@ -44,8 +47,10 @@ DEPENDENCIES:
   - APIKit
   - BigInt (~> 3.0)
   - BonMot (~> 5.0)
+  - Crashlytics
   - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift`, branch `master`)
   - Eureka (~> 4.0.1)
+  - Fabric
   - Geth
   - JavaScriptKit
   - JSONRPCKit (from `https://github.com/bricklife/JSONRPCKit.git`)
@@ -88,8 +93,10 @@ SPEC CHECKSUMS:
   APIKit: 7460983f490d3bde6aaaaa4164d18c9865a6f91d
   BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
   BonMot: 3ff354572f2aa9295d3760947f7578490cb810be
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   CryptoSwift: 475ae2a25439f52412686d68b854c0ca724c8dfd
   Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
+  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   Geth: 1efbf2eb4d4c697a7232c5385da127ca386b1060
   JavaScriptKit: 9ff565209e6efe21bcb9c6d6ca3e863a67a8ecf7
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
@@ -110,6 +117,6 @@ SPEC CHECKSUMS:
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   VENTouchLock: 20d378b9c6173e2c054448aeb3fb2f40822a9f3f
 
-PODFILE CHECKSUM: 572bb29c83926b48dddd2c576f5b7d300f4937f4
+PODFILE CHECKSUM: eda4a56021a004e61bffcdb78ca2a334ba60ac6d
 
 COCOAPODS: 1.3.1

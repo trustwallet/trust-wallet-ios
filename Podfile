@@ -25,6 +25,8 @@ target 'Trust' do
   pod 'Moya', '~> 10.0.1'
   pod 'JavaScriptKit' 
   pod 'CryptoSwift', :git=>'https://github.com/krzyzanowskim/CryptoSwift', :branch=>'master'
+  pod 'Fabric'
+  pod 'Crashlytics'  
 
   target 'TrustTests' do
     inherit! :search_paths

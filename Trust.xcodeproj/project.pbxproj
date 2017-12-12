@@ -96,6 +96,7 @@
 		293E626F1FA2ED1400CB0A66 /* InCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E626E1FA2ED1400CB0A66 /* InCoordinator.swift */; };
 		293E62711FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E62701FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift */; };
 		293E62731FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E62721FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift */; };
+		294DFB981FDF8CBB004CEB56 /* CrashReportInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DFB971FDF8CBB004CEB56 /* CrashReportInitializer.swift */; };
 		294EC1D81FD7FBAB0065EB20 /* BiometryAuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294EC1D71FD7FBAB0065EB20 /* BiometryAuthenticationType.swift */; };
 		294EC1DA1FD8E4E60065EB20 /* GasPriceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294EC1D91FD8E4E60065EB20 /* GasPriceRequest.swift */; };
 		294FE5661F72442D00754F31 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294FE5651F72442D00754F31 /* Address.swift */; };
@@ -388,6 +389,7 @@
 		293E626E1FA2ED1400CB0A66 /* InCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InCoordinator.swift; sourceTree = "<group>"; };
 		293E62701FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialWalletCreationCoordinator.swift; sourceTree = "<group>"; };
 		293E62721FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialWalletCreationCoordinatorTests.swift; sourceTree = "<group>"; };
+		294DFB971FDF8CBB004CEB56 /* CrashReportInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReportInitializer.swift; sourceTree = "<group>"; };
 		294EC1D71FD7FBAB0065EB20 /* BiometryAuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometryAuthenticationType.swift; sourceTree = "<group>"; };
 		294EC1D91FD8E4E60065EB20 /* GasPriceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPriceRequest.swift; sourceTree = "<group>"; };
 		294FE5651F72442D00754F31 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
@@ -1552,6 +1554,7 @@
 				290B2B5A1F8F551E0053C83E /* LokaliseInitializer.swift */,
 				2923D9B01FDA49D8000CF3F8 /* Initializer.swift */,
 				2923D9B21FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift */,
+				294DFB971FDF8CBB004CEB56 /* CrashReportInitializer.swift */,
 			);
 			path = Initializers;
 			sourceTree = "<group>";
@@ -1723,6 +1726,7 @@
 				F291FF6299FBB0600050DA49 /* [CP] Embed Pods Frameworks */,
 				2909B06A324FDD6FB858F676 /* [CP] Copy Pods Resources */,
 				29282B511F7629DB0067F88D /* Run SwiftLint */,
+				294DFB961FDF8C6A004CEB56 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1937,6 +1941,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/Trust\"";
 		};
+		294DFB961FDF8C6A004CEB56 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 74d3fa8b5038a154c0c05555d27112a0d4a80d68 8973b953bafdeaf177a2bae935a2bfba6158575b615f75305af25cf01a6adac6";
+		};
 		558B94C30BF51EDC00493AF8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2118,6 +2135,7 @@
 				29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */,
 				2963B6AB1F9818C7003063C1 /* TransactionHeaderViewModel.swift in Sources */,
 				29AD8A091F93F8B2008E10E7 /* Session.swift in Sources */,
+				294DFB981FDF8CBB004CEB56 /* CrashReportInitializer.swift in Sources */,
 				2985430A1FC188A700CB5081 /* ExchangeTokenInputField.swift in Sources */,
 				291F52B91F6B880F00B369AB /* EtherKeystore.swift in Sources */,
 				2931122A1FC8EE8100966EEA /* ExchangeGetPrice.swift in Sources */,

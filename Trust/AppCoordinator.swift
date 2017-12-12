@@ -65,6 +65,7 @@ class AppCoordinator: NSObject, Coordinator {
     func inializers() {
         let initializers: [Initializer] = [
             MigrationInitializer(),
+            CrashReportInitializer(),
             LokaliseInitializer(),
             SkipBackupFilesInitializer(),
         ]
