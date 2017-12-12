@@ -81,7 +81,7 @@ class ConfigureTransactionViewController: FormViewController {
         form = Section()
 
         +++ Section(
-            footer: viewModel.gasLimitFooterText
+            footer: viewModel.gasPriceFooterText
         )
 
         <<< SliderRow(Values.gasPrice) {
