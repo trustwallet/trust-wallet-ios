@@ -19,8 +19,8 @@ platform :ios do
   before_all do
   end
 
-  def localize
-    sh "cd .. && sh scripts/localizer.sh Trust " << ENV['LOKALISE_TOKEN']
+  def run_localizer
+    sh "cd .. && sh scripts/localizer.sh Trust " << ENV['LOKALISE_API_TOKEN']
   end
 
   def screenshots
@@ -50,7 +50,14 @@ platform :ios do
 
   desc "Localize"
   lane :localize do
-    localize
+    run_localizer
+    #lokalise_metadata(
+    #  api_token: "9a58b66883f72ff69f35d418bb128a2a57ebcabb",
+    #  project_identifier: "3947163159df13df851b51.98101647",
+    #  action: "update_lokalise",
+    #  add_languages: true,
+    #  override_translation: true
+    #)
   end
 
   # You can define as many lanes as you want
