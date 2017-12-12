@@ -40,12 +40,12 @@ class SettingsViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = NSLocalizedString("Settings.Title", value: "Settings", comment: "")
+        title = NSLocalizedString("settings.navigation.title", value: "Settings", comment: "")
 
         form = Section()
 
             <<< PushRow<String> {
-                $0.title = NSLocalizedString("settings.network", value: "Network", comment: "")
+                $0.title = NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
                 $0.options = viewModel.servers
                 $0.value = RPCServer(chainID: config.chainID).name
                 $0.displayValueFor = { value in
@@ -61,7 +61,7 @@ class SettingsViewController: FormViewController {
                 cell.imageView?.image = R.image.settings_server()
             }
 
-            +++ Section(NSLocalizedString("Settings.Security", value: "Security", comment: ""))
+            +++ Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))
 
             <<< SwitchRow {
                 $0.title = viewModel.passcodeTitle
@@ -82,7 +82,7 @@ class SettingsViewController: FormViewController {
             }
 
             <<< SwitchRow {
-                $0.title = NSLocalizedString("Settings.PushNotifications", value: "Push Notifications", comment: "")
+                $0.title = NSLocalizedString("settings.pushNotifications.button.title", value: "Push Notifications", comment: "")
                 $0.value = SettingsViewController.isPushNotificationEnabled
             }.onChange { [unowned self] row in
                 let enabled = row.value ?? false
@@ -91,30 +91,30 @@ class SettingsViewController: FormViewController {
                 cell.imageView?.image = R.image.settings_push_notifications()
             }
 
-            +++ Section(NSLocalizedString("Settings.OpenSourceDevelopment", value: "Open Source Development", comment: ""))
+            +++ Section(NSLocalizedString("settings.openSourceDevelopment.label.title", value: "Open Source Development", comment: ""))
 
             <<< link(
-                title: NSLocalizedString("Settings.SourceCode", value: "Source Code", comment: ""),
+                title: NSLocalizedString("settings.sourceCode.button.title", value: "Source Code", comment: ""),
                 value: "https://github.com/TrustWallet/trust-wallet-ios",
                 image: R.image.settings_open_source()
             )
 
             <<< link(
-                title: NSLocalizedString("Settings.ReportABug", value: "Report a Bug", comment: ""),
+                title: NSLocalizedString("settings.reportBug.button.title", value: "Report a Bug", comment: ""),
                 value: "https://github.com/TrustWallet/trust-wallet-ios/issues/new",
                 image: R.image.settings_bug()
             )
 
-            +++ Section(NSLocalizedString("Settings.Community", value: "Community", comment: ""))
+            +++ Section(NSLocalizedString("settings.community.label.title", value: "Community", comment: ""))
 
             <<< linkProvider(type: .twitter)
             <<< linkProvider(type: .telegram)
             <<< linkProvider(type: .facebook)
 
-            +++ Section(NSLocalizedString("Settings.Support", value: "Support", comment: ""))
+            +++ Section(NSLocalizedString("settings.support.label.title", value: "Support", comment: ""))
 
             <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("Settings.RateUsAppStore", value: "Rate Us on App Store", comment: "")
+                button.title = NSLocalizedString("settings.rateUsAppStore.button.title", value: "Rate Us on App Store", comment: "")
             }.onCellSelection { _, _  in
                 if #available(iOS 10.3, *) { SKStoreReviewController.requestReview() } else {
                     UIApplication.shared.openURL(URL(string: "itms-apps://itunes.apple.com/app/id1288339409")!)
@@ -124,7 +124,7 @@ class SettingsViewController: FormViewController {
             }
 
             <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("Settings.emailUs", value: "Email Us", comment: "")
+                button.title = NSLocalizedString("settings.emailUs.button.title", value: "Email Us", comment: "")
             }.onCellSelection { _, _  in
                 self.sendUsEmail()
             }.cellSetup { cell, _ in
@@ -132,7 +132,7 @@ class SettingsViewController: FormViewController {
             }
 
             <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("Settings.Donate", value: "Donate", comment: "")
+                button.title = NSLocalizedString("settings.donate.button.title", value: "Donate", comment: "")
             }.onCellSelection { [unowned self] _, _ in
                 self.run(action: .donate(address: Values.donationAddress))
             }.cellSetup { cell, _ in
@@ -140,13 +140,13 @@ class SettingsViewController: FormViewController {
             }
 
             <<< link(
-                title: NSLocalizedString("Settings.PrivacyPolicy", value: "Privacy Policy", comment: ""),
+                title: NSLocalizedString("settings.privacyPolicy.button.title", value: "Privacy Policy", comment: ""),
                 value: "https://trustwalletapp.com/privacy-policy.html",
                 image: R.image.settings_privacy_policy()
             )
 
             <<< link(
-                title: NSLocalizedString("settings.TermsOfService", value: "Terms of Service", comment: ""),
+                title: NSLocalizedString("settings.termsOfService.button.title", value: "Terms of Service", comment: ""),
                 value: "https://trustwalletapp.com/terms.html",
                 image: R.image.settings_terms()
             )
@@ -154,7 +154,7 @@ class SettingsViewController: FormViewController {
             +++ Section()
 
             <<< TextRow {
-                $0.title = NSLocalizedString("Settings.Version", value: "Version", comment: "")
+                $0.title = NSLocalizedString("settings.version.label.title", value: "Version", comment: "")
                 $0.value = version()
                 $0.disabled = true
             }
@@ -215,7 +215,7 @@ class SettingsViewController: FormViewController {
         let composerController = MFMailComposeViewController()
         composerController.mailComposeDelegate = self
         composerController.setToRecipients([Constants.supportEmail])
-        composerController.setSubject("Trust Feedback")
+        composerController.setSubject(NSLocalizedString("settings.feedback.email.title", value: "Trust Feedback", comment: ""))
         composerController.setMessageBody("", isHTML: false)
 
         if MFMailComposeViewController.canSendMail() {

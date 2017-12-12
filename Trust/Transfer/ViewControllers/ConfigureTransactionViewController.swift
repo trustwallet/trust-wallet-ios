@@ -85,7 +85,7 @@ class ConfigureTransactionViewController: FormViewController {
         )
 
         <<< SliderRow(Values.gasPrice) {
-            $0.title = NSLocalizedString("configureTransaction.gasPrice", value: "Gas Price", comment: "")
+            $0.title = NSLocalizedString("configureTransaction.gasPrice.label.title", value: "Gas Price", comment: "")
             $0.value = Float(gasPriceGwei) ?? 1
             $0.minimumValue = Constant.minGasPrice
             $0.maximumValue = Constant.maxGasPrice
@@ -103,7 +103,7 @@ class ConfigureTransactionViewController: FormViewController {
         )
 
         <<< SliderRow(Values.gasLimit) {
-            $0.title = NSLocalizedString("configureTransaction.gasLimit", value: "Gas Limit", comment: "")
+            $0.title = NSLocalizedString("configureTransaction.gasLimit.label.title", value: "Gas Limit", comment: "")
             $0.value = Float(configuration.speed.gasLimit.description) ?? 21000
             $0.minimumValue = Constant.minGasLimit
             $0.maximumValue = Constant.maxGasLimit
@@ -119,7 +119,7 @@ class ConfigureTransactionViewController: FormViewController {
         +++ Section()
 
         <<< TextRow(Values.totalFee) {
-            $0.title = NSLocalizedString("configureTransaction.totalNetworkFee", value: "Total network fee", comment: "")
+            $0.title = NSLocalizedString("configureTransaction.totalNetworkFee.label.title", value: "Total network fee", comment: "")
             $0.disabled = true
         }
 

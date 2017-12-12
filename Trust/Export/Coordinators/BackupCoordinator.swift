@@ -42,7 +42,7 @@ class BackupCoordinator: Coordinator {
         let result = keystore.export(account: account, password: password, newPassword: newPassword)
 
         navigationController.displayLoading(
-            text: NSLocalizedString("export.presentBackupOptions", value: "Preparing backup options...", comment: "")
+            text: NSLocalizedString("export.presentBackupOptions.label.title", value: "Preparing backup options...", comment: "")
         )
 
         switch result {
@@ -73,7 +73,7 @@ class BackupCoordinator: Coordinator {
     func export(for account: Account) {
         if let currentPassword = keystore.getPassword(for: account) {
             let verifyController = UIAlertController.askPassword(
-                title: NSLocalizedString("export.enterPasswordWallet", value: "Enter password to backup your wallet", comment: "")
+                title: NSLocalizedString("export.enterPassword.textField.title", value: "Enter password to encrypt your wallet", comment: "")
             ) { result in
                 switch result {
                 case .success(let newPassword):
@@ -89,7 +89,7 @@ class BackupCoordinator: Coordinator {
         } else {
             //FIXME: remove later. for old version, when password were missing in the keychain
             let verifyController = UIAlertController.askPassword(
-                title: NSLocalizedString("export.enterCurrentPasswordWallet", value: "Enter current password to export your wallet", comment: "")
+                title: NSLocalizedString("export.enterCurrentPassword.textField.title", value: "Enter current password to export your wallet", comment: "")
             ) { result in
                 switch result {
                 case .success(let newPassword):

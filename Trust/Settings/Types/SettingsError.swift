@@ -8,7 +8,7 @@ enum SettingsError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .failedToSendEmail:
-            return NSLocalizedString("Settings.failedToSendEmail", value: "Failed to send email. Make sure you have Mail app installed.", comment: "")
+            return NSLocalizedString("settings.error.failedToSendEmail", value: "Failed to send email. Make sure you have Mail app installed.", comment: "")
         }
     }
 }

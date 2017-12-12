@@ -12,16 +12,16 @@ class CheckDeviceCoordinator: Coordinator {
 
     lazy var alertViewController: UIAlertController = {
         let controller = UIAlertController(
-            title: NSLocalizedString("jailbreak.title", value: "DEVICE SECURITY COMPROMISED", comment: ""),
+            title: NSLocalizedString("app.device.jailbreak.title", value: "DEVICE SECURITY COMPROMISED", comment: ""),
             message: NSLocalizedString(
-                "jailbreak.message",
+                "app.device.jailbreak.description",
                 value: "Any 'jailbreak' app can access Trust's keychain data and steal your bitcoin! Wipe this wallet immediately and restore on a secure device",
                 comment: ""
             ),
             preferredStyle: UIAlertControllerStyle.alert
         )
         controller.popoverPresentationController?.sourceView = navigationController.view
-        controller.addAction(UIAlertAction(title: NSLocalizedString("jailbreak.submit", value: "Got it", comment: ""), style: .default))
+        controller.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default))
 
         return controller
     }()

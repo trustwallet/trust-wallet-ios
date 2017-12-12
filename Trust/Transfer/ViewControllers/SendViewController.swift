@@ -56,7 +56,7 @@ class SendViewController: FormViewController {
 
         let pasteButton = Button(size: .normal, style: .borderless)
         pasteButton.translatesAutoresizingMaskIntoConstraints = false
-        pasteButton.setTitle("Paste", for: .normal)
+        pasteButton.setTitle(NSLocalizedString("send.paste.button.title", value: "Paste", comment: ""), for: .normal)
         pasteButton.addTarget(self, action: #selector(pasteAction), for: .touchUpInside)
 
         let qrButton = UIButton(type: .custom)
@@ -77,7 +77,7 @@ class SendViewController: FormViewController {
 
         let maxButton = Button(size: .normal, style: .borderless)
         maxButton.translatesAutoresizingMaskIntoConstraints = false
-        maxButton.setTitle("Max", for: .normal)
+        maxButton.setTitle(NSLocalizedString("send.max.button.title", value: "Max", comment: ""), for: .normal)
         maxButton.addTarget(self, action: #selector(useMaxAmount), for: .touchUpInside)
 
         let amountRightView = UIStackView(arrangedSubviews: [
@@ -96,7 +96,7 @@ class SendViewController: FormViewController {
                 $0.validationOptions = .validatesOnDemand
             }.cellUpdate { cell, _ in
                 cell.textField.textAlignment = .left
-                cell.textField.placeholder = NSLocalizedString("send.recipientAddress", value: "Recipient Address", comment: "")
+                cell.textField.placeholder = NSLocalizedString("send.recipientAddress.textField.placeholder", value: "Recipient Address", comment: "")
                 cell.textField.rightView = recipientRightView
                 cell.textField.rightViewMode = .always
             }
@@ -106,7 +106,7 @@ class SendViewController: FormViewController {
                 $0.validationOptions = .validatesOnDemand
             }.cellUpdate { cell, _ in
                 cell.textField.textAlignment = .left
-                cell.textField.placeholder = "\(self.viewModel.symbol) " + NSLocalizedString("Send.AmountPlaceholder", value: "Amount", comment: "")
+                cell.textField.placeholder = "\(self.viewModel.symbol) " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
                 cell.textField.keyboardType = .decimalPad
                 //cell.textField.rightView = maxButton // TODO Enable it's ready
                 cell.textField.rightViewMode = .always

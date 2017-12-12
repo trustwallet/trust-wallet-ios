@@ -13,7 +13,7 @@ class LoadingView: UIView {
     private let viewModel = StateViewModel()
 
     init(
-        message: String = NSLocalizedString("Generic.Loading", value: "Loading", comment: ""),
+        message: String = NSLocalizedString("Loading", value: "Loading", comment: ""),
         image: UIImage? = .none,
         insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     ) {

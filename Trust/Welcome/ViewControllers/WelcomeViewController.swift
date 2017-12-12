@@ -34,7 +34,7 @@ class WelcomeViewController: UIViewController {
     let createWalletButton: UIButton = {
         let button = Button(size: .large, style: .solid)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(NSLocalizedString("welcome.createWallet", value: "CREATE WALLET", comment: ""), for: .normal)
+        button.setTitle(NSLocalizedString("welcome.createWallet.button.title", value: "CREATE WALLET", comment: ""), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
         button.backgroundColor = Colors.darkBlue
         return button
@@ -42,7 +42,7 @@ class WelcomeViewController: UIViewController {
     let importWalletButton: UIButton = {
         let importWalletButton = Button(size: .large, style: .solid)
         importWalletButton.translatesAutoresizingMaskIntoConstraints = false
-        importWalletButton.setTitle(NSLocalizedString("welcome.importWallet", value: "IMPORT WALLET", comment: ""), for: .normal)
+        importWalletButton.setTitle(NSLocalizedString("welcome.importWallet.button.title", value: "IMPORT WALLET", comment: ""), for: .normal)
         importWalletButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
         importWalletButton.setBackgroundColor(Colors.gray, forState: .normal)
         importWalletButton.setBackgroundColor(Colors.lightGray, forState: .highlighted)
@@ -50,23 +50,23 @@ class WelcomeViewController: UIViewController {
     }()
     let pages: [OnboardingPageViewModel] = [
         OnboardingPageViewModel(
-            title: NSLocalizedString("Welcome.PrivateAndSecure", value: "Private & Secure", comment: ""),
-            subtitle: NSLocalizedString("Welcome.PrivateKeysNeverLeaveDevice", value: "Private keys never leave your device.", comment: ""),
+            title: NSLocalizedString("welcome.privateAndSecure.label.title", value: "Private & Secure", comment: ""),
+            subtitle: NSLocalizedString("welcome.privateAndSecure.label.description", value: "Private keys never leave your device.", comment: ""),
             image: R.image.onboarding_lock()!
         ),
         OnboardingPageViewModel(
-            title: NSLocalizedString("welcome.erc20title", value: "ERC20 Compatible", comment: ""),
-            subtitle: NSLocalizedString("welcome.erc20description", value: "Support for ERC20 tokens by default. ", comment: ""),
+            title: NSLocalizedString("welcome.erc20.label.title", value: "ERC20 Compatible", comment: ""),
+            subtitle: NSLocalizedString("welcome.erc20.label.description", value: "Support for ERC20 tokens by default. ", comment: ""),
             image: R.image.onboarding_erc20()!
         ),
         OnboardingPageViewModel(
-            title: NSLocalizedString("Welcome.FullyTransparent", value: "Fully transparent", comment: ""),
-            subtitle: NSLocalizedString("Welcome.CodeOpenSource", value: "Code is open sourced (GPL-3.0 license) and fully audited.", comment: ""),
+            title: NSLocalizedString("welcome.fullyTransparent.label.title", value: "Fully transparent", comment: ""),
+            subtitle: NSLocalizedString("welcome.fullyTransparent.label.description", value: "Code is open sourced (GPL-3.0 license) and fully audited.", comment: ""),
             image: R.image.onboarding_open_source()!
         ),
         OnboardingPageViewModel(
-            title: NSLocalizedString("Welcome.UltraReliable", value: "Ultra Reliable", comment: ""),
-            subtitle: NSLocalizedString("Welcome.FastExperience", value: "The fastest Ethereum wallet experience on mobile", comment: ""),
+            title: NSLocalizedString("welcome.ultraReliable.label.title", value: "Ultra Reliable", comment: ""),
+            subtitle: NSLocalizedString("welcome.ultraReliable.label.description", value: "The fastest Ethereum wallet experience on mobile", comment: ""),
             image: R.image.onboarding_rocket()!
         ),
     ]

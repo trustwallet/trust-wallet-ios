@@ -12,7 +12,7 @@ enum ConfigureTransactionError: LocalizedError {
         case .gasLimitTooHigh:
             return String(
                 format: NSLocalizedString(
-                    "configureTransaction.gasLimitTooHigh",
+                    "configureTransaction.error.gasLimitTooHigh",
                     value: "Gas Limit too high. Max available: %d",
                     comment: ""
                 ),
@@ -21,7 +21,7 @@ enum ConfigureTransactionError: LocalizedError {
         case .gasFeeTooHigh:
             return String(
                 format: NSLocalizedString(
-                    "configureTransaction.gasFeeTooHigh",
+                    "configureTransaction.error.gasFeeTooHigh",
                     value: "Gas Fee too high. Max available: %@",
                     comment: ""
                 ),

@@ -24,11 +24,11 @@ struct ConfirmPaymentViewModel {
     }
 
     var title: String {
-        return NSLocalizedString("confirmPayment.title", value: "Confirm", comment: "")
+        return NSLocalizedString("confirmPayment.confirm.button.title", value: "Confirm", comment: "")
     }
 
     var sendButtonText: String {
-        return NSLocalizedString("confirmPayment.send", value: "Send", comment: "")
+        return NSLocalizedString("Send", value: "Send", comment: "")
     }
 
     var backgroundColor: UIColor {
@@ -48,18 +48,18 @@ struct ConfirmPaymentViewModel {
     }
 
     var paymentFromTitle: String {
-        return NSLocalizedString("confirmPayment.from", value: "From", comment: "")
+        return NSLocalizedString("confirmPayment.from.label.title", value: "From", comment: "")
     }
 
     var paymentToTitle: String {
-        return NSLocalizedString("confirmPayment.to", value: "To", comment: "")
+        return NSLocalizedString("confirmPayment.to.label.title", value: "To", comment: "")
     }
     var paymentToText: String {
         return transaction.address.address
     }
 
     var gasPriceTitle: String {
-        return NSLocalizedString("confirmPayment.gasPrice", value: "Gas Price", comment: "")
+        return NSLocalizedString("confirmPayment.gasPrice.label.title", value: "Gas Price", comment: "")
     }
 
     var gasPriceText: String {
@@ -73,7 +73,7 @@ struct ConfirmPaymentViewModel {
     }
 
     var feeTitle: String {
-        return NSLocalizedString("confirmPayment.gasFee", value: "Network Fee", comment: "")
+        return NSLocalizedString("confirmPayment.gasFee.label.title", value: "Network Fee", comment: "")
     }
 
     var feeText: String {
@@ -92,7 +92,7 @@ struct ConfirmPaymentViewModel {
     }
 
     var gasLimitTitle: String {
-        return NSLocalizedString("confirmPayment.gasLimit", value: "Gas Limit", comment: "")
+        return NSLocalizedString("confirmPayment.gasLimit.label.title", value: "Gas Limit", comment: "")
     }
 
     var gasLimitText: String {

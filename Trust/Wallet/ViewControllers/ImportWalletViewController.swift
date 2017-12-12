@@ -147,7 +147,7 @@ class ImportWalletViewController: FormViewController {
         let privateKeyInput = privateKeyRow?.value?.trimmed ?? ""
         let password = passwordRow?.value ?? ""
 
-        displayLoading(text: NSLocalizedString("importWallet.importingIndicatorTitle", value: "Importing wallet...", comment: ""), animated: false)
+        displayLoading(text: NSLocalizedString("importWallet.importingIndicator.label.title", value: "Importing wallet...", comment: ""), animated: false)
 
         let type = ImportSelectionType(title: segmentRow?.value)
         let importType: ImportType = {

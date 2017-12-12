@@ -13,13 +13,13 @@ struct ConfigureTransactionViewModel {
     }
 
     var title: String {
-        return "Advanced"
+        return NSLocalizedString("Advanced", value: "Advanced", comment: "")
     }
 
     var gasPriceFooterText: String {
         return String(
             format: NSLocalizedString(
-                "configureTransaction.gasPriceDescription",
+                "configureTransaction.gasPrice.label.description",
                 value: "The higher the gas price, the more expesnive your transaction fee will be, but the quicker your tranasction will be processed by the %@ network.",
                 comment: ""
             ),
@@ -30,7 +30,7 @@ struct ConfigureTransactionViewModel {
     var gasLimitFooterText: String {
         return String(
             format: NSLocalizedString(
-                "configureTransaction.gasLimitDescription",
+                "configureTransaction.gasLimit.label.description",
                 value: "The gas limit prevents smart contracts from consuming all your %@. We will try to calculate the gas limit automatically for you, but some smart contracts may require a custom gas limit.",
                 comment: ""
             ),

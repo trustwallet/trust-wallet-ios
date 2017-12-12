@@ -14,7 +14,7 @@ struct BackupViewModel {
 
     var headlineText: String {
         return String(
-            format: NSLocalizedString("export.noBackup.title", value: "No backup, no %@.", comment: ""),
+            format: NSLocalizedString("export.noBackup.label.title", value: "No backup, no %@.", comment: ""),
             config.server.name
         )
     }

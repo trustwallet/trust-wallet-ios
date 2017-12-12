@@ -95,10 +95,10 @@ class TransactionViewController: UIViewController {
         )
         alertController.popoverPresentationController?.sourceView = sourceView
         alertController.popoverPresentationController?.sourceRect = sourceView.bounds
-        let copyAction = UIAlertAction(title: NSLocalizedString("transactionDetails.copy", value: "Copy", comment: ""), style: .default) { _ in
+        let copyAction = UIAlertAction(title: NSLocalizedString("Copy", value: "Copy", comment: ""), style: .default) { _ in
             UIPasteboard.general.string = value
         }
-        let cancelAction = UIAlertAction(title: NSLocalizedString("generic.cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
         alertController.addAction(copyAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)

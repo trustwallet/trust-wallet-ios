@@ -24,20 +24,20 @@ class DepositCoordinator: Coordinator {
     func showAlertSheet(from barButtonItem: UIBarButtonItem? = .none) {
         let alertController = UIAlertController(
             title: nil,
-            message: NSLocalizedString("deposit.alertSheetMessage", value: "How would you like to buy?", comment: ""),
+            message: NSLocalizedString("deposit.buy.label.title", value: "How would you like to buy?", comment: ""),
             preferredStyle: .actionSheet
         )
         alertController.popoverPresentationController?.barButtonItem = barButtonItem
-        let coinbaseAction = UIAlertAction(title: NSLocalizedString("deposit.viaCoinbase", value: "via Coinbase", comment: ""), style: .default) { _ in
+        let coinbaseAction = UIAlertAction(title: NSLocalizedString("deposit.buy.button.coinbase.title", value: "via Coinbase", comment: ""), style: .default) { _ in
             self.showCoinbase()
         }
-        let shapeShiftAction = UIAlertAction(title: NSLocalizedString("deposit.viaShapeShift", value: "via ShapeShift (Crypto only)", comment: ""), style: .default) { _ in
+        let shapeShiftAction = UIAlertAction(title: NSLocalizedString("deposit.buy.button.shapeShift.title", value: "via ShapeShift (Crypto only)", comment: ""), style: .default) { _ in
             self.showShapeShift()
         }
-        let changellyAction = UIAlertAction(title: NSLocalizedString("deposit.viaChangelly", value: "via Changelly", comment: ""), style: .default) { _ in
+        let changellyAction = UIAlertAction(title: NSLocalizedString("deposit.buy.button.changelly.title", value: "via Changelly", comment: ""), style: .default) { _ in
             self.showChangelly()
         }
-        let cancelAction = UIAlertAction(title: NSLocalizedString("generic.cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
 
         alertController.addAction(coinbaseAction)
         alertController.addAction(shapeShiftAction)
