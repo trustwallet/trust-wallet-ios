@@ -21,9 +21,9 @@ comment: Error messesage when failed to update rates on pairs of tokens
 
 Generic keys and values:
 ```
-generic.ok - Ok
-generic.cancel - Cancel
-generic.done - Done
-generic.send - Send
-generic.refresh - Refresh
+Ok - Ok
+Cancel - Cancel
+Done - Done
+Send - Send
+Refresh - Refresh
 ```
