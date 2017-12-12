@@ -1,1 +1,1 @@
-blockchain,bitcoin,litecoin,token,track,eth,vault,btc,crypto,finance,currency,buy,erc20,ticker
+blockchain,bitcoin,litecoin,token,track,eth,btc,crypto,finance,currency,buy,erc20,myetherwallet
