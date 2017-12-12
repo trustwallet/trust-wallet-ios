@@ -15,7 +15,7 @@ class CheckDeviceCoordinator: Coordinator {
             title: NSLocalizedString("app.device.jailbreak.title", value: "DEVICE SECURITY COMPROMISED", comment: ""),
             message: NSLocalizedString(
                 "app.device.jailbreak.description",
-                value: "Any 'jailbreak' app can access Trust's keychain data and steal your bitcoin! Wipe this wallet immediately and restore on a secure device",
+                value: "Any 'jailbreak' app can access Trust's keychain data and steal your wallet! Wipe this wallet immediately and restore on a secure device.",
                 comment: ""
             ),
             preferredStyle: UIAlertControllerStyle.alert
