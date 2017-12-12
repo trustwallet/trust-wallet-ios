@@ -9,13 +9,23 @@ key: transactions.myAddress.button.title,
 value: My Address
 comment: The title of the my address button on the transactions page
 
-key: deposit.alertSheet.button.viaCoinbase, 
+key: deposit.buy.button.coinbase.title, 
 value: via Coinbase
 comment: The title of the deposit button in the alert sheet
 
 key: exchange.error.failedToGetRates
 value: Failed to get rates
 comment: Error messesage when failed to update rates on pairs of tokens
+
+
+
+key: welcome.privateAndSecure.label.title
+value: Private & Secure
+comment: 
+
+key: welcome.privateAndSecure.label.description
+value: Private keys never leave your device.
+comment:
 
 ```
 
