@@ -7,6 +7,6 @@ import Crashlytics
 struct CrashReportInitializer: Initializer {
 
     func perform() {
-        Fabric.with([Crashlytics.self])
+        Fabric.with([Crashlytics.self, Answers.self])
     }
 }
