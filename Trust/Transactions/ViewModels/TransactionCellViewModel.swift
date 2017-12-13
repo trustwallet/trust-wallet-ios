@@ -6,18 +6,12 @@ import UIKit
 
 struct TransactionCellViewModel {
 
-    let transaction: Transaction
-    let config: Config
-    let chainState: ChainState
-    let shortFormatter = EtherNumberFormatter.short
+    private let transaction: Transaction
+    private let config: Config
+    private let chainState: ChainState
+    private let shortFormatter = EtherNumberFormatter.short
 
-    lazy var transactionViewModel: TransactionViewModel = {
-        return TransactionViewModel(
-            transaction: transaction,
-            config: config,
-            chainState: chainState
-        )
-    }()
+    private let transactionViewModel: TransactionViewModel
 
     init(
         transaction: Transaction,
@@ -27,20 +21,15 @@ struct TransactionCellViewModel {
         self.transaction = transaction
         self.config = config
         self.chainState = chainState
+        self.transactionViewModel = TransactionViewModel(
+            transaction: transaction,
+            config: config,
+            chainState: chainState
+        )
     }
 
     var confirmations: Int? {
         return chainState.confirmations(fromBlock: transaction.blockNumber)
-    }
-
-    var state: TransactionState {
-        if transaction.isError {
-            return .error
-        }
-        if confirmations == 0 {
-            return .pending
-        }
-        return .completed
     }
 
     private var operationTitle: String? {
@@ -49,7 +38,7 @@ struct TransactionCellViewModel {
 
     var title: String {
         if let operationTitle = operationTitle { return operationTitle }
-        switch state {
+        switch transactionViewModel.state {
         case .completed:
             switch transaction.direction {
             case .incoming: return "Received"
@@ -79,34 +68,8 @@ struct TransactionCellViewModel {
         return UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.thin)
     }
 
-    var amount: String {
-        let value: String = {
-            if let operation = transaction.operation {
-                return shortFormatter.string(from: BigInt(operation.value) ?? BigInt(), decimals: operation.decimals)
-            }
-            let number = BigInt(transaction.value) ?? BigInt()
-            return shortFormatter.string(from: number)
-        }()
-        guard value != "0" else { return value }
-        switch transaction.direction {
-        case .incoming: return "+\(value)"
-        case .outgoing: return "-\(value)"
-        }
-    }
-
-    var amountTextColor: UIColor {
-        switch transaction.direction {
-        case .incoming: return Colors.green
-        case .outgoing: return Colors.red
-        }
-    }
-
-    var amountFont: UIFont {
-        return UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
-    }
-
     var backgroundColor: UIColor {
-        switch state {
+        switch transactionViewModel.state {
         case .completed:
             return .white
         case .error:
@@ -116,8 +79,20 @@ struct TransactionCellViewModel {
         }
     }
 
+    var amountAttributedString: NSAttributedString {
+        let value = transactionViewModel.shortValue
+        let amount = NSAttributedString(
+            string: transactionViewModel.amountWithSign(for: value.amount) + " " + value.symbol,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold),
+                .foregroundColor: transactionViewModel.amountTextColor,
+            ]
+        )
+        return amount
+    }
+
     var statusImage: UIImage? {
-        switch state {
+        switch transactionViewModel.state {
         case .error: return R.image.transaction_error()
         case .completed:
             switch transaction.direction {

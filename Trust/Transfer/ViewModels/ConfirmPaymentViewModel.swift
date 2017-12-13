@@ -162,7 +162,7 @@ struct ConfirmPaymentViewModel {
 
     private func amountAttributedText(string: String) -> NSAttributedString {
         let amount = NSAttributedString(
-            string: string,
+            string: amountWithSign(for: string),
             attributes: [
                 .font: UIFont.systemFont(ofSize: 28),
                 .foregroundColor: amountTextColor,
@@ -176,5 +176,10 @@ struct ConfirmPaymentViewModel {
             ]
         )
         return amount + currency
+    }
+
+    private func amountWithSign(for amount: String) -> String {
+        guard amount != "0" else { return amount }
+        return "-\(amount)"
     }
 }

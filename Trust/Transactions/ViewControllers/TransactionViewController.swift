@@ -7,7 +7,7 @@ import SafariServices
 
 class TransactionViewController: UIViewController {
 
-    private lazy var viewModel: TransactionViewModel = {
+    private lazy var viewModel: TransactionDetailsViewModel = {
         return .init(
             transaction: self.transaction,
             config: self.config,
