@@ -14,8 +14,9 @@ struct Token {
 extension Token {
     private static let numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
-        numberFormatter.minimumFractionDigits = 3
-        numberFormatter.maximumFractionDigits = 3
+        numberFormatter.minimumFractionDigits = 0
+        numberFormatter.maximumFractionDigits = 8
+        numberFormatter.roundingMode = .down
         return numberFormatter
     }()
 
