@@ -16,7 +16,7 @@ extension Token {
         let numberFormatter = NumberFormatter()
         numberFormatter.minimumFractionDigits = 0
         numberFormatter.maximumFractionDigits = 8
-        numberFormatter.roundingMode = .down
+        numberFormatter.roundingMode = .floor
         return numberFormatter
     }()
 
