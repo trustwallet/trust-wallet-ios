@@ -12,7 +12,7 @@ struct TokensViewModel {
     }
 
     var title: String {
-        return "Tokens"
+        return NSLocalizedString("tokens.navigation.title", value: "Tokens", comment: "")
     }
 
     var backgroundColor: UIColor {

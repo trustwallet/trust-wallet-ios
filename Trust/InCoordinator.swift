@@ -49,7 +49,7 @@ class InCoordinator: Coordinator {
             ),
             keystore: keystore
         )
-        transactionCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Transactions", image: R.image.feed(), selectedImage: nil)
+        transactionCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("transactions.tabbar.item.title", value: "Transactions", comment: ""), image: R.image.feed(), selectedImage: nil)
         transactionCoordinator.delegate = self
         transactionCoordinator.start()
         addCoordinator(transactionCoordinator)
@@ -70,7 +70,7 @@ class InCoordinator: Coordinator {
                 session: session,
                 keystore: keystore
             )
-            tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Tokens", image: R.image.coins(), selectedImage: nil)
+            tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("tokens.tabbar.item.title", value: "Tokens", comment: ""), image: R.image.coins(), selectedImage: nil)
             tokenCoordinator.start()
             addCoordinator(tokenCoordinator)
             tabBarController.viewControllers?.append(tokenCoordinator.navigationController)
@@ -78,7 +78,7 @@ class InCoordinator: Coordinator {
 
         if inCoordinatorViewModel.exchangeAvailable {
             let exchangeCoordinator = ExchangeCoordinator(session: session, keystore: keystore)
-            exchangeCoordinator.rootViewController.tabBarItem = UITabBarItem(title: "Exchange", image: R.image.exchange(), selectedImage: nil)
+            exchangeCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("exchange.tabbar.item.title", value: "Exchange", comment: ""), image: R.image.exchange(), selectedImage: nil)
             exchangeCoordinator.start()
             addCoordinator(exchangeCoordinator)
             tabBarController.viewControllers?.append(exchangeCoordinator.navigationController)
