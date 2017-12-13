@@ -3,10 +3,10 @@
 import XCTest
 @testable import Trust
 
-class TransactionCellViewModelTests: XCTestCase {
+class TransactionViewModelTests: XCTestCase {
 
     func testErrorState() {
-        let viewModel = TransactionCellViewModel(transaction: .make(isError: true), chainState: .make())
+        let viewModel = TransactionViewModel(transaction: .make(isError: true), config: .make(), chainState: .make())
 
         XCTAssertEqual(.error, viewModel.state)
     }
@@ -16,7 +16,7 @@ class TransactionCellViewModelTests: XCTestCase {
         let chainState: ChainState = .make()
         chainState.latestBlock = blockNumber
 
-        let viewModel = TransactionCellViewModel(transaction: .make(blockNumber: blockNumber), chainState: chainState)
+        let viewModel = TransactionViewModel(transaction: .make(blockNumber: blockNumber), config: .make(), chainState: chainState)
 
         XCTAssertEqual(.pending, viewModel.state)
         XCTAssertEqual(0, viewModel.confirmations)
@@ -27,7 +27,7 @@ class TransactionCellViewModelTests: XCTestCase {
         let chainState: ChainState = .make()
         chainState.latestBlock = blockNumber - 1
 
-        let viewModel = TransactionCellViewModel(transaction: .make(blockNumber: blockNumber), chainState: chainState)
+        let viewModel = TransactionViewModel(transaction: .make(blockNumber: blockNumber), config: .make(), chainState: chainState)
 
         XCTAssertEqual(.completed, viewModel.state)
         XCTAssertNil(viewModel.confirmations)
@@ -38,7 +38,7 @@ class TransactionCellViewModelTests: XCTestCase {
         let chainState: ChainState = .make()
         chainState.latestBlock = blockNumber
 
-        let viewModel = TransactionCellViewModel(transaction: .make(blockNumber: 1), chainState: chainState)
+        let viewModel = TransactionViewModel(transaction: .make(blockNumber: 1), config: .make(), chainState: chainState)
 
         XCTAssertEqual(.completed, viewModel.state)
         XCTAssertEqual(2, viewModel.confirmations)

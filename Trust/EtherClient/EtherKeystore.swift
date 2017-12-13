@@ -141,7 +141,7 @@ open class EtherKeystore: Keystore {
             let accounts = gethAccounts.filter { $0.getAddress().getHex() == gethAccount.getAddress().getHex() }
             if accounts.count >= 2 {
                 do {
-                    try gethKeyStorage.delete(gethAccount, passphrase: password)
+                    try gethKeyStorage.delete(gethAccount, passphrase: newPassword)
                 } catch {
                     return (.failure(.failedToImport(error)))
                 }

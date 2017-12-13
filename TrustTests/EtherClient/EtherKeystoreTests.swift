@@ -68,13 +68,13 @@ class EtherKeystoreTests: XCTestCase {
         let result1 = keystore.importKeystore(
             value: TestKeyStore.keystore,
             password: TestKeyStore.password,
-            newPassword: TestKeyStore.password
+            newPassword: TestKeyStore.newPassword
         )
 
         let result2 = keystore.importKeystore(
             value: TestKeyStore.keystore,
             password: TestKeyStore.password,
-            newPassword: TestKeyStore.password
+            newPassword: TestKeyStore.newPassword
         )
 
         guard case let .success(account) = result1 else {
