@@ -12,15 +12,17 @@ enum ConfirmationError: LocalizedError {
 
 extension UIViewController {
     func displaySuccess(title: String? = .none, message: String? = .none) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: UIAlertActionStyle.default, handler: nil))
-        present(alert, animated: true, completion: nil)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: UIAlertActionStyle.default, handler: nil))
+        present(alertController, animated: true, completion: nil)
     }
 
     func displayError(error: Error) {
-        let alert = UIAlertController(title: error.prettyError, message: "", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: UIAlertActionStyle.default, handler: nil))
-        present(alert, animated: true, completion: nil)
+        let alertController = UIAlertController(title: error.prettyError, message: "", preferredStyle: UIAlertControllerStyle.alert)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: UIAlertActionStyle.default, handler: nil))
+        present(alertController, animated: true, completion: nil)
     }
 
     func confirm(
@@ -31,6 +33,7 @@ extension UIViewController {
         completion: @escaping (Result<Void, ConfirmationError>) -> Void
     ) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.popoverPresentationController?.sourceView = self.view
         alertController.addAction(UIAlertAction(title: okTitle, style: okStyle, handler: { _ in
             completion(.success(()))
         }))
