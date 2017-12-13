@@ -1,3 +1,13 @@
-Trust - fast and secure Ethereum wallet that’s easy to use.
+Trust - is an extremely fast and secure Ethereum wallet built with ease of use in mind. We provide a fully security audited system that makes it simple to buy and store Ethereum and ERC20 tokens on your device. Trust is designed specifically for iOS to provide the best possible experience:
 
-- ERC20 Compatible wallet
+- Securely store private keys on your device
+- Send and request ether (ETH)
+- Store and track ERC20 tokens
+- Check balance, transaction history, and other details
+- Keep your private key secure with bank level security
+- Use FaceID, TouchID or conventional password to protect your investments
+- Gain peace of mind knowing all web interactions are protected by military grade encryptions
+- Keep your data personal - we will never access any of your information 
+- Enjoy intuitive interfaces
+
+If you’re having issues with the app, or wish to provide feedback, please send us an email at support@trustwalletapp.com or contact our community from within the app itself.
