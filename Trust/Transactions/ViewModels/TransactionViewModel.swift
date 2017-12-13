@@ -55,28 +55,15 @@ struct TransactionViewModel {
         return transactionValue(for: fullFormatter)
     }
 
-    private func transactionValue(for formatter: EtherNumberFormatter) -> TransactionValue {
-        if let operation = transaction.operation, let symbol = operation.symbol {
-            return TransactionValue(
-                amount: formatter.string(from: BigInt(operation.value) ?? BigInt(), decimals: operation.decimals),
-                symbol: symbol
-            )
-        }
-        return TransactionValue(
-            amount: fullFormatter.string(from: BigInt(transaction.value) ?? BigInt()),
-            symbol: config.server.symbol
-        )
-    }
-
     var shortAmountAttributedString: NSAttributedString {
-        return amountAttributedString(for: shortValue, formatter: EtherNumberFormatter.short)
+        return amountAttributedString(for: shortValue)
     }
 
     var fullAmountAttributedString: NSAttributedString {
-        return amountAttributedString(for: shortValue, formatter: EtherNumberFormatter.full)
+        return amountAttributedString(for: fullValue)
     }
 
-    func amountAttributedString(for value: TransactionValue, formatter: EtherNumberFormatter) -> NSAttributedString {
+    func amountAttributedString(for value: TransactionValue) -> NSAttributedString {
         let amount = NSAttributedString(
             string: amountWithSign(for: value.amount),
             attributes: [
@@ -101,5 +88,18 @@ struct TransactionViewModel {
         case .incoming: return "+\(amount)"
         case .outgoing: return "-\(amount)"
         }
+    }
+
+    private func transactionValue(for formatter: EtherNumberFormatter) -> TransactionValue {
+        if let operation = transaction.operation, let symbol = operation.symbol {
+            return TransactionValue(
+                amount: formatter.string(from: BigInt(operation.value) ?? BigInt(), decimals: operation.decimals),
+                symbol: symbol
+            )
+        }
+        return TransactionValue(
+            amount: formatter.string(from: BigInt(transaction.value) ?? BigInt()),
+            symbol: config.server.symbol
+        )
     }
 }
