@@ -12,13 +12,6 @@ struct TransactionAppearance {
         return view
     }
 
-    static func header(viewModel: TransactionHeaderBaseViewModel) -> UIView {
-        let view = TransactionHeaderView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.amountLabel.attributedText = viewModel.amountAttributedString
-        return view
-    }
-
     static func item(title: String, subTitle: String, completion:((_ title: String, _ value: String, _ sender: UIView) -> Void)? = .none) -> UIView {
         let titleLabel = UILabel(frame: .zero)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

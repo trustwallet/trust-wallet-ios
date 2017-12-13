@@ -68,17 +68,11 @@ class SendCoordinator: Coordinator {
 extension SendCoordinator: SendViewControllerDelegate {
     func didPressConfirm(transaction: UnconfirmedTransaction, transferType: TransferType, gasPrice: BigInt?, in viewController: SendViewController) {
 
-        let viewModel = ConfirmTransactionHeaderViewModel(
-            transaction: transaction,
-            config: session.config
-        )
-
         let controller = ConfirmPaymentViewController(
             session: session,
             keystore: keystore,
             transaction: transaction,
-            gasPrice: gasPrice,
-            headerViewModel: viewModel
+            gasPrice: gasPrice
         )
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)

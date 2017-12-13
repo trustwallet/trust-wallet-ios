@@ -42,8 +42,6 @@ class ConfirmPaymentViewController: UIViewController {
         )
     }
 
-    var headerViewModel: TransactionHeaderBaseViewModel
-
     private lazy var transactionSpeed: TransactionSpeed = {
         return .regular
     }()
@@ -80,15 +78,13 @@ class ConfirmPaymentViewController: UIViewController {
         session: WalletSession,
         keystore: Keystore,
         transaction: UnconfirmedTransaction,
-        gasPrice: BigInt?,
-        headerViewModel: TransactionHeaderBaseViewModel
+        gasPrice: BigInt?
     ) {
         self.session = session
         self.keystore = keystore
         self.transaction = transaction
         self.configuration = TransactionConfiguration()
         self.gasPrice = gasPrice
-        self.headerViewModel = headerViewModel
 
         super.init(nibName: nil, bundle: nil)
 
@@ -108,11 +104,13 @@ class ConfirmPaymentViewController: UIViewController {
     private func reloadView() {
         stackViewController.items.forEach { stackViewController.removeItem($0) }
 
+        let header = TransactionHeaderView()
+        header.translatesAutoresizingMaskIntoConstraints = false
+        header.amountLabel.attributedText = viewModel.amountAttributedString
+
         let items: [UIView] = [
             .spacer(),
-            TransactionAppearance.header(
-                viewModel: headerViewModel
-            ),
+            header,
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(
                 title: viewModel.paymentFromTitle,

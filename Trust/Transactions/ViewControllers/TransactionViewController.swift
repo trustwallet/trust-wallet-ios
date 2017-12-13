@@ -35,14 +35,13 @@ class TransactionViewController: UIViewController {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
+        let header = TransactionHeaderView()
+        header.translatesAutoresizingMaskIntoConstraints = false
+        header.amountLabel.attributedText = viewModel.amountAttributedString
+
         let items: [UIView] = [
             .spacer(),
-            TransactionAppearance.header(
-                viewModel: TransactionHeaderViewModel(
-                    value: viewModel.value,
-                    direction: transaction.direction
-                )
-            ),
+            header,
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             item(title: "From", value: viewModel.from),
             item(title: "To", value: viewModel.to),

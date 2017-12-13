@@ -44,16 +44,7 @@ struct TransactionViewModel {
     }
 
     var value: TransactionValue {
-        if let operation = transaction.operation, let symbol = operation.symbol {
-            return TransactionValue(
-                amount: shortFormatter.string(from: BigInt(operation.value) ?? BigInt(), decimals: operation.decimals),
-                symbol: symbol
-            )
-        }
-        return TransactionValue(
-            amount: fullFormatter.string(from: BigInt(transaction.value) ?? BigInt()),
-            symbol: config.server.symbol
-        )
+        return transactionValue(for: shortFormatter)
     }
 
     var createdAt: String {
@@ -94,5 +85,52 @@ struct TransactionViewModel {
 
     var blockNumber: String {
         return String(transaction.blockNumber)
+    }
+
+    var amountTextColor: UIColor {
+        switch transaction.direction {
+        case .incoming: return Colors.green
+        case .outgoing: return Colors.red
+        }
+    }
+
+    var valueString: String {
+        guard value.amount != "0" else { return value.amount }
+        switch transaction.direction {
+        case .incoming: return "+\(value.amount)"
+        case .outgoing: return "-\(value.amount)"
+        }
+    }
+
+    var amountAttributedString: NSAttributedString {
+        let amount = NSAttributedString(
+            string: valueString,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 24),
+                .foregroundColor: amountTextColor,
+            ]
+        )
+
+        let currency = NSAttributedString(
+            string: " " + value.symbol,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 14),
+            ]
+        )
+
+        return amount + currency
+    }
+
+    private func transactionValue(for formatter: EtherNumberFormatter) -> TransactionValue {
+        if let operation = transaction.operation, let symbol = operation.symbol {
+            return TransactionValue(
+                amount: formatter.string(from: BigInt(operation.value) ?? BigInt(), decimals: operation.decimals),
+                symbol: symbol
+            )
+        }
+        return TransactionValue(
+            amount: fullFormatter.string(from: BigInt(transaction.value) ?? BigInt()),
+            symbol: config.server.symbol
+        )
     }
 }

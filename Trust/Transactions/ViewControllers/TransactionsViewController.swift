@@ -177,6 +177,7 @@ extension TransactionsViewController: UITableViewDataSource {
         let cell = TransactionViewCell(style: .default, reuseIdentifier: TransactionViewCell.identifier)
         cell.configure(viewModel: .init(
                 transaction: transaction,
+                config: session.config,
                 chainState: session.chainState
             )
         )

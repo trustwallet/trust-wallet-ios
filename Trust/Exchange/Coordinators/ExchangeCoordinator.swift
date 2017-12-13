@@ -44,17 +44,11 @@ extension ExchangeCoordinator: ExchangeViewControllerDelegate {
             address: to.token.address // TODO FIX IT
         )
 
-        let viewModel = ConfirmTransactionHeaderViewModel(
-            transaction: transaction,
-            config: Config()
-        )
-
         let controller = ConfirmPaymentViewController(
             session: session,
             keystore: keystore,
             transaction: transaction,
-            gasPrice: .none,
-            headerViewModel: viewModel
+            gasPrice: .none
         )
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)

@@ -7,14 +7,25 @@ import UIKit
 struct TransactionCellViewModel {
 
     let transaction: Transaction
+    let config: Config
     let chainState: ChainState
     let shortFormatter = EtherNumberFormatter.short
 
+    lazy var transactionViewModel: TransactionViewModel = {
+        return TransactionViewModel(
+            transaction: transaction,
+            config: config,
+            chainState: chainState
+        )
+    }()
+
     init(
         transaction: Transaction,
+        config: Config,
         chainState: ChainState
     ) {
         self.transaction = transaction
+        self.config = config
         self.chainState = chainState
     }
 
