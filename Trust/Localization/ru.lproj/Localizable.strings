@@ -92,3 +92,4 @@
 "tokens.navigation.title" = "Токены";
 "tokens.tabbar.item.title" = "Токены";
 "transactions.tabbar.item.title" = "Транзакции";
+"import.navigation.title" = "Импортировать кошелек";
