@@ -24,6 +24,7 @@ struct SettingsViewModel {
             }
             return [
                 RPCServer.main,
+                RPCServer.oracles,
                 RPCServer.kovan,
                 RPCServer.ropsten,
             ]

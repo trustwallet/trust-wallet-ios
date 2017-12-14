@@ -6,6 +6,7 @@ enum RPCServer: String {
     case main
     case kovan
     case ropsten
+    case oracles
     case oraclesTest
 
     var chainID: Int {
@@ -13,6 +14,7 @@ enum RPCServer: String {
         case .main: return 1
         case .kovan: return 42
         case .ropsten: return 3
+        case .oracles: return 99
         case .oraclesTest: return 12648430
         }
     }
@@ -22,13 +24,13 @@ enum RPCServer: String {
         case .main: return "Ethereum"
         case .kovan: return "Kovan"
         case .ropsten: return "Ropsten"
-        case .oraclesTest: return "Oracles"
+        case .oracles, .oraclesTest: return "Oracles"
         }
     }
 
     var isTestNetwork: Bool {
         switch self {
-        case .main: return false
+        case .main, .oracles: return false
         case .kovan, .ropsten, .oraclesTest: return true
         }
     }
@@ -37,7 +39,7 @@ enum RPCServer: String {
         switch self {
         case .main: return "ETH"
         case .kovan, .ropsten: return "ETH"
-        case .oraclesTest: return "POA"
+        case .oracles, .oraclesTest: return "POA"
         }
     }
 
@@ -47,6 +49,7 @@ enum RPCServer: String {
             case RPCServer.main.name: return .main
             case RPCServer.kovan.name: return .kovan
             case RPCServer.ropsten.name: return .ropsten
+            case RPCServer.oracles.name: return .oracles
             case RPCServer.oraclesTest.name: return .oraclesTest
             default: return .main
             }
@@ -59,6 +62,7 @@ enum RPCServer: String {
             case RPCServer.main.chainID: return .main
             case RPCServer.kovan.chainID: return .kovan
             case RPCServer.ropsten.chainID: return .ropsten
+            case RPCServer.oracles.chainID: return .oracles
             case RPCServer.oraclesTest.chainID: return .oraclesTest
             default: return .main
             }

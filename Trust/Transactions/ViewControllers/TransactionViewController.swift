@@ -39,7 +39,7 @@ class TransactionViewController: UIViewController {
         header.translatesAutoresizingMaskIntoConstraints = false
         header.amountLabel.attributedText = viewModel.amountAttributedString
 
-        let items: [UIView] = [
+        var items: [UIView] = [
             .spacer(),
             header,
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
@@ -51,8 +51,11 @@ class TransactionViewController: UIViewController {
             item(title: "Transaction #", value: viewModel.transactionID),
             item(title: "Transaction time", value: viewModel.createdAt),
             item(title: "Block #", value: viewModel.blockNumber),
-            moreDetails(),
         ]
+
+        if viewModel.detailsAvailable {
+            items.append(moreDetails())
+        }
 
         for item in items {
             stackViewController.addItem(item)

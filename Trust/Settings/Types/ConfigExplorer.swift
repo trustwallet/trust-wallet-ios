@@ -21,8 +21,10 @@ struct ConfigExplorer {
                 return ConfigExplorerConstants.etherscanKovan + "/tx/" + ID
             case .ropsten:
                 return ConfigExplorerConstants.etherscanRopsten + "/tx/" + ID
-            case .oraclesTest:
+            case .oracles:
                 return ConfigExplorerConstants.oraclesMain + "/tx/" + ID
+            case .oraclesTest:
+                return ConfigExplorerConstants.oraclesTest + "/tx/" + ID
             }
         }()
         return URL(string: urlString)!

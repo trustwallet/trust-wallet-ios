@@ -49,6 +49,13 @@ struct TransactionDetailsViewModel {
         return TransactionDetailsViewModel.dateFormatter.string(from: transaction.date)
     }
 
+    var detailsAvailable: Bool {
+        switch config.server {
+        case .main, .kovan, .oraclesTest, .ropsten: return true
+        case .oracles: return false
+        }
+    }
+
     var detailsURL: URL {
         return ConfigExplorer(server: config.server).transactionURL(for: transaction.id)
     }
