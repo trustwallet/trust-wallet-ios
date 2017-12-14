@@ -34,7 +34,6 @@ platform :ios do
     increment_build_number
     ensure_git_branch()
     increment_version_number(bump_type: "patch")
-    #localize
     cert
     match(type: "appstore", readonly: true)
     gym(scheme: "Trust")
