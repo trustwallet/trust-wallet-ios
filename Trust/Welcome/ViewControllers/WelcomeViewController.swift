@@ -46,6 +46,7 @@ class WelcomeViewController: UIViewController {
         importWalletButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
         importWalletButton.setBackgroundColor(Colors.gray, forState: .normal)
         importWalletButton.setBackgroundColor(Colors.lightGray, forState: .highlighted)
+        importWalletButton.accessibilityIdentifier = "import-wallet"
         return importWalletButton
     }()
     let pages: [OnboardingPageViewModel] = [

@@ -88,3 +88,7 @@
 "welcome.privateAndSecure.label.title" = "Конфиденциальный и Безопасный";
 "welcome.ultraReliable.label.description" = "Самый быстрый кошелек Ethereum на мобильных устройствах";
 "welcome.ultraReliable.label.title" = "Сверх надежный";
+"exchange.tabbar.item.title" = "Обменник";
+"tokens.navigation.title" = "Токены";
+"tokens.tabbar.item.title" = "Токены";
+"transactions.tabbar.item.title" = "Транзакции";

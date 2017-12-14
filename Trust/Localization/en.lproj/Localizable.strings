@@ -87,3 +87,7 @@
 "welcome.privateAndSecure.label.title" = "Private & Secure";
 "welcome.ultraReliable.label.description" = "The fastest Ethereum wallet experience on mobile";
 "welcome.ultraReliable.label.title" = "Ultra Reliable";
+"exchange.tabbar.item.title" = "Exchange";
+"tokens.navigation.title" = "Tokens";
+"tokens.tabbar.item.title" = "Tokens";
+"transactions.tabbar.item.title" = "Transactions";

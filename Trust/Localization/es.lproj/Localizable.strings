@@ -87,3 +87,7 @@
 "welcome.privateAndSecure.label.title" = "Privado y seguro";
 "welcome.ultraReliable.label.description" = "La experiencia de cartera Ethereum más rápida en dispositivos móviles";
 "welcome.ultraReliable.label.title" = "Ultra confiable";
+"exchange.tabbar.item.title" = "Intercambio";
+"tokens.navigation.title" = "Tokens";
+"tokens.tabbar.item.title" = "Tokens";
+"transactions.tabbar.item.title" = "Actas";

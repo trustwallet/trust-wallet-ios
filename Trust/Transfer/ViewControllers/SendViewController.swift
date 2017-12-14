@@ -99,6 +99,7 @@ class SendViewController: FormViewController {
                 cell.textField.placeholder = NSLocalizedString("send.recipientAddress.textField.placeholder", value: "Recipient Address", comment: "")
                 cell.textField.rightView = recipientRightView
                 cell.textField.rightViewMode = .always
+                cell.textField.accessibilityIdentifier = "amount-field"
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.amount) {

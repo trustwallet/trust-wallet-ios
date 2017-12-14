@@ -10,6 +10,7 @@ class TransactionsFooterView: UIView {
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.layer.cornerRadius = 6
         sendButton.setTitle(NSLocalizedString("Send", value: "Send", comment: ""), for: .normal)
+        sendButton.accessibilityIdentifier = "send-button"
         sendButton.backgroundColor = Colors.blue
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
         return sendButton
