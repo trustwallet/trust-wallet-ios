@@ -6,7 +6,7 @@
 "configureTransaction.error.gasLimitTooHigh" = "Límite de Gas demasiado alto. Máximo disponible: %d";
 "configureTransaction.gasLimit.label.description" = "El límite de gas impide que los contratos inteligentes consuman todo tu %@ . Intentaremos calcular el límite de gas automáticamente, pero algunos contratos inteligentes pueden requerir un límite de gas personalizado.";
 "configureTransaction.gasLimit.label.title" = "Límite de Gas";
-"configureTransaction.gasPrice.label.description" = "Cuanto mayor sea el precio del Gas, más costosa será tu tarifa de transacción, pero más rápido será procesada por la red %@ .";
+"configureTransaction.gasPrice.label.description" = "Cuanto mayor sea el precio del Gas, más costosa será tu tarifa de transacción, pero más rápido será procesada por la red %@.";
 "configureTransaction.gasPrice.label.title" = "Precio del Gas";
 "configureTransaction.totalNetworkFee.label.title" = "Tarifa total de la red";
 "confirmPayment.confirm.button.title" = "Confirmar";
@@ -30,7 +30,7 @@
 "export.enterCurrentPassword.textField.title" = "Introduce tu contraseña para exportar tu cartera";
 "export.enterPassword.textField.title" = "Introduce la contraseña para cifrar tu cartera";
 "export.neverStored.label.title" = "Tu cartera nunca se guarda en la nube ni en las copias de seguridad estándar de tu dispositivo.";
-"export.noBackup.label.title" = "Sin copia de seguridad, no hay %@ .";
+"export.noBackup.label.title" = "Sin copia de seguridad, no hay %@.";
 "export.presentBackupOptions.label.title" = "Preparando opciones de copia de seguridad...";
 "export.skip.button.title" = "Más tarde";
 "importWallet.importingIndicator.label.title" = "Importando cartera...";

@@ -1,0 +1,13 @@
+Trust: es una billetera Ethereum extremadamente rápida y segura, diseñada pensando en la facilidad de uso. Proporcionamos un sistema totalmente auditado de seguridad que simplifica la compra y almacenamiento de tokens Ethereum y ERC20 en su dispositivo. Trust está diseñado específicamente para iOS para proporcionar la mejor experiencia posible: 
+
+ - Almacenar de forma segura claves privadas en su dispositivo 
+ - Enviar y solicitar éter (ETH) 
+ - Almacenar y rastrear tokens ERC20 
+ - Verificar saldo, historial de transacciones y otros detalles 
+ - Mantenga su clave privada segura con seguridad de nivel bancario 
+ - Use FaceID, TouchID o contraseña convencional para proteger sus inversiones 
+ - Obtenga la tranquilidad de saber que todas las interacciones web están protegidas por encriptaciones de grado militar 
+ - Mantenga sus datos personales - nunca accederemos a su información 
+ - Disfruta de interfaces intuitivas 
+
+ Si tiene problemas con la aplicación o desea enviar sus comentarios, envíenos un correo electrónico a support@trustwalletapp.com o comuníquese con nuestra comunidad desde la propia aplicación.
