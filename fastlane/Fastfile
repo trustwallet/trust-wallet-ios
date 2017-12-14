@@ -56,7 +56,7 @@ platform :ios do
   lane :update_lokalise do
     lokalise_metadata(
       api_token: ENV['LOKALISE_API_TOKEN'],
-      project_identifier: ENV['LOKALISE_PROJECT_ID'],
+      project_identifier: ENV['LOKALISE_STORE_PROJECT_ID'],
       action: "update_lokalise",
       add_languages: true,
       override_translation: false
@@ -66,7 +66,7 @@ platform :ios do
   lane :update_itunes do
    lokalise_metadata(
       api_token: ENV['LOKALISE_API_TOKEN'],
-      project_identifier: ENV['LOKALISE_PROJECT_ID'],
+      project_identifier: ENV['LOKALISE_STORE_PROJECT_ID'],
       action: "update_itunes"
    )
   end
