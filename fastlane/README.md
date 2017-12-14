@@ -45,6 +45,16 @@ Screenshots
 fastlane ios localize
 ```
 Localize
+### ios update_lokalise
+```
+fastlane ios update_lokalise
+```
+
+### ios update_itunes
+```
+fastlane ios update_itunes
+```
+
 
 ----
 

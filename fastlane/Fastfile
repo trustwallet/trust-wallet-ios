@@ -51,13 +51,24 @@ platform :ios do
   desc "Localize"
   lane :localize do
     run_localizer
-    #lokalise_metadata(
-    #  api_token: "9a58b66883f72ff69f35d418bb128a2a57ebcabb",
-    #  project_identifier: "3947163159df13df851b51.98101647",
-    #  action: "update_lokalise",
-    #  add_languages: true,
-    #  override_translation: true
-    #)
+  end
+
+  lane :update_lokalise do
+    lokalise_metadata(
+      api_token: ENV['LOKALISE_API_TOKEN'],
+      project_identifier: ENV['LOKALISE_PROJECT_ID'],
+      action: "update_lokalise",
+      add_languages: true,
+      override_translation: false
+    )
+  end
+
+  lane :update_itunes do
+   lokalise_metadata(
+      api_token: ENV['LOKALISE_API_TOKEN'],
+      project_identifier: ENV['LOKALISE_PROJECT_ID'],
+      action: "update_itunes"
+   )
   end
 
   # You can define as many lanes as you want

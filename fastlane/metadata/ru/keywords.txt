@@ -1,0 +1,1 @@
+bitcoin,валюта,token,токены,eth,btc,crypto,блокчейн,крипто,currency,buy,erc20,myetherwallet
