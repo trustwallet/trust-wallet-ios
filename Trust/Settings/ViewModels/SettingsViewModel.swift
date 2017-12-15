@@ -36,7 +36,7 @@ struct SettingsViewModel {
         switch BiometryAuthenticationType.current {
         case .faceID, .touchID:
             return String(
-                format: NSLocalizedString("settings.biometricsEnabled.label.title", value: "Passcode / %@)", comment: ""),
+                format: NSLocalizedString("settings.biometricsEnabled.label.title", value: "Passcode / %@", comment: ""),
                 BiometryAuthenticationType.current.title
             )
         case .none:
