@@ -10,7 +10,7 @@ protocol TransactionsViewControllerDelegate: class {
     func didPressSend(in viewController: TransactionsViewController)
     func didPressRequest(in viewController: TransactionsViewController)
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController)
-    func didPressDeposit(for account: Account, in viewController: TransactionsViewController)
+    func didPressDeposit(for account: Account, sender: UIView, in viewController: TransactionsViewController)
 }
 
 class TransactionsViewController: UIViewController {
@@ -85,7 +85,9 @@ class TransactionsViewController: UIViewController {
         emptyView = {
             let view = TransactionsEmptyView(
                 insets: insets,
-                onDeposit: { [unowned self] in self.showDeposit() }
+                onDeposit: { [unowned self] sender in
+                    self.showDeposit(sender)
+                }
             )
             view.isDepositAvailable = viewModel.isBuyActionAvailable
             return view
@@ -123,8 +125,8 @@ class TransactionsViewController: UIViewController {
         delegate?.didPressRequest(in: self)
     }
 
-    func showDeposit() {
-        delegate?.didPressDeposit(for: account, in: self)
+    func showDeposit(_ sender: UIButton) {
+        delegate?.didPressDeposit(for: account, sender: sender, in: self)
     }
 
     func configure(viewModel: TransactionsViewModel) {

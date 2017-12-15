@@ -56,9 +56,10 @@ class AccountsCoordinator: Coordinator {
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
-    func showInfoSheet(for account: Account) {
+    func showInfoSheet(for account: Account, sender: UIView) {
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        controller.popoverPresentationController?.sourceView = navigationController.view
+        controller.popoverPresentationController?.sourceView = sender
+        controller.popoverPresentationController?.sourceRect = sender.centerRect
         let actionTitle = NSLocalizedString("wallets.backup.alertSheet.title", value: "Backup Keystore", comment: "The title of the backup button in the wallet's action sheet")
         let action = UIAlertAction(title: actionTitle, style: .default) { _ in
             let coordinator = BackupCoordinator(
@@ -86,8 +87,8 @@ extension AccountsCoordinator: AccountsViewControllerDelegate {
         delegate?.didDeleteAccount(account: account, in: self)
     }
 
-    func didSelectInfoForAccount(account: Account, in viewController: AccountsViewController) {
-        showInfoSheet(for: account)
+    func didSelectInfoForAccount(account: Account, sender: UIView, in viewController: AccountsViewController) {
+        showInfoSheet(for: account, sender: sender)
     }
 }
 

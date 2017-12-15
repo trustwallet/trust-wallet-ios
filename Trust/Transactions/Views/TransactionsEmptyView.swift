@@ -12,7 +12,7 @@ class TransactionsEmptyView: UIView {
     let depositButton = Button(size: .normal, style: .solid)
     let insets: UIEdgeInsets
     private var onRetry: (() -> Void)? = .none
-    var onDeposit: (() -> Void)? = .none
+    var onDeposit: ((_ sender: UIButton) -> Void)? = .none
     private let viewModel = StateViewModel()
 
     var isDepositAvailable: Bool = true {
@@ -26,7 +26,7 @@ class TransactionsEmptyView: UIView {
         image: UIImage? = R.image.no_transactions_mascot(),
         insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
         onRetry: (() -> Void)? = .none,
-        onDeposit: (() -> Void)? = .none
+        onDeposit: ((_ sender: UIButton) -> Void)? = .none
     ) {
         self.insets = insets
         self.onRetry = onRetry
@@ -49,7 +49,7 @@ class TransactionsEmptyView: UIView {
 
         depositButton.translatesAutoresizingMaskIntoConstraints = false
         depositButton.setTitle(NSLocalizedString("transactions.deposit.button.title", value: "Buy", comment: ""), for: .normal)
-        depositButton.addTarget(self, action: #selector(deposit), for: .touchUpInside)
+        depositButton.addTarget(self, action: #selector(deposit(_:)), for: .touchUpInside)
 
         let stackView = UIStackView(arrangedSubviews: [
             imageView,
@@ -81,8 +81,8 @@ class TransactionsEmptyView: UIView {
         onRetry?()
     }
 
-    @objc func deposit() {
-        onDeposit?()
+    @objc func deposit(_ sender: UIButton) {
+        onDeposit?(sender)
     }
 
     required init?(coder aDecoder: NSCoder) {

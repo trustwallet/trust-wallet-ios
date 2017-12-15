@@ -21,13 +21,19 @@ class DepositCoordinator: Coordinator {
         showAlertSheet(from: barButtonItem)
     }
 
-    func showAlertSheet(from barButtonItem: UIBarButtonItem? = .none) {
+    func start(from view: UIView) {
+        let alertController = makeAlertSheet()
+        alertController.popoverPresentationController?.sourceView = view
+        alertController.popoverPresentationController?.sourceRect = view.centerRect
+        navigationController.present(alertController, animated: true, completion: nil)
+    }
+
+    private func makeAlertSheet() -> UIAlertController {
         let alertController = UIAlertController(
             title: nil,
             message: NSLocalizedString("deposit.buy.label.title", value: "How would you like to buy?", comment: ""),
             preferredStyle: .actionSheet
         )
-        alertController.popoverPresentationController?.barButtonItem = barButtonItem
         let coinbaseAction = UIAlertAction(title: NSLocalizedString("deposit.buy.button.coinbase.title", value: "via Coinbase", comment: ""), style: .default) { _ in
             self.showCoinbase()
         }
@@ -43,6 +49,12 @@ class DepositCoordinator: Coordinator {
         alertController.addAction(shapeShiftAction)
         alertController.addAction(changellyAction)
         alertController.addAction(cancelAction)
+        return alertController
+    }
+
+    func showAlertSheet(from barButtonItem: UIBarButtonItem? = .none) {
+        let alertController = makeAlertSheet()
+        alertController.popoverPresentationController?.barButtonItem = barButtonItem
         navigationController.present(alertController, animated: true, completion: nil)
     }
 

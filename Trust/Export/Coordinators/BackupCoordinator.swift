@@ -55,6 +55,7 @@ class BackupCoordinator: Coordinator {
                 completion(result)
             }
             activityViewController.popoverPresentationController?.sourceView = navigationController.view
+            activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
             navigationController.present(activityViewController, animated: true) { [unowned self] in
                 self.navigationController.hideLoading()
             }
@@ -85,7 +86,6 @@ class BackupCoordinator: Coordinator {
                 case .failure: break
                 }
             }
-            verifyController.popoverPresentationController?.sourceView = self.navigationController.view
             navigationController.present(verifyController, animated: true, completion: nil)
         } else {
             //FIXME: remove later. for old version, when password were missing in the keychain
@@ -102,7 +102,6 @@ class BackupCoordinator: Coordinator {
                 case .failure: break
                 }
             }
-            verifyController.popoverPresentationController?.sourceView = self.navigationController.view
             navigationController.present(verifyController, animated: true, completion: nil)
         }
     }

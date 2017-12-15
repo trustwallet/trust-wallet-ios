@@ -5,7 +5,7 @@ import UIKit
 protocol AccountsViewControllerDelegate: class {
     func didSelectAccount(account: Account, in viewController: AccountsViewController)
     func didDeleteAccount(account: Account, in viewController: AccountsViewController)
-    func didSelectInfoForAccount(account: Account, in viewController: AccountsViewController)
+    func didSelectInfoForAccount(account: Account, sender: UIView, in viewController: AccountsViewController)
 }
 
 class AccountsViewController: UITableViewController {
@@ -129,6 +129,6 @@ class AccountsViewController: UITableViewController {
 
 extension AccountsViewController: AccountViewCellDelegate {
     func accountViewCell(_ cell: AccountViewCell, didTapInfoViewForAccount account: Account) {
-        self.delegate?.didSelectInfoForAccount(account: account, in: self)
+        self.delegate?.didSelectInfoForAccount(account: account, sender: cell.infoButton, in: self)
     }
 }
