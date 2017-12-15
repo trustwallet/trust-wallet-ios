@@ -51,8 +51,8 @@ struct TransactionDetailsViewModel {
 
     var detailsAvailable: Bool {
         switch config.server {
-        case .main, .kovan, .oraclesTest, .ropsten: return true
-        case .oracles: return false
+        case .main, .kovan, .poaTest, .ropsten: return true
+        case .poa: return false
         }
     }
 

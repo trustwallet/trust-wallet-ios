@@ -6,16 +6,16 @@ enum RPCServer: String {
     case main
     case kovan
     case ropsten
-    case oracles
-    case oraclesTest
+    case poa
+    case poaTest
 
     var chainID: Int {
         switch self {
         case .main: return 1
         case .kovan: return 42
         case .ropsten: return 3
-        case .oracles: return 99
-        case .oraclesTest: return 12648430
+        case .poa: return 99
+        case .poaTest: return 12648430
         }
     }
 
@@ -24,14 +24,14 @@ enum RPCServer: String {
         case .main: return "Ethereum"
         case .kovan: return "Kovan"
         case .ropsten: return "Ropsten"
-        case .oracles, .oraclesTest: return "Oracles"
+        case .poa, .poaTest: return "POA Network"
         }
     }
 
     var isTestNetwork: Bool {
         switch self {
-        case .main, .oracles: return false
-        case .kovan, .ropsten, .oraclesTest: return true
+        case .main, .poa: return false
+        case .kovan, .ropsten, .poaTest: return true
         }
     }
 
@@ -39,7 +39,7 @@ enum RPCServer: String {
         switch self {
         case .main: return "ETH"
         case .kovan, .ropsten: return "ETH"
-        case .oracles, .oraclesTest: return "POA"
+        case .poa, .poaTest: return "POA"
         }
     }
 
@@ -49,8 +49,8 @@ enum RPCServer: String {
             case RPCServer.main.name: return .main
             case RPCServer.kovan.name: return .kovan
             case RPCServer.ropsten.name: return .ropsten
-            case RPCServer.oracles.name: return .oracles
-            case RPCServer.oraclesTest.name: return .oraclesTest
+            case RPCServer.poa.name: return .poa
+            case RPCServer.poaTest.name: return .poaTest
             default: return .main
             }
         }()
@@ -62,8 +62,8 @@ enum RPCServer: String {
             case RPCServer.main.chainID: return .main
             case RPCServer.kovan.chainID: return .kovan
             case RPCServer.ropsten.chainID: return .ropsten
-            case RPCServer.oracles.chainID: return .oracles
-            case RPCServer.oraclesTest.chainID: return .oraclesTest
+            case RPCServer.poa.chainID: return .poa
+            case RPCServer.poaTest.chainID: return .poaTest
             default: return .main
             }
         }()

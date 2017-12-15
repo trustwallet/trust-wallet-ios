@@ -13,13 +13,13 @@ struct InCoordinatorViewModel {
     var tokensAvailable: Bool {
         switch config.server {
         case .main: return true
-        case .kovan, .ropsten, .oracles, .oraclesTest: return false
+        case .kovan, .ropsten, .poa, .poaTest: return false
         }
     }
 
     var exchangeAvailable: Bool {
         switch config.server {
-        case .main, .ropsten, .oracles, .oraclesTest: return false
+        case .main, .ropsten, .poa, .poaTest: return false
         case .kovan: return config.isDebugEnabled
         }
     }

@@ -19,12 +19,12 @@ struct SettingsViewModel {
                     RPCServer.main,
                     RPCServer.kovan,
                     RPCServer.ropsten,
-                    RPCServer.oraclesTest,
+                    RPCServer.poaTest,
                 ]
             }
             return [
                 RPCServer.main,
-                RPCServer.oracles,
+                RPCServer.poa,
                 RPCServer.kovan,
                 RPCServer.ropsten,
             ]

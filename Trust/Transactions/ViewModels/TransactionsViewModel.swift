@@ -79,7 +79,7 @@ struct TransactionsViewModel {
     var isBuyActionAvailable: Bool {
         switch config.server {
         case .main: return true
-        case .kovan, .ropsten, .oracles, .oraclesTest: return false
+        case .kovan, .ropsten, .poa, .poaTest: return false
         }
     }
 }
