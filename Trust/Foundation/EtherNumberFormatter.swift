@@ -7,7 +7,7 @@ final class EtherNumberFormatter {
     /// Formatter that preserves full precision.
     static let full = EtherNumberFormatter()
 
-    // Formatter that caps the number of decimal digits to 3.
+    // Formatter that caps the number of decimal digits to 4.
     static let short: EtherNumberFormatter = {
         let formatter = EtherNumberFormatter()
         formatter.maximumFractionDigits = 4
