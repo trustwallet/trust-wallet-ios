@@ -55,6 +55,11 @@ fastlane ios update_lokalise
 fastlane ios update_itunes
 ```
 
+### ios tests
+```
+fastlane ios tests
+```
+
 
 ----
 

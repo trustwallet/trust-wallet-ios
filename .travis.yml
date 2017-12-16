@@ -16,8 +16,7 @@ before_install:
 script:
   - set -o pipefail
   - pod install
-  - swiftlint
-  - xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
+  - fastlane tests
 
 notifications:
   slack: trust-wallet:33Vj3pGpKoBMTBAHTB8dF79n

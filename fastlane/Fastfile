@@ -70,6 +70,15 @@ platform :ios do
    )
   end
 
+  lane :tests do 
+    cocoapods(use_bundle_exec: false)
+    run_tests(
+      workspace: "Trust.xcworkspace",
+      scheme: "TrustTests",
+      clean: false
+    )
+  end
+
   # You can define as many lanes as you want
 
   after_all do |lane|
