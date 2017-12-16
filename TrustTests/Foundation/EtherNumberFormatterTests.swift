@@ -44,6 +44,11 @@ class EtherNumberFormatterTests: XCTestCase {
         XCTAssertEqual(shortFormatter.string(from: number), "1,234,567,890,123.4567")
     }
 
+    func testDigits2() {
+        let number = BigInt("819947500000000000")!
+        XCTAssertEqual(shortFormatter.string(from: number), "0.8199")
+    }
+
     func testNoFraction() {
         let formatter: EtherNumberFormatter = {
             let formatter = EtherNumberFormatter(locale: Locale(identifier: "en_US_POSIX"))
