@@ -130,7 +130,6 @@ final class EtherNumberFormatter {
         }
         if decimals > maximumFractionDigits {
             number /= BigInt(10).power(decimals - maximumFractionDigits - 1)
-            number = (number + 5) / 10 // Make sure that the result is rounded
         }
 
         var string = number.description
