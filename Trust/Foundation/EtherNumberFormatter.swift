@@ -7,7 +7,7 @@ final class EtherNumberFormatter {
     /// Formatter that preserves full precision.
     static let full = EtherNumberFormatter()
 
-    // Formatter that caps the number of decimal digits to 3.
+    // Formatter that caps the number of decimal digits to 4.
     static let short: EtherNumberFormatter = {
         let formatter = EtherNumberFormatter()
         formatter.maximumFractionDigits = 4
@@ -130,7 +130,6 @@ final class EtherNumberFormatter {
         }
         if decimals > maximumFractionDigits {
             number /= BigInt(10).power(decimals - maximumFractionDigits - 1)
-            number = (number + 5) / 10 // Make sure that the result is rounded
         }
 
         var string = number.description
