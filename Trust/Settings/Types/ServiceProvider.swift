@@ -23,7 +23,7 @@ enum URLServiceProvider {
         case .telegram:
             return URL(string: "tg://resolve?domain=\(Constants.telegramUsername)")
         case .facebook:
-            return URL(string: "fb://profile/\(Constants.facebookUsername)")
+            return URL(string: "fb://profile?id=\(Constants.facebookUsername)")
         }
     }
 
