@@ -5,6 +5,6 @@ import BigInt
 
 protocol BalanceProtocol {
     var value: BigInt { get }
-    var amount: String { get }
+    var amountShort: String { get }
     var amountFull: String { get }
 }

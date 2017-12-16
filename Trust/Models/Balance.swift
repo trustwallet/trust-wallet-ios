@@ -15,11 +15,11 @@ struct Balance: BalanceProtocol {
         return value.isZero
     }
 
-    var amount: String {
+    var amountShort: String {
         return EtherNumberFormatter.short.string(from: value)
     }
 
     var amountFull: String {
-        return amount
+        return EtherNumberFormatter.full.string(from: value)
     }
 }

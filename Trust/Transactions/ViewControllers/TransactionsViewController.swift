@@ -94,7 +94,7 @@ class TransactionsViewController: UIViewController {
         }()
 
         navigationItem.titleView = titleView
-        titleView.configure(viewModel: BalanceViewModel())
+        titleView.viewModel = BalanceViewModel()
     }
 
     override func viewWillAppear(_ animated: Bool) {

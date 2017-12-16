@@ -6,14 +6,19 @@ struct BalanceTokenViewModel: BalanceBaseViewModel {
 
     let token: Token
 
-    var attributedAmount: NSAttributedString {
-        return NSAttributedString(
-            string: "\(token.amount) \(token.symbol)",
-            attributes: largeLabelAttributed
-        )
+    var currencyAmount: String? {
+        return nil
     }
 
-    var attributedCurrencyAmount: NSAttributedString? {
-        return nil
+    var amountFull: String {
+        return token.amount
+    }
+
+    var amountShort: String {
+        return token.amount
+    }
+
+    var symbol: String {
+        return token.symbol
     }
 }
