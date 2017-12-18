@@ -8,7 +8,7 @@ class EtherNumberFormatterTests: XCTestCase {
     let fullFormatter = EtherNumberFormatter(locale: Locale(identifier: "en_US_POSIX"))
     let shortFormatter: EtherNumberFormatter = {
         var formatter = EtherNumberFormatter(locale: Locale(identifier: "en_US_POSIX"))
-        formatter.maximumFractionDigits = 3
+        formatter.maximumFractionDigits = 4
         return formatter
     }()
 
@@ -47,6 +47,11 @@ class EtherNumberFormatterTests: XCTestCase {
     func testDigits2() {
         let number = BigInt("819947500000000000")!
         XCTAssertEqual(shortFormatter.string(from: number), "0.8199")
+    }
+
+    func testDigits3() {
+        let number = BigInt("165700487753527")!
+        XCTAssertEqual(shortFormatter.string(from: number), "0.0001")
     }
 
     func testNoFraction() {

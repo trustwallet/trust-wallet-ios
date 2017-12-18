@@ -129,7 +129,7 @@ final class EtherNumberFormatter {
             number *= BigInt(10).power(minimumFractionDigits - decimals)
         }
         if decimals > maximumFractionDigits {
-            number /= BigInt(10).power(decimals - maximumFractionDigits - 1)
+            number /= BigInt(10).power(decimals - maximumFractionDigits)
         }
 
         var string = number.description
