@@ -14,7 +14,7 @@ class CurrencyFormatter {
     }
 
     static var plainFormatter: EtherNumberFormatter {
-        var formatter = EtherNumberFormatter.full
+        let formatter = EtherNumberFormatter.full
         formatter.groupingSeparator = ""
         return formatter
     }

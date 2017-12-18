@@ -123,6 +123,10 @@ extension TokensViewController: UITableViewDelegate {
             delegate?.didDelete(token: viewModel.item(for: indexPath.row, section: indexPath.section), in: self)
         }
     }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
 }
 
 extension TokensViewController: TokensDataStoreDelegate {

@@ -20,7 +20,15 @@ struct TokenViewCellViewModel {
     }
 
     var title: String {
-        return token.name
+        return token.symbol
+    }
+
+    var titleFont: UIFont {
+        return UIFont.systemFont(ofSize: 18, weight: .medium)
+    }
+
+    var titleTextColor: UIColor {
+        return Colors.black
     }
 
     var amount: String {
@@ -28,10 +36,11 @@ struct TokenViewCellViewModel {
     }
 
     var currencyAmount: String? {
-        guard let ticker = ticker else { return .none }
+        let noResult = "-"
+        guard let ticker = ticker else { return noResult }
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
         let amount = tokenValue * ticker.priceUSD
-        guard amount > 0 else { return .none }
+        guard amount > 0 else { return noResult }
         return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
     }
 
@@ -40,7 +49,7 @@ struct TokenViewCellViewModel {
     }
 
     var amountFont: UIFont {
-        return UIFont.systemFont(ofSize: 17, weight: .medium)
+        return UIFont.systemFont(ofSize: 18, weight: .medium)
     }
 
     var currencyAmountTextColor: UIColor {
@@ -48,19 +57,7 @@ struct TokenViewCellViewModel {
     }
 
     var currencyAmountFont: UIFont {
-        return UIFont.systemFont(ofSize: 14, weight: .regular)
-    }
-
-    var subTitle: String {
-        return token.symbol
-    }
-
-    var subTitleTextColor: UIColor {
-        return Colors.black
-    }
-
-    var subTitleFont: UIFont {
-        return UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.regular)
+        return UIFont.systemFont(ofSize: 16, weight: .regular)
     }
 
     var backgroundColor: UIColor {

@@ -13,7 +13,6 @@ class NewTokenViewController: FormViewController {
 
     private struct Values {
         static let contract = "contract"
-        static let name = "name"
         static let symbol = "symbol"
         static let decimals = "decimals"
     }
@@ -22,9 +21,6 @@ class NewTokenViewController: FormViewController {
 
     private var contractRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.contract) as? TextFloatLabelRow
-    }
-    private var nameRow: TextFloatLabelRow? {
-        return form.rowBy(tag: Values.name) as? TextFloatLabelRow
     }
     private var symbolRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.symbol) as? TextFloatLabelRow
@@ -45,19 +41,13 @@ class NewTokenViewController: FormViewController {
             <<< AppFormAppearance.textFieldFloat(tag: Values.contract) {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
-                $0.title = NSLocalizedString("tokens.contract.textfield.title", value: "Contract address", comment: "")
-            }
-
-            <<< AppFormAppearance.textFieldFloat(tag: Values.name) {
-                $0.add(rule: RuleRequired())
-                $0.validationOptions = .validatesOnDemand
-                $0.title = NSLocalizedString("tokens.name.textfield.title", value: "Name", comment: "")
+                $0.title = NSLocalizedString("tokens.contract.textfield.title", value: "Address", comment: "")
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.symbol) {
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
-                $0.title = NSLocalizedString("tokens.symbol.textfield.title", value: "Symbol", comment: "")
+                $0.title = NSLocalizedString("tokens.symbol.textfield.title", value: "Token Symbol", comment: "")
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.decimals) {
@@ -77,13 +67,11 @@ class NewTokenViewController: FormViewController {
         }
 
         let contract = contractRow?.value ?? ""
-        let name = nameRow?.value ?? ""
         let symbol = symbolRow?.value ?? ""
         let decimals = Int(decimalsRow?.value ?? "") ?? 0
 
         let token = ERC20Token(
             contract: Address(address: contract),
-            name: name,
             symbol: symbol,
             decimals: decimals
         )

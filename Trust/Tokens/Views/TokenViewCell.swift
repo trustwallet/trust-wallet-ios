@@ -11,18 +11,14 @@ class TokenViewCell: UITableViewCell {
     let amountLabel = UILabel()
     let currencyAmountLabel = UILabel()
     let symbolImageView = UIImageView()
-    let subTitleLabel = UILabel()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subTitleLabel.lineBreakMode = .byTruncatingMiddle
-
         symbolImageView.translatesAutoresizingMaskIntoConstraints = false
-        symbolImageView.contentMode = .scaleAspectFit
+        symbolImageView.contentMode = .center
 
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
         amountLabel.textAlignment = .right
@@ -30,21 +26,22 @@ class TokenViewCell: UITableViewCell {
         currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         currencyAmountLabel.textAlignment = .right
 
-        let leftStackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
+        let leftStackView = UIStackView(arrangedSubviews: [titleLabel])
         leftStackView.translatesAutoresizingMaskIntoConstraints = false
         leftStackView.axis = .vertical
-        leftStackView.spacing = 10
+        leftStackView.spacing = 12
 
-        let rightStackView = UIStackView(arrangedSubviews: [amountLabel, currencyAmountLabel])
+        let rightStackView = UIStackView(arrangedSubviews: [amountLabel, .spacer(), currencyAmountLabel])
         rightStackView.translatesAutoresizingMaskIntoConstraints = false
         rightStackView.axis = .vertical
-        leftStackView.spacing = 10
+        leftStackView.spacing = 12
 
         let stackView = UIStackView(arrangedSubviews: [symbolImageView, leftStackView, rightStackView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 12
         stackView.distribution = .fill
+        stackView.alignment = .center
 
         symbolImageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -55,7 +52,8 @@ class TokenViewCell: UITableViewCell {
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            symbolImageView.widthAnchor.constraint(equalToConstant: 40),
+            symbolImageView.widthAnchor.constraint(equalToConstant: 50),
+            symbolImageView.heightAnchor.constraint(equalToConstant: 50),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -StyleLayout.sideMargin),
@@ -68,7 +66,10 @@ class TokenViewCell: UITableViewCell {
     }
 
     func configure(viewModel: TokenViewCellViewModel) {
+
         titleLabel.text = viewModel.title
+        titleLabel.textColor = viewModel.titleTextColor
+        titleLabel.font = viewModel.titleFont
 
         amountLabel.text = viewModel.amount
         amountLabel.textColor = viewModel.amountTextColor
@@ -77,10 +78,6 @@ class TokenViewCell: UITableViewCell {
         currencyAmountLabel.text = viewModel.currencyAmount
         currencyAmountLabel.textColor = viewModel.currencyAmountTextColor
         currencyAmountLabel.font = viewModel.currencyAmountFont
-
-        subTitleLabel.text = viewModel.subTitle
-        subTitleLabel.textColor = viewModel.subTitleTextColor
-        subTitleLabel.font = viewModel.subTitleFont
 
         symbolImageView.image = viewModel.image
 
