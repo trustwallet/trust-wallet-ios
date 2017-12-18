@@ -31,7 +31,7 @@ struct GetTokensRequest: APIKit.Request {
         if
             let objectJSON = object as? [String: AnyObject],
             let tokensJSON = objectJSON["tokens"] as? [[String: AnyObject]] {
-            return tokensJSON.map { Token.from(address: address, json: $0) }.filter { !$0.address.isEmpty }
+            return tokensJSON.map { Token.from(address: address, json: $0) }.filter { !$0.address.address.isEmpty }
         }
         return []
     }
