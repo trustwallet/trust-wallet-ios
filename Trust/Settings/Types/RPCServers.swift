@@ -43,6 +43,10 @@ enum RPCServer: String {
         }
     }
 
+    var decimals: Int {
+        return 18
+    }
+
     init(name: String) {
         self = {
             switch name {

@@ -5,6 +5,7 @@ import Moya
 
 enum CoinMarketService {
     case price(id: String, currency: String)
+    case prices(limit: Int)
 }
 
 extension CoinMarketService: TargetType {
@@ -15,12 +16,14 @@ extension CoinMarketService: TargetType {
         switch self {
         case .price(let id, _):
             return "/ticker/\(id)"
+        case .prices:
+            return "/ticker"
         }
     }
 
     var method: Moya.Method {
         switch self {
-        case .price: return .get
+        case .price, .prices: return .get
         }
     }
 
@@ -28,6 +31,8 @@ extension CoinMarketService: TargetType {
         switch self {
         case .price(_, let currency):
             return .requestCompositeData(bodyData: Data(), urlParameters: ["convert": currency])
+        case .prices(let limit):
+            return .requestCompositeData(bodyData: Data(), urlParameters: ["limit": limit])
         }
     }
 

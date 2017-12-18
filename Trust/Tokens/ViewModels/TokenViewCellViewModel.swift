@@ -9,9 +9,14 @@ struct TokenViewCellViewModel {
     private let shortFormatter = EtherNumberFormatter.short
 
     let token: TokenObject
+    let ticker: CoinTicker?
 
-    init(token: TokenObject) {
+    init(
+        token: TokenObject,
+        ticker: CoinTicker?
+    ) {
         self.token = token
+        self.ticker = ticker
     }
 
     var title: String {
@@ -22,12 +27,28 @@ struct TokenViewCellViewModel {
         return shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
     }
 
+    var currencyAmount: String? {
+        guard let ticker = ticker else { return .none }
+        let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
+        let amount = tokenValue * ticker.priceUSD
+        guard amount > 0 else { return .none }
+        return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
+    }
+
     var amountTextColor: UIColor {
         return Colors.black
     }
 
     var amountFont: UIFont {
-        return UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
+        return UIFont.systemFont(ofSize: 17, weight: .medium)
+    }
+
+    var currencyAmountTextColor: UIColor {
+        return Colors.lightGray
+    }
+
+    var currencyAmountFont: UIFont {
+        return UIFont.systemFont(ofSize: 14, weight: .regular)
     }
 
     var subTitle: String {

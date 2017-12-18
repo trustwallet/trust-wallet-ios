@@ -5,7 +5,7 @@ import Foundation
 import RealmSwift
 
 class FakeTransactionsStorage: TransactionsStorage {
-    convenience init(_ current: Account = .make(address: Address(address: "0x1")), chainID: Int = -1) {
+    convenience init() {
         let configuration = Realm.Configuration(inMemoryIdentifier: "MyInMemoryRealm")
         self.init(configuration: configuration)
     }

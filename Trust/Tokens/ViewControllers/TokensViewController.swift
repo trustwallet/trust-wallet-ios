@@ -14,7 +14,11 @@ class TokensViewController: UIViewController {
 
     private let dataStore: TokensDataStore
 
-    var viewModel: TokensViewModel = TokensViewModel(tokens: [])
+    var viewModel: TokensViewModel = TokensViewModel(tokens: [], tickers: .none) {
+        didSet {
+            refreshView(viewModel: viewModel)
+        }
+    }
     let account: Account
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
@@ -58,13 +62,13 @@ class TokensViewController: UIViewController {
             onRetry: fetch
         )
 
-        title = viewModel.title
-        view.backgroundColor = viewModel.backgroundColor
+        //header.translatesAutoresizingMaskIntoConstraints = false
+
+        refreshView(viewModel: viewModel)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         fetch()
     }
 
@@ -80,6 +84,19 @@ class TokensViewController: UIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func refreshView(viewModel: TokensViewModel) {
+        title = viewModel.title
+        view.backgroundColor = viewModel.backgroundColor
+
+        let header = TokensHeaderView(frame: .zero)
+        header.amountLabel.text = viewModel.headerBalance
+        header.amountLabel.textColor = viewModel.headerBalanceTextColor
+        header.backgroundColor = viewModel.headerBackgroundColor
+        header.amountLabel.font = viewModel.headerBalanceFont
+        header.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
+        tableView.tableHeaderView = header
     }
 }
 
@@ -132,8 +149,14 @@ extension TokensViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let token = viewModel.item(for: indexPath.row, section: indexPath.section)
+
         let cell = TokenViewCell(style: .default, reuseIdentifier: TokenViewCell.identifier)
-        cell.configure(viewModel: .init(token: token))
+        cell.configure(
+            viewModel: .init(
+                token: token,
+                ticker: viewModel.ticker(for: token)
+            )
+        )
         return cell
     }
 

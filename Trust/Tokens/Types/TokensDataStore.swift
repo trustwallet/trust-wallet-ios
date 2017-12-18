@@ -5,6 +5,7 @@ import Result
 import APIKit
 import RealmSwift
 import BigInt
+import Moya
 
 enum TokenError: Error {
     case failedToFetch
@@ -19,10 +20,12 @@ class TokensDataStore {
     private lazy var getBalanceCoordinator: GetBalanceCoordinator = {
         return GetBalanceCoordinator(session: self.session)
     }()
+    private let provider = MoyaProvider<CoinMarketService>()
 
     let session: WalletSession
     weak var delegate: TokensDataStoreDelegate?
     let realm: Realm
+    var tickers: [String: CoinTicker]? = .none
 
     init(
         session: WalletSession,
@@ -59,18 +62,23 @@ class TokensDataStore {
     }
 
     func fetch() {
+        let contracts = uniqueContracts()
+        update(tokens: contracts)
+
         switch session.config.server {
         case .main:
             let request = GetTokensRequest(address: session.account.address.address)
-            Session.send(request) { result in
+            Session.send(request) { [weak self] result in
+                guard let `self` = self else { return }
                 switch result {
                 case .success(let response):
                     self.update(tokens: response)
                     self.refreshBalance()
-                case .failure:
-                    self.delegate?.didUpdate(result: .failure(TokenError.failedToFetch))
+                case .failure(let error):
+                    self.handleError(error: error)
                 }
             }
+            updatePrices()
         case .kovan, .poa, .poaTest, .ropsten:
             self.refreshBalance()
         }
@@ -78,7 +86,7 @@ class TokensDataStore {
 
     func refreshBalance() {
         guard !objects.isEmpty else {
-            delegate?.didUpdate(result: .success(TokensViewModel(tokens: [])))
+            updateDelegate()
             return
         }
         let updateTokens = objects
@@ -94,10 +102,32 @@ class TokensDataStore {
                 }
                 count += 1
                 if count == updateTokens.count {
-                    self.delegate?.didUpdate(result: .success(TokensViewModel(tokens: self.objects)))
+                   self.updateDelegate()
                 }
             }
         }
+    }
+
+    func updateDelegate() {
+        let balance = TokenObject(
+            contract: "0x",
+            name: session.config.server.name,
+            symbol: session.config.server.symbol,
+            decimals: session.config.server.decimals,
+            value: session.balance?.value.description ?? "0",
+            isCustom: false,
+            type: .ether
+        )
+
+        var results = objects
+        results.insert(balance, at: 0)
+
+        delegate?.didUpdate(result: .success(
+            TokensViewModel(
+                tokens: results,
+                tickers: tickers
+            ))
+        )
     }
 
     func handleError(error: Error) {
@@ -114,6 +144,21 @@ class TokensDataStore {
             isCustom: true
         )
         add(tokens: [newToken])
+    }
+
+    func updatePrices() {
+        provider.request(.prices(limit: 150)) { result in
+            guard  case .success(let response) = result else { return }
+            do {
+                let tickers = try response.map([CoinTicker].self)
+                self.tickers = tickers.reduce([String: CoinTicker]()) { (dict, ticker) -> [String: CoinTicker] in
+                    var dict = dict
+                    dict[ticker.symbol] = ticker
+                    return dict
+                }
+                self.updateDelegate()
+            } catch { }
+        }
     }
 
     @discardableResult
@@ -134,5 +179,26 @@ class TokensDataStore {
         realm.beginWrite()
         token.value = value.description
         try! realm.commitWrite()
+    }
+
+    func uniqueContracts() -> [Token] {
+        let transactions = realm.objects(Transaction.self)
+            .sorted(byKeyPath: "date", ascending: true)
+            .filter { !$0.localizedOperations.isEmpty }
+
+        let tokens: [Token] = transactions.flatMap { transaction in
+            guard
+                let operation = transaction.localizedOperations.first,
+                let contract = operation.contract,
+                let name = operation.name,
+                let symbol = operation.symbol else { return nil }
+            return Token(
+                address: Address(address: contract),
+                name: name,
+                symbol: symbol,
+                decimals: operation.decimals
+            )
+        }
+        return tokens
     }
 }

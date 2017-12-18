@@ -5,16 +5,6 @@ import UIKit
 
 struct BalanceViewModel: BalanceBaseViewModel {
 
-    static var formatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        //TODO: use current locale when available this feature
-        formatter.locale = Locale(identifier: "en_US")
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
-        formatter.numberStyle = .currency
-        return formatter
-    }
-
     let balance: Balance?
     let rate: CurrencyRate?
     let config: Config
@@ -48,7 +38,7 @@ struct BalanceViewModel: BalanceBaseViewModel {
             amount > 0
         else { return nil }
         let totalAmount = amount * currentRate.price
-        return BalanceViewModel.formatter.string(from: NSNumber(value: totalAmount))
+        return CurrencyFormatter.formatter.string(from: NSNumber(value: totalAmount))
     }
 
     var amountFull: String {

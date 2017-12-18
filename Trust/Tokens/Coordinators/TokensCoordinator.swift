@@ -28,16 +28,14 @@ class TokensCoordinator: Coordinator {
     init(
         navigationController: UINavigationController = NavigationController(),
         session: WalletSession,
-        keystore: Keystore
+        keystore: Keystore,
+        tokensStorage: TokensDataStore
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
         self.keystore = keystore
-        self.storage = TokensDataStore(
-            session: session,
-            configuration: RealmConfiguration.configuration(for: session.account, chainID: session.config.chainID)
-        )
+        self.storage = tokensStorage
     }
 
     func start() {
@@ -80,7 +78,12 @@ class TokensCoordinator: Coordinator {
 
 extension TokensCoordinator: TokensViewControllerDelegate {
     func didSelect(token: TokenObject, in viewController: UIViewController) {
-        showPaymentFlow(for: .send(type: .token(token)))
+        switch token.type {
+        case .ether:
+            showPaymentFlow(for: .send(type: .ether(destination: .none)))
+        case .token:
+            showPaymentFlow(for: .send(type: .token(token)))
+        }
     }
 
     func didDelete(token: TokenObject, in viewController: UIViewController) {

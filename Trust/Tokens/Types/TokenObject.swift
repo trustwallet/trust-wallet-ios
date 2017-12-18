@@ -4,6 +4,11 @@ import Foundation
 import RealmSwift
 import BigInt
 
+enum TokenType {
+    case ether
+    case token
+}
+
 class TokenObject: Object {
     @objc dynamic var contract: String = ""
     @objc dynamic var name: String = ""
@@ -18,7 +23,8 @@ class TokenObject: Object {
         symbol: String = "",
         decimals: Int = 0,
         value: String,
-        isCustom: Bool = false
+        isCustom: Bool = false,
+        type: TokenType = .token
     ) {
         self.init()
         self.contract = contract.lowercased()
@@ -27,6 +33,7 @@ class TokenObject: Object {
         self.decimals = decimals
         self.value = value
         self.isCustom = isCustom
+        self.type = type
     }
 
     var address: Address {
@@ -37,7 +44,13 @@ class TokenObject: Object {
         return BigInt(value) ?? BigInt()
     }
 
+    var type: TokenType = .token
+
     override static func primaryKey() -> String? {
         return "contract"
+    }
+
+    override static func ignoredProperties() -> [String] {
+        return ["type"]
     }
 }

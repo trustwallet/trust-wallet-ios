@@ -9,6 +9,7 @@ class TokenViewCell: UITableViewCell {
 
     let titleLabel = UILabel()
     let amountLabel = UILabel()
+    let currencyAmountLabel = UILabel()
     let symbolImageView = UIImageView()
     let subTitleLabel = UILabel()
 
@@ -23,29 +24,33 @@ class TokenViewCell: UITableViewCell {
         symbolImageView.translatesAutoresizingMaskIntoConstraints = false
         symbolImageView.contentMode = .scaleAspectFit
 
-        amountLabel.textAlignment = .right
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
+        amountLabel.textAlignment = .right
+
+        currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
+        currencyAmountLabel.textAlignment = .right
 
         let leftStackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
         leftStackView.translatesAutoresizingMaskIntoConstraints = false
         leftStackView.axis = .vertical
-        leftStackView.spacing = 2
+        leftStackView.spacing = 10
 
-        let rightStackView = UIStackView(arrangedSubviews: [amountLabel])
+        let rightStackView = UIStackView(arrangedSubviews: [amountLabel, currencyAmountLabel])
         rightStackView.translatesAutoresizingMaskIntoConstraints = false
         rightStackView.axis = .vertical
+        leftStackView.spacing = 10
 
         let stackView = UIStackView(arrangedSubviews: [symbolImageView, leftStackView, rightStackView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.spacing = 10
+        stackView.spacing = 12
         stackView.distribution = .fill
 
-        symbolImageView.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
-        titleLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
+        symbolImageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
-        amountLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
-        stackView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        rightStackView.setContentHuggingPriority(.required, for: .horizontal)
+        stackView.setContentHuggingPriority(.required, for: .horizontal)
 
         addSubview(stackView)
 
@@ -68,6 +73,10 @@ class TokenViewCell: UITableViewCell {
         amountLabel.text = viewModel.amount
         amountLabel.textColor = viewModel.amountTextColor
         amountLabel.font = viewModel.amountFont
+
+        currencyAmountLabel.text = viewModel.currencyAmount
+        currencyAmountLabel.textColor = viewModel.currencyAmountTextColor
+        currencyAmountLabel.font = viewModel.currencyAmountFont
 
         subTitleLabel.text = viewModel.subTitle
         subTitleLabel.textColor = viewModel.subTitleTextColor
