@@ -96,7 +96,7 @@ class ImportWalletViewController: FormViewController {
             }
 
             <<< AppFormAppearance.textArea(tag: Values.keystore) {
-                $0.placeholder = "Keystore JSON"
+                $0.placeholder = NSLocalizedString("Keystore JSON", value: "Keystore JSON", comment: "")
                 $0.textAreaHeight = .fixed(cellHeight: 140)
                 $0.add(rule: RuleRequired())
 
@@ -106,7 +106,7 @@ class ImportWalletViewController: FormViewController {
             }
 
             <<< AppFormAppearance.textArea(tag: Values.privateKey) {
-                $0.placeholder = "Private Key"
+                $0.placeholder = NSLocalizedString("Private Key", value: "Private Key", comment: "")
                 $0.textAreaHeight = .fixed(cellHeight: 140)
                 $0.add(rule: RuleRequired())
                 $0.add(rule: PrivateKeyRule())
@@ -123,12 +123,12 @@ class ImportWalletViewController: FormViewController {
             }.cellUpdate { cell, _ in
                 cell.textField.isSecureTextEntry = true
                 cell.textField.textAlignment = .left
-                cell.textField.placeholder = "Password"
+                cell.textField.placeholder = NSLocalizedString("Password", value: "Password", comment: "")
             }
 
             +++ Section("")
 
-            <<< ButtonRow("Import") {
+            <<< ButtonRow(NSLocalizedString("importWallet.import.button.title", value: "Import", comment: "")) {
                 $0.title = $0.tag
             }.onCellSelection { [unowned self] _, _ in
                 self.importWallet()
@@ -195,12 +195,19 @@ class ImportWalletViewController: FormViewController {
     }
 
     @objc func importOptions(sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Import Wallet Options", message: .none, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(
+            title: NSLocalizedString("importWallet.import.alertSheet.title", value: "Import Wallet Options", comment: ""),
+            message: .none,
+            preferredStyle: .actionSheet
+        )
         alertController.popoverPresentationController?.barButtonItem = sender
-        alertController.addAction(UIAlertAction(title: "iCloud/Dropbox/Google Drive", style: .default) { _ in
+        alertController.addAction(UIAlertAction(
+            title: NSLocalizedString("importWallet.import.alertSheet.option.title", value: "iCloud/Dropbox/Google Drive", comment: ""),
+            style: .default
+        ) { _ in
             self.showDocumentPicker()
         })
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in })
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in })
         present(alertController, animated: true)
     }
 
