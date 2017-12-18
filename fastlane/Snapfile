@@ -13,7 +13,7 @@ devices([
 
 languages([
   "en-US",
-  "ru-RU",
+  "ru",
   "es-ES",
   #{}"de-DE",
   #{}"it-IT",
