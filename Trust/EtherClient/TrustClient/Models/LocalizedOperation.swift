@@ -2,24 +2,26 @@
 
 import Foundation
 
+struct ERC20Contract: Decodable {
+    let address: String
+    let name: String
+    let totalSupply: String
+    let decimals: Int
+    let symbol: String
+}
+
 struct LocalizedOperation: Decodable {
-    let title: String
     let from: String
     let to: String
-    let contract: String?
     let type: OperationType
     let value: String
-    let symbol: String?
-    let decimals: Int?
+    let contract: ERC20Contract
 
     enum CodingKeys: String, CodingKey {
-        case title
         case from
         case to
-        case contract
         case type
-        case value = "new_value"
-        case symbol
-        case decimals
+        case value
+        case contract
     }
 }

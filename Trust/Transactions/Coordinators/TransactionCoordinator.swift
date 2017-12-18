@@ -219,7 +219,7 @@ extension TransactionCoordinator: AccountsCoordinatorDelegate {
     }
 
     func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator) {
-        storage.delete(for: account)
+        storage.deleteAll()
         delegate?.didUpdateAccounts(in: self)
         guard !coordinator.accountsViewController.hasAccounts else { return }
         coordinator.navigationController.dismiss(animated: true, completion: nil)

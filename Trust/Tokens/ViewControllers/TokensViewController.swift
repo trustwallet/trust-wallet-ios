@@ -6,14 +6,13 @@ import StatefulViewController
 import Result
 
 protocol TokensViewControllerDelegate: class {
-    func didSelect(token: Token, in viewController: UIViewController)
+    func didSelect(token: TokenObject, in viewController: UIViewController)
+    func didDelete(token: TokenObject, in viewController: UIViewController)
 }
 
 class TokensViewController: UIViewController {
 
-    private lazy var dataStore: TokensDataStore = {
-        return .init(account: self.account)
-    }()
+    private let dataStore: TokensDataStore
 
     var viewModel: TokensViewModel = TokensViewModel(tokens: [])
     let account: Account
@@ -22,9 +21,12 @@ class TokensViewController: UIViewController {
     weak var delegate: TokensViewControllerDelegate?
 
     init(
-        account: Account
+        account: Account,
+        dataStore: TokensDataStore
     ) {
         self.account = account
+        self.dataStore = dataStore
+
         tableView = UITableView(frame: .zero, style: .plain)
 
         super.init(nibName: nil, bundle: nil)
@@ -72,8 +74,8 @@ class TokensViewController: UIViewController {
     }
 
     func fetch() {
-        dataStore.fetch()
         startLoading()
+        dataStore.fetch()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -93,6 +95,16 @@ extension TokensViewController: UITableViewDelegate {
 
         let token = viewModel.item(for: indexPath.row, section: indexPath.section)
         delegate?.didSelect(token: token, in: self)
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return viewModel.canDelete(for: indexPath.row, section: indexPath.section)
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            delegate?.didDelete(token: viewModel.item(for: indexPath.row, section: indexPath.section), in: self)
+        }
     }
 }
 

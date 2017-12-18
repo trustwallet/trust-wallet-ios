@@ -104,7 +104,6 @@ extension Transaction {
         return Transaction(
             id: transaction.hash,
             owner: owner.address,
-            chainID: chainID,
             blockNumber: Int(transaction.blockNumber) ?? 0,
             from: transaction.from,
             to: transaction.to,

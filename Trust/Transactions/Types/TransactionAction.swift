@@ -17,8 +17,6 @@ extension TransactionAction {
                 address: Address(address: ""),
                 name: dict["name"] as? String ?? "",
                 symbol: dict["symbol"] as? String ?? "",
-                totalSupply: dict["totalSupply"] as? String ?? "",
-                balance: dict["balance"] as? Double ?? 0,
                 decimals: dict["decimals"] as? Int ?? 0
             )
             let tokenTransfer = TokenTransfer(

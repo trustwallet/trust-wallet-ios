@@ -31,7 +31,7 @@ class InCoordinator: Coordinator {
 
     func start() {
         showTabBar(for: account)
-
+        //Account(address: Address(address: "0x8e6cdfacdae218ae312ad24cb1e8cf34bb9f6b61"))
         checkDevice()
     }
 
@@ -40,12 +40,13 @@ class InCoordinator: Coordinator {
             account: account,
             config: config
         )
+        MigrationInitializer(account: account, chainID: config.chainID).perform()
+
         let inCoordinatorViewModel = InCoordinatorViewModel(config: config)
         let transactionCoordinator = TransactionCoordinator(
             session: session,
             storage: TransactionsStorage(
-                current: account,
-                chainID: config.chainID
+                configuration: RealmConfiguration.configuration(for: account, chainID: session.config.chainID)
             ),
             keystore: keystore
         )

@@ -4,7 +4,6 @@ import Foundation
 import RealmSwift
 
 class LocalizedOperationObject: Object {
-    @objc dynamic var title: String = ""
     @objc dynamic var from: String = ""
     @objc dynamic var to: String = ""
     @objc dynamic var contract: String? = .none
@@ -14,7 +13,6 @@ class LocalizedOperationObject: Object {
     @objc dynamic var decimals: Int = 18
 
     convenience init(
-        title: String,
         from: String,
         to: String,
         contract: String?,
@@ -24,7 +22,6 @@ class LocalizedOperationObject: Object {
         decimals: Int
     ) {
         self.init()
-        self.title = title
         self.from = from
         self.to = to
         self.contract = contract
@@ -33,6 +30,10 @@ class LocalizedOperationObject: Object {
         self.symbol = symbol
         self.decimals = decimals
     }
+
+    var operationType: OperationType {
+        return OperationType(string: type)
+    }
 }
 
 extension LocalizedOperationObject {
@@ -40,14 +41,13 @@ extension LocalizedOperationObject {
         guard let operations = operations else { return [] }
         return operations.map { operation in
             return LocalizedOperationObject(
-                title: operation.title,
                 from: operation.from,
                 to: operation.to,
-                contract: operation.contract,
+                contract: operation.contract.address,
                 type: operation.type.rawValue,
                 value: operation.value,
-                symbol: operation.symbol,
-                decimals: operation.decimals ?? 18
+                symbol: operation.contract.symbol,
+                decimals: operation.contract.decimals
             )
         }
     }

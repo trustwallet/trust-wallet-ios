@@ -28,7 +28,7 @@ struct RawTransaction: Decodable {
         case gasPrice
         case input
         case gasUsed
-        case operationsLocalized = "operations_localized"
+        case operationsLocalized = "operations"
         case error = "error"
     }
 
@@ -41,7 +41,6 @@ extension Transaction {
         return Transaction(
             id: transaction.hash,
             owner: owner.address,
-            chainID: chainID,
             blockNumber: transaction.blockNumber,
             from: transaction.from,
             to: transaction.to,

@@ -36,10 +36,6 @@ struct TransactionViewModel {
         return .completed
     }
 
-    private var operationTitle: String? {
-        return transaction.operation?.title
-    }
-
     var amountTextColor: UIColor {
         switch transaction.direction {
         case .incoming: return Colors.green

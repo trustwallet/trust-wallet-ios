@@ -12,8 +12,7 @@ struct InCoordinatorViewModel {
 
     var tokensAvailable: Bool {
         switch config.server {
-        case .main: return true
-        case .kovan, .ropsten, .poa, .poaTest: return false
+        case .main, .kovan, .ropsten, .poa, .poaTest: return true
         }
     }
 

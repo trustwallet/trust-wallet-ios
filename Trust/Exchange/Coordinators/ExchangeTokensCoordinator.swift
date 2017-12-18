@@ -16,6 +16,10 @@ class ExchangeTokensCoordinator {
     var tokens: [ExchangeToken]
     let exchangeConfig = ExchangeConfig(server: Config().server)
 
+    private lazy var getBalanceCoordinator: GetBalanceCoordinator = {
+        return GetBalanceCoordinator(session: session)
+    }()
+
     var viewModel: ExchangeTokensViewModel {
         return ExchangeTokensViewModel(
             from: from,
@@ -124,19 +128,25 @@ class ExchangeTokensCoordinator {
     func getBalances() {
         let onlyTokens = tokens.filter { $0.address != exchangeConfig.tokenAddress }
         onlyTokens.forEach { [weak self] token in
-            self?.getBalance(for: token) { balance in
+            self?.getBalanceCoordinator.getBalance(for: session.account.address, contract: token.address) { [weak self] result in
                 guard let `self` = self else { return }
-                if let index = self.tokens.index(of: token) {
-                    let oldToken = self.tokens[index]
-                    let newToken = ExchangeToken(
-                        name: oldToken.name,
-                        address: oldToken.address,
-                        symbol: oldToken.symbol,
-                        image: oldToken.image,
-                        balance: balance.value,
-                        decimals: oldToken.decimals
-                    )
-                    self.tokens[index] = newToken
+                switch result {
+                case .success(let balance):
+                    if let index = self.tokens.index(of: token) {
+                        let oldToken = self.tokens[index]
+                        let newToken = ExchangeToken(
+                            name: oldToken.name,
+                            address: oldToken.address,
+                            symbol: oldToken.symbol,
+                            image: oldToken.image,
+                            balance: balance,
+                            decimals: oldToken.decimals
+                        )
+                        self.tokens[index] = newToken
+                    }
+                case .failure:
+                    //TODO
+                    break
                 }
             }
         }
@@ -177,37 +187,15 @@ class ExchangeTokensCoordinator {
             }
         } else {
             // get price for token
-            getBalance(for: from) { balance in
-                self.balance =  balance
-            }
-        }
-    }
-
-    func getBalance(for token: ExchangeToken, completion: ((BalanceProtocol) -> Void)? = .none) {
-        let request = GetERC20BalanceEncode(address: session.account.address)
-        session.web3.request(request: request) { result in
-            switch result {
-            case .success(let res):
-                let request2 = EtherServiceRequest(batch: BatchFactory().create(CallRequest(to: token.address.address, data: res)))
-                Session.send(request2) { [weak self] result2 in
-                    switch result2 {
-                    case .success(let balance):
-                        let request = GetERC20BalanceDecode(data: balance)
-                        self?.session.web3.request(request: request) { result in
-                            switch result {
-                            case .success(let res):
-                                NSLog("res \(res)")
-                                completion?(TokenBalance(token: token, value: BigInt(res)!))
-                            case .failure(let error):
-                                NSLog("getPrice3 error \(error)")
-                            }
-                        }
-                    case .failure(let error):
-                        NSLog("getPrice2 error \(error)")
-                    }
+            getBalanceCoordinator.getBalance(for: session.account.address, contract: from.address) { [weak self] result in
+                guard let `self` = self else { return }
+                switch result {
+                case .success(let balance):
+                    self.balance = TokenBalance(token: self.from, value: balance)
+                case .failure:
+                    //TODO
+                    break
                 }
-            case .failure(let error):
-                NSLog("getPrice error \(error)")
             }
         }
     }

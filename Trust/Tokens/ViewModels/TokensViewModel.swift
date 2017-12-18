@@ -5,9 +5,11 @@ import UIKit
 
 struct TokensViewModel {
 
-    var tokens: [Token] = []
+    var tokens: [TokenObject] = []
 
-    init(tokens: [Token]) {
+    init(
+        tokens: [TokenObject]
+    ) {
         self.tokens = tokens
     }
 
@@ -31,7 +33,12 @@ struct TokensViewModel {
         return tokens.count
     }
 
-    func item(for row: Int, section: Int) -> Token {
+    func item(for row: Int, section: Int) -> TokenObject {
         return tokens[row]
+    }
+
+    func canDelete(for row: Int, section: Int) -> Bool {
+        let token = item(for: row, section: section)
+        return token.isCustom || token.valueBigInt.isZero
     }
 }

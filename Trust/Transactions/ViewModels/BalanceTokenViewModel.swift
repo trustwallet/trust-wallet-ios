@@ -4,18 +4,18 @@ import Foundation
 
 struct BalanceTokenViewModel: BalanceBaseViewModel {
 
-    let token: Token
+    let token: TokenObject
 
     var currencyAmount: String? {
         return nil
     }
 
     var amountFull: String {
-        return token.amount
+        return EtherNumberFormatter.full.string(from: token.valueBigInt, decimals: token.decimals)
     }
 
     var amountShort: String {
-        return token.amount
+        return EtherNumberFormatter.full.string(from: token.valueBigInt, decimals: token.decimals)
     }
 
     var symbol: String {

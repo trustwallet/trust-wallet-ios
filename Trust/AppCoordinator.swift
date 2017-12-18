@@ -48,6 +48,7 @@ class AppCoordinator: NSObject, Coordinator {
     }
 
     func showTransactions(for account: Account) {
+
         let coordinator = InCoordinator(
             navigationController: navigationController,
             account: account,
@@ -58,13 +59,8 @@ class AppCoordinator: NSObject, Coordinator {
         addCoordinator(coordinator)
     }
 
-    func performMigration() {
-
-    }
-
     func inializers() {
         let initializers: [Initializer] = [
-            MigrationInitializer(),
             CrashReportInitializer(),
             LokaliseInitializer(),
             SkipBackupFilesInitializer(),

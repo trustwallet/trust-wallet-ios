@@ -6,17 +6,11 @@ import RealmSwift
 class TransactionsStorage {
 
     let realm: Realm
-    let current: Account
-    let chainID: Int
 
     init(
-        configuration: Realm.Configuration = .defaultConfiguration,
-        current: Account,
-        chainID: Int
+        configuration: Realm.Configuration
     ) {
         self.realm = try! Realm(configuration: configuration)
-        self.current = current
-        self.chainID = chainID
     }
 
     var count: Int {
@@ -24,7 +18,9 @@ class TransactionsStorage {
     }
 
     var objects: [Transaction] {
-        return realm.objects(Transaction.self).sorted(byKeyPath: "date", ascending: true).filter { $0.owner == current.address.address && chainID == $0.chainID }
+        return realm.objects(Transaction.self)
+            .sorted(byKeyPath: "date", ascending: true)
+            .filter { !$0.id.isEmpty }
     }
 
     func get(forPrimaryKey: String) -> Transaction? {
@@ -47,13 +43,6 @@ class TransactionsStorage {
 
     func deleteAll() {
         let objects = realm.objects(Transaction.self)
-        try! realm.write {
-            realm.delete(objects)
-        }
-    }
-
-    func delete(for account: Account) {
-        let objects = realm.objects(Transaction.self).filter { $0.owner == account.address.address }
         try! realm.write {
             realm.delete(objects)
         }

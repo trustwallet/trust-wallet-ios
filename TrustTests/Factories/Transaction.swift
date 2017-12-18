@@ -7,7 +7,6 @@ extension Transaction {
     static func make(
         id: String = "0x1",
         owner: String = "0x1",
-        chainID: Int = -1,
         blockNumber: Int = 1,
         from: String = "0x1",
         to: String = "0x1",
@@ -23,7 +22,6 @@ extension Transaction {
         return Transaction(
             id: id,
             owner: owner,
-            chainID: chainID,
             blockNumber: blockNumber,
             from: from,
             to: to,

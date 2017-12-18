@@ -6,7 +6,6 @@ import RealmSwift
 class Transaction: Object {
     @objc dynamic var id: String = ""
     @objc dynamic var owner: String = ""
-    @objc dynamic var chainID: Int = 1
     @objc dynamic var blockNumber: Int = 0
     @objc dynamic var from = ""
     @objc dynamic var to = ""
@@ -22,7 +21,6 @@ class Transaction: Object {
     convenience init(
         id: String,
         owner: String,
-        chainID: Int,
         blockNumber: Int,
         from: String,
         to: String,
@@ -39,7 +37,6 @@ class Transaction: Object {
         self.init()
         self.id = id
         self.owner = owner
-        self.chainID = chainID
         self.blockNumber = blockNumber
         self.from = from
         self.to = to

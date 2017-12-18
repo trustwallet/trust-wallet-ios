@@ -33,22 +33,37 @@ struct TransactionCellViewModel {
     }
 
     private var operationTitle: String? {
-        return transaction.operation?.title
+        guard let operation = transaction.operation else { return .none }
+        switch operation.operationType {
+        case .tokenTransfer:
+            return String(
+                format: NSLocalizedString(
+                    "transaction.cell.tokenTransfer.title",
+                    value: "Transfer %@",
+                    comment: "Transfer token title. Example: Transfer OMG"
+                ),
+                operation.symbol ?? ""
+            )
+        case .unknown:
+            return .none
+        }
     }
 
     var title: String {
-        if let operationTitle = operationTitle { return operationTitle }
+        if let operationTitle = operationTitle {
+            return operationTitle
+        }
         switch transactionViewModel.state {
         case .completed:
             switch transaction.direction {
-            case .incoming: return "Received"
-            case .outgoing: return "Sent"
+            case .incoming: return NSLocalizedString("transaction.cell.received.title", value: "Received", comment: "")
+            case .outgoing: return NSLocalizedString("transaction.cell.sent.title", value: "Sent", comment: "")
             }
-        case .error: return "Error"
+        case .error: return NSLocalizedString("transaction.cell.error.title", value: "Error", comment: "")
         case .pending:
             switch transaction.direction {
-            case .incoming: return "Receiving"
-            case .outgoing: return "Sending"
+            case .incoming: return NSLocalizedString("transaction.cell.receiving.title", value: "Receiving", comment: "")
+            case .outgoing: return NSLocalizedString("transaction.cell.sending.title", value: "Sending", comment: "")
             }
         }
     }

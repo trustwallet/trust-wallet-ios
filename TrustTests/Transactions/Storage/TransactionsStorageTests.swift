@@ -13,29 +13,6 @@ class TransactionsStorageTests: XCTestCase {
         XCTAssertEqual(0, storage.count)
     }
 
-    func testTwoTransactionsDifferentChainID() {
-        let owner: Account = .make(address: Address(address: "0x3"))
-        let storage = FakeTransactionsStorage(owner, chainID: 1)
-
-        storage.add([.make(id: "0x1", owner: owner.address.address, chainID: 1)])
-        storage.add([.make(id: "0x2", owner: owner.address.address, chainID: 2)])
-
-        XCTAssertEqual(1, storage.count)
-        XCTAssertEqual(1, storage.objects.first?.chainID)
-    }
-
-    func testTwoTransactionsDifferentOwner() {
-        let owner: Account = .make(address: Address(address: "0x1"))
-        let storage = FakeTransactionsStorage(owner, chainID: 1)
-
-        storage.add([.make(id: "0x1", owner: owner.address.address, chainID: 1)])
-        storage.add([.make(id: "0x2", owner: "0x2", chainID: 1)])
-
-        XCTAssertEqual(1, storage.count)
-        XCTAssertEqual(1, storage.objects.first?.chainID)
-        XCTAssertEqual(owner.address.address, storage.objects.first?.owner)
-    }
-
     func testAddItem() {
         let storage = FakeTransactionsStorage()
         let item: Transaction = .make()
@@ -97,10 +74,6 @@ class TransactionsStorageTests: XCTestCase {
         ])
 
         XCTAssertEqual(2, storage.count)
-
-        storage.delete(for: owner)
-
-        XCTAssertEqual(0, storage.count)
     }
 
     func testDeleteAll() {

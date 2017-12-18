@@ -2,12 +2,15 @@
 
 import Foundation
 import UIKit
+import BigInt
 
 struct TokenViewCellViewModel {
 
-    let token: Token
+    private let shortFormatter = EtherNumberFormatter.short
 
-    init(token: Token) {
+    let token: TokenObject
+
+    init(token: TokenObject) {
         self.token = token
     }
 
@@ -16,7 +19,7 @@ struct TokenViewCellViewModel {
     }
 
     var amount: String {
-        return token.amount
+        return shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
     }
 
     var amountTextColor: UIColor {

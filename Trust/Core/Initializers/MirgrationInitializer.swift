@@ -5,11 +5,20 @@ import RealmSwift
 
 class MigrationInitializer: Initializer {
 
+    let account: Account
+    let chainID: Int
+
+    init(
+        account: Account, chainID: Int
+    ) {
+        self.account = account
+        self.chainID = chainID
+    }
+
     func perform() {
-        let config = Realm.Configuration(
-            schemaVersion: 18,
-            migrationBlock: { _, _ in }
-        )
+        var config = RealmConfiguration.configuration(for: account, chainID: chainID)
+        config.schemaVersion = 26
+        config.migrationBlock = { _, _ in }
         Realm.Configuration.defaultConfiguration = config
         let _ = try! Realm()
     }
