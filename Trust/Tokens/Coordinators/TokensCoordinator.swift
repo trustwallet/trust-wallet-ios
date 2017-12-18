@@ -48,7 +48,7 @@ class TokensCoordinator: Coordinator {
         navigationController.viewControllers = [rootViewController]
     }
 
-    func showPaymentFlow(for type: PaymentFlow, session: WalletSession) {
+    func showPaymentFlow(for type: PaymentFlow) {
         let coordinator = PaymentCoordinator(
             flow: type,
             session: session,
@@ -80,7 +80,7 @@ class TokensCoordinator: Coordinator {
 
 extension TokensCoordinator: TokensViewControllerDelegate {
     func didSelect(token: TokenObject, in viewController: UIViewController) {
-        showPaymentFlow(for: .send(type: .token(token)), session: session)
+        showPaymentFlow(for: .send(type: .token(token)))
     }
 
     func didDelete(token: TokenObject, in viewController: UIViewController) {

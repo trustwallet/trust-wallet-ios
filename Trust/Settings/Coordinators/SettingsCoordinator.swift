@@ -4,7 +4,6 @@ import Foundation
 import UIKit
 
 protocol SettingsCoordinatorDelegate: class {
-    func didCancel(in coordinator: SettingsCoordinator)
     func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator)
 }
 
@@ -17,6 +16,14 @@ class SettingsCoordinator: Coordinator {
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
     var coordinators: [Coordinator] = []
 
+    lazy var rootViewController: SettingsViewController = {
+        let controller = SettingsViewController()
+        controller.delegate = self
+        controller.modalPresentationStyle = .pageSheet
+        return controller
+    }()
+
+
     init(
         navigationController: UINavigationController = NavigationController(),
         keystore: Keystore
@@ -27,19 +34,7 @@ class SettingsCoordinator: Coordinator {
     }
 
     func start() {
-        navigationController.viewControllers = [makeSettingsController()]
-    }
-
-    private func makeSettingsController() -> SettingsViewController {
-        let controller = SettingsViewController()
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss))
-        controller.delegate = self
-        controller.modalPresentationStyle = .pageSheet
-        return controller
-    }
-
-    @objc func dismiss() {
-        delegate?.didCancel(in: self)
+        navigationController.viewControllers = [rootViewController]
     }
 }
 

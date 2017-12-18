@@ -4,20 +4,6 @@ import XCTest
 @testable import Trust
 
 class TransactionCoordinatorTests: XCTestCase {
-    
-    func testShowSettings() {
-        let coordinator = TransactionCoordinator(
-            session: .make(),
-            navigationController: FakeNavigationController(),
-            storage: FakeTransactionsStorage(),
-            keystore: FakeEtherKeystore()
-        )
-
-        coordinator.showSettings()
-
-        XCTAssertTrue(coordinator.coordinators.first is SettingsCoordinator)
-        XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is SettingsViewController)
-    }
 
     func testShowSendFlow() {
         let coordinator = TransactionCoordinator(
@@ -27,7 +13,7 @@ class TransactionCoordinatorTests: XCTestCase {
             keystore: FakeEtherKeystore()
         )
 
-        coordinator.showPaymentFlow(for: .send(type: .ether(destination: .none)), session: .make())
+        coordinator.showPaymentFlow(for: .send(type: .ether(destination: .none)))
 
         let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
 
@@ -43,7 +29,7 @@ class TransactionCoordinatorTests: XCTestCase {
             keystore: FakeEtherKeystore()
         )
 
-        coordinator.showPaymentFlow(for: .request, session: .make())
+        coordinator.showPaymentFlow(for: .request)
 
         let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
 

@@ -16,6 +16,9 @@ class InCoordinator: Coordinator {
     var keystore: Keystore
     var config: Config
     weak var delegate: InCoordinatorDelegate?
+    var transactionCoordinator: TransactionCoordinator? {
+        return self.coordinators.flatMap { $0 as? TransactionCoordinator }.first
+    }
 
     init(
         navigationController: UINavigationController = NavigationController(),
@@ -31,7 +34,6 @@ class InCoordinator: Coordinator {
 
     func start() {
         showTabBar(for: account)
-        //Account(address: Address(address: "0x8e6cdfacdae218ae312ad24cb1e8cf34bb9f6b61"))
         checkDevice()
     }
 
@@ -85,6 +87,17 @@ class InCoordinator: Coordinator {
             tabBarController.viewControllers?.append(exchangeCoordinator.navigationController)
         }
 
+        let settingsCoordinator = SettingsCoordinator(keystore: keystore)
+        settingsCoordinator.rootViewController.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("settings.navigation.title", value: "Settings", comment: ""),
+            image: R.image.settings_icon(),
+            selectedImage: nil
+        )
+        settingsCoordinator.delegate = self
+        settingsCoordinator.start()
+        addCoordinator(settingsCoordinator)
+        tabBarController.viewControllers?.append(settingsCoordinator.navigationController)
+
         navigationController.setViewControllers(
             [tabBarController],
             animated: false
@@ -98,10 +111,8 @@ class InCoordinator: Coordinator {
     @objc func activateDebug() {
         config.isDebugEnabled = !config.isDebugEnabled
 
-        let coordinators: [TransactionCoordinator] = self.coordinators.flatMap { $0 as? TransactionCoordinator }
-        if let coordinator = coordinators.first {
-            restart(for: account, in: coordinator)
-        }
+        guard let transactionCoordinator = transactionCoordinator else { return }
+        restart(for: account, in: transactionCoordinator)
     }
 
     func restart(for account: Account, in coordinator: TransactionCoordinator) {
@@ -137,5 +148,26 @@ extension InCoordinator: TransactionCoordinatorDelegate {
 
     func didUpdateAccounts(in coordinator: TransactionCoordinator) {
         delegate?.didUpdateAccounts(in: self)
+    }
+}
+
+extension InCoordinator: SettingsCoordinatorDelegate {
+    func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator) {
+        switch action {
+        case .RPCServer:
+            removeCoordinator(coordinator)
+            guard let transactionCoordinator = transactionCoordinator else { return }
+            restart(for: account, in: transactionCoordinator)
+        case .pushNotifications:
+            break
+        case .donate(let address):
+            guard let transactionCoordinator = transactionCoordinator else { return }
+            transactionCoordinator.showPaymentFlow(for: .send(type: .ether(destination: address)))
+        }
+    }
+
+    func didCancel(in coordinator: SettingsCoordinator) {
+        removeCoordinator(coordinator)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
     }
 }

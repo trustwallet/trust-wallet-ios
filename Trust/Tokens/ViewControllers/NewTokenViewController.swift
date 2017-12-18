@@ -45,7 +45,7 @@ class NewTokenViewController: FormViewController {
             <<< AppFormAppearance.textFieldFloat(tag: Values.contract) {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
-                $0.title = NSLocalizedString("tokens.contract.textfield.title", value: "Contract address. Ex: 0x...", comment: "")
+                $0.title = NSLocalizedString("tokens.contract.textfield.title", value: "Contract address", comment: "")
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.name) {
@@ -63,7 +63,7 @@ class NewTokenViewController: FormViewController {
             <<< AppFormAppearance.textFieldFloat(tag: Values.decimals) {
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
-                $0.title = NSLocalizedString("tokens.decimals.textfield.title", value: "Decimals. Ex: 18", comment: "")
+                $0.title = NSLocalizedString("tokens.decimals.textfield.title", value: "Decimals", comment: "")
             }.cellUpdate { cell, _ in
                 cell.textField.keyboardType = .decimalPad
             }

@@ -59,31 +59,19 @@ class TransactionCoordinator: Coordinator {
             viewModel: viewModel
         )
 
-        let accountsBarButtonItem = UIBarButtonItem(image: R.image.accountsSwitch(), landscapeImagePhone: R.image.accountsSwitch(), style: .done, target: self, action: #selector(showAccounts))
         let rightItems: [UIBarButtonItem] = {
             switch viewModel.isBuyActionAvailable {
             case true:
                 return [
-                    accountsBarButtonItem,
                     UIBarButtonItem(image: R.image.deposit(), landscapeImagePhone: R.image.deposit(), style: .done, target: self, action: #selector(deposit)),
                 ]
-            case false:
-                return [accountsBarButtonItem]
+            case false: return []
             }
         }()
-
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.settings_icon(), landscapeImagePhone: R.image.settings_icon(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showSettings))
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.accountsSwitch(), landscapeImagePhone: R.image.accountsSwitch(), style: .done, target: self, action: #selector(showAccounts))
         controller.navigationItem.rightBarButtonItems = rightItems
         controller.delegate = self
         return controller
-    }
-
-    @objc func showSettings() {
-        let coordinator = SettingsCoordinator(keystore: keystore)
-        coordinator.delegate = self
-        coordinator.start()
-        addCoordinator(coordinator)
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
     func showTransaction(_ transaction: Transaction) {
@@ -101,7 +89,7 @@ class TransactionCoordinator: Coordinator {
         }
     }
 
-    func showPaymentFlow(for type: PaymentFlow, session: WalletSession) {
+    func showPaymentFlow(for type: PaymentFlow) {
         let coordinator = PaymentCoordinator(
             flow: type,
             session: session,
@@ -158,35 +146,13 @@ class TransactionCoordinator: Coordinator {
     }
 }
 
-extension TransactionCoordinator: SettingsCoordinatorDelegate {
-    func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator) {
-        switch action {
-        case .RPCServer:
-            removeCoordinator(coordinator)
-            restart(for: session.account)
-        case .pushNotifications:
-            break
-        case .donate(let address):
-            coordinator.navigationController.dismiss(animated: true) {
-                self.showPaymentFlow(for: .send(type: .ether(destination: address)), session: self.session)
-            }
-            removeCoordinator(coordinator)
-        }
-    }
-
-    func didCancel(in coordinator: SettingsCoordinator) {
-        removeCoordinator(coordinator)
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-    }
-}
-
 extension TransactionCoordinator: TransactionsViewControllerDelegate {
     func didPressSend(in viewController: TransactionsViewController) {
-        showPaymentFlow(for: .send(type: .ether(destination: .none)), session: session)
+        showPaymentFlow(for: .send(type: .ether(destination: .none)))
     }
 
     func didPressRequest(in viewController: TransactionsViewController) {
-        showPaymentFlow(for: .request, session: session)
+        showPaymentFlow(for: .request)
     }
 
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
