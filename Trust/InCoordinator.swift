@@ -69,6 +69,18 @@ class InCoordinator: Coordinator {
             }
         }
 
+        if inCoordinatorViewModel.browserAvailable {
+            let coordinator = BrowserCoordinator()
+            coordinator.start()
+            coordinator.rootViewController.tabBarItem = UITabBarItem(
+                title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
+                image: R.image.coins(),
+                selectedImage: nil
+            )
+            addCoordinator(coordinator)
+            tabBarController.viewControllers?.insert(coordinator.navigationController, at: 0)
+        }
+
         if inCoordinatorViewModel.tokensAvailable {
             let tokensStorage = TokensDataStore(
                 session: session,
