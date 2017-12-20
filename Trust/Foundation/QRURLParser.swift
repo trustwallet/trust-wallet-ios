@@ -9,18 +9,18 @@ struct ParserResult {
 }
 
 func parseParamsFromParamParts(paramParts: [String]) -> [String: String] {
-    if (paramParts.count == 0) {
+    if paramParts.isEmpty {
         return [:]
     }
-    var params = [String:String]()
-    var i = 0;
+    var params = [String: String]()
+    var i = 0
     while i < paramParts.count {
         let tokenizedParamParts = paramParts[i].components(separatedBy: "=")
         if tokenizedParamParts.count < 2 {
             return [:]
         }
         params[tokenizedParamParts[0]] = params[tokenizedParamParts[1]]
-        i += 1;
+        i += 1
     }
     return params
 }
