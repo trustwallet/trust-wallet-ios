@@ -17,9 +17,9 @@ func parseParamsFromParamParts(paramParts: [String]) -> [String: String] {
     while i < paramParts.count {
         let tokenizedParamParts = paramParts[i].components(separatedBy: "=")
         if tokenizedParamParts.count < 2 {
-            return [:]
+            break
         }
-        params[tokenizedParamParts[0]] = params[tokenizedParamParts[1]]
+        params[tokenizedParamParts[0]] = tokenizedParamParts[1]
         i += 1
     }
     return params
@@ -38,7 +38,7 @@ struct QRURLParser {
         }
 
         if parts.count == 2, let address = QRURLParser.getAddress(from: parts.last), CryptoAddressValidator.isValidAddress(address) {
-            let paramParts = parts[1].components(separatedBy: "?")
+            let paramParts = Array(parts[1].components(separatedBy: "?")[1...])
             let params = parseParamsFromParamParts(paramParts: paramParts)
             return ParserResult(
                 protocolName: parts.first ?? "",
