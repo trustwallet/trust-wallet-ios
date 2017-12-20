@@ -223,9 +223,9 @@ open class EtherKeystore: Keystore {
         let transaction = GethNewTransaction(
             numericCast(signTransaction.nonce),
             gethAddress,
-            signTransaction.amount,
-            signTransaction.speed.gasLimit.gethBigInt,
-            signTransaction.speed.gasPrice.gethBigInt,
+            signTransaction.value.gethBigInt,
+            signTransaction.gasLimit.gethBigInt,
+            signTransaction.gasPrice.gethBigInt,
             signTransaction.data
         )
         let password = getPassword(for: signTransaction.account)
@@ -242,7 +242,7 @@ open class EtherKeystore: Keystore {
             let signedTransaction = try gethKeyStorage.signTx(
                 gethAccount,
                 tx: transaction,
-                chainID: signTransaction.chainID
+                chainID: GethBigInt.from(int: signTransaction.chainID)
             )
             let rlp = try signedTransaction.encodeRLP()
             return .success(rlp)

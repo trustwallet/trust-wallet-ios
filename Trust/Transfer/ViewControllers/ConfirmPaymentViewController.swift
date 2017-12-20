@@ -13,7 +13,7 @@ protocol ConfirmPaymentViewControllerDelegate: class {
 class ConfirmPaymentViewController: UIViewController {
 
     private let keystore: Keystore
-    let transaction: UnconfirmedTransaction
+    //let transaction: UnconfirmedTransaction
     let session: WalletSession
     let stackViewController = StackViewController()
     lazy var sendTransactionCoordinator = {
@@ -27,114 +27,75 @@ class ConfirmPaymentViewController: UIViewController {
         return button
     }()
     weak var delegate: ConfirmPaymentViewControllerDelegate?
-
-    var configuration: TransactionConfiguration {
-        didSet {
-            reloadView()
-        }
-    }
-
-    var viewModel: ConfirmPaymentViewModel {
-        return ConfirmPaymentViewModel(
-            transaction: transaction,
-            currentBalance: session.balance,
-            configuration: configuration
-        )
-    }
-
-    private lazy var transactionSpeed: TransactionSpeed = {
-        return .regular
-    }()
-
-    private lazy var initialConfiguration: TransactionConfiguration = {
-        switch transaction.transferType {
-        case .ether:
-            return TransactionConfiguration(
-                speed: TransactionSpeed.custom(
-                    gasPrice: self.gasPrice ?? transactionSpeed.gasPrice,
-                    gasLimit: 90000
-                )
-            )
-        case .token:
-            return TransactionConfiguration(
-                speed: TransactionSpeed.custom(
-                    gasPrice: self.gasPrice ?? transactionSpeed.gasPrice,
-                    gasLimit: 144_000
-                )
-            )
-        case .exchange:
-            return TransactionConfiguration(
-                speed: TransactionSpeed.custom(
-                    gasPrice: self.gasPrice ?? transactionSpeed.gasPrice,
-                    gasLimit: 300_000
-                )
-            )
-        }
-    }()
-
-    private let gasPrice: BigInt?
+    let viewModel = ConfirmPaymentViewModel()
+    var configurator: TransactionConfigurator
 
     init(
         session: WalletSession,
         keystore: Keystore,
-        transaction: UnconfirmedTransaction,
-        gasPrice: BigInt?
+        configurator: TransactionConfigurator
     ) {
         self.session = session
         self.keystore = keystore
-        self.transaction = transaction
-        self.configuration = TransactionConfiguration()
-        self.gasPrice = gasPrice
+        self.configurator = configurator
 
         super.init(nibName: nil, bundle: nil)
 
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.settings_icon(), style: .plain, target: self, action: #selector(edit))
         view.backgroundColor = viewModel.backgroundColor
         stackViewController.view.backgroundColor = viewModel.backgroundColor
-
         navigationItem.title = viewModel.title
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
 
-        reloadView()
-
-        defer {
-            configuration = initialConfiguration
+        configurator.load { [unowned self] result in
+            switch result {
+            case .success:
+                self.reloadView()
+            case .failure(let error):
+                self.displayError(error: error)
+            }
         }
     }
 
-    private func reloadView() {
+    func configure(for detailsViewModel: ConfirmPaymentDetailsViewModel) {
         stackViewController.items.forEach { stackViewController.removeItem($0) }
 
         let header = TransactionHeaderView()
         header.translatesAutoresizingMaskIntoConstraints = false
-        header.amountLabel.attributedText = viewModel.amountAttributedString
+        header.amountLabel.attributedText = detailsViewModel.amountAttributedString
 
         let items: [UIView] = [
             .spacer(),
             header,
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(
-                title: viewModel.paymentFromTitle,
+                title: detailsViewModel.paymentFromTitle,
                 subTitle: session.account.address.address
             ),
             TransactionAppearance.item(
-                title: viewModel.paymentToTitle,
-                subTitle: viewModel.paymentToText
+                title: detailsViewModel.paymentToTitle,
+                subTitle: detailsViewModel.paymentToText
             ),
             TransactionAppearance.item(
-                title: viewModel.gasLimitTitle,
-                subTitle: viewModel.gasLimitText
+                title: detailsViewModel.gasLimitTitle,
+                subTitle: detailsViewModel.gasLimitText
             ) { [unowned self] _, _, _ in
                 self.edit()
             },
             TransactionAppearance.item(
-                title: viewModel.gasPriceTitle,
-                subTitle: viewModel.gasPriceText
+                title: detailsViewModel.gasPriceTitle,
+                subTitle: detailsViewModel.gasPriceText
             ) { [unowned self] _, _, _ in
                 self.edit()
             },
             TransactionAppearance.item(
-                title: viewModel.feeTitle,
-                subTitle: viewModel.feeText
+                title: detailsViewModel.feeTitle,
+                subTitle: detailsViewModel.feeText
+            ) { [unowned self] _, _, _ in
+                self.edit()
+            },
+            TransactionAppearance.item(
+                title: detailsViewModel.dataTitle,
+                subTitle: detailsViewModel.dataText
             ) { [unowned self] _, _, _ in
                 self.edit()
             },
@@ -157,79 +118,49 @@ class ConfirmPaymentViewController: UIViewController {
         displayChildViewController(viewController: stackViewController)
     }
 
+    private func reloadView() {
+        let viewModel = ConfirmPaymentDetailsViewModel(
+            transaction: configurator.previewTransaction(),
+            currentBalance: self.session.balance
+        )
+        self.configure(for: viewModel)
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     @objc func edit() {
         let controller = ConfigureTransactionViewController(
-            configuration: configuration,
+            configuration: configurator.configuration,
+            transferType: configurator.transaction.transferType,
             config: session.config
         )
         controller.delegate = self
-        navigationController?.pushViewController(controller, animated: true)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 
     @objc func send() {
         self.displayLoading()
 
-        let amount = viewModel.transaction.value
-
-        switch transaction.transferType {
-        case .ether:
-            self.sendTransactionCoordinator.send(
-                address: transaction.address,
-                value: amount,
-                configuration: self.configuration
-            ) { [weak self] result in
-                guard let `self` = self else { return }
-                switch result {
-                case .success(let transaction):
-                    self.delegate?.didCompleted(transaction: transaction, in: self)
-                case .failure(let error):
-                    self.displayError(error: error)
-                }
-                self.hideLoading()
+        let transaction = configurator.signTransaction()
+        self.sendTransactionCoordinator.send(transactions: [transaction]) { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let transaction):
+                self.delegate?.didCompleted(transaction: transaction, in: self)
+            case .failure(let error):
+                self.displayError(error: error)
             }
-        case .token(let token):
-            self.sendTransactionCoordinator.send(
-                contract: token.address,
-                to: transaction.address,
-                amount: amount,
-                configuration: self.configuration
-            ) { [weak self] result in
-                guard let `self` = self else { return }
-                switch result {
-                case .success(let transaction):
-                    self.delegate?.didCompleted(transaction: transaction, in: self)
-                case .failure(let error):
-                    self.displayError(error: error)
-                }
-                self.hideLoading()
-            }
-        case .exchange(let from, let to):
-            self.sendTransactionCoordinator.trade(
-                from: from,
-                to: to,
-                configuration: self.configuration,
-                completion: { [weak self] result in
-                    guard let `self` = self else { return }
-                    switch result {
-                    case .success(let transaction):
-                        self.delegate?.didCompleted(transaction: transaction, in: self)
-                    case .failure(let error):
-                        self.displayError(error: error)
-                    }
-                    self.hideLoading()
-                }
-            )
+            self.hideLoading()
         }
     }
 }
 
 extension ConfirmPaymentViewController: ConfigureTransactionViewControllerDelegate {
     func didEdit(configuration: TransactionConfiguration, in viewController: ConfigureTransactionViewController) {
-        self.configuration = configuration
+        configurator.update(configuration: configuration)
+        reloadView()
         navigationController?.popViewController(animated: true)
     }
 }

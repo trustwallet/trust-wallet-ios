@@ -166,7 +166,10 @@ class SendViewController: FormViewController {
         let transaction = UnconfirmedTransaction(
             transferType: transferType,
             value: value,
-            address: address
+            address: address,
+            account: session.account,
+            chainID: session.config.chainID,
+            data: Data()
         )
         self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, gasPrice: gasPrice, in: self)
     }
