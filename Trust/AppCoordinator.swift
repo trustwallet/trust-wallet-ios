@@ -43,6 +43,8 @@ class AppCoordinator: NSObject, Coordinator {
 
         if keystore.hasAccounts {
             showTransactions(for: keystore.recentlyUsedAccount ?? keystore.accounts.first!)
+        } else {
+            resetToWelcomeScreen()
         }
         pushNotificationRegistrar.reRegister()
     }
