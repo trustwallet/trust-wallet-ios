@@ -15,7 +15,6 @@ before_install:
   - pod repo update master
 script:
   - set -o pipefail
-  - pod install
   - fastlane tests
 
 notifications:
