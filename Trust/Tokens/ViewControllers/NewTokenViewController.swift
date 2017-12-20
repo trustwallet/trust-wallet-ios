@@ -41,21 +41,20 @@ class NewTokenViewController: FormViewController {
             <<< AppFormAppearance.textFieldFloat(tag: Values.contract) {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
-                $0.title = NSLocalizedString("tokens.contract.textfield.title", value: "Address", comment: "")
+                $0.title = NSLocalizedString("Contract Address", value: "Contract Address", comment: "")
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.symbol) {
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
-                $0.title = NSLocalizedString("tokens.symbol.textfield.title", value: "Token Symbol", comment: "")
+                $0.title = NSLocalizedString("Symbol", value: "Symbol", comment: "")
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.decimals) {
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
-                $0.title = NSLocalizedString("tokens.decimals.textfield.title", value: "Decimals", comment: "")
-            }.cellUpdate { cell, _ in
-                cell.textField.keyboardType = .decimalPad
+                $0.title = NSLocalizedString("Decimals", value: "Decimals", comment: "")
+                $0.cell.textField.keyboardType = .decimalPad
             }
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(addToken))

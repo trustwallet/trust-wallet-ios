@@ -71,8 +71,12 @@ struct TransactionsViewModel {
     func titleForHeader(in section: Int) -> String {
         let value = items[section].date
         let date = TransactionsViewModel.formatter.date(from: value)!
-        if NSCalendar.current.isDateInToday(date) { return "Today" }
-        if NSCalendar.current.isDateInYesterday(date) { return "Yesterday" }
+        if NSCalendar.current.isDateInToday(date) {
+            return NSLocalizedString("Today", value: "Today", comment: "")
+        }
+        if NSCalendar.current.isDateInYesterday(date) {
+            return NSLocalizedString("Yesterday", value: "Yesterday", comment: "")
+        }
         return value
     }
 

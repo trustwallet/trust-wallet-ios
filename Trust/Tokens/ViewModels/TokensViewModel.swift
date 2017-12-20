@@ -77,6 +77,6 @@ struct TokensViewModel {
 
     func canDelete(for row: Int, section: Int) -> Bool {
         let token = item(for: row, section: section)
-        return token.isCustom || token.valueBigInt.isZero
+        return token.isCustom
     }
 }

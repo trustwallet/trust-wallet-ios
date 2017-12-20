@@ -16,10 +16,14 @@ struct InCoordinatorViewModel {
         }
     }
 
+    var browserAvailable: Bool {
+        return isDebug
+    }
+
     var exchangeAvailable: Bool {
         switch config.server {
         case .main, .ropsten, .poa, .poaTest: return false
-        case .kovan: return config.isDebugEnabled
+        case .kovan: return false //config.isDebugEnabled
         }
     }
 

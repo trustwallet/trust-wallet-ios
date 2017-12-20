@@ -4,6 +4,7 @@ import XCTest
 @testable import Trust
 import KeychainSwift
 import Geth
+import BigInt
 
 class EtherKeystoreTests: XCTestCase {
     
@@ -170,13 +171,14 @@ class EtherKeystoreTests: XCTestCase {
         let account = keystore.createAccout(password: "test")
 
         let signTransaction = SignTransaction(
-            amount: GethNewBigInt(1),
+            value: BigInt(1),
             account: account,
             address: .make(address: "0x123f681646d4a755815f9cb19e1acc8565a0c2ac"),
             nonce: 0,
-            speed: .regular,
             data: Data(),
-            chainID: GethNewBigInt(1)
+            gasPrice: BigInt(1),
+            gasLimit: BigInt(1),
+            chainID: 1
         )
 
         let signedTransaction = keystore.signTransaction(signTransaction)

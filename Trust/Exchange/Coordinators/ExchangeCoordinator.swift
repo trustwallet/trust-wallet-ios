@@ -41,14 +41,22 @@ extension ExchangeCoordinator: ExchangeViewControllerDelegate {
         let transaction = UnconfirmedTransaction(
             transferType: .exchange(from: from, to: to),
             value: from.amount,
-            address: to.token.address // TODO FIX IT
+            address: to.token.address,
+            account: session.account,
+            chainID: session.config.chainID,
+            data: Data()
+        )
+
+        let configurator = TransactionConfigurator(
+            session: session,
+            transaction: transaction,
+            gasPrice: .none
         )
 
         let controller = ConfirmPaymentViewController(
             session: session,
             keystore: keystore,
-            transaction: transaction,
-            gasPrice: .none
+            configurator: configurator
         )
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)
