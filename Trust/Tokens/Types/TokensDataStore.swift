@@ -44,7 +44,7 @@ class TokensDataStore {
     var enabledObject: [TokenObject] {
         return realm.objects(TokenObject.self)
             .sorted(byKeyPath: "contract", ascending: true)
-            .filter { $0.isEnabled }
+            .filter { !$0.isDisabled }
     }
 
     func update(tokens: [Token]) {
@@ -182,7 +182,7 @@ class TokensDataStore {
 
     enum TokenUpdate {
         case value(BigInt)
-        case isEnabled(Bool)
+        case isDisabled(Bool)
     }
 
     func update(token: TokenObject, action: TokenUpdate) {
@@ -190,8 +190,8 @@ class TokensDataStore {
         switch action {
         case .value(let value):
             token.value = value.description
-        case .isEnabled(let value):
-            token.isEnabled = value
+        case .isDisabled(let value):
+            token.isDisabled = value
         }
         try! realm.commitWrite()
     }

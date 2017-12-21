@@ -22,6 +22,6 @@ struct EditTokenTableCellViewModel {
     }
 
     var isEnabled: Bool {
-        return token.isEnabled
+        return !token.isDisabled
     }
 }
