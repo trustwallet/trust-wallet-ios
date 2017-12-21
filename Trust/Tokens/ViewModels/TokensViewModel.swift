@@ -79,4 +79,16 @@ struct TokensViewModel {
         let token = item(for: row, section: section)
         return token.isCustom
     }
+
+    var footerTitle: String {
+        return NSLocalizedString("tokens.footer.label.title", value: "If you have missing tokens, feel free to add them to see the balance", comment: "")
+    }
+
+    var footerTextColor: UIColor {
+        return Colors.black
+    }
+
+    var footerTextFont: UIFont {
+        return UIFont.systemFont(ofSize: 14, weight: .light)
+    }
 }
