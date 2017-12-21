@@ -12,7 +12,7 @@ class InCoordinator: Coordinator {
 
     let navigationController: UINavigationController
     var coordinators: [Coordinator] = []
-    let account: Account
+    let initialAccount: Account
     var keystore: Keystore
     var config: Config
     weak var delegate: InCoordinatorDelegate?
@@ -27,13 +27,13 @@ class InCoordinator: Coordinator {
         config: Config = Config()
     ) {
         self.navigationController = navigationController
-        self.account = account
+        self.initialAccount = account
         self.keystore = keystore
         self.config = config
     }
 
     func start() {
-        showTabBar(for: account)
+        showTabBar(for: initialAccount)
         checkDevice()
     }
 
@@ -130,7 +130,7 @@ class InCoordinator: Coordinator {
         config.isDebugEnabled = !config.isDebugEnabled
 
         guard let transactionCoordinator = transactionCoordinator else { return }
-        restart(for: account, in: transactionCoordinator)
+        restart(for: initialAccount, in: transactionCoordinator)
     }
 
     func restart(for account: Account, in coordinator: TransactionCoordinator) {
@@ -175,7 +175,7 @@ extension InCoordinator: SettingsCoordinatorDelegate {
         case .RPCServer:
             removeCoordinator(coordinator)
             guard let transactionCoordinator = transactionCoordinator else { return }
-            restart(for: account, in: transactionCoordinator)
+            restart(for: transactionCoordinator.session.account, in: transactionCoordinator)
         case .pushNotifications:
             break
         case .donate(let address):
