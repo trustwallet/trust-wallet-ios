@@ -12,7 +12,6 @@ before_install:
   - gem install xcpretty -N
   - brew update
   - brew install swiftlint || true
-  - pod repo update master
 script:
   - set -o pipefail
   - fastlane tests
