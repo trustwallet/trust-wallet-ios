@@ -4,6 +4,6 @@ import Foundation
 
 struct NewTokenViewModel {
     var title: String {
-        return NSLocalizedString("tokens.newtoken.navigation.title", value: "Add Token", comment: "")
+        return NSLocalizedString("tokens.newtoken.navigation.title", value: "Add Custom Token", comment: "")
     }
 }

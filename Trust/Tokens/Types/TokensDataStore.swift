@@ -41,6 +41,12 @@ class TokensDataStore {
             .filter { !$0.contract.isEmpty }
     }
 
+    var enabledObject: [TokenObject] {
+        return realm.objects(TokenObject.self)
+            .sorted(byKeyPath: "contract", ascending: true)
+            .filter { $0.isEnabled }
+    }
+
     func update(tokens: [Token]) {
         realm.beginWrite()
         for token in tokens {
@@ -96,7 +102,7 @@ class TokensDataStore {
                 guard let `self` = self else { return }
                 switch result {
                 case .success(let balance):
-                    self.update(token: tokenObject, value: balance)
+                    self.update(token: tokenObject, action: .value(balance))
                 case .failure(let error):
                     self.handleError(error: error)
                 }
@@ -119,7 +125,7 @@ class TokensDataStore {
             type: .ether
         )
 
-        var results = objects
+        var results = enabledObject
         results.insert(balance, at: 0)
 
         delegate?.didUpdate(result: .success(
@@ -174,9 +180,19 @@ class TokensDataStore {
         try! realm.commitWrite()
     }
 
-    func update(token: TokenObject, value: BigInt) {
+    enum TokenUpdate {
+        case value(BigInt)
+        case isEnabled(Bool)
+    }
+
+    func update(token: TokenObject, action: TokenUpdate) {
         realm.beginWrite()
-        token.value = value.description
+        switch action {
+        case .value(let value):
+            token.value = value.description
+        case .isEnabled(let value):
+            token.isEnabled = value
+        }
         try! realm.commitWrite()
     }
 

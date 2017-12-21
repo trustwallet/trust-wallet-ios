@@ -18,6 +18,7 @@ class TokensCoordinator: Coordinator {
         )
         controller.delegate = self
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
         return controller
     }()
 
@@ -73,6 +74,14 @@ class TokensCoordinator: Coordinator {
 
     @objc func dismiss() {
         navigationController.dismiss(animated: true, completion: nil)
+    }
+
+    @objc func edit() {
+        let controller = EditTokensViewController(
+            session: session,
+            storage: storage
+        )
+        navigationController.pushViewController(controller, animated: true)
     }
 }
 
