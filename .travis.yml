@@ -12,11 +12,12 @@ cache:
    cocoapods
 
 before_install:
+  - bundle install
   - gem install --no-rdoc --no-ri cocoapods
   - gem install --no-rdoc --no-ri xcpretty -N
   - brew update
   - brew install swiftlint || true
-  
+
 script:
   - set -o pipefail
   - fastlane tests
