@@ -136,7 +136,7 @@ class InCoordinator: Coordinator {
     func restart(for account: Account, in coordinator: TransactionCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         coordinator.stop()
-        removeCoordinator(coordinator)
+        removeAllCoordinators()
         showTabBar(for: account)
     }
 
