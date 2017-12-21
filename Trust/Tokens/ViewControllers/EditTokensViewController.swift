@@ -11,6 +11,10 @@ class EditTokensViewController: UITableViewController {
     let searchController = UISearchController(searchResultsController: nil)
     var filteredTokens = [TokenObject]()
 
+    var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+
     init(
         session: WalletSession,
         storage: TokensDataStore
@@ -38,7 +42,7 @@ class EditTokensViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering() {
+        if isFiltering {
             return filteredTokens.count
         }
         return storage.objects.count
@@ -47,18 +51,12 @@ class EditTokensViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.editTokenTableViewCell.name, for: indexPath) as! EditTokenTableViewCell
         cell.delegate = self
-        let token: TokenObject
-        if isFiltering() {
-            token = filteredTokens[indexPath.row]
-        } else {
-            token = storage.objects[indexPath.row]
-        }
-        cell.viewModel = EditTokenTableCellViewModel(token: token)
+        cell.viewModel = EditTokenTableCellViewModel(token: token(for: indexPath))
         return cell
     }
 
     func token(for indexPath: IndexPath) -> TokenObject {
-        if isFiltering() {
+        if isFiltering {
             return filteredTokens[indexPath.row]
         }
         return storage.objects[indexPath.row]
@@ -72,11 +70,6 @@ class EditTokensViewController: UITableViewController {
 
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
-    }
-
-    func isFiltering() -> Bool {
-        let searchBarScopeIsFiltering = searchController.searchBar.selectedScopeButtonIndex != 0
-        return searchController.isActive && (!searchBarIsEmpty() || searchBarScopeIsFiltering)
     }
 
     required init?(coder aDecoder: NSCoder) {
