@@ -19,6 +19,8 @@ platform :ios do
   before_all do
   end
 
+  cocoapods(use_bundle_exec: false)
+
   def run_localizer
     sh "cd .. && sh scripts/localizer.sh Trust " << ENV['LOKALISE_API_TOKEN']
   end
