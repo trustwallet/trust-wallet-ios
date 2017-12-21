@@ -14,7 +14,7 @@ struct EditTokenTableCellViewModel {
     }
 
     var title: String {
-        return token.name
+        return token.name.isEmpty ? token.symbol : token.name
     }
 
     var image: UIImage? {

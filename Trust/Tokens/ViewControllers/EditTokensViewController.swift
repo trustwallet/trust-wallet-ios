@@ -12,7 +12,10 @@ class EditTokensViewController: UITableViewController {
     var filteredTokens = [TokenObject]()
 
     var isFiltering: Bool {
-        return searchController.isActive && !searchBarIsEmpty()
+        return searchController.isActive && !searchBarIsEmpty
+    }
+    var searchBarIsEmpty: Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
     }
 
     init(
@@ -62,14 +65,10 @@ class EditTokensViewController: UITableViewController {
         return storage.objects[indexPath.row]
     }
 
-    func filterContentForSearchText(_ searchText: String?) {
+    func filter(for searchText: String?) {
         let text = searchText?.lowercased() ?? ""
-        filteredTokens = storage.objects.filter { $0.name.lowercased().contains(text) }
+        filteredTokens = storage.objects.filter { $0.name.lowercased().contains(text) || $0.symbol.lowercased().contains(text) }
         tableView.reloadData()
-    }
-
-    func searchBarIsEmpty() -> Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -88,12 +87,12 @@ extension EditTokensViewController: EditTokenTableViewCellDelegate {
 
 extension EditTokensViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        filterContentForSearchText(searchBar.text)
+        filter(for: searchBar.text)
     }
 }
 
 extension EditTokensViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text)
+        filter(for: searchController.searchBar.text)
     }
 }
