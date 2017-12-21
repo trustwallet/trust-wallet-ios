@@ -19,8 +19,6 @@ platform :ios do
   before_all do
   end
 
-  cocoapods(use_bundle_exec: false)
-
   def run_localizer
     sh "cd .. && sh scripts/localizer.sh Trust " << ENV['LOKALISE_API_TOKEN']
   end
@@ -72,7 +70,7 @@ platform :ios do
    )
   end
 
-  lane :tests do 
+  lane :tests do
     cocoapods(use_bundle_exec: false)
     run_tests(
       workspace: "Trust.xcworkspace",

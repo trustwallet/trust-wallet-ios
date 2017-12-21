@@ -9,12 +9,9 @@ env:
   - LC_CTYPE=en_US.UTF-8 LANG=en_US.UTF-8
 
 cache:
-   cocoapods
+   bundler
 
 before_install:
-  - gem install bundler
-  - gem install --no-rdoc --no-ri cocoapods
-  - gem install --no-rdoc --no-ri xcpretty -N
   - brew update
   - brew install swiftlint || true
 
