@@ -152,7 +152,7 @@ class TokensDataStore {
     }
 
     func updatePrices() {
-        provider.request(.prices(limit: 150)) { result in
+        provider.request(.prices(limit: 0)) { result in
             guard  case .success(let response) = result else { return }
             do {
                 let tickers = try response.map([CoinTicker].self)

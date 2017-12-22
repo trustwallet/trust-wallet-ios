@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class TokenViewCell: UITableViewCell {
 
@@ -78,8 +79,8 @@ class TokenViewCell: UITableViewCell {
         currencyAmountLabel.text = viewModel.currencyAmount
         currencyAmountLabel.textColor = viewModel.currencyAmountTextColor
         currencyAmountLabel.font = viewModel.currencyAmountFont
-
-        symbolImageView.image = viewModel.image
+        
+        symbolImageView.kf.setImage(with: viewModel.imageUrl, placeholder: viewModel.placeHolder)
 
         backgroundColor = viewModel.backgroundColor
     }
