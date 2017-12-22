@@ -33,7 +33,7 @@ class ExchangeRateCoordinator: NSObject {
             rates: [
                 Rate(
                     code: ticker.symbol,
-                    price: Double(ticker.price_usd) ?? 0
+                    price: Double(ticker.usdPrice) ?? 0
                 ),
             ]
         )

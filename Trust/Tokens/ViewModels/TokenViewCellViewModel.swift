@@ -39,7 +39,8 @@ struct TokenViewCellViewModel {
         let noResult = "-"
         guard let ticker = ticker else { return noResult }
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
-        let amount = tokenValue * ticker.priceUSD
+        let priceInUsd = Double(ticker.usdPrice) ?? 0
+        let amount = tokenValue * priceInUsd
         guard amount > 0 else { return noResult }
         return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
     }
