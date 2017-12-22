@@ -65,7 +65,14 @@ struct TokenViewCellViewModel {
         return .white
     }
 
-    var image: UIImage? {
+    var placeHolder: UIImage? {
         return R.image.ethereumToken()
+    }
+    
+    var imageUrl: URL? {
+        guard let path = self.ticker?.img else {
+            return nil
+        }
+        return URL(string: path)
     }
 }

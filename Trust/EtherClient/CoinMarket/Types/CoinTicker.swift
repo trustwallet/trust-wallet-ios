@@ -4,27 +4,25 @@ import Foundation
 import RealmSwift
 
 struct CoinTicker {
-    let id:String
-    let name:String
-    let symbol:String
-    let rank:String
-    let usdPrice:String
-    let btcPrice:String
-    let volumeUsd24h:String?
-    let marketCapUsd:String?
-    let availableSupply:String?
-    let totalSupply:String?
-    let percentChange1h:String?
-    let percentChange24h:String?
-    let percentChange7d:String?
-    let lastUpdated:String
-    let img:String
-    
+    let id: String
+    let name: String
+    let symbol: String
+    let rank: String
+    let usdPrice: String
+    let btcPrice: String
+    let volumeUsd24h: String?
+    let marketCapUsd: String?
+    let availableSupply: String?
+    let totalSupply: String?
+    let percentChange1h: String?
+    let percentChange24h: String?
+    let percentChange7d: String?
+    let lastUpdated: String
+    let img: String
     static let path = "https://files.coinmarketcap.com/static/img/coins/32x32/"
 }
 
 extension CoinTicker: Decodable {
-    
     enum CoinTickerKeys: String, CodingKey {
         case id = "id"
         case name = "name"
@@ -42,7 +40,6 @@ extension CoinTicker: Decodable {
         case lastUpdated = "last_updated"
         case img = "img"
     }
-    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CoinTickerKeys.self)
         let id: String = try container.decode(String.self, forKey: .id)
@@ -60,13 +57,11 @@ extension CoinTicker: Decodable {
         let percentChange7d: String? = try container.decodeIfPresent(String.self, forKey: .percentChange7d)
         let lastUpdated: String = try container.decode(String.self, forKey: .lastUpdated)
         let img: String = CoinTicker.path + id + ".png"
-        
         self.init(id: id, name: name, symbol: symbol, rank: rank, usdPrice: usdPrice, btcPrice: btcPrice, volumeUsd24h: volumeUsd24h, marketCapUsd: marketCapUsd, availableSupply: availableSupply, totalSupply: totalSupply, percentChange1h: percentChange1h, percentChange24h: percentChange24h, percentChange7d: percentChange7d, lastUpdated: lastUpdated, img: img)
     }
 }
 
 class RealmCoinTicker: Object {
-    
     @objc dynamic var id: String = ""
     @objc dynamic var name: String = ""
     @objc dynamic var symbol: String = ""
@@ -82,11 +77,9 @@ class RealmCoinTicker: Object {
     @objc dynamic var percentChange7d: String = ""
     @objc dynamic var lastUpdated: String = ""
     @objc dynamic var img: String = ""
-    
     override static func primaryKey() -> String? {
         return "id"
     }
-    
     convenience init(coin: CoinTicker) {
         self.init()
         id = coin.id
@@ -105,7 +98,6 @@ class RealmCoinTicker: Object {
         lastUpdated = coin.lastUpdated
         img = coin.img
     }
-    
     var entity: CoinTicker {
         return CoinTicker(id: id, name: name, symbol: symbol, rank: rank, usdPrice: usdPrice, btcPrice: btcPrice, volumeUsd24h: volumeUsd24h, marketCapUsd: marketCapUsd, availableSupply: availableSupply, totalSupply: totalSupply, percentChange1h: percentChange1h, percentChange24h: percentChange24h, percentChange7d: percentChange7d, lastUpdated: lastUpdated, img: img)
     }
