@@ -43,9 +43,9 @@ extension TrustService: TargetType {
         case .getTransaction:
             return .requestPlain
         case .register(let device):
-            return .requestParameters(parameters: device.dict, encoding: JSONEncoding.default)
+            return .requestJSONEncodable(device)
         case .unregister(let device):
-            return .requestParameters(parameters: device.dict, encoding: JSONEncoding.default)
+            return .requestJSONEncodable(device)
         }
     }
 
