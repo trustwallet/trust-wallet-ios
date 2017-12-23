@@ -22,16 +22,6 @@ class ConfigureTransactionViewController: FormViewController {
         static let data = "data"
     }
 
-    private struct Constant {
-        static let minGasPrice: Float = 1
-        static let maxGasPrice: Float = 120
-        static let gasPriceSteps: UInt = 120
-
-        static let minGasLimit: Float = 21000
-        static let maxGasLimit: Float = 300000
-        static let gasLimitSteps: UInt = 60
-    }
-
     lazy var viewModel: ConfigureTransactionViewModel = {
         return ConfigureTransactionViewModel(
             config: self.config,
@@ -100,9 +90,9 @@ class ConfigureTransactionViewController: FormViewController {
         <<< SliderRow(Values.gasPrice) {
             $0.title = NSLocalizedString("configureTransaction.gasPrice.label.title", value: "Gas Price", comment: "")
             $0.value = Float(gasPriceGwei) ?? 1
-            $0.minimumValue = Constant.minGasPrice
-            $0.maximumValue = Constant.maxGasPrice
-            $0.steps = Constant.gasPriceSteps
+            $0.minimumValue = Float(GasPriceConfiguration.min / BigInt(UnitConfiguration.gasPriceUnit.rawValue))
+            $0.maximumValue = Float(GasPriceConfiguration.max / BigInt(UnitConfiguration.gasPriceUnit.rawValue))
+            $0.steps = UInt(GasPriceConfiguration.max / GasPriceConfiguration.min)
             $0.displayValueFor = { (rowValue: Float?) in
                 return "\(Int(rowValue ?? 1)) (Gwei)"
             }
@@ -118,9 +108,9 @@ class ConfigureTransactionViewController: FormViewController {
         <<< SliderRow(Values.gasLimit) {
             $0.title = NSLocalizedString("configureTransaction.gasLimit.label.title", value: "Gas Limit", comment: "")
             $0.value = Float(configuration.gasLimit.description) ?? 21000
-            $0.minimumValue = Constant.minGasLimit
-            $0.maximumValue = Constant.maxGasLimit
-            $0.steps = Constant.gasLimitSteps
+            $0.minimumValue = Float(GasLimitConfiguration.min)
+            $0.maximumValue = Float(GasLimitConfiguration.max)
+            $0.steps = UInt(GasLimitConfiguration.max / GasLimitConfiguration.min)
             $0.displayValueFor = { (rowValue: Float?) in
                 return "\(Int(rowValue ?? 1))"
             }

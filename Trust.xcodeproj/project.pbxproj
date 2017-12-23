@@ -210,6 +210,12 @@
 		29BB94951F6FC54C009B09CC /* EthereumUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94941F6FC54C009B09CC /* EthereumUnit.swift */; };
 		29BB94971F6FCD60009B09CC /* SendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB94961F6FCD60009B09CC /* SendViewModel.swift */; };
 		29BBB36B1F7BCEDD006BC91B /* GethBigInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BBB36A1F7BCEDD006BC91B /* GethBigInt.swift */; };
+		29BDF1941FEE43AA0023A45F /* TransactionConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDF1931FEE43AA0023A45F /* TransactionConfiguratorTests.swift */; };
+		29BDF1961FEE43F40023A45F /* UnconfirmedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDF1951FEE43F40023A45F /* UnconfirmedTransaction.swift */; };
+		29BDF1981FEE4DB00023A45F /* GasPriceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDF1971FEE4DB00023A45F /* GasPriceConfiguration.swift */; };
+		29BDF19D1FEE50E90023A45F /* GasPriceConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDF19C1FEE50E90023A45F /* GasPriceConfigurationTests.swift */; };
+		29BDF19F1FEE51650023A45F /* GasLimitConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDF19E1FEE51650023A45F /* GasLimitConfigurationTests.swift */; };
+		29BDF1A11FEE51A80023A45F /* GasLimitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDF1A01FEE51A80023A45F /* GasLimitConfiguration.swift */; };
 		29BE3FD01F7071A200F6BFC2 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE3FCF1F7071A200F6BFC2 /* UIColor.swift */; };
 		29BE3FD21F707DC300F6BFC2 /* TransactionDataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE3FD11F707DC300F6BFC2 /* TransactionDataCoordinator.swift */; };
 		29C80D331FB2CCF10037B1E0 /* GetBlockByNumberRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D321FB2CCF10037B1E0 /* GetBlockByNumberRequest.swift */; };
@@ -524,6 +530,12 @@
 		29BB94941F6FC54C009B09CC /* EthereumUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumUnit.swift; sourceTree = "<group>"; };
 		29BB94961F6FCD60009B09CC /* SendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewModel.swift; sourceTree = "<group>"; };
 		29BBB36A1F7BCEDD006BC91B /* GethBigInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GethBigInt.swift; sourceTree = "<group>"; };
+		29BDF1931FEE43AA0023A45F /* TransactionConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionConfiguratorTests.swift; sourceTree = "<group>"; };
+		29BDF1951FEE43F40023A45F /* UnconfirmedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnconfirmedTransaction.swift; sourceTree = "<group>"; };
+		29BDF1971FEE4DB00023A45F /* GasPriceConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPriceConfiguration.swift; sourceTree = "<group>"; };
+		29BDF19C1FEE50E90023A45F /* GasPriceConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPriceConfigurationTests.swift; sourceTree = "<group>"; };
+		29BDF19E1FEE51650023A45F /* GasLimitConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasLimitConfigurationTests.swift; sourceTree = "<group>"; };
+		29BDF1A01FEE51A80023A45F /* GasLimitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasLimitConfiguration.swift; sourceTree = "<group>"; };
 		29BE3FCF1F7071A200F6BFC2 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		29BE3FD11F707DC300F6BFC2 /* TransactionDataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataCoordinator.swift; sourceTree = "<group>"; };
 		29C80D321FB2CCF10037B1E0 /* GetBlockByNumberRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockByNumberRequest.swift; sourceTree = "<group>"; };
@@ -1420,6 +1432,8 @@
 		299B5E351FCBCDE10051361C /* Transfer */ = {
 			isa = PBXGroup;
 			children = (
+				29BDF1991FEE50B60023A45F /* Types */,
+				29BDF1921FEE437E0023A45F /* Controllers */,
 				299B5E361FCBCDE90051361C /* ViewModels */,
 			);
 			path = Transfer;
@@ -1517,6 +1531,8 @@
 				29B933F71F8609FF009FCABB /* PaymentFlow.swift */,
 				299B5E461FD2C87F0051361C /* ConfigureTransactionError.swift */,
 				299B5E481FD2C8900051361C /* ConfigureTransaction.swift */,
+				29BDF1971FEE4DB00023A45F /* GasPriceConfiguration.swift */,
+				29BDF1A01FEE51A80023A45F /* GasLimitConfiguration.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1544,6 +1560,23 @@
 				29F114F51FA8147300114A29 /* RequestCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		29BDF1921FEE437E0023A45F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				29BDF1931FEE43AA0023A45F /* TransactionConfiguratorTests.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		29BDF1991FEE50B60023A45F /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				29BDF19C1FEE50E90023A45F /* GasPriceConfigurationTests.swift */,
+				29BDF19E1FEE51650023A45F /* GasLimitConfigurationTests.swift */,
+			);
+			path = Types;
 			sourceTree = "<group>";
 		};
 		29DBF29F1F9DA6E200327C60 /* ViewControllers */ = {
@@ -1727,6 +1760,7 @@
 				293112321FC971F600966EEA /* ExchangeToken.swift */,
 				CCA4FE391FD42B4100749AE4 /* FakeJailbreakChecker.swift */,
 				295B61D51FE7FC8300642E60 /* FakeTokensDataStore.swift */,
+				29BDF1951FEE43F40023A45F /* UnconfirmedTransaction.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -2256,6 +2290,7 @@
 				290B2B5B1F8F551E0053C83E /* LokaliseInitializer.swift in Sources */,
 				293112371FC9A24600966EEA /* UIGestureRecognizer+Closure.swift in Sources */,
 				29B6AECB1F7C5FA900EC6DE3 /* PaymentCoordinator.swift in Sources */,
+				29BDF1A11FEE51A80023A45F /* GasLimitConfiguration.swift in Sources */,
 				615F10591FCBEF7C008A45AF /* OnboardingPage.swift in Sources */,
 				2963B6B91F9A7EEA003063C1 /* CoinTicker.swift in Sources */,
 				29F114EC1FA448F400114A29 /* TokensCoordinator.swift in Sources */,
@@ -2324,6 +2359,7 @@
 				29E14FD11F7F457D00185568 /* TransactionsStorage.swift in Sources */,
 				299B5E451FD22FB40051361C /* ConfigureTransactionViewModel.swift in Sources */,
 				29F114EE1FA65DEF00114A29 /* ImportType.swift in Sources */,
+				29BDF1981FEE4DB00023A45F /* GasPriceConfiguration.swift in Sources */,
 				2963A28A1FC402940095447D /* LocalizedOperationObject.swift in Sources */,
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
 				294EC1D81FD7FBAB0065EB20 /* BiometryAuthenticationType.swift in Sources */,
@@ -2450,9 +2486,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29BDF19F1FEE51650023A45F /* GasLimitConfigurationTests.swift in Sources */,
 				290B2B6C1F92C35B0053C83E /* RPCServerTests.swift in Sources */,
 				29FF13031F75EB7500AFD326 /* Account.swift in Sources */,
 				290B2B6A1F92C0440053C83E /* ConfigTests.swift in Sources */,
+				29BDF1941FEE43AA0023A45F /* TransactionConfiguratorTests.swift in Sources */,
 				29FF13081F75F0AE00AFD326 /* AppCoordinatorTests.swift in Sources */,
 				2923D9B71FDA5E51000CF3F8 /* PasswordGeneratorTests.swift in Sources */,
 				2912CD101F6A830700C6CBE3 /* TrustTests.swift in Sources */,
@@ -2466,6 +2504,7 @@
 				299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */,
 				61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */,
 				29E14FD91F7F4D4E00185568 /* FakeTransactionsStorage.swift in Sources */,
+				29BDF1961FEE43F40023A45F /* UnconfirmedTransaction.swift in Sources */,
 				29E14FD71F7F490000185568 /* Transaction.swift in Sources */,
 				296106CC1F776FD00006164B /* WalletCoordinatorTests.swift in Sources */,
 				298542FE1FBEADEF00CB5081 /* TransactionViewModelTests.swift in Sources */,
@@ -2488,6 +2527,7 @@
 				299B5E381FCBCDF70051361C /* RequestViewModelTests.swift in Sources */,
 				293E62731FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift in Sources */,
 				29FF130A1F75F67200AFD326 /* Address.swift in Sources */,
+				29BDF19D1FEE50E90023A45F /* GasPriceConfigurationTests.swift in Sources */,
 				295996141FAB09A200DB66A8 /* DepositCoordinatorTests.swift in Sources */,
 				29F114E91FA3EC9E00114A29 /* InCoordinatorTests.swift in Sources */,
 				2981F4731F8303E600CA6590 /* TransactionCoordinatorTests.swift in Sources */,
