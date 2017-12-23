@@ -7,7 +7,7 @@ import Moya
 
 class PushNotificationsRegistrar {
 
-    private let trustProvider = MoyaProvider<TrustService>()
+    private let trustProvider = TrustProviderFactory.makeProvider()
     let config = Config()
 
     var isRegisteredForRemoteNotifications: Bool {
@@ -37,7 +37,7 @@ class PushNotificationsRegistrar {
             chainID: config.chainID
         )
 
-        trustProvider.unregister(device: device)
+        trustProvider.request(.unregister(device: device)) { _ in }
         UIApplication.shared.unregisterForRemoteNotifications()
     }
 
@@ -53,6 +53,6 @@ class PushNotificationsRegistrar {
             chainID: config.chainID
         )
 
-        trustProvider.register(device: device)
+        trustProvider.request(.register(device: device)) { _ in }
     }
 }
