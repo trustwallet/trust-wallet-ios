@@ -100,6 +100,10 @@ extension TokensCoordinator: TokensViewControllerDelegate {
         storage.delete(tokens: [token])
         tokensViewController.fetch()
     }
+
+    func didPressAddToken(in viewController: UIViewController) {
+        addToken()
+    }
 }
 
 extension TokensCoordinator: PaymentCoordinatorDelegate {

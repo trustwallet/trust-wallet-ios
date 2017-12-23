@@ -81,7 +81,7 @@ struct TokensViewModel {
     }
 
     var footerTitle: String {
-        return NSLocalizedString("tokens.footer.label.title", value: "If you have missing tokens, feel free to add them to see the balance", comment: "")
+        return NSLocalizedString("tokens.footer.label.title", value: "Missing token?", comment: "")
     }
 
     var footerTextColor: UIColor {

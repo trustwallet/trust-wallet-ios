@@ -6,6 +6,7 @@ import StatefulViewController
 import Result
 
 protocol TokensViewControllerDelegate: class {
+    func didPressAddToken( in viewController: UIViewController)
     func didSelect(token: TokenObject, in viewController: UIViewController)
     func didDelete(token: TokenObject, in viewController: UIViewController)
 }
@@ -102,7 +103,15 @@ class TokensViewController: UIViewController {
         footer.textLabel.textColor = viewModel.footerTextColor
         footer.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
 
+        footer.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(missingToken))
+        )
+
         tableView.tableFooterView = footer
+    }
+
+    @objc func missingToken() {
+        delegate?.didPressAddToken(in: self)
     }
 }
 
