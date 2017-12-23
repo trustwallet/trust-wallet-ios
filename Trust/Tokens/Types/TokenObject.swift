@@ -25,7 +25,7 @@ class TokenObject: Object {
         decimals: Int = 0,
         value: String,
         isCustom: Bool = false,
-        isDisabled: Bool = true,
+        isDisabled: Bool = false,
         type: TokenType = .token
     ) {
         self.init()

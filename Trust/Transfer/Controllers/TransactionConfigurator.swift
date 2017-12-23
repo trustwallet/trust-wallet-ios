@@ -33,7 +33,7 @@ class TransactionConfigurator {
         self.session = session
         self.transaction = transaction
         self.gasPrice = gasPrice
-        
+
         self.configuration = TransactionConfiguration(
             gasPrice: min(max(gasPrice ?? GasPriceConfiguration.default, GasPriceConfiguration.min), GasPriceConfiguration.max),
             gasLimit: GasLimitConfiguration.default,
