@@ -17,6 +17,8 @@ class TokenObject: Object {
     @objc dynamic var value: String = ""
     @objc dynamic var isCustom: Bool = false
     @objc dynamic var isDisabled: Bool = false
+    
+    static let tokenLogoPath = "https://files.coinmarketcap.com/static/img/coins/64x64/"
 
     convenience init(
         contract: String = "",

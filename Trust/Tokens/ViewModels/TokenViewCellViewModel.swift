@@ -39,7 +39,7 @@ struct TokenViewCellViewModel {
         let noResult = "-"
         guard let ticker = ticker else { return noResult }
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
-        let priceInUsd = Double(ticker.usdPrice) ?? 0
+        let priceInUsd = Double(ticker.price) ?? 0
         let amount = tokenValue * priceInUsd
         guard amount > 0 else { return noResult }
         return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
@@ -70,9 +70,6 @@ struct TokenViewCellViewModel {
     }
     
     var imageUrl: URL? {
-        guard let path = self.ticker?.img else {
-            return nil
-        }
-        return URL(string: path)
+        return URL(string: TokenObject.tokenLogoPath + token.name)
     }
 }
