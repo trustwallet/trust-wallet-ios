@@ -26,12 +26,9 @@ class TokensHeaderView: UIView {
 
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin + 10),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: StyleLayout.sideMargin),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
+            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -StyleLayout.sideMargin - 10),
         ])
-
-        backgroundColor = Colors.blue
     }
 
     required init?(coder aDecoder: NSCoder) {
