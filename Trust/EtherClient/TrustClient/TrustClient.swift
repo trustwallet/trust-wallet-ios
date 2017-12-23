@@ -21,9 +21,9 @@ extension TrustService: TargetType {
         case .getTransaction(let ID):
             return "/transactions/\(ID)"
         case .register:
-            return "/register"
+            return "/push/register"
         case .unregister:
-            return "/unregister"
+            return "/push/unregister"
         }
     }
 
