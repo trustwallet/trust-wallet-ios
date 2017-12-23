@@ -69,6 +69,7 @@ class TokensCoordinator: Coordinator {
         let controller = newTokenViewController()
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .formSheet
         navigationController.present(nav, animated: true, completion: nil)
     }
 
