@@ -44,6 +44,17 @@ struct TokenViewCellViewModel {
         guard amount > 0 else { return noResult }
         return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
     }
+    
+    var percentChange: String? {
+        let noResult = "-"
+        guard let ticker = ticker else { return noResult }
+        return ticker.percent_change_24h + "%"
+    }
+    
+    var percentChangeColor: UIColor {
+        guard let ticker = ticker else { return Colors.lightGray }
+        return ticker.percent_change_24h.starts(with: "-") ? Colors.red : Colors.green
+    }
 
     var amountTextColor: UIColor {
         return Colors.black
@@ -70,6 +81,9 @@ struct TokenViewCellViewModel {
     }
     
     var imageUrl: URL? {
-        return URL(string: TokenObject.tokenLogoPath + token.name)
+        guard let ticker = self.ticker else {
+            return nil
+        }
+        return URL(string: CoinTicker.tokenLogoPath + ticker.name.lowercased() + ".png")
     }
 }
