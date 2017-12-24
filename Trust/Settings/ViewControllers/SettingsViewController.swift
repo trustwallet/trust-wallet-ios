@@ -77,6 +77,24 @@ class SettingsViewController: FormViewController {
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_server()
             }
+            
+            +++ Section(NSLocalizedString("settings.currency.button.title", value: "Currency", comment: ""))
+            
+            <<< PushRow<String> {
+                $0.title = NSLocalizedString("settings.currency.button.title", value: "Currency", comment: "")
+                $0.options = viewModel.currency
+                $0.value = config.currency.rawValue
+                $0.displayValueFor = { value in
+                    return value
+                }
+            }.onChange { row in
+                self.config.currency = Currency(rawValue: row.value ?? "USD")!
+                self.run(action: .currency)
+            }.onPresent { _, selectorController in
+                selectorController.enableDeselection = false
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_server()
+            }
 
             <<< AppFormAppearance.button { button in
                 button.cellStyle = .value1

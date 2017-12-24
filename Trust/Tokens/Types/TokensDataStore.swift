@@ -154,7 +154,7 @@ class TokensDataStore {
     func updatePrices() {
         var symbols = objects.map { $0.symbol }
         symbols.append("ETH")
-        provider.request(.prices(currency: .USD, symbols: symbols)) { result in
+        provider.request(.prices(currency: Config().currency, symbols: symbols)) { result in
             guard  case .success(let response) = result else { return }
             do {
                 let tickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())

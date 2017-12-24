@@ -5,10 +5,10 @@ import Foundation
 class CurrencyFormatter {
     static var formatter: NumberFormatter {
         let formatter = NumberFormatter()
-        //TODO: use current locale when available this feature
-        formatter.locale = Locale(identifier: "en_US")
+       
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
+        formatter.currencyCode = Config().currency.rawValue
         formatter.numberStyle = .currency
         return formatter
     }
