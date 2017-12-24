@@ -18,7 +18,7 @@ class TokenViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-
+        
         symbolImageView.translatesAutoresizingMaskIntoConstraints = false
         symbolImageView.contentMode = .scaleAspectFit
 
@@ -63,8 +63,8 @@ class TokenViewCell: UITableViewCell {
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            symbolImageView.widthAnchor.constraint(equalToConstant: 50),
-            symbolImageView.heightAnchor.constraint(equalToConstant: 50),
+            symbolImageView.widthAnchor.constraint(equalToConstant: 45),
+            symbolImageView.heightAnchor.constraint(equalToConstant: 45),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -StyleLayout.sideMargin),
@@ -92,7 +92,7 @@ class TokenViewCell: UITableViewCell {
         
         percentChange.text = viewModel.percentChange
         percentChange.textColor = viewModel.percentChangeColor
-        percentChange.font = viewModel.currencyAmountFont
+        percentChange.font = viewModel.percentChangeFont
         
         symbolImageView.kf.setImage(with:viewModel.imageUrl,placeholder:viewModel.placeHolder,options:
         [KingfisherOptionsInfoItem.fromMemoryCacheOrRefresh])
