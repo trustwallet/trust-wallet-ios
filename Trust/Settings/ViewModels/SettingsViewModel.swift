@@ -20,6 +20,10 @@ struct SettingsViewModel {
             RPCServer.ropsten,
         ]
     }
+    
+    var currency: [String] {
+        return Currency.allValues.map{$0.rawValue}.sorted()
+    }
 
     var passcodeTitle: String {
         switch BiometryAuthenticationType.current {

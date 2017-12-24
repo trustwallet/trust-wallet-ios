@@ -3,10 +3,6 @@
 import Foundation
 import Moya
 
-enum Currency: String {
-    case USD
-}
-
 enum TrustMarketService {
     case prices(currency: Currency, symbols: [String])
 }
