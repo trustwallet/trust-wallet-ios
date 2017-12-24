@@ -169,7 +169,7 @@ extension InCoordinator: SettingsCoordinatorDelegate {
     func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator) {
         switch action {
         case .wallets: break
-        case .RPCServer:
+        case .RPCServer, .currency:
             removeCoordinator(coordinator)
             guard let transactionCoordinator = transactionCoordinator else { return }
             restart(for: transactionCoordinator.session.account, in: transactionCoordinator)
