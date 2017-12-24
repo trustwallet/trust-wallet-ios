@@ -3,7 +3,7 @@
 import Foundation
 import RealmSwift
 
-struct CoinTicker {
+struct CoinTicker: Codable {
     let name: String
     let symbol: String
     let price: String

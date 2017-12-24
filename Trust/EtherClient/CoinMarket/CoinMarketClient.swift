@@ -3,36 +3,35 @@
 import Foundation
 import Moya
 
-enum CoinMarketService {
-    case price(id: String, currency: String)
-    case prices(limit: Int)
+enum Currency: String {
+    case USD
 }
 
-extension CoinMarketService: TargetType {
+enum TrustMarketService {
+    case prices(currency: Currency, symbols: [String])
+}
 
-    var baseURL: URL { return URL(string: "https://api.coinmarketcap.com/v1")! }
+extension TrustMarketService: TargetType {
+
+    var baseURL: URL { return URL(string: "https://api.trustwalletapp.com")! }
 
     var path: String {
         switch self {
-        case .price(let id, _):
-            return "/ticker/\(id)"
         case .prices:
-            return "/ticker"
+        return "/prices"
         }
     }
 
     var method: Moya.Method {
         switch self {
-        case .price, .prices: return .get
+        case .prices: return .get
         }
     }
 
     var task: Task {
         switch self {
-        case .price(_, let currency):
-            return .requestCompositeData(bodyData: Data(), urlParameters: ["convert": currency])
-        case .prices(let limit):
-            return .requestCompositeData(bodyData: Data(), urlParameters: ["limit": limit])
+        case .prices(let currency, let symbols):
+        return .requestParameters(parameters:["currency":currency.rawValue,"symbols":symbols.joined(separator: ",")],encoding:URLEncoding.queryString)
         }
     }
 
