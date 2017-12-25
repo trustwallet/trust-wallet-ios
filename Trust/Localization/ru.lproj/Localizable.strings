@@ -63,6 +63,7 @@
 "settings.feedback.email.title" = "Trust - Обратная связь ";
 "settings.navigation.title" = "Настройки";
 "settings.network.button.title" = "Сеть";
+"settings.currency.button.title" = "Валюта";
 "settings.openSourceDevelopment.label.title" = "Разработка с открытым исходным кодом";
 "settings.privacyPolicy.button.title" = "Политика Конфиденциальности";
 "settings.pushNotifications.button.title" = "Push-Уведомления";

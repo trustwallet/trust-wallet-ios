@@ -62,6 +62,7 @@
 "settings.feedback.email.title" = "Comentarios sobre Trust";
 "settings.navigation.title" = "Configuración";
 "settings.network.button.title" = "Red";
+"settings.currency.button.title" = "Moneda";
 "settings.openSourceDevelopment.label.title" = "Desarrollo en abierto";
 "settings.privacyPolicy.button.title" = "Política de privacidad";
 "settings.pushNotifications.button.title" = "Notificaciones Push";

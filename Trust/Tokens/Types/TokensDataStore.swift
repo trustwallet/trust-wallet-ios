@@ -20,7 +20,7 @@ class TokensDataStore {
     private lazy var getBalanceCoordinator: GetBalanceCoordinator = {
         return GetBalanceCoordinator(session: self.session)
     }()
-    private let provider = MoyaProvider<CoinMarketService>()
+    private let provider = MoyaProvider<TrustService>()
 
     let session: WalletSession
     weak var delegate: TokensDataStoreDelegate?
@@ -152,10 +152,12 @@ class TokensDataStore {
     }
 
     func updatePrices() {
-        provider.request(.prices(limit: 150)) { result in
+        var symbols = enabledObject.map { $0.symbol }
+        symbols.append(Config().server.symbol)
+        provider.request(.prices(currency: Config().currency, symbols: symbols)) { result in
             guard  case .success(let response) = result else { return }
             do {
-                let tickers = try response.map([CoinTicker].self)
+                let tickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
                 self.tickers = tickers.reduce([String: CoinTicker]()) { (dict, ticker) -> [String: CoinTicker] in
                     var dict = dict
                     dict[ticker.symbol] = ticker

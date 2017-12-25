@@ -62,6 +62,7 @@
 "settings.feedback.email.title" = "Trust Feedback";
 "settings.navigation.title" = "Settings";
 "settings.network.button.title" = "Network";
+"settings.currency.button.title" = "Currency";
 "settings.openSourceDevelopment.label.title" = "Open Source Development";
 "settings.privacyPolicy.button.title" = "Privacy Policy";
 "settings.pushNotifications.button.title" = "Push Notifications";
