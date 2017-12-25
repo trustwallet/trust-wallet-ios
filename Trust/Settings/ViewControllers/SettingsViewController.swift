@@ -45,9 +45,10 @@ class SettingsViewController: FormViewController {
         form = Section()
 
             <<< PushRow<String> {
-                $0.title = NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
+                $0.title = viewModel.networkTitle
                 $0.options = viewModel.servers
                 $0.value = RPCServer(chainID: config.chainID).name
+                $0.selectorTitle = viewModel.networkTitle
                 $0.displayValueFor = { value in
                     let network = RPCServer(name: value ?? "")
                     return network.name + (network.isTestNetwork ? " (Test)" : "")
