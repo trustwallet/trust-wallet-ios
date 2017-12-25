@@ -294,6 +294,7 @@
 		61F8AA951FCA4C9300488C6E /* BigIntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8AA941FCA4C9300488C6E /* BigIntTests.swift */; };
 		61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */; };
 		61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */; };
+		778EAF7D1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */; };
 		CCA4FE331FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE321FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift */; };
 		CCA4FE361FD4282400749AE4 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE351FD4282400749AE4 /* DeviceChecker.swift */; };
 		CCA4FE381FD428B300749AE4 /* JailbreakChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE371FD428B300749AE4 /* JailbreakChecker.swift */; };
@@ -617,6 +618,7 @@
 		61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherNumberFormatter.swift; sourceTree = "<group>"; };
 		61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherNumberFormatterTests.swift; sourceTree = "<group>"; };
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinatorTests.swift; sourceTree = "<group>"; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -668,6 +670,7 @@
 		290B2B681F92C0300053C83E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				778EAF7B1FF10AE000C8E2AB /* Coordinators */,
 				290B2B691F92C0440053C83E /* ConfigTests.swift */,
 				290B2B6B1F92C35B0053C83E /* RPCServerTests.swift */,
 			);
@@ -1794,6 +1797,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		778EAF7B1FF10AE000C8E2AB /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
 		9A0F00B2D545197C8F7691C2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -2533,6 +2544,7 @@
 				29FF130A1F75F67200AFD326 /* Address.swift in Sources */,
 				29BDF19D1FEE50E90023A45F /* GasPriceConfigurationTests.swift in Sources */,
 				295996141FAB09A200DB66A8 /* DepositCoordinatorTests.swift in Sources */,
+				778EAF7D1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift in Sources */,
 				29F114E91FA3EC9E00114A29 /* InCoordinatorTests.swift in Sources */,
 				2981F4731F8303E600CA6590 /* TransactionCoordinatorTests.swift in Sources */,
 			);

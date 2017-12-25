@@ -35,13 +35,24 @@ class SettingsViewController: FormViewController {
     lazy var viewModel: SettingsViewModel = {
         return SettingsViewModel(isDebug: isDebug)
     }()
+    let session: WalletSession
 
+    init(session: WalletSession) {
+        self.session = session
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // swiftlint:disable:next function_body_length
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = NSLocalizedString("settings.navigation.title", value: "Settings", comment: "")
-
+        let account = session.account
+        
         form = Section()
 
             <<< PushRow<String> {
@@ -60,6 +71,18 @@ class SettingsViewController: FormViewController {
                 selectorController.enableDeselection = false
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_server()
+            }
+
+            <<< AppFormAppearance.button { button in
+                button.cellStyle = .value1
+            }.onCellSelection { [unowned self] _, _ in
+                self.run(action: .wallets)
+            }.cellUpdate { cell, _ in
+                cell.textLabel?.textColor = .black
+                cell.imageView?.image = R.image.settings_wallet()
+                cell.textLabel?.text = NSLocalizedString("settings.wallets.button.title", value: "Wallets", comment: "")
+                cell.detailTextLabel?.text = String(account.address.address.prefix(8)) + "..."
+                cell.accessoryType = .disclosureIndicator
             }
 
             +++ Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))

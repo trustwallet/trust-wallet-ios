@@ -6,8 +6,6 @@ import Result
 
 protocol TransactionCoordinatorDelegate: class {
     func didCancel(in coordinator: TransactionCoordinator)
-    func didRestart(with account: Account, in coordinator: TransactionCoordinator)
-    func didUpdateAccounts(in coordinator: TransactionCoordinator)
 }
 
 class TransactionCoordinator: Coordinator {
@@ -68,7 +66,6 @@ class TransactionCoordinator: Coordinator {
             case false: return []
             }
         }()
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.accountsSwitch(), landscapeImagePhone: R.image.accountsSwitch(), style: .done, target: self, action: #selector(showAccounts))
         controller.navigationItem.rightBarButtonItems = rightItems
         controller.delegate = self
         return controller
@@ -114,23 +111,8 @@ class TransactionCoordinator: Coordinator {
         session.stop()
     }
 
-    func restart(for account: Account) {
-        delegate?.didRestart(with: account, in: self)
-    }
-
     deinit {
         NotificationCenter.default.removeObserver(self)
-    }
-
-    @objc func showAccounts() {
-        let coordinator = AccountsCoordinator(
-            navigationController: NavigationController(),
-            keystore: keystore
-        )
-        coordinator.delegate = self
-        coordinator.start()
-        addCoordinator(coordinator)
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
     @objc func deposit(sender: UIBarButtonItem) {
@@ -179,27 +161,3 @@ extension TransactionCoordinator: PaymentCoordinatorDelegate {
     }
 }
 
-extension TransactionCoordinator: AccountsCoordinatorDelegate {
-    func didAddAccount(account: Account, in coordinator: AccountsCoordinator) {
-        delegate?.didUpdateAccounts(in: self)
-    }
-
-    func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator) {
-        storage.deleteAll()
-        delegate?.didUpdateAccounts(in: self)
-        guard !coordinator.accountsViewController.hasAccounts else { return }
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        delegate?.didCancel(in: self)
-    }
-
-    func didCancel(in coordinator: AccountsCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
-    }
-
-    func didSelectAccount(account: Account, in coordinator: AccountsCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
-        delegate?.didRestart(with: account, in: self)
-    }
-}
