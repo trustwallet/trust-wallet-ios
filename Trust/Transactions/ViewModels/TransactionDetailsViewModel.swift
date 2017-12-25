@@ -95,4 +95,8 @@ struct TransactionDetailsViewModel {
     var amountAttributedString: NSAttributedString {
         return transactionViewModel.fullAmountAttributedString
     }
+
+    var shareItem: URL {
+        return detailsURL
+    }
 }

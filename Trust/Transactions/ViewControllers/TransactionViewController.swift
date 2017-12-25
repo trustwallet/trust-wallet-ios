@@ -62,6 +62,8 @@ class TransactionViewController: UIViewController {
         }
 
         displayChildViewController(viewController: stackViewController)
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
     }
 
     private func item(title: String, value: String) -> UIView {
@@ -75,7 +77,7 @@ class TransactionViewController: UIViewController {
 
     private func moreDetails() -> UIView {
         let button = Button(size: .large, style: .border)
-        button.setTitle("More Details", for: .normal)
+        button.setTitle(NSLocalizedString("More Details", value: "More Details", comment: ""), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(more), for: .touchUpInside)
 
@@ -109,6 +111,17 @@ class TransactionViewController: UIViewController {
     @objc func more() {
         let controller = SFSafariViewController(url: viewModel.detailsURL)
         present(controller, animated: true, completion: nil)
+    }
+
+    @objc func share(_ sender: UIBarButtonItem) {
+        let activityViewController = UIActivityViewController(
+            activityItems: [
+                viewModel.shareItem,
+            ],
+            applicationActivities: nil
+        )
+        activityViewController.popoverPresentationController?.barButtonItem = sender
+        navigationController?.present(activityViewController, animated: true, completion: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
