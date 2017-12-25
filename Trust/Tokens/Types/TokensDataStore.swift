@@ -152,7 +152,7 @@ class TokensDataStore {
     }
 
     func updatePrices() {
-        var symbols = objects.map { $0.symbol }
+        var symbols = enabledObject.map { $0.symbol }
         symbols.append("ETH")
         provider.request(.prices(currency: Config().currency, symbols: symbols)) { result in
             guard  case .success(let response) = result else { return }
