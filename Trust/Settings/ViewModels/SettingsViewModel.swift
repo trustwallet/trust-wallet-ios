@@ -15,6 +15,7 @@ struct SettingsViewModel {
     var servers: [RPCServer] {
         return [
             RPCServer.main,
+            RPCServer.classic,
             RPCServer.poa,
             RPCServer.kovan,
             RPCServer.ropsten,

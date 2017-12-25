@@ -45,6 +45,7 @@ struct Config {
         let urlString: String = {
             switch server {
             case .main: return "https://mainnet.infura.io/llyrtzQ3YhkdESt2Fzrk"
+            case .classic: return "https://mewapi.epool.io/"
             case .kovan: return "https://kovan.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .ropsten: return "https://ropsten.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .poa: return "https://core.poa.network"
@@ -57,6 +58,7 @@ struct Config {
         let urlString: String = {
             switch server {
             case .main: return "https://api.trustwalletapp.com"
+            case .classic: return "https://classic.trustwalletapp.com"
             case .kovan: return "https://kovan.trustwalletapp.com"
             case .ropsten: return "https://ropsten.trustwalletapp.com"
             case .poa: return "https://poa.trustwalletapp.com"
