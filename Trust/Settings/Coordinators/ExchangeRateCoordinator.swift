@@ -12,7 +12,7 @@ class ExchangeRateCoordinator: NSObject {
 
     weak var delegate: ExchangeRateCoordinatorDelegate?
 
-    private let provider = MoyaProvider<TrustMarketService>()
+    private let provider = MoyaProvider<TrustService>()
     
     func start() {
         fetch()

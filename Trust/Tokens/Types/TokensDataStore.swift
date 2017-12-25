@@ -20,7 +20,7 @@ class TokensDataStore {
     private lazy var getBalanceCoordinator: GetBalanceCoordinator = {
         return GetBalanceCoordinator(session: self.session)
     }()
-    private let provider = MoyaProvider<TrustMarketService>()
+    private let provider = MoyaProvider<TrustService>()
 
     let session: WalletSession
     weak var delegate: TokensDataStoreDelegate?
