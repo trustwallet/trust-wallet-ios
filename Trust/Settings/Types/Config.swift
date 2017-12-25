@@ -18,7 +18,7 @@ struct Config {
     ) {
         self.defaults = defaults
     }
-    
+
     var currency: Currency {
         get {
             //If it is saved currency

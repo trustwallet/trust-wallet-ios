@@ -77,9 +77,9 @@ class SettingsViewController: FormViewController {
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_server()
             }
-            
+
             +++ Section(NSLocalizedString("settings.currency.button.title", value: "Currency", comment: ""))
-            
+
             <<< PushRow<String> {
                 $0.title = NSLocalizedString("settings.currency.button.title", value: "Currency", comment: "")
                 $0.options = viewModel.currency

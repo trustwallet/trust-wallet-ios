@@ -18,7 +18,7 @@ class TokenViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        
+
         symbolImageView.translatesAutoresizingMaskIntoConstraints = false
         symbolImageView.contentMode = .scaleAspectFit
 
@@ -27,7 +27,7 @@ class TokenViewCell: UITableViewCell {
 
         currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         currencyAmountLabel.textAlignment = .right
-        
+
         percentChange.translatesAutoresizingMaskIntoConstraints = false
         percentChange.textAlignment = .right
 
@@ -35,7 +35,7 @@ class TokenViewCell: UITableViewCell {
         leftStackView.translatesAutoresizingMaskIntoConstraints = false
         leftStackView.axis = .vertical
         leftStackView.spacing = 12
-        
+
         let rightBottomStackView = UIStackView(arrangedSubviews: [currencyAmountLabel, percentChange])
         rightBottomStackView.translatesAutoresizingMaskIntoConstraints = false
         rightBottomStackView.axis = .horizontal
@@ -89,13 +89,16 @@ class TokenViewCell: UITableViewCell {
         currencyAmountLabel.text = viewModel.currencyAmount
         currencyAmountLabel.textColor = viewModel.currencyAmountTextColor
         currencyAmountLabel.font = viewModel.currencyAmountFont
-        
+
         percentChange.text = viewModel.percentChange
         percentChange.textColor = viewModel.percentChangeColor
         percentChange.font = viewModel.percentChangeFont
-        
-        symbolImageView.kf.setImage(with:viewModel.imageUrl,placeholder:viewModel.placeHolder,options:
-        [KingfisherOptionsInfoItem.fromMemoryCacheOrRefresh])
+
+        symbolImageView.kf.setImage(
+            with: viewModel.imageUrl,
+            placeholder: viewModel.placeHolder,
+            options: [KingfisherOptionsInfoItem.fromMemoryCacheOrRefresh]
+        )
 
         backgroundColor = viewModel.backgroundColor
     }

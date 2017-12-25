@@ -51,7 +51,13 @@ extension TrustService: TargetType {
         case .unregister(let device):
             return .requestJSONEncodable(device)
         case .prices(let currency, let symbols):
-            return .requestParameters(parameters:["currency":currency.rawValue,"symbols":symbols.joined(separator: ",")],encoding:URLEncoding.queryString)
+            return .requestParameters(
+                parameters: [
+                    "currency": currency.rawValue,
+                    "symbols": symbols.joined(separator: ","),
+                ],
+                encoding:URLEncoding.queryString
+            )
         }
     }
 

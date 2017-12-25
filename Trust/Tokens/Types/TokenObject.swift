@@ -17,7 +17,7 @@ class TokenObject: Object {
     @objc dynamic var value: String = ""
     @objc dynamic var isCustom: Bool = false
     @objc dynamic var isDisabled: Bool = false
-    
+
     convenience init(
         contract: String = "",
         name: String = "",

@@ -44,18 +44,18 @@ struct TokenViewCellViewModel {
         guard amount > 0 else { return noResult }
         return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
     }
-    
+
     var percentChange: String? {
         let noResult = "-"
         guard let ticker = ticker else { return noResult }
         return "(" + ticker.percent_change_24h + "%)"
     }
-    
+
     var percentChangeColor: UIColor {
         guard let ticker = ticker else { return Colors.lightGray }
         return ticker.percent_change_24h.starts(with: "-") ? Colors.red : Colors.green
     }
-    
+
     var percentChangeFont: UIFont {
         return UIFont.systemFont(ofSize: 16, weight: .regular)
     }
@@ -83,7 +83,7 @@ struct TokenViewCellViewModel {
     var placeHolder: UIImage? {
         return R.image.ethereumToken()
     }
-    
+
     var imageUrl: URL? {
         guard let ticker = self.ticker else {
             return nil
