@@ -43,7 +43,10 @@ extension UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
 
-    func displayLoading(text: String = NSLocalizedString("Loading...", value: "Loading...", comment: ""), animated: Bool = true) {
+    func displayLoading(
+        text: String = String(format: NSLocalizedString("loading.dots", value: "Loading %@", comment: ""), "..."),
+        animated: Bool = true
+    ) {
         let hud = MBProgressHUD.showAdded(to: self.view, animated: animated)
         hud.label.text = text
     }

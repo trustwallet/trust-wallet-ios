@@ -6,6 +6,7 @@ import StatefulViewController
 import Result
 
 protocol TokensViewControllerDelegate: class {
+    func didPressAddToken( in viewController: UIViewController)
     func didSelect(token: TokenObject, in viewController: UIViewController)
     func didDelete(token: TokenObject, in viewController: UIViewController)
 }
@@ -62,8 +63,6 @@ class TokensViewController: UIViewController {
             onRetry: fetch
         )
 
-        //header.translatesAutoresizingMaskIntoConstraints = false
-
         refreshView(viewModel: viewModel)
     }
 
@@ -97,6 +96,22 @@ class TokensViewController: UIViewController {
         header.amountLabel.font = viewModel.headerBalanceFont
         header.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
         tableView.tableHeaderView = header
+
+        let footer = TokensFooterView(frame: .zero)
+        footer.textLabel.text = viewModel.footerTitle
+        footer.textLabel.font = viewModel.footerTextFont
+        footer.textLabel.textColor = viewModel.footerTextColor
+        footer.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
+
+        footer.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(missingToken))
+        )
+
+        tableView.tableFooterView = footer
+    }
+
+    @objc func missingToken() {
+        delegate?.didPressAddToken(in: self)
     }
 }
 

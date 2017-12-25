@@ -17,7 +17,8 @@ class TokensCoordinator: Coordinator {
             dataStore: storage
         )
         controller.delegate = self
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
+        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
         return controller
     }()
 
@@ -68,11 +69,20 @@ class TokensCoordinator: Coordinator {
         let controller = newTokenViewController()
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .formSheet
         navigationController.present(nav, animated: true, completion: nil)
     }
 
     @objc func dismiss() {
         navigationController.dismiss(animated: true, completion: nil)
+    }
+
+    @objc func edit() {
+        let controller = EditTokensViewController(
+            session: session,
+            storage: storage
+        )
+        navigationController.pushViewController(controller, animated: true)
     }
 }
 
@@ -89,6 +99,10 @@ extension TokensCoordinator: TokensViewControllerDelegate {
     func didDelete(token: TokenObject, in viewController: UIViewController) {
         storage.delete(tokens: [token])
         tokensViewController.fetch()
+    }
+
+    func didPressAddToken(in viewController: UIViewController) {
+        addToken()
     }
 }
 

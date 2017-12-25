@@ -5,11 +5,14 @@ import Foundation
 struct ConfigureTransactionViewModel {
 
     let config: Config
+    let transferType: TransferType
 
     init(
-        config: Config
+        config: Config,
+        transferType: TransferType
     ) {
         self.config = config
+        self.transferType = transferType
     }
 
     var title: String {
@@ -36,5 +39,12 @@ struct ConfigureTransactionViewModel {
             ),
             config.server.name
         )
+    }
+
+    var isDataInputHidden: Bool {
+        switch transferType {
+        case .ether: return false
+        case .token, .exchange: return true
+        }
     }
 }

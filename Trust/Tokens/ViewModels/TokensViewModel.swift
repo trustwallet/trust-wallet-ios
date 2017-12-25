@@ -77,6 +77,18 @@ struct TokensViewModel {
 
     func canDelete(for row: Int, section: Int) -> Bool {
         let token = item(for: row, section: section)
-        return token.isCustom || token.valueBigInt.isZero
+        return token.isCustom
+    }
+
+    var footerTitle: String {
+        return NSLocalizedString("tokens.footer.label.title", value: "Missing token?", comment: "")
+    }
+
+    var footerTextColor: UIColor {
+        return Colors.black
+    }
+
+    var footerTextFont: UIFont {
+        return UIFont.systemFont(ofSize: 14, weight: .light)
     }
 }

@@ -16,6 +16,7 @@ class TokenObject: Object {
     @objc dynamic var decimals: Int = 0
     @objc dynamic var value: String = ""
     @objc dynamic var isCustom: Bool = false
+    @objc dynamic var isDisabled: Bool = false
 
     convenience init(
         contract: String = "",
@@ -24,6 +25,7 @@ class TokenObject: Object {
         decimals: Int = 0,
         value: String,
         isCustom: Bool = false,
+        isDisabled: Bool = false,
         type: TokenType = .token
     ) {
         self.init()
@@ -33,6 +35,7 @@ class TokenObject: Object {
         self.decimals = decimals
         self.value = value
         self.isCustom = isCustom
+        self.isDisabled = isDisabled
         self.type = type
     }
 

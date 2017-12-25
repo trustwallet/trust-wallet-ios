@@ -71,8 +71,15 @@ class AccountsCoordinator: Coordinator {
             coordinator.start()
             self.addCoordinator(coordinator)
         }
+        let copyAction = UIAlertAction(
+            title: NSLocalizedString("Copy Address", value: "Copy Address", comment: ""),
+            style: .default
+        ) { _ in
+            UIPasteboard.general.string = account.address.address
+        }
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
         controller.addAction(action)
+        controller.addAction(copyAction)
         controller.addAction(cancelAction)
         navigationController.present(controller, animated: true, completion: nil)
     }

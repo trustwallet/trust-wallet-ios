@@ -105,17 +105,17 @@ class SendViewController: FormViewController {
             <<< AppFormAppearance.textFieldFloat(tag: Values.amount) {
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
-            }.cellUpdate { cell, _ in
+            }.cellUpdate {[weak self] cell, _ in
                 cell.textField.textAlignment = .left
-                cell.textField.placeholder = "\(self.viewModel.symbol) " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
+                cell.textField.placeholder = "\(self?.viewModel.symbol ?? "") " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
                 cell.textField.keyboardType = .decimalPad
                 //cell.textField.rightView = maxButton // TODO Enable it's ready
                 cell.textField.rightViewMode = .always
             }
 
             +++ Section {
-                $0.hidden = Eureka.Condition.function([Values.amount], { _ in
-                    return self.amountRow?.value?.isEmpty ?? true
+                $0.hidden = Eureka.Condition.function([Values.amount], { [weak self] _ in
+                    return self?.amountRow?.value?.isEmpty ?? true
                 })
             }
 
@@ -166,7 +166,10 @@ class SendViewController: FormViewController {
         let transaction = UnconfirmedTransaction(
             transferType: transferType,
             value: value,
-            address: address
+            address: address,
+            account: session.account,
+            chainID: session.config.chainID,
+            data: Data()
         )
         self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, gasPrice: gasPrice, in: self)
     }
