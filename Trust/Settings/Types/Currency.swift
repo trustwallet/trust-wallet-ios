@@ -37,6 +37,10 @@ enum Currency: String {
     case USD
     
     static let allValues = [AUD,BRL,CAD,CHF,CLP,CNY,CZK,DKK,EUR,GBP,HKD,HUF,IDR,ILS,INR,JPY,KRW,MXN,MYR,NOK,NZD,PHP,PKR,PLN,RUB,SEK,SGD,THB,TRY,TWD,ZAR,USD]
+    
+    init(value: String) {
+        self =  Currency(rawValue: value) ?? .USD
+    }
 }
 
 class CurrencyManager {
