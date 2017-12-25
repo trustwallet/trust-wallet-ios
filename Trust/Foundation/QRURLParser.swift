@@ -8,25 +8,7 @@ struct ParserResult {
     let params: [String: String]
 }
 
-func parseParamsFromParamParts(paramParts: [String]) -> [String: String] {
-    if paramParts.isEmpty {
-        return [:]
-    }
-    var params = [String: String]()
-    var i = 0
-    while i < paramParts.count {
-        let tokenizedParamParts = paramParts[i].components(separatedBy: "=")
-        if tokenizedParamParts.count < 2 {
-            break
-        }
-        params[tokenizedParamParts[0]] = tokenizedParamParts[1]
-        i += 1
-    }
-    return params
-}
-
 struct QRURLParser {
-
     static func from(string: String) -> ParserResult? {
         let parts = string.components(separatedBy: ":")
         if parts.count == 1, let address = parts.first, CryptoAddressValidator.isValidAddress(address) {
@@ -38,8 +20,9 @@ struct QRURLParser {
         }
 
         if parts.count == 2, let address = QRURLParser.getAddress(from: parts.last), CryptoAddressValidator.isValidAddress(address) {
-            let paramParts = Array(parts[1].components(separatedBy: "?")[1...])
-            let params = parseParamsFromParamParts(paramParts: paramParts)
+            let uncheckedParamParts = Array(parts[1].components(separatedBy: "?")[1...])
+            let paramParts = uncheckedParamParts.isEmpty ? [] : Array(uncheckedParamParts[0].components(separatedBy: "&"))
+            let params = QRURLParser.parseParamsFromParamParts(paramParts: paramParts)
             return ParserResult(
                 protocolName: parts.first ?? "",
                 address: address,
@@ -55,6 +38,23 @@ struct QRURLParser {
             return .none
         }
         return from.substring(to: AddressValidatorType.ethereum.addressLength)
+    }
+    
+    private static func parseParamsFromParamParts(paramParts: [String]) -> [String: String] {
+        if paramParts.isEmpty {
+            return [:]
+        }
+        var params = [String: String]()
+        var i = 0
+        while i < paramParts.count {
+            let tokenizedParamParts = paramParts[i].components(separatedBy: "=")
+            if tokenizedParamParts.count < 2 {
+                break
+            }
+            params[tokenizedParamParts[0]] = tokenizedParamParts[1]
+            i += 1
+        }
+        return params
     }
 }
 
