@@ -23,8 +23,6 @@ struct ConfigExplorer {
                 return ConfigExplorerConstants.etherscanRopsten + "/tx/" + ID
             case .poa:
                 return ConfigExplorerConstants.poaMain + "/tx/" + ID
-            case .poaTest:
-                return ConfigExplorerConstants.poaTest + "/tx/" + ID
             }
         }()
         return URL(string: urlString)!

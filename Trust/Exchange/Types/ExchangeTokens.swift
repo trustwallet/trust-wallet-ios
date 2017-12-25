@@ -5,7 +5,7 @@ import Foundation
 struct ExchangeTokens {
     static func get(for server: RPCServer) -> [ExchangeToken] {
         switch server {
-        case .main, .ropsten, .poa, .poaTest:
+        case .main, .ropsten, .poa:
             return [
                 ExchangeToken(name: "Ethereum", address: Address(address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"), symbol: "ETH", image: R.image.token_eth(), decimals: 18),
             ]

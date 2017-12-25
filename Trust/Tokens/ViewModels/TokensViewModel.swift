@@ -81,7 +81,7 @@ struct TokensViewModel {
     }
 
     var footerTitle: String {
-        return NSLocalizedString("tokens.footer.label.title", value: "Missing token?", comment: "")
+        return NSLocalizedString("tokens.footer.label.title", value: "Tokens will appear automagically. + to add manually.", comment: "")
     }
 
     var footerTextColor: UIColor {
@@ -89,6 +89,6 @@ struct TokensViewModel {
     }
 
     var footerTextFont: UIFont {
-        return UIFont.systemFont(ofSize: 14, weight: .light)
+        return UIFont.systemFont(ofSize: 13, weight: .light)
     }
 }

@@ -105,7 +105,11 @@ class InCoordinator: Coordinator {
             tabBarController.viewControllers?.append(exchangeCoordinator.navigationController)
         }
 
-        let settingsCoordinator = SettingsCoordinator(keystore: keystore)
+        let settingsCoordinator = SettingsCoordinator(
+            keystore: keystore,
+            session: session,
+            storage: transactionsStorage
+        )
         settingsCoordinator.rootViewController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("settings.navigation.title", value: "Settings", comment: ""),
             image: R.image.settings_icon(),
@@ -159,19 +163,12 @@ extension InCoordinator: TransactionCoordinatorDelegate {
         coordinator.stop()
         removeAllCoordinators()
     }
-
-    func didRestart(with account: Account, in coordinator: TransactionCoordinator) {
-        restart(for: account, in: coordinator)
-    }
-
-    func didUpdateAccounts(in coordinator: TransactionCoordinator) {
-        delegate?.didUpdateAccounts(in: self)
-    }
 }
 
 extension InCoordinator: SettingsCoordinatorDelegate {
     func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator) {
         switch action {
+        case .wallets: break
         case .RPCServer:
             removeCoordinator(coordinator)
             guard let transactionCoordinator = transactionCoordinator else { return }
@@ -187,5 +184,14 @@ extension InCoordinator: SettingsCoordinatorDelegate {
     func didCancel(in coordinator: SettingsCoordinator) {
         removeCoordinator(coordinator)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+    }
+
+    func didRestart(with account: Account, in coordinator: SettingsCoordinator) {
+        guard let transactionCoordinator = transactionCoordinator else { return }
+        restart(for: account, in: transactionCoordinator)
+    }
+
+    func didUpdateAccounts(in coordinator: SettingsCoordinator) {
+        delegate?.didUpdateAccounts(in: self)
     }
 }

@@ -51,7 +51,7 @@ struct TransactionDetailsViewModel {
 
     var detailsAvailable: Bool {
         switch config.server {
-        case .main, .kovan, .poaTest, .ropsten: return true
+        case .main, .kovan, .ropsten: return true
         case .poa: return false
         }
     }
@@ -94,5 +94,9 @@ struct TransactionDetailsViewModel {
 
     var amountAttributedString: NSAttributedString {
         return transactionViewModel.fullAmountAttributedString
+    }
+
+    var shareItem: URL {
+        return detailsURL
     }
 }

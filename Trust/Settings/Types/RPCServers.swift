@@ -7,7 +7,6 @@ enum RPCServer: String {
     case kovan
     case ropsten
     case poa
-    case poaTest
 
     var chainID: Int {
         switch self {
@@ -15,7 +14,6 @@ enum RPCServer: String {
         case .kovan: return 42
         case .ropsten: return 3
         case .poa: return 99
-        case .poaTest: return 12648430
         }
     }
 
@@ -24,14 +22,14 @@ enum RPCServer: String {
         case .main: return "Ethereum"
         case .kovan: return "Kovan"
         case .ropsten: return "Ropsten"
-        case .poa, .poaTest: return "POA Network"
+        case .poa: return "POA Network"
         }
     }
 
     var isTestNetwork: Bool {
         switch self {
         case .main, .poa: return false
-        case .kovan, .ropsten, .poaTest: return true
+        case .kovan, .ropsten: return true
         }
     }
 
@@ -39,7 +37,7 @@ enum RPCServer: String {
         switch self {
         case .main: return "ETH"
         case .kovan, .ropsten: return "ETH"
-        case .poa, .poaTest: return "POA"
+        case .poa: return "POA"
         }
     }
 
@@ -54,7 +52,6 @@ enum RPCServer: String {
             case RPCServer.kovan.name: return .kovan
             case RPCServer.ropsten.name: return .ropsten
             case RPCServer.poa.name: return .poa
-            case RPCServer.poaTest.name: return .poaTest
             default: return .main
             }
         }()
@@ -67,7 +64,6 @@ enum RPCServer: String {
             case RPCServer.kovan.chainID: return .kovan
             case RPCServer.ropsten.chainID: return .ropsten
             case RPCServer.poa.chainID: return .poa
-            case RPCServer.poaTest.chainID: return .poaTest
             default: return .main
             }
         }()

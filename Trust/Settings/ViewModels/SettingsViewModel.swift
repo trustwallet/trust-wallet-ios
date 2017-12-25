@@ -12,24 +12,13 @@ struct SettingsViewModel {
         self.isDebug = isDebug
     }
 
-    var servers: [String] {
-        let list: [RPCServer] = {
-            if isDebug {
-                return [
-                    RPCServer.main,
-                    RPCServer.kovan,
-                    RPCServer.ropsten,
-                    RPCServer.poaTest,
-                ]
-            }
-            return [
-                RPCServer.main,
-                RPCServer.poa,
-                RPCServer.kovan,
-                RPCServer.ropsten,
-            ]
-        }()
-        return list.map { $0.name }
+    var servers: [RPCServer] {
+        return [
+            RPCServer.main,
+            RPCServer.poa,
+            RPCServer.kovan,
+            RPCServer.ropsten,
+        ]
     }
 
     var passcodeTitle: String {
@@ -42,5 +31,9 @@ struct SettingsViewModel {
         case .none:
             return NSLocalizedString("settings.biometricsDisabled.label.title", value: "Passcode", comment: "")
         }
+    }
+
+    var networkTitle: String {
+        return NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
     }
 }

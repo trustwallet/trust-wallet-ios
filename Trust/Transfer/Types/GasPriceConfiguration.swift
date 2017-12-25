@@ -8,4 +8,3 @@ public struct GasPriceConfiguration {
     static let min: BigInt = EtherNumberFormatter.full.number(from: "1", units: UnitConfiguration.gasPriceUnit)!
     static let max: BigInt = EtherNumberFormatter.full.number(from: "120", units: UnitConfiguration.gasPriceUnit)!
 }
-
