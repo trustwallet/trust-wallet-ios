@@ -28,7 +28,7 @@ struct TokensViewModel {
         guard let tickers = tickers else { return 0 }
         guard !token.valueBigInt.isZero, let price = tickers[token.symbol] else { return 0 }
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
-        let priceInUsd = Double(price.price) ?? 0
+        let price = Double(price.price) ?? 0
         return tokenValue * priceInUsd
     }
 
