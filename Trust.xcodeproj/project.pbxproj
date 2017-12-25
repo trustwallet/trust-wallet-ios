@@ -161,7 +161,6 @@
 		298542E81FBAD0B200CB5081 /* OperationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542E71FBAD0B200CB5081 /* OperationType.swift */; };
 		298542F31FBD594D00CB5081 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F21FBD594D00CB5081 /* SettingsViewModel.swift */; };
 		298542F51FBD8E6A00CB5081 /* ConfigExplorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F41FBD8E6A00CB5081 /* ConfigExplorer.swift */; };
-		298542F71FBD8FD700CB5081 /* ConfigExplorerConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F61FBD8FD700CB5081 /* ConfigExplorerConstants.swift */; };
 		298542F91FBE9A0100CB5081 /* CryptoAddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542F81FBE9A0100CB5081 /* CryptoAddressValidator.swift */; };
 		298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FA1FBEA03300CB5081 /* SendInputErrors.swift */; };
 		298542FE1FBEADEF00CB5081 /* TransactionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FD1FBEADEF00CB5081 /* TransactionViewModelTests.swift */; };
@@ -293,8 +292,8 @@
 		61F8AA951FCA4C9300488C6E /* BigIntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8AA941FCA4C9300488C6E /* BigIntTests.swift */; };
 		61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */; };
 		61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */; };
-		778EAF7D1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */; };
 		739533971FEFF5FD0084AFAB /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739533961FEFF5FD0084AFAB /* Currency.swift */; };
+		778EAF7D1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */; };
 		CCA4FE331FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE321FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift */; };
 		CCA4FE361FD4282400749AE4 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE351FD4282400749AE4 /* DeviceChecker.swift */; };
 		CCA4FE381FD428B300749AE4 /* JailbreakChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE371FD428B300749AE4 /* JailbreakChecker.swift */; };
@@ -481,7 +480,6 @@
 		298542E71FBAD0B200CB5081 /* OperationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationType.swift; sourceTree = "<group>"; };
 		298542F21FBD594D00CB5081 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		298542F41FBD8E6A00CB5081 /* ConfigExplorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigExplorer.swift; sourceTree = "<group>"; };
-		298542F61FBD8FD700CB5081 /* ConfigExplorerConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigExplorerConstants.swift; sourceTree = "<group>"; };
 		298542F81FBE9A0100CB5081 /* CryptoAddressValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoAddressValidator.swift; sourceTree = "<group>"; };
 		298542FA1FBEA03300CB5081 /* SendInputErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInputErrors.swift; sourceTree = "<group>"; };
 		298542FD1FBEADEF00CB5081 /* TransactionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModelTests.swift; sourceTree = "<group>"; };
@@ -617,8 +615,8 @@
 		61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherNumberFormatter.swift; sourceTree = "<group>"; };
 		61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherNumberFormatterTests.swift; sourceTree = "<group>"; };
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinatorTests.swift; sourceTree = "<group>"; };
 		739533961FEFF5FD0084AFAB /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinatorTests.swift; sourceTree = "<group>"; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1710,7 +1708,6 @@
 				290B2B661F9266630053C83E /* SettingsAction.swift */,
 				29AD8A031F93D6CD008E10E7 /* Constants.swift */,
 				298542F41FBD8E6A00CB5081 /* ConfigExplorer.swift */,
-				298542F61FBD8FD700CB5081 /* ConfigExplorerConstants.swift */,
 				298542FA1FBEA03300CB5081 /* SendInputErrors.swift */,
 				293112111FC4F48400966EEA /* ServiceProvider.swift */,
 				2931122D1FC94E4200966EEA /* SettingsError.swift */,
@@ -2316,7 +2313,6 @@
 				296105931FA2AA2100292494 /* SignTransaction.swift in Sources */,
 				296105951FA2DEF000292494 /* TransactionDirection.swift in Sources */,
 				291ED08B1F6F5D2100E7E93A /* Bundle.swift in Sources */,
-				298542F71FBD8FD700CB5081 /* ConfigExplorerConstants.swift in Sources */,
 				299B5E2F1FCBC0790051361C /* TokenBalance.swift in Sources */,
 				293B8B451F70A20200356286 /* TransactionViewCell.swift in Sources */,
 				29FC0CB81F8299510036089F /* Coordinator.swift in Sources */,
