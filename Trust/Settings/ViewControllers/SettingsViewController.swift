@@ -88,7 +88,10 @@ class SettingsViewController: FormViewController {
                     return value
                 }
             }.onChange { row in
-                self.config.currency = Currency(rawValue: row.value ?? "USD")!
+                guard let value = row.value else {
+                    return
+                }
+                self.config.currency = Currency(value: value)
                 self.run(action: .currency)
             }.onPresent { _, selectorController in
                 selectorController.enableDeselection = false
