@@ -93,7 +93,7 @@ class SettingsViewController: FormViewController {
             }.onPresent { _, selectorController in
                 selectorController.enableDeselection = false
             }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_server()
+                cell.imageView?.image = R.image.settingsCurrency()
             }
 
             <<< AppFormAppearance.button { button in
