@@ -26,9 +26,10 @@ struct TokensViewModel {
 
     private func amount(for token: TokenObject) -> Double {
         guard let tickers = tickers else { return 0 }
-        guard !token.valueBigInt.isZero, let price = tickers[token.symbol] else { return 0 }
+        guard !token.valueBigInt.isZero, let tickersSymbol = tickers[token.symbol] else { return 0 }
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
-        return tokenValue * price.priceUSD
+        let price = Double(tickersSymbol.price) ?? 0
+        return tokenValue * price
     }
 
     var headerBalance: String {

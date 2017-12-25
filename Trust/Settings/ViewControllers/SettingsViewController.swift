@@ -70,12 +70,33 @@ class SettingsViewController: FormViewController {
                 selectorController.enableDeselection = false
                 selectorController.sectionKeyForValue = { option in
                     switch option {
-                    case .main, .poa: return ""
+                    case .main, .classic, .poa: return ""
                     case .kovan, .ropsten: return NSLocalizedString("settings.network.test.label.title", value: "Test", comment: "")
                     }
                 }
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_server()
+            }
+
+            +++ Section(NSLocalizedString("settings.currency.button.title", value: "Currency", comment: ""))
+
+            <<< PushRow<String> {
+                $0.title = NSLocalizedString("settings.currency.button.title", value: "Currency", comment: "")
+                $0.options = viewModel.currency
+                $0.value = config.currency.rawValue
+                $0.displayValueFor = { value in
+                    return value
+                }
+            }.onChange { row in
+                guard let value = row.value else {
+                    return
+                }
+                self.config.currency = Currency(value: value)
+                self.run(action: .currency)
+            }.onPresent { _, selectorController in
+                selectorController.enableDeselection = false
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settingsCurrency()
             }
 
             <<< AppFormAppearance.button { button in

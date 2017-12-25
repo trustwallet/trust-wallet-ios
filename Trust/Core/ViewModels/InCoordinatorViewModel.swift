@@ -12,7 +12,7 @@ struct InCoordinatorViewModel {
 
     var tokensAvailable: Bool {
         switch config.server {
-        case .main, .kovan, .ropsten, .poa: return true
+        case .main, .classic, .kovan, .ropsten, .poa: return true
         }
     }
 
@@ -22,7 +22,7 @@ struct InCoordinatorViewModel {
 
     var exchangeAvailable: Bool {
         switch config.server {
-        case .main, .ropsten, .poa: return false
+        case .main, .classic, .ropsten, .poa: return false
         case .kovan: return false //config.isDebugEnabled
         }
     }

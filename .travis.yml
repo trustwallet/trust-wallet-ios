@@ -12,6 +12,7 @@ cache:
   - bundler
 
 before_install:
+  - pod install --repo-update
   - brew update
   - brew install swiftlint || true
 

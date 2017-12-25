@@ -15,10 +15,15 @@ struct SettingsViewModel {
     var servers: [RPCServer] {
         return [
             RPCServer.main,
+            RPCServer.classic,
             RPCServer.poa,
             RPCServer.kovan,
             RPCServer.ropsten,
         ]
+    }
+
+    var currency: [String] {
+        return Currency.allValues.map { $0.rawValue }.sorted()
     }
 
     var passcodeTitle: String {
