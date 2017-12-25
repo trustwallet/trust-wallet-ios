@@ -48,7 +48,6 @@ struct Config {
             case .kovan: return "https://kovan.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .ropsten: return "https://ropsten.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .poa: return "https://core.poa.network"
-            case .poaTest: return "http://testnet.oracles.org:8545"
             }
         }()
         return URL(string: urlString)!
@@ -61,7 +60,6 @@ struct Config {
             case .kovan: return "https://kovan.trustwalletapp.com"
             case .ropsten: return "https://ropsten.trustwalletapp.com"
             case .poa: return "https://poa.trustwalletapp.com"
-            case .poaTest: return "https://poa-test.trustwalletapp.com"
             }
         }()
         return URL(string: urlString)!

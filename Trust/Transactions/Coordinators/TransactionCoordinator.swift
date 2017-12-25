@@ -160,4 +160,3 @@ extension TransactionCoordinator: PaymentCoordinatorDelegate {
         removeCoordinator(coordinator)
     }
 }
-

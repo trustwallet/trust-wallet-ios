@@ -41,34 +41,39 @@ class SettingsViewController: FormViewController {
         self.session = session
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // swiftlint:disable:next function_body_length
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = NSLocalizedString("settings.navigation.title", value: "Settings", comment: "")
         let account = session.account
-        
+
         form = Section()
 
-            <<< PushRow<String> {
+            <<< PushRow<RPCServer> {
                 $0.title = viewModel.networkTitle
                 $0.options = viewModel.servers
-                $0.value = RPCServer(chainID: config.chainID).name
+                $0.value = RPCServer(chainID: config.chainID)
                 $0.selectorTitle = viewModel.networkTitle
                 $0.displayValueFor = { value in
-                    let network = RPCServer(name: value ?? "")
-                    return network.name + (network.isTestNetwork ? " (Test)" : "")
+                    return value?.name
                 }
             }.onChange { row in
-                self.config.chainID = RPCServer(name: row.value ?? "").chainID
+                self.config.chainID = row.value?.chainID ?? RPCServer.main.chainID
                 self.run(action: .RPCServer)
             }.onPresent { _, selectorController in
                 selectorController.enableDeselection = false
+                selectorController.sectionKeyForValue = { option in
+                    switch option {
+                    case .main, .poa: return ""
+                    case .kovan, .ropsten: return NSLocalizedString("settings.network.test.label.title", value: "Test", comment: "")
+                    }
+                }
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_server()
             }

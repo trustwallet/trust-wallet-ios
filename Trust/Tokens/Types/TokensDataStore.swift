@@ -85,7 +85,7 @@ class TokensDataStore {
                 }
             }
             updatePrices()
-        case .kovan, .poa, .poaTest, .ropsten:
+        case .kovan, .poa, .ropsten:
             self.refreshBalance()
         }
     }
