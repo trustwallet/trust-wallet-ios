@@ -89,6 +89,6 @@ struct TokensViewModel {
     }
 
     var footerTextFont: UIFont {
-        return UIFont.systemFont(ofSize: 14, weight: .light)
+        return UIFont.systemFont(ofSize: 13, weight: .light)
     }
 }
