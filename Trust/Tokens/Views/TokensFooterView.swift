@@ -1,33 +1,32 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
-import Foundation
 import UIKit
 
-class TokensHeaderView: UIView {
+class TokensFooterView: UIView {
 
-    lazy var amountLabel: UILabel = {
+    lazy var textLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.textColor = Colors.black
         label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        amountLabel.translatesAutoresizingMaskIntoConstraints = false
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
 
         let stackView = UIStackView(arrangedSubviews: [
-            amountLabel,
+            textLabel,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin + 10),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -StyleLayout.sideMargin - 10),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -StyleLayout.sideMargin),
         ])
     }
 

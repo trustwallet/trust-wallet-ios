@@ -2,23 +2,9 @@
 
 import Foundation
 
-protocol JSONable {
-    var dict: [String: Any] { get }
-}
-
-struct PushDevice: JSONable {
-
+struct PushDevice: Encodable {
     let deviceID: String
     let token: String
     let wallets: [String]
     let chainID: Int
-
-    var dict: [String: Any] {
-        return [
-            "deviceID": deviceID,
-            "token": token,
-            "wallets": wallets,
-            "chainID": chainID,
-        ]
-    }
 }

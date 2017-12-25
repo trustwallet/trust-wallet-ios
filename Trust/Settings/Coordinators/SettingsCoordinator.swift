@@ -23,7 +23,6 @@ class SettingsCoordinator: Coordinator {
         return controller
     }()
 
-
     init(
         navigationController: UINavigationController = NavigationController(),
         keystore: Keystore
