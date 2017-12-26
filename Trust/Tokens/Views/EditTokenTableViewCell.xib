@@ -12,50 +12,51 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="90" id="KGk-i7-Jjw" customClass="EditTokenTableViewCell" customModule="Trust" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="319" height="90"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" id="KGk-i7-Jjw" customClass="EditTokenTableViewCell" customModule="Trust" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="319" height="80"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="319" height="89.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="319" height="79.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gzC-hL-qRv">
-                        <rect key="frame" x="80" y="35" width="166" height="21"/>
+                        <rect key="frame" x="72" y="29" width="180" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tfc-cq-2hm">
+                        <rect key="frame" x="15" y="17" width="45" height="45"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="45" id="5TH-Jm-zEs"/>
+                            <constraint firstAttribute="width" constant="45" id="A0j-qz-MY7"/>
+                        </constraints>
+                    </imageView>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uf5-TC-p3g">
-                        <rect key="frame" x="254" y="29.5" width="51" height="31"/>
+                        <rect key="frame" x="254" y="24" width="51" height="31"/>
                         <connections>
                             <action selector="didChangeSwitch:" destination="KGk-i7-Jjw" eventType="valueChanged" id="RNY-kW-3Zh"/>
                         </connections>
                     </switch>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tfc-cq-2hm">
-                        <rect key="frame" x="16" y="17" width="56" height="56"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="56" id="A0j-qz-MY7"/>
-                        </constraints>
-                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Uf5-TC-p3g" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="4Yf-Ra-pM4"/>
-                    <constraint firstItem="gzC-hL-qRv" firstAttribute="leading" secondItem="Tfc-cq-2hm" secondAttribute="trailing" constant="8" id="EZl-Lo-A2h"/>
-                    <constraint firstItem="Tfc-cq-2hm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Ftm-4F-Eeh"/>
-                    <constraint firstAttribute="bottom" secondItem="Tfc-cq-2hm" secondAttribute="bottom" constant="16.5" id="JfO-rn-j2Z"/>
-                    <constraint firstItem="Uf5-TC-p3g" firstAttribute="leading" secondItem="gzC-hL-qRv" secondAttribute="trailing" constant="8" id="OW7-vs-rbE"/>
+                    <constraint firstItem="gzC-hL-qRv" firstAttribute="leading" secondItem="Tfc-cq-2hm" secondAttribute="trailing" constant="12" id="EZl-Lo-A2h"/>
+                    <constraint firstItem="gzC-hL-qRv" firstAttribute="centerY" secondItem="Tfc-cq-2hm" secondAttribute="centerY" id="LSb-Tt-KSi"/>
+                    <constraint firstItem="Uf5-TC-p3g" firstAttribute="leading" secondItem="gzC-hL-qRv" secondAttribute="trailing" constant="2" id="OW7-vs-rbE"/>
                     <constraint firstAttribute="trailing" secondItem="Uf5-TC-p3g" secondAttribute="trailing" constant="16" id="cbB-Nl-ZxG"/>
-                    <constraint firstItem="Tfc-cq-2hm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="17" id="qhR-gC-pFJ"/>
-                    <constraint firstItem="gzC-hL-qRv" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="u4n-Ro-jZb"/>
+                    <constraint firstItem="Tfc-cq-2hm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="lkE-uI-Jdn"/>
+                    <constraint firstItem="Uf5-TC-p3g" firstAttribute="centerY" secondItem="Tfc-cq-2hm" secondAttribute="centerY" id="n2o-94-kkp"/>
+                    <constraint firstItem="Tfc-cq-2hm" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xo3-Af-dLY"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="tokenEnableSwitch" destination="Uf5-TC-p3g" id="Lcf-e0-JTA"/>
                 <outlet property="tokenImageView" destination="Tfc-cq-2hm" id="QtY-sC-dhw"/>
                 <outlet property="tokenLabel" destination="gzC-hL-qRv" id="cHh-cJ-bga"/>
             </connections>
-            <point key="canvasLocation" x="33.5" y="77"/>
+            <point key="canvasLocation" x="33.5" y="72"/>
         </tableViewCell>
     </objects>
 </document>

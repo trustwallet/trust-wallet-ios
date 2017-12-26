@@ -137,6 +137,10 @@ class TokensDataStore {
         )
     }
 
+    func coinTicker(for token: TokenObject) -> CoinTicker? {
+        return tickers?[token.symbol]
+    }
+
     func handleError(error: Error) {
         delegate?.didUpdate(result: .failure(TokenError.failedToFetch))
     }
@@ -153,7 +157,7 @@ class TokensDataStore {
     }
 
     func updatePrices() {
-        var symbols = enabledObject.map { $0.symbol }
+        var symbols = objects.map { $0.symbol }
         symbols.append(Config().server.symbol)
         provider.request(.prices(currency: Config().currency, symbols: symbols)) { result in
             guard  case .success(let response) = result else { return }

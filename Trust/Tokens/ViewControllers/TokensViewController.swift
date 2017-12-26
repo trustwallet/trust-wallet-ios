@@ -43,7 +43,6 @@ class TokensViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
-        tableView.rowHeight = 72
         view.addSubview(tableView)
 
         NSLayoutConstraint.activate([

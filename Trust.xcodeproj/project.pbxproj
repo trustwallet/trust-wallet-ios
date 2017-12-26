@@ -1014,13 +1014,6 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
-		294DFBAA1FE6F1AD004CEB56 /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Storage;
-			sourceTree = "<group>";
-		};
 		295247DB1F8326C8007FDC31 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1073,7 +1066,6 @@
 		296106C01F7640240006164B /* Tokens */ = {
 			isa = PBXGroup;
 			children = (
-				294DFBAA1FE6F1AD004CEB56 /* Storage */,
 				29F114EA1FA448DE00114A29 /* Coordinators */,
 				2977CAF31F7E0C5D009682A0 /* Types */,
 				2977CAF21F7E0C3A009682A0 /* ViewModels */,

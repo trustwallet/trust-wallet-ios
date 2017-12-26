@@ -57,7 +57,7 @@ struct TokenViewCellViewModel {
     }
 
     var percentChangeFont: UIFont {
-        return UIFont.systemFont(ofSize: 16, weight: .regular)
+        return UIFont.systemFont(ofSize: 14, weight: .light)
     }
 
     var amountTextColor: UIColor {
@@ -85,9 +85,6 @@ struct TokenViewCellViewModel {
     }
 
     var imageUrl: URL? {
-        guard let ticker = self.ticker else {
-            return nil
-        }
-        return URL(string: CoinTicker.tokenLogoPath + ticker.name.lowercased() + ".png")
+        return ticker?.imageURL
     }
 }

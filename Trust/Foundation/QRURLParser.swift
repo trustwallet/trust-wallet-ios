@@ -39,7 +39,7 @@ struct QRURLParser {
         }
         return from.substring(to: AddressValidatorType.ethereum.addressLength)
     }
-    
+
     private static func parseParamsFromParamParts(paramParts: [String]) -> [String: String] {
         if paramParts.isEmpty {
             return [:]
