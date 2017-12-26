@@ -14,6 +14,8 @@ class SettingsViewController: FormViewController {
 
     struct Values {
         static let donationAddress = Address(address: "0x9f8284ce2cf0c8ce10685f537b1fff418104a317")
+        static let currencyPopularKey = "0"
+        static let currencyAllKey = "1"
     }
 
     private var config = Config()
@@ -78,27 +80,6 @@ class SettingsViewController: FormViewController {
                 cell.imageView?.image = R.image.settings_server()
             }
 
-            +++ Section(NSLocalizedString("settings.currency.button.title", value: "Currency", comment: ""))
-
-            <<< PushRow<String> {
-                $0.title = NSLocalizedString("settings.currency.button.title", value: "Currency", comment: "")
-                $0.options = viewModel.currency
-                $0.value = config.currency.rawValue
-                $0.displayValueFor = { value in
-                    return value
-                }
-            }.onChange { row in
-                guard let value = row.value else {
-                    return
-                }
-                self.config.currency = Currency(value: value)
-                self.run(action: .currency)
-            }.onPresent { _, selectorController in
-                selectorController.enableDeselection = false
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settingsCurrency()
-            }
-
             <<< AppFormAppearance.button { button in
                 button.cellStyle = .value1
             }.onCellSelection { [unowned self] _, _ in
@@ -109,6 +90,41 @@ class SettingsViewController: FormViewController {
                 cell.textLabel?.text = NSLocalizedString("settings.wallets.button.title", value: "Wallets", comment: "")
                 cell.detailTextLabel?.text = String(account.address.address.prefix(8)) + "..."
                 cell.accessoryType = .disclosureIndicator
+            }
+
+            +++ Section()
+
+            <<< PushRow<Currency> {
+                $0.title = viewModel.currencyTitle
+                $0.selectorTitle = viewModel.currencyTitle
+                $0.options = viewModel.currency
+                $0.value = config.currency
+                $0.displayValueFor = { value in
+                    return value?.rawValue
+                }
+            }.onChange { row in
+                guard let value = row.value else { return }
+                self.config.currency = value
+                self.run(action: .currency)
+            }.onPresent { _, selectorController in
+                selectorController.enableDeselection = false
+                selectorController.sectionKeyForValue = { option in
+                    switch option {
+                    case .USD, .EUR, .GBP, .AUD, .RUB: return Values.currencyPopularKey
+                    default: return Values.currencyAllKey
+                    }
+                }
+                selectorController.sectionHeaderTitleForKey = { option in
+                    switch option {
+                    case Values.currencyPopularKey:
+                        return NSLocalizedString("settings.currency.popular.label.title", value: "Popular", comment: "")
+                    case Values.currencyAllKey:
+                        return NSLocalizedString("settings.currency.all.label.title", value: "All", comment: "")
+                    default: return ""
+                    }
+                }
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settingsCurrency()
             }
 
             +++ Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))

@@ -13,13 +13,20 @@ class ExchangeRateCoordinator: NSObject {
     weak var delegate: ExchangeRateCoordinatorDelegate?
 
     private let provider = MoyaProvider<TrustService>()
+    let config: Config
+
+    init(
+        config: Config
+    ) {
+        self.config = config
+    }
 
     func start() {
         fetch()
     }
 
     func fetch() {
-        provider.request(.prices(currency: Config().currency, symbols:["ETH"])) { (result) in
+        provider.request(.prices(currency: Config().currency, symbols:[config.server.symbol])) { (result) in
             guard  case .success(let response) = result else { return }
             do {
                 guard let ticker = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder()).first else { return }

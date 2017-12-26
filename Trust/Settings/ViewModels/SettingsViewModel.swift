@@ -22,8 +22,8 @@ struct SettingsViewModel {
         ]
     }
 
-    var currency: [String] {
-        return Currency.allValues.map { $0.rawValue }.sorted()
+    var currency: [Currency] {
+        return Currency.allValues.map { $0 }
     }
 
     var passcodeTitle: String {
@@ -40,5 +40,9 @@ struct SettingsViewModel {
 
     var networkTitle: String {
         return NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
+    }
+
+    var currencyTitle: String {
+        return NSLocalizedString("settings.currency.button.title", value: "Currency", comment: "")
     }
 }

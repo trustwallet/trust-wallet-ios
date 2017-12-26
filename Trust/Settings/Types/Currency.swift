@@ -37,7 +37,11 @@ enum Currency: String {
     case USD
 
     static let allValues = [
+        USD,
+        EUR,
+        GBP,
         AUD,
+        RUB,
         BRL,
         CAD,
         CHF,
@@ -45,8 +49,6 @@ enum Currency: String {
         CNY,
         CZK,
         DKK,
-        EUR,
-        GBP,
         HKD,
         HUF,
         IDR,
@@ -61,14 +63,12 @@ enum Currency: String {
         PHP,
         PKR,
         PLN,
-        RUB,
         SEK,
         SGD,
         THB,
         TRY,
         TWD,
         ZAR,
-        USD,
     ]
 
     init(value: String) {
