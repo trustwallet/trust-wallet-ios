@@ -100,7 +100,12 @@ class SettingsViewController: FormViewController {
                 $0.options = viewModel.currency
                 $0.value = config.currency
                 $0.displayValueFor = { value in
-                    return value?.rawValue
+                    let currencyCode = value?.rawValue ?? ""
+                    if #available(iOS 10.0, *) {
+                        return currencyCode + " - " + (NSLocale.current.localizedString(forCurrencyCode: currencyCode) ?? "")
+                    } else {
+                        return currencyCode
+                    }
                 }
             }.onChange { row in
                 guard let value = row.value else { return }
