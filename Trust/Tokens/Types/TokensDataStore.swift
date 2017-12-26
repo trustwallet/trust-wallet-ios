@@ -80,8 +80,7 @@ class TokensDataStore {
                 case .success(let response):
                     self.update(tokens: response)
                     self.refreshBalance()
-                case .failure(let error):
-                    self.handleError(error: error)
+                case .failure: break
                 }
             }
             updatePrices()
@@ -104,8 +103,7 @@ class TokensDataStore {
                 switch result {
                 case .success(let balance):
                     self.update(token: tokenObject, action: .value(balance))
-                case .failure(let error):
-                    self.handleError(error: error)
+                case .failure: break
                 }
                 count += 1
                 if count == updateTokens.count {
@@ -159,8 +157,9 @@ class TokensDataStore {
     func updatePrices() {
         var symbols = objects.map { $0.symbol }
         symbols.append(Config().server.symbol)
-        provider.request(.prices(currency: Config().currency, symbols: symbols)) { result in
-            guard  case .success(let response) = result else { return }
+        provider.request(.prices(currency: Config().currency, symbols: symbols)) { [weak self] result in
+            guard let `self` = self else { return }
+            guard case .success(let response) = result else { return }
             do {
                 let tickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
                 self.tickers = tickers.reduce([String: CoinTicker]()) { (dict, ticker) -> [String: CoinTicker] in
