@@ -33,8 +33,7 @@ class PushNotificationsRegistrar {
         let device = PushDevice(
             deviceID: UIDevice.current.identifierForVendor!.uuidString,
             token: "",
-            wallets: [],
-            chainID: config.chainID
+            wallets: []
         )
 
         trustProvider.request(.unregister(device: device)) { _ in }
@@ -49,8 +48,7 @@ class PushNotificationsRegistrar {
         let device = PushDevice(
             deviceID: UIDevice.current.identifierForVendor!.uuidString,
             token: token,
-            wallets: addresses.map { $0.address },
-            chainID: config.chainID
+            wallets: addresses.map { $0.address }
         )
 
         trustProvider.request(.register(device: device)) { _ in }
