@@ -70,7 +70,7 @@ class InCoordinator: Coordinator {
         }
 
         if inCoordinatorViewModel.browserAvailable {
-            let coordinator = BrowserCoordinator()
+            let coordinator = BrowserCoordinator(session: session)
             coordinator.start()
             coordinator.rootViewController.tabBarItem = UITabBarItem(
                 title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),

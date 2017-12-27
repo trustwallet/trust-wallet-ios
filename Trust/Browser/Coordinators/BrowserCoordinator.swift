@@ -6,13 +6,18 @@ import UIKit
 class BrowserCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
 
+    let session: WalletSession
     let navigationController: UINavigationController
-    let rootViewController = BrowserViewController()
+    lazy var rootViewController: BrowserViewController = {
+        return BrowserViewController(session: self.session)
+    }()
 
     init(
-        navigationController: UINavigationController = NavigationController()
+        navigationController: UINavigationController = NavigationController(),
+        session: WalletSession
     ) {
         self.navigationController = navigationController
+        self.session = session
     }
 
     func start() {
