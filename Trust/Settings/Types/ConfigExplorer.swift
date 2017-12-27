@@ -19,7 +19,7 @@ struct ConfigExplorer {
             case .main:
                 return endpoint + "/tx/" + ID
             case .classic:
-                return endpoint + "/txt" + ID
+                return endpoint + "/tx/" + ID
             case .kovan:
                 return endpoint + "/tx/" + ID
             case .ropsten:
