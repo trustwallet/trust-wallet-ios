@@ -55,7 +55,7 @@
 "send.paste.button.title" = "Вставить";
 "send.recipientAddress.textField.placeholder" = "Адрес Получателя";
 "settings.biometricsDisabled.label.title" = "Код доступа";
-"settings.biometricsEnabled.label.title" = "Код доступа / [%с])";
+"settings.biometricsEnabled.label.title" = "Код доступа / %@";
 "settings.community.label.title" = "Сообщество";
 "settings.donate.button.title" = "Пожертвовать";
 "settings.emailUs.button.title" = "Напишите Нам";

@@ -54,7 +54,7 @@
 "send.paste.button.title" = "Pegar";
 "send.recipientAddress.textField.placeholder" = "Dirección del destinatario";
 "settings.biometricsDisabled.label.title" = "Código de acceso";
-"settings.biometricsEnabled.label.title" = "Código de acceso / %@ )";
+"settings.biometricsEnabled.label.title" = "Código de acceso / %@";
 "settings.community.label.title" = "Comunidad";
 "settings.donate.button.title" = "Donar";
 "settings.emailUs.button.title" = "Envíanos un email";
