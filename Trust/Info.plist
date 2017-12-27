@@ -16,6 +16,8 @@
 		</dict>
 		</array>
 	</dict>
+	<key>com.apple.security.get-task-allow</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

@@ -294,6 +294,7 @@
 		61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */; };
 		739533971FEFF5FD0084AFAB /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739533961FEFF5FD0084AFAB /* Currency.swift */; };
 		778EAF7D1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */; };
+		778EAF831FF379AA00C8E2AB /* web3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 778EAF821FF379AA00C8E2AB /* web3.min.js */; };
 		CCA4FE331FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE321FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift */; };
 		CCA4FE361FD4282400749AE4 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE351FD4282400749AE4 /* DeviceChecker.swift */; };
 		CCA4FE381FD428B300749AE4 /* JailbreakChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE371FD428B300749AE4 /* JailbreakChecker.swift */; };
@@ -617,6 +618,7 @@
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		739533961FEFF5FD0084AFAB /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinatorTests.swift; sourceTree = "<group>"; };
+		778EAF821FF379AA00C8E2AB /* web3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = web3.min.js; sourceTree = "<group>"; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -816,6 +818,7 @@
 		291794F61F95DBFC00539A30 /* html */ = {
 			isa = PBXGroup;
 			children = (
+				778EAF821FF379AA00C8E2AB /* web3.min.js */,
 				291794F71F95DC0200539A30 /* index.html */,
 			);
 			path = html;
@@ -1979,6 +1982,7 @@
 				613D04891FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer in Resources */,
 				291794FC1F95DE5F00539A30 /* index.html in Resources */,
 				296106CE1F777E410006164B /* LaunchScreen.storyboard in Resources */,
+				778EAF831FF379AA00C8E2AB /* web3.min.js in Resources */,
 				290B2B541F8F50030053C83E /* Localizable.strings in Resources */,
 				2912CD021F6A830700C6CBE3 /* Assets.xcassets in Resources */,
 				29F1C8481FEB6664003780D8 /* EditTokenTableViewCell.xib in Resources */,
