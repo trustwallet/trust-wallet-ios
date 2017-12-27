@@ -6,7 +6,7 @@ import WebKit
 
 class BrowserViewController: UIViewController {
 
-    //let session: WalletSession
+    let session: WalletSession
 
     enum Method: String {
         case getAccounts
@@ -37,16 +37,22 @@ class BrowserViewController: UIViewController {
         if let filepath = Bundle.main.path(forResource: "web3.min", ofType: "js") {
             do {
                 js += try String(contentsOfFile: filepath)
-
-                NSLog("Loaded sofa.js")
+                NSLog("Loaded web3.js")
             } catch {
-                NSLog("Failed to load sofa.js")
+                NSLog("Failed to load web.js")
             }
         } else {
-            NSLog("Sofa.js not found in bundle")
+            NSLog("web3.js not found in bundle")
         }
 
-        var userScript: WKUserScript = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
+        js +=
+        """
+        let web3 = new Web3(new Web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)"));
+        web3.eth.defaultAccount = "\(session.account.address.address)"
+        window.web3 = web3
+        """
+
+        let userScript = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
 
         config.userContentController.add(self, name: Method.getAccounts.rawValue)
         config.userContentController.add(self, name: Method.signPersonalMessage.rawValue)
@@ -60,9 +66,9 @@ class BrowserViewController: UIViewController {
     }()
 
     init(
-        //session: WalletSession
+        session: WalletSession
     ) {
-        //self.session = session
+        self.session = session
 
         super.init(nibName: nil, bundle: nil)
 
