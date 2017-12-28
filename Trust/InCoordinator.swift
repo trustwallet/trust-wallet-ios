@@ -95,10 +95,6 @@ class InCoordinator: Coordinator {
             tokenCoordinator.start()
             addCoordinator(tokenCoordinator)
             tabBarController.viewControllers?.append(tokenCoordinator.navigationController)
-
-            if !transactionsStorage.objects.isEmpty {
-                tabBarController.selectedViewController = tokenCoordinator.navigationController
-            }
         }
 
         if inCoordinatorViewModel.exchangeAvailable {
