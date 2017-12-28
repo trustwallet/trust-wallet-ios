@@ -134,7 +134,7 @@ class InCoordinator: Coordinator {
         config.isDebugEnabled = !config.isDebugEnabled
 
         guard let transactionCoordinator = transactionCoordinator else { return }
-        restart(for: initialAccount, in: transactionCoordinator)
+        restart(for: transactionCoordinator.session.account, in: transactionCoordinator)
     }
 
     func restart(for account: Account, in coordinator: TransactionCoordinator) {
