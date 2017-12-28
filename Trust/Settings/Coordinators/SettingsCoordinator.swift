@@ -7,6 +7,7 @@ protocol SettingsCoordinatorDelegate: class {
     func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator)
     func didRestart(with account: Account, in coordinator: SettingsCoordinator)
     func didUpdateAccounts(in coordinator: SettingsCoordinator)
+    func didCancel(in coordinator: SettingsCoordinator)
 }
 
 class SettingsCoordinator: Coordinator {
@@ -86,6 +87,7 @@ extension SettingsCoordinator: AccountsCoordinatorDelegate {
         delegate?.didUpdateAccounts(in: self)
         guard !coordinator.accountsViewController.hasAccounts else { return }
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        delegate?.didCancel(in: self)
     }
 
     func didCancel(in coordinator: AccountsCoordinator) {

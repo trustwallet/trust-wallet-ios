@@ -184,6 +184,7 @@ extension InCoordinator: SettingsCoordinatorDelegate {
     func didCancel(in coordinator: SettingsCoordinator) {
         removeCoordinator(coordinator)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        delegate?.didCancel(in: self)
     }
 
     func didRestart(with account: Account, in coordinator: SettingsCoordinator) {
