@@ -19,7 +19,13 @@ class Screenshots: XCTestCase {
         app.buttons["import-wallet"].tap()
 
         snapshot("3ImportWallet")
-        sleep(6)
+        sleep(3)
+
+        app.tabBars.buttons.element(boundBy: 1).tap()
+
+        sleep(1)
+
+        app.tabBars.buttons.element(boundBy: 0).tap()
 
         app.buttons["send-button"].tap()
         app.tables.textFields["amount-field"].tap()
@@ -31,7 +37,7 @@ class Screenshots: XCTestCase {
         snapshot("4Transactions")
 
         app.tabBars.buttons.element(boundBy: 1).tap()
-        sleep(8)
+
         snapshot("2Tokens")
     }
 }
