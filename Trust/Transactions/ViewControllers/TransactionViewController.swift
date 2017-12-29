@@ -63,7 +63,9 @@ class TransactionViewController: UIViewController {
 
         displayChildViewController(viewController: stackViewController)
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
+        if viewModel.shareAvailable {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
+        }
     }
 
     private func item(title: String, value: String) -> UIView {

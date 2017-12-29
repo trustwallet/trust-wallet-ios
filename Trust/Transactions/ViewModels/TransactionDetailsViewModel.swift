@@ -56,6 +56,10 @@ struct TransactionDetailsViewModel {
         }
     }
 
+    var shareAvailable: Bool {
+        return detailsAvailable
+    }
+
     var detailsURL: URL {
         return ConfigExplorer(server: config.server).transactionURL(for: transaction.id)
     }
