@@ -13,7 +13,6 @@ protocol SettingsViewControllerDelegate: class {
 class SettingsViewController: FormViewController {
 
     struct Values {
-        static let donationAddress = Address(address: "0x9f8284ce2cf0c8ce10685f537b1fff418104a317")
         static let currencyPopularKey = "0"
         static let currencyAllKey = "1"
     }
@@ -200,14 +199,6 @@ class SettingsViewController: FormViewController {
                 self.sendUsEmail()
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_email()
-            }
-
-            <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("settings.donate.button.title", value: "Donate", comment: "")
-            }.onCellSelection { [unowned self] _, _ in
-                self.run(action: .donate(address: Values.donationAddress))
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_donate()
             }
 
             <<< link(

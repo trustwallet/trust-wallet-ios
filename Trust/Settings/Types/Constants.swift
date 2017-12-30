@@ -16,6 +16,7 @@ public struct Constants {
 
     // support
     public static let supportEmail = "support@trustwalletapp.com"
+    public static let donationAddress = "0x9f8284ce2cf0c8ce10685f537b1fff418104a317"
 }
 
 public struct UnitConfiguration {

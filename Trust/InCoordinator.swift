@@ -175,9 +175,6 @@ extension InCoordinator: SettingsCoordinatorDelegate {
             restart(for: transactionCoordinator.session.account, in: transactionCoordinator)
         case .pushNotifications:
             break
-        case .donate(let address):
-            guard let transactionCoordinator = transactionCoordinator else { return }
-            transactionCoordinator.showPaymentFlow(for: .send(type: .ether(destination: address)))
         }
     }
 
