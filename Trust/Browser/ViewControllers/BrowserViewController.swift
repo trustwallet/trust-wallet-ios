@@ -4,19 +4,19 @@ import Foundation
 import UIKit
 import WebKit
 
+enum Method: String {
+    //case getAccounts
+    case signTransaction
+    //case signMessage
+}
+
+protocol BrowserViewControllerDelegate: class {
+    func didCall(method: Method)
+}
+
 class BrowserViewController: UIViewController {
 
     let session: WalletSession
-
-    enum Method: String {
-        case getAccounts
-        case signTransaction
-        case signMessage
-        case signPersonalMessage
-        case publishTransaction
-        case approveTransaction
-    }
-
     lazy var webView: WKWebView = {
         let webView = WKWebView(
             frame: .zero,
@@ -49,21 +49,26 @@ class BrowserViewController: UIViewController {
         """
         let web3 = new Web3(new Web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)"));
         web3.eth.defaultAccount = "\(session.account.address.address)"
+        web3.eth.signTransaction = function(tx, callback) {
+            webkit.messageHandlers.signTransaction.postMessage("name")
+        }
         window.web3 = web3
         """
 
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
 
-        config.userContentController.add(self, name: Method.getAccounts.rawValue)
-        config.userContentController.add(self, name: Method.signPersonalMessage.rawValue)
-        config.userContentController.add(self, name: Method.signMessage.rawValue)
+//        config.userContentController.add(self, name: Method.getAccounts.rawValue)
+//        config.userContentController.add(self, name: Method.signPersonalMessage.rawValue)
+//        config.userContentController.add(self, name: Method.signMessage.rawValue)
         config.userContentController.add(self, name: Method.signTransaction.rawValue)
-        config.userContentController.add(self, name: Method.publishTransaction.rawValue)
-        config.userContentController.add(self, name: Method.approveTransaction.rawValue)
+//        config.userContentController.add(self, name: Method.publishTransaction.rawValue)
+//        config.userContentController.add(self, name: Method.approveTransaction.rawValue)
 
         config.userContentController.addUserScript(userScript)
         return config
     }()
+
+    weak var delegate: BrowserViewControllerDelegate?
 
     init(
         session: WalletSession
@@ -82,7 +87,11 @@ class BrowserViewController: UIViewController {
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
 
-        webView.load(URLRequest(url: URL(string: "https://poanetwork.github.io/poa-dapps-validators/")!))
+        //webView.load(URLRequest(url: URL(string: "https://poanetwork.github.io/poa-dapps-validators/")!))
+
+        if let url = Bundle.main.url(forResource: "demo", withExtension: "html") {
+            webView.load(URLRequest(url: url))
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -99,5 +108,8 @@ extension BrowserViewController: WKNavigationDelegate {
 extension BrowserViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         NSLog("message \(message.body)")
+
+        guard let method = Method(rawValue: message.name) else { return }
+        delegate?.didCall(method: method)
     }
 }

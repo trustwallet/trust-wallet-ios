@@ -2,25 +2,75 @@
 
 import Foundation
 import UIKit
+import BigInt
 
 class BrowserCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
 
     let session: WalletSession
+    let keystore: Keystore
     let navigationController: UINavigationController
     lazy var rootViewController: BrowserViewController = {
-        return BrowserViewController(session: self.session)
+        let controller = BrowserViewController(session: self.session)
+        controller.delegate = self
+        return controller
     }()
 
     init(
         navigationController: UINavigationController = NavigationController(),
-        session: WalletSession
+        session: WalletSession,
+        keystore: Keystore
     ) {
         self.navigationController = navigationController
         self.session = session
+        self.keystore = keystore
     }
 
     func start() {
         navigationController.viewControllers = [rootViewController]
+    }
+
+    @objc func dismiss() {
+        navigationController.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension BrowserCoordinator: BrowserViewControllerDelegate {
+    func didCall(method: Method) {
+        switch method {
+        case .signTransaction:
+
+            let transaction = UnconfirmedTransaction(
+                transferType: .ether(destination: .none),
+                value: BigInt(1),
+                address: Address(address: "0x"),
+                account: session.account,
+                chainID: session.config.chainID,
+                data: Data()
+            )
+
+            let configurator = TransactionConfigurator(
+                session: session,
+                transaction: transaction,
+                gasPrice: .none
+            )
+
+            let controller = ConfirmPaymentViewController(
+                session: session,
+                keystore: keystore,
+                configurator: configurator
+            )
+            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+            controller.delegate = self
+
+            let nav = UINavigationController(rootViewController: controller)
+            navigationController.present(nav, animated: true, completion: nil)
+        }
+    }
+}
+
+extension BrowserCoordinator: ConfirmPaymentViewControllerDelegate {
+    func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController) {
+        navigationController.dismiss(animated: true, completion: nil)
     }
 }
