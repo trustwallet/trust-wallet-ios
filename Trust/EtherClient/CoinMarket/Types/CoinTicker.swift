@@ -4,6 +4,7 @@ import Foundation
 import RealmSwift
 
 struct CoinTicker: Codable {
+    let id: String
     let name: String
     let symbol: String
     let price: String
@@ -14,6 +15,6 @@ struct CoinTicker: Codable {
 
 extension CoinTicker {
     var imageURL: URL? {
-        return URL(string: CoinTicker.tokenLogoPath + name.lowercased() + ".png")
+        return URL(string: CoinTicker.tokenLogoPath + id + ".png")
     }
 }
