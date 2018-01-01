@@ -85,6 +85,10 @@ class TransactionsViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //Is not greatest solution. Should be refactor!!!
+        guard errorView == nil, loadingView == nil, emptyView == nil   else {
+            return
+        }
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
         emptyView = {
