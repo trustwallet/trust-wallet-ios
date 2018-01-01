@@ -1,6 +1,8 @@
 PODS:
   - 1PasswordExtension (1.8.5)
   - Alamofire (4.6.0)
+  - Alamofire-Synchronous (4.0.0):
+    - Alamofire (~> 4.0)
   - APIKit (3.1.1):
     - Result (~> 3.0)
   - BigInt (3.0.1):
@@ -18,6 +20,7 @@ PODS:
     - Result (~> 3.0)
   - KeychainSwift (10.0.0)
   - Kingfisher (4.5.0)
+  - libsodium (1.0.12)
   - Lokalise (0.8.0)
   - MBProgressHUD (1.1.0)
   - Moya (10.0.1):
@@ -35,6 +38,7 @@ PODS:
   - RealmSwift (3.0.2):
     - Realm (= 3.0.2)
   - Result (3.2.4)
+  - secp256k1_ios (0.0.7)
   - SeedStackViewController (0.4.0)
   - SipHash (1.2.0)
   - SSKeychain (1.4.1)
@@ -42,6 +46,13 @@ PODS:
   - SwiftLint (0.24.0)
   - VENTouchLock (1.12.0):
     - SSKeychain (~> 1.0)
+  - web3swift (0.2.0):
+    - Alamofire (~> 4.5)
+    - Alamofire-Synchronous (~> 4.0)
+    - BigInt (~> 3.0.1)
+    - CryptoSwift
+    - libsodium
+    - secp256k1_ios (~> 0.0.7)
 
 DEPENDENCIES:
   - 1PasswordExtension
@@ -67,6 +78,7 @@ DEPENDENCIES:
   - StatefulViewController
   - SwiftLint
   - VENTouchLock
+  - web3swift
 
 EXTERNAL SOURCES:
   CryptoSwift:
@@ -92,6 +104,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   1PasswordExtension: 0e95bdea64ec8ff2f4f693be5467a09fac42a83d
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  Alamofire-Synchronous: eedf1e6e961c3795a63c74990b3f7d9fbfac7e50
   APIKit: 7460983f490d3bde6aaaaa4164d18c9865a6f91d
   BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
   BonMot: 3ff354572f2aa9295d3760947f7578490cb810be
@@ -104,6 +117,7 @@ SPEC CHECKSUMS:
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
   Kingfisher: 26ae0473102b77b575da51960c932431e3745407
+  libsodium: 9a8faa5ef2fa0d2d57bd7f7d79bf8fb7c1a9f0ea
   Lokalise: 9547ef438a2d25cfba0b4c02201d3c39b3db35fb
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Moya: 9e621707ff754eeb51ff3ec51a3d54e517c0733a
@@ -113,13 +127,15 @@ SPEC CHECKSUMS:
   Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
   RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  secp256k1_ios: 12a9bddc3d7aa723efbb32b42413f041b11a7765
   SeedStackViewController: 45e88ca1493a610e74d661d3feced7098f72dbd3
   SipHash: c6e9e43e9c531b5bc6602545130c26194a6d31ce
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
   VENTouchLock: 20d378b9c6173e2c054448aeb3fb2f40822a9f3f
+  web3swift: 06aeb9be2c791443b74912f6f8671a0373b064ae
 
-PODFILE CHECKSUM: c450cd81f66ae414970ac4ce8a138d08eb4c8c92
+PODFILE CHECKSUM: a619b1fc4a2ae86244e902c37df685b94f999472
 
 COCOAPODS: 1.3.1
