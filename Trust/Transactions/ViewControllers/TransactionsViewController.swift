@@ -28,6 +28,8 @@ class TransactionsViewController: UIViewController {
     weak var delegate: TransactionsViewControllerDelegate?
     let dataCoordinator: TransactionDataCoordinator
     let session: WalletSession
+    
+    let insets = UIEdgeInsets(top: 130, left: 0, bottom: ButtonSize.extraLarge.height + 84, right: 0)
 
     lazy var footerView: TransactionsFooterView = {
         let footerView = TransactionsFooterView(frame: .zero)
@@ -70,16 +72,6 @@ class TransactionsViewController: UIViewController {
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
-
-        dataCoordinator.delegate = self
-        dataCoordinator.start()
-
-        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-        tableView.addSubview(refreshControl)
-
-        //TODO: Find a way to fix hardcoded 32px value. Use bottom safe inset instead.
-        let insets = UIEdgeInsets(top: 130, left: 0, bottom: ButtonSize.extraLarge.height + 84, right: 0)
-
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
         emptyView = {
@@ -93,13 +85,18 @@ class TransactionsViewController: UIViewController {
             return view
         }()
 
+        dataCoordinator.delegate = self
+        dataCoordinator.start()
+
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+
         navigationItem.titleView = titleView
         titleView.viewModel = BalanceViewModel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         fetch()
     }
 
