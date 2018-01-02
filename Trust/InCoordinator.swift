@@ -20,6 +20,12 @@ class InCoordinator: Coordinator {
     var transactionCoordinator: TransactionCoordinator? {
         return self.coordinators.flatMap { $0 as? TransactionCoordinator }.first
     }
+    lazy var helpUsCoordinator: HelpUsCoordinator = {
+        return HelpUsCoordinator(
+            navigationController: navigationController,
+            appTracker: appTracker
+        )
+    }()
 
     init(
         navigationController: UINavigationController = NavigationController(),
@@ -38,6 +44,9 @@ class InCoordinator: Coordinator {
     func start() {
         showTabBar(for: initialAccount)
         checkDevice()
+
+        helpUsCoordinator.start()
+        addCoordinator(helpUsCoordinator)
     }
 
     func showTabBar(for account: Account) {

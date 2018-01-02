@@ -4,10 +4,11 @@ import Foundation
 import UIKit
 import StoreKit
 
-class HelpUsCoordinator {
+class HelpUsCoordinator: Coordinator {
 
     let navigationController: UINavigationController
     let appTracker: AppTracker
+    var coordinators: [Coordinator] = []
 
     init(
         navigationController: UINavigationController,
