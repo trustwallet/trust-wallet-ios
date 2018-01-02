@@ -293,6 +293,9 @@
 		61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */; };
 		61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */; };
 		739533971FEFF5FD0084AFAB /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739533961FEFF5FD0084AFAB /* Currency.swift */; };
+		771AA9531FFB3EA800D25403 /* HelpUsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA9521FFB3EA800D25403 /* HelpUsCoordinator.swift */; };
+		771AA9551FFB3FB100D25403 /* AppTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA9541FFB3FB100D25403 /* AppTracker.swift */; };
+		771AA9581FFB41C400D25403 /* AppTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA9571FFB41C400D25403 /* AppTrackerTests.swift */; };
 		778EAF7D1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */; };
 		CCA4FE331FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE321FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift */; };
 		CCA4FE361FD4282400749AE4 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE351FD4282400749AE4 /* DeviceChecker.swift */; };
@@ -619,6 +622,9 @@
 		771AA94F1FFB053D00D25403 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		771AA9501FFB054000D25403 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		771AA9511FFB054600D25403 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		771AA9521FFB3EA800D25403 /* HelpUsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpUsCoordinator.swift; sourceTree = "<group>"; };
+		771AA9541FFB3FB100D25403 /* AppTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTracker.swift; sourceTree = "<group>"; };
+		771AA9571FFB41C400D25403 /* AppTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackerTests.swift; sourceTree = "<group>"; };
 		778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinatorTests.swift; sourceTree = "<group>"; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1633,6 +1639,7 @@
 			isa = PBXGroup;
 			children = (
 				29E9CFD11FE737FE00017744 /* TrustRealmConfiguration.swift */,
+				771AA9541FFB3FB100D25403 /* AppTracker.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1781,6 +1788,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		771AA9561FFB41B900D25403 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				771AA9571FFB41C400D25403 /* AppTrackerTests.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
 		778EAF7B1FF10AE000C8E2AB /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
@@ -1805,6 +1820,7 @@
 		CCA4FE301FD3652100749AE4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				771AA9561FFB41B900D25403 /* Types */,
 				CCA4FE311FD3653300749AE4 /* Coordinators */,
 			);
 			path = Core;
@@ -1831,6 +1847,7 @@
 			isa = PBXGroup;
 			children = (
 				CCCD74FC1FD2D38D004A087D /* CheckDeviceCoordinator.swift */,
+				771AA9521FFB3EA800D25403 /* HelpUsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -2308,6 +2325,7 @@
 				29F114EC1FA448F400114A29 /* TokensCoordinator.swift in Sources */,
 				2932488E1F88E69F008A9818 /* OnePasswordError.swift in Sources */,
 				293E62711FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift in Sources */,
+				771AA9551FFB3FB100D25403 /* AppTracker.swift in Sources */,
 				291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */,
 				29BE3FD21F707DC300F6BFC2 /* TransactionDataCoordinator.swift in Sources */,
 				295B61D11FE7B20400642E60 /* TokensHeaderView.swift in Sources */,
@@ -2457,6 +2475,7 @@
 				295247DF1F8326EF007FDC31 /* AccountViewCell.swift in Sources */,
 				2981C29C1FC18F7700537E43 /* ChangellyBuyWidget.swift in Sources */,
 				291F52B71F6B870400B369AB /* CastError.swift in Sources */,
+				771AA9531FFB3EA800D25403 /* HelpUsCoordinator.swift in Sources */,
 				293248841F88CCD2008A9818 /* SplashState.swift in Sources */,
 				291F52BC1F6B8D0600B369AB /* Account.swift in Sources */,
 				299B5E2B1FCA9A640051361C /* ApproveERC20.swift in Sources */,
@@ -2521,6 +2540,7 @@
 				298542FE1FBEADEF00CB5081 /* TransactionViewModelTests.swift in Sources */,
 				295B61D61FE7FC8300642E60 /* FakeTokensDataStore.swift in Sources */,
 				291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */,
+				771AA9581FFB41C400D25403 /* AppTrackerTests.swift in Sources */,
 				298543001FBEAE2F00CB5081 /* ChainState.swift in Sources */,
 				299B5E3F1FD143400051361C /* BackupViewModelTests.swift in Sources */,
 				29AD8A0E1F93FF28008E10E7 /* WalletSession.swift in Sources */,

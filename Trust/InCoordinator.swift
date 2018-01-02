@@ -15,6 +15,7 @@ class InCoordinator: Coordinator {
     let initialAccount: Account
     var keystore: Keystore
     var config: Config
+    let appTracker: AppTracker
     weak var delegate: InCoordinatorDelegate?
     var transactionCoordinator: TransactionCoordinator? {
         return self.coordinators.flatMap { $0 as? TransactionCoordinator }.first
@@ -24,12 +25,14 @@ class InCoordinator: Coordinator {
         navigationController: UINavigationController = NavigationController(),
         account: Account,
         keystore: Keystore,
-        config: Config = Config()
+        config: Config = Config(),
+        appTracker: AppTracker = AppTracker()
     ) {
         self.navigationController = navigationController
         self.initialAccount = account
         self.keystore = keystore
         self.config = config
+        self.appTracker = appTracker
     }
 
     func start() {
