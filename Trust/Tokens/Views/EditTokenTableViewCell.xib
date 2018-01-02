@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,8 +20,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="319" height="79.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gzC-hL-qRv">
-                        <rect key="frame" x="72" y="29" width="180" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test lable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="gzC-hL-qRv">
+                        <rect key="frame" x="72" y="29" width="170" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -28,25 +29,29 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tfc-cq-2hm">
                         <rect key="frame" x="15" y="17" width="45" height="45"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="45" id="5TH-Jm-zEs"/>
-                            <constraint firstAttribute="width" constant="45" id="A0j-qz-MY7"/>
+                            <constraint firstAttribute="height" constant="45" id="3rh-jw-GO8"/>
+                            <constraint firstAttribute="width" constant="45" id="E8Z-l4-SpR"/>
                         </constraints>
                     </imageView>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uf5-TC-p3g">
                         <rect key="frame" x="254" y="24" width="51" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="49" id="9eW-fN-CfE"/>
+                            <constraint firstAttribute="height" constant="31" id="IcU-kb-K2q"/>
+                        </constraints>
                         <connections>
                             <action selector="didChangeSwitch:" destination="KGk-i7-Jjw" eventType="valueChanged" id="RNY-kW-3Zh"/>
                         </connections>
                     </switch>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="gzC-hL-qRv" firstAttribute="leading" secondItem="Tfc-cq-2hm" secondAttribute="trailing" constant="12" id="EZl-Lo-A2h"/>
-                    <constraint firstItem="gzC-hL-qRv" firstAttribute="centerY" secondItem="Tfc-cq-2hm" secondAttribute="centerY" id="LSb-Tt-KSi"/>
-                    <constraint firstItem="Uf5-TC-p3g" firstAttribute="leading" secondItem="gzC-hL-qRv" secondAttribute="trailing" constant="2" id="OW7-vs-rbE"/>
-                    <constraint firstAttribute="trailing" secondItem="Uf5-TC-p3g" secondAttribute="trailing" constant="16" id="cbB-Nl-ZxG"/>
-                    <constraint firstItem="Tfc-cq-2hm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="lkE-uI-Jdn"/>
-                    <constraint firstItem="Uf5-TC-p3g" firstAttribute="centerY" secondItem="Tfc-cq-2hm" secondAttribute="centerY" id="n2o-94-kkp"/>
-                    <constraint firstItem="Tfc-cq-2hm" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xo3-Af-dLY"/>
+                    <constraint firstItem="gzC-hL-qRv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="18" id="Jsh-hj-FwI"/>
+                    <constraint firstItem="Uf5-TC-p3g" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="V2P-JH-IZ8"/>
+                    <constraint firstItem="Tfc-cq-2hm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="17" id="c1S-Bb-w4T"/>
+                    <constraint firstItem="Uf5-TC-p3g" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="13" id="dFP-Uv-MTU"/>
+                    <constraint firstItem="Tfc-cq-2hm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="kxB-6Q-pKE"/>
+                    <constraint firstItem="gzC-hL-qRv" firstAttribute="leading" secondItem="Tfc-cq-2hm" secondAttribute="trailing" constant="12" id="lG4-GB-2XD"/>
+                    <constraint firstItem="Uf5-TC-p3g" firstAttribute="leading" secondItem="gzC-hL-qRv" secondAttribute="trailing" constant="12" id="vqn-0J-ACF"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
