@@ -20,8 +20,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="319" height="79.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test lable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gzC-hL-qRv">
-                        <rect key="frame" x="72" y="29" width="180" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test lable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="gzC-hL-qRv">
+                        <rect key="frame" x="72" y="29" width="170" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -47,11 +47,11 @@
                 <constraints>
                     <constraint firstItem="gzC-hL-qRv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="18" id="Jsh-hj-FwI"/>
                     <constraint firstItem="Uf5-TC-p3g" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="V2P-JH-IZ8"/>
-                    <constraint firstItem="Uf5-TC-p3g" firstAttribute="leading" secondItem="gzC-hL-qRv" secondAttribute="trailing" constant="2" id="aNV-Cp-Xmt"/>
                     <constraint firstItem="Tfc-cq-2hm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="17" id="c1S-Bb-w4T"/>
                     <constraint firstItem="Uf5-TC-p3g" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="13" id="dFP-Uv-MTU"/>
                     <constraint firstItem="Tfc-cq-2hm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="kxB-6Q-pKE"/>
                     <constraint firstItem="gzC-hL-qRv" firstAttribute="leading" secondItem="Tfc-cq-2hm" secondAttribute="trailing" constant="12" id="lG4-GB-2XD"/>
+                    <constraint firstItem="Uf5-TC-p3g" firstAttribute="leading" secondItem="gzC-hL-qRv" secondAttribute="trailing" constant="12" id="vqn-0J-ACF"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
