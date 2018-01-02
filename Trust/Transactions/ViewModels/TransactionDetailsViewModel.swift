@@ -82,7 +82,7 @@ struct TransactionDetailsViewModel {
     var gasFee: String {
         let gasUsed = BigInt(transaction.gasUsed) ?? BigInt()
         let gasPrice = BigInt(transaction.gasPrice) ?? BigInt()
-        return fullFormatter.string(from: gasPrice * gasUsed)
+        return fullFormatter.string(from: gasPrice * gasUsed) + " " + config.server.symbol
     }
 
     var confirmation: String {
