@@ -72,23 +72,6 @@ class TransactionsViewController: UIViewController {
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
-
-        dataCoordinator.delegate = self
-        dataCoordinator.start()
-
-        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-        tableView.addSubview(refreshControl)
-
-        navigationItem.titleView = titleView
-        titleView.viewModel = BalanceViewModel()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //Is not greatest solution. Should be refactor!!!
-        guard errorView == nil, loadingView == nil, emptyView == nil   else {
-            return
-        }
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
         emptyView = {
@@ -102,6 +85,18 @@ class TransactionsViewController: UIViewController {
             return view
         }()
 
+        dataCoordinator.delegate = self
+        dataCoordinator.start()
+
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+
+        navigationItem.titleView = titleView
+        titleView.viewModel = BalanceViewModel()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetch()
     }
 
