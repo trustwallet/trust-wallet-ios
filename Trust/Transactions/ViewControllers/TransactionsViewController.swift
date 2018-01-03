@@ -28,7 +28,7 @@ class TransactionsViewController: UIViewController {
     weak var delegate: TransactionsViewControllerDelegate?
     let dataCoordinator: TransactionDataCoordinator
     let session: WalletSession
-    
+
     let insets = UIEdgeInsets(top: 130, left: 0, bottom: ButtonSize.extraLarge.height + 84, right: 0)
 
     lazy var footerView: TransactionsFooterView = {

@@ -12,8 +12,8 @@ class HelpUsCoordinator: Coordinator {
 
     private let viewModel = HelpUsViewModel()
     init(
-        navigationController: UINavigationController,
-        appTracker: AppTracker
+        navigationController: UINavigationController = NavigationController(),
+        appTracker: AppTracker = AppTracker()
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
@@ -30,11 +30,11 @@ class HelpUsCoordinator: Coordinator {
         }
     }
 
-    private func rateUs() {
-        if #available(iOS 10.3, *) {
-            SKStoreReviewController.requestReview()
-            appTracker.completedRating = true
+    func rateUs() {
+        if #available(iOS 10.3, *) { SKStoreReviewController.requestReview() } else {
+            UIApplication.shared.openURL(URL(string: "itms-apps://itunes.apple.com/app/id1288339409")!)
         }
+        appTracker.completedRating = true
     }
 
     private func wellDone() {

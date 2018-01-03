@@ -37,6 +37,7 @@ class SettingsViewController: FormViewController {
         return SettingsViewModel(isDebug: isDebug)
     }()
     let session: WalletSession
+    let helpUsCoordinator = HelpUsCoordinator()
 
     init(session: WalletSession) {
         self.session = session
@@ -185,17 +186,21 @@ class SettingsViewController: FormViewController {
 
             <<< AppFormAppearance.button { button in
                 button.title = NSLocalizedString("settings.rateUsAppStore.button.title", value: "Rate Us on App Store", comment: "")
-            }.onCellSelection { _, _  in
-                if #available(iOS 10.3, *) { SKStoreReviewController.requestReview() } else {
-                    UIApplication.shared.openURL(URL(string: "itms-apps://itunes.apple.com/app/id1288339409")!)
-                }
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_rating()
+                button.cell.imageView?.image = R.image.settings_rating()
+            }.onCellSelection { [unowned self] _, _  in
+                self.helpUsCoordinator.rateUs()
+            }
+
+            <<< AppFormAppearance.button { button in
+                button.title = NSLocalizedString("settings.shareWithFriends.button.title", value: "Share With Friends", comment: "")
+                button.cell.imageView?.image = R.image.settingsShare()
+            }.onCellSelection { [unowned self] cell, _  in
+                self.helpUsCoordinator.presentSharing(in: self, from: cell.contentView)
             }
 
             <<< AppFormAppearance.button { button in
                 button.title = NSLocalizedString("settings.emailUs.button.title", value: "Email Us", comment: "")
-            }.onCellSelection { _, _  in
+            }.onCellSelection { [unowned self] _, _  in
                 self.sendUsEmail()
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_email()
