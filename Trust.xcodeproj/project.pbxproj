@@ -296,6 +296,8 @@
 		771AA9531FFB3EA800D25403 /* HelpUsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA9521FFB3EA800D25403 /* HelpUsCoordinator.swift */; };
 		771AA9551FFB3FB100D25403 /* AppTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA9541FFB3FB100D25403 /* AppTracker.swift */; };
 		771AA9581FFB41C400D25403 /* AppTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA9571FFB41C400D25403 /* AppTrackerTests.swift */; };
+		771AA95B1FFB699900D25403 /* WellDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA95A1FFB699900D25403 /* WellDoneViewController.swift */; };
+		771AA95D1FFC5CD500D25403 /* HelpUsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA95C1FFC5CD500D25403 /* HelpUsViewModel.swift */; };
 		778EAF7D1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */; };
 		CCA4FE331FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE321FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift */; };
 		CCA4FE361FD4282400749AE4 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE351FD4282400749AE4 /* DeviceChecker.swift */; };
@@ -625,6 +627,8 @@
 		771AA9521FFB3EA800D25403 /* HelpUsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpUsCoordinator.swift; sourceTree = "<group>"; };
 		771AA9541FFB3FB100D25403 /* AppTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTracker.swift; sourceTree = "<group>"; };
 		771AA9571FFB41C400D25403 /* AppTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackerTests.swift; sourceTree = "<group>"; };
+		771AA95A1FFB699900D25403 /* WellDoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellDoneViewController.swift; sourceTree = "<group>"; };
+		771AA95C1FFC5CD500D25403 /* HelpUsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpUsViewModel.swift; sourceTree = "<group>"; };
 		778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinatorTests.swift; sourceTree = "<group>"; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -988,6 +992,7 @@
 			isa = PBXGroup;
 			children = (
 				2931120F1FC4ADCB00966EEA /* InCoordinatorViewModel.swift */,
+				771AA95C1FFC5CD500D25403 /* HelpUsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1667,6 +1672,7 @@
 		29FC9BC31F830880000209CD /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				771AA9591FFB696800D25403 /* ViewControllers */,
 				295B61D21FE7D5AB00642E60 /* Formatters */,
 				29E9CFD01FE737EE00017744 /* Types */,
 				CCA4FE341FD427CA00749AE4 /* Helpers */,
@@ -1794,6 +1800,14 @@
 				771AA9571FFB41C400D25403 /* AppTrackerTests.swift */,
 			);
 			path = Types;
+			sourceTree = "<group>";
+		};
+		771AA9591FFB696800D25403 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				771AA95A1FFB699900D25403 /* WellDoneViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		778EAF7B1FF10AE000C8E2AB /* Coordinators */ = {
@@ -2282,6 +2296,7 @@
 				296106C41F7640C50006164B /* TokenViewCellViewModel.swift in Sources */,
 				29B9345D1F88459C009FCABB /* SplashViewController.swift in Sources */,
 				29E2E33A1F7A008C000CF94A /* UIView.swift in Sources */,
+				771AA95B1FFB699900D25403 /* WellDoneViewController.swift in Sources */,
 				299B5E491FD2C8900051361C /* ConfigureTransaction.swift in Sources */,
 				291795051F95F60100539A30 /* Web3RequestType.swift in Sources */,
 				29C80D511FB67A110037B1E0 /* ArrayResponse.swift in Sources */,
@@ -2457,6 +2472,7 @@
 				298542F51FBD8E6A00CB5081 /* ConfigExplorer.swift in Sources */,
 				29A13E2C1F6A955700E432A2 /* CreateWalletViewModel.swift in Sources */,
 				29F1C84A1FEB6D6B003780D8 /* EditTokenViewModel.swift in Sources */,
+				771AA95D1FFC5CD500D25403 /* HelpUsViewModel.swift in Sources */,
 				29DF400A1FD3E80A000077CA /* TabBarController.swift in Sources */,
 				29C80D4F1FB520AF0037B1E0 /* BalanceTokenViewModel.swift in Sources */,
 				29CA4B771F6FBBFB0032313D /* RequestViewModel.swift in Sources */,
