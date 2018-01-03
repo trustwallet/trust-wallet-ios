@@ -28,7 +28,6 @@ class HelpUsCoordinator: Coordinator {
             wellDone()
         default: break
         }
-        wellDone()
     }
 
     private func rateUs() {
