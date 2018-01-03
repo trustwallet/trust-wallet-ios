@@ -26,7 +26,8 @@ class ExchangeRateCoordinator: NSObject {
     }
 
     func fetch() {
-        provider.request(.prices(currency: Config().currency, symbols:[config.server.symbol])) { result in
+        provider.request(.prices(currency: Config().currency, symbols:[config.server.symbol])) { [weak self] result in
+            guard let `self` = self else { return }
             guard case .success(let response) = result else { return }
             do {
                 guard let ticker = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder()).first else { return }
