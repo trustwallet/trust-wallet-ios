@@ -17,7 +17,8 @@ PODS:
   - JSONRPCKit (2.0.0):
     - Result (~> 3.0)
   - KeychainSwift (10.0.0)
-  - Kingfisher (4.5.0)
+  - Kingfisher (4.6.1)
+  - libsodium (1.0.12)
   - Lokalise (0.8.0)
   - MBProgressHUD (1.1.0)
   - Moya (10.0.1):
@@ -80,7 +81,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CryptoSwift:
-    :commit: 577e94f6060184f3ad72503aedd43d58272a8f2d
+    :commit: 289ef07b2f386d91a25b9393a96b0c3daa1d9114
     :git: https://github.com/krzyzanowskim/CryptoSwift
   JSONRPCKit:
     :commit: 50d19a4f7ec593ac5e07cffa1e11c17f1fbe347d
@@ -103,7 +104,8 @@ SPEC CHECKSUMS:
   JavaScriptKit: 9ff565209e6efe21bcb9c6d6ca3e863a67a8ecf7
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
-  Kingfisher: 26ae0473102b77b575da51960c932431e3745407
+  Kingfisher: 1f9157d9c02b380cbd0b7cc890161195164eb634
+  libsodium: 9a8faa5ef2fa0d2d57bd7f7d79bf8fb7c1a9f0ea
   Lokalise: 9547ef438a2d25cfba0b4c02201d3c39b3db35fb
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Moya: 9e621707ff754eeb51ff3ec51a3d54e517c0733a

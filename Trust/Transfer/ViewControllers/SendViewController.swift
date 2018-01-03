@@ -30,6 +30,15 @@ class SendViewController: FormViewController {
         static let address = "address"
         static let amount = "amount"
     }
+    
+    struct Pair {
+        let left: String
+        let right: String
+        
+        func swapPair() -> Pair {
+            return Pair(left: right, right: left)
+        }
+    }
 
     let session: WalletSession
     let transferType: TransferType
@@ -41,6 +50,10 @@ class SendViewController: FormViewController {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
     }
     private var gasPrice: BigInt?
+    
+    lazy var currentPair: Pair = {
+        return Pair(left: viewModel.symbol, right: Config().currency.rawValue)
+    }()
 
     init(
         session: WalletSession,
@@ -79,13 +92,19 @@ class SendViewController: FormViewController {
         maxButton.translatesAutoresizingMaskIntoConstraints = false
         maxButton.setTitle(NSLocalizedString("send.max.button.title", value: "Max", comment: ""), for: .normal)
         maxButton.addTarget(self, action: #selector(useMaxAmount), for: .touchUpInside)
+        
+        let fiatButton = Button(size: .normal, style: .borderless)
+        fiatButton.translatesAutoresizingMaskIntoConstraints = false
+        fiatButton.setTitle(currentPair.right, for: .normal)
+        fiatButton.addTarget(self, action: #selector(fiatAction), for: .touchUpInside)
 
         let amountRightView = UIStackView(arrangedSubviews: [
-            maxButton,
+            fiatButton,
         ])
+    
         amountRightView.translatesAutoresizingMaskIntoConstraints = false
         amountRightView.distribution = .equalSpacing
-        amountRightView.spacing = 10
+        amountRightView.spacing = 1
         amountRightView.axis = .horizontal
 
         form = Section()
@@ -107,9 +126,10 @@ class SendViewController: FormViewController {
                 $0.validationOptions = .validatesOnDemand
             }.cellUpdate {[weak self] cell, _ in
                 cell.textField.textAlignment = .left
-                cell.textField.placeholder = "\(self?.viewModel.symbol ?? "") " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
+                cell.textField.delegate = self
+                cell.textField.placeholder = "\(self?.currentPair.left ?? "") " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
                 cell.textField.keyboardType = .decimalPad
-                //cell.textField.rightView = maxButton // TODO Enable it's ready
+                cell.textField.rightView = amountRightView
                 cell.textField.rightViewMode = .always
             }
 
@@ -202,6 +222,15 @@ class SendViewController: FormViewController {
         amountRow?.value = value
         amountRow?.reload()
     }
+    
+    @objc func fiatAction(sender: UIButton) {
+        let swappedPair = currentPair.swapPair()
+        //New pair for future calculation we should swap pair each time we press fiat button.
+        self.currentPair = swappedPair
+        //Update button title and realod cell.
+        sender.setTitle(currentPair.right, for: .normal)
+        amountRow?.reload()
+    }
 
     func activateAmountView() {
         amountRow?.cell.textField.becomeFirstResponder()
@@ -209,6 +238,10 @@ class SendViewController: FormViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func updatePairPrice(with amount:String) {
+        
     }
 }
 
@@ -225,5 +258,16 @@ extension SendViewController: QRCodeReaderDelegate {
         addressRow?.reload()
 
         activateAmountView()
+    }
+}
+
+extension SendViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
+        guard let amount = text, Double(amount) != nil else {
+            return true
+        }
+        self.updatePairPrice(with: amount)
+        return true
     }
 }

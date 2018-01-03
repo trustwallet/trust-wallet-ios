@@ -62,7 +62,13 @@ class InCoordinator: Coordinator {
             account: account,
             config: config
         )
+        
         MigrationInitializer(account: account, chainID: config.chainID).perform()
+        
+        let tokensStorage = TokensDataStore(
+            session: session,
+            configuration: RealmConfiguration.configuration(for: session.account, chainID: session.config.chainID)
+        )
 
         let transactionsStorage = TransactionsStorage(
             configuration: RealmConfiguration.configuration(for: account, chainID: session.config.chainID)
@@ -71,7 +77,8 @@ class InCoordinator: Coordinator {
         let transactionCoordinator = TransactionCoordinator(
             session: session,
             storage: transactionsStorage,
-            keystore: keystore
+            keystore: keystore,
+            tokensStorage: tokensStorage
         )
         transactionCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("transactions.tabbar.item.title", value: "Transactions", comment: ""), image: R.image.feed(), selectedImage: nil)
         transactionCoordinator.delegate = self
@@ -102,10 +109,6 @@ class InCoordinator: Coordinator {
         }
 
         if inCoordinatorViewModel.tokensAvailable {
-            let tokensStorage = TokensDataStore(
-                session: session,
-                configuration: RealmConfiguration.configuration(for: session.account, chainID: session.config.chainID)
-            )
             let tokenCoordinator = TokensCoordinator(
                 session: session,
                 keystore: keystore,
