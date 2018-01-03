@@ -7,6 +7,8 @@ class AppTracker {
     struct Keys {
         static let launchCountTotal = "launchCountTotal"
         static let launchCountForCurrentBuild = "launchCountForCurrentBuild-" + String(Bundle.main.buildNumberInt)
+        static let completedSharing = "completedSharing"
+        static let completedRating = "completedRating"
     }
 
     let defaults: UserDefaults
@@ -19,6 +21,16 @@ class AppTracker {
     var launchCountForCurrentBuild: Int {
         get { return defaults.integer(forKey: Keys.launchCountForCurrentBuild) }
         set { return defaults.set(newValue, forKey: Keys.launchCountForCurrentBuild) }
+    }
+
+    var completedRating: Bool {
+        get { return defaults.bool(forKey: Keys.completedRating) }
+        set { return defaults.set(newValue, forKey: Keys.completedRating) }
+    }
+
+    var completedSharing: Bool {
+        get { return defaults.bool(forKey: Keys.completedSharing) }
+        set { return defaults.set(newValue, forKey: Keys.completedSharing) }
     }
 
     init(
@@ -36,6 +48,8 @@ class AppTracker {
         return """
         launchCountTotal: \(launchCountTotal)
         launchCountForCurrentBuild: \(launchCountForCurrentBuild)
+        completedRating: \(completedRating)
+        completedSharing: \(completedSharing)
         """
     }
 }
