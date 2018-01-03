@@ -29,6 +29,7 @@ class SendViewController: FormViewController {
     struct Values {
         static let address = "address"
         static let amount = "amount"
+        static let price = "amount"
     }
     
     struct Pair {
@@ -39,7 +40,8 @@ class SendViewController: FormViewController {
             return Pair(left: right, right: left)
         }
     }
-
+    
+    var pairValue = 0.0
     let session: WalletSession
     let transferType: TransferType
     let storage: TokensDataStore
@@ -49,6 +51,9 @@ class SendViewController: FormViewController {
     }
     var amountRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
+    }
+    var priceSection: Section? {
+        return form.sectionBy(tag: Values.price)
     }
     private var gasPrice: BigInt?
     
@@ -66,7 +71,10 @@ class SendViewController: FormViewController {
         self.storage = storage
 
         super.init(nibName: nil, bundle: nil)
-
+        
+        storage.updatePrices()
+        getGasPrice()
+        
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
@@ -112,7 +120,6 @@ class SendViewController: FormViewController {
 
         form = Section()
             +++ Section("")
-
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
@@ -123,7 +130,6 @@ class SendViewController: FormViewController {
                 cell.textField.rightViewMode = .always
                 cell.textField.accessibilityIdentifier = "amount-field"
             }
-
             <<< AppFormAppearance.textFieldFloat(tag: Values.amount) {
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
@@ -135,14 +141,14 @@ class SendViewController: FormViewController {
                 cell.textField.rightView = amountRightView
                 cell.textField.rightViewMode = .always
             }
-
             +++ Section {
                 $0.hidden = Eureka.Condition.function([Values.amount], { [weak self] _ in
                     return self?.amountRow?.value?.isEmpty ?? true
                 })
             }
-
-        getGasPrice()
+            +++ Section("~ \(String(self.pairValue)) " + "\(currentPair.right)") {
+                $0.tag = Values.price
+            }
     }
 
     func getGasPrice() {
@@ -233,6 +239,10 @@ class SendViewController: FormViewController {
         //Update button title and realod cell.
         sender.setTitle(currentPair.right, for: .normal)
         amountRow?.reload()
+        //Reset pair value
+        pairValue = 0.0
+        //Update section
+        updatePriceSection()
     }
 
     func activateAmountView() {
@@ -243,8 +253,21 @@ class SendViewController: FormViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func updatePairPrice(with amount:String) {
-        
+    private func updatePriceSection() {
+        priceSection?.header = HeaderFooterView(title: "~ \(String(self.pairValue)) " + "\(currentPair.right)")
+        priceSection?.reload()
+    }
+    
+    private func updatePairPrice(with amount: Double) {
+        guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.symbol], let price = Double(currentTokenInfo.price) else {
+            return
+        }
+        if self.currentPair.left == viewModel.symbol {
+            pairValue = amount * price
+        } else {
+            pairValue = amount / price
+        }
+        self.updatePriceSection()
     }
 }
 
@@ -267,7 +290,7 @@ extension SendViewController: QRCodeReaderDelegate {
 extension SendViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
-        guard let amount = text, Double(amount) != nil else {
+        guard let total = text, let amount = Double(total) else {
             return true
         }
         self.updatePairPrice(with: amount)
