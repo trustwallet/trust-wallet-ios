@@ -28,6 +28,7 @@ class TransactionCoordinator: Coordinator {
     weak var delegate: TransactionCoordinatorDelegate?
 
     let session: WalletSession
+    let tokensStorage: TokensDataStore
     let navigationController: UINavigationController
     var coordinators: [Coordinator] = []
 
@@ -35,12 +36,14 @@ class TransactionCoordinator: Coordinator {
         session: WalletSession,
         navigationController: UINavigationController = NavigationController(),
         storage: TransactionsStorage,
-        keystore: Keystore
+        keystore: Keystore,
+        tokensStorage: TokensDataStore
     ) {
         self.session = session
         self.keystore = keystore
         self.navigationController = navigationController
         self.storage = storage
+        self.tokensStorage = tokensStorage
 
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
     }

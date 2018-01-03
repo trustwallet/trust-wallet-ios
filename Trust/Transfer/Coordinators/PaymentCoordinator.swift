@@ -16,6 +16,7 @@ class PaymentCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     let navigationController: UINavigationController
     let keystore: Keystore
+    let storage: TokensDataStore
 
     lazy var transferType: TransferType = {
         switch self.flow {
@@ -30,13 +31,15 @@ class PaymentCoordinator: Coordinator {
         navigationController: UINavigationController = UINavigationController(),
         flow: PaymentFlow,
         session: WalletSession,
-        keystore: Keystore
+        keystore: Keystore,
+        storage:TokensDataStore
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
         self.flow = flow
         self.keystore = keystore
+        self.storage = storage
     }
 
     func start() {
