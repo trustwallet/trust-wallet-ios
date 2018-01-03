@@ -32,7 +32,7 @@ class PaymentCoordinator: Coordinator {
         flow: PaymentFlow,
         session: WalletSession,
         keystore: Keystore,
-        storage:TokensDataStore
+        storage: TokensDataStore
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
@@ -49,7 +49,8 @@ class PaymentCoordinator: Coordinator {
                 transferType: type,
                 navigationController: navigationController,
                 session: session,
-                keystore: keystore
+                keystore: keystore,
+                storage: storage
             )
             coordinator.delegate = self
             coordinator.start()
