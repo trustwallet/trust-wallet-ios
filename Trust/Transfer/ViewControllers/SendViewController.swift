@@ -42,6 +42,7 @@ class SendViewController: FormViewController {
 
     let session: WalletSession
     let transferType: TransferType
+    let storage: TokensDataStore
 
     var addressRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.address) as? TextFloatLabelRow
@@ -57,10 +58,12 @@ class SendViewController: FormViewController {
 
     init(
         session: WalletSession,
+        storage: TokensDataStore,
         transferType: TransferType = .ether(destination: .none)
     ) {
         self.session = session
         self.transferType = transferType
+        self.storage = storage
 
         super.init(nibName: nil, bundle: nil)
 
