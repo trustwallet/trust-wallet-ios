@@ -143,13 +143,6 @@ class SendViewController: FormViewController {
                 cell.textField.rightView = amountRightView
                 cell.textField.rightViewMode = .always
             }
-            /*
-            +++ Section {
-                $0.hidden = Eureka.Condition.function([Values.amount], { [weak self] _ in
-                    return self?.amountRow?.value?.isEmpty ?? true
-                })
-            }
-            */
     }
 
     func getGasPrice() {
@@ -242,14 +235,17 @@ class SendViewController: FormViewController {
         let swappedPair = currentPair.swapPair()
         //New pair for future calculation we should swap pair each time we press fiat button.
         self.currentPair = swappedPair
-        //Update button title and realod cell.
+        //Update button title.
         sender.setTitle(currentPair.right, for: .normal)
+        //Reset amountRow value.
         amountRow?.value = nil
         amountRow?.reload()
-        //Reset pair value
+        //Reset pair value.
         pairValue = 0.0
-        //Update section
+        //Update section.
         updatePriceSection()
+        //Set focuse on pair change.
+        activateAmountView()
     }
 
     func activateAmountView() {
@@ -261,8 +257,15 @@ class SendViewController: FormViewController {
     }
     
     private func updatePriceSection() {
-        priceSection?.footer = HeaderFooterView(title: "~ \(String(self.pairValue)) " + "\(currentPair.right)")
-        priceSection?.reload()
+        //We use this section update to prevent update of the all section including cells.
+        UIView.setAnimationsEnabled(false)
+        tableView.beginUpdates()
+        if let containerView = tableView.footerView(forSection: 1) {
+            containerView.textLabel!.text = "~ \(String(self.pairValue)) " + "\(currentPair.right)"
+            containerView.sizeToFit()
+        }
+        tableView.endUpdates()
+        UIView.setAnimationsEnabled(true)
     }
     
     private func updatePairPrice(with amount: Double) {
