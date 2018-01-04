@@ -95,9 +95,9 @@ class TokensDataStore {
             updateDelegate()
             return
         }
-        let updateTokens = objects
+        let updateTokens = enabledObject
         var count = 0
-        for tokenObject in objects {
+        for tokenObject in updateTokens {
             getBalanceCoordinator.getBalance(for: session.account.address, contract: Address(address: tokenObject.contract)) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {
