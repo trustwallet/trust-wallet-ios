@@ -29,7 +29,6 @@ class SendViewController: FormViewController {
     struct Values {
         static let address = "address"
         static let amount = "amount"
-        static let price = "price"
     }
     
     struct Pair {
@@ -52,9 +51,7 @@ class SendViewController: FormViewController {
     var amountRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
     }
-    var priceSection: Section? {
-        return form.sectionBy(tag: Values.price)
-    }
+
     private var gasPrice: BigInt?
     
     lazy var currentPair: Pair = {
@@ -119,9 +116,7 @@ class SendViewController: FormViewController {
         amountRightView.axis = .horizontal
 
         form = Section()
-            +++ Section(header: "", footer: "~ \(String(self.pairValue)) " + "\(currentPair.right)") {
-                $0.tag = Values.price
-            }
+            +++ Section(header: "", footer: "~ \(String(self.pairValue)) " + "\(currentPair.right)") 
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
