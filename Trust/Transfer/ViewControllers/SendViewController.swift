@@ -243,6 +243,7 @@ class SendViewController: FormViewController {
         self.currentPair = swappedPair
         //Update button title and realod cell.
         sender.setTitle(currentPair.right, for: .normal)
+        amountRow?.value = nil
         amountRow?.reload()
         //Reset pair value
         pairValue = 0.0
