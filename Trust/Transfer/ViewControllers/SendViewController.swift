@@ -119,7 +119,7 @@ class SendViewController: FormViewController {
         amountRightView.axis = .horizontal
 
         form = Section()
-            +++ Section(header:"", footer:"~ \(String(self.pairValue)) " + "\(currentPair.right)") {
+            +++ Section(header: "", footer: "~ \(String(self.pairValue)) " + "\(currentPair.right)") {
                 $0.tag = Values.price
             }
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
@@ -261,7 +261,7 @@ class SendViewController: FormViewController {
     }
     
     private func updatePriceSection() {
-        priceSection?.header = HeaderFooterView(title: "~ \(String(self.pairValue)) " + "\(currentPair.right)")
+        priceSection?.footer = HeaderFooterView(title: "~ \(String(self.pairValue)) " + "\(currentPair.right)")
         priceSection?.reload()
     }
     
