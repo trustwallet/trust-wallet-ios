@@ -29,7 +29,7 @@ class SendViewController: FormViewController {
     struct Values {
         static let address = "address"
         static let amount = "amount"
-        static let price = "amount"
+        static let price = "price"
     }
     
     struct Pair {
@@ -119,7 +119,9 @@ class SendViewController: FormViewController {
         amountRightView.axis = .horizontal
 
         form = Section()
-            +++ Section("")
+            +++ Section(header:"", footer:"~ \(String(self.pairValue)) " + "\(currentPair.right)") {
+                $0.tag = Values.price
+            }
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
@@ -141,14 +143,13 @@ class SendViewController: FormViewController {
                 cell.textField.rightView = amountRightView
                 cell.textField.rightViewMode = .always
             }
+            /*
             +++ Section {
                 $0.hidden = Eureka.Condition.function([Values.amount], { [weak self] _ in
                     return self?.amountRow?.value?.isEmpty ?? true
                 })
             }
-            +++ Section("~ \(String(self.pairValue)) " + "\(currentPair.right)") {
-                $0.tag = Values.price
-            }
+            */
     }
 
     func getGasPrice() {
