@@ -9,6 +9,7 @@ struct CoinTicker: Codable {
     let symbol: String
     let price: String
     let percent_change_24h: String
+    let contract: String
 
     static let tokenLogoPath = "https://files.coinmarketcap.com/static/img/coins/128x128/"
 }
