@@ -18,6 +18,7 @@ class TransactionsViewController: UIViewController {
     var viewModel: TransactionsViewModel
 
     let account: Account
+    let tokensStorage: TokensDataStore
     let tableView = UITableView(frame: .zero, style: .plain)
     let refreshControl = UIRefreshControl()
 
@@ -43,15 +44,17 @@ class TransactionsViewController: UIViewController {
         account: Account,
         dataCoordinator: TransactionDataCoordinator,
         session: WalletSession,
+        tokensStorage: TokensDataStore,
         viewModel: TransactionsViewModel = TransactionsViewModel(transactions: [])
     ) {
         self.account = account
         self.dataCoordinator = dataCoordinator
         self.session = session
         self.viewModel = viewModel
-
+        self.tokensStorage = tokensStorage
         super.init(nibName: nil, bundle: nil)
-
+        
+        tokensStorage.updatePrices()
         view.backgroundColor = viewModel.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
