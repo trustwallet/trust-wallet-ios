@@ -291,6 +291,9 @@ extension SendViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
         guard let total = text, let amount = Double(total) else {
+            //Should be done in another way.
+            pairValue = 0.0
+            updatePriceSection()
             return true
         }
         self.updatePairPrice(with: amount)
