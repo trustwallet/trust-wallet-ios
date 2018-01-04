@@ -175,7 +175,12 @@ class SendViewController: FormViewController {
         guard errors.isEmpty else { return }
 
         let addressString = addressRow?.value?.trimmed ?? ""
-        let amountString = amountRow?.value?.trimmed ?? ""
+        var amountString = ""
+        if self.currentPair.left == viewModel.symbol {
+            amountString = amountRow?.value?.trimmed ?? ""
+        } else {
+            amountString = String(pairValue).trimmed
+        }
 
         let address = Address(address: addressString)
 
