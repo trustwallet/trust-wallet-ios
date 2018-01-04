@@ -105,7 +105,8 @@ class SendViewController: FormViewController {
         fiatButton.translatesAutoresizingMaskIntoConstraints = false
         fiatButton.setTitle(currentPair.right, for: .normal)
         fiatButton.addTarget(self, action: #selector(fiatAction), for: .touchUpInside)
-
+        fiatButton.isHidden = isFiatViewHidden()
+        
         let amountRightView = UIStackView(arrangedSubviews: [
             fiatButton,
         ])
@@ -116,7 +117,7 @@ class SendViewController: FormViewController {
         amountRightView.axis = .horizontal
 
         form = Section()
-            +++ Section(header: "", footer: "~ \(String(self.pairValue)) " + "\(currentPair.right)") 
+            +++ Section(header: "", footer: isFiatViewHidden() ? "" : "~ \(String(self.pairValue)) " + "\(currentPair.right)")
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
@@ -273,6 +274,13 @@ class SendViewController: FormViewController {
             pairValue = amount / price
         }
         self.updatePriceSection()
+    }
+    
+    private func isFiatViewHidden() -> Bool {
+        guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.symbol], let _ = Double(currentTokenInfo.price) else {
+            return true
+        }
+        return false
     }
 }
 
