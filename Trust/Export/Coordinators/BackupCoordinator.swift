@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import Result
 
 protocol BackupCoordinatorDelegate: class {
     func didCancel(coordinator: BackupCoordinator)
@@ -30,15 +31,16 @@ class BackupCoordinator: Coordinator {
         export(for: account)
     }
 
-    func finish(completed: Bool) {
-        if completed {
+    func finish(result: Result<Bool, AnyError>) {
+        switch result {
+        case .success:
             delegate?.didFinish(account: account, in: self)
-        } else {
+        case .failure:
             delegate?.didCancel(coordinator: self)
         }
     }
 
-    func presentActivityViewController(for account: Account, password: String, newPassword: String, completion: @escaping (Bool) -> Void) {
+    func presentActivityViewController(for account: Account, password: String, newPassword: String, completion: @escaping (Result<Bool, AnyError>) -> Void) {
         let result = keystore.export(account: account, password: password, newPassword: newPassword)
 
         navigationController.displayLoading(
@@ -47,12 +49,21 @@ class BackupCoordinator: Coordinator {
 
         switch result {
         case .success(let value):
+            let url = URL(fileURLWithPath: NSTemporaryDirectory().appending("trust_wallet_\(account.address.address)-\(Date()).json"))
+            do {
+                try value.data(using: .utf8)!.write(to: url)
+            } catch {
+                return completion(.failure(AnyError(error)))
+            }
+
             let activityViewController = UIActivityViewController(
-                activityItems: [value],
+                activityItems: [url],
                 applicationActivities: nil
             )
             activityViewController.completionWithItemsHandler = { _, result, _, _ in
-                completion(result)
+                do { try FileManager.default.removeItem(at: url)
+                } catch { }
+                completion(.success(result))
             }
             activityViewController.popoverPresentationController?.sourceView = navigationController.view
             activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
@@ -66,8 +77,8 @@ class BackupCoordinator: Coordinator {
     }
 
     func presentShareActivity(for account: Account, password: String, newPassword: String) {
-        self.presentActivityViewController(for: account, password: password, newPassword: newPassword) { completed in
-            self.finish(completed: completed)
+        self.presentActivityViewController(for: account, password: password, newPassword: newPassword) { result in
+            self.finish(result: result)
         }
     }
 
