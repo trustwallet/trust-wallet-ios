@@ -21,7 +21,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test lable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="gzC-hL-qRv">
-                        <rect key="frame" x="72" y="29" width="170" height="21"/>
+                        <rect key="frame" x="72" y="24" width="170" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -43,13 +43,22 @@
                             <action selector="didChangeSwitch:" destination="KGk-i7-Jjw" eventType="valueChanged" id="RNY-kW-3Zh"/>
                         </connections>
                     </switch>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Su7-1W-bDk">
+                        <rect key="frame" x="72" y="46" width="170" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="gzC-hL-qRv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="18" id="Jsh-hj-FwI"/>
+                    <constraint firstItem="Su7-1W-bDk" firstAttribute="top" secondItem="gzC-hL-qRv" secondAttribute="bottom" constant="1" id="IvD-Zz-EN6"/>
+                    <constraint firstItem="gzC-hL-qRv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="13" id="Jsh-hj-FwI"/>
                     <constraint firstItem="Uf5-TC-p3g" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="V2P-JH-IZ8"/>
                     <constraint firstItem="Tfc-cq-2hm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="17" id="c1S-Bb-w4T"/>
                     <constraint firstItem="Uf5-TC-p3g" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="13" id="dFP-Uv-MTU"/>
+                    <constraint firstItem="Uf5-TC-p3g" firstAttribute="leading" secondItem="Su7-1W-bDk" secondAttribute="trailing" constant="12" id="emQ-7E-Kqv"/>
                     <constraint firstItem="Tfc-cq-2hm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="kxB-6Q-pKE"/>
+                    <constraint firstItem="Su7-1W-bDk" firstAttribute="leading" secondItem="Tfc-cq-2hm" secondAttribute="trailing" constant="12" id="l2g-7L-4FY"/>
                     <constraint firstItem="gzC-hL-qRv" firstAttribute="leading" secondItem="Tfc-cq-2hm" secondAttribute="trailing" constant="12" id="lG4-GB-2XD"/>
                     <constraint firstItem="Uf5-TC-p3g" firstAttribute="leading" secondItem="gzC-hL-qRv" secondAttribute="trailing" constant="12" id="vqn-0J-ACF"/>
                 </constraints>
@@ -57,6 +66,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
+                <outlet property="tokenContractLabel" destination="Su7-1W-bDk" id="gpT-3O-qkl"/>
                 <outlet property="tokenEnableSwitch" destination="Uf5-TC-p3g" id="Lcf-e0-JTA"/>
                 <outlet property="tokenImageView" destination="Tfc-cq-2hm" id="QtY-sC-dhw"/>
                 <outlet property="tokenLabel" destination="gzC-hL-qRv" id="cHh-cJ-bga"/>
