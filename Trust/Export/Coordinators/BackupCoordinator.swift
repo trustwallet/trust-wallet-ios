@@ -49,7 +49,7 @@ class BackupCoordinator: Coordinator {
 
         switch result {
         case .success(let value):
-            let url = URL(fileURLWithPath: NSTemporaryDirectory().appending("trust_wallet_\(account.address.address)-\(Date()).json"))
+            let url = URL(fileURLWithPath: NSTemporaryDirectory().appending("trust_wallet_\(account.address.address).json"))
             do {
                 try value.data(using: .utf8)!.write(to: url)
             } catch {
