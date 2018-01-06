@@ -61,7 +61,7 @@ class AccountsCoordinator: Coordinator {
         controller.popoverPresentationController?.sourceView = sender
         controller.popoverPresentationController?.sourceRect = sender.centerRect
         let actionTitle = NSLocalizedString("wallets.backup.alertSheet.title", value: "Backup Keystore", comment: "The title of the backup button in the wallet's action sheet")
-        let action = UIAlertAction(title: actionTitle, style: .default) { _ in
+        let backupKeystoreAction = UIAlertAction(title: actionTitle, style: .default) { _ in
             let coordinator = BackupCoordinator(
                 navigationController: self.navigationController,
                 keystore: self.keystore,
@@ -78,7 +78,11 @@ class AccountsCoordinator: Coordinator {
             UIPasteboard.general.string = account.address.address
         }
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
-        controller.addAction(action)
+        switch account.type {
+        case .real:
+            controller.addAction(backupKeystoreAction)
+        case .watch: break
+        }
         controller.addAction(copyAction)
         controller.addAction(cancelAction)
         navigationController.present(controller, animated: true, completion: nil)

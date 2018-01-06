@@ -3,6 +3,10 @@
 import Foundation
 import UIKit
 
+protocol TokensCoordinatorDelegate: class {
+    func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator)
+}
+
 class TokensCoordinator: Coordinator {
 
     let navigationController: UINavigationController
@@ -10,6 +14,7 @@ class TokensCoordinator: Coordinator {
     let keystore: Keystore
     var coordinators: [Coordinator] = []
     let storage: TokensDataStore
+    weak var delegate: TokensCoordinatorDelegate?
 
     lazy var tokensViewController: TokensViewController = {
         let controller = TokensViewController(
@@ -47,18 +52,6 @@ class TokensCoordinator: Coordinator {
         navigationController.viewControllers = [rootViewController]
     }
 
-    func showPaymentFlow(for type: PaymentFlow) {
-        let coordinator = PaymentCoordinator(
-            flow: type,
-            session: session,
-            keystore: keystore
-        )
-        coordinator.delegate = self
-        coordinator.start()
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
-        addCoordinator(coordinator)
-    }
-
     func newTokenViewController() -> NewTokenViewController {
         let controller = NewTokenViewController()
         controller.delegate = self
@@ -90,9 +83,9 @@ extension TokensCoordinator: TokensViewControllerDelegate {
     func didSelect(token: TokenObject, in viewController: UIViewController) {
         switch token.type {
         case .ether:
-            showPaymentFlow(for: .send(type: .ether(destination: .none)))
+            delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
         case .token:
-            showPaymentFlow(for: .send(type: .token(token)))
+            delegate?.didPress(for: .send(type: .token(token)), in: self)
         }
     }
 
@@ -103,13 +96,6 @@ extension TokensCoordinator: TokensViewControllerDelegate {
 
     func didPressAddToken(in viewController: UIViewController) {
         addToken()
-    }
-}
-
-extension TokensCoordinator: PaymentCoordinatorDelegate {
-    func didCancel(in coordinator: PaymentCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
     }
 }
 

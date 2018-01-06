@@ -8,6 +8,14 @@ protocol InCoordinatorDelegate: class {
     func didUpdateAccounts(in coordinator: InCoordinator)
 }
 
+enum InCoordinatorError: LocalizedError {
+    case onlyWatchAccount
+
+    var errorDescription: String? {
+        return NSLocalizedString("InCoordinatorError.onlyWatchAccount", value: "This wallet could be only used for watching. Import Private Key/Keystore to sign transactions", comment: "")
+    }
+}
+
 class InCoordinator: Coordinator {
 
     let navigationController: UINavigationController
@@ -104,6 +112,7 @@ class InCoordinator: Coordinator {
                 tokensStorage: tokensStorage
             )
             tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("tokens.tabbar.item.title", value: "Tokens", comment: ""), image: R.image.coins(), selectedImage: nil)
+            tokenCoordinator.delegate = self
             tokenCoordinator.start()
             addCoordinator(tokenCoordinator)
             tabBarController.viewControllers?.append(tokenCoordinator.navigationController)
@@ -166,9 +175,34 @@ class InCoordinator: Coordinator {
 
         addCoordinator(deviceChecker)
     }
+
+    func showPaymentFlow(for type: PaymentFlow) {
+        guard let transactionCoordinator = transactionCoordinator else { return }
+        let session = transactionCoordinator.session
+
+        if session.account.type == .watch {
+            if case .request = type { } else {
+                return self.navigationController.displayError(error: InCoordinatorError.onlyWatchAccount)
+            }
+        }
+
+        let coordinator = PaymentCoordinator(
+            flow: type,
+            session: session,
+            keystore: keystore
+        )
+        coordinator.delegate = self
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+        coordinator.start()
+        addCoordinator(coordinator)
+    }
 }
 
 extension InCoordinator: TransactionCoordinatorDelegate {
+    func didPress(for type: PaymentFlow, in coordinator: TransactionCoordinator) {
+        showPaymentFlow(for: type)
+    }
+
     func didCancel(in coordinator: TransactionCoordinator) {
         delegate?.didCancel(in: self)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
@@ -203,5 +237,18 @@ extension InCoordinator: SettingsCoordinatorDelegate {
 
     func didUpdateAccounts(in coordinator: SettingsCoordinator) {
         delegate?.didUpdateAccounts(in: self)
+    }
+}
+
+extension InCoordinator: TokensCoordinatorDelegate {
+    func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator) {
+        showPaymentFlow(for: type)
+    }
+}
+
+extension InCoordinator: PaymentCoordinatorDelegate {
+    func didCancel(in coordinator: PaymentCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 }

@@ -5,6 +5,7 @@ import UIKit
 import Result
 
 protocol TransactionCoordinatorDelegate: class {
+    func didPress(for type: PaymentFlow, in coordinator: TransactionCoordinator)
     func didCancel(in coordinator: TransactionCoordinator)
 }
 
@@ -86,18 +87,6 @@ class TransactionCoordinator: Coordinator {
         }
     }
 
-    func showPaymentFlow(for type: PaymentFlow) {
-        let coordinator = PaymentCoordinator(
-            flow: type,
-            session: session,
-            keystore: keystore
-        )
-        coordinator.delegate = self
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
-        coordinator.start()
-        addCoordinator(coordinator)
-    }
-
     @objc func didEnterForeground() {
         rootViewController.fetch()
     }
@@ -130,11 +119,11 @@ class TransactionCoordinator: Coordinator {
 
 extension TransactionCoordinator: TransactionsViewControllerDelegate {
     func didPressSend(in viewController: TransactionsViewController) {
-        showPaymentFlow(for: .send(type: .ether(destination: .none)))
+        delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
     }
 
     func didPressRequest(in viewController: TransactionsViewController) {
-        showPaymentFlow(for: .request)
+        delegate?.didPress(for: .request, in: self)
     }
 
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
@@ -151,12 +140,5 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
 
     func reset() {
         delegate?.didCancel(in: self)
-    }
-}
-
-extension TransactionCoordinator: PaymentCoordinatorDelegate {
-    func didCancel(in coordinator: PaymentCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
     }
 }
