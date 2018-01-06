@@ -265,7 +265,7 @@ class SendViewController: FormViewController {
     }
     
     private func updatePairPrice(with amount: Double) {
-        guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.symbol], let price = Double(currentTokenInfo.price) else {
+        guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.contract], let price = Double(currentTokenInfo.price) else {
             return
         }
         if self.currentPair.left == viewModel.symbol {
@@ -277,7 +277,7 @@ class SendViewController: FormViewController {
     }
     
     private func isFiatViewHidden() -> Bool {
-        guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.symbol], let _ = Double(currentTokenInfo.price) else {
+        guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.contract], let _ = Double(currentTokenInfo.price) else {
             return true
         }
         return false

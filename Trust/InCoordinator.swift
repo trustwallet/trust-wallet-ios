@@ -182,6 +182,7 @@ class InCoordinator: Coordinator {
     func showPaymentFlow(for type: PaymentFlow) {
         guard let transactionCoordinator = transactionCoordinator else { return }
         let session = transactionCoordinator.session
+        let tokenStorage = transactionCoordinator.tokensStorage
 
         if session.account.type == .watch {
             if case .request = type { } else {
@@ -192,7 +193,8 @@ class InCoordinator: Coordinator {
         let coordinator = PaymentCoordinator(
             flow: type,
             session: session,
-            keystore: keystore
+            keystore: keystore,
+            storage: tokenStorage
         )
         coordinator.delegate = self
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
