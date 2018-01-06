@@ -3,15 +3,24 @@
 import Foundation
 import UIKit
 import WebKit
+import JavaScriptCore
 
-enum Method: String {
+struct DappCommand: Decodable {
+    let name: Method
+    let object: [String: String]
+}
+
+enum Method: String, Decodable {
     //case getAccounts
     case signTransaction
+    case sign
     //case signMessage
 }
 
+
+
 protocol BrowserViewControllerDelegate: class {
-    func didCall(method: Method)
+    func didCall(action: DappAction)
 }
 
 class BrowserViewController: UIViewController {
@@ -47,28 +56,30 @@ class BrowserViewController: UIViewController {
 
         js +=
         """
+        function runCommand(command, object) {
+            webkit.messageHandlers.command.postMessage({"name": command, "object": object})
+        }
+
         let web3 = new Web3(new Web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)"));
         web3.eth.defaultAccount = "\(session.account.address.address)"
         web3.eth.signTransaction = function(tx, callback) {
-            webkit.messageHandlers.signTransaction.postMessage("name")
+            runCommand("signTransaction", tx)
+        }
+        web3.eth.sign = function(message, callback){
+            runCommand("sign", {"message": message})
         }
         window.web3 = web3
         """
 
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
-
-//        config.userContentController.add(self, name: Method.getAccounts.rawValue)
-//        config.userContentController.add(self, name: Method.signPersonalMessage.rawValue)
-//        config.userContentController.add(self, name: Method.signMessage.rawValue)
-        config.userContentController.add(self, name: Method.signTransaction.rawValue)
-//        config.userContentController.add(self, name: Method.publishTransaction.rawValue)
-//        config.userContentController.add(self, name: Method.approveTransaction.rawValue)
+        config.userContentController.add(self, name: "command")
 
         config.userContentController.addUserScript(userScript)
         return config
     }()
 
     weak var delegate: BrowserViewControllerDelegate?
+    let decoder = JSONDecoder()
 
     init(
         session: WalletSession
@@ -106,10 +117,41 @@ extension BrowserViewController: WKNavigationDelegate {
 }
 
 extension BrowserViewController: WKScriptMessageHandler {
+    private func jsCallback(callbackId: String, payload: String) {
+//        let js = "SOFA.callback(\"" + callbackId + "\",\"" + payload + "\")"
+//
+//        }
+    }
+
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         NSLog("message \(message.body)")
 
-        guard let method = Method(rawValue: message.name) else { return }
-        delegate?.didCall(method: method)
+        guard
+            let body = message.body as? [String: AnyObject],
+            let jsonString = body.jsonString
+        else { return }
+
+        do {
+            let command = try decoder.decode(
+                DappCommand.self,
+                from: jsonString.data(using: .utf8)!
+            )
+            let action = DappAction.fromCommand(command)
+            delegate?.didCall(action: action)
+        } catch {
+            NSLog("error \(error)")
+        }
     }
+
+
+}
+
+struct SendTransaction: Decodable {
+    let from: String
+    let to: String?
+    let value: String?
+    let gas: String?
+    let gasPrice: String?
+    let data: String?
+    let nonce: String?
 }

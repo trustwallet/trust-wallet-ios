@@ -36,22 +36,12 @@ class BrowserCoordinator: Coordinator {
 }
 
 extension BrowserCoordinator: BrowserViewControllerDelegate {
-    func didCall(method: Method) {
-        switch method {
-        case .signTransaction:
-
-            let transaction = UnconfirmedTransaction(
-                transferType: .ether(destination: .none),
-                value: BigInt(1),
-                address: Address(address: "0x"),
-                account: session.account,
-                chainID: session.config.chainID,
-                data: Data()
-            )
-
+    func didCall(action: DappAction) {
+        switch action {
+        case .signTransaction(let unconfirmedTransaction):
             let configurator = TransactionConfigurator(
                 session: session,
-                transaction: transaction,
+                transaction: unconfirmedTransaction,
                 gasPrice: .none
             )
 
@@ -65,6 +55,8 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
 
             let nav = UINavigationController(rootViewController: controller)
             navigationController.present(nav, animated: true, completion: nil)
+        case .sign, .unknown:
+            break
         }
     }
 }
