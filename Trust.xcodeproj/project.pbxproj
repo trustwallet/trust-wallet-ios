@@ -288,6 +288,8 @@
 		615F10591FCBEF7C008A45AF /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615F10581FCBEF7C008A45AF /* OnboardingPage.swift */; };
 		615F105D1FCBF55E008A45AF /* OnboardingCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615F105C1FCBF55E008A45AF /* OnboardingCollectionViewController.swift */; };
 		615F10621FCD3F0F008A45AF /* OnboardingPageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615F10611FCD3F0F008A45AF /* OnboardingPageStyle.swift */; };
+		61DCE17B2001A6BE0053939F /* RLP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCE17A2001A6BE0053939F /* RLP.swift */; };
+		61DCE17D2001A7A20053939F /* RLPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCE17C2001A7A20053939F /* RLPTests.swift */; };
 		61F8AA931FCA4A0F00488C6E /* BigInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8AA921FCA4A0F00488C6E /* BigInt.swift */; };
 		61F8AA951FCA4C9300488C6E /* BigIntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8AA941FCA4C9300488C6E /* BigIntTests.swift */; };
 		61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */; };
@@ -613,6 +615,8 @@
 		615F10581FCBEF7C008A45AF /* OnboardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
 		615F105C1FCBF55E008A45AF /* OnboardingCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewController.swift; sourceTree = "<group>"; };
 		615F10611FCD3F0F008A45AF /* OnboardingPageStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageStyle.swift; sourceTree = "<group>"; };
+		61DCE17A2001A6BE0053939F /* RLP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLP.swift; sourceTree = "<group>"; };
+		61DCE17C2001A7A20053939F /* RLPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLPTests.swift; sourceTree = "<group>"; };
 		61F8AA921FCA4A0F00488C6E /* BigInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigInt.swift; sourceTree = "<group>"; };
 		61F8AA941FCA4C9300488C6E /* BigIntTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigIntTests.swift; sourceTree = "<group>"; };
 		61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherNumberFormatter.swift; sourceTree = "<group>"; };
@@ -863,6 +867,7 @@
 			children = (
 				291E8FBE1F7DEA85003F0ECF /* EtherKeystoreTests.swift */,
 				2923D9B61FDA5E51000CF3F8 /* PasswordGeneratorTests.swift */,
+				61DCE17C2001A7A20053939F /* RLPTests.swift */,
 			);
 			path = EtherClient;
 			sourceTree = "<group>";
@@ -902,19 +907,20 @@
 		291F52A01F6B6DBC00B369AB /* EtherClient */ = {
 			isa = PBXGroup;
 			children = (
-				2959961D1FAE756400DB66A8 /* TrustClient */,
 				2963B6B41F9A7E13003063C1 /* CoinMarket */,
 				29282B561F7636600067F88D /* Ethplorer */,
 				291F52A31F6B760A00B369AB /* Requests */,
-				291F52A11F6B6DCF00B369AB /* EtherClient.swift */,
-				291F52A41F6B762300B369AB /* EtherServiceRequest.swift */,
+				2959961D1FAE756400DB66A8 /* TrustClient */,
 				291F52B61F6B870400B369AB /* CastError.swift */,
-				291F52B81F6B880F00B369AB /* EtherKeystore.swift */,
-				291ED08C1F6F5F0A00E7E93A /* KeyStoreError.swift */,
-				29FF12FD1F75EA3F00AFD326 /* Keystore.swift */,
-				29F114ED1FA65DEF00114A29 /* ImportType.swift */,
 				2961BD061FB146EB00C4B840 /* ChainState.swift */,
+				291F52A11F6B6DCF00B369AB /* EtherClient.swift */,
+				291F52B81F6B880F00B369AB /* EtherKeystore.swift */,
+				291F52A41F6B762300B369AB /* EtherServiceRequest.swift */,
+				29F114ED1FA65DEF00114A29 /* ImportType.swift */,
+				29FF12FD1F75EA3F00AFD326 /* Keystore.swift */,
+				291ED08C1F6F5F0A00E7E93A /* KeyStoreError.swift */,
 				2923D9B41FDA4E07000CF3F8 /* PasswordGenerator.swift */,
+				61DCE17A2001A6BE0053939F /* RLP.swift */,
 			);
 			path = EtherClient;
 			sourceTree = "<group>";
@@ -2380,6 +2386,7 @@
 				294EC1D81FD7FBAB0065EB20 /* BiometryAuthenticationType.swift in Sources */,
 				29E6E0721FEA200D0079265A /* ConfirmPaymentDetailsViewModel.swift in Sources */,
 				2931121B1FC560E500966EEA /* ExchangeTokenTableViewCell.swift in Sources */,
+				61DCE17B2001A6BE0053939F /* RLP.swift in Sources */,
 				293112261FC8154E00966EEA /* ContractExchangeTrade.swift in Sources */,
 				29E6E0701FEA12910079265A /* TransactionConfigurator.swift in Sources */,
 				299B5E3B1FD141B70051361C /* BackupViewModel.swift in Sources */,
@@ -2513,6 +2520,7 @@
 				2912CD101F6A830700C6CBE3 /* TrustTests.swift in Sources */,
 				29FF130D1F7626E800AFD326 /* FakeNavigationController.swift in Sources */,
 				293112311FC971B600966EEA /* ExchangeTokensCoordinatorTests.swift in Sources */,
+				61DCE17D2001A7A20053939F /* RLPTests.swift in Sources */,
 				61F8AA951FCA4C9300488C6E /* BigIntTests.swift in Sources */,
 				299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */,
 				CCA4FE3A1FD42B4100749AE4 /* FakeJailbreakChecker.swift in Sources */,
@@ -2640,7 +2648,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2695,7 +2703,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -2719,7 +2727,6 @@
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Trust/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sixdays.trust;
@@ -2744,7 +2751,6 @@
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Trust/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sixdays.trust;
 				PRODUCT_NAME = "$(TARGET_NAME)";
