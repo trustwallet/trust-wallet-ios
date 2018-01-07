@@ -15,7 +15,7 @@ enum RPCServer: String {
         case .kovan: return 42
         case .ropsten: return 3
         case .poa: return 99
-        case .classic: return 61
+        case .classic: return 66
         }
     }
 

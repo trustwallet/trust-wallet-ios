@@ -39,8 +39,4 @@ struct EditTokenTableCellViewModel {
     var isEnabled: Bool {
         return !token.isDisabled
     }
-
-    var contractText: String {
-        return token.contract
-    }
 }

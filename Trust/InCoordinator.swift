@@ -8,14 +8,6 @@ protocol InCoordinatorDelegate: class {
     func didUpdateAccounts(in coordinator: InCoordinator)
 }
 
-enum InCoordinatorError: LocalizedError {
-    case onlyWatchAccount
-
-    var errorDescription: String? {
-        return NSLocalizedString("InCoordinatorError.onlyWatchAccount", value: "This wallet could be only used for watching. Import Private Key/Keystore to sign transactions", comment: "")
-    }
-}
-
 class InCoordinator: Coordinator {
 
     let navigationController: UINavigationController
@@ -23,38 +15,26 @@ class InCoordinator: Coordinator {
     let initialAccount: Account
     var keystore: Keystore
     var config: Config
-    let appTracker: AppTracker
     weak var delegate: InCoordinatorDelegate?
     var transactionCoordinator: TransactionCoordinator? {
         return self.coordinators.flatMap { $0 as? TransactionCoordinator }.first
     }
-    lazy var helpUsCoordinator: HelpUsCoordinator = {
-        return HelpUsCoordinator(
-            navigationController: navigationController,
-            appTracker: appTracker
-        )
-    }()
 
     init(
         navigationController: UINavigationController = NavigationController(),
         account: Account,
         keystore: Keystore,
-        config: Config = Config(),
-        appTracker: AppTracker = AppTracker()
+        config: Config = Config()
     ) {
         self.navigationController = navigationController
         self.initialAccount = account
         self.keystore = keystore
         self.config = config
-        self.appTracker = appTracker
     }
 
     func start() {
         showTabBar(for: initialAccount)
         checkDevice()
-
-        helpUsCoordinator.start()
-        addCoordinator(helpUsCoordinator)
     }
 
     func showTabBar(for account: Account) {
@@ -62,13 +42,7 @@ class InCoordinator: Coordinator {
             account: account,
             config: config
         )
-        
         MigrationInitializer(account: account, chainID: config.chainID).perform()
-        
-        let tokensStorage = TokensDataStore(
-            session: session,
-            configuration: RealmConfiguration.configuration(for: session.account, chainID: session.config.chainID)
-        )
 
         let transactionsStorage = TransactionsStorage(
             configuration: RealmConfiguration.configuration(for: account, chainID: session.config.chainID)
@@ -77,8 +51,7 @@ class InCoordinator: Coordinator {
         let transactionCoordinator = TransactionCoordinator(
             session: session,
             storage: transactionsStorage,
-            keystore: keystore,
-            tokensStorage: tokensStorage
+            keystore: keystore
         )
         transactionCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("transactions.tabbar.item.title", value: "Transactions", comment: ""), image: R.image.feed(), selectedImage: nil)
         transactionCoordinator.delegate = self
@@ -97,7 +70,7 @@ class InCoordinator: Coordinator {
         }
 
         if inCoordinatorViewModel.browserAvailable {
-            let coordinator = BrowserCoordinator()
+            let coordinator = BrowserCoordinator(session: session, keystore: keystore)
             coordinator.start()
             coordinator.rootViewController.tabBarItem = UITabBarItem(
                 title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
@@ -109,13 +82,16 @@ class InCoordinator: Coordinator {
         }
 
         if inCoordinatorViewModel.tokensAvailable {
+            let tokensStorage = TokensDataStore(
+                session: session,
+                configuration: RealmConfiguration.configuration(for: session.account, chainID: session.config.chainID)
+            )
             let tokenCoordinator = TokensCoordinator(
                 session: session,
                 keystore: keystore,
                 tokensStorage: tokensStorage
             )
             tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("tokens.tabbar.item.title", value: "Tokens", comment: ""), image: R.image.coins(), selectedImage: nil)
-            tokenCoordinator.delegate = self
             tokenCoordinator.start()
             addCoordinator(tokenCoordinator)
             tabBarController.viewControllers?.append(tokenCoordinator.navigationController)
@@ -178,36 +154,9 @@ class InCoordinator: Coordinator {
 
         addCoordinator(deviceChecker)
     }
-
-    func showPaymentFlow(for type: PaymentFlow) {
-        guard let transactionCoordinator = transactionCoordinator else { return }
-        let session = transactionCoordinator.session
-        let tokenStorage = transactionCoordinator.tokensStorage
-
-        if session.account.type == .watch {
-            if case .request = type { } else {
-                return self.navigationController.displayError(error: InCoordinatorError.onlyWatchAccount)
-            }
-        }
-
-        let coordinator = PaymentCoordinator(
-            flow: type,
-            session: session,
-            keystore: keystore,
-            storage: tokenStorage
-        )
-        coordinator.delegate = self
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
-        coordinator.start()
-        addCoordinator(coordinator)
-    }
 }
 
 extension InCoordinator: TransactionCoordinatorDelegate {
-    func didPress(for type: PaymentFlow, in coordinator: TransactionCoordinator) {
-        showPaymentFlow(for: type)
-    }
-
     func didCancel(in coordinator: TransactionCoordinator) {
         delegate?.didCancel(in: self)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
@@ -242,18 +191,5 @@ extension InCoordinator: SettingsCoordinatorDelegate {
 
     func didUpdateAccounts(in coordinator: SettingsCoordinator) {
         delegate?.didUpdateAccounts(in: self)
-    }
-}
-
-extension InCoordinator: TokensCoordinatorDelegate {
-    func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator) {
-        showPaymentFlow(for: type)
-    }
-}
-
-extension InCoordinator: PaymentCoordinatorDelegate {
-    func didCancel(in coordinator: PaymentCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
     }
 }

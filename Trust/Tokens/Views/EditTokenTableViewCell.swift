@@ -12,7 +12,6 @@ class EditTokenTableViewCell: UITableViewCell {
     @IBOutlet weak var tokenImageView: UIImageView!
     @IBOutlet weak var tokenLabel: UILabel!
     @IBOutlet weak var tokenEnableSwitch: UISwitch!
-    @IBOutlet weak var tokenContractLabel: UILabel!
     weak var delegate: EditTokenTableViewCellDelegate?
 
     var viewModel: EditTokenTableCellViewModel? {
@@ -21,7 +20,6 @@ class EditTokenTableViewCell: UITableViewCell {
             tokenLabel.text = viewModel.title
             tokenLabel.font = viewModel.titleFont
             tokenLabel.textColor = viewModel.titleTextColor
-            tokenContractLabel.text = viewModel.contractText
             tokenEnableSwitch.isOn = viewModel.isEnabled
             tokenImageView.kf.setImage(
                 with: viewModel.imageUrl,

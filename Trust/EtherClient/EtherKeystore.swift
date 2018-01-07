@@ -14,7 +14,6 @@ open class EtherKeystore: Keystore {
 
     struct Keys {
         static let recentlyUsedAddress: String = "recentlyUsedAddress"
-        static let watchAddresses = "watchAddresses"
     }
 
     private let keychain: KeychainSwift
@@ -58,17 +57,6 @@ open class EtherKeystore: Keystore {
         }
     }
 
-    var watchAddresses: [String] {
-        set {
-            let data = NSKeyedArchiver.archivedData(withRootObject: newValue)
-            keychain.set(data, forKey: Keys.watchAddresses)
-        }
-        get {
-            guard let data = keychain.getData(Keys.watchAddresses) else { return [] }
-            return NSKeyedUnarchiver.unarchiveObject(with: data) as? [String] ?? []
-        }
-    }
-
     // Async
     func createAccount(with password: String, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
@@ -103,9 +91,6 @@ open class EtherKeystore: Keystore {
                     completion(.failure(error))
                 }
             }
-        case .watch(let address):
-            self.watchAddresses = [watchAddresses, [address.address]].flatMap { $0 }
-            completion(.success(Account(address: address)))
         }
     }
 
@@ -172,10 +157,7 @@ open class EtherKeystore: Keystore {
     }
 
     var accounts: [Account] {
-        return [
-            gethAccounts.map { Account(address: Address(address: $0.getAddress().getHex())) },
-            watchAddresses.map { Account(address: Address(address: $0), type: .watch) },
-        ].flatMap { $0 }
+        return self.gethAccounts.map { Account(address: Address(address: $0.getAddress().getHex())) }
     }
 
     var gethAccounts: [GethAccount] {
@@ -214,19 +196,13 @@ open class EtherKeystore: Keystore {
     }
 
     func delete(account: Account) -> Result<Void, KeystoreError> {
-        switch account.type {
-        case .real:
-            let gethAccount = getGethAccount(for: account.address)
-            let password = getPassword(for: account)
-            do {
-                try gethKeyStorage.delete(gethAccount, passphrase: password)
-                return .success(())
-            } catch {
-                return .failure(.failedToDeleteAccount)
-            }
-        case .watch:
-            watchAddresses = watchAddresses.filter { $0 != account.address.address }
+        let gethAccount = getGethAccount(for: account.address)
+        let password = getPassword(for: account)
+        do {
+            try gethKeyStorage.delete(gethAccount, passphrase: password)
             return .success(())
+        } catch {
+            return .failure(.failedToDeleteAccount)
         }
     }
 

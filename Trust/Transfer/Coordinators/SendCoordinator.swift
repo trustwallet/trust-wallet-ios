@@ -14,7 +14,6 @@ class SendCoordinator: Coordinator {
     let session: WalletSession
     let navigationController: UINavigationController
     let keystore: Keystore
-    let storage: TokensDataStore
     var coordinators: [Coordinator] = []
     weak var delegate: SendCoordinatorDelegate?
     lazy var sendViewController: SendViewController = {
@@ -25,15 +24,13 @@ class SendCoordinator: Coordinator {
         transferType: TransferType,
         navigationController: UINavigationController = UINavigationController(),
         session: WalletSession,
-        keystore: Keystore,
-        storage: TokensDataStore
+        keystore: Keystore
     ) {
         self.transferType = transferType
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
         self.keystore = keystore
-        self.storage = storage
     }
 
     func start() {
@@ -43,7 +40,6 @@ class SendCoordinator: Coordinator {
     func makeSendViewController() -> SendViewController {
         let controller = SendViewController(
             session: session,
-            storage: storage,
             transferType: transferType
         )
         controller.navigationItem.titleView = BalanceTitleView.make(from: self.session, transferType)
