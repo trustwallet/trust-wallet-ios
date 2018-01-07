@@ -288,6 +288,8 @@
 		615F10591FCBEF7C008A45AF /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615F10581FCBEF7C008A45AF /* OnboardingPage.swift */; };
 		615F105D1FCBF55E008A45AF /* OnboardingCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615F105C1FCBF55E008A45AF /* OnboardingCollectionViewController.swift */; };
 		615F10621FCD3F0F008A45AF /* OnboardingPageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615F10611FCD3F0F008A45AF /* OnboardingPageStyle.swift */; };
+		61C359E02002AA5A0097B04D /* TransactionSigning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C359DF2002AA590097B04D /* TransactionSigning.swift */; };
+		61C359E22002AC9D0097B04D /* TransactionSigningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C359E12002AC9D0097B04D /* TransactionSigningTests.swift */; };
 		61DCE17B2001A6BE0053939F /* RLP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCE17A2001A6BE0053939F /* RLP.swift */; };
 		61DCE17D2001A7A20053939F /* RLPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCE17C2001A7A20053939F /* RLPTests.swift */; };
 		61F8AA931FCA4A0F00488C6E /* BigInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F8AA921FCA4A0F00488C6E /* BigInt.swift */; };
@@ -615,6 +617,8 @@
 		615F10581FCBEF7C008A45AF /* OnboardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
 		615F105C1FCBF55E008A45AF /* OnboardingCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewController.swift; sourceTree = "<group>"; };
 		615F10611FCD3F0F008A45AF /* OnboardingPageStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageStyle.swift; sourceTree = "<group>"; };
+		61C359DF2002AA590097B04D /* TransactionSigning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionSigning.swift; sourceTree = "<group>"; };
+		61C359E12002AC9D0097B04D /* TransactionSigningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSigningTests.swift; sourceTree = "<group>"; };
 		61DCE17A2001A6BE0053939F /* RLP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLP.swift; sourceTree = "<group>"; };
 		61DCE17C2001A7A20053939F /* RLPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLPTests.swift; sourceTree = "<group>"; };
 		61F8AA921FCA4A0F00488C6E /* BigInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigInt.swift; sourceTree = "<group>"; };
@@ -868,6 +872,7 @@
 				291E8FBE1F7DEA85003F0ECF /* EtherKeystoreTests.swift */,
 				2923D9B61FDA5E51000CF3F8 /* PasswordGeneratorTests.swift */,
 				61DCE17C2001A7A20053939F /* RLPTests.swift */,
+				61C359E12002AC9D0097B04D /* TransactionSigningTests.swift */,
 			);
 			path = EtherClient;
 			sourceTree = "<group>";
@@ -921,6 +926,7 @@
 				291ED08C1F6F5F0A00E7E93A /* KeyStoreError.swift */,
 				2923D9B41FDA4E07000CF3F8 /* PasswordGenerator.swift */,
 				61DCE17A2001A6BE0053939F /* RLP.swift */,
+				61C359DF2002AA590097B04D /* TransactionSigning.swift */,
 			);
 			path = EtherClient;
 			sourceTree = "<group>";
@@ -2402,6 +2408,7 @@
 				29C80D371FB2CD230037B1E0 /* ParsedTransaction.swift in Sources */,
 				613D048B1FDE162B008DE72E /* TrustProvider.swift in Sources */,
 				293204581F8DC6B20095B7C1 /* ExchangeRateCoordinator.swift in Sources */,
+				61C359E02002AA5A0097B04D /* TransactionSigning.swift in Sources */,
 				29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */,
 				2963B6BF1F9AB9A2003063C1 /* ContractERC20Transfer.swift in Sources */,
 				29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */,
@@ -2549,6 +2556,7 @@
 				2977CAE01F7DEEB0009682A0 /* FakeEtherKeystore.swift in Sources */,
 				29DBF2A51F9EB75E00327C60 /* BackupCoordinatorTests.swift in Sources */,
 				29E14FD51F7F470C00185568 /* TransactionsStorageTests.swift in Sources */,
+				61C359E22002AC9D0097B04D /* TransactionSigningTests.swift in Sources */,
 				299B5E381FCBCDF70051361C /* RequestViewModelTests.swift in Sources */,
 				293E62731FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift in Sources */,
 				29FF130A1F75F67200AFD326 /* Address.swift in Sources */,
