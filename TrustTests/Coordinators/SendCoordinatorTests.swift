@@ -10,8 +10,7 @@ class SendCoordinatorTests: XCTestCase {
             transferType: .ether(destination: .none),
             navigationController: FakeNavigationController(),
             session: .make(),
-            keystore: FakeKeystore(),
-            storage: FakeTokensDataStore()
+            keystore: FakeKeystore()
         )
 
         coordinator.start()
@@ -25,8 +24,7 @@ class SendCoordinatorTests: XCTestCase {
             transferType: .ether(destination: address),
             navigationController: FakeNavigationController(),
             session: .make(),
-            keystore: FakeKeystore(),
-            storage: FakeTokensDataStore()
+            keystore: FakeKeystore()
         )
         coordinator.start()
 

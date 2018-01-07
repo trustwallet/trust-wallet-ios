@@ -49,7 +49,9 @@ class AccountsViewController: UITableViewController {
     }
 
     func fetch() {
-        accounts = keystore.accounts
+        accounts = keystore.accounts.map {
+            Account(address: Address(address: $0.address.address))
+        }
     }
 
     func configure(viewModel: AccountsViewModel) {

@@ -3,18 +3,11 @@
 import Foundation
 import Geth
 
-enum AccountType {
-    case real
-    case watch
-}
-
 struct Account {
     let address: Address
-    let type: AccountType
 
-    init(address: Address, type: AccountType = .real) {
+    init(address: Address) {
         self.address = address
-        self.type = type
     }
 }
 

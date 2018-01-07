@@ -5,7 +5,6 @@ import UIKit
 import Result
 
 protocol TransactionCoordinatorDelegate: class {
-    func didPress(for type: PaymentFlow, in coordinator: TransactionCoordinator)
     func didCancel(in coordinator: TransactionCoordinator)
 }
 
@@ -28,7 +27,6 @@ class TransactionCoordinator: Coordinator {
     weak var delegate: TransactionCoordinatorDelegate?
 
     let session: WalletSession
-    let tokensStorage: TokensDataStore
     let navigationController: UINavigationController
     var coordinators: [Coordinator] = []
 
@@ -36,14 +34,12 @@ class TransactionCoordinator: Coordinator {
         session: WalletSession,
         navigationController: UINavigationController = NavigationController(),
         storage: TransactionsStorage,
-        keystore: Keystore,
-        tokensStorage: TokensDataStore
+        keystore: Keystore
     ) {
         self.session = session
         self.keystore = keystore
         self.navigationController = navigationController
         self.storage = storage
-        self.tokensStorage = tokensStorage
 
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
     }
@@ -58,7 +54,6 @@ class TransactionCoordinator: Coordinator {
             account: account,
             dataCoordinator: dataCoordinator,
             session: session,
-            tokensStorage: tokensStorage,
             viewModel: viewModel
         )
 
@@ -89,6 +84,18 @@ class TransactionCoordinator: Coordinator {
         } else {
             navigationController.pushViewController(controller, animated: true)
         }
+    }
+
+    func showPaymentFlow(for type: PaymentFlow) {
+        let coordinator = PaymentCoordinator(
+            flow: type,
+            session: session,
+            keystore: keystore
+        )
+        coordinator.delegate = self
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+        coordinator.start()
+        addCoordinator(coordinator)
     }
 
     @objc func didEnterForeground() {
@@ -123,11 +130,11 @@ class TransactionCoordinator: Coordinator {
 
 extension TransactionCoordinator: TransactionsViewControllerDelegate {
     func didPressSend(in viewController: TransactionsViewController) {
-        delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
+        showPaymentFlow(for: .send(type: .ether(destination: .none)))
     }
 
     func didPressRequest(in viewController: TransactionsViewController) {
-        delegate?.didPress(for: .request, in: self)
+        showPaymentFlow(for: .request)
     }
 
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
@@ -144,5 +151,12 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
 
     func reset() {
         delegate?.didCancel(in: self)
+    }
+}
+
+extension TransactionCoordinator: PaymentCoordinatorDelegate {
+    func didCancel(in coordinator: PaymentCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 }

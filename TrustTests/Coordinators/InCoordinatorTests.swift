@@ -49,38 +49,4 @@ class InCoordinatorTests: XCTestCase {
 
         XCTAssertEqual(coordinator.keystore.recentlyUsedAccount, account2)
     }
-
-    func testShowSendFlow() {
-        let coordinator = InCoordinator(
-            navigationController: FakeNavigationController(),
-            account: .make(),
-            keystore: FakeEtherKeystore(),
-            config: .make()
-        )
-        coordinator.showTabBar(for: .make())
-
-        coordinator.showPaymentFlow(for: .send(type: .ether(destination: .none)))
-
-        let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
-
-        XCTAssertTrue(coordinator.coordinators.last is PaymentCoordinator)
-        XCTAssertTrue(controller is SendViewController)
-    }
-
-    func testShowRequstFlow() {
-        let coordinator = InCoordinator(
-            navigationController: FakeNavigationController(),
-            account: .make(),
-            keystore: FakeEtherKeystore(),
-            config: .make()
-        )
-        coordinator.showTabBar(for: .make())
-
-        coordinator.showPaymentFlow(for: .request)
-
-        let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
-
-        XCTAssertTrue(coordinator.coordinators.last is PaymentCoordinator)
-        XCTAssertTrue(controller is RequestViewController)
-    }
 }
