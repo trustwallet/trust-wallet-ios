@@ -6,7 +6,6 @@ import BigInt
 
 class BrowserCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
-
     let session: WalletSession
     let keystore: Keystore
     let navigationController: UINavigationController
@@ -66,3 +65,4 @@ extension BrowserCoordinator: ConfirmPaymentViewControllerDelegate {
         navigationController.dismiss(animated: true, completion: nil)
     }
 }
+

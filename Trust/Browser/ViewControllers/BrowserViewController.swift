@@ -17,15 +17,22 @@ enum Method: String, Decodable {
     //case signMessage
 }
 
-
-
 protocol BrowserViewControllerDelegate: class {
     func didCall(action: DappAction)
 }
-
 class BrowserViewController: UIViewController {
 
     let session: WalletSession
+
+    enum Method: String {
+        case getAccounts
+        case signTransaction
+        case signMessage
+        case signPersonalMessage
+        case publishTransaction
+        case approveTransaction
+    }
+
     lazy var webView: WKWebView = {
         let webView = WKWebView(
             frame: .zero,
@@ -37,6 +44,9 @@ class BrowserViewController: UIViewController {
         webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
         return webView
     }()
+
+    weak var delegate: BrowserViewControllerDelegate?
+    let decoder = JSONDecoder()
 
     lazy var config: WKWebViewConfiguration = {
         let config = WKWebViewConfiguration()
@@ -68,7 +78,6 @@ class BrowserViewController: UIViewController {
         web3.eth.sign = function(message, callback){
             runCommand("sign", {"message": message})
         }
-        window.web3 = web3
         """
 
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
@@ -77,9 +86,6 @@ class BrowserViewController: UIViewController {
         config.userContentController.addUserScript(userScript)
         return config
     }()
-
-    weak var delegate: BrowserViewControllerDelegate?
-    let decoder = JSONDecoder()
 
     init(
         session: WalletSession
@@ -98,11 +104,10 @@ class BrowserViewController: UIViewController {
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
 
-        //webView.load(URLRequest(url: URL(string: "https://poanetwork.github.io/poa-dapps-validators/")!))
-
         if let url = Bundle.main.url(forResource: "demo", withExtension: "html") {
             webView.load(URLRequest(url: url))
         }
+        //webView.load(URLRequest(url: URL(string: "https://poanetwork.github.io/poa-dapps-validators/")!))
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -117,12 +122,6 @@ extension BrowserViewController: WKNavigationDelegate {
 }
 
 extension BrowserViewController: WKScriptMessageHandler {
-    private func jsCallback(callbackId: String, payload: String) {
-//        let js = "SOFA.callback(\"" + callbackId + "\",\"" + payload + "\")"
-//
-//        }
-    }
-
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         NSLog("message \(message.body)")
 
@@ -142,8 +141,6 @@ extension BrowserViewController: WKScriptMessageHandler {
             NSLog("error \(error)")
         }
     }
-
-
 }
 
 struct SendTransaction: Decodable {
