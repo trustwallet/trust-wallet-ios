@@ -17,7 +17,7 @@ struct InCoordinatorViewModel {
     }
 
     var browserAvailable: Bool {
-        return true //isDebug
+        return isDebug
     }
 
     var exchangeAvailable: Bool {
