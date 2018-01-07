@@ -65,4 +65,3 @@ extension BrowserCoordinator: ConfirmPaymentViewControllerDelegate {
         navigationController.dismiss(animated: true, completion: nil)
     }
 }
-

@@ -18,10 +18,17 @@ class InCoordinatorTests: XCTestCase {
         let tabbarController = coordinator.navigationController.viewControllers[0] as? UITabBarController
 
         XCTAssertNotNil(tabbarController)
-        
-        XCTAssert((tabbarController?.viewControllers?[0] as? UINavigationController)?.viewControllers[0] is TransactionsViewController)
-        XCTAssert((tabbarController?.viewControllers?[1] as? UINavigationController)?.viewControllers[0] is TokensViewController)
-        XCTAssert((tabbarController?.viewControllers?[2] as? UINavigationController)?.viewControllers[0] is SettingsViewController)
+
+        if isDebug {
+            XCTAssert((tabbarController?.viewControllers?[0] as? UINavigationController)?.viewControllers[0] is BrowserViewController)
+            XCTAssert((tabbarController?.viewControllers?[1] as? UINavigationController)?.viewControllers[0] is TransactionsViewController)
+            XCTAssert((tabbarController?.viewControllers?[2] as? UINavigationController)?.viewControllers[0] is TokensViewController)
+            XCTAssert((tabbarController?.viewControllers?[3] as? UINavigationController)?.viewControllers[0] is SettingsViewController)
+        } else {
+            XCTAssert((tabbarController?.viewControllers?[0] as? UINavigationController)?.viewControllers[0] is TransactionsViewController)
+            XCTAssert((tabbarController?.viewControllers?[1] as? UINavigationController)?.viewControllers[0] is TokensViewController)
+            XCTAssert((tabbarController?.viewControllers?[2] as? UINavigationController)?.viewControllers[0] is SettingsViewController)
+        }
     }
 
     func testChangeRecentlyUsedAccount() {
