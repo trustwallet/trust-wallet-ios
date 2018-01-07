@@ -3,8 +3,18 @@
 import Foundation
 import Moya
 
+struct TokensPrice: Encodable {
+    let currency: String
+    let tokens: [TokenPrice]
+}
+
+struct TokenPrice: Encodable {
+    let contract: String
+    let symbol: String
+}
+
 enum TrustService {
-    case prices(currency: Currency, symbols: [String])
+    case prices(TokensPrice)
     case getTransactions(address: String, startBlock: Int)
     case getTransaction(ID: String)
     case register(device: PushDevice)
@@ -26,7 +36,7 @@ extension TrustService: TargetType {
         case .unregister:
             return "/push/unregister"
         case .prices:
-            return "/prices"
+            return "/tokenPrices"
         }
     }
 
@@ -36,7 +46,7 @@ extension TrustService: TargetType {
         case .getTransaction: return .get
         case .register: return .post
         case .unregister: return .delete
-        case .prices: return .get
+        case .prices: return .post
         }
     }
 
@@ -50,14 +60,8 @@ extension TrustService: TargetType {
             return .requestJSONEncodable(device)
         case .unregister(let device):
             return .requestJSONEncodable(device)
-        case .prices(let currency, let symbols):
-            return .requestParameters(
-                parameters: [
-                    "currency": currency.rawValue,
-                    "symbols": symbols.joined(separator: ","),
-                ],
-                encoding:URLEncoding.queryString
-            )
+        case .prices(let tokensPrice):
+            return .requestJSONEncodable(tokensPrice)
         }
     }
 

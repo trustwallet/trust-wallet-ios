@@ -11,7 +11,8 @@ class PaymentCoordinatorTests: XCTestCase {
             navigationController: FakeNavigationController(),
             flow: .send(type: .ether(destination: address)),
             session: .make(),
-            keystore: FakeKeystore()
+            keystore: FakeKeystore(),
+            storage: FakeTokensDataStore()
         )
         coordinator.start()
 
@@ -24,7 +25,8 @@ class PaymentCoordinatorTests: XCTestCase {
             navigationController: FakeNavigationController(),
             flow: .request,
             session: .make(),
-            keystore: FakeKeystore()
+            keystore: FakeKeystore(),
+            storage: FakeTokensDataStore()
         )
 
         coordinator.start()

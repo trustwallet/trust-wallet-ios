@@ -18,6 +18,7 @@ class ImportWalletViewController: FormViewController {
         static let segment = "segment"
         static let keystore = "keystore"
         static let privateKey = "privateKey"
+        static let watch = "watch"
         static let password = "password"
     }
 
@@ -31,6 +32,10 @@ class ImportWalletViewController: FormViewController {
 
     var privateKeyRow: TextAreaRow? {
         return form.rowBy(tag: Values.privateKey)
+    }
+
+    var watchRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.watch)
     }
 
     var passwordRow: TextFloatLabelRow? {
@@ -91,6 +96,7 @@ class ImportWalletViewController: FormViewController {
                 $0.options = [
                     ImportSelectionType.keystore.title,
                     ImportSelectionType.privateKey.title,
+                    ImportSelectionType.watch.title,
                 ]
                 $0.value = ImportSelectionType.keystore.title
             }
@@ -113,6 +119,16 @@ class ImportWalletViewController: FormViewController {
                 $0.hidden = Eureka.Condition.function([Values.segment], { _ in
                     return self.segmentRow?.value != ImportSelectionType.privateKey.title
                 })
+            }
+
+            <<< AppFormAppearance.textFieldFloat(tag: Values.watch) {
+                $0.add(rule: RuleRequired())
+                $0.add(rule: EthereumAddressRule())
+                $0.hidden = Eureka.Condition.function([Values.segment], { _ in
+                    return self.segmentRow?.value != ImportSelectionType.watch.title
+                })
+            }.cellUpdate { cell, _ in
+                cell.textField.placeholder = NSLocalizedString("Ethereum Address", value: "Ethereum Address", comment: "")
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.password) {
@@ -145,6 +161,7 @@ class ImportWalletViewController: FormViewController {
 
         let keystoreInput = keystoreRow?.value?.trimmed ?? ""
         let privateKeyInput = privateKeyRow?.value?.trimmed ?? ""
+        let watchInput = watchRow?.value?.trimmed ?? ""
         let password = passwordRow?.value ?? ""
 
         displayLoading(text: NSLocalizedString("importWallet.importingIndicator.label.title", value: "Importing wallet...", comment: ""), animated: false)
@@ -156,6 +173,8 @@ class ImportWalletViewController: FormViewController {
                 return .keystore(string: keystoreInput, password: password)
             case .privateKey:
                 return .privateKey(privateKey: privateKeyInput)
+            case .watch:
+                return .watch(address: Address(address: watchInput))
             }
         }()
 

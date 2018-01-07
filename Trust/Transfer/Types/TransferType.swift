@@ -18,4 +18,14 @@ extension TransferType {
         case .exchange: return "--"
         }
     }
+    
+    func contract() -> String {
+        switch self {
+        case .ether:
+            return "0x"
+        case .token(let token):
+            return token.contract
+        case .exchange: return "--"
+        }
+    }
 }

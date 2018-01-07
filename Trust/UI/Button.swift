@@ -101,7 +101,7 @@ class Button: UIButton {
     func apply(size: ButtonSize, style: ButtonStyle) {
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: size.height),
-            ])
+        ])
 
         backgroundColor = style.backgroundColor
         layer.cornerRadius = style.cornerRadius

@@ -20,6 +20,7 @@ class AppCoordinator: NSObject, Coordinator {
     let pushNotificationRegistrar = PushNotificationsRegistrar()
 
     private var keystore: Keystore
+    private var appTracker = AppTracker()
 
     var coordinators: [Coordinator] = []
 
@@ -37,6 +38,7 @@ class AppCoordinator: NSObject, Coordinator {
 
     func start() {
         inializers()
+        appTracker.start()
         handleNotifications()
         applyStyle()
         resetToWelcomeScreen()
@@ -54,7 +56,8 @@ class AppCoordinator: NSObject, Coordinator {
         let coordinator = InCoordinator(
             navigationController: navigationController,
             account: account,
-            keystore: keystore
+            keystore: keystore,
+            appTracker: appTracker
         )
         coordinator.delegate = self
         coordinator.start()
