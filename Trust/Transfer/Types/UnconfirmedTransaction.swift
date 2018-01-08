@@ -2,6 +2,7 @@
 
 import Foundation
 import BigInt
+import TrustKeystore
 
 struct UnconfirmedTransaction {
     let transferType: TransferType

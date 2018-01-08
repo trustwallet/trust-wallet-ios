@@ -3,6 +3,7 @@
 import Foundation
 import UIKit
 import BigInt
+import TrustKeystore
 
 struct ExchangeToken {
     let name: String

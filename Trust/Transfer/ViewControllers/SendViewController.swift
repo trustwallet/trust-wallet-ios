@@ -2,12 +2,12 @@
 
 import Foundation
 import UIKit
-import Geth
 import Eureka
 import JSONRPCKit
 import APIKit
 import QRCodeReaderViewController
 import BigInt
+import TrustKeystore
 
 protocol SendViewControllerDelegate: class {
     func didPressConfirm(
@@ -148,7 +148,7 @@ class SendViewController: FormViewController {
         let addressString = addressRow?.value?.trimmed ?? ""
         let amountString = amountRow?.value?.trimmed ?? ""
 
-        let address = Address(address: addressString)
+        let address = Address(string: addressString)
 
         let parsedValue: BigInt? = {
             switch transferType {

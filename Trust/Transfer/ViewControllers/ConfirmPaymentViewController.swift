@@ -4,7 +4,6 @@ import BigInt
 import Foundation
 import UIKit
 import StackViewController
-import Geth
 
 protocol ConfirmPaymentViewControllerDelegate: class {
     func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController)
@@ -69,7 +68,7 @@ class ConfirmPaymentViewController: UIViewController {
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(
                 title: detailsViewModel.paymentFromTitle,
-                subTitle: session.account.address.address
+                subTitle: session.account.address.description
             ),
             TransactionAppearance.item(
                 title: detailsViewModel.paymentToTitle,

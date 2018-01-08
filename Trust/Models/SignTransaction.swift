@@ -1,8 +1,8 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
-import Geth
 import BigInt
+import TrustKeystore
 
 public struct SignTransaction {
     let value: BigInt

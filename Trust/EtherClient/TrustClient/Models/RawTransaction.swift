@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 
 struct RawTransaction: Decodable {
     let hash: String
@@ -40,7 +41,7 @@ extension Transaction {
         let isError = transaction.error?.isEmpty == false
         return Transaction(
             id: transaction.hash,
-            owner: owner.address,
+            owner: owner.description,
             blockNumber: transaction.blockNumber,
             from: transaction.from,
             to: transaction.to,

@@ -3,7 +3,7 @@
 import Foundation
 import BigInt
 import Result
-import Geth
+import TrustKeystore
 
 public struct PreviewTransaction {
     let value: BigInt
@@ -52,7 +52,7 @@ class TransactionConfigurator {
             )
             completion(.success(()))
         case .token:
-            session.web3.request(request: ContractERC20Transfer(amount: transaction.value, address: transaction.address.address)) { result in
+            session.web3.request(request: ContractERC20Transfer(amount: transaction.value, address: transaction.address.description)) { result in
                 switch result {
                 case .success(let res):
                     let data = Data(hex: res.drop0x)

@@ -2,13 +2,14 @@
 
 import Foundation
 @testable import Trust
+import TrustKeystore
 
 extension Address {
     static func make(
-        address: String = "0x1"
+        address: String = "0x1000000000000000000000000000000000000000"
     ) -> Address {
         return Address(
-            address: address
+            string: address
         )
     }
 }

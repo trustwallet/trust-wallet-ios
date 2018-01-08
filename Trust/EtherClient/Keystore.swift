@@ -2,12 +2,14 @@
 
 import Foundation
 import Result
+import TrustKeystore
 
 protocol Keystore {
     var hasAccounts: Bool { get }
     var accounts: [Account] { get }
     var recentlyUsedAccount: Account? { get set }
     static var current: Account? { get }
+    @available(iOS 10.0, *)
     func createAccount(with password: String, completion: @escaping (Result<Account, KeystoreError>) -> Void)
     func importWallet(type: ImportType, completion: @escaping (Result<Account, KeystoreError>) -> Void)
     func keystore(for privateKey: String, password: String, completion: @escaping (Result<String, KeystoreError>) -> Void)

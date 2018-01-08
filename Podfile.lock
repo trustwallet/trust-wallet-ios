@@ -11,13 +11,12 @@ PODS:
   - CryptoSwift (0.8.0)
   - Eureka (4.0.1)
   - Fabric (1.7.2)
-  - Geth (1.7.3)
   - JavaScriptKit (1.0.0):
     - Result (~> 3.1)
   - JSONRPCKit (2.0.0):
     - Result (~> 3.0)
   - KeychainSwift (10.0.0)
-  - Kingfisher (4.5.0)
+  - Kingfisher (4.6.1)
   - Lokalise (0.8.0)
   - MBProgressHUD (1.1.0)
   - Moya (10.0.1):
@@ -35,11 +34,15 @@ PODS:
   - RealmSwift (3.0.2):
     - Realm (= 3.0.2)
   - Result (3.2.4)
+  - secp256k1 (0.2.0)
   - SeedStackViewController (0.4.0)
   - SipHash (1.2.0)
   - SSKeychain (1.4.1)
   - StatefulViewController (3.0)
   - SwiftLint (0.24.0)
+  - TrustKeystore (0.0.3):
+    - CryptoSwift
+    - secp256k1
   - VENTouchLock (1.12.0):
     - SSKeychain (~> 1.0)
 
@@ -52,7 +55,6 @@ DEPENDENCIES:
   - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift`, branch `master`)
   - Eureka (~> 4.0.1)
   - Fabric
-  - Geth
   - JavaScriptKit
   - JSONRPCKit (from `https://github.com/bricklife/JSONRPCKit.git`)
   - KeychainSwift
@@ -66,6 +68,7 @@ DEPENDENCIES:
   - SeedStackViewController
   - StatefulViewController
   - SwiftLint
+  - TrustKeystore
   - VENTouchLock
 
 EXTERNAL SOURCES:
@@ -80,7 +83,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CryptoSwift:
-    :commit: 577e94f6060184f3ad72503aedd43d58272a8f2d
+    :commit: 289ef07b2f386d91a25b9393a96b0c3daa1d9114
     :git: https://github.com/krzyzanowskim/CryptoSwift
   JSONRPCKit:
     :commit: 50d19a4f7ec593ac5e07cffa1e11c17f1fbe347d
@@ -99,11 +102,10 @@ SPEC CHECKSUMS:
   CryptoSwift: 475ae2a25439f52412686d68b854c0ca724c8dfd
   Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
-  Geth: 45a08eeef7a20e58dfc09a455563ffe210941a96
   JavaScriptKit: 9ff565209e6efe21bcb9c6d6ca3e863a67a8ecf7
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
-  Kingfisher: 26ae0473102b77b575da51960c932431e3745407
+  Kingfisher: 1f9157d9c02b380cbd0b7cc890161195164eb634
   Lokalise: 9547ef438a2d25cfba0b4c02201d3c39b3db35fb
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Moya: 9e621707ff754eeb51ff3ec51a3d54e517c0733a
@@ -113,13 +115,15 @@ SPEC CHECKSUMS:
   Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
   RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  secp256k1: a003ba33d06041f6dbb126391753c894da5df794
   SeedStackViewController: 45e88ca1493a610e74d661d3feced7098f72dbd3
   SipHash: c6e9e43e9c531b5bc6602545130c26194a6d31ce
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
+  TrustKeystore: 8b6075cc7b4eeef2c744ce6db42a3520bb3224be
   VENTouchLock: 20d378b9c6173e2c054448aeb3fb2f40822a9f3f
 
-PODFILE CHECKSUM: c450cd81f66ae414970ac4ce8a138d08eb4c8c92
+PODFILE CHECKSUM: a6a2d9b88208745291562d4167d27a7acecbc24a
 
 COCOAPODS: 1.3.1

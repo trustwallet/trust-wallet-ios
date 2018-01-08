@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 import UIKit
 
 struct AccountViewModel {
@@ -14,7 +15,7 @@ struct AccountViewModel {
     }
 
     var title: String {
-        return account.address.address
+        return account.address.description
     }
 
     var image: UIImage? {

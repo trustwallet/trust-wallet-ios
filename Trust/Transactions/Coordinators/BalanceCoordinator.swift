@@ -49,7 +49,7 @@ class BalanceCoordinator {
     }
 
     func fetchBalance() {
-        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: session.account.address.address)))
+        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: session.account.address.description)))
         Session.send(request) { [weak self] result in
             switch result {
             case .success(let balance):

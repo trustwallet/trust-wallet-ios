@@ -7,6 +7,7 @@ import APIKit
 import RealmSwift
 import Result
 import Moya
+import TrustKeystore
 
 enum TransactionError: Error {
     case failedToFetch
@@ -57,7 +58,7 @@ class TransactionDataCoordinator {
             }
             return transaction.blockNumber - 2000
         }()
-        trustProvider.request(.getTransactions(address: session.account.address.address, startBlock: startBlock)) { [weak self] result in
+        trustProvider.request(.getTransactions(address: session.account.address.description, startBlock: startBlock)) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .success(let response):
@@ -86,7 +87,7 @@ class TransactionDataCoordinator {
             switch result {
             case .success(let block):
                 for item in block.transactions {
-                    if item.to == self.session.account.address.address || item.from == self.session.account.address.address {
+                    if item.to == self.session.account.address.description || item.from == self.session.account.address.description {
                         self.update(chainID: self.config.chainID, owner: self.session.account.address, items: [item])
                     }
                 }

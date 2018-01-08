@@ -1,5 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
+import TrustKeystore
 import UIKit
 
 protocol AccountViewCellDelegate: class {

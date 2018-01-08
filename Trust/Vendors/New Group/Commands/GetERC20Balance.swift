@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 
 struct GetERC20BalanceEncode: Web3Request {
     typealias Response = String
@@ -10,7 +11,7 @@ struct GetERC20BalanceEncode: Web3Request {
     let address: Address
 
     var type: Web3RequestType {
-        let run = "web3.eth.abi.encodeFunctionCall(\(GetERC20BalanceEncode.abi), [\"\(address.address)\"])"
+        let run = "web3.eth.abi.encodeFunctionCall(\(GetERC20BalanceEncode.abi), [\"\(address.description)\"])"
         return .script(command: run)
     }
 }

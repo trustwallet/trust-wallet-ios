@@ -4,6 +4,7 @@ import Foundation
 import UIKit
 import OnePasswordExtension
 import Result
+import TrustKeystore
 
 class OnePasswordCoordinator {
 
@@ -31,7 +32,7 @@ class OnePasswordCoordinator {
         OnePasswordExtension().storeLogin(
             forURLString: OnePasswordConfig.url,
             loginDetails: [
-                AppExtensionUsernameKey: account.address.address,
+                AppExtensionUsernameKey: account.address.description,
                 AppExtensionPasswordKey: formattedPassword,
                 AppExtensionNotesKey: "Ethereum wallet has been stored here. Format: password-trust-keystore. -trust- - is a divider between password and keystore",
             ],

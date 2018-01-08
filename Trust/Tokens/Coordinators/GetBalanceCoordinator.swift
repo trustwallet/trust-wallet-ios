@@ -5,6 +5,7 @@ import BigInt
 import JSONRPCKit
 import APIKit
 import Result
+import TrustKeystore
 
 class GetBalanceCoordinator {
 
@@ -26,7 +27,7 @@ class GetBalanceCoordinator {
             switch result {
             case .success(let res):
                 let request2 = EtherServiceRequest(
-                    batch: BatchFactory().create(CallRequest(to: contract.address, data: res))
+                    batch: BatchFactory().create(CallRequest(to: contract.description, data: res))
                 )
                 Session.send(request2) { [weak self] result2 in
                     switch result2 {

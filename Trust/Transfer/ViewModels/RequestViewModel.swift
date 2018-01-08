@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 import UIKit
 
 struct RequestViewModel {
@@ -17,7 +18,7 @@ struct RequestViewModel {
     }
 
     var myAddressText: String {
-        return account.address.address
+        return account.address.description
     }
 
     var shareMyAddressText: String {
