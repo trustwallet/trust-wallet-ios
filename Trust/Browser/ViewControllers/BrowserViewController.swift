@@ -71,7 +71,7 @@ class BrowserViewController: UIViewController {
         }
 
         let web3 = new Web3(new Web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)"));
-        web3.eth.defaultAccount = "\(session.account.address.description)"
+        web3.eth.defaultAccount = "\(session.account.address.address)"
         web3.eth.signTransaction = function(tx, callback) {
             runCommand("signTransaction", tx)
         }

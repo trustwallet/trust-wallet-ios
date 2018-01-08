@@ -29,7 +29,7 @@ class SendTransactionCoordinator {
         transactions: [SignTransaction],
         completion: @escaping (Result<SentTransaction, AnyError>) -> Void
     ) {
-        let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: session.account.address.description)))
+        let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: session.account.address.address)))
         Session.send(request) { [weak self] result in
             guard let `self` = self else { return }
             switch result {

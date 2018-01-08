@@ -40,7 +40,7 @@ struct ConfirmPaymentDetailsViewModel {
         return NSLocalizedString("confirmPayment.to.label.title", value: "To", comment: "")
     }
     var paymentToText: String {
-        return transaction.address.description
+        return transaction.address.address
     }
 
     var gasPriceTitle: String {

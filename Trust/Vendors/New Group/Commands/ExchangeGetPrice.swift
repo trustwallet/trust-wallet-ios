@@ -11,7 +11,7 @@ struct ExchangeGetPrice: Web3Request {
     let to: ExchangeToken
 
     var type: Web3RequestType {
-        let run = "web3.eth.abi.encodeFunctionCall(\(ExchangeGetPrice.abi), [\"\(from.address.description)\", \"\(to.address.description)\"])"
+        let run = "web3.eth.abi.encodeFunctionCall(\(ExchangeGetPrice.abi), [\"\(from.address.address)\", \"\(to.address.address)\"])"
         return .script(command: run)
     }
 }

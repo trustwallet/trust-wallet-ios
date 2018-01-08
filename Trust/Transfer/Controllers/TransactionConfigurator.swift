@@ -52,7 +52,7 @@ class TransactionConfigurator {
             )
             completion(.success(()))
         case .token:
-            session.web3.request(request: ContractERC20Transfer(amount: transaction.value, address: transaction.address.description)) { result in
+            session.web3.request(request: ContractERC20Transfer(amount: transaction.value, address: transaction.address.address)) { result in
                 switch result {
                 case .success(let res):
                     let data = Data(hex: res.drop0x)

@@ -32,7 +32,7 @@ class OnePasswordCoordinator {
         OnePasswordExtension().storeLogin(
             forURLString: OnePasswordConfig.url,
             loginDetails: [
-                AppExtensionUsernameKey: account.address.description,
+                AppExtensionUsernameKey: account.address.address,
                 AppExtensionPasswordKey: formattedPassword,
                 AppExtensionNotesKey: "Ethereum wallet has been stored here. Format: password-trust-keystore. -trust- - is a divider between password and keystore",
             ],

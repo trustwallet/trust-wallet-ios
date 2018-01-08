@@ -18,7 +18,7 @@ struct RequestViewModel {
     }
 
     var myAddressText: String {
-        return account.address.description
+        return account.address.address
     }
 
     var shareMyAddressText: String {

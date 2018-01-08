@@ -61,21 +61,21 @@ class DepositCoordinator: Coordinator {
 
     func showCoinbase() {
         let widget = CoinbaseBuyWidget(
-            address: account.address.description
+            address: account.address.address
         )
         navigationController.openURL(widget.url)
     }
 
     func showShapeShift() {
         let widget = ShapeShiftBuyWidget(
-            address: account.address.description
+            address: account.address.address
         )
         navigationController.openURL(widget.url)
     }
 
     func showChangelly() {
         let widget = ChangellyBuyWidget(
-            address: account.address.description
+            address: account.address.address
         )
         navigationController.openURL(widget.url)
     }

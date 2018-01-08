@@ -42,11 +42,11 @@ open class EtherKeystore: Keystore {
 
     var recentlyUsedAccount: Account? {
         set {
-            keychain.set(newValue?.address.description ?? "", forKey: Keys.recentlyUsedAddress, withAccess: defaultKeychainAccess)
+            keychain.set(newValue?.address.address ?? "", forKey: Keys.recentlyUsedAddress, withAccess: defaultKeychainAccess)
         }
         get {
             let address = keychain.get(Keys.recentlyUsedAddress)
-            return accounts.filter { $0.address.description == address }.first
+            return accounts.filter { $0.address.address == address }.first
         }
     }
 
@@ -233,12 +233,12 @@ open class EtherKeystore: Keystore {
     }
 
     func getPassword(for account: Account) -> String? {
-        return keychain.get(account.address.description.lowercased())
+        return keychain.get(account.address.address.lowercased())
     }
 
     @discardableResult
     func setPassword(_ password: String, for account: Account) -> Bool {
-        return keychain.set(password, forKey: account.address.description.lowercased(), withAccess: defaultKeychainAccess)
+        return keychain.set(password, forKey: account.address.address.lowercased(), withAccess: defaultKeychainAccess)
     }
 
     func getAccount(for address: Address) -> Account? {

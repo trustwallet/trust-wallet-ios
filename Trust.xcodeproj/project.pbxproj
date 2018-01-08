@@ -265,6 +265,7 @@
 		29F1C8481FEB6664003780D8 /* EditTokenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29F1C8461FEB6664003780D8 /* EditTokenTableViewCell.xib */; };
 		29F1C84A1FEB6D6B003780D8 /* EditTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F1C8491FEB6D6B003780D8 /* EditTokenViewModel.swift */; };
 		29F1C84C1FEC4F6F003780D8 /* TokensFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F1C84B1FEC4F6F003780D8 /* TokensFooterView.swift */; };
+		29F1C85120032688003780D8 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F1C85020032688003780D8 /* Address.swift */; };
 		29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB51F8298820036089F /* TransactionCoordinator.swift */; };
 		29FC0CB81F8299510036089F /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB71F8299510036089F /* Coordinator.swift */; };
 		29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC9BC51F830880000209CD /* MirgrationInitializer.swift */; };
@@ -588,6 +589,7 @@
 		29F1C8461FEB6664003780D8 /* EditTokenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditTokenTableViewCell.xib; sourceTree = "<group>"; };
 		29F1C8491FEB6D6B003780D8 /* EditTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTokenViewModel.swift; sourceTree = "<group>"; };
 		29F1C84B1FEC4F6F003780D8 /* TokensFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensFooterView.swift; sourceTree = "<group>"; };
+		29F1C85020032688003780D8 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		29FC0CB51F8298820036089F /* TransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCoordinator.swift; sourceTree = "<group>"; };
 		29FC0CB71F8299510036089F /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		29FC9BC51F830880000209CD /* MirgrationInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirgrationInitializer.swift; sourceTree = "<group>"; };
@@ -1399,6 +1401,7 @@
 				29C80D481FB51C380037B1E0 /* Dictionary.swift */,
 				29C80D4A1FB51C460037B1E0 /* Decimal.swift */,
 				293112361FC9A24600966EEA /* UIGestureRecognizer+Closure.swift */,
+				29F1C85020032688003780D8 /* Address.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2316,6 +2319,7 @@
 				293E62711FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift in Sources */,
 				291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */,
 				29BE3FD21F707DC300F6BFC2 /* TransactionDataCoordinator.swift in Sources */,
+				29F1C85120032688003780D8 /* Address.swift in Sources */,
 				295B61D11FE7B20400642E60 /* TokensHeaderView.swift in Sources */,
 				29C80D351FB2CD110037B1E0 /* Block.swift in Sources */,
 				291ED0921F6FA5D900E7E93A /* RequestViewController.swift in Sources */,

@@ -203,5 +203,24 @@ class EtherKeystoreTests: XCTestCase {
 
         XCTAssertEqual(1, keystore.accounts.count)
     }
+
+    func testSignTransaction() {
+        let keystore = FakeEtherKeystore()
+        let transaction = SignTransaction(
+            value: BigInt(1),
+            account: .make(),
+            address: .make(),
+            nonce: 1,
+            data: Data(),
+            gasPrice: BigInt(1),
+            gasLimit: BigInt(1),
+            chainID: 1
+        )
+        let result = keystore.signTransaction(transaction)
+
+        guard case .success(let data) = result else {
+            return XCTFail()
+        }
+    }
 }
 

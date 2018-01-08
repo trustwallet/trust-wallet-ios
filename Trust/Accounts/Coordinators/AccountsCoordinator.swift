@@ -76,7 +76,7 @@ class AccountsCoordinator: Coordinator {
             title: NSLocalizedString("Copy Address", value: "Copy Address", comment: ""),
             style: .default
         ) { _ in
-            UIPasteboard.general.string = account.address.description
+            UIPasteboard.general.string = account.address.address
         }
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
         controller.addAction(action)
