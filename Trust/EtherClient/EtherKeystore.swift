@@ -19,7 +19,7 @@ open class EtherKeystore: Keystore {
 
     private let keychain: KeychainSwift
     private let datadir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-    private let keyStore: KeyStore
+    let keyStore: KeyStore
     private let defaultKeychainAccess: KeychainSwiftAccessOptions = .accessibleWhenUnlockedThisDeviceOnly
 
     public init(
@@ -209,7 +209,7 @@ open class EtherKeystore: Keystore {
     }
 
     func signTransaction(_ transaction: SignTransaction) -> Result<Data, KeystoreError> {
-        guard let account = keyStore.account(for: transaction.address) else {
+        guard let account = keyStore.account(for: transaction.account.address) else {
             return .failure(.failedToSignTransaction)
         }
         guard let password = getPassword(for: account) else {
@@ -225,8 +225,18 @@ open class EtherKeystore: Keystore {
 
         do {
             let hash = signer.hash(transaction: transaction)
-            let signed = try keyStore.signHash(hash, account: account, password: password)
-            return .success(signed)
+            let signature = try keyStore.signHash(hash, account: account, password: password)
+            let (r, s, v) = signer.values(transaction: transaction, signature: signature)
+            let data = RLP.encode([
+                transaction.nonce,
+                transaction.gasPrice,
+                transaction.gasLimit,
+                transaction.address.data,
+                transaction.value,
+                transaction.data,
+                v, r, s,
+            ])!
+            return .success(data)
         } catch {
             return .failure(.failedToSignTransaction)
         }

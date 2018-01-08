@@ -34,15 +34,15 @@ PODS:
   - RealmSwift (3.0.2):
     - Realm (= 3.0.2)
   - Result (3.2.4)
-  - secp256k1 (0.2.0)
+  - secp256k1_ios (0.0.7)
   - SeedStackViewController (0.4.0)
   - SipHash (1.2.0)
   - SSKeychain (1.4.1)
   - StatefulViewController (3.0)
   - SwiftLint (0.24.0)
-  - TrustKeystore (0.0.3):
+  - TrustKeystore (0.0.4):
     - CryptoSwift
-    - secp256k1
+    - secp256k1_ios (~> 0.0.7)
   - VENTouchLock (1.12.0):
     - SSKeychain (~> 1.0)
 
@@ -68,7 +68,7 @@ DEPENDENCIES:
   - SeedStackViewController
   - StatefulViewController
   - SwiftLint
-  - TrustKeystore
+  - TrustKeystore (~> 0.0.4)
   - VENTouchLock
 
 EXTERNAL SOURCES:
@@ -115,15 +115,15 @@ SPEC CHECKSUMS:
   Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
   RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
-  secp256k1: a003ba33d06041f6dbb126391753c894da5df794
+  secp256k1_ios: 12a9bddc3d7aa723efbb32b42413f041b11a7765
   SeedStackViewController: 45e88ca1493a610e74d661d3feced7098f72dbd3
   SipHash: c6e9e43e9c531b5bc6602545130c26194a6d31ce
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: a014c92b4664e8b13f380f8640a51bb1733778ba
-  TrustKeystore: 8b6075cc7b4eeef2c744ce6db42a3520bb3224be
+  TrustKeystore: 2c62775c98df86b7e2ef78c059581a4e8c98a054
   VENTouchLock: 20d378b9c6173e2c054448aeb3fb2f40822a9f3f
 
-PODFILE CHECKSUM: a6a2d9b88208745291562d4167d27a7acecbc24a
+PODFILE CHECKSUM: 763570d7b40ec2dbd7a197a827a33457f8805e23
 
 COCOAPODS: 1.3.1
