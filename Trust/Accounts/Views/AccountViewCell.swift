@@ -4,7 +4,7 @@ import TrustKeystore
 import UIKit
 
 protocol AccountViewCellDelegate: class {
-    func accountViewCell(_ cell: AccountViewCell, didTapInfoViewForAccount _: Account)
+    func accountViewCell(_ cell: AccountViewCell, didTapInfoViewForAccount _: Wallet)
 }
 
 class AccountViewCell: UITableViewCell {
@@ -70,7 +70,7 @@ class AccountViewCell: UITableViewCell {
     }
 
     @objc private func didTapInfoButton(sender: UIButton) {
-        guard let account = viewModel?.account else {
+        guard let account = viewModel?.wallet else {
             return
         }
         delegate?.accountViewCell(self, didTapInfoViewForAccount: account)

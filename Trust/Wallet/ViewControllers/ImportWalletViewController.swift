@@ -7,7 +7,7 @@ import BonMot
 import TrustKeystore
 
 protocol ImportWalletViewControllerDelegate: class {
-    func didImportAccount(account: Account, in viewController: ImportWalletViewController)
+    func didImportAccount(account: Wallet, in viewController: ImportWalletViewController)
 }
 
 class ImportWalletViewController: FormViewController {
@@ -20,6 +20,7 @@ class ImportWalletViewController: FormViewController {
         static let keystore = "keystore"
         static let privateKey = "privateKey"
         static let password = "password"
+        static let watch = "watch"
     }
 
     var segmentRow: SegmentedRow<String>? {
@@ -36,6 +37,10 @@ class ImportWalletViewController: FormViewController {
 
     var passwordRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.password)
+    }
+
+    var watchRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.watch)
     }
 
     lazy var onePasswordCoordinator: OnePasswordCoordinator = {
@@ -92,6 +97,7 @@ class ImportWalletViewController: FormViewController {
                 $0.options = [
                     ImportSelectionType.keystore.title,
                     ImportSelectionType.privateKey.title,
+                    ImportSelectionType.watch.title,
                 ]
                 $0.value = ImportSelectionType.keystore.title
             }
@@ -116,6 +122,16 @@ class ImportWalletViewController: FormViewController {
                 })
             }
 
+            <<< AppFormAppearance.textFieldFloat(tag: Values.watch) {
+                $0.add(rule: RuleRequired())
+                $0.add(rule: EthereumAddressRule())
+                $0.hidden = Eureka.Condition.function([Values.segment], { _ in
+                 return self.segmentRow?.value != ImportSelectionType.watch.title
+            })
+            }.cellUpdate { cell, _ in
+                cell.textField.placeholder = NSLocalizedString("Ethereum Address", value: "Ethereum Address", comment: "")
+            }
+
             <<< AppFormAppearance.textFieldFloat(tag: Values.password) {
                 $0.validationOptions = .validatesOnDemand
                 $0.hidden = Eureka.Condition.function([Values.segment], { _ in
@@ -136,7 +152,7 @@ class ImportWalletViewController: FormViewController {
             }
     }
 
-    func didImport(account: Account) {
+    func didImport(account: Wallet) {
         delegate?.didImportAccount(account: account, in: self)
     }
 
@@ -147,6 +163,7 @@ class ImportWalletViewController: FormViewController {
         let keystoreInput = keystoreRow?.value?.trimmed ?? ""
         let privateKeyInput = privateKeyRow?.value?.trimmed ?? ""
         let password = passwordRow?.value ?? ""
+        let watchInput = watchRow?.value?.trimmed ?? ""
 
         displayLoading(text: NSLocalizedString("importWallet.importingIndicator.label.title", value: "Importing wallet...", comment: ""), animated: false)
 
@@ -157,6 +174,8 @@ class ImportWalletViewController: FormViewController {
                 return .keystore(string: keystoreInput, password: password)
             case .privateKey:
                 return .privateKey(privateKey: privateKeyInput)
+            case .watch:
+                return .watch(address: Address(string: watchInput))
             }
         }()
 
@@ -172,27 +191,25 @@ class ImportWalletViewController: FormViewController {
     }
 
     func onePasswordImport() {
-        onePasswordCoordinator.importWallet(in: self) { [weak self] result in
-            guard let `self` = self else { return }
-            switch result {
-            case .success(let password, let keystore):
-                self.keystoreRow?.value = keystore
-                self.keystoreRow?.reload()
-                self.passwordRow?.value = password
-                self.passwordRow?.reload()
-                self.importWallet()
-            case .failure(let error):
-                self.displayError(error: error)
-            }
-        }
+//        onePasswordCoordinator.importWallet(in: self) { [weak self] result in
+//            guard let `self` = self else { return }
+//            switch result {
+//            case .success(let password, let keystore):
+//                self.keystoreRow?.value = keystore
+//                self.keystoreRow?.reload()
+//                self.passwordRow?.value = password
+//                self.passwordRow?.reload()
+//                self.importWallet()
+//            case .failure(let error):
+//                self.displayError(error: error)
+//            }
+//        }
     }
 
     @objc func demo() {
         //Used for taking screenshots to the App Store by snapshot
-        let demoAccount = Account(
-            address: Address(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")
-        )
-        delegate?.didImportAccount(account: demoAccount, in: self)
+        let demoWallet = Wallet(type: .watch(Address(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")))
+        delegate?.didImportAccount(account: demoWallet, in: self)
     }
 
     @objc func importOptions(sender: UIBarButtonItem) {

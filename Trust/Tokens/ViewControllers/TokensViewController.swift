@@ -21,13 +21,13 @@ class TokensViewController: UIViewController {
             refreshView(viewModel: viewModel)
         }
     }
-    let account: Account
+    let account: Wallet
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
     weak var delegate: TokensViewControllerDelegate?
 
     init(
-        account: Account,
+        account: Wallet,
         dataStore: TokensDataStore
     ) {
         self.account = account

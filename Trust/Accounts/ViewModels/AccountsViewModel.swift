@@ -5,10 +5,10 @@ import TrustKeystore
 
 struct AccountsViewModel {
 
-    let accounts: [Account]
+    let wallets: [Wallet]
 
-    init(accounts: [Account]) {
-        self.accounts = accounts
+    init(wallets: [Wallet]) {
+        self.wallets = wallets
     }
 
     var title: String {

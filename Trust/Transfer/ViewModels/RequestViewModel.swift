@@ -6,11 +6,11 @@ import UIKit
 
 struct RequestViewModel {
 
-    let account: Account
+    let account: Wallet
     let config: Config
 
     init(
-        account: Account,
+        account: Wallet,
         config: Config
     ) {
         self.account = account

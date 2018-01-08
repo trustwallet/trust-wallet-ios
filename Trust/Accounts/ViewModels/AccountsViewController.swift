@@ -4,9 +4,9 @@ import TrustKeystore
 import UIKit
 
 protocol AccountsViewControllerDelegate: class {
-    func didSelectAccount(account: Account, in viewController: AccountsViewController)
-    func didDeleteAccount(account: Account, in viewController: AccountsViewController)
-    func didSelectInfoForAccount(account: Account, sender: UIView, in viewController: AccountsViewController)
+    func didSelectAccount(account: Wallet, in viewController: AccountsViewController)
+    func didDeleteAccount(account: Wallet, in viewController: AccountsViewController)
+    func didSelectInfoForAccount(account: Wallet, sender: UIView, in viewController: AccountsViewController)
 }
 
 class AccountsViewController: UITableViewController {
@@ -18,15 +18,15 @@ class AccountsViewController: UITableViewController {
 
     var viewModel: AccountsViewModel {
         return AccountsViewModel(
-            accounts: accounts
+            wallets: wallets
         )
     }
 
-    var hasAccounts: Bool {
-        return !accounts.isEmpty
+    var hasWallets: Bool {
+        return !keystore.wallets.isEmpty
     }
 
-    var accounts: [Account] = [] {
+    var wallets: [Wallet] = [] {
         didSet {
             tableView.reloadData()
             configure(viewModel: viewModel)
@@ -50,17 +50,15 @@ class AccountsViewController: UITableViewController {
     }
 
     func fetch() {
-        accounts = keystore.accounts.map {
-            Account(address: $0.address)
-        }
+        wallets = keystore.wallets
     }
 
     func configure(viewModel: AccountsViewModel) {
         title = headerTitle ?? viewModel.title
     }
 
-    func account(for indexPath: IndexPath) -> Account {
-        return viewModel.accounts[indexPath.row]
+    func account(for indexPath: IndexPath) -> Wallet {
+        return viewModel.wallets[indexPath.row]
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -68,19 +66,19 @@ class AccountsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.accounts.count
+        return viewModel.wallets.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let account = self.account(for: indexPath)
         let cell = AccountViewCell(style: .default, reuseIdentifier: AccountViewCell.identifier)
-        cell.viewModel = AccountViewModel(account: account, current: EtherKeystore.current)
+        cell.viewModel = AccountViewModel(wallet: account, current: EtherKeystore.current)
         cell.delegate = self
         return cell
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return allowsAccountDeletion && (EtherKeystore.current != viewModel.accounts[indexPath.row] || viewModel.accounts.count == 1)
+        return allowsAccountDeletion && (EtherKeystore.current != viewModel.wallets[indexPath.row] || viewModel.wallets.count == 1)
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -97,7 +95,7 @@ class AccountsViewController: UITableViewController {
         delegate?.didSelectAccount(account: account, in: self)
     }
 
-    func confirmDelete(account: Account) {
+    func confirmDelete(account: Wallet) {
         confirm(
             title: "Are you sure you would like to delete this wallet?",
             message: "Make sure you have backup of your wallet",
@@ -112,8 +110,8 @@ class AccountsViewController: UITableViewController {
         }
     }
 
-    func delete(account: Account) {
-        let result = self.keystore.delete(account: account)
+    func delete(account: Wallet) {
+        let result = self.keystore.delete(wallet: account)
         switch result {
         case .success:
             self.fetch()
@@ -129,7 +127,7 @@ class AccountsViewController: UITableViewController {
 }
 
 extension AccountsViewController: AccountViewCellDelegate {
-    func accountViewCell(_ cell: AccountViewCell, didTapInfoViewForAccount account: Account) {
+    func accountViewCell(_ cell: AccountViewCell, didTapInfoViewForAccount account: Wallet) {
         self.delegate?.didSelectInfoForAccount(account: account, sender: cell.infoButton, in: self)
     }
 }

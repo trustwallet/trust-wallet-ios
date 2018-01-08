@@ -6,7 +6,7 @@ import TrustKeystore
 
 struct RealmConfiguration {
 
-    static func configuration(for account: Account, chainID: Int) -> Realm.Configuration {
+    static func configuration(for account: Wallet, chainID: Int) -> Realm.Configuration {
         var config = Realm.Configuration()
         config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("\(account.address.address)-\(chainID).realm")
         return config

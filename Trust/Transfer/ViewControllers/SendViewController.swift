@@ -32,6 +32,7 @@ class SendViewController: FormViewController {
     }
 
     let session: WalletSession
+    let account: Account
     let transferType: TransferType
 
     var addressRow: TextFloatLabelRow? {
@@ -44,9 +45,11 @@ class SendViewController: FormViewController {
 
     init(
         session: WalletSession,
+        account: Account,
         transferType: TransferType = .ether(destination: .none)
     ) {
         self.session = session
+        self.account = account
         self.transferType = transferType
 
         super.init(nibName: nil, bundle: nil)
@@ -167,7 +170,7 @@ class SendViewController: FormViewController {
             transferType: transferType,
             value: value,
             address: address,
-            account: session.account,
+            account: account,
             chainID: session.config.chainID,
             data: Data()
         )

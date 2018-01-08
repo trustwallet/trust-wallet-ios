@@ -18,7 +18,7 @@ class SettingsViewController: FormViewController {
     }
 
     private var config = Config()
-
+    private let helpUsCoordinator = HelpUsCoordinator()
     weak var delegate: SettingsViewControllerDelegate?
 
     var isPasscodeEnabled: Bool {
@@ -184,11 +184,16 @@ class SettingsViewController: FormViewController {
             +++ Section(NSLocalizedString("settings.support.label.title", value: "Support", comment: ""))
 
             <<< AppFormAppearance.button { button in
+                button.title = NSLocalizedString("settings.shareWithFriends.button.title", value: "Share With Friends", comment: "")
+                button.cell.imageView?.image = R.image.settingsShare()
+            }.onCellSelection { [unowned self] cell, _  in
+                self.helpUsCoordinator.presentSharing(in: self, from: cell.contentView)
+            }
+
+            <<< AppFormAppearance.button { button in
                 button.title = NSLocalizedString("settings.rateUsAppStore.button.title", value: "Rate Us on App Store", comment: "")
             }.onCellSelection { _, _  in
-                if #available(iOS 10.3, *) { SKStoreReviewController.requestReview() } else {
-                    UIApplication.shared.openURL(URL(string: "itms-apps://itunes.apple.com/app/id1288339409")!)
-                }
+                self.helpUsCoordinator.rateUs()
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_rating()
             }
@@ -197,7 +202,7 @@ class SettingsViewController: FormViewController {
                 button.title = NSLocalizedString("settings.emailUs.button.title", value: "Email Us", comment: "")
             }.onCellSelection { _, _  in
                 self.sendUsEmail()
-            }.cellSetup { cell, _ in
+            }.cellSetup { [unowned self] cell, _ in
                 cell.imageView?.image = R.image.settings_email()
             }
 

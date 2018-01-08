@@ -15,6 +15,7 @@ open class EtherKeystore: Keystore {
 
     struct Keys {
         static let recentlyUsedAddress: String = "recentlyUsedAddress"
+        static let watchAddresses = "watchAddresses"
     }
 
     private let keychain: KeychainSwift
@@ -36,23 +37,34 @@ open class EtherKeystore: Keystore {
         self.keyStore = try KeyStore(keydir: URL(fileURLWithPath: keydir))
     }
 
-    var hasAccounts: Bool {
-        return !accounts.isEmpty
+    var hasWallets: Bool {
+        return !wallets.isEmpty
     }
 
-    var recentlyUsedAccount: Account? {
+    var watchAddresses: [String] {
+        set {
+            let data = NSKeyedArchiver.archivedData(withRootObject: newValue)
+            keychain.set(data, forKey: Keys.watchAddresses)
+        }
+        get {
+            guard let data = keychain.getData(Keys.watchAddresses) else { return [] }
+            return NSKeyedUnarchiver.unarchiveObject(with: data) as? [String] ?? []
+        }
+     }
+
+    var recentlyUsedWallet: Wallet? {
         set {
             keychain.set(newValue?.address.address ?? "", forKey: Keys.recentlyUsedAddress, withAccess: defaultKeychainAccess)
         }
         get {
             let address = keychain.get(Keys.recentlyUsedAddress)
-            return accounts.filter { $0.address.address == address }.first
+            return wallets.filter { $0.address.address == address }.first
         }
     }
 
-    static var current: Account? {
+    static var current: Wallet? {
         do {
-            return try EtherKeystore().recentlyUsedAccount
+            return try EtherKeystore().recentlyUsedWallet
         } catch {
             return .none
         }
@@ -69,30 +81,45 @@ open class EtherKeystore: Keystore {
         }
     }
 
-    func importWallet(type: ImportType, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
+    func importWallet(type: ImportType, completion: @escaping (Result<Wallet, KeystoreError>) -> Void) {
         let newPassword = PasswordGenerator.generateRandom()
         switch type {
         case .keystore(let string, let password):
             importKeystore(
                 value: string,
                 password: password,
-                newPassword: newPassword,
-                completion: completion
-            )
+                newPassword: newPassword
+            ) { result in
+                switch result {
+                case .success(let account):
+                    completion(.success(Wallet(type: .real(account))))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
         case .privateKey(let privateKey):
-            self.keystore(for: privateKey, password: newPassword) { result in
+            keystore(for: privateKey, password: newPassword) { result in
                 switch result {
                 case .success(let value):
                     self.importKeystore(
                         value: value,
                         password: newPassword,
-                        newPassword: newPassword,
-                        completion: completion
-                    )
+                        newPassword: newPassword
+                    ) { result in
+                        switch result {
+                        case .success(let account):
+                            completion(.success(Wallet(type: .real(account))))
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
+                    }
                 case .failure(let error):
                     completion(.failure(error))
                 }
             }
+        case .watch(let address):
+            self.watchAddresses = [watchAddresses, [address.address]].flatMap { $0 }
+            completion(.success(Wallet(type: .watch(address))))
         }
     }
 
@@ -150,8 +177,11 @@ open class EtherKeystore: Keystore {
         }
     }
 
-    var accounts: [Account] {
-        return keyStore.accounts
+    var wallets: [Wallet] {
+        return [
+            keyStore.accounts.map { Wallet(type: .real($0)) },
+            watchAddresses.map { Wallet(type: .watch(Address(string: $0))) },
+        ].flatMap { $0 }
     }
 
     func export(account: Account, password: String, newPassword: String) -> Result<String, KeystoreError> {
@@ -178,20 +208,26 @@ open class EtherKeystore: Keystore {
         }
     }
 
-    func delete(account: Account) -> Result<Void, KeystoreError> {
-        guard let account = getAccount(for: account.address) else {
-            return .failure(.accountNotFound)
-        }
+    func delete(wallet: Wallet) -> Result<Void, KeystoreError> {
+        switch wallet.type {
+        case .real(let account):
+            guard let account = getAccount(for: account.address) else {
+                return .failure(.accountNotFound)
+            }
 
-        guard let password = getPassword(for: account) else {
-            return .failure(.failedToDeleteAccount)
-        }
+            guard let password = getPassword(for: account) else {
+                return .failure(.failedToDeleteAccount)
+            }
 
-        do {
-            try keyStore.delete(account: account, password: password)
+            do {
+                try keyStore.delete(account: account, password: password)
+                return .success(())
+            } catch {
+                return .failure(.failedToDeleteAccount)
+            }
+        case .watch(let address):
+            watchAddresses = watchAddresses.filter { $0 != address.address }
             return .success(())
-        } catch {
-            return .failure(.failedToDeleteAccount)
         }
     }
 

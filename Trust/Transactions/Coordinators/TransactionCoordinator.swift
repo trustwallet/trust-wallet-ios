@@ -6,6 +6,7 @@ import Result
 import TrustKeystore
 
 protocol TransactionCoordinatorDelegate: class {
+    func didPress(for type: PaymentFlow, in coordinator: TransactionCoordinator)
     func didCancel(in coordinator: TransactionCoordinator)
 }
 
@@ -49,7 +50,7 @@ class TransactionCoordinator: Coordinator {
         navigationController.viewControllers = [rootViewController]
     }
 
-    private func makeTransactionsController(with account: Account) -> TransactionsViewController {
+    private func makeTransactionsController(with account: Wallet) -> TransactionsViewController {
         let viewModel = TransactionsViewModel()
         let controller = TransactionsViewController(
             account: account,
@@ -87,18 +88,6 @@ class TransactionCoordinator: Coordinator {
         }
     }
 
-    func showPaymentFlow(for type: PaymentFlow) {
-        let coordinator = PaymentCoordinator(
-            flow: type,
-            session: session,
-            keystore: keystore
-        )
-        coordinator.delegate = self
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
-        coordinator.start()
-        addCoordinator(coordinator)
-    }
-
     @objc func didEnterForeground() {
         rootViewController.fetch()
     }
@@ -120,7 +109,7 @@ class TransactionCoordinator: Coordinator {
         showDeposit(for: session.account, from: sender)
     }
 
-    func showDeposit(for account: Account, from barButtonItem: UIBarButtonItem? = .none) {
+    func showDeposit(for account: Wallet, from barButtonItem: UIBarButtonItem? = .none) {
         let coordinator = DepositCoordinator(
             navigationController: navigationController,
             account: account
@@ -131,18 +120,18 @@ class TransactionCoordinator: Coordinator {
 
 extension TransactionCoordinator: TransactionsViewControllerDelegate {
     func didPressSend(in viewController: TransactionsViewController) {
-        showPaymentFlow(for: .send(type: .ether(destination: .none)))
+        delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
     }
 
     func didPressRequest(in viewController: TransactionsViewController) {
-        showPaymentFlow(for: .request)
+        delegate?.didPress(for: .request, in: self)
     }
 
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
         showTransaction(transaction)
     }
 
-    func didPressDeposit(for account: Account, sender: UIView, in viewController: TransactionsViewController) {
+    func didPressDeposit(for account: Wallet, sender: UIView, in viewController: TransactionsViewController) {
         let coordinator = DepositCoordinator(
             navigationController: navigationController,
             account: account
@@ -152,12 +141,5 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
 
     func reset() {
         delegate?.didCancel(in: self)
-    }
-}
-
-extension TransactionCoordinator: PaymentCoordinatorDelegate {
-    func didCancel(in coordinator: PaymentCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
     }
 }

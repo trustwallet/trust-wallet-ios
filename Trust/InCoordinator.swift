@@ -9,36 +9,60 @@ protocol InCoordinatorDelegate: class {
     func didUpdateAccounts(in coordinator: InCoordinator)
 }
 
+enum InCoordinatorError: LocalizedError {
+    case onlyWatchAccount
+
+    var errorDescription: String? {
+        return NSLocalizedString(
+            "InCoordinatorError.onlyWatchAccount",
+            value: "This wallet could be only used for watching. Import Private Key/Keystore to sign transactions",
+            comment: ""
+        )
+    }
+}
+
 class InCoordinator: Coordinator {
 
     let navigationController: UINavigationController
     var coordinators: [Coordinator] = []
-    let initialAccount: Account
+    let initialWallet: Wallet
     var keystore: Keystore
     var config: Config
+    let appTracker: AppTracker
     weak var delegate: InCoordinatorDelegate?
     var transactionCoordinator: TransactionCoordinator? {
         return self.coordinators.flatMap { $0 as? TransactionCoordinator }.first
     }
+    lazy var helpUsCoordinator: HelpUsCoordinator = {
+        return HelpUsCoordinator(
+            navigationController: navigationController,
+            appTracker: appTracker
+        )
+    }()
 
     init(
         navigationController: UINavigationController = NavigationController(),
-        account: Account,
+        wallet: Wallet,
         keystore: Keystore,
-        config: Config = Config()
+        config: Config = Config(),
+        appTracker: AppTracker = AppTracker()
     ) {
         self.navigationController = navigationController
-        self.initialAccount = account
+        self.initialWallet = wallet
         self.keystore = keystore
         self.config = config
+        self.appTracker = appTracker
     }
 
     func start() {
-        showTabBar(for: initialAccount)
+        showTabBar(for: initialWallet)
         checkDevice()
+
+        helpUsCoordinator.start()
+        addCoordinator(helpUsCoordinator)
     }
 
-    func showTabBar(for account: Account) {
+    func showTabBar(for account: Wallet) {
         let session = WalletSession(
             account: account,
             config: config
@@ -128,7 +152,7 @@ class InCoordinator: Coordinator {
         navigationController.setNavigationBarHidden(true, animated: false)
         addCoordinator(transactionCoordinator)
 
-        keystore.recentlyUsedAccount = account
+        keystore.recentlyUsedWallet = account
     }
 
     @objc func activateDebug() {
@@ -138,7 +162,7 @@ class InCoordinator: Coordinator {
         restart(for: transactionCoordinator.session.account, in: transactionCoordinator)
     }
 
-    func restart(for account: Account, in coordinator: TransactionCoordinator) {
+    func restart(for account: Wallet, in coordinator: TransactionCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         coordinator.stop()
         removeAllCoordinators()
@@ -155,9 +179,33 @@ class InCoordinator: Coordinator {
 
         addCoordinator(deviceChecker)
     }
+
+    func showPaymentFlow(for type: PaymentFlow) {
+        guard let transactionCoordinator = transactionCoordinator else { return }
+        let session = transactionCoordinator.session
+
+        switch session.account.type {
+        case .real(let account):
+            let coordinator = PaymentCoordinator(
+                flow: type,
+                session: session,
+                account: account,
+                keystore: keystore
+            )
+            coordinator.delegate = self
+            navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+            coordinator.start()
+            addCoordinator(coordinator)
+        case .watch: break
+        }
+    }
 }
 
 extension InCoordinator: TransactionCoordinatorDelegate {
+    func didPress(for type: PaymentFlow, in coordinator: TransactionCoordinator) {
+        showPaymentFlow(for: type)
+    }
+
     func didCancel(in coordinator: TransactionCoordinator) {
         delegate?.didCancel(in: self)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
@@ -185,12 +233,25 @@ extension InCoordinator: SettingsCoordinatorDelegate {
         delegate?.didCancel(in: self)
     }
 
-    func didRestart(with account: Account, in coordinator: SettingsCoordinator) {
+    func didRestart(with account: Wallet, in coordinator: SettingsCoordinator) {
         guard let transactionCoordinator = transactionCoordinator else { return }
         restart(for: account, in: transactionCoordinator)
     }
 
     func didUpdateAccounts(in coordinator: SettingsCoordinator) {
         delegate?.didUpdateAccounts(in: self)
+    }
+}
+
+extension InCoordinator: TokensCoordinatorDelegate {
+   func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator) {
+   showPaymentFlow(for: type)
+    }
+}
+
+extension InCoordinator: PaymentCoordinatorDelegate {
+    func didCancel(in coordinator: PaymentCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 }

@@ -10,6 +10,7 @@ public struct Constants {
     public static let keychainKeyPrefix = "trustwallet"
 
     // social
+    public static let website = "https://trustwalletapp.com"
     public static let twitterUsername = "trustwalletapp"
     public static let telegramUsername = "trustwallet"
     public static let facebookUsername = "trustwalletapp"

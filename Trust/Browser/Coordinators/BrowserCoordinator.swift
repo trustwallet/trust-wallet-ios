@@ -36,27 +36,33 @@ class BrowserCoordinator: Coordinator {
 
 extension BrowserCoordinator: BrowserViewControllerDelegate {
     func didCall(action: DappAction) {
-        switch action {
-        case .signTransaction(let unconfirmedTransaction):
-            let configurator = TransactionConfigurator(
-                session: session,
-                transaction: unconfirmedTransaction,
-                gasPrice: .none
-            )
+        switch session.account.type {
+        case .real(let account):
+            switch action {
+            case .signTransaction(let unconfirmedTransaction):
+                let configurator = TransactionConfigurator(
+                    session: session,
+                    account: account,
+                    transaction: unconfirmedTransaction,
+                    gasPrice: .none
+                )
 
-            let controller = ConfirmPaymentViewController(
-                session: session,
-                keystore: keystore,
-                configurator: configurator
-            )
-            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-            controller.delegate = self
+                let controller = ConfirmPaymentViewController(
+                    session: session,
+                    keystore: keystore,
+                    configurator: configurator
+                )
+                controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+                controller.delegate = self
 
-            let nav = UINavigationController(rootViewController: controller)
-            navigationController.present(nav, animated: true, completion: nil)
-        case .sign, .unknown:
-            break
+                let nav = UINavigationController(rootViewController: controller)
+                navigationController.present(nav, animated: true, completion: nil)
+            case .sign, .unknown:
+                break
+            }
+        case .watch: break
         }
+
     }
 }
 

@@ -6,9 +6,10 @@ import Lokalise
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
-    private let window: UIWindow? = UIWindow()
+    var window: UIWindow?
     var coordinator: AppCoordinator!
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        window = UIWindow(frame: UIScreen.main.bounds)
         do {
             let keystore = try EtherKeystore()
             coordinator = AppCoordinator(window: window!, keystore: keystore)

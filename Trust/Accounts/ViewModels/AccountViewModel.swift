@@ -6,16 +6,16 @@ import UIKit
 
 struct AccountViewModel {
 
-    let account: Account
-    let current: Account?
+    let wallet: Wallet
+    let current: Wallet?
 
-    init(account: Account, current: Account?) {
-        self.account = account
+    init(wallet: Wallet, current: Wallet?) {
+        self.wallet = wallet
         self.current = current
     }
 
     var title: String {
-        return account.address.address
+        return wallet.address.address
     }
 
     var image: UIImage? {
@@ -26,6 +26,6 @@ struct AccountViewModel {
     }
 
     var isActive: Bool {
-        return account == current
+        return wallet == current
     }
 }

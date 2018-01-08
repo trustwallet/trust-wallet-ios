@@ -19,7 +19,7 @@ class TouchRegistrar {
     }
 
     func register() {
-        if !keystore.hasAccounts {
+        if !keystore.hasWallets {
             unregister()
         }
 

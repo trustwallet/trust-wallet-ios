@@ -11,14 +11,14 @@ protocol TransactionsViewControllerDelegate: class {
     func didPressSend(in viewController: TransactionsViewController)
     func didPressRequest(in viewController: TransactionsViewController)
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController)
-    func didPressDeposit(for account: Account, sender: UIView, in viewController: TransactionsViewController)
+    func didPressDeposit(for account: Wallet, sender: UIView, in viewController: TransactionsViewController)
 }
 
 class TransactionsViewController: UIViewController {
 
     var viewModel: TransactionsViewModel
 
-    let account: Account
+    let account: Wallet
     let tableView = UITableView(frame: .zero, style: .plain)
     let refreshControl = UIRefreshControl()
 
@@ -38,8 +38,10 @@ class TransactionsViewController: UIViewController {
         return footerView
     }()
 
+    let insets = UIEdgeInsets(top: 130, left: 0, bottom: ButtonSize.extraLarge.height + 84, right: 0)
+
     init(
-        account: Account,
+        account: Wallet,
         dataCoordinator: TransactionDataCoordinator,
         session: WalletSession,
         viewModel: TransactionsViewModel = TransactionsViewModel(transactions: [])
@@ -77,9 +79,6 @@ class TransactionsViewController: UIViewController {
 
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
-
-        //TODO: Find a way to fix hardcoded 32px value. Use bottom safe inset instead.
-        let insets = UIEdgeInsets(top: 130, left: 0, bottom: ButtonSize.extraLarge.height + 84, right: 0)
 
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)

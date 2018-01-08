@@ -96,9 +96,9 @@ class TokensDataStore {
             updateDelegate()
             return
         }
-        let updateTokens = objects
+        let updateTokens = enabledObject
         var count = 0
-        for tokenObject in objects {
+        for tokenObject in updateTokens {
             getBalanceCoordinator.getBalance(for: session.account.address, contract: Address(string: tokenObject.contract)) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {
@@ -137,7 +137,7 @@ class TokensDataStore {
     }
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
-        return tickers?[token.symbol]
+        return tickers?[token.contract]
     }
 
     func handleError(error: Error) {
@@ -156,16 +156,20 @@ class TokensDataStore {
     }
 
     func updatePrices() {
-        var symbols = objects.map { $0.symbol }
-        symbols.append(Config().server.symbol)
-        provider.request(.prices(currency: Config().currency, symbols: symbols)) { [weak self] result in
+        var tokens = objects.map { TokenPrice(contract: $0.contract, symbol: $0.symbol) }
+        tokens.append(TokenPrice(contract: "0x", symbol: session.config.server.symbol))
+        let tokensPrice = TokensPrice(
+            currency: session.config.currency.rawValue,
+            tokens: tokens
+        )
+        provider.request(.prices(tokensPrice)) { [weak self] result in
             guard let `self` = self else { return }
             guard case .success(let response) = result else { return }
             do {
                 let tickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
                 self.tickers = tickers.reduce([String: CoinTicker]()) { (dict, ticker) -> [String: CoinTicker] in
                     var dict = dict
-                    dict[ticker.symbol] = ticker
+                    dict[ticker.contract] = ticker
                     return dict
                 }
                 self.updateDelegate()

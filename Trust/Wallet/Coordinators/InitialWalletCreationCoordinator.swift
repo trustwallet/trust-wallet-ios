@@ -6,7 +6,7 @@ import UIKit
 
 protocol InitialWalletCreationCoordinatorDelegate: class {
     func didCancel(in coordinator: InitialWalletCreationCoordinator)
-    func didAddAccount(_ account: Account, in coordinator: InitialWalletCreationCoordinator)
+    func didAddAccount(_ account: Wallet, in coordinator: InitialWalletCreationCoordinator)
 }
 
 class InitialWalletCreationCoordinator: Coordinator {
@@ -53,7 +53,7 @@ class InitialWalletCreationCoordinator: Coordinator {
 }
 
 extension InitialWalletCreationCoordinator: WalletCoordinatorDelegate {
-    func didFinish(with account: Account, in coordinator: WalletCoordinator) {
+    func didFinish(with account: Wallet, in coordinator: WalletCoordinator) {
         delegate?.didAddAccount(account, in: self)
         removeCoordinator(coordinator)
     }

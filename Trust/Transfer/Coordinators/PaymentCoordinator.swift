@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import TrustKeystore
 
 protocol PaymentCoordinatorDelegate: class {
     func didCancel(in coordinator: PaymentCoordinator)
@@ -16,6 +17,7 @@ class PaymentCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     let navigationController: UINavigationController
     let keystore: Keystore
+    let account: Account
 
     lazy var transferType: TransferType = {
         switch self.flow {
@@ -30,11 +32,13 @@ class PaymentCoordinator: Coordinator {
         navigationController: UINavigationController = UINavigationController(),
         flow: PaymentFlow,
         session: WalletSession,
+        account: Account,
         keystore: Keystore
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
+        self.account = account
         self.flow = flow
         self.keystore = keystore
     }
@@ -46,6 +50,7 @@ class PaymentCoordinator: Coordinator {
                 transferType: type,
                 navigationController: navigationController,
                 session: session,
+                account: account,
                 keystore: keystore
             )
             coordinator.delegate = self

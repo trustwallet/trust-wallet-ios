@@ -6,9 +6,9 @@ import UIKit
 
 protocol AccountsCoordinatorDelegate: class {
     func didCancel(in coordinator: AccountsCoordinator)
-    func didSelectAccount(account: Account, in coordinator: AccountsCoordinator)
-    func didAddAccount(account: Account, in coordinator: AccountsCoordinator)
-    func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator)
+    func didSelectAccount(account: Wallet, in coordinator: AccountsCoordinator)
+    func didAddAccount(account: Wallet, in coordinator: AccountsCoordinator)
+    func didDeleteAccount(account: Wallet, in coordinator: AccountsCoordinator)
 }
 
 class AccountsCoordinator: Coordinator {
@@ -57,21 +57,29 @@ class AccountsCoordinator: Coordinator {
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
-    func showInfoSheet(for account: Account, sender: UIView) {
+    func showInfoSheet(for account: Wallet, sender: UIView) {
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         controller.popoverPresentationController?.sourceView = sender
         controller.popoverPresentationController?.sourceRect = sender.centerRect
         let actionTitle = NSLocalizedString("wallets.backup.alertSheet.title", value: "Backup Keystore", comment: "The title of the backup button in the wallet's action sheet")
-        let action = UIAlertAction(title: actionTitle, style: .default) { _ in
-            let coordinator = BackupCoordinator(
-                navigationController: self.navigationController,
-                keystore: self.keystore,
-                account: account
-            )
-            coordinator.delegate = self
-            coordinator.start()
-            self.addCoordinator(coordinator)
+
+        switch account.type {
+        case .real(let account):
+            let backupKeystoreAction = UIAlertAction(title: actionTitle, style: .default) { _ in
+                let coordinator = BackupCoordinator(
+                    navigationController: self.navigationController,
+                    keystore: self.keystore,
+                    account: account
+                )
+                coordinator.delegate = self
+                coordinator.start()
+                self.addCoordinator(coordinator)
+            }
+            controller.addAction(backupKeystoreAction)
+        case .watch:
+            break
         }
+
         let copyAction = UIAlertAction(
             title: NSLocalizedString("Copy Address", value: "Copy Address", comment: ""),
             style: .default
@@ -79,7 +87,7 @@ class AccountsCoordinator: Coordinator {
             UIPasteboard.general.string = account.address.address
         }
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
-        controller.addAction(action)
+
         controller.addAction(copyAction)
         controller.addAction(cancelAction)
         navigationController.present(controller, animated: true, completion: nil)
@@ -87,21 +95,21 @@ class AccountsCoordinator: Coordinator {
 }
 
 extension AccountsCoordinator: AccountsViewControllerDelegate {
-    func didSelectAccount(account: Account, in viewController: AccountsViewController) {
+    func didSelectAccount(account: Wallet, in viewController: AccountsViewController) {
         delegate?.didSelectAccount(account: account, in: self)
     }
 
-    func didDeleteAccount(account: Account, in viewController: AccountsViewController) {
+    func didDeleteAccount(account: Wallet, in viewController: AccountsViewController) {
         delegate?.didDeleteAccount(account: account, in: self)
     }
 
-    func didSelectInfoForAccount(account: Account, sender: UIView, in viewController: AccountsViewController) {
+    func didSelectInfoForAccount(account: Wallet, sender: UIView, in viewController: AccountsViewController) {
         showInfoSheet(for: account, sender: sender)
     }
 }
 
 extension AccountsCoordinator: WalletCoordinatorDelegate {
-    func didFinish(with account: Account, in coordinator: WalletCoordinator) {
+    func didFinish(with account: Wallet, in coordinator: WalletCoordinator) {
         delegate?.didAddAccount(account: account, in: self)
         accountsViewController.fetch()
         coordinator.navigationController.dismiss(animated: true, completion: nil)

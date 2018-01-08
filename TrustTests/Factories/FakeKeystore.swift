@@ -6,26 +6,26 @@ import TrustKeystore
 import Result
 
 struct FakeKeystore: Keystore {
-    static var current: Account?
-    var hasAccounts: Bool {
-        return accounts.count > 0
+    static var current: Wallet?
+    var hasWallets: Bool {
+        return wallets.count > 0
     }
-    var accounts: [Account]
-    var recentlyUsedAccount: Account?
+    var wallets: [Wallet]
+    var recentlyUsedWallet: Wallet?
 
     init(
-        accounts: [Account] = [],
-        recentlyUsedAccount: Account? = .none
+        wallets: [Wallet] = [],
+        recentlyUsedWallet: Wallet? = .none
     ) {
-        self.accounts = accounts
-        self.recentlyUsedAccount = recentlyUsedAccount
+        self.wallets = wallets
+        self.recentlyUsedWallet = recentlyUsedWallet
     }
 
     func createAccount(with password: String, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
         completion(.success(.make()))
     }
 
-    func importWallet(type: ImportType, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
+    func importWallet(type: ImportType, completion: @escaping (Result<Wallet, KeystoreError>) -> Void) {
         //TODO: Implement
     }
 
@@ -57,7 +57,7 @@ struct FakeKeystore: Keystore {
         return .failure(KeystoreError.failedToSignTransaction)
     }
 
-    func delete(account: Account) -> Result<Void, KeystoreError> {
+    func delete(wallet wallet: Wallet) -> Result<Void, KeystoreError> {
         //TODO: Implement
         return .failure(KeystoreError.failedToSignTransaction)
     }
@@ -85,12 +85,12 @@ struct FakeKeystore: Keystore {
 
 extension FakeKeystore {
     static func make(
-        accounts: [Account] = [],
-        recentlyUsedAccount: Account? = .none
+        wallets: [Wallet] = [],
+        recentlyUsedWallet: Wallet? = .none
     ) -> FakeKeystore {
         return FakeKeystore(
-            accounts: accounts,
-            recentlyUsedAccount: recentlyUsedAccount
+            wallets: wallets,
+            recentlyUsedWallet: recentlyUsedWallet
         )
     }
 }
