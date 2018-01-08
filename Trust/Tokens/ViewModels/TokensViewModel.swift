@@ -74,7 +74,7 @@ struct TokensViewModel {
     }
 
     func ticker(for token: TokenObject) -> CoinTicker? {
-        return tickers?[token.symbol]
+        return tickers?[token.contract]
     }
 
     func canDelete(for row: Int, section: Int) -> Bool {

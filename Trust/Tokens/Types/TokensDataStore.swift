@@ -54,7 +54,7 @@ class TokensDataStore {
             let update: [String: Any] = [
                 "owner": session.account.address.address,
                 "chainID": session.config.chainID,
-                "contract": token.address?.description ?? "",
+                "contract": token.address?.address ?? "",
                 "name": token.name,
                 "symbol": token.symbol,
                 "decimals": token.decimals,
