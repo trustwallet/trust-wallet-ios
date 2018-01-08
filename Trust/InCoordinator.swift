@@ -117,6 +117,7 @@ class InCoordinator: Coordinator {
                 tokensStorage: tokensStorage
             )
             tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("tokens.tabbar.item.title", value: "Tokens", comment: ""), image: R.image.coins(), selectedImage: nil)
+            tokenCoordinator.delegate = self
             tokenCoordinator.start()
             addCoordinator(tokenCoordinator)
             tabBarController.viewControllers?.append(tokenCoordinator.navigationController)
@@ -244,8 +245,8 @@ extension InCoordinator: SettingsCoordinatorDelegate {
 }
 
 extension InCoordinator: TokensCoordinatorDelegate {
-   func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator) {
-   showPaymentFlow(for: type)
+    func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator) {
+        showPaymentFlow(for: type)
     }
 }
 
