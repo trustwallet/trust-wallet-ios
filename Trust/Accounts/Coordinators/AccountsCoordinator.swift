@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 import UIKit
 
 protocol AccountsCoordinatorDelegate: class {
@@ -75,7 +76,7 @@ class AccountsCoordinator: Coordinator {
             title: NSLocalizedString("Copy Address", value: "Copy Address", comment: ""),
             style: .default
         ) { _ in
-            UIPasteboard.general.string = account.address.address
+            UIPasteboard.general.string = account.address.description
         }
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
         controller.addAction(action)

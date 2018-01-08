@@ -3,6 +3,7 @@
 import Foundation
 import UIKit
 import Result
+import TrustKeystore
 
 protocol TransactionCoordinatorDelegate: class {
     func didCancel(in coordinator: TransactionCoordinator)

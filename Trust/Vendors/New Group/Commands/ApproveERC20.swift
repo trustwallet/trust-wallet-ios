@@ -2,6 +2,7 @@
 
 import Foundation
 import BigInt
+import TrustKeystore
 
 struct ApproveERC20Encode: Web3Request {
     typealias Response = String
@@ -12,7 +13,7 @@ struct ApproveERC20Encode: Web3Request {
     let value: BigInt
 
     var type: Web3RequestType {
-        let run = "web3.eth.abi.encodeFunctionCall(\(ApproveERC20Encode.abi), [\"\(address.address)\", \"\(value.description)\"])"
+        let run = "web3.eth.abi.encodeFunctionCall(\(ApproveERC20Encode.abi), [\"\(address.description)\", \"\(value.description)\"])"
         return .script(command: run)
     }
 }

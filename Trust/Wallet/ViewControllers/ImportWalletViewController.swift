@@ -4,6 +4,7 @@ import UIKit
 import Eureka
 import OnePasswordExtension
 import BonMot
+import TrustKeystore
 
 protocol ImportWalletViewControllerDelegate: class {
     func didImportAccount(account: Account, in viewController: ImportWalletViewController)
@@ -189,7 +190,7 @@ class ImportWalletViewController: FormViewController {
     @objc func demo() {
         //Used for taking screenshots to the App Store by snapshot
         let demoAccount = Account(
-            address: Address(address: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")
+            address: Address(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")
         )
         delegate?.didImportAccount(account: demoAccount, in: self)
     }

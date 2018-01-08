@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 import UIKit
 
 class DepositCoordinator: Coordinator {
@@ -60,21 +61,21 @@ class DepositCoordinator: Coordinator {
 
     func showCoinbase() {
         let widget = CoinbaseBuyWidget(
-            address: account.address.address
+            address: account.address.description
         )
         navigationController.openURL(widget.url)
     }
 
     func showShapeShift() {
         let widget = ShapeShiftBuyWidget(
-            address: account.address.address
+            address: account.address.description
         )
         navigationController.openURL(widget.url)
     }
 
     func showChangelly() {
         let widget = ChangellyBuyWidget(
-            address: account.address.address
+            address: account.address.description
         )
         navigationController.openURL(widget.url)
     }

@@ -2,6 +2,7 @@
 
 import XCTest
 @testable import Trust
+import TrustKeystore
 
 class SendCoordinatorTests: XCTestCase {
     
@@ -28,7 +29,7 @@ class SendCoordinatorTests: XCTestCase {
         )
         coordinator.start()
 
-        XCTAssertEqual(address.address, coordinator.sendViewController.addressRow?.value)
+        XCTAssertEqual(address.description, coordinator.sendViewController.addressRow?.value)
         XCTAssertTrue(coordinator.navigationController.viewControllers[0] is SendViewController)
     }
 }

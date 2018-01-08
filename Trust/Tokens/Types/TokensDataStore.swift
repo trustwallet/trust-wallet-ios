@@ -6,6 +6,7 @@ import APIKit
 import RealmSwift
 import BigInt
 import Moya
+import TrustKeystore
 
 enum TokenError: Error {
     case failedToFetch
@@ -51,9 +52,9 @@ class TokensDataStore {
         realm.beginWrite()
         for token in tokens {
             let update: [String: Any] = [
-                "owner": session.account.address.address,
+                "owner": session.account.address.description,
                 "chainID": session.config.chainID,
-                "contract": token.address.address,
+                "contract": token.address?.description ?? "",
                 "name": token.name,
                 "symbol": token.symbol,
                 "decimals": token.decimals,
@@ -73,7 +74,7 @@ class TokensDataStore {
 
         switch session.config.server {
         case .main:
-            let request = GetTokensRequest(address: session.account.address.address)
+            let request = GetTokensRequest(address: session.account.address.description)
             Session.send(request) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {
@@ -98,7 +99,7 @@ class TokensDataStore {
         let updateTokens = objects
         var count = 0
         for tokenObject in objects {
-            getBalanceCoordinator.getBalance(for: session.account.address, contract: Address(address: tokenObject.contract)) { [weak self] result in
+            getBalanceCoordinator.getBalance(for: session.account.address, contract: Address(string: tokenObject.contract)) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {
                 case .success(let balance):
@@ -145,7 +146,7 @@ class TokensDataStore {
 
     func addCustom(token: ERC20Token) {
         let newToken = TokenObject(
-            contract: token.contract.address,
+            contract: token.contract.description,
             symbol: token.symbol,
             decimals: token.decimals,
             value: "0",
@@ -214,7 +215,7 @@ class TokensDataStore {
                 let name = operation.name,
                 let symbol = operation.symbol else { return nil }
             return Token(
-                address: Address(address: contract),
+                address: Address(string: contract),
                 name: name,
                 symbol: symbol,
                 decimals: operation.decimals

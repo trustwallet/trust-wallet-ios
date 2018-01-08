@@ -2,11 +2,12 @@
 
 import BigInt
 @testable import Trust
+import TrustKeystore
 import XCTest
 
 class TransactionSigningTests: XCTestCase {
     func testEIP155SignHash() {
-        let address = Address(address: "0x3535353535353535353535353535353535353535")
+        let address = Address(string: "0x3535353535353535353535353535353535353535")
         let transaction = SignTransaction(
             value: BigInt("1000000000000000000"),
             account: Account(address: address),
@@ -23,7 +24,7 @@ class TransactionSigningTests: XCTestCase {
     }
 
     func testHomesteadSignHash() {
-        let address = Address(address: "0x3535353535353535353535353535353535353535")
+        let address = Address(string: "0x3535353535353535353535353535353535353535")
         let transaction = SignTransaction(
             value: BigInt("1000000000000000000"),
             account: Account(address: address),

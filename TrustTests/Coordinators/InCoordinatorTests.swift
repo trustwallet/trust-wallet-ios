@@ -2,6 +2,7 @@
 
 import XCTest
 @testable import Trust
+import TrustKeystore
 
 class InCoordinatorTests: XCTestCase {
     
@@ -32,8 +33,8 @@ class InCoordinatorTests: XCTestCase {
     }
 
     func testChangeRecentlyUsedAccount() {
-        let account1: Account = .make(address: .make(address: "0x1"))
-        let account2: Account = .make(address: .make(address: "0x2"))
+        let account1: Account = .make(address: .make(address: "0x1000000000000000000000000000000000000000"))
+        let account2: Account = .make(address: .make(address: "0x2000000000000000000000000000000000000000"))
 
         let keystore = FakeKeystore(
             accounts: [

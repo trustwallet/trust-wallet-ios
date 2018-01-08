@@ -2,6 +2,7 @@
 
 import Foundation
 import Eureka
+import TrustKeystore
 
 protocol NewTokenViewControllerDelegate: class {
     func didAddToken(token: ERC20Token, in viewController: NewTokenViewController)
@@ -70,7 +71,7 @@ class NewTokenViewController: FormViewController {
         let decimals = Int(decimalsRow?.value ?? "") ?? 0
 
         let token = ERC20Token(
-            contract: Address(address: contract),
+            contract: Address(string: contract),
             symbol: symbol,
             decimals: decimals
         )

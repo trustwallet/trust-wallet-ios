@@ -4,6 +4,7 @@ import Foundation
 import UserNotifications
 import UIKit
 import Moya
+import TrustKeystore
 
 class PushNotificationsRegistrar {
 
@@ -48,7 +49,7 @@ class PushNotificationsRegistrar {
         let device = PushDevice(
             deviceID: UIDevice.current.identifierForVendor!.uuidString,
             token: token,
-            wallets: addresses.map { $0.address }
+            wallets: addresses.map { $0.description }
         )
 
         trustProvider.request(.register(device: device)) { _ in }

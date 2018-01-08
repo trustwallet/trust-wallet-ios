@@ -2,6 +2,7 @@
 
 import XCTest
 @testable import Trust
+import TrustKeystore
 
 class WalletCoordinatorTests: XCTestCase {
     

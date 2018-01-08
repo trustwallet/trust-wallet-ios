@@ -4,6 +4,7 @@ import Foundation
 import JSONRPCKit
 import APIKit
 import BigInt
+import TrustKeystore
 
 class ExchangeTokensCoordinator {
 
@@ -102,7 +103,7 @@ class ExchangeTokensCoordinator {
         session.web3.request(request: request) { result in
             switch result {
             case .success(let res):
-                let request2 = EtherServiceRequest(batch: BatchFactory().create(CallRequest(to: self.exchangeConfig.contract.address, data: res)))
+                let request2 = EtherServiceRequest(batch: BatchFactory().create(CallRequest(to: self.exchangeConfig.contract?.description ?? "", data: res)))
                 Session.send(request2) { [weak self] result2 in
                     switch result2 {
                     case .success(let balance):
@@ -170,7 +171,7 @@ class ExchangeTokensCoordinator {
     }
 
     func getETHBalance(address: Address, completion: ((BalanceProtocol) -> Void)? = .none) {
-        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: address.address)))
+        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: address.description)))
         Session.send(request) { result in
             switch result {
             case .success(let balance):

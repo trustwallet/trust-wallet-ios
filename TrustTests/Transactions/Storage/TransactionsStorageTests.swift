@@ -2,6 +2,7 @@
 
 import XCTest
 @testable import Trust
+import TrustKeystore
 import RealmSwift
 
 class TransactionsStorageTests: XCTestCase {
@@ -69,8 +70,8 @@ class TransactionsStorageTests: XCTestCase {
         let owner: Account = .make()
 
         storage.add([
-            .make(id: "0x1", owner: owner.address.address),
-            .make(id: "0x2", owner: owner.address.address)
+            .make(id: "0x1", owner: owner.address.description),
+            .make(id: "0x2", owner: owner.address.description)
         ])
 
         XCTAssertEqual(2, storage.count)

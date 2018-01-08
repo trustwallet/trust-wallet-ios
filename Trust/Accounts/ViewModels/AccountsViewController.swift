@@ -1,5 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
+import TrustKeystore
 import UIKit
 
 protocol AccountsViewControllerDelegate: class {
@@ -50,7 +51,7 @@ class AccountsViewController: UITableViewController {
 
     func fetch() {
         accounts = keystore.accounts.map {
-            Account(address: Address(address: $0.address.address))
+            Account(address: $0.address)
         }
     }
 

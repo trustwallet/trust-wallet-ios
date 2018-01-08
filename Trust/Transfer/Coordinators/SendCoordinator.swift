@@ -52,7 +52,7 @@ class SendCoordinator: Coordinator {
         )
         switch transferType {
         case .ether(let destination):
-            controller.addressRow?.value = destination?.address
+            controller.addressRow?.value = destination?.description
             controller.addressRow?.cell.row.updateCell()
         case .token, .exchange: break
         }
