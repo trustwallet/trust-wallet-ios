@@ -142,8 +142,9 @@ class SettingsViewController: FormViewController {
                         row.value = result
                         row.updateCell()
                     }
-                    VENTouchLock.setShouldUseTouchID(true)
-                    VENTouchLock.sharedInstance().backgroundLockVisible = false
+                    if VENTouchLock.canUseTouchID() {
+                        VENTouchLock.setShouldUseTouchID(true)
+                    }
                 } else {
                     VENTouchLock.sharedInstance().deletePasscode()
                 }
