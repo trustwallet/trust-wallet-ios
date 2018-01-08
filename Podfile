@@ -27,7 +27,7 @@ target 'Trust' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Kingfisher', '~> 4.0'
-  pod 'TrustKeystore'
+  pod 'TrustKeystore', '~> 0.0.4'
 
   target 'TrustTests' do
     inherit! :search_paths

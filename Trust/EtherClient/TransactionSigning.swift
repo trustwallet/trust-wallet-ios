@@ -5,6 +5,7 @@ import CryptoSwift
 
 protocol Signer {
     func hash(transaction: SignTransaction) -> Data
+    func values(transaction: SignTransaction, signature: Data) -> (r: BigInt, s: BigInt, v: BigInt)
 }
 
 struct EIP155Signer: Signer {
@@ -25,6 +26,17 @@ struct EIP155Signer: Signer {
             transaction.chainID, 0, 0,
         ] as [Any])!
     }
+
+    func values(transaction: SignTransaction, signature: Data) -> (r: BigInt, s: BigInt, v: BigInt) {
+        let (r, s, v) = HomesteadSigner().values(transaction: transaction, signature: signature)
+        let newV: BigInt
+        if chainId != 0 {
+            newV = BigInt(signature[64]) + 35 + chainId + chainId
+        } else {
+            newV = v
+        }
+        return (r, s, newV)
+    }
 }
 
 struct HomesteadSigner: Signer {
@@ -37,6 +49,14 @@ struct HomesteadSigner: Signer {
             transaction.value,
             transaction.data,
         ])!
+    }
+
+    func values(transaction: SignTransaction, signature: Data) -> (r: BigInt, s: BigInt, v: BigInt) {
+        precondition(signature.count == 65, "Wrong size for signature")
+        let r = BigInt(sign: .plus, magnitude: BigUInt(signature[..<32]))
+        let s = BigInt(sign: .plus, magnitude: BigUInt(signature[32..<64]))
+        let v = BigInt(sign: .plus, magnitude: BigUInt(signature[64] + 27))
+        return (r, s, v)
     }
 }
 
