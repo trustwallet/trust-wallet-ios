@@ -44,9 +44,11 @@ struct AppFormAppearance {
     }
 
     static func onRowValidationChanged(baseCell: BaseCell, row: BaseRow) {
-        let rowIndex = row.indexPath!.row
-        while row.section!.count > rowIndex + 1 && row.section?[rowIndex  + 1] is LabelRow {
-            row.section?.remove(at: rowIndex + 1)
+        guard let rowIndex = row.indexPath?.row, let rowSection = row.section else {
+            return
+        }
+        while rowSection.count > rowIndex + 1 && rowSection[rowIndex  + 1] is LabelRow {
+            rowSection.remove(at: rowIndex + 1)
         }
         if !row.isValid {
             for (index, validationMsg) in row.validationErrors.map({ $0.msg }).enumerated() {
