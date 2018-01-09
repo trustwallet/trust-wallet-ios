@@ -5,6 +5,7 @@ import Foundation
 enum ImportSelectionType {
     case keystore
     case privateKey
+    case mnemonic
     case watch
 
     var title: String {
@@ -13,6 +14,8 @@ enum ImportSelectionType {
             return "Keystore"
         case .privateKey:
             return "Private Key"
+        case .mnemonic:
+            return "Mnemonic"
         case .watch:
             return "Watch"
         }
@@ -24,6 +27,8 @@ enum ImportSelectionType {
             self = .privateKey
         case ImportSelectionType.watch.title?:
             self = .watch
+        case ImportSelectionType.mnemonic.title?:
+            self = .mnemonic
         default:
             self = .keystore
         }

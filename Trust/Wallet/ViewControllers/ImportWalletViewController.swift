@@ -21,6 +21,7 @@ class ImportWalletViewController: FormViewController {
         static let privateKey = "privateKey"
         static let password = "password"
         static let watch = "watch"
+        static let mnemonic = "mnemonic"
     }
 
     var segmentRow: SegmentedRow<String>? {
@@ -29,6 +30,10 @@ class ImportWalletViewController: FormViewController {
 
     var keystoreRow: TextAreaRow? {
         return form.rowBy(tag: Values.keystore)
+    }
+
+    var mnemonicRow: TextAreaRow? {
+        return form.rowBy(tag: Values.mnemonic)
     }
 
     var privateKeyRow: TextAreaRow? {
@@ -95,11 +100,22 @@ class ImportWalletViewController: FormViewController {
 
             <<< SegmentedRow<String>(Values.segment) {
                 $0.options = [
+                    ImportSelectionType.mnemonic.title,
                     ImportSelectionType.keystore.title,
                     ImportSelectionType.privateKey.title,
                     ImportSelectionType.watch.title,
                 ]
                 $0.value = ImportSelectionType.keystore.title
+            }
+
+            <<< AppFormAppearance.textArea(tag: Values.mnemonic) {
+                $0.placeholder = NSLocalizedString("Mnemonic", value: "Mnemonic", comment: "")
+                $0.textAreaHeight = .fixed(cellHeight: 140)
+                $0.add(rule: RuleRequired())
+
+                $0.hidden = Eureka.Condition.function([Values.segment], { _ in
+                    return self.segmentRow?.value != ImportSelectionType.mnemonic.title
+                })
             }
 
             <<< AppFormAppearance.textArea(tag: Values.keystore) {
@@ -164,6 +180,8 @@ class ImportWalletViewController: FormViewController {
         let privateKeyInput = privateKeyRow?.value?.trimmed ?? ""
         let password = passwordRow?.value ?? ""
         let watchInput = watchRow?.value?.trimmed ?? ""
+        let mnemonicInput = mnemonicRow?.value?.trimmed ?? ""
+        let words = mnemonicInput.components(separatedBy: " ").map { $0.trimmed }
 
         displayLoading(text: NSLocalizedString("importWallet.importingIndicator.label.title", value: "Importing wallet...", comment: ""), animated: false)
 
@@ -174,6 +192,8 @@ class ImportWalletViewController: FormViewController {
                 return .keystore(string: keystoreInput, password: password)
             case .privateKey:
                 return .privateKey(privateKey: privateKeyInput)
+            case .mnemonic:
+                return .mnemonic(words: words)
             case .watch:
                 return .watch(address: Address(string: watchInput))
             }

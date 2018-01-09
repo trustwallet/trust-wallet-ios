@@ -41,7 +41,7 @@ open class EtherKeystore: Keystore {
         return !wallets.isEmpty
     }
 
-    var watchAddresses: [String] {
+    private var watchAddresses: [String] {
         set {
             let data = NSKeyedArchiver.archivedData(withRootObject: newValue)
             keychain.set(data, forKey: Keys.watchAddresses)
@@ -98,6 +98,29 @@ open class EtherKeystore: Keystore {
                 }
             }
         case .privateKey(let privateKey):
+            keystore(for: privateKey, password: newPassword) { result in
+                switch result {
+                case .success(let value):
+                    self.importKeystore(
+                        value: value,
+                        password: newPassword,
+                        newPassword: newPassword
+                    ) { result in
+                        switch result {
+                        case .success(let account):
+                            completion(.success(Wallet(type: .real(account))))
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        case .mnemonic(let words):
+            guard let privateKey = Mnemonic.decode(words: words) else {
+                return completion(.failure(KeystoreError.failedToImportPrivateKey))
+            }
             keystore(for: privateKey, password: newPassword) { result in
                 switch result {
                 case .success(let value):
