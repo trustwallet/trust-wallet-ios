@@ -61,10 +61,10 @@ class AccountsCoordinator: Coordinator {
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         controller.popoverPresentationController?.sourceView = sender
         controller.popoverPresentationController?.sourceRect = sender.centerRect
-        let actionTitle = NSLocalizedString("wallets.backup.alertSheet.title", value: "Backup Keystore", comment: "The title of the backup button in the wallet's action sheet")
 
         switch account.type {
         case .real(let account):
+            let actionTitle = NSLocalizedString("wallets.backup.alertSheet.title", value: "Backup Keystore", comment: "The title of the backup button in the wallet's action sheet")
             let backupKeystoreAction = UIAlertAction(title: actionTitle, style: .default) { _ in
                 let coordinator = BackupCoordinator(
                     navigationController: self.navigationController,
