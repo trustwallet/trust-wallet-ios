@@ -66,6 +66,10 @@ struct FakeKeystore: Keystore {
         return .failure(KeystoreError.failedToSignTransaction)
     }
 
+    func delete(wallet: Wallet, completion: @escaping (Result<Void, KeystoreError>) -> Void) {
+        completion(.failure(KeystoreError.failedToSignTransaction))
+    }
+
     func updateAccount(account: Account, password: String, newPassword: String) -> Result<Void, KeystoreError> {
         //TODO: Implement
         return .failure(KeystoreError.failedToSignTransaction)
