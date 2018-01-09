@@ -17,8 +17,10 @@ protocol Keystore {
     func createAccout(password: String) -> Account
     func importKeystore(value: String, password: String, newPassword: String) -> Result<Account, KeystoreError>
     func export(account: Account, password: String, newPassword: String) -> Result<String, KeystoreError>
+    func export(account: Account, password: String, newPassword: String, completion: @escaping (Result<String, KeystoreError>) -> Void)
     func exportData(account: Account, password: String, newPassword: String) -> Result<Data, KeystoreError>
     func delete(wallet: Wallet) -> Result<Void, KeystoreError>
+    func delete(wallet: Wallet, completion: @escaping (Result<Void, KeystoreError>) -> Void)
     func updateAccount(account: Account, password: String, newPassword: String) -> Result<Void, KeystoreError>
     func signTransaction(_ signTransaction: SignTransaction) -> Result<Data, KeystoreError>
     func getPassword(for account: Account) -> String?

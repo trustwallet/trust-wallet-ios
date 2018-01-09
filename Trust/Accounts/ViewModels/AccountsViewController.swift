@@ -111,13 +111,17 @@ class AccountsViewController: UITableViewController {
     }
 
     func delete(account: Wallet) {
-        let result = self.keystore.delete(wallet: account)
-        switch result {
-        case .success:
-            self.fetch()
-            self.delegate?.didDeleteAccount(account: account, in: self)
-        case .failure(let error):
-            self.displayError(error: error)
+        navigationController?.displayLoading(text: NSLocalizedString("Deleting", value: "Deleting", comment: ""))
+        keystore.delete(wallet: account) { [weak self] result in
+            guard let `self` = self else { return }
+            self.navigationController?.hideLoading()
+            switch result {
+            case .success:
+                self.fetch()
+                self.delegate?.didDeleteAccount(account: account, in: self)
+            case .failure(let error):
+                self.displayError(error: error)
+            }
         }
     }
 

@@ -48,8 +48,12 @@ struct FakeKeystore: Keystore {
     }
 
     func export(account: Account, password: String, newPassword: String) -> Result<String, KeystoreError> {
-        //TODO: Implement
         return .failure(KeystoreError.failedToSignTransaction)
+    }
+
+    func export(account: Account, password: String, newPassword: String, completion: @escaping (Result<String, KeystoreError>) -> Void) {
+        //TODO: Implement
+        return completion(.failure(KeystoreError.failedToSignTransaction))
     }
 
     func exportData(account: Account, password: String, newPassword: String) -> Result<Data, KeystoreError> {

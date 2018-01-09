@@ -43,12 +43,16 @@ class BackupCoordinator: Coordinator {
     }
 
     func presentActivityViewController(for account: Account, password: String, newPassword: String, completion: @escaping (Result<Bool, AnyError>) -> Void) {
-        let result = keystore.export(account: account, password: password, newPassword: newPassword)
-
         navigationController.displayLoading(
             text: NSLocalizedString("export.presentBackupOptions.label.title", value: "Preparing backup options...", comment: "")
         )
+        keystore.export(account: account, password: password, newPassword: newPassword) { [weak self] result in
+            guard let `self` = self else { return }
+            self.handleExport(result: result, completion: completion)
+        }
+    }
 
+    private func handleExport(result: (Result<String, KeystoreError>), completion: @escaping (Result<Bool, AnyError>) -> Void) {
         switch result {
         case .success(let value):
             let url = URL(fileURLWithPath: NSTemporaryDirectory().appending("trust_wallet_\(account.address.address).json"))
@@ -62,9 +66,9 @@ class BackupCoordinator: Coordinator {
                 activityItems: [url],
                 applicationActivities: nil
             )
-            activityViewController.completionWithItemsHandler = { _, result, _, _ in
+            activityViewController.completionWithItemsHandler = { _, result, _, error in
                 do { try FileManager.default.removeItem(at: url)
-                } catch { }
+            } catch { }
                 completion(.success(result))
             }
             activityViewController.popoverPresentationController?.sourceView = navigationController.view

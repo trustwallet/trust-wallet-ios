@@ -12,7 +12,6 @@ enum EtherKeystoreError: LocalizedError {
 }
 
 open class EtherKeystore: Keystore {
-
     struct Keys {
         static let recentlyUsedAddress: String = "recentlyUsedAddress"
         static let watchAddresses = "watchAddresses"
@@ -117,7 +116,7 @@ open class EtherKeystore: Keystore {
                     completion(.failure(error))
                 }
             }
-        case .mnemonic(let words, let password):
+        case .mnemonic:
             let key = ""
             // TODO: Implement it
             keystore(for: key, password: newPassword) { result in
@@ -207,13 +206,22 @@ open class EtherKeystore: Keystore {
     }
 
     func export(account: Account, password: String, newPassword: String) -> Result<String, KeystoreError> {
-        let result = exportData(account: account, password: password, newPassword: newPassword)
+        let result = self.exportData(account: account, password: password, newPassword: newPassword)
         switch result {
         case .success(let data):
             let string = String(data: data, encoding: .utf8) ?? ""
-            return .success(string)
+             return .success(string)
         case .failure(let error):
-            return .failure(error)
+             return .failure(error)
+        }
+    }
+
+    func export(account: Account, password: String, newPassword: String, completion: @escaping (Result<String, KeystoreError>) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let result = self.export(account: account, password: password, newPassword: newPassword)
+            DispatchQueue.main.async {
+                completion(result)
+            }
         }
     }
 
@@ -250,6 +258,15 @@ open class EtherKeystore: Keystore {
         case .watch(let address):
             watchAddresses = watchAddresses.filter { $0 != address.address }
             return .success(())
+        }
+    }
+
+    func delete(wallet: Wallet, completion: @escaping (Result<Void, KeystoreError>) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let result = self.delete(wallet: wallet)
+            DispatchQueue.main.async {
+                completion(result)
+            }
         }
     }
 
