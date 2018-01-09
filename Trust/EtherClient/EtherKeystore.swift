@@ -117,11 +117,10 @@ open class EtherKeystore: Keystore {
                     completion(.failure(error))
                 }
             }
-        case .mnemonic(let words):
-            guard let privateKey = Mnemonic.decode(words: words) else {
-                return completion(.failure(KeystoreError.failedToImportPrivateKey))
-            }
-            keystore(for: privateKey, password: newPassword) { result in
+        case .mnemonic(let words, let password):
+            let key = ""
+            // TODO: Implement it
+            keystore(for: key, password: newPassword) { result in
                 switch result {
                 case .success(let value):
                     self.importKeystore(

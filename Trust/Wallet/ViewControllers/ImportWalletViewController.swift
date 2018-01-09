@@ -100,7 +100,7 @@ class ImportWalletViewController: FormViewController {
 
             <<< SegmentedRow<String>(Values.segment) {
                 $0.options = [
-                    ImportSelectionType.mnemonic.title,
+                    //ImportSelectionType.mnemonic.title,
                     ImportSelectionType.keystore.title,
                     ImportSelectionType.privateKey.title,
                     ImportSelectionType.watch.title,
@@ -193,7 +193,7 @@ class ImportWalletViewController: FormViewController {
             case .privateKey:
                 return .privateKey(privateKey: privateKeyInput)
             case .mnemonic:
-                return .mnemonic(words: words)
+                return .mnemonic(words: words, password: password)
             case .watch:
                 return .watch(address: Address(string: watchInput))
             }
