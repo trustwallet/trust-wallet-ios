@@ -17,6 +17,7 @@ class PaymentCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     let navigationController: UINavigationController
     let keystore: Keystore
+    let storage: TokensDataStore
     let account: Account
 
     lazy var transferType: TransferType = {
@@ -32,8 +33,9 @@ class PaymentCoordinator: Coordinator {
         navigationController: UINavigationController = UINavigationController(),
         flow: PaymentFlow,
         session: WalletSession,
-        account: Account,
-        keystore: Keystore
+        keystore: Keystore,
+        storage: TokensDataStore,
+        account: Account
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
@@ -41,6 +43,7 @@ class PaymentCoordinator: Coordinator {
         self.account = account
         self.flow = flow
         self.keystore = keystore
+        self.storage = storage
     }
 
     func start() {
@@ -50,8 +53,9 @@ class PaymentCoordinator: Coordinator {
                 transferType: type,
                 navigationController: navigationController,
                 session: session,
-                account: account,
-                keystore: keystore
+                keystore: keystore,
+                storage: storage,
+                account: account
             )
             coordinator.delegate = self
             coordinator.start()

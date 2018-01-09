@@ -67,7 +67,13 @@ class InCoordinator: Coordinator {
             account: account,
             config: config
         )
+        
         MigrationInitializer(account: account, chainID: config.chainID).perform()
+        
+        let tokensStorage = TokensDataStore(
+            session: session,
+            configuration: RealmConfiguration.configuration(for: session.account, chainID: session.config.chainID)
+        )
 
         let transactionsStorage = TransactionsStorage(
             configuration: RealmConfiguration.configuration(for: account, chainID: session.config.chainID)
@@ -76,7 +82,8 @@ class InCoordinator: Coordinator {
         let transactionCoordinator = TransactionCoordinator(
             session: session,
             storage: transactionsStorage,
-            keystore: keystore
+            keystore: keystore,
+            tokensStorage: tokensStorage
         )
         transactionCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("transactions.tabbar.item.title", value: "Transactions", comment: ""), image: R.image.feed(), selectedImage: nil)
         transactionCoordinator.delegate = self
@@ -107,10 +114,6 @@ class InCoordinator: Coordinator {
         }
 
         if inCoordinatorViewModel.tokensAvailable {
-            let tokensStorage = TokensDataStore(
-                session: session,
-                configuration: RealmConfiguration.configuration(for: session.account, chainID: session.config.chainID)
-            )
             let tokenCoordinator = TokensCoordinator(
                 session: session,
                 keystore: keystore,
@@ -184,14 +187,16 @@ class InCoordinator: Coordinator {
     func showPaymentFlow(for type: PaymentFlow) {
         guard let transactionCoordinator = transactionCoordinator else { return }
         let session = transactionCoordinator.session
+        let tokenStorage = transactionCoordinator.tokensStorage
 
         switch session.account.type {
         case .real(let account):
             let coordinator = PaymentCoordinator(
                 flow: type,
                 session: session,
-                account: account,
-                keystore: keystore
+                keystore: keystore,
+                storage: tokenStorage,
+                account: account
             )
             coordinator.delegate = self
             navigationController.present(coordinator.navigationController, animated: true, completion: nil)
