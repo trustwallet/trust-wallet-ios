@@ -19,7 +19,7 @@ class TouchRegistrar {
     }
 
     func register() {
-        if !keystore.hasAccounts {
+        if !keystore.hasWallets {
             unregister()
         }
 
@@ -30,9 +30,6 @@ class TouchRegistrar {
             passcodeAttemptLimit: 5,
             splashViewControllerClass: SplashViewController.self
         )
-        VENTouchLock.sharedInstance().backgroundLockVisible = true
-        VENTouchLockAppearance().splashShouldEmbedInNavigationController = true
-        VENTouchLockAppearance().touchIDCancelPresentsPasscodeViewController = false
     }
 
     func unregister() {

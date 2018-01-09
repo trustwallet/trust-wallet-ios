@@ -5,20 +5,22 @@ import APIKit
 import JSONRPCKit
 import StatefulViewController
 import Result
+import TrustKeystore
 
 protocol TransactionsViewControllerDelegate: class {
     func didPressSend(in viewController: TransactionsViewController)
     func didPressRequest(in viewController: TransactionsViewController)
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController)
-    func didPressDeposit(for account: Account, sender: UIView, in viewController: TransactionsViewController)
+    func didPressDeposit(for account: Wallet, sender: UIView, in viewController: TransactionsViewController)
 }
 
 class TransactionsViewController: UIViewController {
 
     var viewModel: TransactionsViewModel
 
-    let account: Account
     let tokensStorage: TokensDataStore
+    let account: Wallet
+
     let tableView = UITableView(frame: .zero, style: .plain)
     let refreshControl = UIRefreshControl()
 
@@ -30,8 +32,6 @@ class TransactionsViewController: UIViewController {
     let dataCoordinator: TransactionDataCoordinator
     let session: WalletSession
 
-    let insets = UIEdgeInsets(top: 130, left: 0, bottom: ButtonSize.extraLarge.height + 84, right: 0)
-
     lazy var footerView: TransactionsFooterView = {
         let footerView = TransactionsFooterView(frame: .zero)
         footerView.translatesAutoresizingMaskIntoConstraints = false
@@ -40,8 +40,10 @@ class TransactionsViewController: UIViewController {
         return footerView
     }()
 
+    let insets = UIEdgeInsets(top: 130, left: 0, bottom: ButtonSize.extraLarge.height + 84, right: 0)
+
     init(
-        account: Account,
+        account: Wallet,
         dataCoordinator: TransactionDataCoordinator,
         session: WalletSession,
         tokensStorage: TokensDataStore,
@@ -75,6 +77,13 @@ class TransactionsViewController: UIViewController {
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
+
+        dataCoordinator.delegate = self
+        dataCoordinator.start()
+
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+
         errorView = ErrorView(insets: insets, onRetry: fetch)
         loadingView = LoadingView(insets: insets)
         emptyView = {
@@ -88,18 +97,13 @@ class TransactionsViewController: UIViewController {
             return view
         }()
 
-        dataCoordinator.delegate = self
-        dataCoordinator.start()
-
-        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-        tableView.addSubview(refreshControl)
-
         navigationItem.titleView = titleView
         titleView.viewModel = BalanceViewModel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         fetch()
     }
 

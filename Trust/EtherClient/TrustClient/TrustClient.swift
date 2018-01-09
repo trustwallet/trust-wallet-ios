@@ -3,6 +3,14 @@
 import Foundation
 import Moya
 
+enum TrustService {
+    case prices(TokensPrice)
+    case getTransactions(address: String, startBlock: Int)
+    case getTransaction(ID: String)
+    case register(device: PushDevice)
+    case unregister(device: PushDevice)
+}
+
 struct TokensPrice: Encodable {
     let currency: String
     let tokens: [TokenPrice]
@@ -11,14 +19,6 @@ struct TokensPrice: Encodable {
 struct TokenPrice: Encodable {
     let contract: String
     let symbol: String
-}
-
-enum TrustService {
-    case prices(TokensPrice)
-    case getTransactions(address: String, startBlock: Int)
-    case getTransaction(ID: String)
-    case register(device: PushDevice)
-    case unregister(device: PushDevice)
 }
 
 extension TrustService: TargetType {

@@ -18,7 +18,7 @@ class SettingsViewController: FormViewController {
     }
 
     private var config = Config()
-
+    private let helpUsCoordinator = HelpUsCoordinator()
     weak var delegate: SettingsViewControllerDelegate?
 
     var isPasscodeEnabled: Bool {
@@ -37,7 +37,6 @@ class SettingsViewController: FormViewController {
         return SettingsViewModel(isDebug: isDebug)
     }()
     let session: WalletSession
-    let helpUsCoordinator = HelpUsCoordinator()
 
     init(session: WalletSession) {
         self.session = session
@@ -143,8 +142,9 @@ class SettingsViewController: FormViewController {
                         row.value = result
                         row.updateCell()
                     }
-                    VENTouchLock.setShouldUseTouchID(true)
-                    VENTouchLock.sharedInstance().backgroundLockVisible = false
+                    if VENTouchLock.canUseTouchID() {
+                        VENTouchLock.setShouldUseTouchID(true)
+                    }
                 } else {
                     VENTouchLock.sharedInstance().deletePasscode()
                 }
@@ -185,13 +185,6 @@ class SettingsViewController: FormViewController {
             +++ Section(NSLocalizedString("settings.support.label.title", value: "Support", comment: ""))
 
             <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("settings.rateUsAppStore.button.title", value: "Rate Us on App Store", comment: "")
-                button.cell.imageView?.image = R.image.settings_rating()
-            }.onCellSelection { [unowned self] _, _  in
-                self.helpUsCoordinator.rateUs()
-            }
-
-            <<< AppFormAppearance.button { button in
                 button.title = NSLocalizedString("settings.shareWithFriends.button.title", value: "Share With Friends", comment: "")
                 button.cell.imageView?.image = R.image.settingsShare()
             }.onCellSelection { [unowned self] cell, _  in
@@ -199,10 +192,18 @@ class SettingsViewController: FormViewController {
             }
 
             <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("settings.emailUs.button.title", value: "Email Us", comment: "")
-            }.onCellSelection { [unowned self] _, _  in
-                self.sendUsEmail()
+                button.title = NSLocalizedString("settings.rateUsAppStore.button.title", value: "Rate Us on App Store", comment: "")
+            }.onCellSelection { _, _  in
+                self.helpUsCoordinator.rateUs()
             }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_rating()
+            }
+
+            <<< AppFormAppearance.button { button in
+                button.title = NSLocalizedString("settings.emailUs.button.title", value: "Email Us", comment: "")
+            }.onCellSelection { _, _  in
+                self.sendUsEmail()
+            }.cellSetup { [unowned self] cell, _ in
                 cell.imageView?.image = R.image.settings_email()
             }
 

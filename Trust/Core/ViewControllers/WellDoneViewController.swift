@@ -1,5 +1,4 @@
 // Copyright SIX DAY LLC. All rights reserved.
-
 import UIKit
 
 enum WellDoneAction {
@@ -19,30 +18,6 @@ class WellDoneViewController: UIViewController {
 
         let imageView = UIImageView(image: R.image.mascot_happy())
         imageView.translatesAutoresizingMaskIntoConstraints = false
-
-//        let facebookButton = Button(size: .normal, style: .solid)
-//        facebookButton.translatesAutoresizingMaskIntoConstraints = false
-//        facebookButton.setTitle(NSLocalizedString("Facebook", value: "Facebook", comment: ""), for: .normal)
-//        facebookButton.addTarget(self, action: #selector(facebook), for: .touchUpInside)
-//
-//        let twitterButton = Button(size: .normal, style: .solid)
-//        twitterButton.translatesAutoresizingMaskIntoConstraints = false
-//        twitterButton.setTitle(NSLocalizedString("Twitter", value: "Twitter", comment: ""), for: .normal)
-//        twitterButton.addTarget(self, action: #selector(twitter), for: .touchUpInside)
-//
-//        let buttonsStackView = UIStackView(arrangedSubviews: [
-//            facebookButton,
-//            twitterButton,
-//        ])
-//        buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
-//        buttonsStackView.axis = .horizontal
-//        buttonsStackView.spacing = 16
-
-//        let titleLabel = UILabel()
-//        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-//        titleLabel.text = NSLocalizedString("welldone.title.label.text", value: "Thank you!", comment: "")
-//        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-//        titleLabel.textColor = Colors.blue
 
         let descriptionLabel = UILabel()
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -83,14 +58,6 @@ class WellDoneViewController: UIViewController {
             otherButton.widthAnchor.constraint(equalToConstant: 240),
         ])
     }
-
-//    @objc private func facebook(sender: UIBarButtonItem) {
-//        delegate?.didPress(action: .facebook, sender: sender)
-//    }
-//
-//    @objc private func twitter(sender: UIBarButtonItem) {
-//        delegate?.didPress(action: .twitter, sender: sender)
-//    }
 
     @objc private func other(_ sender: UIView) {
         delegate?.didPress(action: .other, sender: sender, in: self)

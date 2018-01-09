@@ -1,15 +1,16 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 import UIKit
 
 struct RequestViewModel {
 
-    let account: Account
+    let account: Wallet
     let config: Config
 
     init(
-        account: Account,
+        account: Wallet,
         config: Config
     ) {
         self.account = account

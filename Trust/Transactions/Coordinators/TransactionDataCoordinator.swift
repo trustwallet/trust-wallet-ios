@@ -7,6 +7,7 @@ import APIKit
 import RealmSwift
 import Result
 import Moya
+import TrustKeystore
 
 enum TransactionError: Error {
     case failedToFetch
@@ -115,11 +116,13 @@ class TransactionDataCoordinator {
     }
 
     func handleError(error: Error) {
-        delegate?.didUpdate(result: .failure(TransactionError.failedToFetch))
+        //delegate?.didUpdate(result: .failure(TransactionError.failedToFetch))
+        // Avoid showing an error on failed request, instead show cached transactions.
+        handleUpdateItems()
     }
 
     func handleUpdateItems() {
-        delegate?.didUpdate(result: .success(self.storage.objects))
+        delegate?.didUpdate(result: .success(storage.objects))
     }
 
     func stop() {

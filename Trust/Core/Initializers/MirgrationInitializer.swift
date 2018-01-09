@@ -2,14 +2,15 @@
 
 import Foundation
 import RealmSwift
+import TrustKeystore
 
 class MigrationInitializer: Initializer {
 
-    let account: Account
+    let account: Wallet
     let chainID: Int
 
     init(
-        account: Account, chainID: Int
+        account: Wallet, chainID: Int
     ) {
         self.account = account
         self.chainID = chainID

@@ -4,7 +4,6 @@ import BigInt
 import Foundation
 import UIKit
 import StackViewController
-import Geth
 
 protocol ConfirmPaymentViewControllerDelegate: class {
     func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController)

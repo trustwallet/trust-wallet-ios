@@ -14,7 +14,6 @@ class TokensCoordinator: Coordinator {
     let keystore: Keystore
     var coordinators: [Coordinator] = []
     let storage: TokensDataStore
-    weak var delegate: TokensCoordinatorDelegate?
 
     lazy var tokensViewController: TokensViewController = {
         let controller = TokensViewController(
@@ -26,6 +25,7 @@ class TokensCoordinator: Coordinator {
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
         return controller
     }()
+    weak var delegate: TokensCoordinatorDelegate?
 
     lazy var rootViewController: TokensViewController = {
         return self.tokensViewController

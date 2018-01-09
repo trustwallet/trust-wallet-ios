@@ -21,8 +21,8 @@ class EditTokenTableViewCell: UITableViewCell {
             tokenLabel.text = viewModel.title
             tokenLabel.font = viewModel.titleFont
             tokenLabel.textColor = viewModel.titleTextColor
-            tokenContractLabel.text = viewModel.contractText
             tokenEnableSwitch.isOn = viewModel.isEnabled
+            tokenContractLabel.text = viewModel.contractText
             tokenImageView.kf.setImage(
                 with: viewModel.imageUrl,
                 placeholder: viewModel.placeholderImage,

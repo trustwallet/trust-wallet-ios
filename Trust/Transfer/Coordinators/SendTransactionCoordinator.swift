@@ -2,7 +2,6 @@
 
 import BigInt
 import Foundation
-import Geth
 import APIKit
 import JSONRPCKit
 import Result

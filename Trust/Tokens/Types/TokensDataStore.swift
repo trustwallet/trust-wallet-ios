@@ -6,6 +6,7 @@ import APIKit
 import RealmSwift
 import BigInt
 import Moya
+import TrustKeystore
 
 enum TokenError: Error {
     case failedToFetch
@@ -53,7 +54,7 @@ class TokensDataStore {
             let update: [String: Any] = [
                 "owner": session.account.address.address,
                 "chainID": session.config.chainID,
-                "contract": token.address.address,
+                "contract": token.address?.address ?? "",
                 "name": token.name,
                 "symbol": token.symbol,
                 "decimals": token.decimals,
@@ -98,7 +99,7 @@ class TokensDataStore {
         let updateTokens = enabledObject
         var count = 0
         for tokenObject in updateTokens {
-            getBalanceCoordinator.getBalance(for: session.account.address, contract: Address(address: tokenObject.contract)) { [weak self] result in
+            getBalanceCoordinator.getBalance(for: session.account.address, contract: Address(string: tokenObject.contract)) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {
                 case .success(let balance):
@@ -161,7 +162,6 @@ class TokensDataStore {
             currency: session.config.currency.rawValue,
             tokens: tokens
         )
-
         provider.request(.prices(tokensPrice)) { [weak self] result in
             guard let `self` = self else { return }
             guard case .success(let response) = result else { return }
@@ -219,7 +219,7 @@ class TokensDataStore {
                 let name = operation.name,
                 let symbol = operation.symbol else { return nil }
             return Token(
-                address: Address(address: contract),
+                address: Address(string: contract),
                 name: name,
                 symbol: symbol,
                 decimals: operation.decimals

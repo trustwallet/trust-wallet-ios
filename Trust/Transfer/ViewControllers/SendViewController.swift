@@ -2,12 +2,12 @@
 
 import Foundation
 import UIKit
-import Geth
 import Eureka
 import JSONRPCKit
 import APIKit
 import QRCodeReaderViewController
 import BigInt
+import TrustKeystore
 
 protocol SendViewControllerDelegate: class {
     func didPressConfirm(
@@ -42,6 +42,7 @@ class SendViewController: FormViewController {
     
     var pairValue = 0.0
     let session: WalletSession
+    let account: Account
     let transferType: TransferType
     let storage: TokensDataStore
 
@@ -61,9 +62,11 @@ class SendViewController: FormViewController {
     init(
         session: WalletSession,
         storage: TokensDataStore,
+        account: Account,
         transferType: TransferType = .ether(destination: .none)
     ) {
         self.session = session
+        self.account = account
         self.transferType = transferType
         self.storage = storage
 
@@ -172,7 +175,7 @@ class SendViewController: FormViewController {
             amountString = String(pairValue).trimmed
         }
 
-        let address = Address(address: addressString)
+        let address = Address(string: addressString)
 
         let parsedValue: BigInt? = {
             switch transferType {
@@ -191,7 +194,7 @@ class SendViewController: FormViewController {
             transferType: transferType,
             value: value,
             address: address,
-            account: session.account,
+            account: account,
             chainID: session.config.chainID,
             data: Data()
         )

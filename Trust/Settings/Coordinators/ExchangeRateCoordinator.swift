@@ -30,8 +30,7 @@ class ExchangeRateCoordinator: NSObject {
         let tokensPrice = TokensPrice(
             currency: config.currency.rawValue,
             tokens: tokens
-        )
-
+         )
         provider.request(.prices(tokensPrice)) { [weak self] result in
             guard let `self` = self else { return }
             guard case .success(let response) = result else { return }

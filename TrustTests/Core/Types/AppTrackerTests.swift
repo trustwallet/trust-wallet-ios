@@ -4,7 +4,7 @@ import XCTest
 @testable import Trust
 
 class AppTrackerTests: XCTestCase {
-    
+
     func testLaunchCountForCurrentBuild() {
         let tracker = AppTracker(defaults: .test)
 
@@ -19,3 +19,4 @@ class AppTrackerTests: XCTestCase {
         XCTAssertEqual(2, tracker.launchCountForCurrentBuild)
     }
 }
+

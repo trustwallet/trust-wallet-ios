@@ -1,11 +1,12 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 import UIKit
 
 protocol SettingsCoordinatorDelegate: class {
     func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator)
-    func didRestart(with account: Account, in coordinator: SettingsCoordinator)
+    func didRestart(with account: Wallet, in coordinator: SettingsCoordinator)
     func didUpdateAccounts(in coordinator: SettingsCoordinator)
     func didCancel(in coordinator: SettingsCoordinator)
 }
@@ -77,14 +78,14 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
 }
 
 extension SettingsCoordinator: AccountsCoordinatorDelegate {
-    func didAddAccount(account: Account, in coordinator: AccountsCoordinator) {
+    func didAddAccount(account: Wallet, in coordinator: AccountsCoordinator) {
         delegate?.didUpdateAccounts(in: self)
     }
 
-    func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator) {
+    func didDeleteAccount(account: Wallet, in coordinator: AccountsCoordinator) {
         storage.deleteAll()
         delegate?.didUpdateAccounts(in: self)
-        guard !coordinator.accountsViewController.hasAccounts else { return }
+        guard !coordinator.accountsViewController.hasWallets else { return }
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         delegate?.didCancel(in: self)
     }
@@ -94,7 +95,7 @@ extension SettingsCoordinator: AccountsCoordinatorDelegate {
         removeCoordinator(coordinator)
     }
 
-    func didSelectAccount(account: Account, in coordinator: AccountsCoordinator) {
+    func didSelectAccount(account: Wallet, in coordinator: AccountsCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
         delegate?.didRestart(with: account, in: self)

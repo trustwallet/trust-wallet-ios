@@ -2,6 +2,7 @@
 
 import XCTest
 @testable import Trust
+import TrustKeystore
 
 class PaymentCoordinatorTests: XCTestCase {
 
@@ -12,7 +13,8 @@ class PaymentCoordinatorTests: XCTestCase {
             flow: .send(type: .ether(destination: address)),
             session: .make(),
             keystore: FakeKeystore(),
-            storage: FakeTokensDataStore()
+            storage: FakeTokensDataStore(),
+            account: .make()
         )
         coordinator.start()
 
@@ -26,7 +28,8 @@ class PaymentCoordinatorTests: XCTestCase {
             flow: .request,
             session: .make(),
             keystore: FakeKeystore(),
-            storage: FakeTokensDataStore()
+            storage: FakeTokensDataStore(),
+            account: .make()
         )
 
         coordinator.start()

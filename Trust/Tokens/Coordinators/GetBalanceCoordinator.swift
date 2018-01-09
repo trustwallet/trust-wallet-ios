@@ -5,6 +5,7 @@ import BigInt
 import JSONRPCKit
 import APIKit
 import Result
+import TrustKeystore
 
 class GetBalanceCoordinator {
 

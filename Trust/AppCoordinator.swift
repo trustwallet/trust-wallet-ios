@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 import UIKit
 
 class AppCoordinator: NSObject, Coordinator {
@@ -43,19 +44,18 @@ class AppCoordinator: NSObject, Coordinator {
         applyStyle()
         resetToWelcomeScreen()
 
-        if keystore.hasAccounts {
-            showTransactions(for: keystore.recentlyUsedAccount ?? keystore.accounts.first!)
+        if keystore.hasWallets {
+            showTransactions(for: keystore.recentlyUsedWallet ?? keystore.wallets.first!)
         } else {
             resetToWelcomeScreen()
         }
         pushNotificationRegistrar.reRegister()
     }
 
-    func showTransactions(for account: Account) {
-
+    func showTransactions(for wallet: Wallet) {
         let coordinator = InCoordinator(
             navigationController: navigationController,
-            account: account,
+            wallet: wallet,
             keystore: keystore,
             appTracker: appTracker
         )
@@ -95,7 +95,7 @@ class AppCoordinator: NSObject, Coordinator {
     func didRegisterForRemoteNotificationsWithDeviceToken(deviceToken: Data) {
         pushNotificationRegistrar.didRegister(
             with: deviceToken,
-            addresses: keystore.accounts.map { $0.address }
+            addresses: keystore.wallets.map { $0.address }
         )
     }
 
@@ -127,7 +127,7 @@ extension AppCoordinator: InitialWalletCreationCoordinatorDelegate {
         removeCoordinator(coordinator)
     }
 
-    func didAddAccount(_ account: Account, in coordinator: InitialWalletCreationCoordinator) {
+    func didAddAccount(_ account: Wallet, in coordinator: InitialWalletCreationCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
         showTransactions(for: account)

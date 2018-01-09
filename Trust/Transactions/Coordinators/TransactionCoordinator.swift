@@ -3,6 +3,7 @@
 import Foundation
 import UIKit
 import Result
+import TrustKeystore
 
 protocol TransactionCoordinatorDelegate: class {
     func didPress(for type: PaymentFlow, in coordinator: TransactionCoordinator)
@@ -52,7 +53,7 @@ class TransactionCoordinator: Coordinator {
         navigationController.viewControllers = [rootViewController]
     }
 
-    private func makeTransactionsController(with account: Account) -> TransactionsViewController {
+    private func makeTransactionsController(with account: Wallet) -> TransactionsViewController {
         let viewModel = TransactionsViewModel()
         let controller = TransactionsViewController(
             account: account,
@@ -112,7 +113,7 @@ class TransactionCoordinator: Coordinator {
         showDeposit(for: session.account, from: sender)
     }
 
-    func showDeposit(for account: Account, from barButtonItem: UIBarButtonItem? = .none) {
+    func showDeposit(for account: Wallet, from barButtonItem: UIBarButtonItem? = .none) {
         let coordinator = DepositCoordinator(
             navigationController: navigationController,
             account: account
@@ -134,7 +135,7 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
         showTransaction(transaction)
     }
 
-    func didPressDeposit(for account: Account, sender: UIView, in viewController: TransactionsViewController) {
+    func didPressDeposit(for account: Wallet, sender: UIView, in viewController: TransactionsViewController) {
         let coordinator = DepositCoordinator(
             navigationController: navigationController,
             account: account

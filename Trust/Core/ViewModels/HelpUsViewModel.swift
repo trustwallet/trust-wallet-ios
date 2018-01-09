@@ -1,5 +1,4 @@
 // Copyright SIX DAY LLC. All rights reserved.
-
 import Foundation
 import UIKit
 
@@ -20,12 +19,12 @@ struct HelpUsViewModel {
             value: "Check out Trust - the wallet that lets me securely store my Ethereum and ERC20 tokens.",
             comment: ""
         ),
-         NSLocalizedString(
+        NSLocalizedString(
             "welldone.viewmodel.sharing.text3",
             value: "I securely store Ethereum and ERC20 tokens in the Trust wallet",
             comment: ""
         ),
-         NSLocalizedString(
+        NSLocalizedString(
             "welldone.viewmodel.sharing.text4",
             value: "I secure my Ethereum and ERC20 tokens in the Trust wallet.",
             comment: ""

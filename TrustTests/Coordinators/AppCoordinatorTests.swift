@@ -20,7 +20,7 @@ class AppCoordinatorTests: XCTestCase {
         let coordinator = AppCoordinator(
             window: UIWindow(),
             keystore: FakeKeystore(
-                accounts: [.make()]
+                wallets: [.make()]
             )
         )
         
@@ -34,7 +34,7 @@ class AppCoordinatorTests: XCTestCase {
         let coordinator = AppCoordinator(
             window: UIWindow(),
             keystore: FakeKeystore(
-                accounts: [.make()]
+                wallets: [.make()]
             )
         )
         coordinator.start()
@@ -61,7 +61,7 @@ class AppCoordinatorTests: XCTestCase {
         let coordinator = AppCoordinator(
             window: UIWindow(),
             keystore: FakeKeystore(
-                accounts: [.make()]
+                wallets: [.make()]
             ),
             navigationController: FakeNavigationController()
         )

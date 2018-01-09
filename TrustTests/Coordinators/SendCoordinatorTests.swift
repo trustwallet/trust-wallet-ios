@@ -2,6 +2,7 @@
 
 import XCTest
 @testable import Trust
+import TrustKeystore
 
 class SendCoordinatorTests: XCTestCase {
     
@@ -11,7 +12,8 @@ class SendCoordinatorTests: XCTestCase {
             navigationController: FakeNavigationController(),
             session: .make(),
             keystore: FakeKeystore(),
-            storage: FakeTokensDataStore()
+            storage: FakeTokensDataStore(),
+            account: .make()
         )
 
         coordinator.start()
@@ -26,11 +28,12 @@ class SendCoordinatorTests: XCTestCase {
             navigationController: FakeNavigationController(),
             session: .make(),
             keystore: FakeKeystore(),
-            storage: FakeTokensDataStore()
+            storage: FakeTokensDataStore(),
+            account: .make()
         )
         coordinator.start()
 
-        XCTAssertEqual(address.address, coordinator.sendViewController.addressRow?.value)
+        XCTAssertEqual(address.description, coordinator.sendViewController.addressRow?.value)
         XCTAssertTrue(coordinator.navigationController.viewControllers[0] is SendViewController)
     }
 }
