@@ -89,7 +89,7 @@ class TokensDataStore {
                 }
             }
             updatePrices()
-        case .classic, .kovan, .poa, .ropsten:
+        case .classic, .kovan, .poa, .ropsten, .sokol:
             updatePrices()
             refreshBalance()
         }

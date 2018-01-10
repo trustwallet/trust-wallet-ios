@@ -19,6 +19,7 @@ struct SettingsViewModel {
             RPCServer.poa,
             RPCServer.kovan,
             RPCServer.ropsten,
+            RPCServer.sokol,
         ]
     }
 

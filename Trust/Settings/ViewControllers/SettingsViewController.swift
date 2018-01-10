@@ -72,7 +72,7 @@ class SettingsViewController: FormViewController {
                 selectorController.sectionKeyForValue = { option in
                     switch option {
                     case .main, .classic, .poa: return ""
-                    case .kovan, .ropsten: return NSLocalizedString("settings.network.test.label.title", value: "Test", comment: "")
+                    case .kovan, .ropsten, .sokol: return NSLocalizedString("settings.network.test.label.title", value: "Test", comment: "")
                     }
                 }
             }.cellSetup { cell, _ in
