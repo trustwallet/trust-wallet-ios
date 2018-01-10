@@ -2,6 +2,7 @@
 
 import Foundation
 @testable import Trust
+import TrustKeystore
 import BigInt
 
 extension UnconfirmedTransaction {

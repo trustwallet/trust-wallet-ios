@@ -1,13 +1,14 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 
 enum RefreshType {
     case balance
 }
 
 class WalletSession {
-    let account: Account
+    let account: Wallet
     let web3: Web3Swift
     let config: Config
     let chainState: ChainState
@@ -22,7 +23,7 @@ class WalletSession {
     var balanceViewModel: Subscribable<BalanceBaseViewModel> = Subscribable(nil)
 
     init(
-        account: Account,
+        account: Wallet,
         config: Config
     ) {
         self.account = account

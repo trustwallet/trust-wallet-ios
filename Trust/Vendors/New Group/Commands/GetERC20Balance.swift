@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 
 struct GetERC20BalanceEncode: Web3Request {
     typealias Response = String

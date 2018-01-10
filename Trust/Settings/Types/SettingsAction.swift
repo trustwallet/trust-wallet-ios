@@ -3,7 +3,8 @@
 import Foundation
 
 enum SettingsAction {
+    case wallets
     case RPCServer
-    case donate(address: Address)
+    case currency
     case pushNotifications(enabled: Bool)
 }

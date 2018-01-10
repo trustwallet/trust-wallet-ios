@@ -4,6 +4,7 @@ import Foundation
 import UserNotifications
 import UIKit
 import Moya
+import TrustKeystore
 
 class PushNotificationsRegistrar {
 
@@ -20,21 +21,15 @@ class PushNotificationsRegistrar {
     }
 
     func register() {
-        if #available(iOS 10, *) {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _, _  in }
-            UIApplication.shared.registerForRemoteNotifications()
-        } else if #available(iOS 9, *) {
-            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil))
-            UIApplication.shared.registerForRemoteNotifications()
-        }
+        UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _, _  in }
+        UIApplication.shared.registerForRemoteNotifications()
     }
 
     func unregister() {
         let device = PushDevice(
             deviceID: UIDevice.current.identifierForVendor!.uuidString,
             token: "",
-            wallets: [],
-            chainID: config.chainID
+            wallets: []
         )
 
         trustProvider.request(.unregister(device: device)) { _ in }
@@ -49,8 +44,7 @@ class PushNotificationsRegistrar {
         let device = PushDevice(
             deviceID: UIDevice.current.identifierForVendor!.uuidString,
             token: token,
-            wallets: addresses.map { $0.address },
-            chainID: config.chainID
+            wallets: addresses.map { $0.description }
         )
 
         trustProvider.request(.register(device: device)) { _ in }

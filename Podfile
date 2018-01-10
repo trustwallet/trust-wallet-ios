@@ -9,7 +9,6 @@ target 'Trust' do
   pod 'R.swift'
   pod 'JSONRPCKit', :git=> 'https://github.com/bricklife/JSONRPCKit.git'
   pod 'APIKit'
-  pod 'Geth'
   pod 'Eureka', '~> 4.0.1'
   pod 'MBProgressHUD'
   pod 'StatefulViewController'
@@ -26,7 +25,9 @@ target 'Trust' do
   pod 'JavaScriptKit' 
   pod 'CryptoSwift', :git=>'https://github.com/krzyzanowskim/CryptoSwift', :branch=>'master'
   pod 'Fabric'
-  pod 'Crashlytics'  
+  pod 'Crashlytics'
+  pod 'Kingfisher', '~> 4.0'
+  pod 'TrustKeystore', '~> 0.0.4'
 
   target 'TrustTests' do
     inherit! :search_paths
@@ -47,5 +48,11 @@ post_install do |installer|
         config.build_settings['SWIFT_VERSION'] = '3.0'
       end
     end
+    if ['TrustKeystore'].include? target.name
+      target.build_configurations.each do |config|
+        config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Owholemodule'
+      end
+    end
   end
 end
+

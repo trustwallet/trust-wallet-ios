@@ -64,4 +64,13 @@ class QRURLParserTests: XCTestCase {
         XCTAssertEqual(1, result?.params.count)
         XCTAssertEqual("0x123", result?.params["data"])
     }
+    
+    func testParseMultipleValues() {
+        let result = QRURLParser.from(string: "ethereum:0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c?data=0x123&amount=1.0")
+        
+        XCTAssertEqual("ethereum", result?.protocolName)
+        XCTAssertEqual(2, result?.params.count)
+        XCTAssertEqual("0x123", result?.params["data"])
+        XCTAssertEqual("1.0", result?.params["amount"])
+    }
 }

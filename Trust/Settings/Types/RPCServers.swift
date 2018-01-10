@@ -7,7 +7,8 @@ enum RPCServer: String {
     case kovan
     case ropsten
     case poa
-    case poaTest
+    case sokol
+    case classic
 
     var chainID: Int {
         switch self {
@@ -15,7 +16,8 @@ enum RPCServer: String {
         case .kovan: return 42
         case .ropsten: return 3
         case .poa: return 99
-        case .poaTest: return 12648430
+        case .sokol: return 77
+        case .classic: return 61
         }
     }
 
@@ -24,22 +26,25 @@ enum RPCServer: String {
         case .main: return "Ethereum"
         case .kovan: return "Kovan"
         case .ropsten: return "Ropsten"
-        case .poa, .poaTest: return "POA Network"
+        case .poa: return "POA Network"
+        case .sokol: return "Sokol"
+        case .classic: return "Ethereum Classic"
         }
     }
 
     var isTestNetwork: Bool {
         switch self {
-        case .main, .poa: return false
-        case .kovan, .ropsten, .poaTest: return true
+        case .main, .poa, .classic: return false
+        case .kovan, .ropsten, .sokol: return true
         }
     }
 
     var symbol: String {
         switch self {
         case .main: return "ETH"
+        case .classic: return "ETC"
         case .kovan, .ropsten: return "ETH"
-        case .poa, .poaTest: return "POA"
+        case .poa, .sokol: return "POA"
         }
     }
 
@@ -51,10 +56,11 @@ enum RPCServer: String {
         self = {
             switch name {
             case RPCServer.main.name: return .main
+            case RPCServer.classic.name: return .classic
             case RPCServer.kovan.name: return .kovan
             case RPCServer.ropsten.name: return .ropsten
             case RPCServer.poa.name: return .poa
-            case RPCServer.poaTest.name: return .poaTest
+            case RPCServer.sokol.name: return .sokol
             default: return .main
             }
         }()
@@ -64,10 +70,11 @@ enum RPCServer: String {
         self = {
             switch chainID {
             case RPCServer.main.chainID: return .main
+            case RPCServer.classic.chainID: return .classic
             case RPCServer.kovan.chainID: return .kovan
             case RPCServer.ropsten.chainID: return .ropsten
             case RPCServer.poa.chainID: return .poa
-            case RPCServer.poaTest.chainID: return .poaTest
+            case RPCServer.sokol.chainID: return .sokol
             default: return .main
             }
         }()

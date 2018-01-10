@@ -13,11 +13,12 @@ protocol SettingsViewControllerDelegate: class {
 class SettingsViewController: FormViewController {
 
     struct Values {
-        static let donationAddress = Address(address: "0x9f8284ce2cf0c8ce10685f537b1fff418104a317")
+        static let currencyPopularKey = "0"
+        static let currencyAllKey = "1"
     }
 
     private var config = Config()
-
+    private let helpUsCoordinator = HelpUsCoordinator()
     weak var delegate: SettingsViewControllerDelegate?
 
     var isPasscodeEnabled: Bool {
@@ -35,30 +36,99 @@ class SettingsViewController: FormViewController {
     lazy var viewModel: SettingsViewModel = {
         return SettingsViewModel(isDebug: isDebug)
     }()
+    let session: WalletSession
+
+    init(session: WalletSession) {
+        self.session = session
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // swiftlint:disable:next function_body_length
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = NSLocalizedString("settings.navigation.title", value: "Settings", comment: "")
+        let account = session.account
 
         form = Section()
 
-            <<< PushRow<String> {
-                $0.title = NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
+            <<< PushRow<RPCServer> {
+                $0.title = viewModel.networkTitle
                 $0.options = viewModel.servers
-                $0.value = RPCServer(chainID: config.chainID).name
+                $0.value = RPCServer(chainID: config.chainID)
+                $0.selectorTitle = viewModel.networkTitle
                 $0.displayValueFor = { value in
-                    let network = RPCServer(name: value ?? "")
-                    return network.name + (network.isTestNetwork ? " (Test)" : "")
+                    return value?.name
                 }
             }.onChange { row in
-                self.config.chainID = RPCServer(name: row.value ?? "").chainID
+                self.config.chainID = row.value?.chainID ?? RPCServer.main.chainID
                 self.run(action: .RPCServer)
             }.onPresent { _, selectorController in
                 selectorController.enableDeselection = false
+                selectorController.sectionKeyForValue = { option in
+                    switch option {
+                    case .main, .classic, .poa: return ""
+                    case .kovan, .ropsten, .sokol: return NSLocalizedString("settings.network.test.label.title", value: "Test", comment: "")
+                    }
+                }
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_server()
+            }
+
+            <<< AppFormAppearance.button { button in
+                button.cellStyle = .value1
+            }.onCellSelection { [unowned self] _, _ in
+                self.run(action: .wallets)
+            }.cellUpdate { cell, _ in
+                cell.textLabel?.textColor = .black
+                cell.imageView?.image = R.image.settings_wallet()
+                cell.textLabel?.text = NSLocalizedString("settings.wallets.button.title", value: "Wallets", comment: "")
+                cell.detailTextLabel?.text = String(account.address.address.prefix(10)) + "..."
+                cell.accessoryType = .disclosureIndicator
+            }
+
+            +++ Section()
+
+            <<< PushRow<Currency> {
+                $0.title = viewModel.currencyTitle
+                $0.selectorTitle = viewModel.currencyTitle
+                $0.options = viewModel.currency
+                $0.value = config.currency
+                $0.displayValueFor = { value in
+                    let currencyCode = value?.rawValue ?? ""
+                    if #available(iOS 10.0, *) {
+                        return currencyCode + " - " + (NSLocale.current.localizedString(forCurrencyCode: currencyCode) ?? "")
+                    } else {
+                        return currencyCode
+                    }
+                }
+            }.onChange { row in
+                guard let value = row.value else { return }
+                self.config.currency = value
+                self.run(action: .currency)
+            }.onPresent { _, selectorController in
+                selectorController.enableDeselection = false
+                selectorController.sectionKeyForValue = { option in
+                    switch option {
+                    case .USD, .EUR, .GBP, .AUD, .RUB: return Values.currencyPopularKey
+                    default: return Values.currencyAllKey
+                    }
+                }
+                selectorController.sectionHeaderTitleForKey = { option in
+                    switch option {
+                    case Values.currencyPopularKey:
+                        return NSLocalizedString("settings.currency.popular.label.title", value: "Popular", comment: "")
+                    case Values.currencyAllKey:
+                        return NSLocalizedString("settings.currency.all.label.title", value: "All", comment: "")
+                    default: return ""
+                    }
+                }
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settingsCurrency()
             }
 
             +++ Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))
@@ -72,8 +142,9 @@ class SettingsViewController: FormViewController {
                         row.value = result
                         row.updateCell()
                     }
-                    VENTouchLock.setShouldUseTouchID(true)
-                    VENTouchLock.sharedInstance().backgroundLockVisible = false
+                    if VENTouchLock.canUseTouchID() {
+                        VENTouchLock.setShouldUseTouchID(true)
+                    }
                 } else {
                     VENTouchLock.sharedInstance().deletePasscode()
                 }
@@ -114,11 +185,16 @@ class SettingsViewController: FormViewController {
             +++ Section(NSLocalizedString("settings.support.label.title", value: "Support", comment: ""))
 
             <<< AppFormAppearance.button { button in
+                button.title = NSLocalizedString("settings.shareWithFriends.button.title", value: "Share With Friends", comment: "")
+                button.cell.imageView?.image = R.image.settingsShare()
+            }.onCellSelection { [unowned self] cell, _  in
+                self.helpUsCoordinator.presentSharing(in: self, from: cell.contentView)
+            }
+
+            <<< AppFormAppearance.button { button in
                 button.title = NSLocalizedString("settings.rateUsAppStore.button.title", value: "Rate Us on App Store", comment: "")
             }.onCellSelection { _, _  in
-                if #available(iOS 10.3, *) { SKStoreReviewController.requestReview() } else {
-                    UIApplication.shared.openURL(URL(string: "itms-apps://itunes.apple.com/app/id1288339409")!)
-                }
+                self.helpUsCoordinator.rateUs()
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_rating()
             }
@@ -127,16 +203,8 @@ class SettingsViewController: FormViewController {
                 button.title = NSLocalizedString("settings.emailUs.button.title", value: "Email Us", comment: "")
             }.onCellSelection { _, _  in
                 self.sendUsEmail()
-            }.cellSetup { cell, _ in
+            }.cellSetup { [unowned self] cell, _ in
                 cell.imageView?.image = R.image.settings_email()
-            }
-
-            <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("settings.donate.button.title", value: "Donate", comment: "")
-            }.onCellSelection { [unowned self] _, _ in
-                self.run(action: .donate(address: Values.donationAddress))
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_donate()
             }
 
             <<< link(

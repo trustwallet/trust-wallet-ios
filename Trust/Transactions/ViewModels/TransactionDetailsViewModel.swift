@@ -51,9 +51,13 @@ struct TransactionDetailsViewModel {
 
     var detailsAvailable: Bool {
         switch config.server {
-        case .main, .kovan, .poaTest, .ropsten: return true
-        case .poa: return false
+        case .main, .classic, .poa, .kovan, .ropsten: return true
+        case .sokol: return false
         }
+    }
+
+    var shareAvailable: Bool {
+        return detailsAvailable
     }
 
     var detailsURL: URL {
@@ -78,7 +82,7 @@ struct TransactionDetailsViewModel {
     var gasFee: String {
         let gasUsed = BigInt(transaction.gasUsed) ?? BigInt()
         let gasPrice = BigInt(transaction.gasPrice) ?? BigInt()
-        return fullFormatter.string(from: gasPrice * gasUsed)
+        return fullFormatter.string(from: gasPrice * gasUsed) + " " + config.server.symbol
     }
 
     var confirmation: String {
@@ -94,5 +98,9 @@ struct TransactionDetailsViewModel {
 
     var amountAttributedString: NSAttributedString {
         return transactionViewModel.fullAmountAttributedString
+    }
+
+    var shareItem: URL {
+        return detailsURL
     }
 }

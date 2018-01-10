@@ -6,6 +6,7 @@ import APIKit
 import RealmSwift
 import BigInt
 import Moya
+import TrustKeystore
 
 enum TokenError: Error {
     case failedToFetch
@@ -20,12 +21,15 @@ class TokensDataStore {
     private lazy var getBalanceCoordinator: GetBalanceCoordinator = {
         return GetBalanceCoordinator(session: self.session)
     }()
-    private let provider = MoyaProvider<CoinMarketService>()
+    private let provider = TrustProviderFactory.makeProvider()
 
     let session: WalletSession
     weak var delegate: TokensDataStoreDelegate?
     let realm: Realm
     var tickers: [String: CoinTicker]? = .none
+    var timer = Timer()
+    //We should refresh prices every 5 minutes.
+    let intervalToRefresh = 300.0
 
     init(
         session: WalletSession,
@@ -33,6 +37,7 @@ class TokensDataStore {
     ) {
         self.session = session
         self.realm = try! Realm(configuration: configuration)
+        self.scheduledTimerForPricesUpdate()
     }
 
     var objects: [TokenObject] {
@@ -53,7 +58,7 @@ class TokensDataStore {
             let update: [String: Any] = [
                 "owner": session.account.address.address,
                 "chainID": session.config.chainID,
-                "contract": token.address.address,
+                "contract": token.address?.address ?? "",
                 "name": token.name,
                 "symbol": token.symbol,
                 "decimals": token.decimals,
@@ -80,13 +85,13 @@ class TokensDataStore {
                 case .success(let response):
                     self.update(tokens: response)
                     self.refreshBalance()
-                case .failure(let error):
-                    self.handleError(error: error)
+                case .failure: break
                 }
             }
             updatePrices()
-        case .kovan, .poa, .poaTest, .ropsten:
-            self.refreshBalance()
+        case .classic, .kovan, .poa, .ropsten, .sokol:
+            updatePrices()
+            refreshBalance()
         }
     }
 
@@ -95,16 +100,15 @@ class TokensDataStore {
             updateDelegate()
             return
         }
-        let updateTokens = objects
+        let updateTokens = enabledObject
         var count = 0
-        for tokenObject in objects {
-            getBalanceCoordinator.getBalance(for: session.account.address, contract: Address(address: tokenObject.contract)) { [weak self] result in
+        for tokenObject in updateTokens {
+            getBalanceCoordinator.getBalance(for: session.account.address, contract: Address(string: tokenObject.contract)) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {
                 case .success(let balance):
                     self.update(token: tokenObject, action: .value(balance))
-                case .failure(let error):
-                    self.handleError(error: error)
+                case .failure: break
                 }
                 count += 1
                 if count == updateTokens.count {
@@ -136,6 +140,10 @@ class TokensDataStore {
         )
     }
 
+    func coinTicker(for token: TokenObject) -> CoinTicker? {
+        return tickers?[token.contract]
+    }
+
     func handleError(error: Error) {
         delegate?.didUpdate(result: .failure(TokenError.failedToFetch))
     }
@@ -152,13 +160,20 @@ class TokensDataStore {
     }
 
     func updatePrices() {
-        provider.request(.prices(limit: 150)) { result in
-            guard  case .success(let response) = result else { return }
+        var tokens = objects.map { TokenPrice(contract: $0.contract, symbol: $0.symbol) }
+        tokens.append(TokenPrice(contract: "0x", symbol: session.config.server.symbol))
+        let tokensPrice = TokensPrice(
+            currency: session.config.currency.rawValue,
+            tokens: tokens
+        )
+        provider.request(.prices(tokensPrice)) { [weak self] result in
+            guard let `self` = self else { return }
+            guard case .success(let response) = result else { return }
             do {
-                let tickers = try response.map([CoinTicker].self)
+                let tickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
                 self.tickers = tickers.reduce([String: CoinTicker]()) { (dict, ticker) -> [String: CoinTicker] in
                     var dict = dict
-                    dict[ticker.symbol] = ticker
+                    dict[ticker.contract] = ticker
                     return dict
                 }
                 self.updateDelegate()
@@ -208,12 +223,21 @@ class TokensDataStore {
                 let name = operation.name,
                 let symbol = operation.symbol else { return nil }
             return Token(
-                address: Address(address: contract),
+                address: Address(string: contract),
                 name: name,
                 symbol: symbol,
                 decimals: operation.decimals
             )
         }
         return tokens
+    }
+    private func scheduledTimerForPricesUpdate() {
+        timer = Timer.scheduledTimer(withTimeInterval: intervalToRefresh, repeats: true) { [weak self] _ in
+            self?.updatePrices()
+        }
+    }
+    deinit {
+        //We should make sure that timer is invalidate.
+        timer.invalidate()
     }
 }

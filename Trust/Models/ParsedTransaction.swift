@@ -2,6 +2,7 @@
 
 import BigInt
 import Foundation
+import TrustKeystore
 
 struct ParsedTransaction {
     let blockHash: String
@@ -103,7 +104,7 @@ extension Transaction {
     ) -> Transaction {
         return Transaction(
             id: transaction.hash,
-            owner: owner.address,
+            owner: owner.description,
             blockNumber: Int(transaction.blockNumber) ?? 0,
             from: transaction.from,
             to: transaction.to,

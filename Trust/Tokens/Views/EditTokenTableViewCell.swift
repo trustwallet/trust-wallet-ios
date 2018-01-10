@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import UIKit
+import Kingfisher
 
 protocol EditTokenTableViewCellDelegate: class {
     func didChangeState(state: Bool, in cell: EditTokenTableViewCell)
@@ -11,23 +12,23 @@ class EditTokenTableViewCell: UITableViewCell {
     @IBOutlet weak var tokenImageView: UIImageView!
     @IBOutlet weak var tokenLabel: UILabel!
     @IBOutlet weak var tokenEnableSwitch: UISwitch!
+    @IBOutlet weak var tokenContractLabel: UILabel!
     weak var delegate: EditTokenTableViewCellDelegate?
 
     var viewModel: EditTokenTableCellViewModel? {
         didSet {
-            tokenImageView.image = viewModel?.image
-            tokenLabel.text = viewModel?.title
-            tokenEnableSwitch.isOn = viewModel?.isEnabled ?? false
+            guard let viewModel = viewModel else { return }
+            tokenLabel.text = viewModel.title
+            tokenLabel.font = viewModel.titleFont
+            tokenLabel.textColor = viewModel.titleTextColor
+            tokenEnableSwitch.isOn = viewModel.isEnabled
+            tokenContractLabel.text = viewModel.contractText
+            tokenImageView.kf.setImage(
+                with: viewModel.imageUrl,
+                placeholder: viewModel.placeholderImage,
+                options: [.fromMemoryCacheOrRefresh]
+            )
         }
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
     }
 
     @IBAction func didChangeSwitch(_ sender: UISwitch) {

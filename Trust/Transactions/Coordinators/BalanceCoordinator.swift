@@ -10,7 +10,10 @@ protocol BalanceCoordinatorDelegate: class {
 
 class BalanceCoordinator {
 
-    let exchangeRateCoordinator = ExchangeRateCoordinator()
+    lazy var exchangeRateCoordinator: ExchangeRateCoordinator = {
+        return ExchangeRateCoordinator(config: self.session.config)
+    }()
+
     let session: WalletSession
 
     weak var delegate: BalanceCoordinatorDelegate?

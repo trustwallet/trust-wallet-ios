@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class TokenViewCell: UITableViewCell {
 
@@ -11,6 +12,7 @@ class TokenViewCell: UITableViewCell {
     let amountLabel = UILabel()
     let currencyAmountLabel = UILabel()
     let symbolImageView = UIImageView()
+    let percentChange = UILabel()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -18,7 +20,7 @@ class TokenViewCell: UITableViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
         symbolImageView.translatesAutoresizingMaskIntoConstraints = false
-        symbolImageView.contentMode = .center
+        symbolImageView.contentMode = .scaleAspectFit
 
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
         amountLabel.textAlignment = .right
@@ -26,15 +28,24 @@ class TokenViewCell: UITableViewCell {
         currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         currencyAmountLabel.textAlignment = .right
 
+        percentChange.translatesAutoresizingMaskIntoConstraints = false
+        percentChange.textAlignment = .right
+
         let leftStackView = UIStackView(arrangedSubviews: [titleLabel])
         leftStackView.translatesAutoresizingMaskIntoConstraints = false
         leftStackView.axis = .vertical
         leftStackView.spacing = 12
 
-        let rightStackView = UIStackView(arrangedSubviews: [amountLabel, .spacer(), currencyAmountLabel])
+        let rightBottomStackView = UIStackView(arrangedSubviews: [currencyAmountLabel, percentChange])
+        rightBottomStackView.translatesAutoresizingMaskIntoConstraints = false
+        rightBottomStackView.axis = .horizontal
+        rightBottomStackView.spacing = 5
+
+        let rightStackView = UIStackView(arrangedSubviews: [amountLabel, rightBottomStackView])
+        rightStackView.distribution = .fillEqually
         rightStackView.translatesAutoresizingMaskIntoConstraints = false
         rightStackView.axis = .vertical
-        leftStackView.spacing = 12
+        rightStackView.spacing =  5
 
         let stackView = UIStackView(arrangedSubviews: [symbolImageView, leftStackView, rightStackView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,8 +63,8 @@ class TokenViewCell: UITableViewCell {
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            symbolImageView.widthAnchor.constraint(equalToConstant: 50),
-            symbolImageView.heightAnchor.constraint(equalToConstant: 50),
+            symbolImageView.widthAnchor.constraint(equalToConstant: 45),
+            symbolImageView.heightAnchor.constraint(equalToConstant: 45),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -StyleLayout.sideMargin),
@@ -79,7 +90,15 @@ class TokenViewCell: UITableViewCell {
         currencyAmountLabel.textColor = viewModel.currencyAmountTextColor
         currencyAmountLabel.font = viewModel.currencyAmountFont
 
-        symbolImageView.image = viewModel.image
+        percentChange.text = viewModel.percentChange
+        percentChange.textColor = viewModel.percentChangeColor
+        percentChange.font = viewModel.percentChangeFont
+
+        symbolImageView.kf.setImage(
+            with: viewModel.imageUrl,
+            placeholder: viewModel.placeHolder,
+            options: [.fromMemoryCacheOrRefresh]
+        )
 
         backgroundColor = viewModel.backgroundColor
     }

@@ -3,6 +3,7 @@
 import Foundation
 import RealmSwift
 import BigInt
+import TrustKeystore
 
 enum TokenType {
     case ether
@@ -40,7 +41,7 @@ class TokenObject: Object {
     }
 
     var address: Address {
-        return Address(address: contract)
+        return Address(string: contract)
     }
 
     var valueBigInt: BigInt {

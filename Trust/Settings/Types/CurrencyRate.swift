@@ -5,6 +5,7 @@ import Foundation
 struct Rate {
     let code: String
     let price: Double
+    let contract: String
 }
 
 struct CurrencyRate {

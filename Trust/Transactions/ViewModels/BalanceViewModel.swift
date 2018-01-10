@@ -21,7 +21,7 @@ struct BalanceViewModel: BalanceBaseViewModel {
 
     var amount: Double {
         guard let balance = balance else { return 0.00 }
-        return balance.amountFull.doubleValue
+        return CurrencyFormatter.plainFormatter.string(from: balance.value).doubleValue
     }
 
     var amountString: String {

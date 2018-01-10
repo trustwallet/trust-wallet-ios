@@ -3,7 +3,7 @@
 import Foundation
 import BigInt
 import Result
-import Geth
+import TrustKeystore
 
 public struct PreviewTransaction {
     let value: BigInt
@@ -21,16 +21,19 @@ public struct PreviewTransaction {
 class TransactionConfigurator {
 
     let session: WalletSession
+    let account: Account
     let transaction: UnconfirmedTransaction
     private let gasPrice: BigInt?
     var configuration: TransactionConfiguration
 
     init(
         session: WalletSession,
+        account: Account,
         transaction: UnconfirmedTransaction,
         gasPrice: BigInt?
     ) {
         self.session = session
+        self.account = account
         self.transaction = transaction
         self.gasPrice = gasPrice
 
@@ -107,7 +110,7 @@ class TransactionConfigurator {
         }()
         let signTransaction = SignTransaction(
             value: value,
-            account: transaction.account,
+            account: account,
             address: address,
             nonce: 0,
             data: configuration.data,

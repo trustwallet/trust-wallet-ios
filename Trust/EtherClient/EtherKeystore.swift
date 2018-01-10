@@ -1,24 +1,25 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
+import BigInt
 import Foundation
-import Geth
 import Result
 import KeychainSwift
 import CryptoSwift
+import TrustKeystore
 
 enum EtherKeystoreError: LocalizedError {
     case protectionDisabled
 }
 
 open class EtherKeystore: Keystore {
-
     struct Keys {
         static let recentlyUsedAddress: String = "recentlyUsedAddress"
+        static let watchAddresses = "watchAddresses"
     }
 
     private let keychain: KeychainSwift
     private let datadir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-    private let gethKeyStorage: GethKeyStore
+    let keyStore: KeyStore
     private let defaultKeychainAccess: KeychainSwiftAccessOptions = .accessibleWhenUnlockedThisDeviceOnly
 
     public init(
@@ -32,32 +33,44 @@ open class EtherKeystore: Keystore {
         let keydir = datadir + keyStoreSubfolder
         self.keychain = keychain
         self.keychain.synchronizable = false
-        self.gethKeyStorage = GethNewKeyStore(keydir, GethLightScryptN, GethLightScryptP)
+        self.keyStore = try KeyStore(keydir: URL(fileURLWithPath: keydir))
     }
 
-    var hasAccounts: Bool {
-        return !accounts.isEmpty
+    var hasWallets: Bool {
+        return !wallets.isEmpty
     }
 
-    var recentlyUsedAccount: Account? {
+    private var watchAddresses: [String] {
+        set {
+            let data = NSKeyedArchiver.archivedData(withRootObject: newValue)
+            keychain.set(data, forKey: Keys.watchAddresses)
+        }
+        get {
+            guard let data = keychain.getData(Keys.watchAddresses) else { return [] }
+            return NSKeyedUnarchiver.unarchiveObject(with: data) as? [String] ?? []
+        }
+     }
+
+    var recentlyUsedWallet: Wallet? {
         set {
             keychain.set(newValue?.address.address ?? "", forKey: Keys.recentlyUsedAddress, withAccess: defaultKeychainAccess)
         }
         get {
             let address = keychain.get(Keys.recentlyUsedAddress)
-            return accounts.filter { $0.address.address == address }.first
+            return wallets.filter { $0.address.address == address }.first
         }
     }
 
-    static var current: Account? {
+    static var current: Wallet? {
         do {
-            return try EtherKeystore().recentlyUsedAccount
+            return try EtherKeystore().recentlyUsedWallet
         } catch {
             return .none
         }
     }
 
     // Async
+    @available(iOS 10.0, *)
     func createAccount(with password: String, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let account = self.createAccout(password: password)
@@ -67,30 +80,67 @@ open class EtherKeystore: Keystore {
         }
     }
 
-    func importWallet(type: ImportType, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
+    func importWallet(type: ImportType, completion: @escaping (Result<Wallet, KeystoreError>) -> Void) {
         let newPassword = PasswordGenerator.generateRandom()
         switch type {
         case .keystore(let string, let password):
             importKeystore(
                 value: string,
                 password: password,
-                newPassword: newPassword,
-                completion: completion
-            )
+                newPassword: newPassword
+            ) { result in
+                switch result {
+                case .success(let account):
+                    completion(.success(Wallet(type: .real(account))))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
         case .privateKey(let privateKey):
-            self.keystore(for: privateKey, password: newPassword) { result in
+            keystore(for: privateKey, password: newPassword) { result in
                 switch result {
                 case .success(let value):
                     self.importKeystore(
                         value: value,
                         password: newPassword,
-                        newPassword: newPassword,
-                        completion: completion
-                    )
+                        newPassword: newPassword
+                    ) { result in
+                        switch result {
+                        case .success(let account):
+                            completion(.success(Wallet(type: .real(account))))
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
+                    }
                 case .failure(let error):
                     completion(.failure(error))
                 }
             }
+        case .mnemonic:
+            let key = ""
+            // TODO: Implement it
+            keystore(for: key, password: newPassword) { result in
+                switch result {
+                case .success(let value):
+                    self.importKeystore(
+                        value: value,
+                        password: newPassword,
+                        newPassword: newPassword
+                    ) { result in
+                        switch result {
+                        case .success(let account):
+                            completion(.success(Wallet(type: .real(account))))
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        case .watch(let address):
+            self.watchAddresses = [watchAddresses, [address.address]].flatMap { $0 }
+            completion(.success(Wallet(type: .watch(address))))
         }
     }
 
@@ -126,126 +176,142 @@ open class EtherKeystore: Keystore {
     }
 
     func createAccout(password: String) -> Account {
-        let gethAccount = try! gethKeyStorage.newAccount(password)
-        let account: Account = .from(account: gethAccount)
+        let account = try! keyStore.createAccount(password: password)
         let _ = setPassword(password, for: account)
         return account
     }
 
     func importKeystore(value: String, password: String, newPassword: String) -> Result<Account, KeystoreError> {
-        let data = value.data(using: .utf8)
+        guard let data = value.data(using: .utf8) else {
+            return (.failure(.failedToParseJSON))
+        }
         do {
-            let gethAccount = try gethKeyStorage.importKey(data, passphrase: password, newPassphrase: newPassword)
-
-            //Hack to avoid duplicate accounts
-            let accounts = gethAccounts.filter { $0.getAddress().getHex() == gethAccount.getAddress().getHex() }
-            if accounts.count >= 2 {
-                do {
-                    try gethKeyStorage.delete(gethAccount, passphrase: newPassword)
-                } catch {
-                    return (.failure(.failedToImport(error)))
-                }
-                return (.failure(.duplicateAccount))
-            }
-
-            let account: Account = .from(account: gethAccount)
+            let account = try keyStore.import(json: data, password: password, newPassword: newPassword)
             let _ = setPassword(newPassword, for: account)
             return .success(account)
         } catch {
-            return .failure(.failedToImport(error))
-        }
-    }
-
-    var accounts: [Account] {
-        return self.gethAccounts.map { Account(address: Address(address: $0.getAddress().getHex())) }
-    }
-
-    var gethAccounts: [GethAccount] {
-        var finalAccounts: [GethAccount] = []
-        let allAccounts = gethKeyStorage.getAccounts()
-        let size = allAccounts?.size() ?? 0
-
-        for i in 0..<size {
-            if let account = try! allAccounts?.get(i) {
-                finalAccounts.append(account)
+            if case KeyStore.Error.accountAlreadyExists = error {
+                return .failure(.duplicateAccount)
+            } else {
+                return .failure(.failedToImport(error))
             }
         }
+    }
 
-        return finalAccounts
+    var wallets: [Wallet] {
+        return [
+            keyStore.accounts.map { Wallet(type: .real($0)) },
+            watchAddresses.map { Wallet(type: .watch(Address(string: $0))) },
+        ].flatMap { $0 }
     }
 
     func export(account: Account, password: String, newPassword: String) -> Result<String, KeystoreError> {
-        let result = exportData(account: account, password: password, newPassword: newPassword)
+        let result = self.exportData(account: account, password: password, newPassword: newPassword)
         switch result {
         case .success(let data):
             let string = String(data: data, encoding: .utf8) ?? ""
-            return .success(string)
+             return .success(string)
         case .failure(let error):
-            return .failure(error)
+             return .failure(error)
+        }
+    }
+
+    func export(account: Account, password: String, newPassword: String, completion: @escaping (Result<String, KeystoreError>) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let result = self.export(account: account, password: password, newPassword: newPassword)
+            DispatchQueue.main.async {
+                completion(result)
+            }
         }
     }
 
     func exportData(account: Account, password: String, newPassword: String) -> Result<Data, KeystoreError> {
-        let gethAccount = getGethAccount(for: account.address)
+        guard let account = getAccount(for: account.address) else {
+            return .failure(.accountNotFound)
+        }
+
         do {
-            let data = try gethKeyStorage.exportKey(gethAccount, passphrase: password, newPassphrase: newPassword)
+            let data = try keyStore.export(account: account, password: password, newPassword: newPassword)
             return (.success(data))
         } catch {
             return (.failure(.failedToDecryptKey))
         }
     }
 
-    func delete(account: Account) -> Result<Void, KeystoreError> {
-        let gethAccount = getGethAccount(for: account.address)
-        let password = getPassword(for: account)
-        do {
-            try gethKeyStorage.delete(gethAccount, passphrase: password)
+    func delete(wallet: Wallet) -> Result<Void, KeystoreError> {
+        switch wallet.type {
+        case .real(let account):
+            guard let account = getAccount(for: account.address) else {
+                return .failure(.accountNotFound)
+            }
+
+            guard let password = getPassword(for: account) else {
+                return .failure(.failedToDeleteAccount)
+            }
+
+            do {
+                try keyStore.delete(account: account, password: password)
+                return .success(())
+            } catch {
+                return .failure(.failedToDeleteAccount)
+            }
+        case .watch(let address):
+            watchAddresses = watchAddresses.filter { $0 != address.address }
             return .success(())
-        } catch {
-            return .failure(.failedToDeleteAccount)
+        }
+    }
+
+    func delete(wallet: Wallet, completion: @escaping (Result<Void, KeystoreError>) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let result = self.delete(wallet: wallet)
+            DispatchQueue.main.async {
+                completion(result)
+            }
         }
     }
 
     func updateAccount(account: Account, password: String, newPassword: String) -> Result<Void, KeystoreError> {
-        let gethAccount = getGethAccount(for: account.address)
+        guard let account = getAccount(for: account.address) else {
+            return .failure(.accountNotFound)
+        }
+
         do {
-            try gethKeyStorage.update(gethAccount, passphrase: password, newPassphrase: newPassword)
+            try keyStore.update(account: account, password: password, newPassword: newPassword)
             return .success(())
         } catch {
             return .failure(.failedToUpdatePassword)
         }
     }
 
-    func signTransaction(
-        _ signTransaction: SignTransaction
-    ) -> Result<Data, KeystoreError> {
-        let gethAddress = GethNewAddressFromHex(signTransaction.address.address, nil)
-        let transaction = GethNewTransaction(
-            numericCast(signTransaction.nonce),
-            gethAddress,
-            signTransaction.value.gethBigInt,
-            signTransaction.gasLimit.gethBigInt,
-            signTransaction.gasPrice.gethBigInt,
-            signTransaction.data
-        )
-        let password = getPassword(for: signTransaction.account)
+    func signTransaction(_ transaction: SignTransaction) -> Result<Data, KeystoreError> {
+        guard let account = keyStore.account(for: transaction.account.address) else {
+            return .failure(.failedToSignTransaction)
+        }
+        guard let password = getPassword(for: account) else {
+            return .failure(.failedToSignTransaction)
+        }
 
-        let gethAccount = getGethAccount(for: signTransaction.account.address)
+        let signer: Signer
+        if transaction.chainID == 0 {
+            signer = HomesteadSigner()
+        } else {
+            signer = EIP155Signer(chainId: BigInt(transaction.chainID))
+        }
 
         do {
-            try gethKeyStorage.unlock(gethAccount, passphrase: password)
-            defer {
-                do {
-                    try gethKeyStorage.lock(gethAccount.getAddress())
-                } catch {}
-            }
-            let signedTransaction = try gethKeyStorage.signTx(
-                gethAccount,
-                tx: transaction,
-                chainID: GethBigInt.from(int: signTransaction.chainID)
-            )
-            let rlp = try signedTransaction.encodeRLP()
-            return .success(rlp)
+            let hash = signer.hash(transaction: transaction)
+            let signature = try keyStore.signHash(hash, account: account, password: password)
+            let (r, s, v) = signer.values(transaction: transaction, signature: signature)
+            let data = RLP.encode([
+                transaction.nonce,
+                transaction.gasPrice,
+                transaction.gasLimit,
+                transaction.address.data,
+                transaction.value,
+                transaction.data,
+                v, r, s,
+            ])!
+            return .success(data)
         } catch {
             return .failure(.failedToSignTransaction)
         }
@@ -260,74 +326,21 @@ open class EtherKeystore: Keystore {
         return keychain.set(password, forKey: account.address.address.lowercased(), withAccess: defaultKeychainAccess)
     }
 
-    func getGethAccount(for address: Address) -> GethAccount {
-        return gethAccounts.filter { Address(address: $0.getAddress().getHex()) == address }.first!
+    func getAccount(for address: Address) -> Account? {
+        return keyStore.account(for: address)
     }
 
     func convertPrivateKeyToKeystoreFile(privateKey: String, passphrase: String) -> Result<[String: Any], KeystoreError> {
-        guard let privateKeyData = Data(fromHexEncodedString: privateKey) else {
+        guard let data = Data(hexString: privateKey) else {
             return .failure(KeystoreError.failedToImportPrivateKey)
         }
-        let privateKeyBytes: [UInt8] = Array(privateKeyData)
         do {
-            let passphraseBytes: [UInt8] = Array(passphrase.utf8)
-            // reduce this number for higher speed. This is the default value, though.
-            let numberOfIterations = 2214
-
-            // derive key
-            let salt: [UInt8] = AES.randomIV(32)
-            let derivedKey = try PKCS5.PBKDF2(password: passphraseBytes, salt: salt, iterations: numberOfIterations, variant: .sha256).calculate()
-
-            // encrypt
-            let iv: [UInt8] = AES.randomIV(AES.blockSize)
-            let aes = try AES(key: Array(derivedKey[..<16]), blockMode: .CTR(iv: iv), padding: .noPadding)
-            let ciphertext = try aes.encrypt(privateKeyBytes)
-
-            // calculate the mac
-            let macData = Array(derivedKey[16...]) + ciphertext
-            let mac = SHA3(variant: .keccak256).calculate(for: macData)
-
-            /* convert to JSONv3 */
-
-            // KDF params
-            let kdfParams: [String: Any] = [
-                "prf": "hmac-sha256",
-                "c": numberOfIterations,
-                "salt": salt.toHexString(),
-                "dklen": 32,
-            ]
-
-            // cipher params
-            let cipherParams: [String: String] = [
-                "iv": iv.toHexString(),
-            ]
-
-            // crypto struct (combines KDF and cipher params
-            var cryptoStruct = [String: Any]()
-            cryptoStruct["cipher"] = "aes-128-ctr"
-            cryptoStruct["ciphertext"] = ciphertext.toHexString()
-            cryptoStruct["cipherparams"] = cipherParams
-            cryptoStruct["kdf"] = "pbkdf2"
-            cryptoStruct["kdfparams"] = kdfParams
-            cryptoStruct["mac"] = mac.toHexString()
-
-            // encrypted key json v3
-            let encryptedKeyJSONV3: [String: Any] = [
-                "crypto": cryptoStruct,
-                "version": 3,
-                "id": "",
-            ]
-            return .success(encryptedKeyJSONV3)
+            let key = try Key(password: passphrase, key: data)
+            let data = try JSONEncoder().encode(key)
+            let dict = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+            return .success(dict)
         } catch {
             return .failure(KeystoreError.failedToImportPrivateKey)
         }
-    }
-}
-
-extension Account {
-    static func from(account: GethAccount) -> Account {
-        return Account(
-            address: Address(address: account.getAddress().getHex())
-        )
     }
 }

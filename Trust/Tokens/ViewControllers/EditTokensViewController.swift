@@ -35,9 +35,9 @@ class EditTokensViewController: UITableViewController {
         searchController.searchBar.delegate = self
         tableView.register(R.nib.editTokenTableViewCell(), forCellReuseIdentifier: R.nib.editTokenTableViewCell.name)
         tableView.tableHeaderView = searchController.searchBar
-
+        tableView.separatorStyle = .none
+        tableView.separatorInset = .zero
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 140
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -54,7 +54,11 @@ class EditTokensViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.editTokenTableViewCell.name, for: indexPath) as! EditTokenTableViewCell
         cell.delegate = self
-        cell.viewModel = EditTokenTableCellViewModel(token: token(for: indexPath))
+        let token = self.token(for: indexPath)
+        cell.viewModel = EditTokenTableCellViewModel(
+            token: token,
+            coinTicker: storage.coinTicker(for: token)
+        )
         return cell
     }
 
@@ -69,6 +73,10 @@ class EditTokensViewController: UITableViewController {
         let text = searchText?.lowercased() ?? ""
         filteredTokens = storage.objects.filter { $0.name.lowercased().contains(text) || $0.symbol.lowercased().contains(text) }
         tableView.reloadData()
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
 
     required init?(coder aDecoder: NSCoder) {
