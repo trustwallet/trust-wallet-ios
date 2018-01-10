@@ -54,6 +54,7 @@ class SendViewController: FormViewController {
     }
 
     private var gasPrice: BigInt?
+    private var data = Data()
     
     lazy var currentPair: Pair = {
         return Pair(left: viewModel.symbol, right: Config().currency.rawValue)
@@ -196,7 +197,7 @@ class SendViewController: FormViewController {
             address: address,
             account: account,
             chainID: session.config.chainID,
-            data: Data()
+            data: data
         )
         self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, gasPrice: gasPrice, in: self)
     }
@@ -298,6 +299,19 @@ extension SendViewController: QRCodeReaderDelegate {
         guard let result = QRURLParser.from(string: result) else { return }
         addressRow?.value = result.address
         addressRow?.reload()
+
+        if let dataString = result.params["data"] {
+            data = Data(hex: dataString.drop0x)
+        } else {
+            data = Data()
+        }
+
+        if let value = result.params["amount"] {
+            amountRow?.value = EtherNumberFormatter.full.string(from: BigInt(value) ?? BigInt(), units: .ether)
+        } else {
+            amountRow?.value = ""
+        }
+        amountRow?.reload()
 
         activateAmountView()
     }
