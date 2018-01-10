@@ -25,9 +25,9 @@ struct ConfigExplorer {
             case .ropsten:
                 return endpoint + "/tx/" + ID
             case .poa:
-                return endpoint + "/tx/" + ID
-            case .sokol:
                 return endpoint + "/txid/search/" + ID
+            case .sokol:
+                return endpoint + "/tx/" + ID
             }
         }()
         return URL(string: urlString)!
