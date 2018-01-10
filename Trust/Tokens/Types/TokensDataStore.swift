@@ -27,7 +27,6 @@ class TokensDataStore {
     weak var delegate: TokensDataStoreDelegate?
     let realm: Realm
     var tickers: [String: CoinTicker]? = .none
-    
     var timer = Timer()
     //We should refresh prices every 5 minutes.
     let intervalToRefresh = 300.0
@@ -38,6 +37,7 @@ class TokensDataStore {
     ) {
         self.session = session
         self.realm = try! Realm(configuration: configuration)
+        self.scheduledTimerForPricesUpdate()
     }
 
     var objects: [TokenObject] {
@@ -237,7 +237,6 @@ class TokensDataStore {
             self?.updatePrices()
         }
     }
-    
     deinit {
         //We should make sure that timer is invalidate.
         timer.invalidate()
