@@ -231,7 +231,6 @@ class TokensDataStore {
         }
         return tokens
     }
-    
     private func scheduledTimerForPricesUpdate() {
         timer = Timer.scheduledTimer(withTimeInterval: intervalToRefresh, repeats: true) { [weak self] _ in
             self?.updatePrices()
