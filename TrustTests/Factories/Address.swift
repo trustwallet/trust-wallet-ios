@@ -10,6 +10,6 @@ extension Address {
     ) -> Address {
         return Address(
             string: address
-        )
+        )!
     }
 }

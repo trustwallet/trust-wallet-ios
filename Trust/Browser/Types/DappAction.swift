@@ -23,8 +23,8 @@ extension DappAction {
                 let unconfirmedTransaction = UnconfirmedTransaction(
                     transferType: .ether(destination: .none),
                     value: BigInt(transaction.value ?? "0", radix: 10) ?? BigInt(0),
-                    address: Address(string: "0x0000000000000000000000000000000000000000"),
-                    account: Account(address: Address(string: "0x0000000000000000000000000000000000000000")),
+                    address: Address(string: "0x0000000000000000000000000000000000000000")!,
+                    account: Account(address: Address(string: "0x0000000000000000000000000000000000000000")!),
                     chainID: 1,
                     data: Data()
                 )

@@ -7,7 +7,7 @@ import XCTest
 
 class TransactionSigningTests: XCTestCase {
     func testEIP155SignHash() {
-        let address = Address(string: "0x3535353535353535353535353535353535353535")
+        let address = Address(string: "0x3535353535353535353535353535353535353535")!
         let transaction = SignTransaction(
             value: BigInt("1000000000000000000"),
             account: Account(address: address),
@@ -24,7 +24,7 @@ class TransactionSigningTests: XCTestCase {
     }
 
     func testHomesteadSignHash() {
-        let address = Address(string: "0x3535353535353535353535353535353535353535")
+        let address = Address(string: "0x3535353535353535353535353535353535353535")!
         let transaction = SignTransaction(
             value: BigInt("1000000000000000000"),
             account: Account(address: address),
@@ -45,7 +45,7 @@ class TransactionSigningTests: XCTestCase {
         let transaction = SignTransaction(
             value: BigInt("1000000000000000000"),
             account: account,
-            address: Address(string: "0x3535353535353535353535353535353535353535"),
+            address: Address(string: "0x3535353535353535353535353535353535353535")!,
             nonce: 9,
             data: Data(),
             gasPrice: BigInt(20000000000),

@@ -199,9 +199,10 @@ open class EtherKeystore: Keystore {
     }
 
     var wallets: [Wallet] {
+        let addresses = watchAddresses.flatMap { Address(string: $0) }
         return [
             keyStore.accounts.map { Wallet(type: .real($0)) },
-            watchAddresses.map { Wallet(type: .watch(Address(string: $0))) },
+            addresses.map { Wallet(type: .watch($0)) },
         ].flatMap { $0 }
     }
 

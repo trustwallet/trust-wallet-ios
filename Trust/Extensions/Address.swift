@@ -5,6 +5,17 @@ import TrustKeystore
 
 extension Address {
     var address: String {
-        return "0x" + description
+        return description
+    }
+}
+
+enum AddressError: LocalizedError {
+    case invalidAddress
+
+    var errorDescription: String? {
+        switch self {
+        case .invalidAddress:
+            return NSLocalizedString("send.error.invalidAddress", value: "Invalid Address", comment: "")
+        }
     }
 }

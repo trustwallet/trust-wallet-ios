@@ -176,7 +176,9 @@ class SendViewController: FormViewController {
             amountString = String(pairValue).trimmed
         }
 
-        let address = Address(string: addressString)
+        guard let address = Address(string: addressString) else {
+            return displayError(error: AddressError.invalidAddress)
+        }
 
         let parsedValue: BigInt? = {
             switch transferType {
@@ -215,7 +217,7 @@ class SendViewController: FormViewController {
         }
 
         guard CryptoAddressValidator.isValidAddress(value) else {
-            return displayError(error: SendInputErrors.invalidAddress)
+            return displayError(error: AddressError.invalidAddress)
         }
 
         addressRow?.value = value
