@@ -40,7 +40,7 @@ PODS:
   - SSKeychain (1.4.1)
   - StatefulViewController (3.0)
   - SwiftLint (0.24.1)
-  - TrustKeystore (0.0.4):
+  - TrustKeystore (0.0.5):
     - CryptoSwift
     - secp256k1_ios (~> 0.0.7)
   - VENTouchLock (1.12.0):
@@ -121,7 +121,7 @@ SPEC CHECKSUMS:
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: 2e4b89feed5909c42c3735bbd6745f4345c4b772
-  TrustKeystore: 2c62775c98df86b7e2ef78c059581a4e8c98a054
+  TrustKeystore: 41f86ee21b941f28fb6965bb88bb72710e597add
   VENTouchLock: 20d378b9c6173e2c054448aeb3fb2f40822a9f3f
 
 PODFILE CHECKSUM: f7a245b43f9da8021491b9d8b07045cb9bfa64df

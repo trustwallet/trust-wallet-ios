@@ -103,7 +103,8 @@ class TokensDataStore {
         let updateTokens = enabledObject
         var count = 0
         for tokenObject in updateTokens {
-            getBalanceCoordinator.getBalance(for: session.account.address, contract: Address(string: tokenObject.contract)) { [weak self] result in
+            guard let contract = Address(string: tokenObject.contract) else { return }
+            getBalanceCoordinator.getBalance(for: session.account.address, contract: contract) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {
                 case .success(let balance):

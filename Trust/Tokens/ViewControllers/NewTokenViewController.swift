@@ -90,8 +90,12 @@ class NewTokenViewController: FormViewController {
         let symbol = symbolRow?.value ?? ""
         let decimals = Int(decimalsRow?.value ?? "") ?? 0
 
+        guard let address = Address(string: contract) else {
+            return displayError(error: AddressError.invalidAddress)
+        }
+
         let token = ERC20Token(
-            contract: Address(string: contract),
+            contract: address,
             symbol: symbol,
             decimals: decimals
         )

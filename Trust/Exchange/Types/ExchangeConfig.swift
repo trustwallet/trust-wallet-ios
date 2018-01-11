@@ -23,9 +23,9 @@ struct ExchangeConfig {
     var tokenAddress: Address {
         switch server {
         case .main, .classic, .poa, .ropsten, .sokol:
-            return Address(string: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+            return Address(string: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")!
         case .kovan:
-            return Address(string: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+            return Address(string: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")!
         }
     }
 }

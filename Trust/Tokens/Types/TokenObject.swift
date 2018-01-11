@@ -41,7 +41,7 @@ class TokenObject: Object {
     }
 
     var address: Address {
-        return Address(string: contract)
+        return Address(string: contract)!
     }
 
     var valueBigInt: BigInt {
