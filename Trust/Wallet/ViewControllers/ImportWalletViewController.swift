@@ -185,10 +185,6 @@ class ImportWalletViewController: FormViewController {
 
         displayLoading(text: NSLocalizedString("importWallet.importingIndicator.label.title", value: "Importing wallet...", comment: ""), animated: false)
 
-        guard let address = Address(string: watchInput) else {
-            return displayError(error: AddressError.invalidAddress)
-        }
-
         let type = ImportSelectionType(title: segmentRow?.value)
         let importType: ImportType = {
             switch type {
@@ -199,6 +195,7 @@ class ImportWalletViewController: FormViewController {
             case .mnemonic:
                 return .mnemonic(words: words, password: password)
             case .watch:
+                let address = Address(string: watchInput)! // Address validated by form view.
                 return .watch(address: address)
             }
         }()
