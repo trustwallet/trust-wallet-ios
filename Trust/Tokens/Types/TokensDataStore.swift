@@ -19,25 +19,50 @@ protocol TokensDataStoreDelegate: class {
 class TokensDataStore {
 
     private lazy var getBalanceCoordinator: GetBalanceCoordinator = {
-        return GetBalanceCoordinator(session: self.session)
+        return GetBalanceCoordinator(web3: self.web3)
     }()
     private let provider = TrustProviderFactory.makeProvider()
+    private lazy var ethToken = TokenObject(
+        contract: "0x",
+        name: config.server.name,
+        symbol: config.server.symbol,
+        decimals: config.server.decimals,
+        value: "0",
+        isCustom: false,
+        type: .ether
+    )
 
-    let session: WalletSession
+    let account: Wallet
+    let config: Config
+    let web3: Web3Swift
     weak var delegate: TokensDataStoreDelegate?
     let realm: Realm
     var tickers: [String: CoinTicker]? = .none
     var timer = Timer()
     //We should refresh prices every 5 minutes.
     let intervalToRefresh = 300.0
+    var tokensModel: Subscribable<[TokenObject]> = Subscribable(nil)
 
     init(
         session: WalletSession,
-        realm: Realm
+        realm: Realm,
+        account: Wallet,
+        config: Config,
+        web3: Web3Swift,
+        configuration: Realm.Configuration
     ) {
-        self.session = session
-        self.realm = realm
+        self.account = account
+        self.config = config
+        self.web3 = web3
+        self.realm = try! Realm(configuration: configuration)
+        self.addEthToken()
         self.scheduledTimerForPricesUpdate()
+    }
+    private func addEthToken() {
+        //Check if we have previos values.
+        if objects.first(where: { $0.contract == ethToken.contract }) == nil {
+            add(tokens: [ethToken])
+        }
     }
 
     var objects: [TokenObject] {
@@ -56,8 +81,8 @@ class TokensDataStore {
         realm.beginWrite()
         for token in tokens {
             let update: [String: Any] = [
-                "owner": session.account.address.address,
-                "chainID": session.config.chainID,
+                "owner": account.address.address,
+                "chainID": config.chainID,
                 "contract": token.address?.address ?? "",
                 "name": token.name,
                 "symbol": token.symbol,
@@ -76,14 +101,15 @@ class TokensDataStore {
         let contracts = uniqueContracts()
         update(tokens: contracts)
 
-        switch session.config.server {
+        switch config.server {
         case .main:
-            let request = GetTokensRequest(address: session.account.address.address)
+            let request = GetTokensRequest(address: account.address.address)
             Session.send(request) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {
                 case .success(let response):
                     self.update(tokens: response)
+                    self.refreshEthBalance()
                     self.refreshBalance()
                 case .failure: break
                 }
@@ -96,15 +122,15 @@ class TokensDataStore {
     }
 
     func refreshBalance() {
-        guard !objects.isEmpty else {
+        guard !enabledObject.isEmpty else {
             updateDelegate()
             return
         }
-        let updateTokens = enabledObject
+        let updateTokens = enabledObject.filter { $0.contract != ethToken.contract }
         var count = 0
         for tokenObject in updateTokens {
             guard let contract = Address(string: tokenObject.contract) else { return }
-            getBalanceCoordinator.getBalance(for: session.account.address, contract: contract) { [weak self] result in
+            getBalanceCoordinator.getBalance(for: account.address, contract: contract) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {
                 case .success(let balance):
@@ -118,27 +144,21 @@ class TokensDataStore {
             }
         }
     }
-
+    func refreshEthBalance() {
+        getBalanceCoordinator.getEthBalance(for: account.address) {  [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let balance):
+                self.update(token: self.objects.first (where: { $0.contract == self.ethToken.contract })!, action: .value(balance.value))
+                self.updateDelegate()
+            case .failure: break
+            }
+        }
+    }
     func updateDelegate() {
-        let balance = TokenObject(
-            contract: "0x",
-            name: session.config.server.name,
-            symbol: session.config.server.symbol,
-            decimals: session.config.server.decimals,
-            value: session.balance?.value.description ?? "0",
-            isCustom: false,
-            type: .ether
-        )
-
-        var results = enabledObject
-        results.insert(balance, at: 0)
-
-        delegate?.didUpdate(result: .success(
-            TokensViewModel(
-                tokens: results,
-                tickers: tickers
-            ))
-        )
+        tokensModel.value = enabledObject
+        let tokensViewModel = TokensViewModel( tokens: enabledObject, tickers: tickers )
+        delegate?.didUpdate(result: .success( tokensViewModel ))
     }
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
@@ -161,10 +181,9 @@ class TokensDataStore {
     }
 
     func updatePrices() {
-        var tokens = objects.map { TokenPrice(contract: $0.contract, symbol: $0.symbol) }
-        tokens.append(TokenPrice(contract: "0x", symbol: session.config.server.symbol))
+        let tokens = objects.map { TokenPrice(contract: $0.contract, symbol: $0.symbol) }
         let tokensPrice = TokensPrice(
-            currency: session.config.currency.rawValue,
+            currency: config.currency.rawValue,
             tokens: tokens
         )
         provider.request(.prices(tokensPrice)) { [weak self] result in
@@ -202,14 +221,14 @@ class TokensDataStore {
     }
 
     func update(token: TokenObject, action: TokenUpdate) {
-        realm.beginWrite()
-        switch action {
-        case .value(let value):
-            token.value = value.description
-        case .isDisabled(let value):
-            token.isDisabled = value
+        try! realm.write {
+            switch action {
+            case .value(let value):
+                token.value = value.description
+            case .isDisabled(let value):
+                token.isDisabled = value
+            }
         }
-        try! realm.commitWrite()
     }
 
     func uniqueContracts() -> [Token] {
