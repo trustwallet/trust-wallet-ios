@@ -18,7 +18,7 @@ class ExchangeTokensCoordinator {
     let exchangeConfig = ExchangeConfig(server: Config().server)
 
     private lazy var getBalanceCoordinator: GetBalanceCoordinator = {
-        return GetBalanceCoordinator(session: session)
+        return GetBalanceCoordinator(web3: session.web3)
     }()
 
     var viewModel: ExchangeTokensViewModel {
