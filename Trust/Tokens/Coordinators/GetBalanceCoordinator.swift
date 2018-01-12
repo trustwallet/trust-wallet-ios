@@ -9,12 +9,12 @@ import TrustKeystore
 
 class GetBalanceCoordinator {
 
-    private let session: WalletSession
+    private let web3: Web3Swift
 
     init(
-        session: WalletSession
+        web3: Web3Swift
     ) {
-        self.session = session
+        self.web3 = web3
     }
 
     func getBalance(
@@ -23,7 +23,7 @@ class GetBalanceCoordinator {
         completion: @escaping (Result<BigInt, AnyError>) -> Void
     ) {
         let request = GetERC20BalanceEncode(address: address)
-        session.web3.request(request: request) { result in
+        web3.request(request: request) { result in
             switch result {
             case .success(let res):
                 let request2 = EtherServiceRequest(
@@ -33,7 +33,7 @@ class GetBalanceCoordinator {
                     switch result2 {
                     case .success(let balance):
                         let request = GetERC20BalanceDecode(data: balance)
-                        self?.session.web3.request(request: request) { result in
+                        self?.web3.request(request: request) { result in
                             switch result {
                             case .success(let res):
                                 completion(.success(BigInt(res) ?? BigInt()))
@@ -50,6 +50,20 @@ class GetBalanceCoordinator {
             case .failure(let error):
                 NSLog("getPrice error \(error)")
                 completion(.failure(AnyError(error)))
+            }
+        }
+    }
+    func getEthBalance(
+        for address: Address,
+        completion: @escaping (Result<Balance, AnyError>) -> Void
+        ) {
+        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: address.address)))
+        Session.send(request) { result in
+            switch result {
+                case .success(let balance):
+                    completion(.success(balance))
+                case .failure(let error):
+                    completion(.failure(AnyError(error)))
             }
         }
     }
