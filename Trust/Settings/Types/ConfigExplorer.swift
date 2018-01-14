@@ -46,7 +46,7 @@ struct ConfigExplorer {
         case .poa:
             return "https://poaexplorer.com"
         case .sokol:
-            return "http://testnet.oracles.org:4000"
+            return "https://sokol-explorer.poa.network"
         }
     }
 }
