@@ -300,6 +300,8 @@
 		61DCE17D2001A7A20053939F /* RLPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCE17C2001A7A20053939F /* RLPTests.swift */; };
 		61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */; };
 		61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */; };
+		664D11A12007D59F0041A0B0 /* EstimateGasRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */; };
+		664D11A22007D59F0041A0B0 /* EstimateGasRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */; };
 		739533971FEFF5FD0084AFAB /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739533961FEFF5FD0084AFAB /* Currency.swift */; };
 		771AA94B1FF76B8000D25403 /* demo.html in Resources */ = {isa = PBXBuildFile; fileRef = 771AA94A1FF76B8000D25403 /* demo.html */; };
 		771AA94E1FF971CD00D25403 /* DappAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA94D1FF971CD00D25403 /* DappAction.swift */; };
@@ -634,6 +636,7 @@
 		61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherNumberFormatter.swift; sourceTree = "<group>"; };
 		61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherNumberFormatterTests.swift; sourceTree = "<group>"; };
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateGasRequest.swift; sourceTree = "<group>"; };
 		739533961FEFF5FD0084AFAB /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		771AA94A1FF76B8000D25403 /* demo.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = demo.html; sourceTree = "<group>"; };
 		771AA94D1FF971CD00D25403 /* DappAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DappAction.swift; sourceTree = "<group>"; };
@@ -950,6 +953,7 @@
 				29C80D321FB2CCF10037B1E0 /* GetBlockByNumberRequest.swift */,
 				293112341FC9A0D500966EEA /* CallRequest.swift */,
 				294EC1D91FD8E4E60065EB20 /* GasPriceRequest.swift */,
+				664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -2513,6 +2517,7 @@
 				295247DF1F8326EF007FDC31 /* AccountViewCell.swift in Sources */,
 				2981C29C1FC18F7700537E43 /* ChangellyBuyWidget.swift in Sources */,
 				291F52B71F6B870400B369AB /* CastError.swift in Sources */,
+				664D11A12007D59F0041A0B0 /* EstimateGasRequest.swift in Sources */,
 				293248841F88CCD2008A9818 /* SplashState.swift in Sources */,
 				299B5E2B1FCA9A640051361C /* ApproveERC20.swift in Sources */,
 				291794FB1F95DC2200539A30 /* Web3Swift.swift in Sources */,
@@ -2577,6 +2582,7 @@
 				296106CC1F776FD00006164B /* WalletCoordinatorTests.swift in Sources */,
 				298542FE1FBEADEF00CB5081 /* TransactionViewModelTests.swift in Sources */,
 				295B61D61FE7FC8300642E60 /* FakeTokensDataStore.swift in Sources */,
+				664D11A22007D59F0041A0B0 /* EstimateGasRequest.swift in Sources */,
 				291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */,
 				298543001FBEAE2F00CB5081 /* ChainState.swift in Sources */,
 				299B5E3F1FD143400051361C /* BackupViewModelTests.swift in Sources */,
