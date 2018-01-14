@@ -5,16 +5,16 @@ import JSONRPCKit
 
 struct EstimateGasRequest: JSONRPCKit.Request {
     typealias Response = String
-    
+
     let to: String
-    let data: String
-    
+    let data: Data
+
     var method: String {
         return "eth_estimateGas"
     }
-    
+
     var parameters: Any? {
-        return [["to": to, "data": data], "latest"]
+        return [["to": to, "data": data.hexEncoded], "latest"]
     }
     
     func response(from resultObject: Any) throws -> Response {
@@ -25,4 +25,3 @@ struct EstimateGasRequest: JSONRPCKit.Request {
         }
     }
 }
-
