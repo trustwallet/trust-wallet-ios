@@ -104,9 +104,8 @@ class TransactionConfigurator {
                     if limit == BigInt(21000) {
                         return limit
                     }
-                    return limit * 100 / 80
+                    return limit * (limit * 10 / 100)
                 }()
-                NSLog("gasLimit \(gasLimit)")
 
                 self.configuration =  TransactionConfiguration(
                     gasPrice: self.calculatedGasPrice,
