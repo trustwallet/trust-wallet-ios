@@ -2,22 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Fabric</key>
-	<dict>
-		<key>APIKey</key>
-		<string>74d3fa8b5038a154c0c05555d27112a0d4a80d68</string>
-		<key>Kits</key>
-		<array>
-		<dict>
-			<key>KitInfo</key>
-			<dict/>
-			<key>KitName</key>
-			<string>Crashlytics</string>
-		</dict>
-		</array>
-	</dict>
-	<key>com.apple.security.get-task-allow</key>
-	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -45,6 +29,20 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>111</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>74d3fa8b5038a154c0c05555d27112a0d4a80d68</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
@@ -101,5 +99,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>com.apple.security.get-task-allow</key>
+	<true/>
 </dict>
 </plist>

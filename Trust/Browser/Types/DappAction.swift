@@ -35,6 +35,17 @@ extension DappAction {
             }
         case .sign:
             return .sign
+        case .sendTransaction:
+            let unconfirmedTransaction = UnconfirmedTransaction(
+                transferType: .ether(destination: .none),
+                value: 0,
+                address: Address(string: "0x0000000000000000000000000000000000000000")!,
+                account: Account(address: Address(string: "0x0000000000000000000000000000000000000000")!),
+                chainID: 3,
+                data: command.object["data"]!.value.data(using: String.Encoding.utf8)
+            )
+            
+            return .signTransaction(unconfirmedTransaction)
         }
     }
 }

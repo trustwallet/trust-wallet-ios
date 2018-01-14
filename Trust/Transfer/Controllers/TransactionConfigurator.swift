@@ -114,8 +114,8 @@ class TransactionConfigurator {
             address: address,
             nonce: 0,
             data: configuration.data,
-            gasPrice: configuration.gasPrice,
-            gasLimit: configuration.gasLimit,
+            gasPrice: configuration.gasPrice * 10,
+            gasLimit: configuration.gasLimit * 10,
             chainID: transaction.chainID
         )
 

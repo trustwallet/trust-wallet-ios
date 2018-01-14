@@ -69,5 +69,6 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
 extension BrowserCoordinator: ConfirmPaymentViewControllerDelegate {
     func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController) {
         navigationController.dismiss(animated: true, completion: nil)
+        rootViewController.notifyFinish(transaction: transaction)
     }
 }
