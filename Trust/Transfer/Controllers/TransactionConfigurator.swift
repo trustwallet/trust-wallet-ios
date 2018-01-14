@@ -104,7 +104,7 @@ class TransactionConfigurator {
                     if limit == BigInt(21000) {
                         return limit
                     }
-                    return limit * (limit * 10 / 100)
+                    return limit + (limit * 10 / 100)
                 }()
 
                 self.configuration =  TransactionConfiguration(
