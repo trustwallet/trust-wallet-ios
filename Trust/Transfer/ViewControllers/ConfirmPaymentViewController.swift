@@ -53,6 +53,10 @@ class ConfirmPaymentViewController: UIViewController {
                 self.displayError(error: error)
             }
         }
+        configurator.configurationUpdate.subscribe { [weak self] configurator in
+            guard let `self` = self else { return }
+            self.reloadView()
+        }
     }
 
     func configure(for detailsViewModel: ConfirmPaymentDetailsViewModel) {

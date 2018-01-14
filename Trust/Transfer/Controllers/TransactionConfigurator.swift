@@ -4,6 +4,8 @@ import Foundation
 import BigInt
 import Result
 import TrustKeystore
+import JSONRPCKit
+import APIKit
 
 public struct PreviewTransaction {
     let value: BigInt
@@ -24,7 +26,17 @@ class TransactionConfigurator {
     let account: Account
     let transaction: UnconfirmedTransaction
     private let gasPrice: BigInt?
-    var configuration: TransactionConfiguration
+    var configuration: TransactionConfiguration {
+        didSet {
+            configurationUpdate.value = configuration
+        }
+    }
+
+    lazy var calculatedGasPrice: BigInt = {
+        return self.gasPrice ?? configuration.gasPrice
+    }()
+
+    var configurationUpdate: Subscribable<TransactionConfiguration> = Subscribable(nil)
 
     init(
         session: WalletSession,
@@ -45,22 +57,21 @@ class TransactionConfigurator {
     }
 
     func load(completion: @escaping (Result<Void, AnyError>) -> Void) {
-        let calculatedGasPrice = self.gasPrice ?? configuration.gasPrice
         switch transaction.transferType {
         case .ether:
             self.configuration = TransactionConfiguration(
                 gasPrice: calculatedGasPrice,
-                gasLimit: 90000,
+                gasLimit: GasLimitConfiguration.default,
                 data: transaction.data ?? self.configuration.data
             )
             completion(.success(()))
         case .token:
-            session.web3.request(request: ContractERC20Transfer(amount: transaction.value, address: transaction.address.address)) { result in
+            session.web3.request(request: ContractERC20Transfer(amount: transaction.value, address: transaction.address.address)) { [unowned self] result in
                 switch result {
                 case .success(let res):
                     let data = Data(hex: res.drop0x)
                     self.configuration = TransactionConfiguration(
-                        gasPrice: calculatedGasPrice,
+                        gasPrice: self.calculatedGasPrice,
                         gasLimit: 144000,
                         data: data
                     )
@@ -77,6 +88,33 @@ class TransactionConfigurator {
                 data: Data()
             )
             completion(.success(()))
+        }
+
+        estimateGasLimit()
+    }
+
+    func estimateGasLimit() {
+        let request = EstimateGasRequest(to: transaction.address.address, data: self.configuration.data)
+        Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let block):
+                let gasLimit: BigInt = {
+                    let limit = BigInt(block.drop0x, radix: 16) ?? BigInt()
+                    if limit == BigInt(21000) {
+                        return limit
+                    }
+                    return limit * 100 / 80
+                }()
+                NSLog("gasLimit \(gasLimit)")
+
+                self.configuration =  TransactionConfiguration(
+                    gasPrice: self.calculatedGasPrice,
+                    gasLimit: gasLimit,
+                    data: self.configuration.data
+                )
+            case .failure: break
+            }
         }
     }
 

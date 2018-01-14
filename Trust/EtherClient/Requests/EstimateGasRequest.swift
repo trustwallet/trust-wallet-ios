@@ -14,9 +14,9 @@ struct EstimateGasRequest: JSONRPCKit.Request {
     }
 
     var parameters: Any? {
-        return [["to": to, "data": data.hexEncoded], "latest"]
+        return [["to": to, "data": data.hexEncoded]]
     }
-    
+
     func response(from resultObject: Any) throws -> Response {
         if let response = resultObject as? Response {
             return response
