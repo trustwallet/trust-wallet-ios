@@ -21,6 +21,5 @@ class MigrationInitializer: Initializer {
         config.schemaVersion = 32
         config.migrationBlock = { _, _ in }
         Realm.Configuration.defaultConfiguration = config
-        let _ = try! Realm()
     }
 }

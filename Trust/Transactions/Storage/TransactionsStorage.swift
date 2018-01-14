@@ -8,9 +8,9 @@ class TransactionsStorage {
     let realm: Realm
 
     init(
-        configuration: Realm.Configuration
+        realm: Realm
     ) {
-        self.realm = try! Realm(configuration: configuration)
+        self.realm = realm
     }
 
     var count: Int {

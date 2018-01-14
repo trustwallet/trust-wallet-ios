@@ -33,10 +33,10 @@ class TokensDataStore {
 
     init(
         session: WalletSession,
-        configuration: Realm.Configuration
+        realm: Realm
     ) {
         self.session = session
-        self.realm = try! Realm(configuration: configuration)
+        self.realm = realm
         self.scheduledTimerForPricesUpdate()
     }
 

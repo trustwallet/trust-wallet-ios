@@ -3,6 +3,7 @@
 import Foundation
 import TrustKeystore
 import UIKit
+import RealmSwift
 
 protocol InCoordinatorDelegate: class {
     func didCancel(in coordinator: InCoordinator)
@@ -67,16 +68,17 @@ class InCoordinator: Coordinator {
             account: account,
             config: config
         )
-        
+
         MigrationInitializer(account: account, chainID: config.chainID).perform()
-        
+        let realm = try! Realm()
+
         let tokensStorage = TokensDataStore(
             session: session,
-            configuration: RealmConfiguration.configuration(for: session.account, chainID: session.config.chainID)
+            realm: realm
         )
 
         let transactionsStorage = TransactionsStorage(
-            configuration: RealmConfiguration.configuration(for: account, chainID: session.config.chainID)
+            realm: realm
         )
         let inCoordinatorViewModel = InCoordinatorViewModel(config: config)
         let transactionCoordinator = TransactionCoordinator(
