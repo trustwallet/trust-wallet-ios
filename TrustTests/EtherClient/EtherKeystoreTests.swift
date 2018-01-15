@@ -51,8 +51,8 @@ class EtherKeystoreTests: XCTestCase {
 
         let result = keystore.importKeystore(
             value: TestKeyStore.keystore,
-            password: "test",
-            newPassword: "test"
+            password: TestKeyStore.password,
+            newPassword: TestKeyStore.password
         )
 
         guard case let .success(account) = result else {
@@ -202,5 +202,27 @@ class EtherKeystoreTests: XCTestCase {
         }
 
         XCTAssertEqual(1, keystore.wallets.count)
+    }
+
+    func testSignMessage() {
+        let keystore = FakeEtherKeystore()
+
+        let result = keystore.importKeystore(
+            value: TestKeyStore.keystore,
+            password: TestKeyStore.password,
+            newPassword: TestKeyStore.password
+        )
+
+        guard case let .success(account) = result else {
+            return XCTFail()
+        }
+
+        let signResult = keystore.signMessage(message: "test", account: account)
+
+        guard case let .success(data) = signResult else {
+            return XCTFail()
+        }
+
+        //TODO Verify
     }
 }
