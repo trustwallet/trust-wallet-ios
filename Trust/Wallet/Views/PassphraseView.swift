@@ -18,6 +18,10 @@ class PassphraseView: UIView {
         return collectionView
     }()
 
+    private struct Layout {
+        static let cellHeight: CGFloat = 40
+    }
+
     var words: [String] = [] {
         didSet {
             collectionView.reloadData()
@@ -39,15 +43,22 @@ class PassphraseView: UIView {
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            ])
+        ])
     }
 
     private func index(for indexPath: IndexPath) -> Int {
-        return (indexPath.section / 2) //+ indexPath.row
+        return (indexPath.section * 2) + indexPath.row
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override var intrinsicContentSize: CGSize {
+        return CGSize(
+            width: collectionView.frame.width,
+            height: Layout.cellHeight * CGFloat(numberOfSections(in: collectionView))
+        )
     }
 }
 
@@ -73,6 +84,6 @@ extension PassphraseView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width/2, height: 44)
+        return CGSize(width: frame.width/2, height: Layout.cellHeight)
     }
 }

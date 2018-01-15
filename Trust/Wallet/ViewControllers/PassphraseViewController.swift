@@ -7,7 +7,8 @@ class PassphraseViewController: UIViewController {
 
     let passphraseView = PassphraseView(frame: .zero)
     let viewModel = PassphraseViewModel()
-    init() {
+    
+    init(words: [String]) {
         super.init(nibName: nil, bundle: nil)
 
         navigationItem.title = viewModel.title
@@ -23,15 +24,19 @@ class PassphraseViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
 
         let copyButton = Button(size: .small, style: .borderless)
+        copyButton.setTitle(NSLocalizedString("Copy", value: "Copy", comment: ""), for: .normal)
         copyButton.translatesAutoresizingMaskIntoConstraints = false
+        copyButton.addTarget(self, action: #selector(copyAction), for: .touchUpInside)
 
         let stackView = UIStackView(arrangedSubviews: [
+            .spacer(height: 10),
             passphraseView,
             copyButton,
             label,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
+        stackView.spacing = 10
 
         view.addSubview(stackView)
 
@@ -40,13 +45,14 @@ class PassphraseViewController: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor),
-            passphraseView.heightAnchor.constraint(equalToConstant: 300),
         ])
 
-        passphraseView.words = [
-            "jello", "hello", "ello", "hello", "ello", "hello",
-            "sdfsd", "dfds", "sdfds", "sdfsd", "sdfds", "fefe",
-        ]
+        passphraseView.words = words
+    }
+
+    @objc private func copyAction() {
+        let copyValue = passphraseView.words.joined(separator: " ")
+        UIPasteboard.general.string = copyValue
     }
 
     required init?(coder aDecoder: NSCoder) {
