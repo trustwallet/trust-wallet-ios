@@ -18,8 +18,23 @@ class MigrationInitializer: Initializer {
 
     func perform() {
         var config = RealmConfiguration.configuration(for: account, chainID: chainID)
-        config.schemaVersion = 32
-        config.migrationBlock = { _, _ in }
+        config.schemaVersion = 33
+        config.migrationBlock = { migration, oldSchemaVersion in
+
+            switch oldSchemaVersion {
+            case 0...32:
+                migration.enumerateObjects(ofType: TokenObject.className()) { oldObject, newObject in
+
+                    guard let oldObject = oldObject else { return }
+                    guard let newObject = newObject else { return }
+                    guard let value = oldObject["contract"] as? String else { return }
+                    guard let address = Address(string: value) else { return }
+
+                    newObject["contract"] = address.description
+                }
+            default: break
+            }
+        }
         Realm.Configuration.defaultConfiguration = config
     }
 }
