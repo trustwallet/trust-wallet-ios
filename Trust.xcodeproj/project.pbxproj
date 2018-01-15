@@ -304,6 +304,10 @@
 		739533971FEFF5FD0084AFAB /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739533961FEFF5FD0084AFAB /* Currency.swift */; };
 		771AA94B1FF76B8000D25403 /* demo.html in Resources */ = {isa = PBXBuildFile; fileRef = 771AA94A1FF76B8000D25403 /* demo.html */; };
 		771AA94E1FF971CD00D25403 /* DappAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA94D1FF971CD00D25403 /* DappAction.swift */; };
+		771AA960200D5E8800D25403 /* PassphraseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA95F200D5E8800D25403 /* PassphraseView.swift */; };
+		771AA962200D5EC700D25403 /* PassphraseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA961200D5EC700D25403 /* PassphraseViewModel.swift */; };
+		771AA964200D5EDB00D25403 /* WordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA963200D5EDB00D25403 /* WordCollectionViewCell.swift */; };
+		771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */; };
 		778EAF7D1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */; };
 		778EAF831FF379AA00C8E2AB /* web3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 778EAF821FF379AA00C8E2AB /* web3.min.js */; };
 		CCA4FE331FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE321FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift */; };
@@ -639,6 +643,10 @@
 		739533961FEFF5FD0084AFAB /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		771AA94A1FF76B8000D25403 /* demo.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = demo.html; sourceTree = "<group>"; };
 		771AA94D1FF971CD00D25403 /* DappAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DappAction.swift; sourceTree = "<group>"; };
+		771AA95F200D5E8800D25403 /* PassphraseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseView.swift; sourceTree = "<group>"; };
+		771AA961200D5EC700D25403 /* PassphraseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseViewModel.swift; sourceTree = "<group>"; };
+		771AA963200D5EDB00D25403 /* WordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCollectionViewCell.swift; sourceTree = "<group>"; };
+		771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WordCollectionViewCell.xib; sourceTree = "<group>"; };
 		778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinatorTests.swift; sourceTree = "<group>"; };
 		778EAF821FF379AA00C8E2AB /* web3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = web3.min.js; sourceTree = "<group>"; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -792,6 +800,7 @@
 		2912CD281F6A831700C6CBE3 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
+				771AA95E200D5E7800D25403 /* Views */,
 				293248881F88D586008A9818 /* Types */,
 				2977CAEF1F7E0C14009682A0 /* ViewModels */,
 				2977CAEE1F7E0C0D009682A0 /* ViewControllers */,
@@ -1252,6 +1261,7 @@
 			children = (
 				29A13E2B1F6A955700E432A2 /* CreateWalletViewModel.swift */,
 				2996F1421F6C96FF005C33AE /* ImportWalletViewModel.swift */,
+				771AA961200D5EC700D25403 /* PassphraseViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1836,6 +1846,16 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
+		771AA95E200D5E7800D25403 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				771AA95F200D5E8800D25403 /* PassphraseView.swift */,
+				771AA963200D5EDB00D25403 /* WordCollectionViewCell.swift */,
+				771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		778EAF7B1FF10AE000C8E2AB /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
@@ -2038,6 +2058,7 @@
 			files = (
 				613D04891FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer in Resources */,
 				771AA94B1FF76B8000D25403 /* demo.html in Resources */,
+				771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */,
 				291794FC1F95DE5F00539A30 /* index.html in Resources */,
 				296106CE1F777E410006164B /* LaunchScreen.storyboard in Resources */,
 				778EAF831FF379AA00C8E2AB /* web3.min.js in Resources */,
@@ -2402,6 +2423,7 @@
 				295B61D41FE7D5B500642E60 /* CurrencyFormatter.swift in Sources */,
 				296421991F70C1F900EB363B /* EmptyView.swift in Sources */,
 				298542E51FBA9B0700CB5081 /* ShapeShift.swift in Sources */,
+				771AA962200D5EC700D25403 /* PassphraseViewModel.swift in Sources */,
 				2959960C1FAB03EC00DB66A8 /* CoinbaseBuyWidget.swift in Sources */,
 				291A1B671F98092F00ADEC80 /* ConfirmPaymentViewController.swift in Sources */,
 				295996181FADB78200DB66A8 /* TransactionActionType.swift in Sources */,
@@ -2412,6 +2434,7 @@
 				2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */,
 				29C9F5F91F720BD30025C494 /* FloatLabelCell.swift in Sources */,
 				293112191FC55E5500966EEA /* SelectTokenViewController.swift in Sources */,
+				771AA960200D5E8800D25403 /* PassphraseView.swift in Sources */,
 				61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */,
 				29DBF2A71F9F145900327C60 /* StateViewModel.swift in Sources */,
 				2923D9B31FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift in Sources */,
@@ -2426,6 +2449,7 @@
 				29CAEB8E1F70A2FB00F7357D /* TransactionCellViewModel.swift in Sources */,
 				298542E81FBAD0B200CB5081 /* OperationType.swift in Sources */,
 				29BE3FD01F7071A200F6BFC2 /* UIColor.swift in Sources */,
+				771AA964200D5EDB00D25403 /* WordCollectionViewCell.swift in Sources */,
 				2996F1481F6C9AE5005C33AE /* SettingsCoordinator.swift in Sources */,
 				29C80D4D1FB5202C0037B1E0 /* BalanceBaseViewModel.swift in Sources */,
 				29C80D331FB2CCF10037B1E0 /* GetBlockByNumberRequest.swift in Sources */,
