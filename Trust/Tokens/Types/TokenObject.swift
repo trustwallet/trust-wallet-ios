@@ -30,7 +30,7 @@ class TokenObject: Object {
         type: TokenType = .token
     ) {
         self.init()
-        self.contract = contract.lowercased()
+        self.contract = contract
         self.name = name
         self.symbol = symbol
         self.decimals = decimals
