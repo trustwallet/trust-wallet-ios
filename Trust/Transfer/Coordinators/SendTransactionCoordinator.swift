@@ -51,7 +51,7 @@ class SendTransactionCoordinator {
         return SignTransaction(
             value: to.value,
             account: to.account,
-            address: to.address,
+            to: to.to,
             nonce: currentNonce,
             data: to.data,
             gasPrice: to.gasPrice,

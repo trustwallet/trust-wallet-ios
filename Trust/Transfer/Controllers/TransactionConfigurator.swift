@@ -148,7 +148,7 @@ class TransactionConfigurator {
         let signTransaction = SignTransaction(
             value: value,
             account: account,
-            address: address,
+            to: address,
             nonce: 0,
             data: configuration.data,
             gasPrice: configuration.gasPrice,
