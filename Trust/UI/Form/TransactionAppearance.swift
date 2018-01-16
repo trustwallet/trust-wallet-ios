@@ -25,7 +25,7 @@ struct TransactionAppearance {
         subTitleLabel.textAlignment = .left
         subTitleLabel.textColor = Colors.black
         subTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.light)
-        subTitleLabel.adjustsFontSizeToFitWidth = true
+        subTitleLabel.numberOfLines = 0
 
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
