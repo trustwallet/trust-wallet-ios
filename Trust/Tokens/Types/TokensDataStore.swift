@@ -109,7 +109,6 @@ class TokensDataStore {
                 switch result {
                 case .success(let response):
                     self.update(tokens: response)
-                    self.refreshEthBalance()
                     self.refreshBalance()
                 case .failure: break
                 }
@@ -139,19 +138,17 @@ class TokensDataStore {
                 }
                 count += 1
                 if count == updateTokens.count {
-                   self.updateDelegate()
+                    //We should use prommis kit.
+                    self.getBalanceCoordinator.getEthBalance(for: self.account.address) {  [weak self] result in
+                        guard let `self` = self else { return }
+                        switch result {
+                        case .success(let balance):
+                            self.update(token: self.objects.first (where: { $0.contract == self.ethToken.contract })!, action: .value(balance.value))
+                            self.updateDelegate()
+                        case .failure: break
+                        }
+                    }
                 }
-            }
-        }
-    }
-    func refreshEthBalance() {
-        getBalanceCoordinator.getEthBalance(for: account.address) {  [weak self] result in
-            guard let `self` = self else { return }
-            switch result {
-            case .success(let balance):
-                self.update(token: self.objects.first (where: { $0.contract == self.ethToken.contract })!, action: .value(balance.value))
-                self.updateDelegate()
-            case .failure: break
             }
         }
     }
