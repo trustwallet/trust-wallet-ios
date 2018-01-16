@@ -19,7 +19,7 @@ extension TransferType {
         case .exchange: return "--"
         }
     }
-    
+
     func contract() -> String {
         switch self {
         case .ether:

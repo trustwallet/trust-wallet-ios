@@ -86,12 +86,12 @@ class BrowserViewController: UIViewController {
         """
         let web3 = new Web3(new Web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)"));
         web3.eth.defaultAccount = "\(session.account.address.address)"
-        
+
         web3.eth.accounts = function(message, callback) {
             console.log("account asked for!!!")
         return ["\(session.account.address.address)"]
         }
-        
+
         var callback_;
         web3.eth.sendTransaction = function(message, callback) {
             console.log(message);
@@ -100,17 +100,16 @@ class BrowserViewController: UIViewController {
             callback_ = callback;
         }
         """
-        
+
 //        web3.eth.sign = function(message, callback){
 //            console.log("hooooray");
 //            runCommand("sign", {"message": message})
 //        }
-        
+
 //        web3.eth.signTransaction = function(tx, callback) {
 //            console.log("testing");
 //            runCommand("signTransaction", tx)
 //        }
-
 
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
         config.userContentController.add(self, name: "sendTransaction")
@@ -146,7 +145,7 @@ class BrowserViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func notifyFinish(transaction: SentTransaction) {
         let evString = "callback_(null, \(transaction.id))"
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -166,11 +165,11 @@ extension BrowserViewController: WKScriptMessageHandler {
         if message.name == "sendTransaction" {
             guard let body = message.body as? [String: AnyObject],
                 let jsonString = body.jsonString else { return }
-            
+
             let command = try! decoder.decode(DappCommand.self, from: jsonString.data(using: .utf8)!)
             let action = DappAction.fromCommand(command)
             delegate?.didCall(action: action)
-            
+
             return
         }
 

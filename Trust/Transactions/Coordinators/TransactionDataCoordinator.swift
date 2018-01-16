@@ -84,7 +84,6 @@ class TransactionDataCoordinator {
     func fetchPendingTransactions() {
         // TODO: Handle pending transactions
 
-
     }
 
     @objc func fetchPending() {

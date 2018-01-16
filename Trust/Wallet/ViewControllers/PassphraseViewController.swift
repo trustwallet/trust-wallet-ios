@@ -7,7 +7,7 @@ class PassphraseViewController: UIViewController {
 
     let passphraseView = PassphraseView(frame: .zero)
     let viewModel = PassphraseViewModel()
-    
+
     init(words: [String]) {
         super.init(nibName: nil, bundle: nil)
 

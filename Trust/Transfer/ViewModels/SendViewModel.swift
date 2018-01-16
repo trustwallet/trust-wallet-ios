@@ -23,7 +23,7 @@ struct SendViewModel {
     var symbol: String {
         return transferType.symbol(server: config.server)
     }
-    
+
     var contract: String {
         return transferType.contract()
     }

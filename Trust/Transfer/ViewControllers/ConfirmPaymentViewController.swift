@@ -53,7 +53,7 @@ class ConfirmPaymentViewController: UIViewController {
                 self.displayError(error: error)
             }
         }
-        configurator.configurationUpdate.subscribe { [weak self] configurator in
+        configurator.configurationUpdate.subscribe { [weak self] _ in
             guard let `self` = self else { return }
             self.reloadView()
         }

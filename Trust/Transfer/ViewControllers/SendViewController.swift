@@ -30,16 +30,16 @@ class SendViewController: FormViewController {
         static let address = "address"
         static let amount = "amount"
     }
-    
+
     struct Pair {
         let left: String
         let right: String
-        
+
         func swapPair() -> Pair {
             return Pair(left: right, right: left)
         }
     }
-    
+
     var pairValue = 0.0
     let session: WalletSession
     let account: Account
@@ -55,7 +55,7 @@ class SendViewController: FormViewController {
 
     private var gasPrice: BigInt?
     private var data = Data()
-    
+
     lazy var currentPair: Pair = {
         return Pair(left: viewModel.symbol, right: Config().currency.rawValue)
     }()
@@ -72,10 +72,10 @@ class SendViewController: FormViewController {
         self.storage = storage
 
         super.init(nibName: nil, bundle: nil)
-        
+
         storage.updatePrices()
         getGasPrice()
-        
+
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
@@ -104,17 +104,17 @@ class SendViewController: FormViewController {
         maxButton.translatesAutoresizingMaskIntoConstraints = false
         maxButton.setTitle(NSLocalizedString("send.max.button.title", value: "Max", comment: ""), for: .normal)
         maxButton.addTarget(self, action: #selector(useMaxAmount), for: .touchUpInside)
-        
+
         let fiatButton = Button(size: .normal, style: .borderless)
         fiatButton.translatesAutoresizingMaskIntoConstraints = false
         fiatButton.setTitle(currentPair.right, for: .normal)
         fiatButton.addTarget(self, action: #selector(fiatAction), for: .touchUpInside)
         fiatButton.isHidden = isFiatViewHidden()
-        
+
         let amountRightView = UIStackView(arrangedSubviews: [
             fiatButton,
         ])
-    
+
         amountRightView.translatesAutoresizingMaskIntoConstraints = false
         amountRightView.distribution = .equalSpacing
         amountRightView.spacing = 1
@@ -230,7 +230,7 @@ class SendViewController: FormViewController {
         amountRow?.value = value
         amountRow?.reload()
     }
-    
+
     @objc func fiatAction(sender: UIButton) {
         let swappedPair = currentPair.swapPair()
         //New pair for future calculation we should swap pair each time we press fiat button.
@@ -255,7 +255,7 @@ class SendViewController: FormViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func updatePriceSection() {
         //We use this section update to prevent update of the all section including cells.
         UIView.setAnimationsEnabled(false)
@@ -267,7 +267,7 @@ class SendViewController: FormViewController {
         tableView.endUpdates()
         UIView.setAnimationsEnabled(true)
     }
-    
+
     private func updatePairPrice(with amount: Double) {
         guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.contract], let price = Double(currentTokenInfo.price) else {
             return
@@ -279,7 +279,7 @@ class SendViewController: FormViewController {
         }
         self.updatePriceSection()
     }
-    
+
     private func isFiatViewHidden() -> Bool {
         guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.contract], let _ = Double(currentTokenInfo.price) else {
             return true
