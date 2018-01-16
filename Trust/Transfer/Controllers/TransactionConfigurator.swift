@@ -16,7 +16,6 @@ public struct PreviewTransaction {
     let data: Data
     let gasPrice: BigInt
     let gasLimit: BigInt
-    let chainID: Int
     let transferType: TransferType
 }
 
@@ -127,7 +126,6 @@ class TransactionConfigurator {
             data: configuration.data,
             gasPrice: configuration.gasPrice,
             gasLimit: configuration.gasLimit,
-            chainID: transaction.chainID,
             transferType: transaction.transferType
         )
     }
@@ -153,7 +151,7 @@ class TransactionConfigurator {
             data: configuration.data,
             gasPrice: configuration.gasPrice,
             gasLimit: configuration.gasLimit,
-            chainID: transaction.chainID
+            chainID: session.config.chainID
         )
 
         return signTransaction

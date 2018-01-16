@@ -8,6 +8,5 @@ struct UnconfirmedTransaction {
     let transferType: TransferType
     let value: BigInt
     let to: Address?
-    let chainID: Int
     let data: Data?
 }

@@ -197,7 +197,6 @@ class SendViewController: FormViewController {
             transferType: transferType,
             value: value,
             to: address,
-            chainID: session.config.chainID,
             data: data
         )
         self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, gasPrice: gasPrice, in: self)

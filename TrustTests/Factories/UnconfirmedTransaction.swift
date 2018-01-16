@@ -9,17 +9,13 @@ extension UnconfirmedTransaction {
     static func make(
         transferType: TransferType = .ether(destination: .none),
         value: BigInt = BigInt(1),
-        address: Address = .make(),
-        account: Account = .make(),
-        chainID: Int = 1,
+        to: Address = .make(),
         data: Data = Data()
     ) -> UnconfirmedTransaction {
         return UnconfirmedTransaction(
             transferType: transferType,
             value: value,
-            address: address,
-            account: account,
-            chainID: chainID,
+            to: to,
             data: data
         )
     }
