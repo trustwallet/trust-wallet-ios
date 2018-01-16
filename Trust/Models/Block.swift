@@ -26,7 +26,7 @@ extension Block {
                 timestamp: timestamp
             )
 
-            let transactions: [ParsedTransaction] = transactionsJSON.map { .from(block: block, transaction: $0) }
+            let transactions: [ParsedTransaction] = transactionsJSON.flatMap { .from(block: block, transaction: $0) }
 
             return Block(
                 number: number,

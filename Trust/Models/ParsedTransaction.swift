@@ -10,8 +10,8 @@ struct ParsedTransaction {
     let transactionIndex: String
     let confirmations: String
     let cumulativeGasUsed: String
-    let from: String
-    let to: String
+    let from: Address
+    let to: Address
     let gas: String
     let gasPrice: String
     let gasUsed: String
@@ -23,14 +23,17 @@ struct ParsedTransaction {
 }
 
 extension ParsedTransaction {
-    static func from(json: [String: AnyObject]) -> ParsedTransaction {
+    static func from(json: [String: AnyObject]) -> ParsedTransaction? {
+        guard
+            let from = Address(string: json["from"] as? String ?? ""),
+            let to = Address(string: json["to"] as? String ?? "") else {
+                return .none
+        }
         let blockHash = json["blockHash"] as? String ?? ""
         let blockNumber = json["blockNumber"] as? String ?? ""
         let transactionIndex = json["transactionIndex"] as? String ?? ""
         let confirmation = json["confirmations"] as? String ?? ""
         let cumulativeGasUsed = json["cumulativeGasUsed"] as? String ?? ""
-        let from = json["from"] as? String ?? ""
-        let to = json["to"] as? String ?? ""
         let gas = json["gas"] as? String ?? ""
         let gasPrice = json["gasPrice"] as? String ?? ""
         let gasUsed = json["gasUsed"] as? String ?? ""
@@ -60,14 +63,18 @@ extension ParsedTransaction {
 }
 
 extension ParsedTransaction {
-    static func from(block: ParsedBlock, transaction: [String: AnyObject]) -> ParsedTransaction {
+    static func from(block: ParsedBlock, transaction: [String: AnyObject]) -> ParsedTransaction? {
+        guard
+            let from = Address(string: transaction["from"] as? String ?? ""),
+            let to = Address(string: transaction["to"] as? String ?? "") else {
+                return .none
+        }
+
         let blockHash = transaction["blockHash"] as? String ?? ""
         let blockNumber = transaction["blockNumber"] as? String ?? ""
         let transactionIndex = transaction["transactionIndex"] as? String ?? "0"
         let confirmation = transaction["confirmations"] as? String ?? "0"
         let cumulativeGasUsed = transaction["cumulativeGasUsed"] as? String ?? "0"
-        let from = transaction["from"] as? String ?? ""
-        let to = transaction["to"] as? String ?? ""
         let gas = transaction["gas"] as? String ?? "0"
         let gasPrice = transaction["gasPrice"] as? String ?? "0"
         let gasUsed = transaction["gasUsed"] as? String ?? "0"
@@ -106,8 +113,8 @@ extension Transaction {
             id: transaction.hash,
             owner: owner.description,
             blockNumber: Int(transaction.blockNumber) ?? 0,
-            from: transaction.from,
-            to: transaction.to,
+            from: transaction.from.description,
+            to: transaction.to.description,
             value: transaction.value,
             gas: transaction.gas,
             gasPrice: transaction.gasPrice,

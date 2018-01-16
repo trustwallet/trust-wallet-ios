@@ -37,14 +37,19 @@ struct RawTransaction: Decodable {
 }
 
 extension Transaction {
-    static func from(chainID: Int, owner: Address, transaction: RawTransaction) -> Transaction {
+    static func from(chainID: Int, owner: Address, transaction: RawTransaction) -> Transaction? {
         let isError = transaction.error?.isEmpty == false
+        guard
+            let from = Address(string: transaction.from),
+            let to = Address(string: transaction.to) else {
+                return .none
+        }
         return Transaction(
             id: transaction.hash,
             owner: owner.description,
             blockNumber: transaction.blockNumber,
-            from: transaction.from,
-            to: transaction.to,
+            from: from.description,
+            to: to.description,
             value: transaction.value,
             gas: transaction.gas,
             gasPrice: transaction.gasPrice,

@@ -65,7 +65,7 @@ class TransactionDataCoordinator {
                 do {
                     let transactions = try response.map(ArrayResponse<RawTransaction>.self).docs
                     let chainID = self.config.chainID
-                    let transactions2: [Transaction] = transactions.map { .from(
+                    let transactions2: [Transaction] = transactions.flatMap { .from(
                         chainID: chainID,
                         owner: self.session.account.address,
                         transaction: $0
@@ -82,19 +82,9 @@ class TransactionDataCoordinator {
     }
 
     func fetchPendingTransactions() {
-        Session.send(EtherServiceRequest(batch: BatchFactory().create(GetBlockByNumberRequest(block: "pending")))) { [weak self] result in
-            guard let `self` = self else { return }
-            switch result {
-            case .success(let block):
-                for item in block.transactions {
-                    if item.to == self.session.account.address.address || item.from == self.session.account.address.address {
-                        self.update(chainID: self.config.chainID, owner: self.session.account.address, items: [item])
-                    }
-                }
-            case .failure(let error):
-                self.handleError(error: error)
-            }
-        }
+        // TODO: Handle pending transactions
+
+
     }
 
     @objc func fetchPending() {
