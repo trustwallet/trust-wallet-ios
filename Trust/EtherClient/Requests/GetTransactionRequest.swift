@@ -5,7 +5,7 @@ import JSONRPCKit
 import TrustKeystore
 
 struct GetTransactionRequest: JSONRPCKit.Request {
-    typealias Response = ParsedTransaction
+    typealias Response = PendingTransaction
 
     let hash: String
 
@@ -20,7 +20,7 @@ struct GetTransactionRequest: JSONRPCKit.Request {
     func response(from resultObject: Any) throws -> Response {
         guard
             let dict = resultObject as? [String: AnyObject],
-            let transaction = ParsedTransaction.from(dict)
+            let transaction = PendingTransaction.from(dict)
         else {
             throw CastError(actualValue: resultObject, expectedType: Response.self)
         }

@@ -4,7 +4,7 @@ import BigInt
 import Foundation
 import TrustKeystore
 
-struct ParsedTransaction: Decodable {
+struct PendingTransaction: Decodable {
     let blockHash: String
     let blockNumber: String
     let from: String
@@ -16,8 +16,8 @@ struct ParsedTransaction: Decodable {
     let nonce: String
 }
 
-extension ParsedTransaction {
-    static func from(_ transaction: [String: AnyObject]) -> ParsedTransaction? {
+extension PendingTransaction {
+    static func from(_ transaction: [String: AnyObject]) -> PendingTransaction? {
         let blockHash = transaction["blockHash"] as? String ?? ""
         let blockNumber = transaction["blockNumber"] as? String ?? ""
         let gas = transaction["gas"] as? String ?? "0"
@@ -27,7 +27,7 @@ extension ParsedTransaction {
         let nonce = transaction["nonce"] as? String ?? "0"
         let from = transaction["from"] as? String ?? ""
         let to = transaction["to"] as? String ?? ""
-        return ParsedTransaction(
+        return PendingTransaction(
             blockHash: blockHash,
             blockNumber: BigInt(blockNumber.drop0x, radix: 16)?.description ?? "",
             from: from,
@@ -43,7 +43,7 @@ extension ParsedTransaction {
 
 extension Transaction {
     static func from(
-        transaction: ParsedTransaction
+        transaction: PendingTransaction
     ) -> Transaction? {
         guard
             let from = Address(string: transaction.from),

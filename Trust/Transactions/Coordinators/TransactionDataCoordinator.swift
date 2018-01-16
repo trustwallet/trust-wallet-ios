@@ -79,7 +79,7 @@ class TransactionDataCoordinator {
         }
     }
 
-    func update(chainID: Int, owner: Address, items: [ParsedTransaction]) {
+    func update(chainID: Int, owner: Address, items: [PendingTransaction]) {
         let transactionItems: [Transaction] = items.flatMap { .from(transaction: $0) }
         update(items: transactionItems)
     }
