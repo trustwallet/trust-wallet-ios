@@ -12,7 +12,7 @@ struct CoinTicker: Codable {
     let contract: String
 
     static let tokenLogoPath = "https://files.coinmarketcap.com/static/img/coins/128x128/"
-    
+
     lazy var rate: CurrencyRate = {
         CurrencyRate(
             currency: self.symbol,

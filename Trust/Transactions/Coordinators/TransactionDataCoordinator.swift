@@ -63,13 +63,9 @@ class TransactionDataCoordinator {
             switch result {
             case .success(let response):
                 do {
-                    let transactions = try response.map(ArrayResponse<RawTransaction>.self).docs
-                    let chainID = self.config.chainID
-                    let transactions2: [Transaction] = transactions.flatMap { .from(
-                        transaction: $0
-                        )
-                    }
-                    self.update(items: transactions2)
+                    let rawTransactions = try response.map(ArrayResponse<RawTransaction>.self).docs
+                    let transactions: [Transaction] = rawTransactions.flatMap { .from(transaction: $0) }
+                    self.update(items: transactions)
                 } catch {
                     self.handleError(error: error)
                 }
@@ -85,9 +81,7 @@ class TransactionDataCoordinator {
     }
 
     func fetchPendingTransactions() {
-        // TODO: Handle pending transactions
-
-        let pendingTransactions = storage.objects.filter { $0.internalState == TransactionState.pending.rawValue }
+        let pendingTransactions = storage.objects.filter { $0.state == TransactionState.pending }
 
         for transaction in pendingTransactions {
             let request = GetTransactionRequest(hash: transaction.id)
