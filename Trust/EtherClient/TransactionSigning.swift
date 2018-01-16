@@ -20,7 +20,7 @@ struct EIP155Signer: Signer {
             transaction.nonce,
             transaction.gasPrice,
             transaction.gasLimit,
-            transaction.to.data,
+            transaction.to?.data ?? Data(),
             transaction.value,
             transaction.data,
             transaction.chainID, 0, 0,
@@ -45,7 +45,7 @@ struct HomesteadSigner: Signer {
             transaction.nonce,
             transaction.gasPrice,
             transaction.gasLimit,
-            transaction.to.data,
+            transaction.to?.data ?? Data(),
             transaction.value,
             transaction.data,
         ])!

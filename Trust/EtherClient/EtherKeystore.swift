@@ -324,7 +324,7 @@ open class EtherKeystore: Keystore {
                 transaction.nonce,
                 transaction.gasPrice,
                 transaction.gasLimit,
-                transaction.to.data,
+                transaction.to?.data ?? Data(),
                 transaction.value,
                 transaction.data,
                 v, r, s,
