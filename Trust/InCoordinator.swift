@@ -64,12 +64,12 @@ class InCoordinator: Coordinator {
     }
 
     func showTabBar(for account: Wallet) {
-        let web3: Web3Swift = {
-            let web3 = Web3Swift(url: config.rpcURL)
-            web3.start()
-            return web3
-        }()
-        let realm = self.realm(for: account)
+
+        let migration = MigrationInitializer(account: account, chainID: config.chainID)
+        migration.perform()
+
+        let web3 = self.web3(for: config.server)
+        let realm = self.realm(for: migration.config)
         let tokensStorage = TokensDataStore(realm: realm, account: account, config: config, web3: web3)
         let balance =  BalanceCoordinator(account: account, storage: tokensStorage)
         let session = WalletSession(
@@ -78,7 +78,6 @@ class InCoordinator: Coordinator {
             web3: web3,
             balanceCoordinator: balance
         )
-        MigrationInitializer(account: account, chainID: config.chainID).perform()
         let transactionsStorage = TransactionsStorage(
             realm: realm
         )
@@ -217,10 +216,13 @@ class InCoordinator: Coordinator {
     private func handlePendingTransaction(transaction: SentTransaction) {
         transactionCoordinator?.dataCoordinator.add(transaction: transaction)
     }
-    
-    private func realm(for account:Wallet) -> Realm {
-        let config = RealmConfiguration.configuration(for: account, chainID: self.config.chainID)
+
+    private func realm(for config: Realm.Configuration) -> Realm {
         return try! Realm(configuration: config)
+    }
+
+    private func web3(for server: RPCServer) -> Web3Swift {
+        return Web3Swift(url: config.rpcURL)
     }
 }
 

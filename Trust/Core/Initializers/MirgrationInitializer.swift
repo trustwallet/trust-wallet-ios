@@ -8,6 +8,9 @@ class MigrationInitializer: Initializer {
 
     let account: Wallet
     let chainID: Int
+    lazy var config: Realm.Configuration = {
+        return RealmConfiguration.configuration(for: account, chainID: chainID)
+    }()
 
     init(
         account: Wallet, chainID: Int
@@ -17,10 +20,8 @@ class MigrationInitializer: Initializer {
     }
 
     func perform() {
-        var config = RealmConfiguration.configuration(for: account, chainID: chainID)
         config.schemaVersion = 36
         config.migrationBlock = { migration, oldSchemaVersion in
-
             switch oldSchemaVersion {
             case 0...32:
                 migration.enumerateObjects(ofType: TokenObject.className()) { oldObject, newObject in
@@ -35,6 +36,5 @@ class MigrationInitializer: Initializer {
             default: break
             }
         }
-        Realm.Configuration.defaultConfiguration = config
     }
 }
