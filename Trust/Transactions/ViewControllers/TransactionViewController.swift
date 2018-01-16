@@ -11,7 +11,8 @@ class TransactionViewController: UIViewController {
         return .init(
             transaction: self.transaction,
             config: self.config,
-            chainState: self.session.chainState
+            chainState: self.session.chainState,
+            currentWallet: self.session.account
         )
     }()
     let stackViewController = StackViewController()

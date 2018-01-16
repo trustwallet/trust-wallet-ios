@@ -9,6 +9,7 @@ struct TransactionCellViewModel {
     private let transaction: Transaction
     private let config: Config
     private let chainState: ChainState
+    private let currentWallet: Wallet
     private let shortFormatter = EtherNumberFormatter.short
 
     private let transactionViewModel: TransactionViewModel
@@ -16,15 +17,18 @@ struct TransactionCellViewModel {
     init(
         transaction: Transaction,
         config: Config,
-        chainState: ChainState
+        chainState: ChainState,
+        currentWallet: Wallet
     ) {
         self.transaction = transaction
         self.config = config
         self.chainState = chainState
+        self.currentWallet = currentWallet
         self.transactionViewModel = TransactionViewModel(
             transaction: transaction,
             config: config,
-            chainState: chainState
+            chainState: chainState,
+            currentWallet: currentWallet
         )
     }
 
@@ -53,15 +57,18 @@ struct TransactionCellViewModel {
         if let operationTitle = operationTitle {
             return operationTitle
         }
-        switch transactionViewModel.state {
+        switch transaction.state {
         case .completed:
-            switch transaction.direction {
+            switch transactionViewModel.direction {
             case .incoming: return NSLocalizedString("transaction.cell.received.title", value: "Received", comment: "")
             case .outgoing: return NSLocalizedString("transaction.cell.sent.title", value: "Sent", comment: "")
             }
-        case .error: return NSLocalizedString("transaction.cell.error.title", value: "Error", comment: "")
+        case .error:
+            return NSLocalizedString("transaction.cell.error.title", value: "Error", comment: "")
+        case .unknown:
+            return NSLocalizedString("transaction.cell.unknown.title", value: "Unknown", comment: "")
         case .pending:
-            switch transaction.direction {
+            switch transactionViewModel.direction {
             case .incoming: return NSLocalizedString("transaction.cell.receiving.title", value: "Receiving", comment: "")
             case .outgoing: return NSLocalizedString("transaction.cell.sending.title", value: "Sending", comment: "")
             }
@@ -69,7 +76,7 @@ struct TransactionCellViewModel {
     }
 
     var subTitle: String {
-        switch transaction.direction {
+        switch transactionViewModel.direction {
         case .incoming: return "\(transaction.from)"
         case .outgoing: return "\(transaction.to)"
         }
@@ -84,10 +91,10 @@ struct TransactionCellViewModel {
     }
 
     var backgroundColor: UIColor {
-        switch transactionViewModel.state {
+        switch transaction.state {
         case .completed:
             return .white
-        case .error:
+        case .error, .unknown:
             return Colors.veryLightRed
         case .pending:
             return Colors.veryLightOrange
@@ -107,10 +114,10 @@ struct TransactionCellViewModel {
     }
 
     var statusImage: UIImage? {
-        switch transactionViewModel.state {
-        case .error: return R.image.transaction_error()
+        switch transaction.state {
+        case .error, .unknown: return R.image.transaction_error()
         case .completed:
-            switch transaction.direction {
+            switch transactionViewModel.direction {
             case .incoming: return R.image.transaction_received()
             case .outgoing: return R.image.transaction_sent()
             }

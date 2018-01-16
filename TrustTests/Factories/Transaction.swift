@@ -6,7 +6,6 @@ import Foundation
 extension Transaction {
     static func make(
         id: String = "0x1",
-        owner: String = "0x1",
         blockNumber: Int = 1,
         from: String = "0x1",
         to: String = "0x1",
@@ -16,12 +15,11 @@ extension Transaction {
         gasUsed: String = "0x1",
         nonce: String = "0",
         date: Date = Date(),
-        isError: Bool = false,
-        localizedOperations: [LocalizedOperationObject] = []
+        localizedOperations: [LocalizedOperationObject] = [],
+        state: TransactionState = .completed
     ) -> Transaction {
         return Transaction(
             id: id,
-            owner: owner,
             blockNumber: blockNumber,
             from: from,
             to: to,
@@ -31,8 +29,8 @@ extension Transaction {
             gasUsed: gasUsed,
             nonce: nonce,
             date: date,
-            isError: isError,
-            localizedOperations: localizedOperations
+            localizedOperations: localizedOperations,
+            state: state
         )
     }
 }

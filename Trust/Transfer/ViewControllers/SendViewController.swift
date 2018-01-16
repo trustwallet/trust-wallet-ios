@@ -16,7 +16,6 @@ protocol SendViewControllerDelegate: class {
         gasPrice: BigInt?,
         in viewController: SendViewController
     )
-    func didCreatePendingTransaction(_ transaction: SentTransaction, in viewController: SendViewController)
 }
 
 class SendViewController: FormViewController {

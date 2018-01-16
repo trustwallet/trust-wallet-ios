@@ -184,7 +184,8 @@ extension TransactionsViewController: UITableViewDataSource {
         cell.configure(viewModel: .init(
                 transaction: transaction,
                 config: session.config,
-                chainState: session.chainState
+                chainState: session.chainState,
+                currentWallet: session.account
             )
         )
         return cell

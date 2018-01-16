@@ -261,6 +261,10 @@ extension InCoordinator: TokensCoordinatorDelegate {
 }
 
 extension InCoordinator: PaymentCoordinatorDelegate {
+    func didCreatePendingTransaction(transaction: SentTransaction, in coordinator: PaymentCoordinator) {
+        transactionCoordinator?.dataCoordinator.add(transaction: transaction)
+    }
+
     func didCancel(in coordinator: PaymentCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)

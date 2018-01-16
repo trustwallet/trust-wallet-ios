@@ -18,7 +18,7 @@ class MigrationInitializer: Initializer {
 
     func perform() {
         var config = RealmConfiguration.configuration(for: account, chainID: chainID)
-        config.schemaVersion = 33
+        config.schemaVersion = 36
         config.migrationBlock = { migration, oldSchemaVersion in
 
             switch oldSchemaVersion {

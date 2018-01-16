@@ -2,25 +2,28 @@
 
 import Foundation
 import JSONRPCKit
+import TrustKeystore
 
 struct GetTransactionRequest: JSONRPCKit.Request {
-    typealias Response = String
+    typealias Response = ParsedTransaction
 
-    let address: String
+    let hash: String
 
     var method: String {
         return "eth_getTransactionByHash"
     }
 
     var parameters: Any? {
-        return [address]
+        return [hash]
     }
 
     func response(from resultObject: Any) throws -> Response {
-        if let response = resultObject as? Response {
-            return response
-        } else {
+        guard
+            let dict = resultObject as? [String: AnyObject],
+            let transaction = ParsedTransaction.from(dict)
+        else {
             throw CastError(actualValue: resultObject, expectedType: Response.self)
         }
+        return transaction
     }
 }

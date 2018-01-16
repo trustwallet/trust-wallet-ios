@@ -25,7 +25,8 @@ struct TransactionDetailsViewModel {
     init(
         transaction: Transaction,
         config: Config,
-        chainState: ChainState
+        chainState: ChainState,
+        currentWallet: Wallet
     ) {
         self.transaction = transaction
         self.config = config
@@ -33,7 +34,8 @@ struct TransactionDetailsViewModel {
         self.transactionViewModel = TransactionViewModel(
             transaction: transaction,
             config: config,
-            chainState: chainState
+            chainState: chainState,
+            currentWallet: currentWallet
         )
     }
 
@@ -81,7 +83,14 @@ struct TransactionDetailsViewModel {
     var gasFee: String {
         let gasUsed = BigInt(transaction.gasUsed) ?? BigInt()
         let gasPrice = BigInt(transaction.gasPrice) ?? BigInt()
-        return fullFormatter.string(from: gasPrice * gasUsed) + " " + config.server.symbol
+        let gasLimit = BigInt(transaction.gas) ?? BigInt()
+        let gasFee: BigInt = {
+            switch transaction.state {
+            case .completed, .error: return gasPrice * gasUsed
+            case .pending, .unknown: return gasPrice * gasLimit
+            }
+        }()
+        return fullFormatter.string(from: gasFee) + " " + config.server.symbol
     }
 
     var confirmation: String {

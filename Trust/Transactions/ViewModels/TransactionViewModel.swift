@@ -9,35 +9,33 @@ struct TransactionViewModel {
     private let transaction: Transaction
     private let config: Config
     private let chainState: ChainState
+    private let currentWallet: Wallet
     private let shortFormatter = EtherNumberFormatter.short
     private let fullFormatter = EtherNumberFormatter.full
 
     init(
         transaction: Transaction,
         config: Config,
-        chainState: ChainState
+        chainState: ChainState,
+        currentWallet: Wallet
     ) {
         self.transaction = transaction
         self.config = config
         self.chainState = chainState
+        self.currentWallet = currentWallet
+    }
+
+    var direction: TransactionDirection {
+        if currentWallet.address.description == transaction.from { return .outgoing }
+        return .incoming
     }
 
     var confirmations: Int? {
         return chainState.confirmations(fromBlock: transaction.blockNumber)
     }
 
-    var state: TransactionState {
-        if transaction.isError {
-            return .error
-        }
-        if confirmations == 0 {
-            return .pending
-        }
-        return .completed
-    }
-
     var amountTextColor: UIColor {
-        switch transaction.direction {
+        switch direction {
         case .incoming: return Colors.green
         case .outgoing: return Colors.red
         }
@@ -80,7 +78,7 @@ struct TransactionViewModel {
 
     func amountWithSign(for amount: String) -> String {
         guard amount != "0" else { return amount }
-        switch transaction.direction {
+        switch direction {
         case .incoming: return "+\(amount)"
         case .outgoing: return "-\(amount)"
         }
