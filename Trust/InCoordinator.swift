@@ -69,8 +69,8 @@ class InCoordinator: Coordinator {
             web3.start()
             return web3
         }()
-        let realm = try! Realm()
-        let tokensStorage = TokensDataStore(realm: realm, account: account, config: config, web3: web3, configuration: RealmConfiguration.configuration(for: account, chainID: config.chainID))
+        let realm = self.realm(for: account)
+        let tokensStorage = TokensDataStore(realm: realm, account: account, config: config, web3: web3)
         let balance =  BalanceCoordinator(account: account, storage: tokensStorage)
         let session = WalletSession(
             account: account,
@@ -216,6 +216,11 @@ class InCoordinator: Coordinator {
 
     private func handlePendingTransaction(transaction: SentTransaction) {
         transactionCoordinator?.dataCoordinator.add(transaction: transaction)
+    }
+    
+    private func realm(for account:Wallet) -> Realm {
+        let config = RealmConfiguration.configuration(for: account, chainID: self.config.chainID)
+        return try! Realm(configuration: config)
     }
 }
 

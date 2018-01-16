@@ -47,13 +47,12 @@ class TokensDataStore {
         realm: Realm,
         account: Wallet,
         config: Config,
-        web3: Web3Swift,
-        configuration: Realm.Configuration
+        web3: Web3Swift
     ) {
         self.account = account
         self.config = config
         self.web3 = web3
-        self.realm = try! Realm(configuration: configuration)
+        self.realm = realm
         self.addEthToken()
         self.scheduledTimerForPricesUpdate()
     }
