@@ -51,8 +51,8 @@ class EtherKeystoreTests: XCTestCase {
 
         let result = keystore.importKeystore(
             value: TestKeyStore.keystore,
-            password: "test",
-            newPassword: "test"
+            password: TestKeyStore.password,
+            newPassword: TestKeyStore.password
         )
 
         guard case let .success(account) = result else {
@@ -202,5 +202,44 @@ class EtherKeystoreTests: XCTestCase {
         }
 
         XCTAssertEqual(1, keystore.wallets.count)
+    }
+
+    func testSignMessage() {
+        let keystore = FakeEtherKeystore()
+
+        let privateKeyResult = keystore.convertPrivateKeyToKeystoreFile(privateKey: "0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318", passphrase: TestKeyStore.password)
+
+        guard case let .success(keystoreString) = privateKeyResult else {
+            return XCTFail()
+        }
+
+        let result = keystore.importKeystore(
+            value: keystoreString.jsonString!,
+            password: TestKeyStore.password,
+            newPassword: TestKeyStore.password
+        )
+
+        guard case let .success(account) = result else {
+            return XCTFail()
+        }
+
+        let signResult = keystore.signMessage(message: "Some data", account: account)
+
+        guard case let .success(data) = signResult else {
+            return XCTFail()
+        }
+
+        let expected = Data(hexString: "0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a0291c")
+
+        XCTAssertEqual(expected, data)
+
+        // web3.eth.accounts.sign('Some data', '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318');
+        // expected:
+        // message: 'Some data',
+        // messageHash: '0x1da44b586eb0729ff70a73c326926f6ed5a25f5b056e7f47fbc6e58d86871655',
+        // v: '0x1c',
+        // r: '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd',
+        // s: '0x6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a029',
+        // signature: '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a0291c'
     }
 }

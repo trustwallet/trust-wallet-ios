@@ -284,6 +284,23 @@ open class EtherKeystore: Keystore {
         }
     }
 
+    func signMessage(message: String, account: Account) -> Result<Data, KeystoreError> {
+        let formattedMessage: String = "\u{19}Ethereum Signed Message:\n" + "\(message.count)" + message
+        guard
+            let hash = formattedMessage.data(using: .utf8)?.sha3(.keccak256),
+            let password = getPassword(for: account) else {
+                return .failure(KeystoreError.failedToSignMessage)
+        }
+        do {
+            var data = try keyStore.signHash(hash, account: account, password: password)
+            // TODO: Make it configurable, instead of overriding last byte.
+            data[64] += 27
+            return .success(data)
+        } catch {
+            return .failure(KeystoreError.failedToSignMessage)
+        }
+    }
+
     func signTransaction(_ transaction: SignTransaction) -> Result<Data, KeystoreError> {
         guard let account = keyStore.account(for: transaction.account.address) else {
             return .failure(.failedToSignTransaction)

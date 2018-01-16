@@ -13,6 +13,7 @@ enum KeystoreError: LocalizedError {
     case failedToImportPrivateKey
     case failedToParseJSON
     case accountNotFound
+    case failedToSignMessage
 
     var errorDescription: String? {
         switch self {
@@ -36,6 +37,8 @@ enum KeystoreError: LocalizedError {
             return "Failed to parse key JSON"
         case .accountNotFound:
             return "Account not found"
+        case .failedToSignMessage:
+            return "Failed to sign message"
         }
     }
 }
