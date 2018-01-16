@@ -29,9 +29,12 @@ class TokensDataStore {
     weak var delegate: TokensDataStoreDelegate?
     let realm: Realm
     var tickers: [String: CoinTicker]? = .none
-    var timer = Timer()
+    var pricesTimer = Timer()
+    var ethTimer = Timer()
     //We should refresh prices every 5 minutes.
-    let intervalToRefresh = 300.0
+    let intervalToRefreshPrices = 300.0
+    //We should refresh balance of the ETH every 10 seconds.
+    let intervalToETHRefresh = 10.0
     var tokensModel: Subscribable<[TokenObject]> = Subscribable(nil)
 
     static func etherToken(for config: Config) -> TokenObject {
@@ -58,6 +61,7 @@ class TokensDataStore {
         self.realm = realm
         self.addEthToken()
         self.scheduledTimerForPricesUpdate()
+        self.scheduledTimerForEthBalanceUpdate()
     }
     private func addEthToken() {
         //Check if we have previos values.
@@ -141,17 +145,20 @@ class TokensDataStore {
                 }
                 count += 1
                 if count == updateTokens.count {
-                    //We should use prommis kit.
-                    self.getBalanceCoordinator.getEthBalance(for: self.account.address) {  [weak self] result in
-                        guard let `self` = self else { return }
-                        switch result {
-                        case .success(let balance):
-                            self.update(token: self.objects.first (where: { $0 == etherToken })!, action: .value(balance.value))
-                            self.updateDelegate()
-                        case .failure: break
-                        }
-                    }
+                    self.refreshETHBalance()
                 }
+            }
+        }
+    }
+    private func refreshETHBalance() {
+        self.getBalanceCoordinator.getEthBalance(for: self.account.address) {  [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let balance):
+                let etherToken = TokensDataStore.etherToken(for: self.config)
+                self.update(token: self.objects.first (where: { $0.contract == etherToken.contract })!, action: .value(balance.value))
+                self.updateDelegate()
+            case .failure: break
             }
         }
     }
@@ -252,12 +259,18 @@ class TokensDataStore {
         return tokens
     }
     private func scheduledTimerForPricesUpdate() {
-        timer = Timer.scheduledTimer(withTimeInterval: intervalToRefresh, repeats: true) { [weak self] _ in
+        pricesTimer = Timer.scheduledTimer(withTimeInterval: intervalToRefreshPrices, repeats: true) { [weak self] _ in
             self?.updatePrices()
+        }
+    }
+    private func scheduledTimerForEthBalanceUpdate() {
+        ethTimer = Timer.scheduledTimer(withTimeInterval: intervalToETHRefresh, repeats: true) { [weak self] _ in
+            self?.refreshETHBalance()
         }
     }
     deinit {
         //We should make sure that timer is invalidate.
-        timer.invalidate()
+        pricesTimer.invalidate()
+        ethTimer.invalidate()
     }
 }
