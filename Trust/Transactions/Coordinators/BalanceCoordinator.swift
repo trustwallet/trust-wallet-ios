@@ -22,12 +22,19 @@ class BalanceCoordinator {
             rate: currencyRate
         )
     }
-    init(account: Wallet, storage: TokensDataStore) {
+    init(
+        account: Wallet,
+        config: Config,
+        storage: TokensDataStore
+    ) {
         self.account = account
         self.storage = storage
         self.storage.refreshBalance()
+
+        let etherToken = TokensDataStore.etherToken(for: config)
+
         storage.tokensModel.subscribe {[weak self] tokensModel in
-            guard let tokens = tokensModel, let eth = tokens.first(where: { $0.contract == "0x" }) else {
+            guard let tokens = tokensModel, let eth = tokens.first(where: { $0 == etherToken }) else {
                 return
             }
             var ticker = storage.coinTicker(for: eth)

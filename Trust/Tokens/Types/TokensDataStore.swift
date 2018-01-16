@@ -22,15 +22,6 @@ class TokensDataStore {
         return GetBalanceCoordinator(web3: self.web3)
     }()
     private let provider = TrustProviderFactory.makeProvider()
-    private lazy var ethToken = TokenObject(
-        contract: "0x",
-        name: config.server.name,
-        symbol: config.server.symbol,
-        decimals: config.server.decimals,
-        value: "0",
-        isCustom: false,
-        type: .ether
-    )
 
     let account: Wallet
     let config: Config
@@ -42,6 +33,18 @@ class TokensDataStore {
     //We should refresh prices every 5 minutes.
     let intervalToRefresh = 300.0
     var tokensModel: Subscribable<[TokenObject]> = Subscribable(nil)
+
+    static func etherToken(for config: Config) -> TokenObject {
+        return TokenObject(
+            contract: "0x0000000000000000000000000000000000000000",
+            name: config.server.name,
+            symbol: config.server.symbol,
+            decimals: config.server.decimals,
+            value: "0",
+            isCustom: false,
+            type: .ether
+        )
+    }
 
     init(
         realm: Realm,
@@ -58,8 +61,9 @@ class TokensDataStore {
     }
     private func addEthToken() {
         //Check if we have previos values.
-        if objects.first(where: { $0.contract == ethToken.contract }) == nil {
-            add(tokens: [ethToken])
+        let etherToken = TokensDataStore.etherToken(for: config)
+        if objects.first(where: { $0 == etherToken }) == nil {
+            add(tokens: [etherToken])
         }
     }
 
@@ -123,7 +127,8 @@ class TokensDataStore {
             updateDelegate()
             return
         }
-        let updateTokens = enabledObject.filter { $0.contract != ethToken.contract }
+        let etherToken = TokensDataStore.etherToken(for: config)
+        let updateTokens = enabledObject.filter { $0 != etherToken }
         var count = 0
         for tokenObject in updateTokens {
             guard let contract = Address(string: tokenObject.contract) else { return }
@@ -141,7 +146,7 @@ class TokensDataStore {
                         guard let `self` = self else { return }
                         switch result {
                         case .success(let balance):
-                            self.update(token: self.objects.first (where: { $0.contract == self.ethToken.contract })!, action: .value(balance.value))
+                            self.update(token: self.objects.first (where: { $0 == etherToken })!, action: .value(balance.value))
                             self.updateDelegate()
                         case .failure: break
                         }

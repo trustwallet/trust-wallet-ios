@@ -72,7 +72,7 @@ class InCoordinator: Coordinator {
         web3.start()
         let realm = self.realm(for: migration.config)
         let tokensStorage = TokensDataStore(realm: realm, account: account, config: config, web3: web3)
-        let balance =  BalanceCoordinator(account: account, storage: tokensStorage)
+        let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
         let session = WalletSession(
             account: account,
             config: config,

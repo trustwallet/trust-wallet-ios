@@ -5,11 +5,6 @@ import RealmSwift
 import BigInt
 import TrustKeystore
 
-enum TokenType {
-    case ether
-    case token
-}
-
 class TokenObject: Object {
     @objc dynamic var contract: String = ""
     @objc dynamic var name: String = ""
@@ -18,6 +13,7 @@ class TokenObject: Object {
     @objc dynamic var value: String = ""
     @objc dynamic var isCustom: Bool = false
     @objc dynamic var isDisabled: Bool = false
+    @objc dynamic var internalType: Int = TokenType.ether.rawValue
 
     convenience init(
         contract: String = "",
@@ -37,7 +33,7 @@ class TokenObject: Object {
         self.value = value
         self.isCustom = isCustom
         self.isDisabled = isDisabled
-        self.type = type
+        self.internalType = type.rawValue
     }
 
     var address: Address {
@@ -48,7 +44,9 @@ class TokenObject: Object {
         return BigInt(value) ?? BigInt()
     }
 
-    var type: TokenType = .token
+    var type: TokenType {
+        return TokenType(int: internalType)
+    }
 
     override static func primaryKey() -> String? {
         return "contract"
@@ -56,5 +54,10 @@ class TokenObject: Object {
 
     override static func ignoredProperties() -> [String] {
         return ["type"]
+    }
+
+    override func isEqual(_ object: Any?) -> Bool {
+        guard let object = object as? TokenObject else { return false }
+        return object.contract == self.contract
     }
 }

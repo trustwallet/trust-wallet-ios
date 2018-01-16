@@ -86,6 +86,7 @@ extension TokensCoordinator: TokensViewControllerDelegate {
             delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
         case .token:
             delegate?.didPress(for: .send(type: .token(token)), in: self)
+        case .unknown: break
         }
     }
 
