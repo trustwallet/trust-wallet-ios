@@ -2,6 +2,7 @@
 
 import Foundation
 import RealmSwift
+import TrustKeystore
 
 class LocalizedOperationObject: Object {
     @objc dynamic var from: String = ""
@@ -42,10 +43,15 @@ class LocalizedOperationObject: Object {
 extension LocalizedOperationObject {
     static func from(operations: [LocalizedOperation]?) -> [LocalizedOperationObject] {
         guard let operations = operations else { return [] }
-        return operations.map { operation in
+        return operations.flatMap { operation in
+            guard
+                let from = Address(string: operation.from),
+                let to = Address(string: operation.to) else {
+                    return .none
+            }
             return LocalizedOperationObject(
-                from: operation.from,
-                to: operation.to,
+                from: from.description,
+                to: to.description,
                 contract: operation.contract.address,
                 type: operation.type.rawValue,
                 value: operation.value,
