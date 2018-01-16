@@ -203,7 +203,7 @@ class SettingsViewController: FormViewController {
                 button.title = NSLocalizedString("settings.emailUs.button.title", value: "Email Us", comment: "")
             }.onCellSelection { _, _  in
                 self.sendUsEmail()
-            }.cellSetup { [unowned self] cell, _ in
+            }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_email()
             }
 
