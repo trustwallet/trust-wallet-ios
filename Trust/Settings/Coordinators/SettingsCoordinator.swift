@@ -5,7 +5,6 @@ import TrustKeystore
 import UIKit
 
 protocol SettingsCoordinatorDelegate: class {
-    func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator)
     func didRestart(with account: Wallet, in coordinator: SettingsCoordinator)
     func didUpdateAccounts(in coordinator: SettingsCoordinator)
     func didCancel(in coordinator: SettingsCoordinator)
@@ -56,6 +55,10 @@ class SettingsCoordinator: Coordinator {
         addCoordinator(coordinator)
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
+
+    func restart(for wallet: Wallet) {
+        delegate?.didRestart(with: session.account, in: self)
+    }
 }
 
 extension SettingsCoordinator: SettingsViewControllerDelegate {
@@ -63,7 +66,8 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
         switch action {
         case .wallets:
             showAccounts()
-        case .RPCServer: break
+        case .RPCServer:
+            restart(for: session.account)
         case .currency: break
         case .pushNotifications(let enabled):
             switch enabled {
@@ -73,7 +77,6 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
                 pushNotificationsRegistrar.unregister()
             }
         }
-        delegate?.didUpdate(action: action, in: self)
     }
 }
 
@@ -98,6 +101,6 @@ extension SettingsCoordinator: AccountsCoordinatorDelegate {
     func didSelectAccount(account: Wallet, in coordinator: AccountsCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
-        delegate?.didRestart(with: account, in: self)
+        restart(for: session.account)
     }
 }

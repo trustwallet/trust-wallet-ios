@@ -231,18 +231,6 @@ extension InCoordinator: TransactionCoordinatorDelegate {
 }
 
 extension InCoordinator: SettingsCoordinatorDelegate {
-    func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator) {
-        switch action {
-        case .wallets: break
-        case .RPCServer, .currency:
-            removeCoordinator(coordinator)
-            guard let transactionCoordinator = transactionCoordinator else { return }
-            restart(for: transactionCoordinator.session.account, in: transactionCoordinator)
-        case .pushNotifications:
-            break
-        }
-    }
-
     func didCancel(in coordinator: SettingsCoordinator) {
         removeCoordinator(coordinator)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
