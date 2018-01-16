@@ -196,8 +196,7 @@ class SendViewController: FormViewController {
         let transaction = UnconfirmedTransaction(
             transferType: transferType,
             value: value,
-            address: address,
-            account: account,
+            to: address,
             chainID: session.config.chainID,
             data: data
         )

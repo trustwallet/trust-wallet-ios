@@ -10,7 +10,7 @@ import APIKit
 public struct PreviewTransaction {
     let value: BigInt
     let account: Account
-    let address: Address
+    let address: Address?
     let contract: Address?
     let nonce: Int
     let data: Data
@@ -66,7 +66,7 @@ class TransactionConfigurator {
             )
             completion(.success(()))
         case .token:
-            session.web3.request(request: ContractERC20Transfer(amount: transaction.value, address: transaction.address.address)) { [unowned self] result in
+            session.web3.request(request: ContractERC20Transfer(amount: transaction.value, address: transaction.to!.address)) { [unowned self] result in
                 switch result {
                 case .success(let res):
                     let data = Data(hex: res.drop0x)
@@ -94,7 +94,7 @@ class TransactionConfigurator {
     }
 
     func estimateGasLimit() {
-        let request = EstimateGasRequest(to: transaction.address.address, data: self.configuration.data)
+        let request = EstimateGasRequest(to: transaction.to, data: self.configuration.data)
         Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
@@ -120,8 +120,8 @@ class TransactionConfigurator {
     func previewTransaction() -> PreviewTransaction {
         return PreviewTransaction(
             value: transaction.value,
-            account: transaction.account,
-            address: transaction.address,
+            account: account,
+            address: transaction.to,
             contract: .none,
             nonce: 0,
             data: configuration.data,
@@ -139,9 +139,9 @@ class TransactionConfigurator {
             case .token, .exchange: return 0
             }
         }()
-        let address: Address = {
+        let address: Address? = {
             switch transaction.transferType {
-            case .ether, .exchange: return transaction.address
+            case .ether, .exchange: return transaction.to
             case .token(let token): return token.address
             }
         }()

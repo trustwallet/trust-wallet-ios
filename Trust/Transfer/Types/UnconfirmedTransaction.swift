@@ -7,8 +7,7 @@ import TrustKeystore
 struct UnconfirmedTransaction {
     let transferType: TransferType
     let value: BigInt
-    let address: Address
-    let account: Account
+    let to: Address?
     let chainID: Int
     let data: Data?
 }

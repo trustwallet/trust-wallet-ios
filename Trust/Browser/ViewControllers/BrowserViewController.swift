@@ -27,7 +27,12 @@ enum Method: String, Decodable {
     case signTransaction
     case sign
     case sendTransaction
+    case unknown
     //case signMessage
+
+    init(string: String) {
+        self = Method(string: string)
+    }
 }
 
 protocol BrowserViewControllerDelegate: class {
@@ -168,7 +173,6 @@ extension BrowserViewController: WKScriptMessageHandler {
             
             return
         }
-
 
         guard
             let body = message.body as? [String: AnyObject],

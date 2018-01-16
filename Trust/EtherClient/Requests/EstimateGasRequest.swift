@@ -2,11 +2,12 @@
 
 import Foundation
 import JSONRPCKit
+import TrustKeystore
 
 struct EstimateGasRequest: JSONRPCKit.Request {
     typealias Response = String
 
-    let to: String
+    let to: Address?
     let data: Data
 
     var method: String {
