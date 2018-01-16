@@ -44,7 +44,6 @@ class TokensDataStore {
     var tokensModel: Subscribable<[TokenObject]> = Subscribable(nil)
 
     init(
-        session: WalletSession,
         realm: Realm,
         account: Wallet,
         config: Config,

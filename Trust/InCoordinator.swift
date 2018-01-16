@@ -69,7 +69,8 @@ class InCoordinator: Coordinator {
             web3.start()
             return web3
         }()
-        let tokensStorage = TokensDataStore(account: account, config: config, web3: web3, configuration: RealmConfiguration.configuration(for: account, chainID: config.chainID))
+        let realm = try! Realm()
+        let tokensStorage = TokensDataStore(realm: realm, account: account, config: config, web3: web3, configuration: RealmConfiguration.configuration(for: account, chainID: config.chainID))
         let balance =  BalanceCoordinator(account: account, storage: tokensStorage)
         let session = WalletSession(
             account: account,
@@ -77,12 +78,7 @@ class InCoordinator: Coordinator {
             web3: web3,
             balanceCoordinator: balance
         )
-        let tokensStorage = TokensDataStore(
-            session: session,
-            realm: realm
-        )
         MigrationInitializer(account: account, chainID: config.chainID).perform()
-        let realm = try! Realm()
         let transactionsStorage = TransactionsStorage(
             realm: realm
         )
