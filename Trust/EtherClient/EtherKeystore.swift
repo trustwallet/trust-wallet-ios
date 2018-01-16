@@ -292,7 +292,9 @@ open class EtherKeystore: Keystore {
                 return .failure(KeystoreError.failedToSignMessage)
         }
         do {
-            let data = try keyStore.signHash(hash, account: account, password: password)
+            var data = try keyStore.signHash(hash, account: account, password: password)
+            // TODO: Make it configurable, instead of overriding last byte.
+            data[64] += 27
             return .success(data)
         } catch {
             return .failure(KeystoreError.failedToSignMessage)
