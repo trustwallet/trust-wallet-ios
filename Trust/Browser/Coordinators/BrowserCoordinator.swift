@@ -4,6 +4,10 @@ import Foundation
 import UIKit
 import BigInt
 
+protocol BrowserCoordinatorDelegate: class {
+    func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator)
+}
+
 class BrowserCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     let session: WalletSession
@@ -14,6 +18,7 @@ class BrowserCoordinator: Coordinator {
         controller.delegate = self
         return controller
     }()
+    weak var delegate: BrowserCoordinatorDelegate?
 
     init(
         navigationController: UINavigationController = NavigationController(),
@@ -68,6 +73,7 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
 
 extension BrowserCoordinator: ConfirmPaymentViewControllerDelegate {
     func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController) {
+        delegate?.didSentTransaction(transaction: transaction, in: self)
         navigationController.dismiss(animated: true, completion: nil)
         rootViewController.notifyFinish(transaction: transaction)
     }

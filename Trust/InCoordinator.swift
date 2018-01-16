@@ -105,6 +105,7 @@ class InCoordinator: Coordinator {
 
         if inCoordinatorViewModel.browserAvailable {
             let coordinator = BrowserCoordinator(session: session, keystore: keystore)
+            coordinator.delegate = self
             coordinator.start()
             coordinator.rootViewController.tabBarItem = UITabBarItem(
                 title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
@@ -210,6 +211,10 @@ class InCoordinator: Coordinator {
         case .watch: break
         }
     }
+
+    private func handlePendingTransaction(transaction: SentTransaction) {
+        transactionCoordinator?.dataCoordinator.add(transaction: transaction)
+    }
 }
 
 extension InCoordinator: TransactionCoordinatorDelegate {
@@ -262,11 +267,17 @@ extension InCoordinator: TokensCoordinatorDelegate {
 
 extension InCoordinator: PaymentCoordinatorDelegate {
     func didCreatePendingTransaction(transaction: SentTransaction, in coordinator: PaymentCoordinator) {
-        transactionCoordinator?.dataCoordinator.add(transaction: transaction)
+        handlePendingTransaction(transaction: transaction)
     }
 
     func didCancel(in coordinator: PaymentCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
+    }
+}
+
+extension InCoordinator: BrowserCoordinatorDelegate {
+    func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator) {
+        handlePendingTransaction(transaction: transaction)
     }
 }
