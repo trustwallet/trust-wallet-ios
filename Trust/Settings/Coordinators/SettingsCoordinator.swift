@@ -57,7 +57,7 @@ class SettingsCoordinator: Coordinator {
     }
 
     func restart(for wallet: Wallet) {
-        delegate?.didRestart(with: session.account, in: self)
+        delegate?.didRestart(with: wallet, in: self)
     }
 }
 
@@ -101,6 +101,6 @@ extension SettingsCoordinator: AccountsCoordinatorDelegate {
     func didSelectAccount(account: Wallet, in coordinator: AccountsCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
-        restart(for: session.account)
+        restart(for: account)
     }
 }
