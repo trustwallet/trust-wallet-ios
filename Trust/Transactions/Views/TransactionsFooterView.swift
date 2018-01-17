@@ -21,7 +21,7 @@ class TransactionsFooterView: UIView {
         requestButton.layer.cornerRadius = 6
         requestButton.backgroundColor = Colors.blue
         requestButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
-        requestButton.setTitle(NSLocalizedString("transactions.myAddress", value: "My Address", comment: ""), for: .normal)
+        requestButton.setTitle(NSLocalizedString("transactions.myAddress", value: "Receive", comment: ""), for: .normal)
         return requestButton
     }()
 
