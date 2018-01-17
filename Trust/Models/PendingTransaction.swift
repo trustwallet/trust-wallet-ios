@@ -46,15 +46,14 @@ extension Transaction {
         transaction: PendingTransaction
     ) -> Transaction? {
         guard
-            let from = Address(string: transaction.from),
-            let to = Address(string: transaction.to) else {
+            let from = Address(string: transaction.from) else {
                 return .none
         }
         return Transaction(
             id: transaction.hash,
             blockNumber: Int(transaction.blockNumber) ?? 0,
             from: from.description,
-            to: to.description,
+            to: transaction.to,
             value: transaction.value,
             gas: transaction.gas,
             gasPrice: transaction.gasPrice,

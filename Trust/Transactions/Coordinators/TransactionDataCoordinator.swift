@@ -75,7 +75,7 @@ class TransactionDataCoordinator {
         }
     }
 
-    func update(chainID: Int, owner: Address, items: [PendingTransaction]) {
+    func update(items: [PendingTransaction]) {
         let transactionItems: [Transaction] = items.flatMap { .from(transaction: $0) }
         update(items: transactionItems)
     }
@@ -89,7 +89,7 @@ class TransactionDataCoordinator {
                 guard let `self` = self else { return }
                 switch result {
                 case .success(let transaction):
-                    self.update(chainID: self.config.chainID, owner: self.session.account.address, items: [transaction])
+                    self.update(items: [transaction])
                 case .failure(let error):
                     switch error {
                     case .responseError(let error):
