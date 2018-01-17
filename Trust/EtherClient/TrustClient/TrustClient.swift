@@ -70,6 +70,10 @@ extension TrustService: TargetType {
     }
 
     var headers: [String: String]? {
-        return ["Content-type": "application/json"]
+        return [
+            "Content-type": "application/json",
+            "client": Bundle.main.bundleIdentifier ?? "",
+            "client-build" : Bundle.main.buildNumber ?? "",
+        ]
     }
 }
