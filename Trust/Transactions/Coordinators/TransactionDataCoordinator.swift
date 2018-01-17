@@ -53,9 +53,8 @@ class TransactionDataCoordinator {
 
     @objc func fetchTransactions() {
         let startBlock: Int = {
-            guard let transaction = storage.objects.first, storage.objects.count >= 30 else {
-                return 1
-            }
+            let completedTransaction = storage.objects.filter { $0.state == .completed }
+            guard let transaction = completedTransaction.first else { return 1 }
             return transaction.blockNumber - 2000
         }()
         trustProvider.request(.getTransactions(address: session.account.address.address, startBlock: startBlock)) { [weak self] result in
