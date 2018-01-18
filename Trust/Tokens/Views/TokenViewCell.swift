@@ -96,8 +96,7 @@ class TokenViewCell: UITableViewCell {
 
         symbolImageView.kf.setImage(
             with: viewModel.imageUrl,
-            placeholder: viewModel.placeHolder,
-            options: [.fromMemoryCacheOrRefresh]
+            placeholder: viewModel.placeHolder
         )
 
         backgroundColor = viewModel.backgroundColor
