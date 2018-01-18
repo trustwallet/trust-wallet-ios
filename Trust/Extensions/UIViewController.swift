@@ -12,35 +12,41 @@ enum ConfirmationError: LocalizedError {
 
 extension UIViewController {
     func displaySuccess(title: String? = .none, message: String? = .none) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-        present(alert, animated: true, completion: nil)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: UIAlertActionStyle.default, handler: nil))
+        present(alertController, animated: true, completion: nil)
     }
 
     func displayError(error: Error) {
-        let alert = UIAlertController(title: error.prettyError, message: "", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-        present(alert, animated: true, completion: nil)
+        let alertController = UIAlertController(title: error.prettyError, message: "", preferredStyle: UIAlertControllerStyle.alert)
+        alertController.popoverPresentationController?.sourceView = self.view
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: UIAlertActionStyle.default, handler: nil))
+        present(alertController, animated: true, completion: nil)
     }
 
     func confirm(
         title: String? = .none,
         message: String? = .none,
-        okTitle: String = NSLocalizedString("generic.Ok", value: "Ok", comment: ""),
+        okTitle: String = NSLocalizedString("OK", value: "OK", comment: ""),
         okStyle: UIAlertActionStyle = .default,
         completion: @escaping (Result<Void, ConfirmationError>) -> Void
     ) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.popoverPresentationController?.sourceView = self.view
         alertController.addAction(UIAlertAction(title: okTitle, style: okStyle, handler: { _ in
             completion(.success(()))
         }))
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Generic.Cancel", value: "Cancel", comment: ""), style: .cancel, handler: { _ in
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel, handler: { _ in
             completion(.failure(ConfirmationError.cancel))
         }))
         self.present(alertController, animated: true, completion: nil)
     }
 
-    func displayLoading(text: String = "Loading...", animated: Bool = true) {
+    func displayLoading(
+        text: String = String(format: NSLocalizedString("loading.dots", value: "Loading %@", comment: ""), "..."),
+        animated: Bool = true
+    ) {
         let hud = MBProgressHUD.showAdded(to: self.view, animated: animated)
         hud.label.text = text
     }

@@ -1,14 +1,16 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
-import Geth
+import BigInt
+import TrustKeystore
 
 public struct SignTransaction {
-    let amount: GethBigInt
+    let value: BigInt
     let account: Account
-    let address: Address
+    let to: Address?
     let nonce: Int
-    let speed: TransactionSpeed
     let data: Data
-    let chainID: GethBigInt
+    let gasPrice: BigInt
+    let gasLimit: BigInt
+    let chainID: Int
 }

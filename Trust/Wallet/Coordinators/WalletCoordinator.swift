@@ -1,10 +1,11 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 import UIKit
 
 protocol WalletCoordinatorDelegate: class {
-    func didFinish(with account: Account, in coordinator: WalletCoordinator)
+    func didFinish(with account: Wallet, in coordinator: WalletCoordinator)
     func didCancel(in coordinator: WalletCoordinator)
 }
 
@@ -76,7 +77,7 @@ class WalletCoordinator: Coordinator {
         delegate?.didCancel(in: self)
     }
 
-    func didCreateAccount(account: Account) {
+    func didCreateAccount(account: Wallet) {
         delegate?.didFinish(with: account, in: self)
     }
 
@@ -103,7 +104,7 @@ extension WalletCoordinator: WelcomeViewControllerDelegate {
 }
 
 extension WalletCoordinator: ImportWalletViewControllerDelegate {
-    func didImportAccount(account: Account, in viewController: ImportWalletViewController) {
+    func didImportAccount(account: Wallet, in viewController: ImportWalletViewController) {
         didCreateAccount(account: account)
     }
 }
@@ -122,7 +123,7 @@ extension WalletCoordinator: BackupViewControllerDelegate {
         ) { result in
             switch result {
             case .success:
-                self.delegate?.didFinish(with: account, in: self)
+                self.delegate?.didFinish(with: Wallet(type: .real(account)), in: self)
             case .failure:
                 break
             }
@@ -137,6 +138,6 @@ extension WalletCoordinator: BackupCoordinatorDelegate {
 
     func didFinish(account: Account, in coordinator: BackupCoordinator) {
         removeCoordinator(coordinator)
-        didCreateAccount(account: account)
+        didCreateAccount(account: Wallet(type: .real(account)))
     }
 }

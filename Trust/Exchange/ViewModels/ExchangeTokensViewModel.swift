@@ -97,7 +97,7 @@ struct ExchangeTokensViewModel {
 
     var availableBalance: String {
         guard let balance = balance else { return "" }
-        return balance.amount
+        return balance.amountFull
     }
 
     var attributedAvailableBalance: NSAttributedString {

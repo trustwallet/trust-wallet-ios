@@ -4,27 +4,35 @@ import Foundation
 import UIKit
 import StatefulViewController
 import Result
+import TrustKeystore
 
 protocol TokensViewControllerDelegate: class {
-    func didSelect(token: Token, in viewController: UIViewController)
+    func didPressAddToken( in viewController: UIViewController)
+    func didSelect(token: TokenObject, in viewController: UIViewController)
+    func didDelete(token: TokenObject, in viewController: UIViewController)
 }
 
 class TokensViewController: UIViewController {
 
-    private lazy var dataStore: TokensDataStore = {
-        return .init(account: self.account)
-    }()
+    private let dataStore: TokensDataStore
 
-    var viewModel: TokensViewModel = TokensViewModel(tokens: [])
-    let account: Account
+    var viewModel: TokensViewModel = TokensViewModel(tokens: [], tickers: .none) {
+        didSet {
+            refreshView(viewModel: viewModel)
+        }
+    }
+    let account: Wallet
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
     weak var delegate: TokensViewControllerDelegate?
 
     init(
-        account: Account
+        account: Wallet,
+        dataStore: TokensDataStore
     ) {
         self.account = account
+        self.dataStore = dataStore
+
         tableView = UITableView(frame: .zero, style: .plain)
 
         super.init(nibName: nil, bundle: nil)
@@ -36,7 +44,6 @@ class TokensViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
-        tableView.rowHeight = 72
         view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
@@ -52,17 +59,15 @@ class TokensViewController: UIViewController {
         errorView = ErrorView(onRetry: fetch)
         loadingView = LoadingView()
         emptyView = EmptyView(
-            title: NSLocalizedString("emptyView.noTokens", value: "You haven't received any tokens yet!", comment: ""),
+            title: NSLocalizedString("emptyView.noTokens.label.title", value: "You haven't received any tokens yet!", comment: ""),
             onRetry: fetch
         )
 
-        title = viewModel.title
-        view.backgroundColor = viewModel.backgroundColor
+        refreshView(viewModel: viewModel)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         fetch()
     }
 
@@ -72,12 +77,41 @@ class TokensViewController: UIViewController {
     }
 
     func fetch() {
-        dataStore.fetch()
         startLoading()
+        dataStore.fetch()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func refreshView(viewModel: TokensViewModel) {
+        title = viewModel.title
+        view.backgroundColor = viewModel.backgroundColor
+
+        let header = TokensHeaderView(frame: .zero)
+        header.amountLabel.text = viewModel.headerBalance
+        header.amountLabel.textColor = viewModel.headerBalanceTextColor
+        header.backgroundColor = viewModel.headerBackgroundColor
+        header.amountLabel.font = viewModel.headerBalanceFont
+        header.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
+        tableView.tableHeaderView = header
+
+        let footer = TokensFooterView(frame: .zero)
+        footer.textLabel.text = viewModel.footerTitle
+        footer.textLabel.font = viewModel.footerTextFont
+        footer.textLabel.textColor = viewModel.footerTextColor
+        footer.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
+
+        footer.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(missingToken))
+        )
+
+        tableView.tableFooterView = footer
+    }
+
+    @objc func missingToken() {
+        delegate?.didPressAddToken(in: self)
     }
 }
 
@@ -93,6 +127,20 @@ extension TokensViewController: UITableViewDelegate {
 
         let token = viewModel.item(for: indexPath.row, section: indexPath.section)
         delegate?.didSelect(token: token, in: self)
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return viewModel.canDelete(for: indexPath.row, section: indexPath.section)
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            delegate?.didDelete(token: viewModel.item(for: indexPath.row, section: indexPath.section), in: self)
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
 }
 
@@ -120,8 +168,14 @@ extension TokensViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let token = viewModel.item(for: indexPath.row, section: indexPath.section)
+
         let cell = TokenViewCell(style: .default, reuseIdentifier: TokenViewCell.identifier)
-        cell.configure(viewModel: .init(token: token))
+        cell.configure(
+            viewModel: .init(
+                token: token,
+                ticker: viewModel.ticker(for: token)
+            )
+        )
         return cell
     }
 

@@ -1,15 +1,16 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 import UIKit
 
 struct RequestViewModel {
 
-    let account: Account
+    let account: Wallet
     let config: Config
 
     init(
-        account: Account,
+        account: Wallet,
         config: Config
     ) {
         self.account = account
@@ -22,24 +23,24 @@ struct RequestViewModel {
 
     var shareMyAddressText: String {
         return String(
-            format: NSLocalizedString("Send.MyEthereumAddressIs", value: "My %@ address is: %@", comment: ""),
+            format: NSLocalizedString("request.myAddressIs.label.title", value: "My %@ address is: %@", comment: ""),
             config.server.name, myAddressText
         )
     }
 
     var headlineText: String {
         return String(
-            format: NSLocalizedString("request.headlineTitle", value: "My Public %@ wallet address", comment: ""),
+            format: NSLocalizedString("request.myPublicaddress.label.title", value: "My Public %@ wallet address", comment: ""),
             config.server.name
         )
     }
 
     var copyWalletText: String {
-        return NSLocalizedString("request.copyWalletText", value: "Copy wallet address", comment: "")
+        return NSLocalizedString("request.copyWallet.button.title", value: "Copy wallet address", comment: "")
     }
 
     var addressCopiedText: String {
-        return NSLocalizedString("request.addressCopiedText", value: "Address copied", comment: "")
+        return NSLocalizedString("request.addressCopied.title", value: "Address copied", comment: "")
     }
 
     var backgroundColor: UIColor {

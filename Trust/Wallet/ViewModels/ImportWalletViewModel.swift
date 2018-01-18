@@ -5,6 +5,6 @@ import Foundation
 struct ImportWalletViewModel {
 
     var title: String {
-        return "Import Wallet"
+        return NSLocalizedString("import.navigation.title", value: "Import Wallet", comment: "")
     }
 }

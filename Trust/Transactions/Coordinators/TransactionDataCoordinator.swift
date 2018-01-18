@@ -7,6 +7,7 @@ import APIKit
 import RealmSwift
 import Result
 import Moya
+import TrustKeystore
 
 enum TransactionError: Error {
     case failedToFetch
@@ -29,7 +30,7 @@ class TransactionDataCoordinator {
 
     weak var delegate: TransactionDataCoordinatorDelegate?
 
-    private let trustProvider = MoyaProvider<TrustService>()
+    private let trustProvider = TrustProviderFactory.makeProvider()
 
     init(
         session: WalletSession,
@@ -52,25 +53,18 @@ class TransactionDataCoordinator {
 
     @objc func fetchTransactions() {
         let startBlock: Int = {
-            guard let transaction = storage.objects.first, storage.objects.count >= 30 else {
-                return 1
-            }
+            let completedTransaction = storage.objects.filter { $0.state == .completed }
+            guard let transaction = completedTransaction.first else { return 1 }
             return transaction.blockNumber - 2000
         }()
-
-        trustProvider.request(.getTransactions(address: session.account.address.address, startBlock: startBlock)) { result in
+        trustProvider.request(.getTransactions(address: session.account.address.address, startBlock: startBlock)) { [weak self] result in
+            guard let `self` = self else { return }
             switch result {
             case .success(let response):
                 do {
-                    let transactions = try response.map(ArrayResponse<RawTransaction>.self).docs
-                    let chainID = self.config.chainID
-                    let transactions2: [Transaction] = transactions.map { .from(
-                        chainID: chainID,
-                        owner: self.session.account.address,
-                        transaction: $0
-                        )
-                    }
-                    self.update(items: transactions2)
+                    let rawTransactions = try response.map(ArrayResponse<RawTransaction>.self).docs
+                    let transactions: [Transaction] = rawTransactions.flatMap { .from(transaction: $0) }
+                    self.update(items: transactions)
                 } catch {
                     self.handleError(error: error)
                 }
@@ -80,18 +74,38 @@ class TransactionDataCoordinator {
         }
     }
 
+    func update(items: [PendingTransaction]) {
+        let transactionItems: [Transaction] = items.flatMap { .from(transaction: $0) }
+        update(items: transactionItems)
+    }
+
     func fetchPendingTransactions() {
-        Session.send(EtherServiceRequest(batch: BatchFactory().create(GetBlockByNumberRequest(block: "pending")))) { [weak self] result in
-            guard let `self` = self else { return }
-            switch result {
-            case .success(let block):
-                for item in block.transactions {
-                    if item.to == self.session.account.address.address || item.from == self.session.account.address.address {
-                        self.update(chainID: self.config.chainID, owner: self.session.account.address, items: [item])
+        let pendingTransactions = storage.objects.filter { $0.state == TransactionState.pending }
+
+        for transaction in pendingTransactions {
+            let request = GetTransactionRequest(hash: transaction.id)
+            Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { [weak self] result in
+                guard let `self` = self else { return }
+                switch result {
+                case .success(let transaction):
+                    self.update(items: [transaction])
+                case .failure(let error):
+                    switch error {
+                    case .responseError(let error):
+                        // TODO: Think about the logic to handle pending transactions.
+                        guard let error = error as? JSONRPCError else { return }
+                        switch error {
+                        case .responseError(let code, let message, _):
+                            NSLog("code: \(code), message \(message)")
+                            self.delete(transactions: [transaction])
+                        case .resultObjectParseError:
+                            self.delete(transactions: [transaction])
+                        default: break
+                        }
+
+                    default: break
                     }
                 }
-            case .failure(let error):
-                self.handleError(error: error)
             }
         }
     }
@@ -109,17 +123,26 @@ class TransactionDataCoordinator {
         handleUpdateItems()
     }
 
-    func update(chainID: Int, owner: Address, items: [ParsedTransaction]) {
-        let transactionItems: [Transaction] = items.map { .from(chainID: chainID, owner: owner, transaction: $0) }
-        update(items: transactionItems)
-    }
-
     func handleError(error: Error) {
-        delegate?.didUpdate(result: .failure(TransactionError.failedToFetch))
+        //delegate?.didUpdate(result: .failure(TransactionError.failedToFetch))
+        // Avoid showing an error on failed request, instead show cached transactions.
+        handleUpdateItems()
     }
 
     func handleUpdateItems() {
-        delegate?.didUpdate(result: .success(self.storage.objects))
+        delegate?.didUpdate(result: .success(storage.objects))
+    }
+
+    func add(transaction: SentTransaction) {
+        storage.add([
+            Transaction(id: transaction.id, date: Date(), state: .pending),
+        ])
+        handleUpdateItems()
+    }
+
+    func delete(transactions: [Transaction]) {
+        storage.delete(transactions)
+        handleUpdateItems()
     }
 
     func stop() {

@@ -1,36 +1,35 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 
 enum RefreshType {
     case balance
 }
 
 class WalletSession {
-    let account: Account
+    let account: Wallet
     let web3: Web3Swift
+    let balanceCoordinator: BalanceCoordinator
     let config: Config
     let chainState: ChainState
     var balance: Balance? {
         return balanceCoordinator.balance
     }
 
-    private lazy var balanceCoordinator: BalanceCoordinator = {
-        return BalanceCoordinator(session: self)
-    }()
-
     var balanceViewModel: Subscribable<BalanceBaseViewModel> = Subscribable(nil)
 
     init(
-        account: Account,
-        config: Config
+        account: Wallet,
+        config: Config,
+        web3: Web3Swift,
+        balanceCoordinator: BalanceCoordinator
     ) {
         self.account = account
         self.config = config
-        self.web3 = Web3Swift(url: config.rpcURL)
+        self.web3 = web3
         self.chainState = ChainState(config: config)
-        self.web3.start()
-        self.balanceCoordinator.start()
+        self.balanceCoordinator = balanceCoordinator
         self.balanceCoordinator.delegate = self
 
         self.chainState.start()
@@ -39,7 +38,7 @@ class WalletSession {
     func refresh(_ type: RefreshType) {
         switch type {
         case .balance:
-            balanceCoordinator.fetch()
+            balanceCoordinator.refresh()
         }
     }
 

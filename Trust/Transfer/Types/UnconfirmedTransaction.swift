@@ -2,9 +2,11 @@
 
 import Foundation
 import BigInt
+import TrustKeystore
 
 struct UnconfirmedTransaction {
     let transferType: TransferType
     let value: BigInt
-    let address: Address
+    let to: Address?
+    let data: Data?
 }

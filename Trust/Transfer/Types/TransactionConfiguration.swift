@@ -1,11 +1,10 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import BigInt
 
 struct TransactionConfiguration {
-    let speed: TransactionSpeed
-
-    init(speed: TransactionSpeed = .regular) {
-        self.speed = speed
-    }
+    let gasPrice: BigInt
+    let gasLimit: BigInt
+    let data: Data
 }

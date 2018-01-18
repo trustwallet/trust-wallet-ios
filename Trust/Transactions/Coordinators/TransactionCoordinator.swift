@@ -3,11 +3,11 @@
 import Foundation
 import UIKit
 import Result
+import TrustKeystore
 
 protocol TransactionCoordinatorDelegate: class {
+    func didPress(for type: PaymentFlow, in coordinator: TransactionCoordinator)
     func didCancel(in coordinator: TransactionCoordinator)
-    func didRestart(with account: Account, in coordinator: TransactionCoordinator)
-    func didUpdateAccounts(in coordinator: TransactionCoordinator)
 }
 
 class TransactionCoordinator: Coordinator {
@@ -29,6 +29,7 @@ class TransactionCoordinator: Coordinator {
     weak var delegate: TransactionCoordinatorDelegate?
 
     let session: WalletSession
+    let tokensStorage: TokensDataStore
     let navigationController: UINavigationController
     var coordinators: [Coordinator] = []
 
@@ -36,12 +37,14 @@ class TransactionCoordinator: Coordinator {
         session: WalletSession,
         navigationController: UINavigationController = NavigationController(),
         storage: TransactionsStorage,
-        keystore: Keystore
+        keystore: Keystore,
+        tokensStorage: TokensDataStore
     ) {
         self.session = session
         self.keystore = keystore
         self.navigationController = navigationController
         self.storage = storage
+        self.tokensStorage = tokensStorage
 
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
     }
@@ -50,40 +53,28 @@ class TransactionCoordinator: Coordinator {
         navigationController.viewControllers = [rootViewController]
     }
 
-    private func makeTransactionsController(with account: Account) -> TransactionsViewController {
+    private func makeTransactionsController(with account: Wallet) -> TransactionsViewController {
         let viewModel = TransactionsViewModel()
         let controller = TransactionsViewController(
             account: account,
             dataCoordinator: dataCoordinator,
             session: session,
+            tokensStorage: tokensStorage,
             viewModel: viewModel
         )
 
-        let accountsBarButtonItem = UIBarButtonItem(image: R.image.accountsSwitch(), landscapeImagePhone: R.image.accountsSwitch(), style: .done, target: self, action: #selector(showAccounts))
         let rightItems: [UIBarButtonItem] = {
             switch viewModel.isBuyActionAvailable {
             case true:
                 return [
-                    accountsBarButtonItem,
                     UIBarButtonItem(image: R.image.deposit(), landscapeImagePhone: R.image.deposit(), style: .done, target: self, action: #selector(deposit)),
                 ]
-            case false:
-                return [accountsBarButtonItem]
+            case false: return []
             }
         }()
-
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.settings_icon(), landscapeImagePhone: R.image.settings_icon(), style: UIBarButtonItemStyle.done, target: self, action: #selector(showSettings))
         controller.navigationItem.rightBarButtonItems = rightItems
         controller.delegate = self
         return controller
-    }
-
-    @objc func showSettings() {
-        let coordinator = SettingsCoordinator(keystore: keystore)
-        coordinator.delegate = self
-        coordinator.start()
-        addCoordinator(coordinator)
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
     func showTransaction(_ transaction: Transaction) {
@@ -101,18 +92,6 @@ class TransactionCoordinator: Coordinator {
         }
     }
 
-    func showPaymentFlow(for type: PaymentFlow, session: WalletSession) {
-        let coordinator = PaymentCoordinator(
-            flow: type,
-            session: session,
-            keystore: keystore
-        )
-        coordinator.delegate = self
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
-        coordinator.start()
-        addCoordinator(coordinator)
-    }
-
     @objc func didEnterForeground() {
         rootViewController.fetch()
     }
@@ -126,30 +105,15 @@ class TransactionCoordinator: Coordinator {
         session.stop()
     }
 
-    func restart(for account: Account) {
-        delegate?.didRestart(with: account, in: self)
-    }
-
     deinit {
         NotificationCenter.default.removeObserver(self)
-    }
-
-    @objc func showAccounts() {
-        let coordinator = AccountsCoordinator(
-            navigationController: NavigationController(),
-            keystore: keystore
-        )
-        coordinator.delegate = self
-        coordinator.start()
-        addCoordinator(coordinator)
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
     @objc func deposit(sender: UIBarButtonItem) {
         showDeposit(for: session.account, from: sender)
     }
 
-    func showDeposit(for account: Account, from barButtonItem: UIBarButtonItem? = .none) {
+    func showDeposit(for account: Wallet, from barButtonItem: UIBarButtonItem? = .none) {
         let coordinator = DepositCoordinator(
             navigationController: navigationController,
             account: account
@@ -158,78 +122,28 @@ class TransactionCoordinator: Coordinator {
     }
 }
 
-extension TransactionCoordinator: SettingsCoordinatorDelegate {
-    func didUpdate(action: SettingsAction, in coordinator: SettingsCoordinator) {
-        switch action {
-        case .RPCServer:
-            removeCoordinator(coordinator)
-            restart(for: session.account)
-        case .pushNotifications:
-            break
-        case .donate(let address):
-            coordinator.navigationController.dismiss(animated: true) {
-                self.showPaymentFlow(for: .send(type: .ether(destination: address)), session: self.session)
-            }
-            removeCoordinator(coordinator)
-        }
-    }
-
-    func didCancel(in coordinator: SettingsCoordinator) {
-        removeCoordinator(coordinator)
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-    }
-}
-
 extension TransactionCoordinator: TransactionsViewControllerDelegate {
     func didPressSend(in viewController: TransactionsViewController) {
-        showPaymentFlow(for: .send(type: .ether(destination: .none)), session: session)
+        delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
     }
 
     func didPressRequest(in viewController: TransactionsViewController) {
-        showPaymentFlow(for: .request, session: session)
+        delegate?.didPress(for: .request, in: self)
     }
 
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
         showTransaction(transaction)
     }
 
-    func didPressDeposit(for account: Account, in viewController: TransactionsViewController) {
-        showDeposit(for: account)
+    func didPressDeposit(for account: Wallet, sender: UIView, in viewController: TransactionsViewController) {
+        let coordinator = DepositCoordinator(
+            navigationController: navigationController,
+            account: account
+        )
+        coordinator.start(from: sender)
     }
 
     func reset() {
         delegate?.didCancel(in: self)
-    }
-}
-
-extension TransactionCoordinator: PaymentCoordinatorDelegate {
-    func didCancel(in coordinator: PaymentCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
-    }
-}
-
-extension TransactionCoordinator: AccountsCoordinatorDelegate {
-    func didAddAccount(account: Account, in coordinator: AccountsCoordinator) {
-        delegate?.didUpdateAccounts(in: self)
-    }
-
-    func didDeleteAccount(account: Account, in coordinator: AccountsCoordinator) {
-        storage.delete(for: account)
-        delegate?.didUpdateAccounts(in: self)
-        guard !coordinator.accountsViewController.hasAccounts else { return }
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        delegate?.didCancel(in: self)
-    }
-
-    func didCancel(in coordinator: AccountsCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
-    }
-
-    func didSelectAccount(account: Account, in coordinator: AccountsCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
-        delegate?.didRestart(with: account, in: self)
     }
 }

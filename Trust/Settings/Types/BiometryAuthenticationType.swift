@@ -7,9 +7,7 @@ enum BiometryAuthenticationType {
     case touchID
     case faceID
     case none
-}
 
-extension BiometryAuthenticationType {
     var title: String {
         switch self {
         case .faceID: return "FaceID"
@@ -19,13 +17,20 @@ extension BiometryAuthenticationType {
     }
 
     static var current: BiometryAuthenticationType {
-        if #available(iOS 11.0, *) {
-            switch LAContext().biometryType {
-            case .touchID: return .touchID
-            case .faceID: return .faceID
-            case .none: return .none
+        // https://stackoverflow.com/a/46920111
+        let authContext = LAContext()
+        if #available(iOS 11, *) {
+            let _ = authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+            switch authContext.biometryType {
+            case .none:
+                return .none
+            case .touchID:
+                return .touchID
+            case .faceID:
+                return .faceID
             }
+        } else {
+            return authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) ? .touchID : .none
         }
-        return .touchID
     }
 }

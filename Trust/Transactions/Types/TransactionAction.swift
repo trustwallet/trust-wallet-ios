@@ -14,11 +14,9 @@ extension TransactionAction {
         switch actionType {
         case .tokenTransfer:
             let token = Token(
-                address: Address(address: ""),
+                address: nil,
                 name: dict["name"] as? String ?? "",
                 symbol: dict["symbol"] as? String ?? "",
-                totalSupply: dict["totalSupply"] as? String ?? "",
-                balance: dict["balance"] as? Double ?? 0,
                 decimals: dict["decimals"] as? Int ?? 0
             )
             let tokenTransfer = TokenTransfer(

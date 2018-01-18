@@ -9,7 +9,8 @@ class TokensCoordinatorTests: XCTestCase {
         let coordinator = TokensCoordinator(
             navigationController: FakeNavigationController(),
             session: .make(),
-            keystore: FakeKeystore()
+            keystore: FakeKeystore(),
+            tokensStorage: FakeTokensDataStore()
         )
         coordinator.start()
 

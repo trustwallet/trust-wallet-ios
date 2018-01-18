@@ -2,6 +2,9 @@
 
 import Foundation
 import UIKit
+import Result
+import TrustKeystore
+import Result
 
 protocol BackupCoordinatorDelegate: class {
     func didCancel(coordinator: BackupCoordinator)
@@ -30,31 +33,46 @@ class BackupCoordinator: Coordinator {
         export(for: account)
     }
 
-    func finish(completed: Bool) {
-        if completed {
+    func finish(result: Result<Bool, AnyError>) {
+        switch result {
+        case .success:
             delegate?.didFinish(account: account, in: self)
-        } else {
+        case .failure:
             delegate?.didCancel(coordinator: self)
         }
     }
 
-    func presentActivityViewController(for account: Account, password: String, newPassword: String, completion: @escaping (Bool) -> Void) {
-        let result = keystore.export(account: account, password: password, newPassword: newPassword)
-
+    func presentActivityViewController(for account: Account, password: String, newPassword: String, completion: @escaping (Result<Bool, AnyError>) -> Void) {
         navigationController.displayLoading(
-            text: NSLocalizedString("export.presentBackupOptions", value: "Preparing backup options...", comment: "")
+            text: NSLocalizedString("export.presentBackupOptions.label.title", value: "Preparing backup options...", comment: "")
         )
+        keystore.export(account: account, password: password, newPassword: newPassword) { [weak self] result in
+            guard let `self` = self else { return }
+            self.handleExport(result: result, completion: completion)
+        }
+    }
 
+    private func handleExport(result: (Result<String, KeystoreError>), completion: @escaping (Result<Bool, AnyError>) -> Void) {
         switch result {
         case .success(let value):
+            let url = URL(fileURLWithPath: NSTemporaryDirectory().appending("trust_wallet_\(account.address.address).json"))
+            do {
+                try value.data(using: .utf8)!.write(to: url)
+            } catch {
+                return completion(.failure(AnyError(error)))
+            }
+
             let activityViewController = UIActivityViewController(
-                activityItems: [value],
+                activityItems: [url],
                 applicationActivities: nil
             )
-            activityViewController.completionWithItemsHandler = { _, result, _, _ in
-                completion(result)
+            activityViewController.completionWithItemsHandler = { _, result, _, error in
+                do { try FileManager.default.removeItem(at: url)
+            } catch { }
+                completion(.success(result))
             }
             activityViewController.popoverPresentationController?.sourceView = navigationController.view
+            activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
             navigationController.present(activityViewController, animated: true) { [unowned self] in
                 self.navigationController.hideLoading()
             }
@@ -65,15 +83,15 @@ class BackupCoordinator: Coordinator {
     }
 
     func presentShareActivity(for account: Account, password: String, newPassword: String) {
-        self.presentActivityViewController(for: account, password: password, newPassword: newPassword) { completed in
-            self.finish(completed: completed)
+        self.presentActivityViewController(for: account, password: password, newPassword: newPassword) { result in
+            self.finish(result: result)
         }
     }
 
     func export(for account: Account) {
         if let currentPassword = keystore.getPassword(for: account) {
             let verifyController = UIAlertController.askPassword(
-                title: NSLocalizedString("export.enterPasswordWallet", value: "Enter password to backup your wallet", comment: "")
+                title: NSLocalizedString("export.enterPassword.textField.title", value: "Enter password to encrypt your wallet", comment: "")
             ) { result in
                 switch result {
                 case .success(let newPassword):
@@ -89,7 +107,7 @@ class BackupCoordinator: Coordinator {
         } else {
             //FIXME: remove later. for old version, when password were missing in the keychain
             let verifyController = UIAlertController.askPassword(
-                title: NSLocalizedString("export.enterCurrentPasswordWallet", value: "Enter current password to export your wallet", comment: "")
+                title: NSLocalizedString("export.enterCurrentPassword.textField.title", value: "Enter current password to export your wallet", comment: "")
             ) { result in
                 switch result {
                 case .success(let newPassword):

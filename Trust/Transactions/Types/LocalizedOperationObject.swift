@@ -2,52 +2,62 @@
 
 import Foundation
 import RealmSwift
+import TrustKeystore
 
 class LocalizedOperationObject: Object {
-    @objc dynamic var title: String = ""
     @objc dynamic var from: String = ""
     @objc dynamic var to: String = ""
     @objc dynamic var contract: String? = .none
     @objc dynamic var type: String = ""
     @objc dynamic var value: String = ""
+    @objc dynamic var name: String? = .none
     @objc dynamic var symbol: String? = .none
     @objc dynamic var decimals: Int = 18
 
     convenience init(
-        title: String,
         from: String,
         to: String,
         contract: String?,
         type: String,
         value: String,
         symbol: String?,
+        name: String?,
         decimals: Int
     ) {
         self.init()
-        self.title = title
         self.from = from
         self.to = to
         self.contract = contract
         self.type = type
         self.value = value
         self.symbol = symbol
+        self.name = name
         self.decimals = decimals
+    }
+
+    var operationType: OperationType {
+        return OperationType(string: type)
     }
 }
 
 extension LocalizedOperationObject {
     static func from(operations: [LocalizedOperation]?) -> [LocalizedOperationObject] {
         guard let operations = operations else { return [] }
-        return operations.map { operation in
+        return operations.flatMap { operation in
+            guard
+                let from = Address(string: operation.from),
+                let to = Address(string: operation.to) else {
+                    return .none
+            }
             return LocalizedOperationObject(
-                title: operation.title,
-                from: operation.from,
-                to: operation.to,
-                contract: operation.contract,
+                from: from.description,
+                to: to.description,
+                contract: operation.contract.address,
                 type: operation.type.rawValue,
                 value: operation.value,
-                symbol: operation.symbol,
-                decimals: operation.decimals ?? 18
+                symbol: operation.contract.symbol,
+                name: operation.contract.name,
+                decimals: operation.contract.decimals
             )
         }
     }

@@ -72,9 +72,7 @@ class TransactionViewCell: UITableViewCell {
         subTitleLabel.textColor = viewModel.subTitleTextColor
         subTitleLabel.font = viewModel.subTitleFont
 
-        amountLabel.text = viewModel.amount
-        amountLabel.textColor = viewModel.amountTextColor
-        amountLabel.font = viewModel.amountFont
+        amountLabel.attributedText = viewModel.amountAttributedString
 
         backgroundColor = viewModel.backgroundColor
     }

@@ -7,11 +7,12 @@ import SafariServices
 
 class TransactionViewController: UIViewController {
 
-    private lazy var viewModel: TransactionViewModel = {
+    private lazy var viewModel: TransactionDetailsViewModel = {
         return .init(
             transaction: self.transaction,
             config: self.config,
-            chainState: self.session.chainState
+            chainState: self.session.chainState,
+            currentWallet: self.session.account
         )
     }()
     let stackViewController = StackViewController()
@@ -35,14 +36,13 @@ class TransactionViewController: UIViewController {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
-        let items: [UIView] = [
+        let header = TransactionHeaderView()
+        header.translatesAutoresizingMaskIntoConstraints = false
+        header.amountLabel.attributedText = viewModel.amountAttributedString
+
+        var items: [UIView] = [
             .spacer(),
-            TransactionAppearance.header(
-                viewModel: TransactionHeaderViewModel(
-                    value: viewModel.value,
-                    direction: transaction.direction
-                )
-            ),
+            header,
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             item(title: "From", value: viewModel.from),
             item(title: "To", value: viewModel.to),
@@ -52,14 +52,21 @@ class TransactionViewController: UIViewController {
             item(title: "Transaction #", value: viewModel.transactionID),
             item(title: "Transaction time", value: viewModel.createdAt),
             item(title: "Block #", value: viewModel.blockNumber),
-            moreDetails(),
         ]
+
+        if viewModel.detailsAvailable {
+            items.append(moreDetails())
+        }
 
         for item in items {
             stackViewController.addItem(item)
         }
 
         displayChildViewController(viewController: stackViewController)
+
+        if viewModel.shareAvailable {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
+        }
     }
 
     private func item(title: String, value: String) -> UIView {
@@ -73,7 +80,7 @@ class TransactionViewController: UIViewController {
 
     private func moreDetails() -> UIView {
         let button = Button(size: .large, style: .border)
-        button.setTitle("More Details", for: .normal)
+        button.setTitle(NSLocalizedString("More Details", value: "More Details", comment: ""), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(more), for: .touchUpInside)
 
@@ -95,10 +102,10 @@ class TransactionViewController: UIViewController {
         )
         alertController.popoverPresentationController?.sourceView = sourceView
         alertController.popoverPresentationController?.sourceRect = sourceView.bounds
-        let copyAction = UIAlertAction(title: NSLocalizedString("transactionDetails.copy", value: "Copy", comment: ""), style: .default) { _ in
+        let copyAction = UIAlertAction(title: NSLocalizedString("Copy", value: "Copy", comment: ""), style: .default) { _ in
             UIPasteboard.general.string = value
         }
-        let cancelAction = UIAlertAction(title: NSLocalizedString("generic.cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
         alertController.addAction(copyAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
@@ -107,6 +114,17 @@ class TransactionViewController: UIViewController {
     @objc func more() {
         let controller = SFSafariViewController(url: viewModel.detailsURL)
         present(controller, animated: true, completion: nil)
+    }
+
+    @objc func share(_ sender: UIBarButtonItem) {
+        let activityViewController = UIActivityViewController(
+            activityItems: [
+                viewModel.shareItem,
+            ],
+            applicationActivities: nil
+        )
+        activityViewController.popoverPresentationController?.barButtonItem = sender
+        navigationController?.present(activityViewController, animated: true, completion: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {

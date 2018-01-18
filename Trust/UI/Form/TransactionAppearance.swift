@@ -12,13 +12,6 @@ struct TransactionAppearance {
         return view
     }
 
-    static func header(viewModel: TransactionHeaderBaseViewModel) -> UIView {
-        let view = TransactionHeaderView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.amountLabel.attributedText = viewModel.amountAttributedString
-        return view
-    }
-
     static func item(title: String, subTitle: String, completion:((_ title: String, _ value: String, _ sender: UIView) -> Void)? = .none) -> UIView {
         let titleLabel = UILabel(frame: .zero)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +25,7 @@ struct TransactionAppearance {
         subTitleLabel.textAlignment = .left
         subTitleLabel.textColor = Colors.black
         subTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.light)
-        subTitleLabel.adjustsFontSizeToFitWidth = true
+        subTitleLabel.numberOfLines = 0
 
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false

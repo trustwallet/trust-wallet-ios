@@ -5,8 +5,6 @@ import RealmSwift
 
 class Transaction: Object {
     @objc dynamic var id: String = ""
-    @objc dynamic var owner: String = ""
-    @objc dynamic var chainID: Int = 1
     @objc dynamic var blockNumber: Int = 0
     @objc dynamic var from = ""
     @objc dynamic var to = ""
@@ -16,13 +14,11 @@ class Transaction: Object {
     @objc dynamic var gasUsed = ""
     @objc dynamic var nonce: String = ""
     @objc dynamic var date = Date()
-    @objc dynamic var isError: Bool = false
+    @objc dynamic var internalState: Int = TransactionState.completed.rawValue
     var localizedOperations = List<LocalizedOperationObject>()
 
     convenience init(
         id: String,
-        owner: String,
-        chainID: Int,
         blockNumber: Int,
         from: String,
         to: String,
@@ -32,14 +28,12 @@ class Transaction: Object {
         gasUsed: String,
         nonce: String,
         date: Date,
-        isError: Bool,
-        localizedOperations: [LocalizedOperationObject]
+        localizedOperations: [LocalizedOperationObject],
+        state: TransactionState
     ) {
 
         self.init()
         self.id = id
-        self.owner = owner
-        self.chainID = chainID
         self.blockNumber = blockNumber
         self.from = from
         self.to = to
@@ -49,7 +43,7 @@ class Transaction: Object {
         self.gasUsed = gasUsed
         self.nonce = nonce
         self.date = date
-        self.isError = isError
+        self.internalState = state.rawValue
 
         let list = List<LocalizedOperationObject>()
         localizedOperations.forEach { element in
@@ -59,17 +53,27 @@ class Transaction: Object {
         self.localizedOperations = list
     }
 
+    convenience init(
+        id: String,
+        date: Date,
+        state: TransactionState
+    ) {
+        self.init()
+        self.id = id
+        self.date = date
+        self.internalState = state.rawValue
+    }
+
     override static func primaryKey() -> String? {
         return "id"
+    }
+
+    var state: TransactionState {
+        return TransactionState(int: self.internalState)
     }
 }
 
 extension Transaction {
-    var direction: TransactionDirection {
-        if owner == from { return .outgoing }
-        return .incoming
-    }
-
     var operation: LocalizedOperationObject? {
         return localizedOperations.first
     }

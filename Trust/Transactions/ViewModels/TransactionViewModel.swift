@@ -1,98 +1,99 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
-import BigInt
 import Foundation
 import UIKit
-
-struct TransactionValue {
-    let amount: String
-    let symbol: String
-}
+import BigInt
 
 struct TransactionViewModel {
 
-    static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .medium
-        formatter.timeZone = TimeZone.current
-        return formatter
-    }()
-
-    let transaction: Transaction
-    let config: Config
-    let chainState: ChainState
-    let shortFormatter = EtherNumberFormatter.short
-    let fullFormatter = EtherNumberFormatter.full
+    private let transaction: Transaction
+    private let config: Config
+    private let chainState: ChainState
+    private let currentWallet: Wallet
+    private let shortFormatter = EtherNumberFormatter.short
+    private let fullFormatter = EtherNumberFormatter.full
 
     init(
         transaction: Transaction,
         config: Config,
-        chainState: ChainState
+        chainState: ChainState,
+        currentWallet: Wallet
     ) {
         self.transaction = transaction
         self.config = config
         self.chainState = chainState
+        self.currentWallet = currentWallet
     }
 
-    var title: String {
-        return "Transaction"
+    var direction: TransactionDirection {
+        if currentWallet.address.description == transaction.from { return .outgoing }
+        return .incoming
     }
 
-    var backgroundColor: UIColor {
-        return .white
+    var confirmations: Int? {
+        return chainState.confirmations(fromBlock: transaction.blockNumber)
     }
 
-    var value: TransactionValue {
+    var amountTextColor: UIColor {
+        switch direction {
+        case .incoming: return Colors.green
+        case .outgoing: return Colors.red
+        }
+    }
+
+    var shortValue: TransactionValue {
+        return transactionValue(for: shortFormatter)
+    }
+
+    var fullValue: TransactionValue {
+        return transactionValue(for: fullFormatter)
+    }
+
+    var shortAmountAttributedString: NSAttributedString {
+        return amountAttributedString(for: shortValue)
+    }
+
+    var fullAmountAttributedString: NSAttributedString {
+        return amountAttributedString(for: fullValue)
+    }
+
+    func amountAttributedString(for value: TransactionValue) -> NSAttributedString {
+        let amount = NSAttributedString(
+            string: amountWithSign(for: value.amount),
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 24),
+                .foregroundColor: amountTextColor,
+            ]
+        )
+
+        let currency = NSAttributedString(
+            string: " " + value.symbol,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 14),
+            ]
+        )
+
+        return amount + currency
+    }
+
+    func amountWithSign(for amount: String) -> String {
+        guard amount != "0" else { return amount }
+        switch direction {
+        case .incoming: return "+\(amount)"
+        case .outgoing: return "-\(amount)"
+        }
+    }
+
+    private func transactionValue(for formatter: EtherNumberFormatter) -> TransactionValue {
         if let operation = transaction.operation, let symbol = operation.symbol {
             return TransactionValue(
-                amount: shortFormatter.string(from: BigInt(operation.value) ?? BigInt(), decimals: operation.decimals),
+                amount: formatter.string(from: BigInt(operation.value) ?? BigInt(), decimals: operation.decimals),
                 symbol: symbol
             )
         }
         return TransactionValue(
-            amount: fullFormatter.string(from: BigInt(transaction.value) ?? BigInt()),
+            amount: formatter.string(from: BigInt(transaction.value) ?? BigInt()),
             symbol: config.server.symbol
         )
-    }
-
-    var createdAt: String {
-        return TransactionViewModel.dateFormatter.string(from: transaction.date)
-    }
-
-    var detailsURL: URL {
-        return ConfigExplorer(server: config.server).transactionURL(for: transaction.id)
-    }
-
-    var transactionID: String {
-        return transaction.id
-    }
-
-    var to: String {
-        guard let to = transaction.operation?.to else {
-            return transaction.to
-        }
-        return to
-    }
-
-    var from: String {
-        return transaction.from
-    }
-
-    var gasFee: String {
-        let gasUsed = BigInt(transaction.gasUsed) ?? BigInt()
-        let gasPrice = BigInt(transaction.gasPrice) ?? BigInt()
-        return fullFormatter.string(from: gasPrice * gasUsed)
-    }
-
-    var confirmation: String {
-        guard let confirmation = chainState.confirmations(fromBlock: transaction.blockNumber) else {
-            return "--"
-        }
-        return String(confirmation)
-    }
-
-    var blockNumber: String {
-        return String(transaction.blockNumber)
     }
 }

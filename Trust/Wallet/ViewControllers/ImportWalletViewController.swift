@@ -4,9 +4,10 @@ import UIKit
 import Eureka
 import OnePasswordExtension
 import BonMot
+import TrustKeystore
 
 protocol ImportWalletViewControllerDelegate: class {
-    func didImportAccount(account: Account, in viewController: ImportWalletViewController)
+    func didImportAccount(account: Wallet, in viewController: ImportWalletViewController)
 }
 
 class ImportWalletViewController: FormViewController {
@@ -19,6 +20,8 @@ class ImportWalletViewController: FormViewController {
         static let keystore = "keystore"
         static let privateKey = "privateKey"
         static let password = "password"
+        static let watch = "watch"
+        static let mnemonic = "mnemonic"
     }
 
     var segmentRow: SegmentedRow<String>? {
@@ -29,12 +32,20 @@ class ImportWalletViewController: FormViewController {
         return form.rowBy(tag: Values.keystore)
     }
 
+    var mnemonicRow: TextAreaRow? {
+        return form.rowBy(tag: Values.mnemonic)
+    }
+
     var privateKeyRow: TextAreaRow? {
         return form.rowBy(tag: Values.privateKey)
     }
 
     var passwordRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.password)
+    }
+
+    var watchRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.watch)
     }
 
     lazy var onePasswordCoordinator: OnePasswordCoordinator = {
@@ -89,14 +100,26 @@ class ImportWalletViewController: FormViewController {
 
             <<< SegmentedRow<String>(Values.segment) {
                 $0.options = [
+                    //ImportSelectionType.mnemonic.title,
                     ImportSelectionType.keystore.title,
                     ImportSelectionType.privateKey.title,
+                    ImportSelectionType.watch.title,
                 ]
                 $0.value = ImportSelectionType.keystore.title
             }
 
+            <<< AppFormAppearance.textArea(tag: Values.mnemonic) {
+                $0.placeholder = NSLocalizedString("Mnemonic", value: "Mnemonic", comment: "")
+                $0.textAreaHeight = .fixed(cellHeight: 140)
+                $0.add(rule: RuleRequired())
+
+                $0.hidden = Eureka.Condition.function([Values.segment], { _ in
+                    return self.segmentRow?.value != ImportSelectionType.mnemonic.title
+                })
+            }
+
             <<< AppFormAppearance.textArea(tag: Values.keystore) {
-                $0.placeholder = "Keystore JSON"
+                $0.placeholder = NSLocalizedString("Keystore JSON", value: "Keystore JSON", comment: "")
                 $0.textAreaHeight = .fixed(cellHeight: 140)
                 $0.add(rule: RuleRequired())
 
@@ -106,13 +129,23 @@ class ImportWalletViewController: FormViewController {
             }
 
             <<< AppFormAppearance.textArea(tag: Values.privateKey) {
-                $0.placeholder = "Private Key"
+                $0.placeholder = NSLocalizedString("Private Key", value: "Private Key", comment: "")
                 $0.textAreaHeight = .fixed(cellHeight: 140)
                 $0.add(rule: RuleRequired())
                 $0.add(rule: PrivateKeyRule())
                 $0.hidden = Eureka.Condition.function([Values.segment], { _ in
                     return self.segmentRow?.value != ImportSelectionType.privateKey.title
                 })
+            }
+
+            <<< AppFormAppearance.textFieldFloat(tag: Values.watch) {
+                $0.add(rule: RuleRequired())
+                $0.add(rule: EthereumAddressRule())
+                $0.hidden = Eureka.Condition.function([Values.segment], { _ in
+                 return self.segmentRow?.value != ImportSelectionType.watch.title
+            })
+            }.cellUpdate { cell, _ in
+                cell.textField.placeholder = NSLocalizedString("Ethereum Address", value: "Ethereum Address", comment: "")
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.password) {
@@ -123,19 +156,19 @@ class ImportWalletViewController: FormViewController {
             }.cellUpdate { cell, _ in
                 cell.textField.isSecureTextEntry = true
                 cell.textField.textAlignment = .left
-                cell.textField.placeholder = "Password"
+                cell.textField.placeholder = NSLocalizedString("Password", value: "Password", comment: "")
             }
 
             +++ Section("")
 
-            <<< ButtonRow("Import") {
+            <<< ButtonRow(NSLocalizedString("importWallet.import.button.title", value: "Import", comment: "")) {
                 $0.title = $0.tag
             }.onCellSelection { [unowned self] _, _ in
                 self.importWallet()
             }
     }
 
-    func didImport(account: Account) {
+    func didImport(account: Wallet) {
         delegate?.didImportAccount(account: account, in: self)
     }
 
@@ -146,8 +179,11 @@ class ImportWalletViewController: FormViewController {
         let keystoreInput = keystoreRow?.value?.trimmed ?? ""
         let privateKeyInput = privateKeyRow?.value?.trimmed ?? ""
         let password = passwordRow?.value ?? ""
+        let watchInput = watchRow?.value?.trimmed ?? ""
+        let mnemonicInput = mnemonicRow?.value?.trimmed ?? ""
+        let words = mnemonicInput.components(separatedBy: " ").map { $0.trimmed }
 
-        displayLoading(text: NSLocalizedString("importWallet.importingIndicatorTitle", value: "Importing wallet...", comment: ""), animated: false)
+        displayLoading(text: NSLocalizedString("importWallet.importingIndicator.label.title", value: "Importing wallet...", comment: ""), animated: false)
 
         let type = ImportSelectionType(title: segmentRow?.value)
         let importType: ImportType = {
@@ -156,6 +192,11 @@ class ImportWalletViewController: FormViewController {
                 return .keystore(string: keystoreInput, password: password)
             case .privateKey:
                 return .privateKey(privateKey: privateKeyInput)
+            case .mnemonic:
+                return .mnemonic(words: words, password: password)
+            case .watch:
+                let address = Address(string: watchInput)! // Address validated by form view.
+                return .watch(address: address)
             }
         }()
 
@@ -171,36 +212,41 @@ class ImportWalletViewController: FormViewController {
     }
 
     func onePasswordImport() {
-        onePasswordCoordinator.importWallet(in: self) { [weak self] result in
-            guard let `self` = self else { return }
-            switch result {
-            case .success(let password, let keystore):
-                self.keystoreRow?.value = keystore
-                self.keystoreRow?.reload()
-                self.passwordRow?.value = password
-                self.passwordRow?.reload()
-                self.importWallet()
-            case .failure(let error):
-                self.displayError(error: error)
-            }
-        }
+//        onePasswordCoordinator.importWallet(in: self) { [weak self] result in
+//            guard let `self` = self else { return }
+//            switch result {
+//            case .success(let password, let keystore):
+//                self.keystoreRow?.value = keystore
+//                self.keystoreRow?.reload()
+//                self.passwordRow?.value = password
+//                self.passwordRow?.reload()
+//                self.importWallet()
+//            case .failure(let error):
+//                self.displayError(error: error)
+//            }
+//        }
     }
 
     @objc func demo() {
         //Used for taking screenshots to the App Store by snapshot
-        let demoAccount = Account(
-            address: Address(address: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")
-        )
-        delegate?.didImportAccount(account: demoAccount, in: self)
+        let demoWallet = Wallet(type: .watch(Address(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")!))
+        delegate?.didImportAccount(account: demoWallet, in: self)
     }
 
     @objc func importOptions(sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Import Wallet Options", message: .none, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(
+            title: NSLocalizedString("importWallet.import.alertSheet.title", value: "Import Wallet Options", comment: ""),
+            message: .none,
+            preferredStyle: .actionSheet
+        )
         alertController.popoverPresentationController?.barButtonItem = sender
-        alertController.addAction(UIAlertAction(title: "iCloud/Dropbox/Google Drive", style: .default) { _ in
+        alertController.addAction(UIAlertAction(
+            title: NSLocalizedString("importWallet.import.alertSheet.option.title", value: "iCloud/Dropbox/Google Drive", comment: ""),
+            style: .default
+        ) { _ in
             self.showDocumentPicker()
         })
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in })
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in })
         present(alertController, animated: true)
     }
 

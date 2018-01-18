@@ -12,15 +12,18 @@ struct InCoordinatorViewModel {
 
     var tokensAvailable: Bool {
         switch config.server {
-        case .main: return true
-        case .kovan, .ropsten, .oraclesTest: return false
+        case .main, .classic, .kovan, .ropsten, .poa, .sokol: return true
         }
+    }
+
+    var browserAvailable: Bool {
+        return isDebug
     }
 
     var exchangeAvailable: Bool {
         switch config.server {
-        case .main, .ropsten, .oraclesTest: return false
-        case .kovan: return config.isDebugEnabled
+        case .main, .classic, .ropsten, .poa, .sokol: return false
+        case .kovan: return false //config.isDebugEnabled
         }
     }
 

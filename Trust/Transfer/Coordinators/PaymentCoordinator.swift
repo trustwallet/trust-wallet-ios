@@ -2,8 +2,10 @@
 
 import Foundation
 import UIKit
+import TrustKeystore
 
 protocol PaymentCoordinatorDelegate: class {
+    func didCreatePendingTransaction(transaction: SentTransaction, in coordinator: PaymentCoordinator)
     func didCancel(in coordinator: PaymentCoordinator)
 }
 
@@ -16,6 +18,8 @@ class PaymentCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     let navigationController: UINavigationController
     let keystore: Keystore
+    let storage: TokensDataStore
+    let account: Account
 
     lazy var transferType: TransferType = {
         switch self.flow {
@@ -30,13 +34,17 @@ class PaymentCoordinator: Coordinator {
         navigationController: UINavigationController = UINavigationController(),
         flow: PaymentFlow,
         session: WalletSession,
-        keystore: Keystore
+        keystore: Keystore,
+        storage: TokensDataStore,
+        account: Account
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
+        self.account = account
         self.flow = flow
         self.keystore = keystore
+        self.storage = storage
     }
 
     func start() {
@@ -46,7 +54,9 @@ class PaymentCoordinator: Coordinator {
                 transferType: type,
                 navigationController: navigationController,
                 session: session,
-                keystore: keystore
+                keystore: keystore,
+                storage: storage,
+                account: account
             )
             coordinator.delegate = self
             coordinator.start()
@@ -72,6 +82,10 @@ class PaymentCoordinator: Coordinator {
 }
 
 extension PaymentCoordinator: SendCoordinatorDelegate {
+    func didCreatePendingTransaction(_ transaction: SentTransaction, in coordinator: SendCoordinator) {
+        delegate?.didCreatePendingTransaction(transaction: transaction, in: self)
+    }
+
     func didCancel(in coordinator: SendCoordinator) {
         removeCoordinator(coordinator)
         cancel()

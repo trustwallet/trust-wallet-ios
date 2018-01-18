@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class TokenViewCell: UITableViewCell {
 
@@ -9,48 +10,61 @@ class TokenViewCell: UITableViewCell {
 
     let titleLabel = UILabel()
     let amountLabel = UILabel()
+    let currencyAmountLabel = UILabel()
     let symbolImageView = UIImageView()
-    let subTitleLabel = UILabel()
+    let percentChange = UILabel()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subTitleLabel.lineBreakMode = .byTruncatingMiddle
-
         symbolImageView.translatesAutoresizingMaskIntoConstraints = false
         symbolImageView.contentMode = .scaleAspectFit
 
-        amountLabel.textAlignment = .right
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
+        amountLabel.textAlignment = .right
 
-        let leftStackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
+        currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
+        currencyAmountLabel.textAlignment = .right
+
+        percentChange.translatesAutoresizingMaskIntoConstraints = false
+        percentChange.textAlignment = .right
+
+        let leftStackView = UIStackView(arrangedSubviews: [titleLabel])
         leftStackView.translatesAutoresizingMaskIntoConstraints = false
         leftStackView.axis = .vertical
-        leftStackView.spacing = 2
+        leftStackView.spacing = 12
 
-        let rightStackView = UIStackView(arrangedSubviews: [amountLabel])
+        let rightBottomStackView = UIStackView(arrangedSubviews: [currencyAmountLabel, percentChange])
+        rightBottomStackView.translatesAutoresizingMaskIntoConstraints = false
+        rightBottomStackView.axis = .horizontal
+        rightBottomStackView.spacing = 5
+
+        let rightStackView = UIStackView(arrangedSubviews: [amountLabel, rightBottomStackView])
+        rightStackView.distribution = .fillEqually
         rightStackView.translatesAutoresizingMaskIntoConstraints = false
         rightStackView.axis = .vertical
+        rightStackView.spacing =  5
 
         let stackView = UIStackView(arrangedSubviews: [symbolImageView, leftStackView, rightStackView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.spacing = 10
+        stackView.spacing = 12
         stackView.distribution = .fill
+        stackView.alignment = .center
 
-        symbolImageView.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
-        titleLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
+        symbolImageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
-        amountLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
-        stackView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        rightStackView.setContentHuggingPriority(.required, for: .horizontal)
+        stackView.setContentHuggingPriority(.required, for: .horizontal)
 
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            symbolImageView.widthAnchor.constraint(equalToConstant: 40),
+            symbolImageView.widthAnchor.constraint(equalToConstant: 45),
+            symbolImageView.heightAnchor.constraint(equalToConstant: 45),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -StyleLayout.sideMargin),
@@ -63,17 +77,28 @@ class TokenViewCell: UITableViewCell {
     }
 
     func configure(viewModel: TokenViewCellViewModel) {
+
         titleLabel.text = viewModel.title
+        titleLabel.textColor = viewModel.titleTextColor
+        titleLabel.font = viewModel.titleFont
 
         amountLabel.text = viewModel.amount
         amountLabel.textColor = viewModel.amountTextColor
         amountLabel.font = viewModel.amountFont
 
-        subTitleLabel.text = viewModel.subTitle
-        subTitleLabel.textColor = viewModel.subTitleTextColor
-        subTitleLabel.font = viewModel.subTitleFont
+        currencyAmountLabel.text = viewModel.currencyAmount
+        currencyAmountLabel.textColor = viewModel.currencyAmountTextColor
+        currencyAmountLabel.font = viewModel.currencyAmountFont
 
-        symbolImageView.image = viewModel.image
+        percentChange.text = viewModel.percentChange
+        percentChange.textColor = viewModel.percentChangeColor
+        percentChange.font = viewModel.percentChangeFont
+
+        symbolImageView.kf.setImage(
+            with: viewModel.imageUrl,
+            placeholder: viewModel.placeHolder,
+            options: [.fromMemoryCacheOrRefresh]
+        )
 
         backgroundColor = viewModel.backgroundColor
     }

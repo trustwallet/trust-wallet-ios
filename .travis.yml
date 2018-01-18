@@ -6,18 +6,19 @@ branches:
     - master
 env:
   - LC_CTYPE=en_US.UTF-8 LANG=en_US.UTF-8
+
+cache:
+  - cocoapods
+  - bundler
+
 before_install:
-  - rvm install ruby-2.2.2
-  - gem install cocoapods
-  - gem install xcpretty -N
+  - pod install --repo-update
   - brew update
   - brew install swiftlint || true
-  - pod repo update master
+
 script:
   - set -o pipefail
-  - pod install
-  - swiftlint
-  - xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
+  - fastlane tests
 
 notifications:
   slack: trust-wallet:33Vj3pGpKoBMTBAHTB8dF79n

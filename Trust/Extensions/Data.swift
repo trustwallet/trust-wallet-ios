@@ -56,4 +56,8 @@ extension Data {
         }
         guard even else { return nil }
     }
+
+    func toString() -> String? {
+        return String(data: self, encoding: .utf8)
+    }
 }

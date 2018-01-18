@@ -24,6 +24,10 @@ struct SendViewModel {
         return transferType.symbol(server: config.server)
     }
 
+    var contract: String {
+        return transferType.contract()
+    }
+
     var backgroundColor: UIColor {
         return .white
     }

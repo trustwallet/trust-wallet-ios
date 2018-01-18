@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustKeystore
 
 struct RawTransaction: Decodable {
     let hash: String
@@ -28,7 +29,7 @@ struct RawTransaction: Decodable {
         case gasPrice
         case input
         case gasUsed
-        case operationsLocalized = "operations_localized"
+        case operationsLocalized = "operations"
         case error = "error"
     }
 
@@ -36,14 +37,21 @@ struct RawTransaction: Decodable {
 }
 
 extension Transaction {
-    static func from(chainID: Int, owner: Address, transaction: RawTransaction) -> Transaction {
-        let isError = transaction.error?.isEmpty == false
+    static func from(transaction: RawTransaction) -> Transaction? {
+        guard
+            let from = Address(string: transaction.from) else {
+                return .none
+        }
+        let state: TransactionState = {
+            if transaction.error?.isEmpty == false {
+                return .error
+            }
+            return .completed
+        }()
         return Transaction(
             id: transaction.hash,
-            owner: owner.address,
-            chainID: chainID,
             blockNumber: transaction.blockNumber,
-            from: transaction.from,
+            from: from.description,
             to: transaction.to,
             value: transaction.value,
             gas: transaction.gas,
@@ -51,8 +59,8 @@ extension Transaction {
             gasUsed: transaction.gasUsed,
             nonce: String(transaction.nonce),
             date: NSDate(timeIntervalSince1970: TimeInterval(transaction.timeStamp) ?? 0) as Date,
-            isError: isError,
-            localizedOperations: LocalizedOperationObject.from(operations: transaction.operationsLocalized)
+            localizedOperations: LocalizedOperationObject.from(operations: transaction.operationsLocalized),
+            state: state
         )
     }
 }

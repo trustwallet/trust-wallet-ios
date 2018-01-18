@@ -19,8 +19,8 @@ platform :ios do
   before_all do
   end
 
-  def localize
-    sh "cd .. && sh scripts/localizer.sh Trust " << ENV['LOKALISE_TOKEN']
+  def run_localizer
+    sh "cd .. && sh scripts/localizer.sh Trust " << ENV['LOKALISE_API_TOKEN']
   end
 
   def screenshots
@@ -30,11 +30,10 @@ platform :ios do
 
   desc "Deploy a new version to the App Store"
   lane :release do
-    cocoapods
+    cocoapods(use_bundle_exec: false)
     increment_build_number
     ensure_git_branch()
     increment_version_number(bump_type: "patch")
-    #localize
     cert
     match(type: "appstore", readonly: true)
     gym(scheme: "Trust")
@@ -50,7 +49,34 @@ platform :ios do
 
   desc "Localize"
   lane :localize do
-    localize
+    run_localizer
+  end
+
+  lane :update_lokalise do
+    lokalise_metadata(
+      api_token: ENV['LOKALISE_API_TOKEN'],
+      project_identifier: ENV['LOKALISE_STORE_PROJECT_ID'],
+      action: "update_lokalise",
+      add_languages: true,
+      override_translation: false
+    )
+  end
+
+  lane :update_itunes do
+   lokalise_metadata(
+      api_token: ENV['LOKALISE_API_TOKEN'],
+      project_identifier: ENV['LOKALISE_STORE_PROJECT_ID'],
+      action: "update_itunes"
+   )
+  end
+
+  lane :tests do 
+    cocoapods(use_bundle_exec: false)
+    run_tests(
+      workspace: "Trust.xcworkspace",
+      scheme: "TrustTests",
+      clean: false
+    )
   end
 
   # You can define as many lanes as you want

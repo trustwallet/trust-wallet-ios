@@ -16,22 +16,28 @@ class Screenshots: XCTestCase {
         
         snapshot("0Launch")
 
-        app.buttons["IMPORT WALLET"].tap()
+        app.buttons["import-wallet"].tap()
 
         snapshot("3ImportWallet")
-        sleep(6)
+        sleep(3)
 
-        app.buttons["Send"].tap()
-        app.tables.textFields["ETH Amount"].tap()
+        app.tabBars.buttons.element(boundBy: 1).tap()
+
+        sleep(1)
+
+        app.tabBars.buttons.element(boundBy: 0).tap()
+
+        app.buttons["send-button"].tap()
+        app.tables.textFields["amount-field"].tap()
 
         snapshot("1SendRequest")
 
-        app.navigationBars["Send ETH"].buttons["Cancel"].tap()
+        app.navigationBars.buttons.element(boundBy: 0).tap()
 
         snapshot("4Transactions")
 
-        app.tabBars.buttons["Tokens"].tap()
-        sleep(8)
+        app.tabBars.buttons.element(boundBy: 1).tap()
+
         snapshot("2Tokens")
     }
 }

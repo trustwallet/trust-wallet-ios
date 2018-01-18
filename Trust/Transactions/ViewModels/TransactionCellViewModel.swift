@@ -6,55 +6,77 @@ import UIKit
 
 struct TransactionCellViewModel {
 
-    let transaction: Transaction
-    let chainState: ChainState
-    let shortFormatter = EtherNumberFormatter.short
+    private let transaction: Transaction
+    private let config: Config
+    private let chainState: ChainState
+    private let currentWallet: Wallet
+    private let shortFormatter = EtherNumberFormatter.short
+
+    private let transactionViewModel: TransactionViewModel
 
     init(
         transaction: Transaction,
-        chainState: ChainState
+        config: Config,
+        chainState: ChainState,
+        currentWallet: Wallet
     ) {
         self.transaction = transaction
+        self.config = config
         self.chainState = chainState
+        self.currentWallet = currentWallet
+        self.transactionViewModel = TransactionViewModel(
+            transaction: transaction,
+            config: config,
+            chainState: chainState,
+            currentWallet: currentWallet
+        )
     }
 
     var confirmations: Int? {
         return chainState.confirmations(fromBlock: transaction.blockNumber)
     }
 
-    var state: TransactionState {
-        if transaction.isError {
-            return .error
-        }
-        if confirmations == 0 {
-            return .pending
-        }
-        return .completed
-    }
-
     private var operationTitle: String? {
-        return transaction.operation?.title
+        guard let operation = transaction.operation else { return .none }
+        switch operation.operationType {
+        case .tokenTransfer:
+            return String(
+                format: NSLocalizedString(
+                    "transaction.cell.tokenTransfer.title",
+                    value: "Transfer %@",
+                    comment: "Transfer token title. Example: Transfer OMG"
+                ),
+                operation.symbol ?? ""
+            )
+        case .unknown:
+            return .none
+        }
     }
 
     var title: String {
-        if let operationTitle = operationTitle { return operationTitle }
-        switch state {
+        if let operationTitle = operationTitle {
+            return operationTitle
+        }
+        switch transaction.state {
         case .completed:
-            switch transaction.direction {
-            case .incoming: return "Received"
-            case .outgoing: return "Sent"
+            switch transactionViewModel.direction {
+            case .incoming: return NSLocalizedString("transaction.cell.received.title", value: "Received", comment: "")
+            case .outgoing: return NSLocalizedString("transaction.cell.sent.title", value: "Sent", comment: "")
             }
-        case .error: return "Error"
+        case .error:
+            return NSLocalizedString("transaction.cell.error.title", value: "Error", comment: "")
+        case .unknown:
+            return NSLocalizedString("transaction.cell.unknown.title", value: "Unknown", comment: "")
         case .pending:
-            switch transaction.direction {
-            case .incoming: return "Receiving"
-            case .outgoing: return "Sending"
+            switch transactionViewModel.direction {
+            case .incoming: return NSLocalizedString("transaction.cell.receiving.title", value: "Receiving", comment: "")
+            case .outgoing: return NSLocalizedString("transaction.cell.sending.title", value: "Sending", comment: "")
             }
         }
     }
 
     var subTitle: String {
-        switch transaction.direction {
+        switch transactionViewModel.direction {
         case .incoming: return "\(transaction.from)"
         case .outgoing: return "\(transaction.to)"
         }
@@ -68,48 +90,34 @@ struct TransactionCellViewModel {
         return UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.thin)
     }
 
-    var amount: String {
-        let value: String = {
-            if let operation = transaction.operation {
-                return shortFormatter.string(from: BigInt(operation.value) ?? BigInt(), decimals: operation.decimals)
-            }
-            let number = BigInt(transaction.value) ?? BigInt()
-            return shortFormatter.string(from: number)
-        }()
-        guard value != "0" else { return value }
-        switch transaction.direction {
-        case .incoming: return "+\(value)"
-        case .outgoing: return "-\(value)"
-        }
-    }
-
-    var amountTextColor: UIColor {
-        switch transaction.direction {
-        case .incoming: return Colors.green
-        case .outgoing: return Colors.red
-        }
-    }
-
-    var amountFont: UIFont {
-        return UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
-    }
-
     var backgroundColor: UIColor {
-        switch state {
+        switch transaction.state {
         case .completed:
             return .white
-        case .error:
+        case .error, .unknown:
             return Colors.veryLightRed
         case .pending:
             return Colors.veryLightOrange
         }
     }
 
+    var amountAttributedString: NSAttributedString {
+        let value = transactionViewModel.shortValue
+        let amount = NSAttributedString(
+            string: transactionViewModel.amountWithSign(for: value.amount) + " " + value.symbol,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold),
+                .foregroundColor: transactionViewModel.amountTextColor,
+            ]
+        )
+        return amount
+    }
+
     var statusImage: UIImage? {
-        switch state {
-        case .error: return R.image.transaction_error()
+        switch transaction.state {
+        case .error, .unknown: return R.image.transaction_error()
         case .completed:
-            switch transaction.direction {
+            switch transactionViewModel.direction {
             case .incoming: return R.image.transaction_received()
             case .outgoing: return R.image.transaction_sent()
             }

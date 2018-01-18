@@ -12,26 +12,21 @@ class ConfigureTransactionViewController: FormViewController {
 
     let configuration: TransactionConfiguration
     let config: Config
+    let transferType: TransferType
     private let fullFormatter = EtherNumberFormatter.full
 
     struct Values {
         static let gasPrice = "gasPrice"
         static let gasLimit = "gasLimit"
         static let totalFee = "totalFee"
-    }
-
-    private struct Constant {
-        static let minGasPrice: Float = 1
-        static let maxGasPrice: Float = 120
-        static let gasPriceSteps: UInt = 120
-
-        static let minGasLimit: Float = 21000
-        static let maxGasLimit: Float = 300000
-        static let gasLimitSteps: UInt = 60
+        static let data = "data"
     }
 
     lazy var viewModel: ConfigureTransactionViewModel = {
-        return ConfigureTransactionViewModel(config: self.config)
+        return ConfigureTransactionViewModel(
+            config: self.config,
+            transferType: self.transferType
+        )
     }()
 
     private var gasPriceRow: SliderRow? {
@@ -43,6 +38,9 @@ class ConfigureTransactionViewController: FormViewController {
     private var totalFeeRow: TextRow? {
         return form.rowBy(tag: Values.totalFee) as? TextRow
     }
+    private var dataRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.data) as? TextFloatLabelRow
+    }
 
     private var gasLimit: BigInt {
         return BigInt(String(Int(gasLimitRow?.value ?? 0)), radix: 10) ?? BigInt()
@@ -53,14 +51,19 @@ class ConfigureTransactionViewController: FormViewController {
     private var totalFee: BigInt {
         return gasPrice * gasLimit
     }
+    private var dataString: String {
+        return dataRow?.value ?? "0x"
+    }
 
     weak var delegate: ConfigureTransactionViewControllerDelegate?
 
     init(
         configuration: TransactionConfiguration,
+        transferType: TransferType,
         config: Config
     ) {
         self.configuration = configuration
+        self.transferType = transferType
         self.config = config
 
         super.init(nibName: nil, bundle: nil)
@@ -76,20 +79,20 @@ class ConfigureTransactionViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let gasPriceGwei = EtherNumberFormatter.full.string(from: configuration.speed.gasPrice, units: UnitConfiguration.gasPriceUnit)
+        let gasPriceGwei = EtherNumberFormatter.full.string(from: configuration.gasPrice, units: UnitConfiguration.gasPriceUnit)
 
         form = Section()
 
         +++ Section(
-            footer: viewModel.gasLimitFooterText
+            footer: viewModel.gasPriceFooterText
         )
 
         <<< SliderRow(Values.gasPrice) {
-            $0.title = NSLocalizedString("configureTransaction.gasPrice", value: "Gas Price", comment: "")
+            $0.title = NSLocalizedString("configureTransaction.gasPrice.label.title", value: "Gas Price", comment: "")
             $0.value = Float(gasPriceGwei) ?? 1
-            $0.minimumValue = Constant.minGasPrice
-            $0.maximumValue = Constant.maxGasPrice
-            $0.steps = Constant.gasPriceSteps
+            $0.minimumValue = Float(GasPriceConfiguration.min / BigInt(UnitConfiguration.gasPriceUnit.rawValue))
+            $0.maximumValue = Float(GasPriceConfiguration.max / BigInt(UnitConfiguration.gasPriceUnit.rawValue))
+            $0.steps = UInt(GasPriceConfiguration.max / GasPriceConfiguration.min)
             $0.displayValueFor = { (rowValue: Float?) in
                 return "\(Int(rowValue ?? 1)) (Gwei)"
             }
@@ -103,11 +106,11 @@ class ConfigureTransactionViewController: FormViewController {
         )
 
         <<< SliderRow(Values.gasLimit) {
-            $0.title = NSLocalizedString("configureTransaction.gasLimit", value: "Gas Limit", comment: "")
-            $0.value = Float(configuration.speed.gasLimit.description) ?? 21000
-            $0.minimumValue = Constant.minGasLimit
-            $0.maximumValue = Constant.maxGasLimit
-            $0.steps = Constant.gasLimitSteps
+            $0.title = NSLocalizedString("configureTransaction.gasLimit.label.title", value: "Gas Limit", comment: "")
+            $0.value = Float(configuration.gasLimit.description) ?? 21000
+            $0.minimumValue = Float(GasLimitConfiguration.min)
+            $0.maximumValue = Float(GasLimitConfiguration.max)
+            $0.steps = UInt(GasLimitConfiguration.max / GasLimitConfiguration.min)
             $0.displayValueFor = { (rowValue: Float?) in
                 return "\(Int(rowValue ?? 1))"
             }
@@ -116,10 +119,20 @@ class ConfigureTransactionViewController: FormViewController {
             }
         }
 
+        +++ Section {
+            $0.hidden = Eureka.Condition.function([], { _ in
+                return self.viewModel.isDataInputHidden
+            })
+        }
+        <<< AppFormAppearance.textFieldFloat(tag: Values.data) {
+            $0.title = NSLocalizedString("configureTransaction.data.label.title", value: "Transaction Data (Optional)", comment: "")
+            $0.value = self.configuration.data.hexEncoded
+        }
+
         +++ Section()
 
         <<< TextRow(Values.totalFee) {
-            $0.title = NSLocalizedString("configureTransaction.totalNetworkFee", value: "Total network fee", comment: "")
+            $0.title = NSLocalizedString("configureTransaction.totalNetworkFee.label.title", value: "Total network fee", comment: "")
             $0.disabled = true
         }
 
@@ -140,11 +153,17 @@ class ConfigureTransactionViewController: FormViewController {
             return displayError(error: ConfigureTransactionError.gasFeeTooHigh)
         }
 
+        let data: Data = {
+            if dataString.isEmpty {
+                return Data()
+            }
+            return Data(hex: dataString.drop0x)
+        }()
+
         let configuration = TransactionConfiguration(
-            speed: .custom(
-                gasPrice: gasPrice,
-                gasLimit: gasLimit
-            )
+            gasPrice: gasPrice,
+            gasLimit: gasLimit,
+            data: data
         )
         delegate?.didEdit(configuration: configuration, in: self)
     }

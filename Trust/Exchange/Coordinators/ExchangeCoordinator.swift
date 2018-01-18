@@ -13,7 +13,7 @@ class ExchangeCoordinator: Coordinator {
         let controller = ExchangeViewController(
             session: self.session
         )
-        controller.delegate = self
+        //controller.delegate = self
         return controller
     }()
     var coordinators: [Coordinator] = []
@@ -35,35 +35,37 @@ class ExchangeCoordinator: Coordinator {
     }
 }
 
-extension ExchangeCoordinator: ExchangeViewControllerDelegate {
-    func didPress(from: SubmitExchangeToken, to: SubmitExchangeToken, in viewController: ExchangeViewController) {
-
-        let transaction = UnconfirmedTransaction(
-            transferType: .exchange(from: from, to: to),
-            value: from.amount,
-            address: to.token.address // TODO FIX IT
-        )
-
-        let viewModel = ConfirmTransactionHeaderViewModel(
-            transaction: transaction,
-            config: Config()
-        )
-
-        let controller = ConfirmPaymentViewController(
-            session: session,
-            keystore: keystore,
-            transaction: transaction,
-            gasPrice: .none,
-            headerViewModel: viewModel
-        )
-        controller.delegate = self
-        navigationController.pushViewController(controller, animated: true)
-    }
-}
-
-extension ExchangeCoordinator: ConfirmPaymentViewControllerDelegate {
-    func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController) {
-        navigationController.popViewController(animated: true)
-        navigationController.displaySuccess(title: "Exchanged completed. Transaction ID: (\(transaction.id)")
-    }
-}
+//extension ExchangeCoordinator: ExchangeViewControllerDelegate {
+//    func didPress(from: SubmitExchangeToken, to: SubmitExchangeToken, in viewController: ExchangeViewController) {
+//
+//        let transaction = UnconfirmedTransaction(
+//            transferType: .exchange(from: from, to: to),
+//            value: from.amount,
+//            address: to.token.address,
+//            account: session.account,
+//            chainID: session.config.chainID,
+//            data: Data()
+//        )
+//
+//        let configurator = TransactionConfigurator(
+//            session: session,
+//            transaction: transaction,
+//            gasPrice: .none
+//        )
+//
+//        let controller = ConfirmPaymentViewController(
+//            session: session,
+//            keystore: keystore,
+//            configurator: configurator
+//        )
+//        controller.delegate = self
+//        navigationController.pushViewController(controller, animated: true)
+//    }
+//}
+//
+//extension ExchangeCoordinator: ConfirmPaymentViewControllerDelegate {
+//    func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController) {
+//        navigationController.popViewController(animated: true)
+//        navigationController.displaySuccess(title: "Exchanged completed. Transaction ID: (\(transaction.id)")
+//    }
+//}

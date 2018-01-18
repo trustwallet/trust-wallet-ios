@@ -5,16 +5,6 @@ import UIKit
 
 struct BalanceViewModel: BalanceBaseViewModel {
 
-    static var formatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        //TODO: use current locale when available this feature
-        formatter.locale = Locale(identifier: "en_US")
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
-        formatter.numberStyle = .currency
-        return formatter
-    }
-
     let balance: Balance?
     let rate: CurrencyRate?
     let config: Config
@@ -31,13 +21,13 @@ struct BalanceViewModel: BalanceBaseViewModel {
 
     var amount: Double {
         guard let balance = balance else { return 0.00 }
-        return balance.amount.doubleValue
+        return CurrencyFormatter.plainFormatter.string(from: balance.value).doubleValue
     }
 
     var amountString: String {
         guard let balance = balance else { return "--" }
         guard !balance.isZero else { return "0.00 \(config.server.symbol)" }
-        return "\(balance.amount) \(config.server.symbol)"
+        return "\(balance.amountFull) \(config.server.symbol)"
     }
 
     var currencyAmount: String? {
@@ -48,33 +38,18 @@ struct BalanceViewModel: BalanceBaseViewModel {
             amount > 0
         else { return nil }
         let totalAmount = amount * currentRate.price
-        return BalanceViewModel.formatter.string(from: NSNumber(value: totalAmount))
+        return CurrencyFormatter.formatter.string(from: NSNumber(value: totalAmount))
     }
 
-    var attributedAmount: NSAttributedString {
-        return NSAttributedString(
-            string: amountString,
-            attributes: attributes(primary: config.isCryptoPrimaryCurrency)
-        )
+    var amountFull: String {
+        return balance?.amountFull ?? "--"
     }
 
-    var attributedCurrencyAmount: NSAttributedString? {
-        guard let currencyAmount = currencyAmount else { return nil }
-        return NSAttributedString(
-            string: currencyAmount,
-            attributes: attributes(primary: !config.isCryptoPrimaryCurrency)
-        )
+    var amountShort: String {
+        return balance?.amountShort ?? "--"
     }
 
-    private func attributes(primary: Bool) -> [NSAttributedStringKey: Any] {
-        switch (primary, currencyAmount, balance) {
-        case (true, .none, .none):
-            return largeLabelAttributed
-        case (false, .none, .none), (false, .none, .some), (false, .some, .none):
-            return largeLabelAttributed
-        case (false, .some, .some):
-            return smallLabelAttributes
-        default: return largeLabelAttributed
-        }
+    var symbol: String {
+        return config.server.symbol
     }
 }

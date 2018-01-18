@@ -13,12 +13,12 @@ struct TokenBalance: BalanceProtocol {
         self.value = value
     }
 
-    var amount: String {
-        return TokensFormatter.from(token: token, amount: value.description) ?? ""
+    var amountShort: String {
+        // TODO Implement short amount
+        return amountFull
     }
 
     var amountFull: String {
-        // TODO Implement full amount
-        return amount
+        return TokensFormatter.from(token: token, amount: value.description) ?? ""
     }
 }

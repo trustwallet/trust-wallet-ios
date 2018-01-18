@@ -4,16 +4,21 @@ import Foundation
 
 struct BalanceTokenViewModel: BalanceBaseViewModel {
 
-    let token: Token
+    let token: TokenObject
 
-    var attributedAmount: NSAttributedString {
-        return NSAttributedString(
-            string: "\(token.amount) \(token.symbol)",
-            attributes: largeLabelAttributed
-        )
+    var currencyAmount: String? {
+        return nil
     }
 
-    var attributedCurrencyAmount: NSAttributedString? {
-        return nil
+    var amountFull: String {
+        return EtherNumberFormatter.full.string(from: token.valueBigInt, decimals: token.decimals)
+    }
+
+    var amountShort: String {
+        return EtherNumberFormatter.full.string(from: token.valueBigInt, decimals: token.decimals)
+    }
+
+    var symbol: String {
+        return token.symbol
     }
 }

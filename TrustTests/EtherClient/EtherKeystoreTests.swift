@@ -2,8 +2,9 @@
 
 import XCTest
 @testable import Trust
+import TrustKeystore
 import KeychainSwift
-import Geth
+import BigInt
 
 class EtherKeystoreTests: XCTestCase {
     
@@ -11,7 +12,7 @@ class EtherKeystoreTests: XCTestCase {
         let keystore = FakeEtherKeystore()
 
         XCTAssertNotNil(keystore)
-        XCTAssertEqual(false, keystore.hasAccounts)
+        XCTAssertEqual(false, keystore.hasWallets)
     }
 
     func testCreateWallet() {
@@ -22,7 +23,7 @@ class EtherKeystoreTests: XCTestCase {
         let retrivedPassword = keystore.getPassword(for: account)
 
         XCTAssertEqual(password, retrivedPassword)
-        XCTAssertEqual(1, keystore.accounts.count)
+        XCTAssertEqual(1, keystore.wallets.count)
     }
 
     func testSetAndGetPasswordForAccount() {
@@ -50,16 +51,16 @@ class EtherKeystoreTests: XCTestCase {
 
         let result = keystore.importKeystore(
             value: TestKeyStore.keystore,
-            password: "test",
-            newPassword: "test"
+            password: TestKeyStore.password,
+            newPassword: TestKeyStore.password
         )
 
         guard case let .success(account) = result else {
             return XCTFail()
         }
 
-        XCTAssertEqual("0x5e9c27156a612a2d516c74c7a80af107856f8539", account.address.address)
-        XCTAssertEqual(1, keystore.accounts.count)
+        XCTAssertEqual("0x5E9c27156a612a2D516C74c7a80af107856F8539", account.address.description)
+        XCTAssertEqual(1, keystore.wallets.count)
     }
 
     func testImportDuplicate() {
@@ -68,13 +69,13 @@ class EtherKeystoreTests: XCTestCase {
         let result1 = keystore.importKeystore(
             value: TestKeyStore.keystore,
             password: TestKeyStore.password,
-            newPassword: TestKeyStore.password
+            newPassword: TestKeyStore.newPassword
         )
 
         let result2 = keystore.importKeystore(
             value: TestKeyStore.keystore,
             password: TestKeyStore.password,
-            newPassword: TestKeyStore.password
+            newPassword: TestKeyStore.newPassword
         )
 
         guard case let .success(account) = result1 else {
@@ -85,8 +86,8 @@ class EtherKeystoreTests: XCTestCase {
             return XCTFail()
         }
 
-        XCTAssertEqual("0x5e9c27156a612a2d516c74c7a80af107856f8539", account.address.address)
-        XCTAssertEqual(1, keystore.accounts.count)
+        XCTAssertEqual("0x5E9c27156a612a2D516C74c7a80af107856F8539", account.address.description)
+        XCTAssertEqual(1, keystore.wallets.count)
     }
 
     func testImportFailInvalidPassword() {
@@ -102,7 +103,7 @@ class EtherKeystoreTests: XCTestCase {
             return XCTFail()
         }
 
-        XCTAssertEqual(0, keystore.accounts.count)
+        XCTAssertEqual(0, keystore.wallets.count)
     }
 
     func testImportUsesNewPasswordForEncryption() {
@@ -123,8 +124,8 @@ class EtherKeystoreTests: XCTestCase {
         let retreivePassword = keystore.getPassword(for: account)
 
         XCTAssertEqual(newPassword, retreivePassword)
-        XCTAssertEqual("0x5e9c27156a612a2d516c74c7a80af107856f8539", account.address.address)
-        XCTAssertEqual(1, keystore.accounts.count)
+        XCTAssertEqual("0x5E9c27156a612a2D516C74c7a80af107856F8539", account.address.description)
+        XCTAssertEqual(1, keystore.wallets.count)
 
         let exportResult = keystore.export(account: account, password: newPassword, newPassword: "test2")
 
@@ -152,56 +153,33 @@ class EtherKeystoreTests: XCTestCase {
         let keystore = FakeEtherKeystore()
         let password = "test"
 
-        XCTAssertNil(keystore.recentlyUsedAccount)
+        XCTAssertNil(keystore.recentlyUsedWallet)
 
-        let account = keystore.createAccout(password: password)
+        let account = Wallet(type: .real(keystore.createAccout(password: password)))
 
-        keystore.recentlyUsedAccount = account
+        keystore.recentlyUsedWallet = account
 
-        XCTAssertEqual(account, keystore.recentlyUsedAccount)
+        XCTAssertEqual(account, keystore.recentlyUsedWallet)
 
-        keystore.recentlyUsedAccount = nil
+        keystore.recentlyUsedWallet = nil
 
-        XCTAssertNil(keystore.recentlyUsedAccount)
-    }
-
-    func testSignTransaction() {
-        let keystore = FakeEtherKeystore()
-        let account = keystore.createAccout(password: "test")
-
-        let signTransaction = SignTransaction(
-            amount: GethNewBigInt(1),
-            account: account,
-            address: .make(address: "0x123f681646d4a755815f9cb19e1acc8565a0c2ac"),
-            nonce: 0,
-            speed: .regular,
-            data: Data(),
-            chainID: GethNewBigInt(1)
-        )
-
-        let signedTransaction = keystore.signTransaction(signTransaction)
-
-        guard case .success = signedTransaction else {
-            return XCTAssertFalse(true)
-        }
-
-        XCTAssertTrue(true)
+        XCTAssertNil(keystore.recentlyUsedWallet)
     }
 
     func testDeleteAccount() {
         let keystore = FakeEtherKeystore()
         let password = "test"
-        let account = keystore.createAccout(password: password)
+        let wallet = Wallet(type: .real(keystore.createAccout(password: password)))
 
-        XCTAssertEqual(1, keystore.accounts.count)
+        XCTAssertEqual(1, keystore.wallets.count)
 
-        let result = keystore.delete(account: account)
+        let result = keystore.delete(wallet: wallet)
 
         guard case .success = result else {
             return XCTFail()
         }
 
-        XCTAssertEqual(0, keystore.accounts.count)
+        XCTAssertEqual(0, keystore.wallets.count)
     }
 
     func testConvertPrivateKeyToKeyStore() {
@@ -223,7 +201,45 @@ class EtherKeystoreTests: XCTestCase {
             return XCTFail()
         }
 
-        XCTAssertEqual(1, keystore.accounts.count)
+        XCTAssertEqual(1, keystore.wallets.count)
+    }
+
+    func testSignMessage() {
+        let keystore = FakeEtherKeystore()
+
+        let privateKeyResult = keystore.convertPrivateKeyToKeystoreFile(privateKey: "0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318", passphrase: TestKeyStore.password)
+
+        guard case let .success(keystoreString) = privateKeyResult else {
+            return XCTFail()
+        }
+
+        let result = keystore.importKeystore(
+            value: keystoreString.jsonString!,
+            password: TestKeyStore.password,
+            newPassword: TestKeyStore.password
+        )
+
+        guard case let .success(account) = result else {
+            return XCTFail()
+        }
+
+        let signResult = keystore.signMessage(message: "Some data", account: account)
+
+        guard case let .success(data) = signResult else {
+            return XCTFail()
+        }
+
+        let expected = Data(hexString: "0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a0291c")
+
+        XCTAssertEqual(expected, data)
+
+        // web3.eth.accounts.sign('Some data', '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318');
+        // expected:
+        // message: 'Some data',
+        // messageHash: '0x1da44b586eb0729ff70a73c326926f6ed5a25f5b056e7f47fbc6e58d86871655',
+        // v: '0x1c',
+        // r: '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd',
+        // s: '0x6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a029',
+        // signature: '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a0291c'
     }
 }
-

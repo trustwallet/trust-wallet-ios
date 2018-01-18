@@ -9,9 +9,9 @@ enum ExchangeTokenError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .failedToGetRates:
-            return NSLocalizedString("exchange.failedToGetRates", comment: "Failed to get rates")
+            return NSLocalizedString("exchange.error.failedToGetRates", comment: "Failed to get rates")
         case .wrongInput:
-            return NSLocalizedString("exchange.wrongInput", comment: "Wrong input")
+            return NSLocalizedString("exchange.error.wrongInput", comment: "Wrong input")
         }
     }
 }

@@ -37,18 +37,18 @@ class RequestCoordinator: Coordinator {
         let controller = RequestViewController(viewModel: viewModel)
         controller.navigationItem.titleView = BalanceTitleView.make(from: self.session, .ether(destination: .none))
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
+        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
         return controller
     }
 
-    @objc func share() {
+    @objc func share(_ sender: UIBarButtonItem) {
         let activityViewController = UIActivityViewController(
             activityItems: [
                 viewModel.shareMyAddressText,
             ],
             applicationActivities: nil
         )
-        activityViewController.popoverPresentationController?.sourceView = requestViewController.view
+        activityViewController.popoverPresentationController?.barButtonItem = sender
         navigationController.present(activityViewController, animated: true, completion: nil)
     }
 
