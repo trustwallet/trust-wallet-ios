@@ -73,7 +73,7 @@
 "settings.termsOfService.button.title" = "Terms of Service";
 "settings.version.label.title" = "Version";
 "transactions.deposit.button.title" = "Buy";
-"transactions.myAddress.button.title" = "My Address";
+"transactions.myAddress.button.title" = "Receive";
 "transactions.noTransactions.label.title" = "No Transactions Yet!";
 "wallet.navigation.title" = "Wallets";
 "wallets.backup.alertSheet.title" = "Backup Keystore";
