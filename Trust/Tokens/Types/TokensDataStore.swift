@@ -228,12 +228,14 @@ class TokensDataStore {
     }
 
     func update(token: TokenObject, action: TokenUpdate) {
-        try! realm.write {
-            switch action {
-            case .value(let value):
-                token.value = value.description
-            case .isDisabled(let value):
-                token.isDisabled = value
+        DispatchQueue.main.async { [weak self] in
+            try! self?.realm.write {
+                switch action {
+                case .value(let value):
+                    token.value = value.description
+                case .isDisabled(let value):
+                    token.isDisabled = value
+                }
             }
         }
     }
@@ -260,12 +262,16 @@ class TokensDataStore {
     }
     private func scheduledTimerForPricesUpdate() {
         pricesTimer = Timer.scheduledTimer(withTimeInterval: intervalToRefreshPrices, repeats: true) { [weak self] _ in
-            self?.updatePrices()
+            DispatchQueue.global(qos: .background).async {
+                self?.updatePrices()
+            }
         }
     }
     private func scheduledTimerForEthBalanceUpdate() {
         ethTimer = Timer.scheduledTimer(withTimeInterval: intervalToETHRefresh, repeats: true) { [weak self] _ in
-            self?.refreshETHBalance()
+            DispatchQueue.global(qos: .background).async {
+                self?.refreshETHBalance()
+            }
         }
     }
     deinit {
