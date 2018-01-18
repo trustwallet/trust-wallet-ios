@@ -25,8 +25,7 @@ class EditTokenTableViewCell: UITableViewCell {
             tokenContractLabel.text = viewModel.contractText
             tokenImageView.kf.setImage(
                 with: viewModel.imageUrl,
-                placeholder: viewModel.placeholderImage,
-                options: [.fromMemoryCacheOrRefresh]
+                placeholder: viewModel.placeholderImage
             )
         }
     }
