@@ -21,8 +21,8 @@ class TokensCoordinator: Coordinator {
             dataStore: storage
         )
         controller.delegate = self
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
         return controller
     }()
     weak var delegate: TokensCoordinatorDelegate?
@@ -81,12 +81,16 @@ class TokensCoordinator: Coordinator {
 
 extension TokensCoordinator: TokensViewControllerDelegate {
     func didSelect(token: TokenObject, in viewController: UIViewController) {
-        switch token.type {
+
+        let type: TokenType = {
+            return TokensDataStore.etherToken(for: session.config) == token ? .ether : .token
+        }()
+
+        switch type {
         case .ether:
             delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
         case .token:
             delegate?.didPress(for: .send(type: .token(token)), in: self)
-        case .unknown: break
         }
     }
 

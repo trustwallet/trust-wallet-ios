@@ -44,8 +44,7 @@ class TokensDataStore {
             symbol: config.server.symbol,
             decimals: config.server.decimals,
             value: "0",
-            isCustom: false,
-            type: .ether
+            isCustom: false
         )
     }
 

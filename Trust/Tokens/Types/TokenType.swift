@@ -5,9 +5,4 @@ import Foundation
 enum TokenType: Int {
     case ether
     case token
-    case unknown
-
-    init(int: Int) {
-        self = TokenType(rawValue: int) ?? .unknown
-    }
 }

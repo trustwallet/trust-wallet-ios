@@ -13,7 +13,6 @@ class TokenObject: Object {
     @objc dynamic var value: String = ""
     @objc dynamic var isCustom: Bool = false
     @objc dynamic var isDisabled: Bool = false
-    @objc dynamic var internalType: Int = TokenType.ether.rawValue
 
     convenience init(
         contract: String = "",
@@ -22,8 +21,7 @@ class TokenObject: Object {
         decimals: Int = 0,
         value: String,
         isCustom: Bool = false,
-        isDisabled: Bool = false,
-        type: TokenType = .token
+        isDisabled: Bool = false
     ) {
         self.init()
         self.contract = contract
@@ -33,7 +31,6 @@ class TokenObject: Object {
         self.value = value
         self.isCustom = isCustom
         self.isDisabled = isDisabled
-        self.internalType = type.rawValue
     }
 
     var address: Address {
@@ -42,10 +39,6 @@ class TokenObject: Object {
 
     var valueBigInt: BigInt {
         return BigInt(value) ?? BigInt()
-    }
-
-    var type: TokenType {
-        return TokenType(int: internalType)
     }
 
     override static func primaryKey() -> String? {

@@ -213,6 +213,16 @@ class InCoordinator: Coordinator {
     private func web3(for server: RPCServer) -> Web3Swift {
         return Web3Swift(url: config.rpcURL)
     }
+
+    private func showTransactionSent(transaction: SentTransaction) {
+        let alertController = UIAlertController(title: "Transaction Sent!", message: "Wait for the transaction to be mined on the network.", preferredStyle: UIAlertControllerStyle.alert)
+        let copyAction = UIAlertAction(title: NSLocalizedString("send.action.copy.transaction.title", value: "Copy Transaction ID", comment: ""), style: UIAlertActionStyle.default, handler: { _ in
+            UIPasteboard.general.string = transaction.id
+        })
+        alertController.addAction(copyAction)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: UIAlertActionStyle.default, handler: nil))
+        navigationController.present(alertController, animated: true, completion: nil)
+    }
 }
 
 extension InCoordinator: TransactionCoordinatorDelegate {
@@ -254,6 +264,9 @@ extension InCoordinator: TokensCoordinatorDelegate {
 extension InCoordinator: PaymentCoordinatorDelegate {
     func didCreatePendingTransaction(transaction: SentTransaction, in coordinator: PaymentCoordinator) {
         handlePendingTransaction(transaction: transaction)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        showTransactionSent(transaction: transaction)
+        removeCoordinator(coordinator)
     }
 
     func didCancel(in coordinator: PaymentCoordinator) {
