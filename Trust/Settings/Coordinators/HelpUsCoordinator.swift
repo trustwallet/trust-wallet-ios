@@ -21,9 +21,9 @@ class HelpUsCoordinator: Coordinator {
 
     func start() {
         switch appTracker.launchCountForCurrentBuild {
-        case 5 where !appTracker.completedRating:
+        case 6 where !appTracker.completedRating:
             rateUs()
-        case 10 where !appTracker.completedSharing:
+        case 12 where !appTracker.completedSharing:
             wellDone()
         default: break
         }
