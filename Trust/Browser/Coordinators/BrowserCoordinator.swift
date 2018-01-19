@@ -40,7 +40,7 @@ class BrowserCoordinator: Coordinator {
 }
 
 extension BrowserCoordinator: BrowserViewControllerDelegate {
-    func didCall(action: DappAction) {
+    func didCall(action: DappAction, callbackID: Int) {
         switch session.account.type {
         case .real(let account):
             switch action {
@@ -51,18 +51,32 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
                     transaction: unconfirmedTransaction,
                     gasPrice: .none
                 )
+                //addCoordinator(configurator)
 
                 let controller = ConfirmPaymentViewController(
                     session: session,
                     keystore: keystore,
                     configurator: configurator
                 )
+                controller.didCompleted = { transaction in
+                    self.delegate?.didSentTransaction(transaction: transaction, in: self)
+                    self.navigationController.dismiss(animated: true, completion: nil)
+                    let callback = DappCallback(id: callbackID, value: .signTransaction(transaction))
+                    self.rootViewController.notifyFinish(callback: callback)
+                }
                 controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
                 controller.delegate = self
 
                 let nav = UINavigationController(rootViewController: controller)
                 navigationController.present(nav, animated: true, completion: nil)
-            case .sign, .unknown:
+            case .signMessage(let message):
+                let coordinator = SignMessageCoordinator(
+                    navigationController: navigationController,
+                    keystore: keystore,
+                    account: account
+                )
+                coordinator.start(with: message)
+            case .unknown:
                 break
             }
         case .watch: break
@@ -73,8 +87,8 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
 
 extension BrowserCoordinator: ConfirmPaymentViewControllerDelegate {
     func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController) {
-        delegate?.didSentTransaction(transaction: transaction, in: self)
-        navigationController.dismiss(animated: true, completion: nil)
-        rootViewController.notifyFinish(transaction: transaction)
+        //delegate?.didSentTransaction(transaction: transaction, in: self)
+        //navigationController.dismiss(animated: true, completion: nil)
+        //rootViewController.notifyFinish(transaction: transaction)
     }
 }
