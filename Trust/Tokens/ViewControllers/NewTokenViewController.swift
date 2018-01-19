@@ -36,20 +36,10 @@ class NewTokenViewController: FormViewController {
 
         title = viewModel.title
 
-        let qrButton = UIButton(type: .custom)
-        qrButton.translatesAutoresizingMaskIntoConstraints = false
-        qrButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        qrButton.setImage(R.image.qr_code_icon(), for: .normal)
-        qrButton.addTarget(self, action: #selector(openReader), for: .touchUpInside)
-
-        let recipientRightView = UIStackView(arrangedSubviews: [
-            qrButton,
-            .spacerWidth(1),
-        ])
-        recipientRightView.translatesAutoresizingMaskIntoConstraints = false
-        recipientRightView.distribution = .equalSpacing
-        recipientRightView.spacing = 10
-        recipientRightView.axis = .horizontal
+        let recipientRightView = FieldAppereance.addressFieldRightView(
+            pasteAction: { self.pasteAction() },
+            qrAction: { self.openReader() }
+        )
 
         form = Section()
 
@@ -109,6 +99,23 @@ class NewTokenViewController: FormViewController {
 
         present(controller, animated: true, completion: nil)
     }
+
+    @objc func pasteAction() {
+        guard let value = UIPasteboard.general.string?.trimmed else {
+            return displayError(error: SendInputErrors.emptyClipBoard)
+        }
+
+        guard CryptoAddressValidator.isValidAddress(value) else {
+            return displayError(error: AddressError.invalidAddress)
+        }
+
+        updateContractValue(value: value)
+    }
+
+    private func updateContractValue(value: String) {
+        contractRow?.value = value
+        contractRow?.reload()
+    }
 }
 
 extension NewTokenViewController: QRCodeReaderDelegate {
@@ -120,7 +127,6 @@ extension NewTokenViewController: QRCodeReaderDelegate {
         reader.dismiss(animated: true, completion: nil)
 
         guard let result = QRURLParser.from(string: result) else { return }
-        contractRow?.value = result.address
-        contractRow?.reload()
+        updateContractValue(value: result.address)
     }
 }
