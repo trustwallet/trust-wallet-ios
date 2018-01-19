@@ -10,7 +10,7 @@ class RequestViewModelTests: XCTestCase {
         let account: Wallet = .make()
         let viewModel = RequestViewModel(account: account, config: .make())
 
-        XCTAssertEqual(account.address.address, viewModel.myAddressText)
+        XCTAssertEqual(account.address.description, viewModel.myAddressText)
     }
 
     func testShareMyAddressText() {
@@ -18,6 +18,6 @@ class RequestViewModelTests: XCTestCase {
         let config: Config = .make()
         let viewModel = RequestViewModel(account: account, config: .make())
 
-        XCTAssertEqual("My \(config.server.name) address is: \(account.address.address)", viewModel.shareMyAddressText)
+        XCTAssertEqual("My \(config.server.name) address is: \(account.address.description)", viewModel.shareMyAddressText)
     }
 }

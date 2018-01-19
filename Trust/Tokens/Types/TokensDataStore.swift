@@ -86,9 +86,9 @@ class TokensDataStore {
         realm.beginWrite()
         for token in tokens {
             let update: [String: Any] = [
-                "owner": account.address.address,
+                "owner": account.address.description,
                 "chainID": config.chainID,
-                "contract": token.address?.address ?? "",
+                "contract": token.address?.description ?? "",
                 "name": token.name,
                 "symbol": token.symbol,
                 "decimals": token.decimals,
@@ -108,7 +108,7 @@ class TokensDataStore {
 
         switch config.server {
         case .main:
-            let request = GetTokensRequest(address: account.address.address)
+            let request = GetTokensRequest(address: account.address.description)
             Session.send(request) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {
@@ -177,7 +177,7 @@ class TokensDataStore {
 
     func addCustom(token: ERC20Token) {
         let newToken = TokenObject(
-            contract: token.contract.address,
+            contract: token.contract.description,
             symbol: token.symbol,
             decimals: token.decimals,
             value: "0",

@@ -73,7 +73,7 @@ class ConfirmPaymentViewController: UIViewController {
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(
                 title: detailsViewModel.paymentFromTitle,
-                subTitle: session.account.address.address
+                subTitle: session.account.address.description
             ),
             TransactionAppearance.item(
                 title: detailsViewModel.paymentToTitle,

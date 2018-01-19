@@ -171,7 +171,7 @@ class ExchangeTokensCoordinator {
     }
 
     func getETHBalance(address: Address, completion: ((BalanceProtocol) -> Void)? = .none) {
-        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: address.address)))
+        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: address.description)))
         Session.send(request) { result in
             switch result {
             case .success(let balance):

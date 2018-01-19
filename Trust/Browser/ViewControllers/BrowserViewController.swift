@@ -85,11 +85,11 @@ class BrowserViewController: UIViewController {
         js +=
         """
         let web3 = new Web3(new Web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)"));
-        web3.eth.defaultAccount = "\(session.account.address.address)"
+        web3.eth.defaultAccount = "\(session.account.address.description)"
 
         web3.eth.accounts = function(message, callback) {
             console.log("account asked for!!!")
-        return ["\(session.account.address.address)"]
+        return ["\(session.account.address.description)"]
         }
 
         var callback_;

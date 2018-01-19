@@ -57,7 +57,7 @@ class TransactionDataCoordinator {
             guard let transaction = completedTransaction.first else { return 1 }
             return transaction.blockNumber - 2000
         }()
-        trustProvider.request(.getTransactions(address: session.account.address.address, startBlock: startBlock)) { [weak self] result in
+        trustProvider.request(.getTransactions(address: session.account.address.description, startBlock: startBlock)) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .success(let response):

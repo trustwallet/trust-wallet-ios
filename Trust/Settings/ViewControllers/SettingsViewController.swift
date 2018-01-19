@@ -87,7 +87,7 @@ class SettingsViewController: FormViewController {
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_wallet()
                 cell.textLabel?.text = NSLocalizedString("settings.wallets.button.title", value: "Wallets", comment: "")
-                cell.detailTextLabel?.text = String(account.address.address.prefix(10)) + "..."
+                cell.detailTextLabel?.text = String(account.address.description.prefix(10)) + "..."
                 cell.accessoryType = .disclosureIndicator
             }
 
