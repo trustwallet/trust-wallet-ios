@@ -6,12 +6,14 @@ import VENTouchLock
 class SplashViewController: VENTouchLockSplashViewController {
 
     let label = UILabel()
+    //This fields are required to manage VENTouchLock migration.
+    private var unlocked = false
+    private var maxAttemptsReached = false
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.setIsSnapshot(true)
     }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -39,14 +41,20 @@ class SplashViewController: VENTouchLockSplashViewController {
             label.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
             label.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
         ])
-        self.showUnlock(animated: true)
     }
-
+    //We should show passcode or touch lock only we show spalsh screen firstly.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !unlocked && !maxAttemptsReached {
+            self.showUnlock(animated: false)
+        }
+    }
     override func dismiss(withUnlockSuccess success: Bool, unlockType: VENTouchLockSplashViewControllerUnlockType, animated: Bool) {
         switch unlockType {
         case .passcode, .touchID:
             super.dismiss(withUnlockSuccess: success, unlockType: unlockType, animated: animated)
         case .none:
+            self.maxAttemptsReached = true
             transition(to: .error(.numberOfTries))
             dismiss(animated: false, completion: nil)
         }
@@ -66,6 +74,7 @@ class SplashViewController: VENTouchLockSplashViewController {
         touchLock.requestTouchID(completion: { response in
             switch response {
             case .success:
+                self.unlocked = true
                 self.dismiss(withUnlockSuccess: true, unlockType: .touchID, animated: false)
             case .usePasscode, .canceled, .promptAlreadyPresent:
                 self.showPasscode(animated: false)
@@ -77,9 +86,10 @@ class SplashViewController: VENTouchLockSplashViewController {
 
     override func showPasscode(animated: Bool) {
         let controller = VENTouchLockEnterPasscodeViewController()
-        controller.willFinishWithResult = { result in
+        controller.willFinishWithResult = {[weak self] result in
             if result {
-                self.dismiss(withUnlockSuccess: true, unlockType: .passcode, animated: false)
+                self?.unlocked = result
+                self?.dismiss(withUnlockSuccess: true, unlockType: .passcode, animated: false)
             }
         }
         present(controller, animated: animated, completion: nil)
