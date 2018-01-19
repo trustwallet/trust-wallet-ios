@@ -22,6 +22,9 @@ class InCoordinator: Coordinator {
     var transactionCoordinator: TransactionCoordinator? {
         return self.coordinators.flatMap { $0 as? TransactionCoordinator }.first
     }
+    var tabBarController: UITabBarController? {
+        return self.navigationController.viewControllers.first as? UITabBarController
+    }
     lazy var helpUsCoordinator: HelpUsCoordinator = {
         return HelpUsCoordinator(
             navigationController: navigationController,
@@ -215,7 +218,7 @@ class InCoordinator: Coordinator {
     }
 
     private func showTransactionSent(transaction: SentTransaction) {
-        let alertController = UIAlertController(title: "Transaction Sent!", message: "Wait for the transaction to be mined on the network.", preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: "Transaction Sent!", message: "Wait for the transaction to be mined on the network to see details.", preferredStyle: UIAlertControllerStyle.alert)
         let copyAction = UIAlertAction(title: NSLocalizedString("send.action.copy.transaction.title", value: "Copy Transaction ID", comment: ""), style: UIAlertActionStyle.default, handler: { _ in
             UIPasteboard.general.string = transaction.id
         })
@@ -267,6 +270,9 @@ extension InCoordinator: PaymentCoordinatorDelegate {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         showTransactionSent(transaction: transaction)
         removeCoordinator(coordinator)
+
+        // Once transaction sent, show transactions screen.
+        tabBarController?.selectedIndex = 0
     }
 
     func didCancel(in coordinator: PaymentCoordinator) {
