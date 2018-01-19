@@ -68,10 +68,7 @@ struct TransactionCellViewModel {
         case .unknown:
             return NSLocalizedString("transaction.cell.unknown.title", value: "Unknown", comment: "")
         case .pending:
-            switch transactionViewModel.direction {
-            case .incoming: return NSLocalizedString("transaction.cell.receiving.title", value: "Receiving", comment: "")
-            case .outgoing: return NSLocalizedString("transaction.cell.sending.title", value: "Sending", comment: "")
-            }
+            return NSLocalizedString("transaction.cell.pending.title", value: "Pending", comment: "")
         }
     }
 
@@ -103,14 +100,14 @@ struct TransactionCellViewModel {
 
     var amountAttributedString: NSAttributedString {
         let value = transactionViewModel.shortValue
-        let amount = NSAttributedString(
+
+        return NSAttributedString(
             string: transactionViewModel.amountWithSign(for: value.amount) + " " + value.symbol,
             attributes: [
                 .font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold),
                 .foregroundColor: transactionViewModel.amountTextColor,
             ]
         )
-        return amount
     }
 
     var statusImage: UIImage? {

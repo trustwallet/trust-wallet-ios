@@ -16,15 +16,16 @@ struct TransactionAppearance {
         let titleLabel = UILabel(frame: .zero)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
+        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.regular)
         titleLabel.textAlignment = .left
-        titleLabel.textColor = Colors.gray
+        titleLabel.textColor = Colors.darkGray
 
         let subTitleLabel = UILabel(frame: .zero)
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subTitleLabel.text = subTitle
         subTitleLabel.textAlignment = .left
         subTitleLabel.textColor = Colors.black
-        subTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.light)
+        subTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.light)
         subTitleLabel.numberOfLines = 0
 
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
