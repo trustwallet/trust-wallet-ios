@@ -60,4 +60,8 @@ class TokenObject: Object {
         guard let object = object as? TokenObject else { return false }
         return object.contract == self.contract
     }
+
+    var title: String {
+        return name.isEmpty ? symbol : (name + " (" + symbol + ")")
+    }
 }
