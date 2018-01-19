@@ -19,7 +19,6 @@ class PaymentCoordinator: Coordinator {
     let navigationController: UINavigationController
     let keystore: Keystore
     let storage: TokensDataStore
-    let account: Account
 
     lazy var transferType: TransferType = {
         switch self.flow {
@@ -35,21 +34,19 @@ class PaymentCoordinator: Coordinator {
         flow: PaymentFlow,
         session: WalletSession,
         keystore: Keystore,
-        storage: TokensDataStore,
-        account: Account
+        storage: TokensDataStore
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
-        self.account = account
         self.flow = flow
         self.keystore = keystore
         self.storage = storage
     }
 
     func start() {
-        switch flow {
-        case .send(let type):
+        switch (flow, session.account.type) {
+        case (.send(let type), .real(let account)):
             let coordinator = SendCoordinator(
                 transferType: type,
                 navigationController: navigationController,
@@ -61,7 +58,7 @@ class PaymentCoordinator: Coordinator {
             coordinator.delegate = self
             coordinator.start()
             addCoordinator(coordinator)
-        case .request:
+        case (.request, _):
             let coordinator = RequestCoordinator(
                 navigationController: navigationController,
                 session: session
@@ -69,6 +66,9 @@ class PaymentCoordinator: Coordinator {
             coordinator.delegate = self
             coordinator.start()
             addCoordinator(coordinator)
+        case (.send, .watch):
+            // This case should be returning an error inCoordinator. Improve this logic into single piece.
+            break
         }
     }
 

@@ -10,18 +10,6 @@ protocol InCoordinatorDelegate: class {
     func didUpdateAccounts(in coordinator: InCoordinator)
 }
 
-enum InCoordinatorError: LocalizedError {
-    case onlyWatchAccount
-
-    var errorDescription: String? {
-        return NSLocalizedString(
-            "InCoordinatorError.onlyWatchAccount",
-            value: "This wallet could be only used for watching. Import Private Key/Keystore to sign transactions",
-            comment: ""
-        )
-    }
-}
-
 class InCoordinator: Coordinator {
 
     let navigationController: UINavigationController
@@ -197,20 +185,20 @@ class InCoordinator: Coordinator {
         let session = transactionCoordinator.session
         let tokenStorage = transactionCoordinator.tokensStorage
 
-        switch session.account.type {
-        case .real(let account):
+        switch (type, session.account.type) {
+        case (.send, .real), (.request, _):
             let coordinator = PaymentCoordinator(
                 flow: type,
                 session: session,
                 keystore: keystore,
-                storage: tokenStorage,
-                account: account
+                storage: tokenStorage
             )
             coordinator.delegate = self
             navigationController.present(coordinator.navigationController, animated: true, completion: nil)
             coordinator.start()
             addCoordinator(coordinator)
-        case .watch: break
+        case (_, _):
+            navigationController.displayError(error: InCoordinatorError.onlyWatchAccount)
         }
     }
 
