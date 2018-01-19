@@ -27,8 +27,8 @@ target 'Trust' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Kingfisher', '~> 4.0'
-  pod 'TrustKeystore', '~> 0.0.4'
-  pod 'web3swift'
+  pod 'TrustKeystore', :git=>'https://github.com/TrustWallet/trust-keystore', :branch=>'master'
+  # pod 'web3swift', :git=>'https://github.com/BANKEX/web3swift', :branch=>'master'
 
   target 'TrustTests' do
     inherit! :search_paths

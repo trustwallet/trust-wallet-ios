@@ -63,7 +63,6 @@ class Web3Swift: NSObject {
             JSScript<T.Response>(command).evaluate(in: webView) { result in
                 switch result {
                 case .success(let result):
-                    NSLog("script \(result)")
                     completion(.success(result))
                 case .failure(let error):
                     NSLog("script error \(error)")
