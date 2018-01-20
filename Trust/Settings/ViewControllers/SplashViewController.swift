@@ -7,15 +7,6 @@ class SplashViewController: VENTouchLockSplashViewController {
 
     let label = UILabel()
 
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        self.setIsSnapshot(true)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,7 +30,6 @@ class SplashViewController: VENTouchLockSplashViewController {
             label.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
             label.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
         ])
-        self.showUnlock(animated: true)
     }
 
     override func dismiss(withUnlockSuccess success: Bool, unlockType: VENTouchLockSplashViewControllerUnlockType, animated: Bool) {
@@ -92,5 +82,10 @@ class SplashViewController: VENTouchLockSplashViewController {
         case .error(let error):
             label.text = error.errorDescription
         }
+    }
+
+    override func setIsSnapshot(_ isSnapshotViewController: Bool) {
+        transition(to: .new)
+        return super.setIsSnapshot(isSnapshotViewController)
     }
 }
