@@ -95,7 +95,7 @@ CHECKOUT OPTIONS:
     :commit: 80bd79cbeede842949b229f81bc6328f53701c5a
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
   TrustKeystore:
-    :commit: 60d4c7be67dbfa5ce3aca566da4edb1fbf3c7a9c
+    :commit: 0ab2d5254269e18c5ec7ec19cb539201eb9d153a
     :git: https://github.com/TrustWallet/trust-keystore
 
 SPEC CHECKSUMS:
