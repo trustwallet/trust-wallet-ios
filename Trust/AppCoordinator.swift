@@ -103,11 +103,14 @@ class AppCoordinator: NSObject, Coordinator {
         )
         coordinator.delegate = self
         coordinator.start()
+        addCoordinator(coordinator)
     }
     func applicationWillResignActive() {
+        //Show splash screen to protect sensetive information.
         splashCoordinator.start()
     }
     func applicationDidBecomeActive() {
+        //Hide splash screen.
         splashCoordinator.dismiss()
     }
 }

@@ -5,7 +5,7 @@ import UIKit
 class SplashCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     let navigationController: UINavigationController
-    lazy var rootViewController: SplashViewController = {
+    private lazy var splashViewController: SplashViewController = {
         return SplashViewController()
     }()
     init(
@@ -14,7 +14,8 @@ class SplashCoordinator: Coordinator {
         self.navigationController = navigationController
     }
     func start() {
-        navigationController.pushViewController(rootViewController, animated: false)
+        //We should add splashViewController on top of the navigation stack.
+        navigationController.pushViewController(splashViewController, animated: false)
     }
     func dismiss() {
         navigationController.popViewController(animated: false)
