@@ -21,14 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         coordinator.didRegisterForRemoteNotificationsWithDeviceToken(deviceToken: deviceToken)
     }
-    func applicationDidEnterBackground(_ application: UIApplication) {
-
-    }
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        
+    func applicationWillResignActive(_ application: UIApplication) {
+        coordinator.applicationWillResignActive()
     }
     func applicationDidBecomeActive(_ application: UIApplication) {
         Lokalise.shared.checkForUpdates { _, _ in }
+        coordinator.applicationDidBecomeActive()
     }
     func application(_ application: UIApplication, shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplicationExtensionPointIdentifier) -> Bool {
         if extensionPointIdentifier == UIApplicationExtensionPointIdentifier.keyboard {
