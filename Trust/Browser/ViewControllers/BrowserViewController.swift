@@ -180,7 +180,7 @@ class BrowserViewController: UIViewController {
     }
 
     func notifyFinish(callback: DappCallback) {
-        let evString = "callback_(null, \(callback.value.object))"
+        let evString = "callback_(null, \"\(callback.value.object)\")"
         NSLog("evString \(evString)")
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.webView.evaluateJavaScript(evString, completionHandler: nil)
