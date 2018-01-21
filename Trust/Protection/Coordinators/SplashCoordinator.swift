@@ -14,9 +14,9 @@ class SplashCoordinator: Coordinator {
         self.navigationController = navigationController
     }
     func start() {
-        navigationController.viewControllers = [rootViewController]
+        navigationController.pushViewController(rootViewController, animated: false)
     }
-    @objc func dismiss() {
-        navigationController.dismiss(animated: true, completion: nil)
+    func dismiss() {
+        navigationController.popViewController(animated: false)
     }
 }

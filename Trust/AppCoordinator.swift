@@ -5,26 +5,22 @@ import TrustKeystore
 import UIKit
 
 class AppCoordinator: NSObject, Coordinator {
-
     let navigationController: UINavigationController
-
     lazy var welcomeViewController: WelcomeViewController = {
         let controller = WelcomeViewController()
         controller.delegate = self
         return controller
     }()
-
+    lazy var splashCoordinator: SplashCoordinator = {
+        return SplashCoordinator(navigationController: navigationController)
+    }()
     lazy var touchRegistrar: TouchRegistrar = {
         return TouchRegistrar(keystore: self.keystore)
     }()
-
     let pushNotificationRegistrar = PushNotificationsRegistrar()
-
     private var keystore: Keystore
     private var appTracker = AppTracker()
-
     var coordinators: [Coordinator] = []
-
     init(
         window: UIWindow,
         keystore: Keystore,
@@ -107,7 +103,12 @@ class AppCoordinator: NSObject, Coordinator {
         )
         coordinator.delegate = self
         coordinator.start()
-        addCoordinator(coordinator)
+    }
+    func applicationWillResignActive() {
+        splashCoordinator.start()
+    }
+    func applicationDidBecomeActive() {
+        splashCoordinator.dismiss()
     }
 }
 
