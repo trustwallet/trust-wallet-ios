@@ -738,6 +738,7 @@
 		2912CCF71F6A830700C6CBE3 /* Trust */ = {
 			isa = PBXGroup;
 			children = (
+				732086B2201506AA0047F605 /* Protection */,
 				29E6E0681FE897BB0079265A /* Browser */,
 				298543011FC15F5300CB5081 /* Exchange */,
 				2959960F1FAB065700DB66A8 /* Deposit */,
@@ -1836,6 +1837,37 @@
 				615F10611FCD3F0F008A45AF /* OnboardingPageStyle.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		732086B2201506AA0047F605 /* Protection */ = {
+			isa = PBXGroup;
+			children = (
+				732086B3201507220047F605 /* Coordinators */,
+				732086B4201507220047F605 /* Types */,
+				732086B5201507220047F605 /* ViewControllers */,
+			);
+			path = Protection;
+			sourceTree = "<group>";
+		};
+		732086B3201507220047F605 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		732086B4201507220047F605 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		732086B5201507220047F605 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		771AA94C1FF971BB00D25403 /* Types */ = {
