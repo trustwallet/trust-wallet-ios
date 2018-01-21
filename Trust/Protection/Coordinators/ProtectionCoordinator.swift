@@ -16,7 +16,7 @@ class ProtectionCoordinator: Coordinator {
     func start() {
         navigationController.viewControllers = [rootViewController]
     }
-    @objc func dismiss() {
+    func dismiss() {
         navigationController.dismiss(animated: true, completion: nil)
     }
 }

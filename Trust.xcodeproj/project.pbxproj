@@ -304,6 +304,7 @@
 		664D11A12007D59F0041A0B0 /* EstimateGasRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */; };
 		732086B7201507560047F605 /* ProtectionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732086B6201507560047F605 /* ProtectionCoordinator.swift */; };
 		732086B9201508690047F605 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732086B8201508690047F605 /* SplashCoordinator.swift */; };
+		732086BB20152A5E0047F605 /* ProtectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732086BA20152A5E0047F605 /* ProtectionViewController.swift */; };
 		739533971FEFF5FD0084AFAB /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739533961FEFF5FD0084AFAB /* Currency.swift */; };
 		771AA94B1FF76B8000D25403 /* demo.html in Resources */ = {isa = PBXBuildFile; fileRef = 771AA94A1FF76B8000D25403 /* demo.html */; };
 		771AA94E1FF971CD00D25403 /* DappAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA94D1FF971CD00D25403 /* DappAction.swift */; };
@@ -650,6 +651,7 @@
 		664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateGasRequest.swift; sourceTree = "<group>"; };
 		732086B6201507560047F605 /* ProtectionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectionCoordinator.swift; sourceTree = "<group>"; };
 		732086B8201508690047F605 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
+		732086BA20152A5E0047F605 /* ProtectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectionViewController.swift; sourceTree = "<group>"; };
 		739533961FEFF5FD0084AFAB /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		771AA94A1FF76B8000D25403 /* demo.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = demo.html; sourceTree = "<group>"; };
 		771AA94D1FF971CD00D25403 /* DappAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DappAction.swift; sourceTree = "<group>"; };
@@ -1838,7 +1840,6 @@
 			isa = PBXGroup;
 			children = (
 				732086B3201507220047F605 /* Coordinators */,
-				732086B4201507220047F605 /* Types */,
 				732086B5201507220047F605 /* ViewControllers */,
 			);
 			path = Protection;
@@ -1853,17 +1854,11 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
-		732086B4201507220047F605 /* Types */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Types;
-			sourceTree = "<group>";
-		};
 		732086B5201507220047F605 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				29B9345C1F88459C009FCABB /* SplashViewController.swift */,
+				732086BA20152A5E0047F605 /* ProtectionViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2465,6 +2460,7 @@
 				293112191FC55E5500966EEA /* SelectTokenViewController.swift in Sources */,
 				771AA960200D5E8800D25403 /* PassphraseView.swift in Sources */,
 				61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */,
+				732086BB20152A5E0047F605 /* ProtectionViewController.swift in Sources */,
 				29DBF2A71F9F145900327C60 /* StateViewModel.swift in Sources */,
 				2923D9B31FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift in Sources */,
 				294DFBA01FE0CADE004CEB56 /* TransactionDetailsViewModel.swift in Sources */,
