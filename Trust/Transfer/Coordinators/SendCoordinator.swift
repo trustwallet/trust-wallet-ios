@@ -6,7 +6,7 @@ import BigInt
 import TrustKeystore
 
 protocol SendCoordinatorDelegate: class {
-    func didCreatePendingTransaction(_ transaction: SentTransaction, in coordinator: SendCoordinator)
+    func didFinish(_ result: ConfirmResult, in coordinator: SendCoordinator)
     func didCancel(in coordinator: SendCoordinator)
 }
 
@@ -87,15 +87,12 @@ extension SendCoordinator: SendViewControllerDelegate {
         let controller = ConfirmPaymentViewController(
             session: session,
             keystore: keystore,
-            configurator: configurator
+            configurator: configurator,
+            confirmType: .signThenSend
         )
-        controller.delegate = self
+        controller.didCompleted = { result in
+            self.delegate?.didFinish(result, in: self)
+        }
         navigationController.pushViewController(controller, animated: true)
-    }
-}
-
-extension SendCoordinator: ConfirmPaymentViewControllerDelegate {
-    func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController) {
-        delegate?.didCreatePendingTransaction(transaction, in: self)
     }
 }

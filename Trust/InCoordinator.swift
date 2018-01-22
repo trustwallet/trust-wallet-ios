@@ -265,14 +265,18 @@ extension InCoordinator: TokensCoordinatorDelegate {
 }
 
 extension InCoordinator: PaymentCoordinatorDelegate {
-    func didCreatePendingTransaction(transaction: SentTransaction, in coordinator: PaymentCoordinator) {
-        handlePendingTransaction(transaction: transaction)
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        showTransactionSent(transaction: transaction)
-        removeCoordinator(coordinator)
+    func didFinish(_ result: ConfirmResult, in coordinator: PaymentCoordinator) {
+        switch result {
+        case .sentTransaction(let transaction):
+            handlePendingTransaction(transaction: transaction)
+            coordinator.navigationController.dismiss(animated: true, completion: nil)
+            showTransactionSent(transaction: transaction)
+            removeCoordinator(coordinator)
 
-        // Once transaction sent, show transactions screen.
-        tabBarController?.selectedIndex = 0
+            // Once transaction sent, show transactions screen.
+            tabBarController?.selectedIndex = 0
+        case .signedTransaction: break
+        }
     }
 
     func didCancel(in coordinator: PaymentCoordinator) {

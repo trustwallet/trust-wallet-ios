@@ -5,8 +5,14 @@ import Foundation
 import UIKit
 import StackViewController
 
-protocol ConfirmPaymentViewControllerDelegate: class {
-    func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController)
+enum ConfirmType {
+    case sign
+    case signThenSend
+}
+
+enum ConfirmResult {
+    case signedTransaction(Data)
+    case sentTransaction(SentTransaction)
 }
 
 class ConfirmPaymentViewController: UIViewController {
@@ -16,7 +22,7 @@ class ConfirmPaymentViewController: UIViewController {
     let session: WalletSession
     let stackViewController = StackViewController()
     lazy var sendTransactionCoordinator = {
-        return SendTransactionCoordinator(session: self.session, keystore: keystore)
+        return SendTransactionCoordinator(session: self.session, keystore: keystore, confirmType: confirmType)
     }()
     lazy var submitButton: UIButton = {
         let button = Button(size: .large, style: .solid)
@@ -25,20 +31,21 @@ class ConfirmPaymentViewController: UIViewController {
         button.addTarget(self, action: #selector(send), for: .touchUpInside)
         return button
     }()
-    weak var delegate: ConfirmPaymentViewControllerDelegate?
     let viewModel = ConfirmPaymentViewModel()
     var configurator: TransactionConfigurator
-
-    var didCompleted: ((_ transaction: SentTransaction) -> Void)?
+    let confirmType: ConfirmType
+    var didCompleted: ((_ type: ConfirmResult) -> Void)?
 
     init(
         session: WalletSession,
         keystore: Keystore,
-        configurator: TransactionConfigurator
+        configurator: TransactionConfigurator,
+        confirmType: ConfirmType
     ) {
         self.session = session
         self.keystore = keystore
         self.configurator = configurator
+        self.confirmType = confirmType
 
         super.init(nibName: nil, bundle: nil)
 
@@ -153,9 +160,8 @@ class ConfirmPaymentViewController: UIViewController {
         self.sendTransactionCoordinator.send(transactions: [transaction]) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-            case .success(let transaction):
-                self.delegate?.didCompleted(transaction: transaction, in: self)
-                self.didCompleted?(transaction)
+            case .success(let type):
+                self.didCompleted?(type)
             case .failure(let error):
                 self.displayError(error: error)
             }

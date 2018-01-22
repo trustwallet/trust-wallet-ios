@@ -56,16 +56,20 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
                 let controller = ConfirmPaymentViewController(
                     session: session,
                     keystore: keystore,
-                    configurator: configurator
+                    configurator: configurator,
+                    confirmType: .sign
                 )
-                controller.didCompleted = { transaction in
-                    self.delegate?.didSentTransaction(transaction: transaction, in: self)
+                controller.didCompleted = { type in
+                    switch type {
+                    case .signedTransaction(let data):
+                        let callback = DappCallback(id: callbackID, value: .signTransaction(data))
+                        self.rootViewController.notifyFinish(callback: callback)
+                    case .sentTransaction(let transaction):
+                        self.delegate?.didSentTransaction(transaction: transaction, in: self)
+                    }
                     self.navigationController.dismiss(animated: true, completion: nil)
-                    let callback = DappCallback(id: callbackID, value: .signTransaction(transaction))
-                    self.rootViewController.notifyFinish(callback: callback)
                 }
                 controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-                controller.delegate = self
 
                 let nav = UINavigationController(rootViewController: controller)
                 navigationController.present(nav, animated: true, completion: nil)
@@ -82,13 +86,5 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
         case .watch: break
         }
 
-    }
-}
-
-extension BrowserCoordinator: ConfirmPaymentViewControllerDelegate {
-    func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController) {
-        //delegate?.didSentTransaction(transaction: transaction, in: self)
-        //navigationController.dismiss(animated: true, completion: nil)
-        //rootViewController.notifyFinish(transaction: transaction)
     }
 }

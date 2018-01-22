@@ -18,12 +18,12 @@ struct DappCommandObjectValue: Decodable {
 }
 
 enum DappCallbackValue {
-    case signTransaction(SentTransaction)
+    case signTransaction(Data)
 
     var object: String {
         switch self {
         case .signTransaction(let value):
-            return value.id
+            return value.hexEncoded
         }
     }
 }

@@ -5,7 +5,7 @@ import UIKit
 import TrustKeystore
 
 protocol PaymentCoordinatorDelegate: class {
-    func didCreatePendingTransaction(transaction: SentTransaction, in coordinator: PaymentCoordinator)
+    func didFinish(_ result: ConfirmResult, in coordinator: PaymentCoordinator)
     func didCancel(in coordinator: PaymentCoordinator)
 }
 
@@ -82,8 +82,8 @@ class PaymentCoordinator: Coordinator {
 }
 
 extension PaymentCoordinator: SendCoordinatorDelegate {
-    func didCreatePendingTransaction(_ transaction: SentTransaction, in coordinator: SendCoordinator) {
-        delegate?.didCreatePendingTransaction(transaction: transaction, in: self)
+    func didFinish(_ result: ConfirmResult, in coordinator: SendCoordinator) {
+        delegate?.didFinish(result, in: self)
     }
 
     func didCancel(in coordinator: SendCoordinator) {

@@ -16,18 +16,21 @@ class SendTransactionCoordinator {
     let config = Config()
     let session: WalletSession
     let formatter = EtherNumberFormatter.full
+    let confirmType: ConfirmType
 
     init(
         session: WalletSession,
-        keystore: Keystore
+        keystore: Keystore,
+        confirmType: ConfirmType
     ) {
         self.session = session
         self.keystore = keystore
+        self.confirmType = confirmType
     }
 
     func send(
         transactions: [SignTransaction],
-        completion: @escaping (Result<SentTransaction, AnyError>) -> Void
+        completion: @escaping (Result<ConfirmResult, AnyError>) -> Void
     ) {
         let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: session.account.address.description)))
         Session.send(request) { [weak self] result in
@@ -85,22 +88,24 @@ class SendTransactionCoordinator {
 
     func signAndSend(
         transaction: SignTransaction,
-        completion: @escaping (Result<SentTransaction, AnyError>) -> Void
+        completion: @escaping (Result<ConfirmResult, AnyError>) -> Void
     ) {
         let signedTransaction = keystore.signTransaction(transaction)
 
         switch signedTransaction {
         case .success(let data):
-            let sendData = data.hexEncoded
-            completion(.success(SentTransaction(id: sendData)))
-            return
-            let request = EtherServiceRequest(batch: BatchFactory().create(SendRawTransactionRequest(signedTransaction: sendData)))
-            Session.send(request) { result in
-                switch result {
-                case .success(let transactionID):
-                    completion(.success(SentTransaction(id: transactionID)))
-                case .failure(let error):
-                    completion(.failure(AnyError(error)))
+            switch confirmType {
+            case .sign:
+                completion(.success(.signedTransaction(data)))
+            case .signThenSend:
+                let request = EtherServiceRequest(batch: BatchFactory().create(SendRawTransactionRequest(signedTransaction: data.hexEncoded)))
+                Session.send(request) { result in
+                    switch result {
+                    case .success(let transactionID):
+                        completion(.success(.sentTransaction(SentTransaction(id: transactionID))))
+                    case .failure(let error):
+                        completion(.failure(AnyError(error)))
+                    }
                 }
             }
         case .failure(let error):
