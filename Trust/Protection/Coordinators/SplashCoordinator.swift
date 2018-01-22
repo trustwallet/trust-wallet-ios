@@ -4,20 +4,18 @@ import UIKit
 
 class SplashCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
-    let navigationController: UINavigationController
+    private let window: UIWindow
     private lazy var splashViewController: SplashViewController = {
         return SplashViewController()
     }()
-    init(
-        navigationController: UINavigationController = NavigationController()
-        ) {
-        self.navigationController = navigationController
+    init(window: UIWindow) {
+        self.window = window
     }
     func start() {
-        //We should add splashViewController on top of the navigation stack.
-        navigationController.pushViewController(splashViewController, animated: false)
+        window.rootViewController = splashViewController
+        window.makeKeyAndVisible()
     }
     func dismiss() {
-        navigationController.popViewController(animated: false)
+        window.isHidden = true
     }
 }

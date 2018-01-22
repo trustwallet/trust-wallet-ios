@@ -11,9 +11,6 @@ class AppCoordinator: NSObject, Coordinator {
         controller.delegate = self
         return controller
     }()
-    lazy var splashCoordinator: SplashCoordinator = {
-        return SplashCoordinator(navigationController: navigationController)
-    }()
     lazy var touchRegistrar: TouchRegistrar = {
         return TouchRegistrar(keystore: self.keystore)
     }()
@@ -104,14 +101,6 @@ class AppCoordinator: NSObject, Coordinator {
         coordinator.delegate = self
         coordinator.start()
         addCoordinator(coordinator)
-    }
-    func applicationWillResignActive() {
-        //Show splash screen to protect sensetive information.
-        splashCoordinator.start()
-    }
-    func applicationDidBecomeActive() {
-        //Hide splash screen.
-        splashCoordinator.dismiss()
     }
 }
 
