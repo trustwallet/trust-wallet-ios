@@ -108,7 +108,7 @@ class BrowserViewController: UIViewController {
 
         const engine = ZeroClientProvider({
             getAccounts: function(cb) {
-                return cb(null, ["\(session.account.address.address)"])
+                return cb(null, ["\(session.account.address.description)"])
             },
             rpcUrl: "\(session.config.rpcURL.absoluteString)",
             sendTransaction: function(tx, cb) {
@@ -133,11 +133,11 @@ class BrowserViewController: UIViewController {
         engine.start()
         var web3 = new Web3(engine)
         window.web3 = web3
-        web3.eth.accounts = ["\(session.account.address.address)"]
+        web3.eth.accounts = ["\(session.account.address.description)"]
         web3.eth.getAccounts = function(cb) {
-            return cb(null, ["\(session.account.address.address)"])
+            return cb(null, ["\(session.account.address.description)"])
         }
-        web3.eth.defaultAccount = "\(session.account.address.address)"
+        web3.eth.defaultAccount = "\(session.account.address.description)"
 
         """
 
