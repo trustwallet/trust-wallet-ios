@@ -117,10 +117,9 @@ class BrowserViewController: UIViewController {
             },
             signTransaction: function(tx, cb) {
                 console.log("here2.", tx)
-                //addCallback(callbacksCount, cb)
-                //webkit.messageHandlers.signTransaction.postMessage({"name": "signTransaction", "object": tx})
-                //callback_ = cb
-                cb(null, 0xab5cdb375b15d373b43e16a951bbc3ebb2bdfb2d72d98791531b5be600757b50)
+                addCallback(callbacksCount, cb)
+                webkit.messageHandlers.signTransaction.postMessage({"name": "signTransaction", "object": tx})
+                callback_ = cb
             },
             signMessage: function(cb) {
                 console.log("here.4", cb)
