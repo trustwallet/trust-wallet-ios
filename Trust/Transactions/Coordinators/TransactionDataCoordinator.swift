@@ -113,7 +113,7 @@ class TransactionDataCoordinator {
                         NSLog("code \(code), error: \(message)")
                         self.delete(transactions: [transaction])
                     case .resultObjectParseError:
-                        if transaction.date < Date().addingTimeInterval(Config.deleteMissingInternalSeconds) {
+                        if transaction.date > Date().addingTimeInterval(Config.deleteMissingInternalSeconds) {
                             self.update(state: .failed, for: transaction)
                         }
                     default: break
