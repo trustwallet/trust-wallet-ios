@@ -48,11 +48,12 @@ extension Transaction {
             }
             return .completed
         }()
+        let to = Address(string: transaction.to)?.description ?? transaction.to
         return Transaction(
             id: transaction.hash,
             blockNumber: transaction.blockNumber,
             from: from.description,
-            to: transaction.to,
+            to: to,
             value: transaction.value,
             gas: transaction.gas,
             gasPrice: transaction.gasPrice,
