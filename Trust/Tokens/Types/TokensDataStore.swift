@@ -258,14 +258,14 @@ class TokensDataStore {
         return tokens
     }
     private func scheduledTimerForPricesUpdate() {
-        pricesTimer = Timer.scheduledTimer(withTimeInterval: intervalToRefreshPrices, repeats: true) { [weak self] _ in
-            self?.updatePrices()
-        }
+        pricesTimer = Timer.scheduledTimer(timeInterval: intervalToRefreshPrices, target: BlockOperation {
+            self.updatePrices()
+        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
     private func scheduledTimerForEthBalanceUpdate() {
-        ethTimer = Timer.scheduledTimer(withTimeInterval: intervalToETHRefresh, repeats: true) { [weak self] _ in
-            self?.refreshETHBalance()
-        }
+        ethTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation {
+            self.refreshETHBalance()
+        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
     deinit {
         //We should make sure that timer is invalidate.

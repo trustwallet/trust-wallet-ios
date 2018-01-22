@@ -46,10 +46,10 @@ class TransactionDataCoordinator {
     }
 
     func start() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: BlockOperation {
+        timer = Timer.scheduledTimer(timeInterval: 5, target: BlockOperation {
             self.fetchPending()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
-        updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 1, target: BlockOperation {
+        updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 30, target: BlockOperation {
             self.fetchTransactions()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
