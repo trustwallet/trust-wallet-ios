@@ -258,13 +258,13 @@ class TokensDataStore {
         return tokens
     }
     private func scheduledTimerForPricesUpdate() {
-        pricesTimer = Timer.scheduledTimer(timeInterval: intervalToRefreshPrices, target: BlockOperation {
-            self.updatePrices()
+        pricesTimer = Timer.scheduledTimer(timeInterval: intervalToRefreshPrices, target: BlockOperation { [weak self] in
+            self?.updatePrices()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
     private func scheduledTimerForEthBalanceUpdate() {
-        ethTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation {
-            self.refreshETHBalance()
+        ethTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in
+            self?.refreshETHBalance()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
     deinit {
