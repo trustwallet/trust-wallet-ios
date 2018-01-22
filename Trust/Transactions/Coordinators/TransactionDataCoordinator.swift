@@ -53,8 +53,7 @@ class TransactionDataCoordinator {
 
     @objc func fetchTransactions() {
         let startBlock: Int = {
-            let completedTransaction = storage.objects.filter { $0.state == .completed }
-            guard let transaction = completedTransaction.first else { return 1 }
+            guard let transaction = storage.completedObjects.first else { return 1 }
             return transaction.blockNumber - 2000
         }()
         trustProvider.request(.getTransactions(address: session.account.address.description, startBlock: startBlock)) { [weak self] result in
@@ -80,31 +79,30 @@ class TransactionDataCoordinator {
     }
 
     func fetchPendingTransactions() {
-        let pendingTransactions = storage.objects.filter { $0.state == TransactionState.pending }
+        storage.pendingObjects.forEach { updateTransaction($0) }
+    }
 
-        for transaction in pendingTransactions {
-            let request = GetTransactionRequest(hash: transaction.id)
-            Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { [weak self] result in
-                guard let `self` = self else { return }
-                switch result {
-                case .success(let transaction):
-                    self.update(items: [transaction])
-                case .failure(let error):
+    private func updateTransaction(_ transaction: Transaction) {
+        let request = GetTransactionRequest(hash: transaction.id)
+        Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let transaction):
+                self.update(items: [transaction])
+            case .failure(let error):
+                switch error {
+                case .responseError(let error):
+                    // TODO: Think about the logic to handle pending transactions.
+                    guard let error = error as? JSONRPCError else { return }
                     switch error {
-                    case .responseError(let error):
-                        // TODO: Think about the logic to handle pending transactions.
-                        guard let error = error as? JSONRPCError else { return }
-                        switch error {
-                        case .responseError(let code, let message, _):
-                            NSLog("code: \(code), message \(message)")
-                            self.delete(transactions: [transaction])
-                        case .resultObjectParseError:
-                            self.delete(transactions: [transaction])
-                        default: break
-                        }
-
+                    case .responseError(let code, let message, _):
+                        NSLog("code: \(code), message \(message)")
+                        self.delete(transactions: [transaction])
+                    case .resultObjectParseError:
+                        self.delete(transactions: [transaction])
                     default: break
                     }
+                default: break
                 }
             }
         }
@@ -133,7 +131,7 @@ class TransactionDataCoordinator {
         delegate?.didUpdate(result: .success(storage.objects))
     }
 
-    func add(transaction: SentTransaction) {
+    func addSentTransaction(_ transaction: SentTransaction) {
         storage.add([
             Transaction(id: transaction.id, date: Date(), state: .pending),
         ])

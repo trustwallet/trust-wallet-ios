@@ -26,7 +26,7 @@ struct TransactionsViewModel {
             let date = TransactionsViewModel.formatter.string(from: transaction.date)
 
             var currentItems = newItems[date] ?? []
-            currentItems.insert(transaction, at: 0)
+            currentItems.append(transaction)
             newItems[date] = currentItems
         }
         //TODO. IMPROVE perfomance
