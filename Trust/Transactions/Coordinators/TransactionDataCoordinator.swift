@@ -79,10 +79,10 @@ class TransactionDataCoordinator {
     }
 
     func fetchPendingTransactions() {
-        storage.pendingObjects.forEach { updateTransaction($0) }
+        storage.pendingObjects.forEach { updatePendingTransaction($0) }
     }
 
-    private func updateTransaction(_ transaction: Transaction) {
+    private func updatePendingTransaction(_ transaction: Transaction) {
         let request = GetTransactionRequest(hash: transaction.id)
         Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { [weak self] result in
             guard let `self` = self else { return }
