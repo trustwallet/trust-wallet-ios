@@ -20,6 +20,7 @@ class TransactionsStorage {
     var objects: [Transaction] {
         return realm.objects(Transaction.self)
             .sorted(byKeyPath: "date", ascending: false)
+            .filter { !$0.id.isEmpty }
     }
 
     var completedObjects: [Transaction] {
@@ -46,6 +47,14 @@ class TransactionsStorage {
         try! realm.write {
             realm.delete(items)
         }
+    }
+
+    @discardableResult
+    func update(state: TransactionState, for transaction: Transaction) -> Transaction {
+        realm.beginWrite()
+        transaction.internalState = state.rawValue
+        try! realm.commitWrite()
+        return transaction
     }
 
     func deleteAll() {

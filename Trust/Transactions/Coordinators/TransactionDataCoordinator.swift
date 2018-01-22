@@ -19,6 +19,11 @@ protocol TransactionDataCoordinatorDelegate: class {
 
 class TransactionDataCoordinator {
 
+    struct Config {
+        static let deleteMissingInternalSeconds: Double = 60.0
+        static let deleyedTransactionInternalSeconds: Double = 60.0
+    }
+
     let storage: TransactionsStorage
     let session: WalletSession
     let config = Config()
@@ -41,8 +46,12 @@ class TransactionDataCoordinator {
     }
 
     func start() {
-        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(fetchPending), userInfo: nil, repeats: true)
-        updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(fetchTransactions), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: BlockOperation {
+            self.fetchPending()
+        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
+        updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 1, target: BlockOperation {
+            self.fetchTransactions()
+        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
 
     func fetch() {
@@ -87,19 +96,26 @@ class TransactionDataCoordinator {
         Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-            case .success(let transaction):
-                self.update(items: [transaction])
+            case .success(let parsedTransaction):
+                NSLog("parsedTransaction \(parsedTransaction)")
+                if transaction.date > Date().addingTimeInterval(Config.deleyedTransactionInternalSeconds) {
+                    self.update(state: .completed, for: transaction)
+                    self.update(items: [transaction])
+                }
             case .failure(let error):
+                // NSLog("error: \(error)")
                 switch error {
                 case .responseError(let error):
                     // TODO: Think about the logic to handle pending transactions.
                     guard let error = error as? JSONRPCError else { return }
                     switch error {
                     case .responseError(let code, let message, _):
-                        NSLog("code: \(code), message \(message)")
+                        NSLog("code \(code), error: \(message)")
                         self.delete(transactions: [transaction])
                     case .resultObjectParseError:
-                        self.delete(transactions: [transaction])
+                        if transaction.date < Date().addingTimeInterval(Config.deleteMissingInternalSeconds) {
+                            self.update(state: .failed, for: transaction)
+                        }
                     default: break
                     }
                 default: break
@@ -135,6 +151,11 @@ class TransactionDataCoordinator {
         storage.add([
             Transaction(id: transaction.id, date: Date(), state: .pending),
         ])
+        handleUpdateItems()
+    }
+
+    func update(state: TransactionState, for transaction: Transaction) {
+        storage.update(state: state, for: transaction)
         handleUpdateItems()
     }
 

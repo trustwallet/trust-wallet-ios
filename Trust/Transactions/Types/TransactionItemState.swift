@@ -6,6 +6,7 @@ enum TransactionState: Int {
     case completed
     case pending
     case error
+    case failed
     case unknown
 
     init(int: Int) {
