@@ -240,6 +240,10 @@ class SendViewController: FormViewController {
     }
 
     private func updatePriceSection() {
+        //Update section only if fiat view is visible.
+        guard !isFiatViewHidden() else {
+            return
+        }
         //We use this section update to prevent update of the all section including cells.
         UIView.setAnimationsEnabled(false)
         tableView.beginUpdates()
