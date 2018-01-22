@@ -49,11 +49,12 @@ extension Transaction {
             let from = Address(string: transaction.from) else {
                 return .none
         }
+        let to = Address(string: transaction.to)?.description ?? transaction.to
         return Transaction(
             id: transaction.hash,
             blockNumber: Int(transaction.blockNumber) ?? 0,
             from: from.description,
-            to: transaction.to,
+            to: to,
             value: transaction.value,
             gas: transaction.gas,
             gasPrice: transaction.gasPrice,

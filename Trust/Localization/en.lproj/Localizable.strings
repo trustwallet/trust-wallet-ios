@@ -6,7 +6,7 @@
 "configureTransaction.error.gasLimitTooHigh" = "Gas Limit too high. Max available: %d";
 "configureTransaction.gasLimit.label.description" = "The gas limit prevents smart contracts from consuming all your %@. We will try to calculate the gas limit automatically for you, but some smart contracts may require a custom gas limit.";
 "configureTransaction.gasLimit.label.title" = "Gas Limit";
-"configureTransaction.gasPrice.label.description" = "The higher the gas price, the more expesnive your transaction fee will be, but the quicker your tranasction will be processed by the %@ network.";
+"configureTransaction.gasPrice.label.description" = "The higher the gas price, the more expensive your transaction fee will be, but the quicker your tranasction will be processed by the %@ network.";
 "configureTransaction.gasPrice.label.title" = "Gas Price";
 "configureTransaction.totalNetworkFee.label.title" = "Total network fee";
 "confirmPayment.confirm.button.title" = "Confirm";
@@ -123,3 +123,18 @@
 "transaction.cell.sent.title" = "Sent";
 "transaction.cell.tokenTransfer.title" = "Transfer %@";
 "Yesterday" = "Yesterday";
+"Deleting" = "Deleting";
+"Ethereum Address" = "Ethereum Address";
+"InCoordinatorError.onlyWatchAccount" = "This wallet could be only used for watching. Import Private Key/Keystore to sign transactions";
+"Mnemonic" = "Mnemonic";
+"passphrase.remember.label.title" = "Write this down, and keep it private and secure. You won't be able to restore your wallet if you lose this!";
+"recoveryPhrase.navigation.title" = "Recovery Phrase";
+"settings.shareWithFriends.button.title" = "Share With Friends";
+"transaction.cell.unknown.title" = "Unknown";
+"welldone.description.label.text" = "Help us grow by sharing this app with your friends!";
+"welldone.navigation.title" = "Thank you!";
+"welldone.share.label.text" = "Share";
+"welldone.viewmodel.sharing.text1" = "Here is the app I use to store my ETH and ERC20 tokens.";
+"welldone.viewmodel.sharing.text2" = "Check out Trust - the wallet that lets me securely store my Ethereum and ERC20 tokens.";
+"welldone.viewmodel.sharing.text3" = "I securely store Ethereum and ERC20 tokens in the Trust wallet";
+"welldone.viewmodel.sharing.text4" = "I secure my Ethereum and ERC20 tokens in the Trust wallet.";

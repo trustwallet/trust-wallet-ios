@@ -53,11 +53,11 @@ open class EtherKeystore: Keystore {
 
     var recentlyUsedWallet: Wallet? {
         set {
-            keychain.set(newValue?.address.address ?? "", forKey: Keys.recentlyUsedAddress, withAccess: defaultKeychainAccess)
+            keychain.set(newValue?.address.description ?? "", forKey: Keys.recentlyUsedAddress, withAccess: defaultKeychainAccess)
         }
         get {
             let address = keychain.get(Keys.recentlyUsedAddress)
-            return wallets.filter { $0.address.address == address }.first
+            return wallets.filter { $0.address.description == address }.first
         }
     }
 
@@ -139,7 +139,7 @@ open class EtherKeystore: Keystore {
                 }
             }
         case .watch(let address):
-            self.watchAddresses = [watchAddresses, [address.address]].flatMap { $0 }
+            self.watchAddresses = [watchAddresses, [address.description]].flatMap { $0 }
             completion(.success(Wallet(type: .watch(address))))
         }
     }
@@ -257,7 +257,7 @@ open class EtherKeystore: Keystore {
                 return .failure(.failedToDeleteAccount)
             }
         case .watch(let address):
-            watchAddresses = watchAddresses.filter { $0 != address.address }
+            watchAddresses = watchAddresses.filter { $0 != address.description }
             return .success(())
         }
     }
@@ -336,12 +336,12 @@ open class EtherKeystore: Keystore {
     }
 
     func getPassword(for account: Account) -> String? {
-        return keychain.get(account.address.address.lowercased())
+        return keychain.get(account.address.description.lowercased())
     }
 
     @discardableResult
     func setPassword(_ password: String, for account: Account) -> Bool {
-        return keychain.set(password, forKey: account.address.address.lowercased(), withAccess: defaultKeychainAccess)
+        return keychain.set(password, forKey: account.address.description.lowercased(), withAccess: defaultKeychainAccess)
     }
 
     func getAccount(for address: Address) -> Account? {

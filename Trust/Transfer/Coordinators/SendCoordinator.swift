@@ -97,12 +97,5 @@ extension SendCoordinator: SendViewControllerDelegate {
 extension SendCoordinator: ConfirmPaymentViewControllerDelegate {
     func didCompleted(transaction: SentTransaction, in viewController: ConfirmPaymentViewController) {
         delegate?.didCreatePendingTransaction(transaction, in: self)
-
-        viewController.navigationController?.popViewController(animated: true)
-        sendViewController.clear()
-        navigationController.displaySuccess(
-            title: "Sent! TransactionID: \(transaction.id)",
-            message: ""
-        )
     }
 }

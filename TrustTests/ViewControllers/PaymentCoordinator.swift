@@ -13,8 +13,7 @@ class PaymentCoordinatorTests: XCTestCase {
             flow: .send(type: .ether(destination: address)),
             session: .make(),
             keystore: FakeKeystore(),
-            storage: FakeTokensDataStore(),
-            account: .make()
+            storage: FakeTokensDataStore()
         )
         coordinator.start()
 
@@ -28,8 +27,7 @@ class PaymentCoordinatorTests: XCTestCase {
             flow: .request,
             session: .make(),
             keystore: FakeKeystore(),
-            storage: FakeTokensDataStore(),
-            account: .make()
+            storage: FakeTokensDataStore()
         )
 
         coordinator.start()

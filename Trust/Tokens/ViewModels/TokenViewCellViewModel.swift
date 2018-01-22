@@ -20,7 +20,7 @@ struct TokenViewCellViewModel {
     }
 
     var title: String {
-        return token.symbol
+        return token.title
     }
 
     var titleFont: UIFont {

@@ -56,7 +56,7 @@ class SendViewController: FormViewController {
     private var data = Data()
 
     lazy var currentPair: Pair = {
-        return Pair(left: viewModel.symbol, right: Config().currency.rawValue)
+        return Pair(left: viewModel.symbol, right: session.config.currency.rawValue)
     }()
 
     init(
@@ -78,26 +78,10 @@ class SendViewController: FormViewController {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
-        let pasteButton = Button(size: .normal, style: .borderless)
-        pasteButton.translatesAutoresizingMaskIntoConstraints = false
-        pasteButton.setTitle(NSLocalizedString("send.paste.button.title", value: "Paste", comment: ""), for: .normal)
-        pasteButton.addTarget(self, action: #selector(pasteAction), for: .touchUpInside)
-
-        let qrButton = UIButton(type: .custom)
-        qrButton.translatesAutoresizingMaskIntoConstraints = false
-        qrButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-        qrButton.setImage(R.image.qr_code_icon(), for: .normal)
-        qrButton.addTarget(self, action: #selector(openReader), for: .touchUpInside)
-
-        let recipientRightView = UIStackView(arrangedSubviews: [
-            pasteButton,
-            qrButton,
-            .spacerWidth(1),
-        ])
-        recipientRightView.translatesAutoresizingMaskIntoConstraints = false
-        recipientRightView.distribution = .equalSpacing
-        recipientRightView.spacing = 10
-        recipientRightView.axis = .horizontal
+        let recipientRightView = FieldAppereance.addressFieldRightView(
+            pasteAction: { self.pasteAction() },
+            qrAction: { self.openReader() }
+        )
 
         let maxButton = Button(size: .normal, style: .borderless)
         maxButton.translatesAutoresizingMaskIntoConstraints = false

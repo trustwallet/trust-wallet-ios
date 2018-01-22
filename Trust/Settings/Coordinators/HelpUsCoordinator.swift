@@ -21,9 +21,9 @@ class HelpUsCoordinator: Coordinator {
 
     func start() {
         switch appTracker.launchCountForCurrentBuild {
-        case 5 where !appTracker.completedRating:
+        case 6 where !appTracker.completedRating:
             rateUs()
-        case 10 where !appTracker.completedSharing:
+        case 12 where !appTracker.completedSharing:
             wellDone()
         default: break
         }
@@ -39,7 +39,7 @@ class HelpUsCoordinator: Coordinator {
     private func wellDone() {
         let controller = WellDoneViewController()
         controller.navigationItem.title = viewModel.title
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss))
         controller.delegate = self
         let nav = NavigationController(rootViewController: controller)
         navigationController.present(nav, animated: true, completion: nil)

@@ -23,7 +23,7 @@ extension TransferType {
     func contract() -> String {
         switch self {
         case .ether:
-            return "0x"
+            return TokensDataStore.etherToken(for: Config()).contract
         case .token(let token):
             return token.contract
         case .exchange: return "--"

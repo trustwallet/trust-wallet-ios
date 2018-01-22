@@ -28,7 +28,7 @@ class TouchRegistrar {
             keychainAccount: Keys.account,
             touchIDReason: "Use your fingerprint to access your wallet",
             passcodeAttemptLimit: 5,
-            splashViewControllerClass: SplashViewController.self
+            splashViewControllerClass: ProtectionViewController.self
         )
     }
 

@@ -10,18 +10,6 @@ protocol InCoordinatorDelegate: class {
     func didUpdateAccounts(in coordinator: InCoordinator)
 }
 
-enum InCoordinatorError: LocalizedError {
-    case onlyWatchAccount
-
-    var errorDescription: String? {
-        return NSLocalizedString(
-            "InCoordinatorError.onlyWatchAccount",
-            value: "This wallet could be only used for watching. Import Private Key/Keystore to sign transactions",
-            comment: ""
-        )
-    }
-}
-
 class InCoordinator: Coordinator {
 
     let navigationController: UINavigationController
@@ -33,6 +21,9 @@ class InCoordinator: Coordinator {
     weak var delegate: InCoordinatorDelegate?
     var transactionCoordinator: TransactionCoordinator? {
         return self.coordinators.flatMap { $0 as? TransactionCoordinator }.first
+    }
+    var tabBarController: UITabBarController? {
+        return self.navigationController.viewControllers.first as? UITabBarController
     }
     lazy var helpUsCoordinator: HelpUsCoordinator = {
         return HelpUsCoordinator(
@@ -197,25 +188,25 @@ class InCoordinator: Coordinator {
         let session = transactionCoordinator.session
         let tokenStorage = transactionCoordinator.tokensStorage
 
-        switch session.account.type {
-        case .real(let account):
+        switch (type, session.account.type) {
+        case (.send, .real), (.request, _):
             let coordinator = PaymentCoordinator(
                 flow: type,
                 session: session,
                 keystore: keystore,
-                storage: tokenStorage,
-                account: account
+                storage: tokenStorage
             )
             coordinator.delegate = self
             navigationController.present(coordinator.navigationController, animated: true, completion: nil)
             coordinator.start()
             addCoordinator(coordinator)
-        case .watch: break
+        case (_, _):
+            navigationController.displayError(error: InCoordinatorError.onlyWatchAccount)
         }
     }
 
     private func handlePendingTransaction(transaction: SentTransaction) {
-        transactionCoordinator?.dataCoordinator.add(transaction: transaction)
+        transactionCoordinator?.dataCoordinator.addSentTransaction(transaction)
     }
 
     private func realm(for config: Realm.Configuration) -> Realm {
@@ -224,6 +215,16 @@ class InCoordinator: Coordinator {
 
     private func web3(for server: RPCServer) -> Web3Swift {
         return Web3Swift(url: config.rpcURL)
+    }
+
+    private func showTransactionSent(transaction: SentTransaction) {
+        let alertController = UIAlertController(title: "Transaction Sent!", message: "Wait for the transaction to be mined on the network to see details.", preferredStyle: UIAlertControllerStyle.alert)
+        let copyAction = UIAlertAction(title: NSLocalizedString("send.action.copy.transaction.title", value: "Copy Transaction ID", comment: ""), style: UIAlertActionStyle.default, handler: { _ in
+            UIPasteboard.general.string = transaction.id
+        })
+        alertController.addAction(copyAction)
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: UIAlertActionStyle.default, handler: nil))
+        navigationController.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -266,6 +267,12 @@ extension InCoordinator: TokensCoordinatorDelegate {
 extension InCoordinator: PaymentCoordinatorDelegate {
     func didCreatePendingTransaction(transaction: SentTransaction, in coordinator: PaymentCoordinator) {
         handlePendingTransaction(transaction: transaction)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        showTransactionSent(transaction: transaction)
+        removeCoordinator(coordinator)
+
+        // Once transaction sent, show transactions screen.
+        tabBarController?.selectedIndex = 0
     }
 
     func didCancel(in coordinator: PaymentCoordinator) {

@@ -57,7 +57,8 @@ class EditTokensViewController: UITableViewController {
         let token = self.token(for: indexPath)
         cell.viewModel = EditTokenTableCellViewModel(
             token: token,
-            coinTicker: storage.coinTicker(for: token)
+            coinTicker: storage.coinTicker(for: token),
+            config: session.config
         )
         return cell
     }

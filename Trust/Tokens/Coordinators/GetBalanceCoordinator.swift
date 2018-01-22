@@ -27,7 +27,7 @@ class GetBalanceCoordinator {
             switch result {
             case .success(let res):
                 let request2 = EtherServiceRequest(
-                    batch: BatchFactory().create(CallRequest(to: contract.address, data: res))
+                    batch: BatchFactory().create(CallRequest(to: contract.description, data: res))
                 )
                 Session.send(request2) { [weak self] result2 in
                     switch result2 {
@@ -57,7 +57,7 @@ class GetBalanceCoordinator {
         for address: Address,
         completion: @escaping (Result<Balance, AnyError>) -> Void
     ) {
-        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: address.address)))
+        let request = EtherServiceRequest(batch: BatchFactory().create(BalanceRequest(address: address.description)))
         Session.send(request) { result in
             switch result {
             case .success(let balance):

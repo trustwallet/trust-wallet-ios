@@ -10,7 +10,7 @@ extension WalletSession {
         config: Config = .make(),
         web3: Web3Swift = Web3Swift()
     ) -> WalletSession {
-        let balance =  BalanceCoordinator(account: account, storage: FakeTokensDataStore())
+        let balance =  BalanceCoordinator(account: account, config: config, storage: FakeTokensDataStore())
         return WalletSession(
             account: account,
             config: config,

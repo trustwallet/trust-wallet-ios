@@ -286,6 +286,8 @@
 		29FF13081F75F0AE00AFD326 /* AppCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF13071F75F0AE00AFD326 /* AppCoordinatorTests.swift */; };
 		29FF130A1F75F67200AFD326 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF13091F75F67200AFD326 /* Address.swift */; };
 		29FF130D1F7626E800AFD326 /* FakeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF130C1F7626E800AFD326 /* FakeNavigationController.swift */; };
+		29FF6D6B2011D2AF00A3011C /* InCoordinatorError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF6D6A2011D2AF00A3011C /* InCoordinatorError.swift */; };
+		29FF6D73201200D500A3011C /* FieldAppereance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF6D72201200D500A3011C /* FieldAppereance.swift */; };
 		3CDDD1E2CD1B0180754B7992 /* Pods_Trust.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646C8C822C986358D7388602 /* Pods_Trust.framework */; };
 		613D04891FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer in Resources */ = {isa = PBXBuildFile; fileRef = 613D04881FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer */; };
 		613D048B1FDE162B008DE72E /* TrustProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613D048A1FDE162B008DE72E /* TrustProvider.swift */; };
@@ -300,6 +302,8 @@
 		61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */; };
 		61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */; };
 		664D11A12007D59F0041A0B0 /* EstimateGasRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */; };
+		732086B9201508690047F605 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732086B8201508690047F605 /* SplashCoordinator.swift */; };
+		732086BB20152A5E0047F605 /* ProtectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732086BA20152A5E0047F605 /* ProtectionViewController.swift */; };
 		739533971FEFF5FD0084AFAB /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739533961FEFF5FD0084AFAB /* Currency.swift */; };
 		771AA94B1FF76B8000D25403 /* demo.html in Resources */ = {isa = PBXBuildFile; fileRef = 771AA94A1FF76B8000D25403 /* demo.html */; };
 		771AA94E1FF971CD00D25403 /* DappAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA94D1FF971CD00D25403 /* DappAction.swift */; };
@@ -622,6 +626,12 @@
 		29FF13071F75F0AE00AFD326 /* AppCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorTests.swift; sourceTree = "<group>"; };
 		29FF13091F75F67200AFD326 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		29FF130C1F7626E800AFD326 /* FakeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNavigationController.swift; sourceTree = "<group>"; };
+		29FF6D6A2011D2AF00A3011C /* InCoordinatorError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InCoordinatorError.swift; sourceTree = "<group>"; };
+		29FF6D6E2011E1E900A3011C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		29FF6D6F2011E1EE00A3011C /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		29FF6D702011E1F300A3011C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		29FF6D712011E20500A3011C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		29FF6D72201200D500A3011C /* FieldAppereance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldAppereance.swift; sourceTree = "<group>"; };
 		477899BEAA4489DA423E8857 /* Pods-TrustUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4DB8204016307EAFC079EA48 /* Pods-Trust.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trust.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trust/Pods-Trust.debug.xcconfig"; sourceTree = "<group>"; };
 		613D04881FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "COMODO ECC Domain Validation Secure Server CA 2.cer"; sourceTree = "<group>"; };
@@ -638,6 +648,8 @@
 		61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherNumberFormatterTests.swift; sourceTree = "<group>"; };
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateGasRequest.swift; sourceTree = "<group>"; };
+		732086B8201508690047F605 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
+		732086BA20152A5E0047F605 /* ProtectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectionViewController.swift; sourceTree = "<group>"; };
 		739533961FEFF5FD0084AFAB /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		771AA94A1FF76B8000D25403 /* demo.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = demo.html; sourceTree = "<group>"; };
 		771AA94D1FF971CD00D25403 /* DappAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DappAction.swift; sourceTree = "<group>"; };
@@ -730,6 +742,7 @@
 		2912CCF71F6A830700C6CBE3 /* Trust */ = {
 			isa = PBXGroup;
 			children = (
+				732086B2201506AA0047F605 /* Protection */,
 				29E6E0681FE897BB0079265A /* Browser */,
 				298543011FC15F5300CB5081 /* Exchange */,
 				2959960F1FAB065700DB66A8 /* Deposit */,
@@ -994,7 +1007,6 @@
 			children = (
 				295247DB1F8326C8007FDC31 /* Views */,
 				2977CAE71F7E0B87009682A0 /* ViewModels */,
-				2977CAE61F7E0B7C009682A0 /* ViewControllers */,
 				2977CAE51F7E0B73009682A0 /* Coordinators */,
 			);
 			path = Accounts;
@@ -1013,7 +1025,6 @@
 			isa = PBXGroup;
 			children = (
 				2931120F1FC4ADCB00966EEA /* InCoordinatorViewModel.swift */,
-				29F1C85E200369BA003780D8 /* HelpUsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1149,6 +1160,7 @@
 		2977CAE41F7E0B69009682A0 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
+				29F1C85920036968003780D8 /* HelpUsCoordinator.swift */,
 				2996F1471F6C9AE5005C33AE /* SettingsCoordinator.swift */,
 				290B2B6F1F930AB90053C83E /* PushNotificationsRegistrar.swift */,
 			);
@@ -1161,13 +1173,6 @@
 				295A59371F71C1B90092F0FC /* AccountsCoordinator.swift */,
 			);
 			path = Coordinators;
-			sourceTree = "<group>";
-		};
-		2977CAE61F7E0B7C009682A0 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		2977CAE71F7E0B87009682A0 /* ViewModels */ = {
@@ -1325,6 +1330,7 @@
 		298542F11FBD593900CB5081 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				29F1C85E200369BA003780D8 /* HelpUsViewModel.swift */,
 				298542F21FBD594D00CB5081 /* SettingsViewModel.swift */,
 			);
 			path = ViewModels;
@@ -1556,6 +1562,7 @@
 				299B5E481FD2C8900051361C /* ConfigureTransaction.swift */,
 				29BDF1971FEE4DB00023A45F /* GasPriceConfiguration.swift */,
 				29BDF1A01FEE51A80023A45F /* GasLimitConfiguration.swift */,
+				29FF6D6A2011D2AF00A3011C /* InCoordinatorError.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1701,18 +1708,9 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
-		29F1C85B2003697E003780D8 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				29F1C85C2003698A003780D8 /* WellDoneViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
 		29FC9BC31F830880000209CD /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				29F1C85B2003697E003780D8 /* ViewControllers */,
 				295B61D21FE7D5AB00642E60 /* Formatters */,
 				29E9CFD01FE737EE00017744 /* Types */,
 				CCA4FE341FD427CA00749AE4 /* Helpers */,
@@ -1739,8 +1737,8 @@
 		29FC9BC71F83144D000209CD /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				29B9345C1F88459C009FCABB /* SplashViewController.swift */,
 				2996F1451F6C98B3005C33AE /* SettingsViewController.swift */,
+				29F1C85C2003698A003780D8 /* WellDoneViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1781,6 +1779,7 @@
 				295247E61F835BA0007FDC31 /* InfoHeaderView.swift */,
 				2963B6AC1F981A96003063C1 /* TransactionAppearance.swift */,
 				29F114F11FA7966300114A29 /* PrivateKeyRule.swift */,
+				29FF6D72201200D500A3011C /* FieldAppereance.swift */,
 			);
 			path = Form;
 			sourceTree = "<group>";
@@ -1833,6 +1832,32 @@
 				615F10611FCD3F0F008A45AF /* OnboardingPageStyle.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		732086B2201506AA0047F605 /* Protection */ = {
+			isa = PBXGroup;
+			children = (
+				732086B3201507220047F605 /* Coordinators */,
+				732086B5201507220047F605 /* ViewControllers */,
+			);
+			path = Protection;
+			sourceTree = "<group>";
+		};
+		732086B3201507220047F605 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				732086B8201508690047F605 /* SplashCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		732086B5201507220047F605 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				29B9345C1F88459C009FCABB /* SplashViewController.swift */,
+				732086BA20152A5E0047F605 /* ProtectionViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		771AA94C1FF971BB00D25403 /* Types */ = {
@@ -1904,7 +1929,6 @@
 			isa = PBXGroup;
 			children = (
 				CCCD74FC1FD2D38D004A087D /* CheckDeviceCoordinator.swift */,
-				29F1C85920036968003780D8 /* HelpUsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -2035,6 +2059,10 @@
 				en,
 				es,
 				ru,
+				ar,
+				de,
+				it,
+				fr,
 			);
 			mainGroup = 2912CCEC1F6A830700C6CBE3;
 			productRefGroup = 2912CCF61F6A830700C6CBE3 /* Products */;
@@ -2245,7 +2273,6 @@
 				"${BUILT_PRODUCTS_DIR}/1PasswordExtension/OnePasswordExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/APIKit/APIKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire-Synchronous/Alamofire_Synchronous.framework",
 				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
 				"${BUILT_PRODUCTS_DIR}/BonMot/BonMot.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
@@ -2267,16 +2294,13 @@
 				"${BUILT_PRODUCTS_DIR}/StatefulViewController/StatefulViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/TrustKeystore/TrustKeystore.framework",
 				"${BUILT_PRODUCTS_DIR}/VENTouchLock/VENTouchLock.framework",
-				"${BUILT_PRODUCTS_DIR}/libsodium/libsodium.framework",
 				"${BUILT_PRODUCTS_DIR}/secp256k1_ios/secp256k1_ios.framework",
-				"${BUILT_PRODUCTS_DIR}/web3swift/web3swift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OnePasswordExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APIKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_Synchronous.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BonMot.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
@@ -2298,9 +2322,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatefulViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustKeystore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VENTouchLock.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libsodium.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1_ios.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/web3swift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2397,6 +2419,7 @@
 				771AA94E1FF971CD00D25403 /* DappAction.swift in Sources */,
 				29F1C8471FEB6664003780D8 /* EditTokenTableViewCell.swift in Sources */,
 				296106C21F76403A0006164B /* TokenViewCell.swift in Sources */,
+				29FF6D6B2011D2AF00A3011C /* InCoordinatorError.swift in Sources */,
 				29F114F01FA6D53700114A29 /* ImportSelectionType.swift in Sources */,
 				29850D251F6B27A800791A49 /* R.generated.swift in Sources */,
 				296105931FA2AA2100292494 /* SignTransaction.swift in Sources */,
@@ -2409,6 +2432,7 @@
 				29282B531F7630970067F88D /* Token.swift in Sources */,
 				29F1C85D2003698A003780D8 /* WellDoneViewController.swift in Sources */,
 				29E9CFCF1FE7347200017744 /* ERC20Token.swift in Sources */,
+				29FF6D73201200D500A3011C /* FieldAppereance.swift in Sources */,
 				29C9F5FB1F720C050025C494 /* FloatLabelTextField.swift in Sources */,
 				293248861F88CCE6008A9818 /* SplashError.swift in Sources */,
 				296421951F70C1EC00EB363B /* LoadingView.swift in Sources */,
@@ -2433,6 +2457,7 @@
 				293112191FC55E5500966EEA /* SelectTokenViewController.swift in Sources */,
 				771AA960200D5E8800D25403 /* PassphraseView.swift in Sources */,
 				61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */,
+				732086BB20152A5E0047F605 /* ProtectionViewController.swift in Sources */,
 				29DBF2A71F9F145900327C60 /* StateViewModel.swift in Sources */,
 				2923D9B31FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift in Sources */,
 				294DFBA01FE0CADE004CEB56 /* TransactionDetailsViewModel.swift in Sources */,
@@ -2487,6 +2512,7 @@
 				2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */,
 				291F52A51F6B762300B369AB /* EtherServiceRequest.swift in Sources */,
 				CCA4FE361FD4282400749AE4 /* DeviceChecker.swift in Sources */,
+				732086B9201508690047F605 /* SplashCoordinator.swift in Sources */,
 				29E6E06C1FE897D90079265A /* BrowserCoordinator.swift in Sources */,
 				298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */,
 				29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */,
@@ -2666,6 +2692,10 @@
 				290B2B551F8F50030053C83E /* en */,
 				294DFBA41FE0F437004CEB56 /* es */,
 				294DFBA51FE0F47E004CEB56 /* ru */,
+				29FF6D6E2011E1E900A3011C /* de */,
+				29FF6D6F2011E1EE00A3011C /* ar */,
+				29FF6D702011E1F300A3011C /* it */,
+				29FF6D712011E20500A3011C /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2797,7 +2827,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 111;
+				CURRENT_PROJECT_VERSION = 122;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Trust/Info.plist;
@@ -2821,7 +2851,7 @@
 				CODE_SIGN_ENTITLEMENTS = Trust/Trust.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 111;
+				CURRENT_PROJECT_VERSION = 122;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Trust/Info.plist;

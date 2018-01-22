@@ -3,12 +3,6 @@
 import Foundation
 import TrustKeystore
 
-extension Address {
-    var address: String {
-        return description
-    }
-}
-
 enum AddressError: LocalizedError {
     case invalidAddress
 

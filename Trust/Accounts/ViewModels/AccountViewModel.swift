@@ -15,7 +15,7 @@ struct AccountViewModel {
     }
 
     var title: String {
-        return wallet.address.address
+        return wallet.address.description
     }
 
     var image: UIImage? {

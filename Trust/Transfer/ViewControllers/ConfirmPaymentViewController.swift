@@ -47,7 +47,8 @@ class ConfirmPaymentViewController: UIViewController {
         stackViewController.view.backgroundColor = viewModel.backgroundColor
         navigationItem.title = viewModel.title
 
-        configurator.load { [unowned self] result in
+        configurator.load { [weak self] result in
+            guard let `self` = self else { return }
             switch result {
             case .success:
                 self.reloadView()
@@ -74,7 +75,7 @@ class ConfirmPaymentViewController: UIViewController {
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(
                 title: detailsViewModel.paymentFromTitle,
-                subTitle: session.account.address.address
+                subTitle: session.account.address.description
             ),
             TransactionAppearance.item(
                 title: detailsViewModel.paymentToTitle,

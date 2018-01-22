@@ -7,17 +7,20 @@ struct EditTokenTableCellViewModel {
 
     let token: TokenObject
     let coinTicker: CoinTicker?
+    let config: Config
 
     init(
         token: TokenObject,
-        coinTicker: CoinTicker?
+        coinTicker: CoinTicker?,
+        config: Config
     ) {
         self.token = token
         self.coinTicker = coinTicker
+        self.config = config
     }
 
     var title: String {
-        return token.name.isEmpty ? token.symbol : token.name
+        return token.title
     }
 
     var titleFont: UIFont {
@@ -40,7 +43,18 @@ struct EditTokenTableCellViewModel {
         return !token.isDisabled
     }
 
-    var contractText: String {
-        return token.contract
+    private var isAvailableForChange: Bool {
+        return token.contract == TokensDataStore.etherToken(for: config).contract ? true : false
+    }
+
+    var contractText: String? {
+        if !isAvailableForChange {
+            return token.contract
+        }
+        return .none
+    }
+
+    var isSwitchHidden: Bool {
+        return isAvailableForChange
     }
 }

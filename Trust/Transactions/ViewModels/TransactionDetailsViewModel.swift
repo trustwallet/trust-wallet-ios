@@ -87,7 +87,7 @@ struct TransactionDetailsViewModel {
         let gasFee: BigInt = {
             switch transaction.state {
             case .completed, .error: return gasPrice * gasUsed
-            case .pending, .unknown: return gasPrice * gasLimit
+            case .pending, .unknown, .failed: return gasPrice * gasLimit
             }
         }()
         return fullFormatter.string(from: gasFee) + " " + config.server.symbol

@@ -26,7 +26,7 @@ struct TransactionsViewModel {
             let date = TransactionsViewModel.formatter.string(from: transaction.date)
 
             var currentItems = newItems[date] ?? []
-            currentItems.insert(transaction, at: 0)
+            currentItems.append(transaction)
             newItems[date] = currentItems
         }
         //TODO. IMPROVE perfomance
@@ -82,8 +82,7 @@ struct TransactionsViewModel {
 
     var isBuyActionAvailable: Bool {
         switch config.server {
-        case .main: return true
-        case .kovan, .classic, .ropsten, .poa, .sokol: return false
+        case .main, .kovan, .classic, .ropsten, .poa, .sokol: return false
         }
     }
 }
