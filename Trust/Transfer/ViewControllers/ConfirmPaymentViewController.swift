@@ -29,6 +29,8 @@ class ConfirmPaymentViewController: UIViewController {
     let viewModel = ConfirmPaymentViewModel()
     var configurator: TransactionConfigurator
 
+    var didCompleted: ((_ transaction: SentTransaction) -> Void)?
+
     init(
         session: WalletSession,
         keystore: Keystore,
@@ -153,6 +155,7 @@ class ConfirmPaymentViewController: UIViewController {
             switch result {
             case .success(let transaction):
                 self.delegate?.didCompleted(transaction: transaction, in: self)
+                self.didCompleted?(transaction)
             case .failure(let error):
                 self.displayError(error: error)
             }

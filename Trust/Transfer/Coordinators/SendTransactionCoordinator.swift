@@ -92,6 +92,8 @@ class SendTransactionCoordinator {
         switch signedTransaction {
         case .success(let data):
             let sendData = data.hexEncoded
+            completion(.success(SentTransaction(id: sendData)))
+            return
             let request = EtherServiceRequest(batch: BatchFactory().create(SendRawTransactionRequest(signedTransaction: sendData)))
             Session.send(request) { result in
                 switch result {

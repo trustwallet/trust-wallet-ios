@@ -17,6 +17,22 @@ struct DappCommandObjectValue: Decodable {
     }
 }
 
+enum DappCallbackValue {
+    case signTransaction(SentTransaction)
+
+    var object: String {
+        switch self {
+        case .signTransaction(let value):
+            return value.id
+        }
+    }
+}
+
+struct DappCallback {
+    let id: Int
+    let value: DappCallbackValue
+}
+
 struct DappCommand: Decodable {
     let name: Method
     let object: [String: DappCommandObjectValue]
@@ -24,32 +40,23 @@ struct DappCommand: Decodable {
 
 enum Method: String, Decodable {
     //case getAccounts
-    case signTransaction
-    case sign
     case sendTransaction
+    case signTransaction
+    case signPersonalMessage
+    case signMessage
     case unknown
-    //case signMessage
 
     init(string: String) {
-        self = Method(string: string)
+        self = Method(rawValue: string) ?? .unknown
     }
 }
 
 protocol BrowserViewControllerDelegate: class {
-    func didCall(action: DappAction)
+    func didCall(action: DappAction, callbackID: Int)
 }
 class BrowserViewController: UIViewController {
 
     let session: WalletSession
-
-    enum Method: String {
-        case getAccounts
-        case signTransaction
-        case signMessage
-        case signPersonalMessage
-        case publishTransaction
-        case approveTransaction
-    }
 
     lazy var webView: WKWebView = {
         let webView = WKWebView(
@@ -70,7 +77,6 @@ class BrowserViewController: UIViewController {
         let config = WKWebViewConfiguration()
 
         var js = ""
-
         if let filepath = Bundle.main.path(forResource: "web3.min", ofType: "js") {
             do {
                 js += try String(contentsOfFile: filepath)
@@ -84,36 +90,62 @@ class BrowserViewController: UIViewController {
 
         js +=
         """
-        let web3 = new Web3(new Web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)"));
-        web3.eth.defaultAccount = "\(session.account.address.description)"
-
-        web3.eth.accounts = function(message, callback) {
-            console.log("account asked for!!!")
-        return ["\(session.account.address.description)"]
+        let callbacksCount = 0;
+        let callbacks = {};
+        var callback_
+        function addCallback(callbacksCount, cb) {
+            callbacks[callbacksCount] = cb
+            callbacksCount++
         }
 
-        var callback_;
-        web3.eth.sendTransaction = function(message, callback) {
-            console.log(message);
-            console.log(callback);
-            webkit.messageHandlers.sendTransaction.postMessage({"name": "sendTransaction", "object": message})
-            callback_ = callback;
+        function executeCallback(id, value) {
+            console.log("executeCallback")
+            let callback = callbacks[id](null, value)
+            console.log("id", id)
+            console.log("value", value)
+            //invalid argument 0: json: cannot unmarshal non-string into Go value of type hexutil.Byte
         }
+
+        const engine = ZeroClientProvider({
+            getAccounts: function(cb) {
+                return cb(null, ["\(session.account.address.address)"])
+            },
+            rpcUrl: "\(session.config.rpcURL.absoluteString)",
+            sendTransaction: function(tx, cb) {
+                console.log("here." + tx)
+                webkit.messageHandlers.postMessage({"name": "sendTransaction", "object": tx})
+            },
+            signTransaction: function(tx, cb) {
+                console.log("here2.", tx)
+                addCallback(callbacksCount, cb)
+                webkit.messageHandlers.signTransaction.postMessage({"name": "signTransaction", "object": tx})
+                callback_ = cb
+            },
+            signMessage: function(cb) {
+                console.log("here.4", cb)
+                webkit.messageHandlers.signMessage.postMessage({"name": "signMessage", "object": message})
+            },
+            signPersonalMessage: function(message, cb) {
+                console.log("here.5", cb)
+                webkit.messageHandlers.signPersonalMessage.postMessage({"name": "signPersonalMessage", "object": message})
+            },
+        })
+        engine.start()
+        var web3 = new Web3(engine)
+        window.web3 = web3
+        web3.eth.accounts = ["\(session.account.address.address)"]
+        web3.eth.getAccounts = function(cb) {
+            return cb(null, ["\(session.account.address.address)"])
+        }
+        web3.eth.defaultAccount = "\(session.account.address.address)"
+
         """
 
-//        web3.eth.sign = function(message, callback){
-//            console.log("hooooray");
-//            runCommand("sign", {"message": message})
-//        }
-
-//        web3.eth.signTransaction = function(tx, callback) {
-//            console.log("testing");
-//            runCommand("signTransaction", tx)
-//        }
-
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
-        config.userContentController.add(self, name: "sendTransaction")
-        config.userContentController.add(self, name: "command")
+        config.userContentController.add(self, name: Method.sendTransaction.rawValue)
+        config.userContentController.add(self, name: Method.signTransaction.rawValue)
+        config.userContentController.add(self, name: Method.signPersonalMessage.rawValue)
+        config.userContentController.add(self, name: Method.signMessage.rawValue)
 
         config.userContentController.addUserScript(userScript)
         return config
@@ -139,15 +171,16 @@ class BrowserViewController: UIViewController {
 //        if let url = Bundle.main.url(forResource: "demo", withExtension: "html") {
 //            webView.load(URLRequest(url: url))
 //        }
-        webView.load(URLRequest(url: URL(string: "https://tokenfactory.netlify.com/#/factory/")!))
+        webView.load(URLRequest(url: URL(string: "https://tokenfactory.netlify.com/#/factory")!))
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func notifyFinish(transaction: SentTransaction) {
-        let evString = "callback_(null, \(transaction.id))"
+    func notifyFinish(callback: DappCallback) {
+        let evString = "callback_(null, \"\(callback.value.object)\")"
+        NSLog("evString \(evString)")
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.webView.evaluateJavaScript(evString, completionHandler: nil)
         }
@@ -162,15 +195,22 @@ extension BrowserViewController: WKNavigationDelegate {
 
 extension BrowserViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == "sendTransaction" {
+
+        let method = Method(string: message.name)
+
+        switch method {
+        case .sendTransaction, .signTransaction:
             guard let body = message.body as? [String: AnyObject],
                 let jsonString = body.jsonString else { return }
 
             let command = try! decoder.decode(DappCommand.self, from: jsonString.data(using: .utf8)!)
             let action = DappAction.fromCommand(command)
-            delegate?.didCall(action: action)
 
+            delegate?.didCall(action: action, callbackID: 0)
             return
+        case .signPersonalMessage: break
+            //delegate?.didCall(action: .signMessage("hello"))
+        default: break
         }
 
         guard
@@ -184,7 +224,7 @@ extension BrowserViewController: WKScriptMessageHandler {
                 from: jsonString.data(using: .utf8)!
             )
             let action = DappAction.fromCommand(command)
-            delegate?.didCall(action: action)
+            //delegate?.didCall(action: action)
         } catch {
             NSLog("error \(error)")
         }
