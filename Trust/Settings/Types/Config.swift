@@ -88,8 +88,4 @@ struct Config {
         }()
         return URL(string: urlString)!
     }
-
-    var ethplorerURL: URL {
-        return URL(string: "https://api.ethplorer.io/")!
-    }
 }

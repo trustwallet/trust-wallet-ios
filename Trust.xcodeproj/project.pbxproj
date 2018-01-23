@@ -54,7 +54,6 @@
 		2923D9B51FDA4E07000CF3F8 /* PasswordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B41FDA4E07000CF3F8 /* PasswordGenerator.swift */; };
 		2923D9B71FDA5E51000CF3F8 /* PasswordGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B61FDA5E51000CF3F8 /* PasswordGeneratorTests.swift */; };
 		29282B531F7630970067F88D /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282B521F7630970067F88D /* Token.swift */; };
-		29282B581F7636840067F88D /* GetTokensRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29282B571F7636840067F88D /* GetTokensRequest.swift */; };
 		29285B421F6FB3E60044CF29 /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29285B411F6FB3E60044CF29 /* SendViewController.swift */; };
 		292F75A91F88865A00585F8E /* TouchRegistrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292F75A81F88865A00585F8E /* TouchRegistrar.swift */; };
 		293112101FC4ADCB00966EEA /* InCoordinatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931120F1FC4ADCB00966EEA /* InCoordinatorViewModel.swift */; };
@@ -400,7 +399,6 @@
 		2923D9B41FDA4E07000CF3F8 /* PasswordGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordGenerator.swift; sourceTree = "<group>"; };
 		2923D9B61FDA5E51000CF3F8 /* PasswordGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordGeneratorTests.swift; sourceTree = "<group>"; };
 		29282B521F7630970067F88D /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
-		29282B571F7636840067F88D /* GetTokensRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTokensRequest.swift; sourceTree = "<group>"; };
 		29285B411F6FB3E60044CF29 /* SendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewController.swift; sourceTree = "<group>"; };
 		292F75A81F88865A00585F8E /* TouchRegistrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchRegistrar.swift; sourceTree = "<group>"; };
 		2931120F1FC4ADCB00966EEA /* InCoordinatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InCoordinatorViewModel.swift; sourceTree = "<group>"; };
@@ -1031,7 +1029,6 @@
 		29282B561F7636600067F88D /* Ethplorer */ = {
 			isa = PBXGroup;
 			children = (
-				29282B571F7636840067F88D /* GetTokensRequest.swift */,
 				29C80D401FB2E1610037B1E0 /* EthplorerService.swift */,
 			);
 			path = Ethplorer;
@@ -2550,7 +2547,6 @@
 				2963B6BF1F9AB9A2003063C1 /* ContractERC20Transfer.swift in Sources */,
 				29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */,
 				29FF12F81F747D6C00AFD326 /* Error.swift in Sources */,
-				29282B581F7636840067F88D /* GetTokensRequest.swift in Sources */,
 				29AD8A061F93DC8C008E10E7 /* PushDevice.swift in Sources */,
 				294DFBA91FE6EBFB004CEB56 /* NewTokenViewController.swift in Sources */,
 				29B933F51F860074009FCABB /* SendTransactionCoordinator.swift in Sources */,

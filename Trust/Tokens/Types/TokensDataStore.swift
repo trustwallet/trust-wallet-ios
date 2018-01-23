@@ -106,23 +106,8 @@ class TokensDataStore {
         let contracts = uniqueContracts()
         update(tokens: contracts)
 
-        switch config.server {
-        case .main:
-            let request = GetTokensRequest(address: account.address.description)
-            Session.send(request) { [weak self] result in
-                guard let `self` = self else { return }
-                switch result {
-                case .success(let response):
-                    self.update(tokens: response)
-                    self.refreshBalance()
-                case .failure: break
-                }
-            }
-            updatePrices()
-        case .classic, .kovan, .poa, .ropsten, .sokol:
-            updatePrices()
-            refreshBalance()
-        }
+        updatePrices()
+        refreshBalance()
     }
 
     func refreshBalance() {
@@ -239,7 +224,7 @@ class TokensDataStore {
 
     func uniqueContracts() -> [Token] {
         let transactions = realm.objects(Transaction.self)
-            .sorted(byKeyPath: "date", ascending: true)
+            .sorted(byKeyPath: "date", ascending: false)
             .filter { !$0.localizedOperations.isEmpty }
 
         let tokens: [Token] = transactions.flatMap { transaction in
