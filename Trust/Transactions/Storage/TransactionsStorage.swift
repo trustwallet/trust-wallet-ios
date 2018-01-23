@@ -57,6 +57,13 @@ class TransactionsStorage {
         return transaction
     }
 
+    func removeTransactions(for states: [TransactionState]) {
+        let objects = realm.objects(Transaction.self).filter { states.contains($0.state) }
+        try! realm.write {
+            realm.delete(objects)
+        }
+    }
+
     func deleteAll() {
         let objects = realm.objects(Transaction.self)
         try! realm.write {
