@@ -213,6 +213,7 @@
 		29BE3FD21F707DC300F6BFC2 /* TransactionDataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE3FD11F707DC300F6BFC2 /* TransactionDataCoordinator.swift */; };
 		29C0FCE1200DA94A004A13CB /* SignMessageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0FCE0200DA94A004A13CB /* SignMessageCoordinator.swift */; };
 		29C0FCE5200EBAF6004A13CB /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0FCE4200EBAF6004A13CB /* TokenType.swift */; };
+		29C70C712016C7780072E454 /* SentTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C70C702016C7780072E454 /* SentTransaction.swift */; };
 		29C80D371FB2CD230037B1E0 /* PendingTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D361FB2CD230037B1E0 /* PendingTransaction.swift */; };
 		29C80D411FB2E1610037B1E0 /* EthplorerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D401FB2E1610037B1E0 /* EthplorerService.swift */; };
 		29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D481FB51C380037B1E0 /* Dictionary.swift */; };
@@ -553,6 +554,7 @@
 		29BE3FD11F707DC300F6BFC2 /* TransactionDataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataCoordinator.swift; sourceTree = "<group>"; };
 		29C0FCE0200DA94A004A13CB /* SignMessageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignMessageCoordinator.swift; sourceTree = "<group>"; };
 		29C0FCE4200EBAF6004A13CB /* TokenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenType.swift; sourceTree = "<group>"; };
+		29C70C702016C7780072E454 /* SentTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentTransaction.swift; sourceTree = "<group>"; };
 		29C80D361FB2CD230037B1E0 /* PendingTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingTransaction.swift; sourceTree = "<group>"; };
 		29C80D401FB2E1610037B1E0 /* EthplorerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthplorerService.swift; sourceTree = "<group>"; };
 		29C80D481FB51C380037B1E0 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
@@ -1563,6 +1565,7 @@
 				29BDF1971FEE4DB00023A45F /* GasPriceConfiguration.swift */,
 				29BDF1A01FEE51A80023A45F /* GasLimitConfiguration.swift */,
 				29FF6D6A2011D2AF00A3011C /* InCoordinatorError.swift */,
+				29C70C702016C7780072E454 /* SentTransaction.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2562,6 +2565,7 @@
 				29F114F41FA8117C00114A29 /* SendCoordinator.swift in Sources */,
 				293B8B411F707F4600356286 /* TransactionViewModel.swift in Sources */,
 				29BB94951F6FC54C009B09CC /* EthereumUnit.swift in Sources */,
+				29C70C712016C7780072E454 /* SentTransaction.swift in Sources */,
 				29E9CFD21FE737FE00017744 /* TrustRealmConfiguration.swift in Sources */,
 				2959961C1FAE3EDF00DB66A8 /* TrustClient.swift in Sources */,
 				29AD8A0C1F93FBBF008E10E7 /* Subscribable.swift in Sources */,

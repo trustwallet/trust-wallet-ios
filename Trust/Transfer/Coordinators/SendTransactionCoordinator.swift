@@ -6,10 +6,6 @@ import APIKit
 import JSONRPCKit
 import Result
 
-struct SentTransaction {
-    let id: String
-}
-
 class SendTransactionCoordinator {
 
     private let keystore: Keystore
@@ -102,7 +98,7 @@ class SendTransactionCoordinator {
                 Session.send(request) { result in
                     switch result {
                     case .success(let transactionID):
-                        completion(.success(.sentTransaction(SentTransaction(id: transactionID))))
+                        completion(.success(.sentTransaction(SentTransaction(id: transactionID, original: transaction))))
                     case .failure(let error):
                         completion(.failure(AnyError(error)))
                     }

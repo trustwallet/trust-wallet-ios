@@ -148,9 +148,8 @@ class TransactionDataCoordinator {
     }
 
     func addSentTransaction(_ transaction: SentTransaction) {
-        storage.add([
-            Transaction(id: transaction.id, date: Date(), state: .pending),
-        ])
+        let transaction = SentTransaction.from(from: session.account.address, transaction: transaction)
+        storage.add([transaction])
         handleUpdateItems()
     }
 
