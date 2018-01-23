@@ -15,12 +15,12 @@ struct CoinTicker: Codable {
 
     lazy var rate: CurrencyRate = {
         CurrencyRate(
-            currency: self.symbol,
+            currency: symbol,
             rates: [
                 Rate(
-                    code: self.symbol,
-                    price: Double(self.price) ?? 0,
-                    contract: self.contract
+                    code: symbol,
+                    price: Double(price) ?? 0,
+                    contract: contract
                 ),
             ]
         )
