@@ -186,6 +186,10 @@ class BrowserViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func goTo(url: URL) {
+        webView.load(URLRequest(url: url))
+    }
+
     func notifyFinish(callbackID: Int, value: Result<DappCallback, DAppError>) {
         let script: String = {
             switch value {

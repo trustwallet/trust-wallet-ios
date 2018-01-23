@@ -14,6 +14,7 @@ class ErrorView: UIView {
     private let viewModel = StateViewModel()
 
     init(
+        frame: CGRect = .zero,
         description: String = NSLocalizedString("errorView.description.label.title", value: "Something went wrong... Try again.", comment: ""),
         image: UIImage? = R.image.error(),
         insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
@@ -21,7 +22,7 @@ class ErrorView: UIView {
     ) {
         self.onRetry = onRetry
         self.insets = insets
-        super.init(frame: .zero)
+        super.init(frame: frame)
 
         backgroundColor = .white
 

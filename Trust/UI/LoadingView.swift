@@ -13,12 +13,13 @@ class LoadingView: UIView {
     private let viewModel = StateViewModel()
 
     init(
+        frame: CGRect = .zero,
         message: String = NSLocalizedString("Loading", value: "Loading", comment: ""),
         image: UIImage? = .none,
         insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     ) {
         self.insets = insets
-        super.init(frame: .zero)
+        super.init(frame: frame)
 
         backgroundColor = .white
 

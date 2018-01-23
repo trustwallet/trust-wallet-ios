@@ -314,6 +314,13 @@
 		771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */; };
 		778EAF7D1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */; };
 		778EAF831FF379AA00C8E2AB /* web3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 778EAF821FF379AA00C8E2AB /* web3.min.js */; };
+		77B3BF2B2017CC6F00EEC15A /* MarketplaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF2A2017CC6F00EEC15A /* MarketplaceViewController.swift */; };
+		77B3BF2F2017CD8300EEC15A /* MarketplaceItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF2D2017CD8300EEC15A /* MarketplaceItemTableViewCell.swift */; };
+		77B3BF302017CD8300EEC15A /* MarketplaceItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77B3BF2E2017CD8300EEC15A /* MarketplaceItemTableViewCell.xib */; };
+		77B3BF322017CE3600EEC15A /* MarketplaceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF312017CE3600EEC15A /* MarketplaceItem.swift */; };
+		77B3BF352017D0D000EEC15A /* MarketplaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF342017D0D000EEC15A /* MarketplaceViewModel.swift */; };
+		77B3BF382017D16200EEC15A /* MarketplaceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF372017D16200EEC15A /* MarketplaceCoordinator.swift */; };
+		77B3BF3A2017D72700EEC15A /* MarketplaceItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF392017D72700EEC15A /* MarketplaceItemViewModel.swift */; };
 		CCA4FE331FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE321FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift */; };
 		CCA4FE361FD4282400749AE4 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE351FD4282400749AE4 /* DeviceChecker.swift */; };
 		CCA4FE381FD428B300749AE4 /* JailbreakChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE371FD428B300749AE4 /* JailbreakChecker.swift */; };
@@ -661,6 +668,13 @@
 		771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WordCollectionViewCell.xib; sourceTree = "<group>"; };
 		778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinatorTests.swift; sourceTree = "<group>"; };
 		778EAF821FF379AA00C8E2AB /* web3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = web3.min.js; sourceTree = "<group>"; };
+		77B3BF2A2017CC6F00EEC15A /* MarketplaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceViewController.swift; sourceTree = "<group>"; };
+		77B3BF2D2017CD8300EEC15A /* MarketplaceItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceItemTableViewCell.swift; sourceTree = "<group>"; };
+		77B3BF2E2017CD8300EEC15A /* MarketplaceItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketplaceItemTableViewCell.xib; sourceTree = "<group>"; };
+		77B3BF312017CE3600EEC15A /* MarketplaceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceItem.swift; sourceTree = "<group>"; };
+		77B3BF342017D0D000EEC15A /* MarketplaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceViewModel.swift; sourceTree = "<group>"; };
+		77B3BF372017D16200EEC15A /* MarketplaceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceCoordinator.swift; sourceTree = "<group>"; };
+		77B3BF392017D72700EEC15A /* MarketplaceItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceItemViewModel.swift; sourceTree = "<group>"; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1651,6 +1665,8 @@
 		29E6E0681FE897BB0079265A /* Browser */ = {
 			isa = PBXGroup;
 			children = (
+				77B3BF332017D0C400EEC15A /* ViewModel */,
+				77B3BF2C2017CD1A00EEC15A /* Views */,
 				771AA94C1FF971BB00D25403 /* Types */,
 				29E6E06A1FE897CD0079265A /* ViewControllers */,
 				29E6E0691FE897C70079265A /* Coordinators */,
@@ -1662,6 +1678,7 @@
 			isa = PBXGroup;
 			children = (
 				29E6E06B1FE897D90079265A /* BrowserCoordinator.swift */,
+				77B3BF372017D16200EEC15A /* MarketplaceCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1670,6 +1687,7 @@
 			isa = PBXGroup;
 			children = (
 				29E6E06D1FE897EE0079265A /* BrowserViewController.swift */,
+				77B3BF2A2017CC6F00EEC15A /* MarketplaceViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1867,6 +1885,7 @@
 			isa = PBXGroup;
 			children = (
 				771AA94D1FF971CD00D25403 /* DappAction.swift */,
+				77B3BF312017CE3600EEC15A /* MarketplaceItem.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1887,6 +1906,24 @@
 				778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		77B3BF2C2017CD1A00EEC15A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				77B3BF2D2017CD8300EEC15A /* MarketplaceItemTableViewCell.swift */,
+				77B3BF2E2017CD8300EEC15A /* MarketplaceItemTableViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		77B3BF332017D0C400EEC15A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				77B3BF342017D0D000EEC15A /* MarketplaceViewModel.swift */,
+				77B3BF392017D72700EEC15A /* MarketplaceItemViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		9A0F00B2D545197C8F7691C2 /* Pods */ = {
@@ -2090,6 +2127,7 @@
 				291794FC1F95DE5F00539A30 /* index.html in Resources */,
 				296106CE1F777E410006164B /* LaunchScreen.storyboard in Resources */,
 				778EAF831FF379AA00C8E2AB /* web3.min.js in Resources */,
+				77B3BF302017CD8300EEC15A /* MarketplaceItemTableViewCell.xib in Resources */,
 				290B2B541F8F50030053C83E /* Localizable.strings in Resources */,
 				2912CD021F6A830700C6CBE3 /* Assets.xcassets in Resources */,
 				29F1C8481FEB6664003780D8 /* EditTokenTableViewCell.xib in Resources */,
@@ -2423,6 +2461,7 @@
 				29F1C8471FEB6664003780D8 /* EditTokenTableViewCell.swift in Sources */,
 				296106C21F76403A0006164B /* TokenViewCell.swift in Sources */,
 				29FF6D6B2011D2AF00A3011C /* InCoordinatorError.swift in Sources */,
+				77B3BF352017D0D000EEC15A /* MarketplaceViewModel.swift in Sources */,
 				29F114F01FA6D53700114A29 /* ImportSelectionType.swift in Sources */,
 				29850D251F6B27A800791A49 /* R.generated.swift in Sources */,
 				296105931FA2AA2100292494 /* SignTransaction.swift in Sources */,
@@ -2450,6 +2489,7 @@
 				771AA962200D5EC700D25403 /* PassphraseViewModel.swift in Sources */,
 				2959960C1FAB03EC00DB66A8 /* CoinbaseBuyWidget.swift in Sources */,
 				291A1B671F98092F00ADEC80 /* ConfirmPaymentViewController.swift in Sources */,
+				77B3BF382017D16200EEC15A /* MarketplaceCoordinator.swift in Sources */,
 				295996181FADB78200DB66A8 /* TransactionActionType.swift in Sources */,
 				29F1C8421FEB62ED003780D8 /* EditTokenTableCellViewModel.swift in Sources */,
 				2931122E1FC94E4200966EEA /* SettingsError.swift in Sources */,
@@ -2487,8 +2527,10 @@
 				29E6E0721FEA200D0079265A /* ConfirmPaymentDetailsViewModel.swift in Sources */,
 				2931121B1FC560E500966EEA /* ExchangeTokenTableViewCell.swift in Sources */,
 				61DCE17B2001A6BE0053939F /* RLP.swift in Sources */,
+				77B3BF2F2017CD8300EEC15A /* MarketplaceItemTableViewCell.swift in Sources */,
 				293112261FC8154E00966EEA /* ContractExchangeTrade.swift in Sources */,
 				29E6E0701FEA12910079265A /* TransactionConfigurator.swift in Sources */,
+				77B3BF322017CE3600EEC15A /* MarketplaceItem.swift in Sources */,
 				299B5E3B1FD141B70051361C /* BackupViewModel.swift in Sources */,
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
@@ -2503,6 +2545,7 @@
 				613D048B1FDE162B008DE72E /* TrustProvider.swift in Sources */,
 				61C359E02002AA5A0097B04D /* TransactionSigning.swift in Sources */,
 				29C0FCE1200DA94A004A13CB /* SignMessageCoordinator.swift in Sources */,
+				77B3BF2B2017CC6F00EEC15A /* MarketplaceViewController.swift in Sources */,
 				29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */,
 				2963B6BF1F9AB9A2003063C1 /* ContractERC20Transfer.swift in Sources */,
 				29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */,
@@ -2581,6 +2624,7 @@
 				290B2B611F9179880053C83E /* AccountViewModel.swift in Sources */,
 				2963B6C11F9AE0E4003063C1 /* Data.swift in Sources */,
 				2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */,
+				77B3BF3A2017D72700EEC15A /* MarketplaceItemViewModel.swift in Sources */,
 				2912CD321F6A83EE00C6CBE3 /* WelcomeViewController.swift in Sources */,
 				29F114F61FA8147300114A29 /* RequestCoordinator.swift in Sources */,
 				293112101FC4ADCB00966EEA /* InCoordinatorViewModel.swift in Sources */,

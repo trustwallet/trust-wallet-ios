@@ -9,6 +9,7 @@ enum TrustService {
     case getTransaction(ID: String)
     case register(device: PushDevice)
     case unregister(device: PushDevice)
+    case marketplace
 }
 
 struct TokensPrice: Encodable {
@@ -37,6 +38,8 @@ extension TrustService: TargetType {
             return "/push/unregister"
         case .prices:
             return "/tokenPrices"
+        case .marketplace:
+            return "/marketplace"
         }
     }
 
@@ -47,6 +50,7 @@ extension TrustService: TargetType {
         case .register: return .post
         case .unregister: return .delete
         case .prices: return .post
+        case .marketplace: return .get
         }
     }
 
@@ -54,7 +58,7 @@ extension TrustService: TargetType {
         switch self {
         case .getTransactions(let address, let startBlock):
             return .requestParameters(parameters: ["address": address, "startBlock": startBlock], encoding: URLEncoding())
-        case .getTransaction:
+        case .getTransaction, .marketplace:
             return .requestPlain
         case .register(let device):
             return .requestJSONEncodable(device)
@@ -73,7 +77,7 @@ extension TrustService: TargetType {
         return [
             "Content-type": "application/json",
             "client": Bundle.main.bundleIdentifier ?? "",
-            "client-build" : Bundle.main.buildNumber ?? "",
+            "client-build": Bundle.main.buildNumber ?? "",
         ]
     }
 }

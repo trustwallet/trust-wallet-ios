@@ -13,11 +13,19 @@ class BrowserCoordinator: Coordinator {
     let session: WalletSession
     let keystore: Keystore
     let navigationController: UINavigationController
-    lazy var rootViewController: BrowserViewController = {
+
+    lazy var rootViewController: MarketplaceViewController = {
+        let controller = MarketplaceViewController(session: self.session)
+        controller.delegate = self
+        return controller
+    }()
+
+    lazy var browserViewController: BrowserViewController = {
         let controller = BrowserViewController(session: self.session)
         controller.delegate = self
         return controller
     }()
+
     weak var delegate: BrowserCoordinatorDelegate?
 
     init(
@@ -36,6 +44,13 @@ class BrowserCoordinator: Coordinator {
 
     @objc func dismiss() {
         navigationController.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension BrowserCoordinator: MarketplaceViewControllerDelegate {
+    func didSelectItem(item: MarketplaceItem, in viewController: MarketplaceViewController) {
+        browserViewController.goTo(url: URL(string: item.url)!)
+        navigationController.pushViewController(browserViewController, animated: true)
     }
 }
 
@@ -62,7 +77,7 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
                     switch type {
                     case .signedTransaction(let data):
                         let callback = DappCallback(id: callbackID, value: .signTransaction(data))
-                        self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+                        self.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
                     case .sentTransaction(let transaction):
                         self.delegate?.didSentTransaction(transaction: transaction, in: self)
                     }

@@ -14,6 +14,7 @@ class EmptyView: UIView {
     private let viewModel = StateViewModel()
 
     init(
+        frame: CGRect = .zero,
         title: String = NSLocalizedString("Empty", value: "Empty", comment: ""),
         image: UIImage? = R.image.no_transactions_mascot(),
         insets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
@@ -21,7 +22,7 @@ class EmptyView: UIView {
     ) {
         self.insets = insets
         self.onRetry = onRetry
-        super.init(frame: .zero)
+        super.init(frame: frame)
 
         backgroundColor = .white
 
