@@ -49,7 +49,7 @@ class TransactionDataCoordinator {
         timer = Timer.scheduledTimer(timeInterval: 5, target: BlockOperation { [weak self] in
             self?.fetchPending()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
-        updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 30, target: BlockOperation { [weak self] in
+        updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 15, target: BlockOperation { [weak self] in
             self?.fetchTransactions()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
