@@ -9,4 +9,8 @@ struct UnconfirmedTransaction {
     let value: BigInt
     let to: Address?
     let data: Data?
+
+    let gasLimit: BigInt?
+    let gasPrice: BigInt?
+    let nonce: BigInt?
 }

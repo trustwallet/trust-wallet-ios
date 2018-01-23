@@ -44,7 +44,7 @@ struct ConfigureTransactionViewModel {
     var isDataInputHidden: Bool {
         switch transferType {
         case .ether: return false
-        case .token, .exchange: return true
+        case .token: return true
         }
     }
 }

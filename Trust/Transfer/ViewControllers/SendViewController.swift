@@ -13,7 +13,6 @@ protocol SendViewControllerDelegate: class {
     func didPressConfirm(
         transaction: UnconfirmedTransaction,
         transferType: TransferType,
-        gasPrice: BigInt?,
         in viewController: SendViewController
     )
 }
@@ -165,7 +164,7 @@ class SendViewController: FormViewController {
 
         let parsedValue: BigInt? = {
             switch transferType {
-            case .ether, .exchange: // exchange doesn't really matter here
+            case .ether: // exchange doesn't really matter here
                 return EtherNumberFormatter.full.number(from: amountString, units: .ether)
             case .token(let token):
                 return EtherNumberFormatter.full.number(from: amountString, decimals: token.decimals)
@@ -180,9 +179,12 @@ class SendViewController: FormViewController {
             transferType: transferType,
             value: value,
             to: address,
-            data: data
+            data: data,
+            gasLimit: .none,
+            gasPrice: gasPrice,
+            nonce: .none
         )
-        self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, gasPrice: gasPrice, in: self)
+        self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, in: self)
     }
 
     @objc func openReader() {

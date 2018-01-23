@@ -3,11 +3,14 @@
 import Foundation
 import JSONRPCKit
 import TrustKeystore
+import BigInt
 
 struct EstimateGasRequest: JSONRPCKit.Request {
     typealias Response = String
 
+    let from: Address
     let to: Address?
+    let value: BigInt
     let data: Data
 
     var method: String {
@@ -15,7 +18,15 @@ struct EstimateGasRequest: JSONRPCKit.Request {
     }
 
     var parameters: Any? {
-        return [["to": to, "data": data.hexEncoded]]
+        let results = [
+            [
+                "from": from.description,
+                "to": to?.description ?? "",
+                "value": value.description.hexEncoded,
+                "data": data.hexEncoded,
+            ],
+        ]
+        return results
     }
 
     func response(from resultObject: Any) throws -> Response {

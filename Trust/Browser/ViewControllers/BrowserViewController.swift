@@ -4,6 +4,7 @@ import Foundation
 import UIKit
 import WebKit
 import JavaScriptCore
+import Result
 
 struct DappCommandObjectValue: Decodable {
     public var value: String = ""
@@ -28,6 +29,10 @@ enum DappCallbackValue {
     }
 }
 
+enum DAppError: Error {
+    case cancelled
+}
+
 struct DappCallback {
     let id: Int
     let value: DappCallbackValue
@@ -35,6 +40,7 @@ struct DappCallback {
 
 struct DappCommand: Decodable {
     let name: Method
+    let id: Int
     let object: [String: DappCommandObjectValue]
 }
 
@@ -92,18 +98,18 @@ class BrowserViewController: UIViewController {
         """
         let callbacksCount = 0;
         let callbacks = {};
-        var callback_
-        function addCallback(callbacksCount, cb) {
-            callbacks[callbacksCount] = cb
+        function addCallback(cb) {
             callbacksCount++
+            callbacks[callbacksCount] = cb
+            return callbacksCount
         }
 
-        function executeCallback(id, value) {
+        function executeCallback(id, error, value) {
             console.log("executeCallback")
-            let callback = callbacks[id](null, value)
             console.log("id", id)
             console.log("value", value)
-            //invalid argument 0: json: cannot unmarshal non-string into Go value of type hexutil.Byte
+            console.log("error", error)
+            let callback = callbacks[id](error, value)
         }
 
         const engine = ZeroClientProvider({
@@ -113,21 +119,23 @@ class BrowserViewController: UIViewController {
             rpcUrl: "\(session.config.rpcURL.absoluteString)",
             sendTransaction: function(tx, cb) {
                 console.log("here." + tx)
-                webkit.messageHandlers.postMessage({"name": "sendTransaction", "object": tx})
+                let id = addCallback(cb)
+                webkit.messageHandlers.postMessage({"name": "sendTransaction", "object": tx, id: id})
             },
             signTransaction: function(tx, cb) {
                 console.log("here2.", tx)
-                addCallback(callbacksCount, cb)
-                webkit.messageHandlers.signTransaction.postMessage({"name": "signTransaction", "object": tx})
-                callback_ = cb
+                let id = addCallback(cb)
+                webkit.messageHandlers.signTransaction.postMessage({"name": "signTransaction", "object": tx, id: id})
             },
             signMessage: function(cb) {
                 console.log("here.4", cb)
-                webkit.messageHandlers.signMessage.postMessage({"name": "signMessage", "object": message})
+                let id = addCallback(cb)
+                webkit.messageHandlers.signMessage.postMessage({"name": "signMessage", "object": message, id: id})
             },
             signPersonalMessage: function(message, cb) {
                 console.log("here.5", cb)
-                webkit.messageHandlers.signPersonalMessage.postMessage({"name": "signPersonalMessage", "object": message})
+                let id = addCallback(cb)
+                webkit.messageHandlers.signPersonalMessage.postMessage({"name": "signPersonalMessage", "object": message, id: id})
             },
         })
         engine.start()
@@ -171,19 +179,24 @@ class BrowserViewController: UIViewController {
 //        if let url = Bundle.main.url(forResource: "demo", withExtension: "html") {
 //            webView.load(URLRequest(url: url))
 //        }
-        webView.load(URLRequest(url: URL(string: "https://tokenfactory.netlify.com/#/factory")!))
+        webView.load(URLRequest(url: URL(string: "https://ropsten.kyber.network/")!))
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func notifyFinish(callback: DappCallback) {
-        let evString = "callback_(null, \"\(callback.value.object)\")"
-        NSLog("evString \(evString)")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.webView.evaluateJavaScript(evString, completionHandler: nil)
-        }
+    func notifyFinish(callbackID: Int, value: Result<DappCallback, DAppError>) {
+        let script: String = {
+            switch value {
+            case .success(let result):
+                return "executeCallback(\(callbackID), null, \"\(result.value.object)\")"
+            case .failure(let error):
+                return "executeCallback(\(callbackID), \"\(error)\", null)"
+            }
+        }()
+        NSLog("script \(script)")
+        self.webView.evaluateJavaScript(script, completionHandler: nil)
     }
 }
 
@@ -197,36 +210,20 @@ extension BrowserViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 
         let method = Method(string: message.name)
+        guard let body = message.body as? [String: AnyObject],
+            let jsonString = body.jsonString,
+            let command = try? decoder.decode(DappCommand.self, from: jsonString.data(using: .utf8)!) else {
+                return
+        }
+        let action = DappAction.fromCommand(command)
 
         switch method {
         case .sendTransaction, .signTransaction:
-            guard let body = message.body as? [String: AnyObject],
-                let jsonString = body.jsonString else { return }
-
-            let command = try! decoder.decode(DappCommand.self, from: jsonString.data(using: .utf8)!)
-            let action = DappAction.fromCommand(command)
-
-            delegate?.didCall(action: action, callbackID: 0)
-            return
-        case .signPersonalMessage: break
-            //delegate?.didCall(action: .signMessage("hello"))
-        default: break
-        }
-
-        guard
-            let body = message.body as? [String: AnyObject],
-            let jsonString = body.jsonString
-        else { return }
-
-        do {
-            let command = try decoder.decode(
-                DappCommand.self,
-                from: jsonString.data(using: .utf8)!
-            )
-            let action = DappAction.fromCommand(command)
-            //delegate?.didCall(action: action)
-        } catch {
-            NSLog("error \(error)")
+            delegate?.didCall(action: action, callbackID: command.id)
+        case .signPersonalMessage:
+            delegate?.didCall(action: action, callbackID: command.id)
+        case .signMessage, .unknown:
+            break
         }
     }
 }

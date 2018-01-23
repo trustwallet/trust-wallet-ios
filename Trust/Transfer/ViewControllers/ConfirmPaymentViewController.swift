@@ -62,6 +62,7 @@ class ConfirmPaymentViewController: UIViewController {
             case .failure(let error):
                 self.displayError(error: error)
             }
+
         }
         configurator.configurationUpdate.subscribe { [weak self] _ in
             guard let `self` = self else { return }
@@ -157,7 +158,7 @@ class ConfirmPaymentViewController: UIViewController {
         self.displayLoading()
 
         let transaction = configurator.signTransaction()
-        self.sendTransactionCoordinator.send(transactions: [transaction]) { [weak self] result in
+        self.sendTransactionCoordinator.send(transaction: transaction) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .success(let type):

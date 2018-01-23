@@ -48,8 +48,7 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
                 let configurator = TransactionConfigurator(
                     session: session,
                     account: account,
-                    transaction: unconfirmedTransaction,
-                    gasPrice: .none
+                    transaction: unconfirmedTransaction
                 )
                 //addCoordinator(configurator)
 
@@ -63,7 +62,7 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
                     switch type {
                     case .signedTransaction(let data):
                         let callback = DappCallback(id: callbackID, value: .signTransaction(data))
-                        self.rootViewController.notifyFinish(callback: callback)
+                        self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
                     case .sentTransaction(let transaction):
                         self.delegate?.didSentTransaction(transaction: transaction, in: self)
                     }

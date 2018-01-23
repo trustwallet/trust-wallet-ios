@@ -25,25 +25,24 @@ class SendTransactionCoordinator {
     }
 
     func send(
-        transactions: [SignTransaction],
+        transaction: SignTransaction,
         completion: @escaping (Result<ConfirmResult, AnyError>) -> Void
     ) {
-        let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: session.account.address.description)))
-        Session.send(request) { [weak self] result in
-            guard let `self` = self else { return }
-            switch result {
-            case .success(let count):
-                let transactions = self.mergeNonce(transactions: transactions, currentNonce: count)
-                guard let first = transactions.first else { return }
-                self.signAndSend(transaction: first, completion: completion)
-            case .failure(let error):
-                completion(.failure(AnyError(error)))
+        if transaction.nonce >= 0 {
+            signAndSend(transaction: transaction, completion: completion)
+        } else {
+            let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: session.account.address.description)))
+            Session.send(request) { [weak self] result in
+                guard let `self` = self else { return }
+                switch result {
+                case .success(let count):
+                    let transaction = self.appendNonce(to: transaction, currentNonce: count)
+                    self.signAndSend(transaction: transaction, completion: completion)
+                case .failure(let error):
+                    completion(.failure(AnyError(error)))
+                }
             }
         }
-    }
-
-    private func mergeNonce(transactions: [SignTransaction], currentNonce: Int) -> [SignTransaction] {
-        return transactions.map { appendNonce(to: $0, currentNonce: currentNonce) }
     }
 
     private func appendNonce(to: SignTransaction, currentNonce: Int) -> SignTransaction {
