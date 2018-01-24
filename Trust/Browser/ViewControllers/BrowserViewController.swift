@@ -75,6 +75,7 @@ class BrowserViewController: UIViewController {
         webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
         return webView
     }()
+    let textField = UITextField()
 
     weak var delegate: BrowserViewControllerDelegate?
     let decoder = JSONDecoder()
@@ -120,7 +121,7 @@ class BrowserViewController: UIViewController {
             sendTransaction: function(tx, cb) {
                 console.log("here." + tx)
                 let id = addCallback(cb)
-                webkit.messageHandlers.postMessage({"name": "sendTransaction", "object": tx, id: id})
+                webkit.messageHandlers.sendTransaction.postMessage({"name": "sendTransaction", "object": tx, id: id})
             },
             signTransaction: function(tx, cb) {
                 console.log("here2.", tx)
@@ -136,7 +137,7 @@ class BrowserViewController: UIViewController {
                 console.log("here.5", cb)
                 let id = addCallback(cb)
                 webkit.messageHandlers.signPersonalMessage.postMessage({"name": "signPersonalMessage", "object": message, id: id})
-            },
+            }
         })
         engine.start()
         var web3 = new Web3(engine)
@@ -179,7 +180,32 @@ class BrowserViewController: UIViewController {
 //        if let url = Bundle.main.url(forResource: "demo", withExtension: "html") {
 //            webView.load(URLRequest(url: url))
 //        }
-        webView.load(URLRequest(url: URL(string: "https://ropsten.kyber.network/")!))
+        webView.load(URLRequest(url: URL(string: "https://poanetwork.github.io/poa-dapps-validators/")!))
+
+        let backButton = UIBarButtonItem(barButtonSystemItem: .undo, target: self, action: nil)
+        let frontButton = UIBarButtonItem(barButtonSystemItem: .fastForward, target: self, action: nil)
+        let homeButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: nil)
+
+        textField.autoresizingMask = .flexibleWidth
+        textField.delegate = self
+        textField.autocapitalizationType = .none
+        textField.keyboardType = .URL
+        textField.backgroundColor = .red
+        textField.clearButtonMode = .whileEditing
+
+        let textFieldItem = UIBarButtonItem(customView: textField)
+
+        let toolbar = UIToolbar()
+        toolbar.items = [
+            backButton,
+            frontButton,
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+            textFieldItem,
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+            homeButton,
+        ]
+
+        navigationItem.titleView = toolbar
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -206,6 +232,10 @@ class BrowserViewController: UIViewController {
 
 extension BrowserViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        textField.text = webView.url?.absoluteString
+    }
+
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
 
     }
 }
@@ -229,6 +259,16 @@ extension BrowserViewController: WKScriptMessageHandler {
         case .signMessage, .unknown:
             break
         }
+    }
+}
+
+extension BrowserViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let url = URL(string: textField.text ?? "") else {
+            return true
+        }
+        goTo(url: url)
+        return true
     }
 }
 

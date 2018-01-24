@@ -30,22 +30,7 @@ class MarketplaceViewController: UIViewController {
 
         //navigationItem.title = viewModel.title
 
-        let backButton = UIBarButtonItem(barButtonSystemItem: .undo, target: self, action: nil)
-        let frontButton = UIBarButtonItem(barButtonSystemItem: .fastForward, target: self, action: nil)
-        let homeButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: nil)
-
-        let textField = UITextField()
-        textField.autoresizingMask = .flexibleWidth
-
-        textField.backgroundColor = .red
-        let textFieldItem = UIBarButtonItem(customView: textField)
-
-        let toolbar = UIToolbar()
-        toolbar.items = [backButton, frontButton, textFieldItem, homeButton]
-
-        //let titleView = BrowserNavigationTitleView()
-        //titleView.translatesAutoresizingMaskIntoConstraints = false
-        navigationItem.titleView = toolbar
+        
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(R.nib.marketplaceItemTableViewCell(), forCellReuseIdentifier: R.nib.marketplaceItemTableViewCell.name)
