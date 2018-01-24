@@ -215,4 +215,3 @@ extension TransactionsViewController: UITableViewDataSource {
         return hederView(for: section)
     }
 }
-

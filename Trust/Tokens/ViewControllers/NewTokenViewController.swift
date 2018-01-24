@@ -120,10 +120,12 @@ class NewTokenViewController: FormViewController {
 
 extension NewTokenViewController: QRCodeReaderDelegate {
     func readerDidCancel(_ reader: QRCodeReaderViewController!) {
+        reader.stopScanning()
         reader.dismiss(animated: true, completion: nil)
     }
 
     func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
+        reader.stopScanning()
         reader.dismiss(animated: true, completion: nil)
 
         guard let result = QRURLParser.from(string: result) else { return }
