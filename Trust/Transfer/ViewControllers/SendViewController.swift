@@ -279,11 +279,14 @@ class SendViewController: FormViewController {
 
 extension SendViewController: QRCodeReaderDelegate {
     func readerDidCancel(_ reader: QRCodeReaderViewController!) {
+        reader.stopScanning()
         reader.dismiss(animated: true, completion: nil)
     }
-
     func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
-        reader.dismiss(animated: true, completion: nil)
+        reader.stopScanning()
+        reader.dismiss(animated: true) { [weak self] in
+           self?.activateAmountView()
+        }
 
         guard let result = QRURLParser.from(string: result) else { return }
         addressRow?.value = result.address
@@ -301,8 +304,8 @@ extension SendViewController: QRCodeReaderDelegate {
             amountRow?.value = ""
         }
         amountRow?.reload()
-
-        activateAmountView()
+        pairValue = 0.0
+        updatePriceSection()
     }
 }
 
