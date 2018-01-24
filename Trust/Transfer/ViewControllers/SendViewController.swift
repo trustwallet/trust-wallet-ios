@@ -278,7 +278,6 @@ class SendViewController: FormViewController {
 }
 
 extension SendViewController: QRCodeReaderDelegate {
-     //We should stop scannin when recive result from QR code reader.
     func readerDidCancel(_ reader: QRCodeReaderViewController!) {
         reader.stopScanning()
         reader.dismiss(animated: true, completion: nil)
