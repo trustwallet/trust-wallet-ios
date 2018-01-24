@@ -7,26 +7,19 @@ protocol MarketplaceViewControllerDelegate: class {
     func didSelectItem(item: MarketplaceItem, in viewController: MarketplaceViewController)
 }
 
-class MarketplaceViewController: UITableViewController {
+class MarketplaceViewController: UIViewController {
 
     let session: WalletSession
     let viewModel = MarketplaceViewModel()
-    let searchController = UISearchController(searchResultsController: nil)
     var items = [MarketplaceItem]() {
         didSet {
             tableView.reloadData()
         }
     }
-    var filteredItems = [MarketplaceItem]()
-    var isFiltering: Bool {
-        return searchController.isActive && !searchBarIsEmpty
-    }
-    var searchBarIsEmpty: Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
     weak var delegate: MarketplaceViewControllerDelegate?
     private let trustProvider = TrustProviderFactory.makeProvider()
-    //let refreshControl = UIRefreshControl()
+    let refreshControl = UIRefreshControl()
+    let tableView = UITableView(frame: .zero, style: .grouped)
 
     init(
         session: WalletSession
@@ -35,20 +28,43 @@ class MarketplaceViewController: UITableViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        navigationItem.title = viewModel.title
-        //searchController.searchResultsUpdater = self
-        //searchController.obscuresBackgroundDuringPresentation = false
-        //searchController.searchBar.placeholder = NSLocalizedString("editTokens.searchBar.placeholder.title", value: "Search tokens", comment: "")
-        //definesPresentationContext = true
-        //searchController.searchBar.delegate = self
+        //navigationItem.title = viewModel.title
+
+        let backButton = UIBarButtonItem(barButtonSystemItem: .undo, target: self, action: nil)
+        let frontButton = UIBarButtonItem(barButtonSystemItem: .fastForward, target: self, action: nil)
+        let homeButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: nil)
+
+        let textField = UITextField()
+        textField.autoresizingMask = .flexibleWidth
+
+        textField.backgroundColor = .red
+        let textFieldItem = UIBarButtonItem(customView: textField)
+
+        let toolbar = UIToolbar()
+        toolbar.items = [backButton, frontButton, textFieldItem, homeButton]
+
+        //let titleView = BrowserNavigationTitleView()
+        //titleView.translatesAutoresizingMaskIntoConstraints = false
+        navigationItem.titleView = toolbar
+
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(R.nib.marketplaceItemTableViewCell(), forCellReuseIdentifier: R.nib.marketplaceItemTableViewCell.name)
-        //tableView.tableHeaderView = searchController.searchBar
         tableView.separatorStyle = .none
         tableView.separatorInset = .zero
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
+        view.addSubview(tableView)
 
-        refreshControl?.addTarget(self, action: #selector(fetch), for: .valueChanged)
-        //tableView.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(fetch), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
 
         errorView = ErrorView(frame: view.frame)
         loadingView = LoadingView(frame: view.frame)
@@ -64,18 +80,21 @@ class MarketplaceViewController: UITableViewController {
 
     @objc func fetch() {
         startLoading()
-        trustProvider.request(.marketplace) { [weak self] result in
+
+        trustProvider.request(.marketplace(chainID: session.config.chainID)) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .success(let response):
                 do {
                     self.items = try response.map(ArrayResponse<MarketplaceItem>.self).docs
+                    self.endLoading(error: nil, completion: nil)
                 } catch {
                     self.handleError(error: error)
                 }
             case .failure(let error):
                 self.handleError(error: error)
             }
+            self.refreshControl.endRefreshing()
         }
     }
 
@@ -83,63 +102,44 @@ class MarketplaceViewController: UITableViewController {
         endLoading(error: error, completion: nil)
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering {
-            return filteredItems.count
-        }
-        return items.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.marketplaceItemTableViewCell.name, for: indexPath) as! MarketplaceItemTableViewCell
-        cell.viewModel = MarketplaceItemViewModel(item: item(for: indexPath))
-        return cell
-    }
-
     func item(for indexPath: IndexPath) -> MarketplaceItem {
-        if isFiltering {
-            return items[indexPath.row]
-        }
         return items[indexPath.row]
-    }
-
-    func filter(for searchText: String?) {
-        //let text = searchText?.lowercased() ?? ""
-        //filteredTokens = storage.objects.filter { $0.name.lowercased().contains(text) || $0.symbol.lowercased().contains(text) }
-        //tableView.reloadData()
-    }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+extension MarketplaceViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.marketplaceItemTableViewCell.name, for: indexPath) as! MarketplaceItemTableViewCell
+        cell.viewModel = MarketplaceItemViewModel(item: item(for: indexPath))
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+}
+
+extension MarketplaceViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         delegate?.didSelectItem(item: item(for: indexPath), in: self)
-    }
-}
-
-extension MarketplaceViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        filter(for: searchBar.text)
-    }
-}
-
-extension MarketplaceViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        filter(for: searchController.searchBar.text)
     }
 }
 
 extension MarketplaceViewController: StatefulViewController {
     func hasContent() -> Bool {
-        return items.isEmpty
+        return !items.isEmpty
     }
 }

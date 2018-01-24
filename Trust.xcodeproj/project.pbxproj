@@ -213,6 +213,7 @@
 		29C0FCE1200DA94A004A13CB /* SignMessageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0FCE0200DA94A004A13CB /* SignMessageCoordinator.swift */; };
 		29C0FCE5200EBAF6004A13CB /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0FCE4200EBAF6004A13CB /* TokenType.swift */; };
 		29C70C712016C7780072E454 /* SentTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C70C702016C7780072E454 /* SentTransaction.swift */; };
+		29C70C732017FDFA0072E454 /* BrowserNavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C70C722017FDFA0072E454 /* BrowserNavigationTitleView.swift */; };
 		29C80D371FB2CD230037B1E0 /* PendingTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D361FB2CD230037B1E0 /* PendingTransaction.swift */; };
 		29C80D411FB2E1610037B1E0 /* EthplorerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D401FB2E1610037B1E0 /* EthplorerService.swift */; };
 		29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D481FB51C380037B1E0 /* Dictionary.swift */; };
@@ -560,6 +561,7 @@
 		29C0FCE0200DA94A004A13CB /* SignMessageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignMessageCoordinator.swift; sourceTree = "<group>"; };
 		29C0FCE4200EBAF6004A13CB /* TokenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenType.swift; sourceTree = "<group>"; };
 		29C70C702016C7780072E454 /* SentTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentTransaction.swift; sourceTree = "<group>"; };
+		29C70C722017FDFA0072E454 /* BrowserNavigationTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserNavigationTitleView.swift; sourceTree = "<group>"; };
 		29C80D361FB2CD230037B1E0 /* PendingTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingTransaction.swift; sourceTree = "<group>"; };
 		29C80D401FB2E1610037B1E0 /* EthplorerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthplorerService.swift; sourceTree = "<group>"; };
 		29C80D481FB51C380037B1E0 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
@@ -1910,6 +1912,7 @@
 			children = (
 				77B3BF2D2017CD8300EEC15A /* MarketplaceItemTableViewCell.swift */,
 				77B3BF2E2017CD8300EEC15A /* MarketplaceItemTableViewCell.xib */,
+				29C70C722017FDFA0072E454 /* BrowserNavigationTitleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2407,6 +2410,7 @@
 				29C80D511FB67A110037B1E0 /* ArrayResponse.swift in Sources */,
 				290B2B5F1F9177860053C83E /* UIImage.swift in Sources */,
 				291ED08F1F6F613200E7E93A /* GetTransactionRequest.swift in Sources */,
+				29C70C732017FDFA0072E454 /* BrowserNavigationTitleView.swift in Sources */,
 				2931121D1FC65F2900966EEA /* ExchangeCurrencyView.swift in Sources */,
 				294EC1DA1FD8E4E60065EB20 /* GasPriceRequest.swift in Sources */,
 				293112171FC5555500966EEA /* ExchangeTokensViewModel.swift in Sources */,
