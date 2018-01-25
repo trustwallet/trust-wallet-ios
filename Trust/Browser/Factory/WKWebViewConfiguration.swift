@@ -7,6 +7,7 @@ import JavaScriptCore
 extension WKWebViewConfiguration {
 
     static func make(for session: WalletSession, in messageHandler: WKScriptMessageHandler) -> WKWebViewConfiguration {
+        let address = session.account.address.description
         let config = WKWebViewConfiguration()
         var js = ""
         if let filepath = Bundle.main.path(forResource: "web3.min", ofType: "js") {
@@ -40,7 +41,7 @@ extension WKWebViewConfiguration {
 
         const engine = ZeroClientProvider({
             getAccounts: function(cb) {
-            return cb(null, ["\(session.account.address.description)"])
+            return cb(null, ["\(address)"])
         },
         rpcUrl: "\(session.config.rpcURL.absoluteString)",
         sendTransaction: function(tx, cb) {
@@ -67,12 +68,11 @@ extension WKWebViewConfiguration {
         engine.start()
         var web3 = new Web3(engine)
         window.web3 = web3
-        web3.eth.accounts = ["\(session.account.address.description)"]
+        web3.eth.accounts = ["\(address)"]
         web3.eth.getAccounts = function(cb) {
-            return cb(null, ["\(session.account.address.description)"])
+            return cb(null, ["\(address)"])
         }
-        web3.eth.defaultAccount = "\(session.account.address.description)"
-
+        web3.eth.defaultAccount = "\(address)"
         """
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
         config.userContentController.add(messageHandler, name: Method.sendTransaction.rawValue)
