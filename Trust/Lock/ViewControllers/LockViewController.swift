@@ -51,6 +51,16 @@ class LockViewController: UIViewController {
         self.view.addSubview(lockTitle)
         self.view.addSubview(characterView)
     }
+    func shake() {
+        let keypath = "position"
+        let animation = CABasicAnimation(keyPath: keypath)
+        animation.duration = 0.07
+        animation.repeatCount = 4
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: characterView.center.x - 10, y: characterView.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: characterView.center.x + 10, y: characterView.center.y))
+        characterView.layer.add(animation, forKey: keypath)
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
