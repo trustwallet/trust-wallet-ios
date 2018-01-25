@@ -214,6 +214,7 @@
 		29C0FCE5200EBAF6004A13CB /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0FCE4200EBAF6004A13CB /* TokenType.swift */; };
 		29C70C712016C7780072E454 /* SentTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C70C702016C7780072E454 /* SentTransaction.swift */; };
 		29C70C7C201990540072E454 /* SendTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C70C7B201990540072E454 /* SendTransaction.swift */; };
+		29C70C7F20199AEB0072E454 /* WKWebViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C70C7E20199AEB0072E454 /* WKWebViewConfiguration.swift */; };
 		29C80D371FB2CD230037B1E0 /* PendingTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D361FB2CD230037B1E0 /* PendingTransaction.swift */; };
 		29C80D411FB2E1610037B1E0 /* EthplorerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D401FB2E1610037B1E0 /* EthplorerService.swift */; };
 		29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C80D481FB51C380037B1E0 /* Dictionary.swift */; };
@@ -565,6 +566,7 @@
 		29C0FCE4200EBAF6004A13CB /* TokenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenType.swift; sourceTree = "<group>"; };
 		29C70C702016C7780072E454 /* SentTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentTransaction.swift; sourceTree = "<group>"; };
 		29C70C7B201990540072E454 /* SendTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransaction.swift; sourceTree = "<group>"; };
+		29C70C7E20199AEB0072E454 /* WKWebViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKWebViewConfiguration.swift; sourceTree = "<group>"; };
 		29C80D361FB2CD230037B1E0 /* PendingTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingTransaction.swift; sourceTree = "<group>"; };
 		29C80D401FB2E1610037B1E0 /* EthplorerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthplorerService.swift; sourceTree = "<group>"; };
 		29C80D481FB51C380037B1E0 /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
@@ -1633,6 +1635,14 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
+		29C70C7D20199ADE0072E454 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				29C70C7E20199AEB0072E454 /* WKWebViewConfiguration.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
 		29DBF29F1F9DA6E200327C60 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1671,6 +1681,7 @@
 		29E6E0681FE897BB0079265A /* Browser */ = {
 			isa = PBXGroup;
 			children = (
+				29C70C7D20199ADE0072E454 /* Factory */,
 				77B3BF332017D0C400EEC15A /* ViewModel */,
 				77B3BF2C2017CD1A00EEC15A /* Views */,
 				771AA94C1FF971BB00D25403 /* Types */,
@@ -2405,6 +2416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				295996121FAB067600DB66A8 /* DepositCoordinator.swift in Sources */,
+				29C70C7F20199AEB0072E454 /* WKWebViewConfiguration.swift in Sources */,
 				2985430C1FC188D200CB5081 /* ExchangeTokensField.swift in Sources */,
 				29AD8A041F93D6CD008E10E7 /* Constants.swift in Sources */,
 				29FF12FE1F75EA3F00AFD326 /* Keystore.swift in Sources */,
