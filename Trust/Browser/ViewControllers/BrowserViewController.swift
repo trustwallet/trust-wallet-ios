@@ -76,7 +76,9 @@ class BrowserViewController: UIViewController {
         webView.allowsBackForwardNavigationGestures = true
         webView.scrollView.isScrollEnabled = true
         webView.navigationDelegate = self
-        webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
+        if isDebug() {
+            webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
+        }
         return webView
     }()
     weak var delegate: BrowserViewControllerDelegate?
@@ -237,7 +239,7 @@ class BrowserViewController: UIViewController {
         browserNavBar?.goForwardItem.isEnabled = webView.canGoForward
     }
 
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         guard let change = change else { return }
         if context != &myContext {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
@@ -304,14 +306,4 @@ extension BrowserViewController: WKScriptMessageHandler {
             break
         }
     }
-}
-
-struct SendTransaction: Decodable {
-    let from: String
-    let to: String?
-    let value: String?
-    let gas: String?
-    let gasPrice: String?
-    let data: String?
-    let nonce: String?
 }
