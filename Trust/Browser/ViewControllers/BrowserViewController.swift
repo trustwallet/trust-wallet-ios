@@ -76,7 +76,7 @@ class BrowserViewController: UIViewController {
         webView.allowsBackForwardNavigationGestures = true
         webView.scrollView.isScrollEnabled = true
         webView.navigationDelegate = self
-        if isDebug() {
+        if isDebug {
             webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
         }
         return webView
