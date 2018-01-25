@@ -29,11 +29,10 @@ class BrowserCoordinator: Coordinator {
     weak var delegate: BrowserCoordinatorDelegate?
 
     init(
-        navigationController: UINavigationController = NavigationController(),
         session: WalletSession,
         keystore: Keystore
     ) {
-        self.navigationController = navigationController
+        self.navigationController = UINavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
         self.session = session
         self.keystore = keystore
     }
@@ -65,40 +64,75 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
                     account: account,
                     transaction: unconfirmedTransaction
                 )
-                //addCoordinator(configurator)
-
-                let controller = ConfirmPaymentViewController(
+                let coordinator = ConfirmCoordinator(
+                    navigationController: UINavigationController(),
                     session: session,
-                    keystore: keystore,
                     configurator: configurator,
-                    confirmType: .sign
+                    keystore: keystore,
+                    account: account,
+                    type: .sign
                 )
-                controller.didCompleted = { type in
-                    switch type {
-                    case .signedTransaction(let data):
-                        let callback = DappCallback(id: callbackID, value: .signTransaction(data))
-                        self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
-                    case .sentTransaction(let transaction):
-                        self.delegate?.didSentTransaction(transaction: transaction, in: self)
+                addCoordinator(coordinator)
+                coordinator.didCompleted = { [unowned self] result in
+                    switch result {
+                    case .success(let type):
+                        switch type {
+                        case .signedTransaction(let data):
+                            let callback = DappCallback(id: callbackID, value: .signTransaction(data))
+                            self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+                        case .sentTransaction(let transaction):
+                            self.delegate?.didSentTransaction(transaction: transaction, in: self)
+                        }
+                    case .failure:
+                        self.rootViewController.notifyFinish(
+                            callbackID: callbackID,
+                            value: .failure(DAppError.cancelled)
+                        )
                     }
+                    self.removeCoordinator(coordinator)
                     self.navigationController.dismiss(animated: true, completion: nil)
                 }
-                controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+                coordinator.start()
+                navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+            case .signMessage(let hexMessage):
+                let data = Data(hexString: hexMessage)!
+                let message = String(data: data, encoding: .utf8)!
 
-                let nav = UINavigationController(rootViewController: controller)
-                navigationController.present(nav, animated: true, completion: nil)
-            case .signMessage(let message):
                 let coordinator = SignMessageCoordinator(
                     navigationController: navigationController,
                     keystore: keystore,
                     account: account
                 )
+                coordinator.didComplete = { [unowned self] result in
+                    switch result {
+                    case .success(let data):
+                        let callback = DappCallback(id: callbackID, value: .signMessage(data))
+                        self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+                    case .failure:
+                        self.rootViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
+                    }
+                    self.removeCoordinator(coordinator)
+                }
+                coordinator.delegate = self
+                addCoordinator(coordinator)
                 coordinator.start(with: message)
             case .unknown:
                 break
             }
         case .watch: break
         }
+    }
+}
 
+extension BrowserCoordinator: SignMessageCoordinatorDelegate {
+    func didCancel(in coordinator: SignMessageCoordinator) {
+        removeCoordinator(coordinator)
+    }
+}
+
+extension BrowserCoordinator: ConfirmCoordinatorDelegate {
+    func didCancel(in coordinator: ConfirmCoordinator) {
+        navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 }

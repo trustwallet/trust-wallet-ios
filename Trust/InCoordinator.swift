@@ -154,8 +154,7 @@ class InCoordinator: Coordinator {
         navigationController.setNavigationBarHidden(true, animated: false)
         addCoordinator(transactionCoordinator)
 
-//        let coor = SignMessageCoordinator(navigationController: navigationController, keystore: keystore, account: Account(address: account.address))
-//        coor.start(with: "Hello")
+        tabBarController.selectedIndex = 0
 
         keystore.recentlyUsedWallet = account
     }

@@ -4,6 +4,7 @@ import BigInt
 import Foundation
 import UIKit
 import StackViewController
+import Result
 
 enum ConfirmType {
     case sign
@@ -34,7 +35,7 @@ class ConfirmPaymentViewController: UIViewController {
     let viewModel = ConfirmPaymentViewModel()
     var configurator: TransactionConfigurator
     let confirmType: ConfirmType
-    var didCompleted: ((_ type: ConfirmResult) -> Void)?
+    var didCompleted: ((Result<ConfirmResult, AnyError>) -> Void)?
 
     init(
         session: WalletSession,
@@ -62,7 +63,6 @@ class ConfirmPaymentViewController: UIViewController {
             case .failure(let error):
                 self.displayError(error: error)
             }
-
         }
         configurator.configurationUpdate.subscribe { [weak self] _ in
             guard let `self` = self else { return }
@@ -160,12 +160,7 @@ class ConfirmPaymentViewController: UIViewController {
         let transaction = configurator.signTransaction()
         self.sendTransactionCoordinator.send(transaction: transaction) { [weak self] result in
             guard let `self` = self else { return }
-            switch result {
-            case .success(let type):
-                self.didCompleted?(type)
-            case .failure(let error):
-                self.displayError(error: error)
-            }
+            self.didCompleted?(result)
             self.hideLoading()
         }
     }

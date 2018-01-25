@@ -90,7 +90,12 @@ extension SendCoordinator: SendViewControllerDelegate {
             confirmType: .signThenSend
         )
         controller.didCompleted = { result in
-            self.delegate?.didFinish(result, in: self)
+            switch result {
+            case .success(let type):
+                self.delegate?.didFinish(type, in: self)
+            case .failure(let error):
+                self.navigationController.displayError(error: error)
+            }
         }
         navigationController.pushViewController(controller, animated: true)
     }

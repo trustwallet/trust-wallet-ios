@@ -28,9 +28,7 @@ class MarketplaceViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        //navigationItem.title = viewModel.title
-
-        
+        navigationItem.title = viewModel.title
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(R.nib.marketplaceItemTableViewCell(), forCellReuseIdentifier: R.nib.marketplaceItemTableViewCell.name)

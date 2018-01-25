@@ -4,10 +4,9 @@ import Foundation
 import UIKit
 import TrustKeystore
 import CryptoSwift
+import Result
 
 protocol SignMessageCoordinatorDelegate: class {
-    func didSignMesage(message: String, in coordinator: SignMessageCoordinator)
-    func didError(error: Error, in coordinator: SignMessageCoordinator)
     func didCancel(in coordinator: SignMessageCoordinator)
 }
 
@@ -20,6 +19,7 @@ class SignMessageCoordinator: Coordinator {
     let account: Account
 
     weak var delegate: SignMessageCoordinatorDelegate?
+    var didComplete: ((Result<Data, AnyError>) -> Void)?
 
     init(
         navigationController: UINavigationController,
@@ -52,6 +52,7 @@ class SignMessageCoordinator: Coordinator {
         }
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { [weak self] _ in
             guard let `self` = self else { return }
+            self.didComplete?(.failure(AnyError(DAppError.cancelled)))
             self.delegate?.didCancel(in: self)
         }
         alertController.addAction(signAction)
@@ -63,9 +64,9 @@ class SignMessageCoordinator: Coordinator {
         let result = self.keystore.signMessage(message: message, account: self.account)
         switch result {
         case .success(let data):
-            delegate?.didSignMesage(message: data.toHexString(), in: self)
+            didComplete?(.success(data))
         case .failure(let error):
-            delegate?.didError(error: error, in: self)
+            didComplete?(.failure(AnyError(error)))
         }
     }
 }

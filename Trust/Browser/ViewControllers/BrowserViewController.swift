@@ -20,11 +20,14 @@ struct DappCommandObjectValue: Decodable {
 
 enum DappCallbackValue {
     case signTransaction(Data)
+    case signMessage(Data)
 
     var object: String {
         switch self {
-        case .signTransaction(let value):
-            return value.hexEncoded
+        case .signTransaction(let data):
+            return data.hexEncoded
+        case .signMessage(let data):
+            return data.hexEncoded
         }
     }
 }
@@ -62,6 +65,7 @@ protocol BrowserViewControllerDelegate: class {
 }
 class BrowserViewController: UIViewController {
 
+    private var myContext = 0
     let session: WalletSession
 
     lazy var webView: WKWebView = {
@@ -75,10 +79,13 @@ class BrowserViewController: UIViewController {
         webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
         return webView
     }()
-    let textField = UITextField()
-
     weak var delegate: BrowserViewControllerDelegate?
     let decoder = JSONDecoder()
+
+    var browserNavBar: BrowserNavigationBar? {
+        return navigationController?.navigationBar as? BrowserNavigationBar
+    }
+    let progressView = UIProgressView(progressViewStyle: .default)
 
     lazy var config: WKWebViewConfiguration = {
         let config = WKWebViewConfiguration()
@@ -170,46 +177,38 @@ class BrowserViewController: UIViewController {
         webView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(webView)
 
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.tintColor = Colors.blue
+        webView.addSubview(progressView)
+        webView.bringSubview(toFront: progressView)
+
         NSLayoutConstraint.activate([
             webView.topAnchor.constraint(equalTo: view.topAnchor),
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            progressView.topAnchor.constraint(equalTo: view.layoutGuide.topAnchor),
+            progressView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
+            progressView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+            progressView.heightAnchor.constraint(equalToConstant: 3),
         ])
 
-//        if let url = Bundle.main.url(forResource: "demo", withExtension: "html") {
-//            webView.load(URLRequest(url: url))
-//        }
-        webView.load(URLRequest(url: URL(string: "https://poanetwork.github.io/poa-dapps-validators/")!))
-
-        let backButton = UIBarButtonItem(barButtonSystemItem: .undo, target: self, action: nil)
-        let frontButton = UIBarButtonItem(barButtonSystemItem: .fastForward, target: self, action: nil)
-        let homeButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: nil)
-
-        textField.autoresizingMask = .flexibleWidth
-        textField.delegate = self
-        textField.autocapitalizationType = .none
-        textField.keyboardType = .URL
-        textField.backgroundColor = .red
-        textField.clearButtonMode = .whileEditing
-
-        let textFieldItem = UIBarButtonItem(customView: textField)
-
-        let toolbar = UIToolbar()
-        toolbar.items = [
-            backButton,
-            frontButton,
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-            textFieldItem,
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-            homeButton,
-        ]
-
-        navigationItem.titleView = toolbar
+        webView.load(URLRequest(url: URL(string: "https://ropsten.kyber.network/")!))
+        webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: &myContext)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        browserNavBar?.browserDelegate = self
+        browserNavBar?.toolbar.layoutSubviews()
+        refreshURL()
+        refreshButton()
     }
 
     func goTo(url: URL) {
@@ -228,15 +227,60 @@ class BrowserViewController: UIViewController {
         NSLog("script \(script)")
         self.webView.evaluateJavaScript(script, completionHandler: nil)
     }
+
+    private func refreshURL() {
+        browserNavBar?.textField.text = webView.url?.absoluteString
+    }
+
+    private func refreshButton() {
+        browserNavBar?.goBackItem.isEnabled = webView.canGoBack
+        browserNavBar?.goForwardItem.isEnabled = webView.canGoForward
+    }
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        guard let change = change else { return }
+        if context != &myContext {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+            return
+        }
+        if keyPath == "estimatedProgress" {
+            if let progress = (change[NSKeyValueChangeKey.newKey] as AnyObject).floatValue {
+                progressView.progress = progress
+                progressView.isHidden = progress == 1
+            }
+        }
+    }
+
+    deinit {
+        webView.removeObserver(self, forKeyPath: "estimatedProgress")
+    }
+}
+
+extension BrowserViewController: BrowserNavigationBarDelegate {
+    func did(action: BrowserAction) {
+        switch action {
+        case .forward:
+            webView.goForward()
+        case .back:
+            webView.goBack()
+        case .enter(let string):
+            guard let url = URL(string: string) else { return }
+            goTo(url: url)
+        case .menu:
+            break //
+        }
+    }
 }
 
 extension BrowserViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        textField.text = webView.url?.absoluteString
+        refreshURL()
+        refreshButton()
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-
+        refreshURL()
+        refreshButton()
     }
 }
 
@@ -259,16 +303,6 @@ extension BrowserViewController: WKScriptMessageHandler {
         case .signMessage, .unknown:
             break
         }
-    }
-}
-
-extension BrowserViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let url = URL(string: textField.text ?? "") else {
-            return true
-        }
-        goTo(url: url)
-        return true
     }
 }
 
