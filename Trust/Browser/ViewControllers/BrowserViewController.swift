@@ -68,6 +68,10 @@ class BrowserViewController: UIViewController {
     private var myContext = 0
     let session: WalletSession
 
+    private struct Keys {
+        static let estimatedProgress = "estimatedProgress"
+    }
+
     lazy var webView: WKWebView = {
         let webView = WKWebView(
             frame: .zero,
@@ -197,7 +201,7 @@ class BrowserViewController: UIViewController {
         ])
 
         webView.load(URLRequest(url: URL(string: "https://ropsten.kyber.network/")!))
-        webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: &myContext)
+        webView.addObserver(self, forKeyPath: Keys.estimatedProgress, options: .new, context: &myContext)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -245,7 +249,7 @@ class BrowserViewController: UIViewController {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
             return
         }
-        if keyPath == "estimatedProgress" {
+        if keyPath == Keys.estimatedProgress {
             if let progress = (change[NSKeyValueChangeKey.newKey] as AnyObject).floatValue {
                 progressView.progress = progress
                 progressView.isHidden = progress == 1
