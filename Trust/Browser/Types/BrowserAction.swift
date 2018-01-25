@@ -6,5 +6,4 @@ enum BrowserAction {
     case back
     case forward
     case enter(String)
-    case menu
 }

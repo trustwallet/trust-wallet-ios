@@ -208,7 +208,7 @@ class BrowserViewController: UIViewController {
         browserNavBar?.browserDelegate = self
         browserNavBar?.toolbar.layoutSubviews()
         refreshURL()
-        refreshButton()
+        reloadButtons()
     }
 
     func goTo(url: URL) {
@@ -232,7 +232,7 @@ class BrowserViewController: UIViewController {
         browserNavBar?.textField.text = webView.url?.absoluteString
     }
 
-    private func refreshButton() {
+    private func reloadButtons() {
         browserNavBar?.goBackItem.isEnabled = webView.canGoBack
         browserNavBar?.goForwardItem.isEnabled = webView.canGoForward
     }
@@ -266,21 +266,21 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
         case .enter(let string):
             guard let url = URL(string: string) else { return }
             goTo(url: url)
-        case .menu:
-            break //
         }
+
+        reloadButtons()
     }
 }
 
 extension BrowserViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         refreshURL()
-        refreshButton()
+        reloadButtons()
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         refreshURL()
-        refreshButton()
+        reloadButtons()
     }
 }
 

@@ -13,7 +13,6 @@ class BrowserNavigationBar: UINavigationBar {
     let goBackItem = UIBarButtonItem(image: R.image.toolbarBack(), style: .done, target: self, action: #selector(goBack))
     let goForwardItem = UIBarButtonItem(image: R.image.toolbarForward(), style: .done, target: self, action: #selector(goForward))
 
-    let menuItem = UIBarButtonItem(image: R.image.toolbarMenu(), style: .done, target: self, action: #selector(menu))
     weak var browserDelegate: BrowserNavigationBarDelegate?
 
     override init(frame: CGRect) {
@@ -46,7 +45,6 @@ class BrowserNavigationBar: UINavigationBar {
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
             textfieldItem,
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            menuItem,
         ]
         addSubview(toolbar)
 
@@ -65,10 +63,6 @@ class BrowserNavigationBar: UINavigationBar {
 
     @objc private func goForward() {
         browserDelegate?.did(action: .forward)
-    }
-
-    @objc private func menu() {
-        browserDelegate?.did(action: .menu)
     }
 
     required init?(coder aDecoder: NSCoder) {
