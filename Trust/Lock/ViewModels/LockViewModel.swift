@@ -3,4 +3,6 @@
 import UIKit
 
 class LockViewModel {
+    var lockTitle = "Enter a new password"
+    var charCount = 6
 }
