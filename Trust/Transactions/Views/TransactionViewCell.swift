@@ -28,6 +28,7 @@ class TransactionViewCell: UITableViewCell {
         let leftStackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
         leftStackView.translatesAutoresizingMaskIntoConstraints = false
         leftStackView.axis = .vertical
+        leftStackView.distribution = .fillProportionally
         leftStackView.spacing = 6
 
         let rightStackView = UIStackView(arrangedSubviews: [amountLabel])

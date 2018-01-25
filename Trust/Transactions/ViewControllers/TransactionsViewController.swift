@@ -143,8 +143,6 @@ class TransactionsViewController: UIViewController {
     fileprivate func hederView(for section: Int) -> UIView {
         let conteiner = UIView()
         conteiner.backgroundColor = viewModel.headerBackgroundColor
-        conteiner.layer.addBorder(edge: .top, color: viewModel.headerBorderColor, thickness: 0.5)
-        conteiner.layer.addBorder(edge: .bottom, color: viewModel.headerBorderColor, thickness: 0.5)
         let title = UILabel()
         title.text = viewModel.titleForHeader(in: section)
         title.sizeToFit()
@@ -213,5 +211,13 @@ extension TransactionsViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return hederView(for: section)
+    }
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.layer.addBorder(edge: .top, color: viewModel.headerBorderColor, thickness: 0.5)
+        view.layer.addBorder(edge: .bottom, color: viewModel.headerBorderColor, thickness: 0.5)
+    }
+    //Method heightForHeaderInSection is required for iOS 10.
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
     }
 }
