@@ -226,12 +226,12 @@ class SettingsViewController: FormViewController {
     }
 
     func setPasscode(completion: ((Bool) -> Void)? = .none) {
-        let controller = VENTouchLockCreatePasscodeViewController()
-        controller.willFinishWithResult = { result in
+        let lock = LockCreatePasscodeCoordinator(navigationController: self.navigationController!, model: LockCreatePasscodeViewModel())
+        lock.start()
+        lock.lockViewController.willFinishWithResult = { result in
             completion?(result)
-            controller.dismiss(animated: true, completion: nil)
+            lock.dismiss()
         }
-        present(controller.embeddedInNavigationController(), animated: true, completion: nil)
     }
 
     private func version() -> String {

@@ -3,7 +3,7 @@
 import UIKit
 
 class LockCreatePasscodeViewModel: LockViewModel {
+    let title = "Passcode"
     let initialLabelText = "Enter a new password"
     let confirmLabelText = "Please re-enter your passcode"
-    let createPasscodemismatchedLabelText = "Passcodes did not match. Try again"
 }
