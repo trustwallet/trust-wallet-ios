@@ -60,8 +60,6 @@
 		293112121FC4F48400966EEA /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112111FC4F48400966EEA /* ServiceProvider.swift */; };
 		293112261FC8154E00966EEA /* ContractExchangeTrade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112251FC8154E00966EEA /* ContractExchangeTrade.swift */; };
 		2931122E1FC94E4200966EEA /* SettingsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931122D1FC94E4200966EEA /* SettingsError.swift */; };
-		293112311FC971B600966EEA /* ExchangeTokensCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112301FC971B600966EEA /* ExchangeTokensCoordinatorTests.swift */; };
-		293112331FC971F600966EEA /* ExchangeToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112321FC971F600966EEA /* ExchangeToken.swift */; };
 		293112351FC9A0D500966EEA /* CallRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112341FC9A0D500966EEA /* CallRequest.swift */; };
 		293112371FC9A24600966EEA /* UIGestureRecognizer+Closure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112361FC9A24600966EEA /* UIGestureRecognizer+Closure.swift */; };
 		2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */; };
@@ -393,8 +391,6 @@
 		293112111FC4F48400966EEA /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		293112251FC8154E00966EEA /* ContractExchangeTrade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractExchangeTrade.swift; sourceTree = "<group>"; };
 		2931122D1FC94E4200966EEA /* SettingsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsError.swift; sourceTree = "<group>"; };
-		293112301FC971B600966EEA /* ExchangeTokensCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTokensCoordinatorTests.swift; sourceTree = "<group>"; };
-		293112321FC971F600966EEA /* ExchangeToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeToken.swift; sourceTree = "<group>"; };
 		293112341FC9A0D500966EEA /* CallRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallRequest.swift; sourceTree = "<group>"; };
 		293112361FC9A24600966EEA /* UIGestureRecognizer+Closure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer+Closure.swift"; sourceTree = "<group>"; };
 		2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRate.swift; sourceTree = "<group>"; };
@@ -1018,7 +1014,6 @@
 		2931122F1FC971A400966EEA /* Exchange */ = {
 			isa = PBXGroup;
 			children = (
-				293112301FC971B600966EEA /* ExchangeTokensCoordinatorTests.swift */,
 			);
 			path = Exchange;
 			sourceTree = "<group>";
@@ -1738,7 +1733,6 @@
 				299573A31FA27A15006F17FD /* TestKeyStore.swift */,
 				2961BD081FB14B6D00C4B840 /* Config.swift */,
 				298542FF1FBEAE2F00CB5081 /* ChainState.swift */,
-				293112321FC971F600966EEA /* ExchangeToken.swift */,
 				CCA4FE391FD42B4100749AE4 /* FakeJailbreakChecker.swift */,
 				295B61D51FE7FC8300642E60 /* FakeTokensDataStore.swift */,
 				29BDF1951FEE43F40023A45F /* UnconfirmedTransaction.swift */,
@@ -2575,12 +2569,10 @@
 				29F1C865200384FE003780D8 /* Wallet.swift in Sources */,
 				2912CD101F6A830700C6CBE3 /* TrustTests.swift in Sources */,
 				29FF130D1F7626E800AFD326 /* FakeNavigationController.swift in Sources */,
-				293112311FC971B600966EEA /* ExchangeTokensCoordinatorTests.swift in Sources */,
 				61DCE17D2001A7A20053939F /* RLPTests.swift in Sources */,
 				299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */,
 				CCA4FE3A1FD42B4100749AE4 /* FakeJailbreakChecker.swift in Sources */,
 				29F114F81FA8165200114A29 /* SendCoordinatorTests.swift in Sources */,
-				293112331FC971F600966EEA /* ExchangeToken.swift in Sources */,
 				299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */,
 				61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */,
 				29E14FD91F7F4D4E00185568 /* FakeTransactionsStorage.swift in Sources */,
