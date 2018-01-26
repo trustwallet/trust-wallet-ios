@@ -3,11 +3,10 @@
 import UIKit
 
 class LockViewModel {
-    let createPasscodeinitialLabelText = "Enter a new password"
-    let createPasscodeconfirmLabelText = "Please re-enter your passcode"
-    let createPasscodemismatchedLabelText = "Passcodes did not match. Try again"
-    let enterPasscodeInitialLabelText = "Enter your passcode"
-    let enterPasscodeIncorrectLabelText = "Incorrect passcode. Try again."
-    let enterPasscodeViewControllerTitle = "Enter Passcode"
-    var charCount = 6
+    lazy var charCount: Int = {
+        return 5
+    }()
+    lazy var passcodeAttemptLimit: Int = {
+        return 5
+    }()
 }
