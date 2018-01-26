@@ -80,6 +80,7 @@ class BrowserViewController: UIViewController {
         webView.allowsBackForwardNavigationGestures = true
         webView.scrollView.isScrollEnabled = true
         webView.navigationDelegate = self
+        webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
         if isDebug {
             webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
         }
@@ -182,7 +183,7 @@ class BrowserViewController: UIViewController {
     }
 
     deinit {
-        webView.removeObserver(self, forKeyPath: "estimatedProgress")
+        webView.removeObserver(self, forKeyPath: Keys.estimatedProgress)
     }
 }
 

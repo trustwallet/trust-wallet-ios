@@ -10,8 +10,8 @@ class BrowserNavigationBar: UINavigationBar {
 
     let toolbar = UIToolbar(frame: .zero)
     let textField = UITextField()
-    let goBackItem = UIBarButtonItem(image: R.image.toolbarBack(), style: .done, target: self, action: #selector(goBack))
-    let goForwardItem = UIBarButtonItem(image: R.image.toolbarForward(), style: .done, target: self, action: #selector(goForward))
+    let goBackItem = UIBarButtonItem(image: R.image.toolbarBack(), style: .done, target: self, action: #selector(moveBack))
+    let goForwardItem = UIBarButtonItem(image: R.image.toolbarForward(), style: .done, target: self, action: #selector(moveForward))
 
     weak var browserDelegate: BrowserNavigationBarDelegate?
 
@@ -57,11 +57,11 @@ class BrowserNavigationBar: UINavigationBar {
         ])
     }
 
-    @objc private func goBack() {
+    @objc private func moveBack() {
         browserDelegate?.did(action: .back)
     }
 
-    @objc private func goForward() {
+    @objc private func moveForward() {
         browserDelegate?.did(action: .forward)
     }
 
