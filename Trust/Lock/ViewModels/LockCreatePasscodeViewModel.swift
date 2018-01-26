@@ -3,7 +3,7 @@
 import UIKit
 
 class LockCreatePasscodeViewModel: LockViewModel {
-    let title = "Passcode"
-    let initialLabelText = "Enter a new password"
-    let confirmLabelText = "Please re-enter your passcode"
+    let title = NSLocalizedString("lock.create.passcode.view.model.title", value: "Set Passcode", comment: "")
+    let initialLabelText = NSLocalizedString("lock.create.passcode.view.model.initial", value: "Enter a new password", comment: "")
+    let confirmLabelText = NSLocalizedString("lock.create.passcode.view.model.confirm", value: "Please re-enter your passcode", comment: "")
 }

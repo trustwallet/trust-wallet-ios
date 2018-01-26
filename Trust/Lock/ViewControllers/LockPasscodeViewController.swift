@@ -41,7 +41,7 @@ class LockPasscodeViewController: UIViewController {
         view.addSubview(invisiblePasscodeField)
     }
     private func configureNavigationItems() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.userTappedCancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .plain, target: self, action: #selector(self.userTappedCancel))
     }
     private func configureLockView() {
         lockView = LockView(model)
