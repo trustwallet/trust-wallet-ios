@@ -138,3 +138,8 @@
 "welldone.viewmodel.sharing.text2" = "Check out Trust - the wallet that lets me securely store my Ethereum and ERC20 tokens.";
 "welldone.viewmodel.sharing.text3" = "I securely store Ethereum and ERC20 tokens in the Trust wallet";
 "welldone.viewmodel.sharing.text4" = "I secure my Ethereum and ERC20 tokens in the Trust wallet.";
+"lock.create.passcode.view.model.title" = "Set Passcode";
+"lock.create.passcode.view.model.initial" = "Enter a new password";
+"lock.create.passcode.view.model.confirm" = "Please re-enter your passcode";
+"lock.enter.passcode.view.model.initial" = "Enter your passcode";
+"lock.enter.passcode.view.model.incorrect" = "Incorrect passcode. Try again.";
