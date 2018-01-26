@@ -6,7 +6,7 @@ class LockCreatePasscodeCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     private let model: LockCreatePasscodeViewModel
     private let navigationController: UINavigationController
-    private lazy var lockViewController: LockCreatePasscodeViewController = {
+    lazy var lockViewController: LockCreatePasscodeViewController = {
         return LockCreatePasscodeViewController(model: model)
     }()
     init(navigationController: UINavigationController, model: LockCreatePasscodeViewModel) {
@@ -14,9 +14,9 @@ class LockCreatePasscodeCoordinator: Coordinator {
         self.model = model
     }
     func start() {
-        navigationController.viewControllers = [lockViewController]
+        navigationController.pushViewController(lockViewController, animated: true)
     }
     func dismiss() {
-        navigationController.dismiss(animated: true, completion: nil)
+        navigationController.popViewController(animated: true)
     }
 }

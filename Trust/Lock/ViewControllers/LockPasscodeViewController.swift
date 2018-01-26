@@ -13,6 +13,7 @@ class LockPasscodeViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     override func viewDidLoad() {
+        self.navigationItem.hidesBackButton = true
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         self.view.backgroundColor = UIColor.white
         self.configureInvisiblePasscodeField()
@@ -48,7 +49,6 @@ class LockPasscodeViewController: UIViewController {
         view.addSubview(lockView)
         lockView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         lockView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        lockView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
         lockView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
     }
     @objc func userTappedCancel() {
@@ -59,11 +59,12 @@ class LockPasscodeViewController: UIViewController {
     }
     @objc func enteredPasscode(_ passcode: String) {
         shouldIgnoreTextFieldDelegateCalls = false
+        clearPasscode()
     }
     func clearPasscode() {
         invisiblePasscodeField.text = ""
         for characterView in lockView.characters {
-            characterView.isEmpty = true
+            characterView.setEmpty(true)
         }
     }
     func finish(withResult success: Bool, animated: Bool) {
