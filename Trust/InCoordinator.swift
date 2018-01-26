@@ -124,14 +124,6 @@ class InCoordinator: Coordinator {
             tabBarController.viewControllers?.append(tokenCoordinator.navigationController)
         }
 
-        if inCoordinatorViewModel.exchangeAvailable {
-            let exchangeCoordinator = ExchangeCoordinator(session: session, keystore: keystore)
-            exchangeCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("exchange.tabbar.item.title", value: "Exchange", comment: ""), image: R.image.exchange(), selectedImage: nil)
-            exchangeCoordinator.start()
-            addCoordinator(exchangeCoordinator)
-            tabBarController.viewControllers?.append(exchangeCoordinator.navigationController)
-        }
-
         let settingsCoordinator = SettingsCoordinator(
             keystore: keystore,
             session: session,
