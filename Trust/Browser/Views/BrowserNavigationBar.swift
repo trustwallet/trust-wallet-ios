@@ -8,12 +8,14 @@ protocol BrowserNavigationBarDelegate: class {
 
 class BrowserNavigationBar: UINavigationBar {
 
-    let toolbar = UIToolbar(frame: .zero)
+    let goBack = UIButton()
+    let goForward = UIButton()
     let textField = UITextField()
-    let goBackItem = UIBarButtonItem(image: R.image.toolbarBack(), style: .done, target: self, action: #selector(moveBack))
-    let goForwardItem = UIBarButtonItem(image: R.image.toolbarForward(), style: .done, target: self, action: #selector(moveForward))
-
     weak var browserDelegate: BrowserNavigationBarDelegate?
+
+    private struct Layout {
+        static let width: CGFloat = 34
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,34 +37,43 @@ class BrowserNavigationBar: UINavigationBar {
         textField.autoresizingMask = [.flexibleWidth]
         textField.setContentHuggingPriority(.required, for: .horizontal)
 
-        let textfieldItem = UIBarButtonItem(customView: textField)
+        goBack.translatesAutoresizingMaskIntoConstraints = false
+        goBack.setImage(R.image.toolbarBack(), for: .normal)
+        goBack.addTarget(self, action: #selector(goBackAction), for: .touchUpInside)
 
-        toolbar.translatesAutoresizingMaskIntoConstraints = false
-        toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
-        toolbar.items = [
-            goBackItem,
-            goForwardItem,
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            textfieldItem,
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-        ]
-        addSubview(toolbar)
+        goForward.translatesAutoresizingMaskIntoConstraints = false
+        goForward.setImage(R.image.toolbarForward(), for: .normal)
+        goForward.addTarget(self, action: #selector(goForwardAction), for: .touchUpInside)
+
+        let stackView = UIStackView(arrangedSubviews: [
+            goBack,
+            goForward,
+            textField,
+        ])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 4
+
+        addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            toolbar.topAnchor.constraint(equalTo: topAnchor),
-            toolbar.leadingAnchor.constraint(equalTo: leadingAnchor),
-            toolbar.trailingAnchor.constraint(equalTo: trailingAnchor),
-            toolbar.bottomAnchor.constraint(equalTo: bottomAnchor),
-            textField.heightAnchor.constraint(equalToConstant: 34),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
+
+            goForward.widthAnchor.constraint(equalToConstant: Layout.width),
+            goBack.widthAnchor.constraint(equalToConstant: Layout.width),
         ])
     }
 
-    @objc private func moveBack() {
-        browserDelegate?.did(action: .back)
+    @objc private func goBackAction() {
+        browserDelegate?.did(action: .goBack)
     }
 
-    @objc private func moveForward() {
-        browserDelegate?.did(action: .forward)
+    @objc private func goForwardAction() {
+        browserDelegate?.did(action: .goForward)
     }
 
     required init?(coder aDecoder: NSCoder) {

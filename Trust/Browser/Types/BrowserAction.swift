@@ -3,7 +3,7 @@
 import Foundation
 
 enum BrowserAction {
-    case back
-    case forward
+    case goBack
+    case goForward
     case enter(String)
 }

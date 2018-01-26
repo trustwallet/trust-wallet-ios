@@ -136,7 +136,6 @@ class BrowserViewController: UIViewController {
         super.viewWillAppear(animated)
 
         browserNavBar?.browserDelegate = self
-        browserNavBar?.toolbar.layoutSubviews()
         refreshURL()
         reloadButtons()
     }
@@ -163,8 +162,8 @@ class BrowserViewController: UIViewController {
     }
 
     private func reloadButtons() {
-        browserNavBar?.goBackItem.isEnabled = webView.canGoBack
-        browserNavBar?.goForwardItem.isEnabled = webView.canGoForward
+        browserNavBar?.goBack.isEnabled = webView.canGoBack
+        browserNavBar?.goForward.isEnabled = webView.canGoForward
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
@@ -189,15 +188,14 @@ class BrowserViewController: UIViewController {
 extension BrowserViewController: BrowserNavigationBarDelegate {
     func did(action: BrowserAction) {
         switch action {
-        case .forward:
+        case .goForward:
             webView.goForward()
-        case .back:
+        case .goBack:
             webView.goBack()
         case .enter(let string):
             guard let url = URL(string: string) else { return }
             goTo(url: url)
         }
-
         reloadButtons()
     }
 }
