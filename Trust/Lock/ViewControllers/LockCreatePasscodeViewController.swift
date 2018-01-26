@@ -16,7 +16,7 @@ class LockCreatePasscodeViewController: LockPasscodeViewController {
         super.enteredPasscode(passcode)
         if let first = firstPasscode {
             if passcode == first {
-                //Set path to lock manager
+                lock.setPasscode(passcode: passcode)
                 finish(withResult: true, animated: true)
             } else {
                 lockView.shake()

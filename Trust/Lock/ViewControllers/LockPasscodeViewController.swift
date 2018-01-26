@@ -3,11 +3,12 @@
 import UIKit
 
 class LockPasscodeViewController: UIViewController {
-    var invisiblePasscodeField = UITextField()
-    var shouldIgnoreTextFieldDelegateCalls = false
     var willFinishWithResult: ((_ success: Bool) -> Void)?
     let model: LockViewModel
     var lockView: LockView!
+    let lock = Lock()
+    private var invisiblePasscodeField = UITextField()
+    private var shouldIgnoreTextFieldDelegateCalls = false
     init(model: LockViewModel) {
         self.model = model
         super.init(nibName: nil, bundle: nil)
