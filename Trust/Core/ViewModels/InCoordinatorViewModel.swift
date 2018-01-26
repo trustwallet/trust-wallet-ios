@@ -20,13 +20,6 @@ struct InCoordinatorViewModel {
         return isDebug
     }
 
-    var exchangeAvailable: Bool {
-        switch config.server {
-        case .main, .classic, .ropsten, .rinkeby, .poa, .sokol: return false
-        case .kovan: return false //config.isDebugEnabled
-        }
-    }
-
     var canActivateDebugMode: Bool {
         return config.server.isTestNetwork
     }
