@@ -6,8 +6,8 @@ class LockCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     private let window: UIWindow
     private let model: LockViewModel
-    private lazy var lockViewController: LockViewController = {
-        return LockViewController(model: model)
+    private lazy var lockViewController: LockPasscodeViewController = {
+        return LockPasscodeViewController(model: model)
     }()
     init(window: UIWindow, model: LockViewModel) {
         self.window = window

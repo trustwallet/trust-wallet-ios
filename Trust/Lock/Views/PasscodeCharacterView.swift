@@ -3,58 +3,24 @@
 import UIKit
 
 class PasscodeCharacterView: UIView {
-    /**
-     * YES if the view represents no character (to display a hyphen character). NO otherwise (to display a bullet character).
-     */
-    private var _isEmpty: Bool = false
-    var isEmpty: Bool {
-        get {
-            return _isEmpty
-        }
-        set {
-            if self.isEmpty != newValue {
-                _isEmpty = newValue
-                redraw()
-            }
-            _isEmpty = newValue
-        }
-    }
-    /**
-     * The fill color of the passcode character.
-     */
-    private var _fillColor: UIColor?
-    var fillColor: UIColor? {
-        get {
-            return _fillColor
-        }
-        set {
-            _fillColor = newValue
-            guard let cgColor = _fillColor?.cgColor else {
-                return
-            }
-            hyphen?.fillColor = cgColor
-            hyphen?.strokeColor = cgColor
-            circle?.fillColor = cgColor
-            circle?.strokeColor = cgColor
-        }
-    }
+    var isEmpty = true
     private var circle: CAShapeLayer?
     private var hyphen: CAShapeLayer?
     override func layoutSubviews() {
         commonInit()
     }
-    func commonInit() {
+    private func commonInit() {
         isEmpty = true
         backgroundColor = UIColor.clear
         drawCircle()
         drawHyphen()
         redraw()
     }
-    func redraw() {
+    private func redraw() {
         circle?.isHidden = isEmpty
         hyphen?.isHidden = !isEmpty
     }
-    func drawCircle() {
+    private func drawCircle() {
         let borderWidth: CGFloat = 2
         let radius: CGFloat = bounds.width / 2 - borderWidth
         let circle = CAShapeLayer()
@@ -66,8 +32,8 @@ class PasscodeCharacterView: UIView {
         layer.addSublayer(circle)
         self.circle = circle
     }
-    func drawHyphen() {
-        let horizontalMargin: CGFloat = 1
+    private func drawHyphen() {
+        let horizontalMargin: CGFloat = 2
         let hyphenHeight: CGFloat = bounds.height / 7
         let hyphen = CAShapeLayer()
         let hyphenPath = UIBezierPath()
@@ -85,5 +51,11 @@ class PasscodeCharacterView: UIView {
         hyphen.strokeColor = hyphenColor?.cgColor
         layer.addSublayer(hyphen)
         self.hyphen = hyphen
+    }
+    func setEmpty(_ isEmpty: Bool) {
+        if self.isEmpty != isEmpty {
+            self.isEmpty = isEmpty
+            redraw()
+        }
     }
 }
