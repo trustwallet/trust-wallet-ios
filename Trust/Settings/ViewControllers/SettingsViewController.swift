@@ -15,10 +15,11 @@ class SettingsViewController: FormViewController {
         static let currencyAllKey = "1"
     }
     private var config = Config()
+    private var lock = Lock()
     private let helpUsCoordinator = HelpUsCoordinator()
     weak var delegate: SettingsViewControllerDelegate?
     var isPasscodeEnabled: Bool {
-        return true
+        return lock.isPasscodeSet()
     }
     static var isPushNotificationEnabled: Bool {
         guard let settings = UIApplication.shared.currentUserNotificationSettings
@@ -133,7 +134,7 @@ class SettingsViewController: FormViewController {
                         row.updateCell()
                     }
                 } else {
-                   //Delete passcode
+                    self.lock.deletePasscode()
                 }
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_lock()
