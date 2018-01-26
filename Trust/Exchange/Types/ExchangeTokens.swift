@@ -6,7 +6,7 @@ import TrustKeystore
 struct ExchangeTokens {
     static func get(for server: RPCServer) -> [ExchangeToken] {
         switch server {
-        case .main, .classic, .ropsten, .poa, .sokol:
+        case .main, .classic, .ropsten, .rinkeby, .poa, .sokol:
             return [
                 ExchangeToken(name: "Ethereum", address: Address(string: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")!, symbol: "ETH", image: R.image.token_eth(), decimals: 18),
             ]

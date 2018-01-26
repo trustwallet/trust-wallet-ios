@@ -13,7 +13,7 @@ struct ExchangeConfig {
 
     var contract: Address? {
         switch server {
-        case .main, .classic, .poa, .ropsten, .sokol:
+        case .main, .classic, .poa, .ropsten, .rinkeby, .sokol:
             return nil
         case .kovan:
             return Address(string: "0x9044968086e365216cc9e441a8e2cea300dd7228")
@@ -22,7 +22,7 @@ struct ExchangeConfig {
 
     var tokenAddress: Address {
         switch server {
-        case .main, .classic, .poa, .ropsten, .sokol:
+        case .main, .classic, .poa, .ropsten, .rinkeby, .sokol:
             return Address(string: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")!
         case .kovan:
             return Address(string: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")!

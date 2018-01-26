@@ -24,6 +24,8 @@ struct ConfigExplorer {
                 return endpoint + "/tx/" + ID
             case .ropsten:
                 return endpoint + "/tx/" + ID
+            case .rinkeby:
+                return endpoint + "/tx/" + ID
             case .poa:
                 return endpoint + "/txid/search/" + ID
             case .sokol:
@@ -43,6 +45,8 @@ struct ConfigExplorer {
             return "https://ropsten.etherscan.io"
         case .ropsten:
             return "https://ropsten.etherscan.io"
+        case .rinkeby:
+            return "https://rinkeby.etherscan.io"
         case .poa:
             return "https://poaexplorer.com"
         case .sokol:
