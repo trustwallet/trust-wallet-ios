@@ -33,7 +33,6 @@ class LockView: UIView {
         characterView.translatesAutoresizingMaskIntoConstraints = false
     }
     private func configLabel() {
-        lockTitle.text = model.createPasscodeconfirmLabelText
         lockTitle.textAlignment = .center
         lockTitle.translatesAutoresizingMaskIntoConstraints = false
     }
