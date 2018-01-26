@@ -22,7 +22,7 @@ class TouchRegistrar {
         if !keystore.hasWallets {
             unregister()
         }
-
+        /*
         VENTouchLock.sharedInstance().setKeychainService(
             Keys.service,
             keychainAccount: Keys.account,
@@ -30,6 +30,7 @@ class TouchRegistrar {
             passcodeAttemptLimit: 5,
             splashViewControllerClass: ProtectionViewController.self
         )
+        */
     }
 
     func unregister() {
