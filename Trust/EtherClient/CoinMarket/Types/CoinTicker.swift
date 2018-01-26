@@ -10,8 +10,7 @@ struct CoinTicker: Codable {
     let price: String
     let percent_change_24h: String
     let contract: String
-
-    static let tokenLogoPath = "https://files.coinmarketcap.com/static/img/coins/128x128/"
+    let image: String
 
     lazy var rate: CurrencyRate = {
         CurrencyRate(
@@ -29,6 +28,6 @@ struct CoinTicker: Codable {
 
 extension CoinTicker {
     var imageURL: URL? {
-        return URL(string: CoinTicker.tokenLogoPath + id + ".png")
+        return URL(string: image)
     }
 }
