@@ -70,6 +70,7 @@ class BrowserViewController: UIViewController {
 
     private struct Keys {
         static let estimatedProgress = "estimatedProgress"
+        static let developerExtrasEnabled = "developerExtrasEnabled"
     }
 
     lazy var webView: WKWebView = {
@@ -78,11 +79,9 @@ class BrowserViewController: UIViewController {
             configuration: self.config
         )
         webView.allowsBackForwardNavigationGestures = true
-        webView.scrollView.isScrollEnabled = true
         webView.navigationDelegate = self
-        webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
         if isDebug {
-            webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
+            webView.configuration.preferences.setValue(true, forKey: Keys.developerExtrasEnabled)
         }
         return webView
     }()
@@ -125,7 +124,7 @@ class BrowserViewController: UIViewController {
             progressView.heightAnchor.constraint(equalToConstant: 3),
         ])
 
-        webView.load(URLRequest(url: URL(string: "https://ropsten.kyber.network/")!))
+        webView.load(URLRequest(url: URL(string: Constants.dappsBrowserURL)!))
         webView.addObserver(self, forKeyPath: Keys.estimatedProgress, options: .new, context: &myContext)
     }
 
