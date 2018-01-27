@@ -12,6 +12,11 @@ class LockEnterPasscodeCoordinator: Coordinator {
     init(window: UIWindow, model: LockEnterPasscodeViewModel) {
         self.window = window
         self.model = model
+        lockEnterPasscodeViewController.willFinishWithResult = { [weak self] state in
+            if state {
+                self?.dismiss()
+            }
+        }
     }
     func start() {
         window.rootViewController = lockEnterPasscodeViewController

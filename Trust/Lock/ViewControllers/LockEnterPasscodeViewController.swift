@@ -7,6 +7,7 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
         return self.model as? LockEnterPasscodeViewModel
     }()
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.lockView.lockTitle.text = lockEnterPasscodeViewModel?.initialLabelText
     }
     override func enteredPasscode(_ passcode: String) {
