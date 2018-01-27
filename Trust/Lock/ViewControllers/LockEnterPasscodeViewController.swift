@@ -14,11 +14,15 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
         super.enteredPasscode(passcode)
         if lock.isPasscodeValid(passcode: passcode) {
             lock.resetPasscodeAttemptHistory()
+            self.lockView.lockTitle.text = lockEnterPasscodeViewModel?.initialLabelText
             finish(withResult: true, animated: true)
         } else {
-            lockView.lockTitle.text = lockEnterPasscodeViewModel?.incorrectLabelText
+            let numberOfAttempts = self.lock.numberOfAttempts()
+            let passcodeAttemptLimit = model.passcodeAttemptLimit
+            let text = String(format: NSLocalizedString("lock.enter.passcode.view.model.incorrect.passcode", value: "Incorrect passcode. You have %d attempts.", comment: ""), passcodeAttemptLimit - numberOfAttempts)
+            lockView.lockTitle.text = text
             lockView.shake()
-            if self.lock.numberOfAttempts() == model.passcodeAttemptLimit {
+            if numberOfAttempts == model.passcodeAttemptLimit {
                 exceededLimit()
                 return
             }
