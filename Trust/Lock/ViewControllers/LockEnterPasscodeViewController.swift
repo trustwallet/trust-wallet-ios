@@ -1,11 +1,13 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import UIKit
+import LocalAuthentication
 
 class LockEnterPasscodeViewController: LockPasscodeViewController {
     private lazy var lockEnterPasscodeViewModel: LockEnterPasscodeViewModel? = {
         return self.model as? LockEnterPasscodeViewModel
     }()
+    private let context = LAContext()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.lockView.lockTitle.text = lockEnterPasscodeViewModel?.initialLabelText
@@ -17,6 +19,7 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
             self.lockView.lockTitle.text = lockEnterPasscodeViewModel?.tryAfterOneMinute
             maxAttemptTimerValidation()
         }
+        touchValidation()
     }
     override func enteredPasscode(_ passcode: String) {
         super.enteredPasscode(passcode)
@@ -51,6 +54,24 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
         if interval >= 60 {
             self.lockView.lockTitle.text = lockEnterPasscodeViewModel?.initialLabelText
             self.showKeyboard()
+        }
+    }
+    private func canEvaluatePolicy() -> Bool {
+        return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+    }
+    private func touchValidation() {
+        guard canEvaluatePolicy(), let reason = lockEnterPasscodeViewModel?.loginReason else {
+            return
+        }
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,localizedReason: reason) { [weak self](success,_) in
+            if success {
+                DispatchQueue.main.async() {
+                    self?.lock.resetPasscodeAttemptHistory()
+                    self?.lock.removeIncorrectMaxAttemptTime()
+                    self?.lockView.lockTitle.text = self?.lockEnterPasscodeViewModel?.initialLabelText
+                    self?.finish(withResult: true, animated: true)
+                }
+            }
         }
     }
 }

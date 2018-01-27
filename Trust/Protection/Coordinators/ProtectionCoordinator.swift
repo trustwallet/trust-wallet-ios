@@ -15,15 +15,16 @@ class ProtectionCoordinator: Coordinator {
         self.protectionWindow = UIWindow()
     }
     func applicationWillResignActive() {
-        //Show splash screen to protect sensetive information.
-        splashCoordinator.start()
+        if !lockEnterPasscodeCoordinator.passcodeViewIsActive {
+            splashCoordinator.start()
+        }
     }
     func applicationDidBecomeActive() {
-        //Hide splash screen.
-        splashCoordinator.dismiss()
-        //Show passcode screen after app become active.
-        if Lock().isPasscodeSet() {
-            lockEnterPasscodeCoordinator.start()
+        if !lockEnterPasscodeCoordinator.passcodeViewIsActive {
+            splashCoordinator.dismiss()
         }
+    }
+    func didFinishLaunchingWithOptions() {
+        lockEnterPasscodeCoordinator.start()
     }
 }

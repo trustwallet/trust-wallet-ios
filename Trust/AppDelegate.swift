@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
         //This is separate coordinator for the protection of the sensitive information.
         protectionCoordinator = ProtectionCoordinator()
+        protectionCoordinator.didFinishLaunchingWithOptions()
         return true
     }
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
