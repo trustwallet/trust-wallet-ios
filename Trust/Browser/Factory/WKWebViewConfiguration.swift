@@ -68,11 +68,19 @@ extension WKWebViewConfiguration {
         engine.start()
         var web3 = new Web3(engine)
         window.web3 = web3
+
         web3.eth.accounts = ["\(address)"]
         web3.eth.getAccounts = function(cb) {
             return cb(null, ["\(address)"])
         }
+
+        web3.eth.getCoinbase = function(cb) {
+            return cb(null, "\(address)")
+        }
+        web3.eth.coinbase = "\(address)"
+
         web3.eth.defaultAccount = "\(address)"
+        web3.currentProvider.isMetaMask = true
         """
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
         config.userContentController.add(messageHandler, name: Method.sendTransaction.rawValue)
