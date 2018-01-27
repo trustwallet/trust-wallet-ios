@@ -4,6 +4,7 @@ import UIKit
 
 class LockEnterPasscodeCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
+    var passcodeViewIsActive = false
     private let window: UIWindow
     private let model: LockEnterPasscodeViewModel
     private lazy var lockEnterPasscodeViewController: LockEnterPasscodeViewController = {
@@ -19,10 +20,15 @@ class LockEnterPasscodeCoordinator: Coordinator {
         }
     }
     func start() {
+        guard !passcodeViewIsActive else {
+            return
+        }
+        passcodeViewIsActive = true
         window.rootViewController = lockEnterPasscodeViewController
         window.makeKeyAndVisible()
     }
     func dismiss() {
+        passcodeViewIsActive = false
         window.isHidden = true
     }
 }
