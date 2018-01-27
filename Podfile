@@ -18,16 +18,16 @@ target 'Trust' do
   pod 'SeedStackViewController'
   pod 'RealmSwift'
   pod 'BonMot', '~> 5.0'
-  pod 'VENTouchLock'
   pod '1PasswordExtension'
   pod 'Lokalise'
   pod 'Moya', '~> 10.0.1'
   pod 'JavaScriptKit' 
   pod 'CryptoSwift', :git=>'https://github.com/krzyzanowskim/CryptoSwift', :branch=>'master'
   pod 'Fabric'
+  pod 'SAMKeychain'
   pod 'Crashlytics'
   pod 'Kingfisher', '~> 4.0'
-  pod 'TrustKeystore', :git=>'https://github.com/TrustWallet/trust-keystore', :branch=>'master'
+  pod 'TrustKeystore', '~> 0.0.4'
   # pod 'web3swift', :git=>'https://github.com/BANKEX/web3swift', :branch=>'master'
 
   target 'TrustTests' do
