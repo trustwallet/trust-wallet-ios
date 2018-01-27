@@ -5,20 +5,12 @@ import UIKit
 class LockView: UIView {
     var characterView = UIStackView()
     var lockTitle = UILabel()
-    lazy var characters: [PasscodeCharacterView] = {
-        var characters = [PasscodeCharacterView]()
-        for _ in 0..<model.charCount() {
-            let passcodeCharacterView = PasscodeCharacterView()
-            passcodeCharacterView.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-            passcodeCharacterView.widthAnchor.constraint(equalToConstant: 20).isActive = true
-            characters.append(passcodeCharacterView)
-        }
-        return characters
-    }()
     var model: LockViewModel!
+    var characters: [PasscodeCharacterView]!
     init(_ model: LockViewModel) {
         super.init(frame: CGRect.zero)
         self.model = model
+        self.characters = passcodeCharacters()
         configCharacterView()
         configLabel()
         addUiElements()
@@ -48,6 +40,16 @@ class LockView: UIView {
         self.backgroundColor = UIColor.white
         self.addSubview(lockTitle)
         self.addSubview(characterView)
+    }
+    private func passcodeCharacters() -> [PasscodeCharacterView] {
+        var characters = [PasscodeCharacterView]()
+        for _ in 0..<model.charCount() {
+            let passcodeCharacterView = PasscodeCharacterView()
+            passcodeCharacterView.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+            passcodeCharacterView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+            characters.append(passcodeCharacterView)
+        }
+        return characters
     }
     func shake() {
         let keypath = "position"

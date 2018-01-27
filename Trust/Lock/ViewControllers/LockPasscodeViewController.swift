@@ -50,6 +50,7 @@ class LockPasscodeViewController: UIViewController {
         view.addSubview(lockView)
         lockView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         lockView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        lockView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         lockView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
     }
     @objc func userTappedCancel() {
