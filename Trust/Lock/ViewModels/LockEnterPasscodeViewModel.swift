@@ -3,6 +3,5 @@
 import UIKit
 
 class LockEnterPasscodeViewModel: LockViewModel {
-    let initialLabelText = "Enter your passcode"
-    let incorrectLabelText = "Incorrect passcode. Try again."
+    let initialLabelText =  NSLocalizedString("lock.enter.passcode.view.model.initial", value: "Enter your passcode", comment: "")
 }
