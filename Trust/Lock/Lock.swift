@@ -35,6 +35,6 @@ class Lock {
     func recordIncorrectPasscodeAttempt() {
         var numberOfAttemptsSoFar = standardDefaults.integer(forKey: passcodeAttempts)
         numberOfAttemptsSoFar += 1
-        standardDefaults.set(passcodeAttempts, forKey: passcodeAttempts)
+        standardDefaults.set(numberOfAttemptsSoFar, forKey: passcodeAttempts)
     }
 }
