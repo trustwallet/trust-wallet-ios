@@ -10,6 +10,7 @@ class Lock {
     }
     private let standardDefaults = UserDefaults.standard
     private let passcodeAttempts = "passcodeAttempts"
+    private let maxAttemptTime = "maxAttemptTime"
     func isPasscodeSet() -> Bool {
         return currentPasscode() != nil
     }
@@ -36,5 +37,17 @@ class Lock {
         var numberOfAttemptsSoFar = standardDefaults.integer(forKey: passcodeAttempts)
         numberOfAttemptsSoFar += 1
         standardDefaults.set(numberOfAttemptsSoFar, forKey: passcodeAttempts)
+    }
+    func recordedMaxAttemptTime() -> Date {
+        return standardDefaults.object(forKey: maxAttemptTime) as! Date
+    }
+    func incorrectMaxAttemptTimeIsSet() -> Bool {
+        return (standardDefaults.object(forKey: maxAttemptTime) != nil)
+    }
+    func recordIncorrectMaxAttemptTime() {
+        standardDefaults.set(Date(), forKey: maxAttemptTime)
+    }
+    func removeIncorrectMaxAttemptTime() {
+        standardDefaults.removeObject(forKey: maxAttemptTime)
     }
 }

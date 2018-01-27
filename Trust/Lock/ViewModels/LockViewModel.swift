@@ -4,7 +4,7 @@ import UIKit
 
 class LockViewModel {
     private let lock = Lock()
-    lazy var charCount: Int = {
+    func charCount() -> Int {
         //This step is required for old clients to support 4 digit passcode.
         var count = 0
         if lock.isPasscodeSet() {
@@ -13,8 +13,9 @@ class LockViewModel {
             count = 6
         }
         return count
-    }()
-    lazy var passcodeAttemptLimit: Int = {
-        return 5
-    }()
+    }
+    func passcodeAttemptLimit() -> Int {
+        //If max attempt limit is rached we should give only 1 attempt.
+        return lock.incorrectMaxAttemptTimeIsSet() ? 1 : 5
+    }
 }

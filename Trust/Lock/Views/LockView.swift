@@ -7,7 +7,7 @@ class LockView: UIView {
     var lockTitle = UILabel()
     lazy var characters: [PasscodeCharacterView] = {
         var characters = [PasscodeCharacterView]()
-        for _ in 0..<model.charCount {
+        for _ in 0..<model.charCount() {
             let passcodeCharacterView = PasscodeCharacterView()
             passcodeCharacterView.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
             passcodeCharacterView.widthAnchor.constraint(equalToConstant: 20).isActive = true
