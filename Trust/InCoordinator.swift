@@ -98,18 +98,16 @@ class InCoordinator: Coordinator {
             }
         }
 
-        if inCoordinatorViewModel.browserAvailable {
-            let coordinator = BrowserCoordinator(session: session, keystore: keystore)
-            coordinator.delegate = self
-            coordinator.start()
-            coordinator.rootViewController.tabBarItem = UITabBarItem(
-                title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
-                image: R.image.coins(),
-                selectedImage: nil
-            )
-            addCoordinator(coordinator)
-            tabBarController.viewControllers?.insert(coordinator.navigationController, at: 0)
-        }
+        let coordinator = BrowserCoordinator(session: session, keystore: keystore)
+        coordinator.delegate = self
+        coordinator.start()
+        coordinator.rootViewController.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
+            image: R.image.coins(),
+            selectedImage: nil
+        )
+        addCoordinator(coordinator)
+        tabBarController.viewControllers?.insert(coordinator.navigationController, at: 0)
 
         if inCoordinatorViewModel.tokensAvailable {
             let tokenCoordinator = TokensCoordinator(
@@ -146,7 +144,7 @@ class InCoordinator: Coordinator {
         navigationController.setNavigationBarHidden(true, animated: false)
         addCoordinator(transactionCoordinator)
 
-        tabBarController.selectedIndex = 0
+        tabBarController.selectedIndex = 1
 
         keystore.recentlyUsedWallet = account
     }

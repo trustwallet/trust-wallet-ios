@@ -16,10 +16,6 @@ struct InCoordinatorViewModel {
         }
     }
 
-    var browserAvailable: Bool {
-        return isDebug
-    }
-
     var canActivateDebugMode: Bool {
         return config.server.isTestNetwork
     }
