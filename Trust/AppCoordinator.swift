@@ -11,10 +11,8 @@ class AppCoordinator: NSObject, Coordinator {
         controller.delegate = self
         return controller
     }()
-    lazy var touchRegistrar: TouchRegistrar = {
-        return TouchRegistrar(keystore: self.keystore)
-    }()
     let pushNotificationRegistrar = PushNotificationsRegistrar()
+    private let lock = Lock()
     private var keystore: Keystore
     private var appTracker = AppTracker()
     var coordinators: [Coordinator] = []
@@ -64,8 +62,6 @@ class AppCoordinator: NSObject, Coordinator {
             SkipBackupFilesInitializer(),
         ]
         initializers.forEach { $0.perform() }
-
-        touchRegistrar.register()
     }
 
     func handleNotifications() {
@@ -78,7 +74,7 @@ class AppCoordinator: NSObject, Coordinator {
     }
 
     @objc func reset() {
-        touchRegistrar.unregister()
+        lock.deletePasscode()
         pushNotificationRegistrar.unregister()
         coordinators.removeAll()
         navigationController.dismiss(animated: true, completion: nil)

@@ -3,8 +3,6 @@
 import UIKit
 
 class LockEnterPasscodeViewController: LockPasscodeViewController {
-    private let standardDefaults = UserDefaults.standard
-    private let passcodeAttempts = "passcodeAttempts"
     private lazy var lockEnterPasscodeViewModel: LockEnterPasscodeViewModel? = {
         return self.model as? LockEnterPasscodeViewModel
     }()
@@ -13,26 +11,17 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
     }
     override func enteredPasscode(_ passcode: String) {
         super.enteredPasscode(passcode)
-        //touchLock.isPasscodeValid(passcode)
-        if true {
-            self.resetPasscodeAttemptHistory()
+        if lock.isPasscodeValid(passcode: passcode) {
+            lock.resetPasscodeAttemptHistory()
             finish(withResult: true, animated: true)
         } else {
-            lockView.shake()
             lockView.lockTitle.text = lockEnterPasscodeViewModel?.incorrectLabelText
-            self.clearPasscode()
-            self.recordIncorrectPasscodeAttempt()
-        }
-    }
-    private func resetPasscodeAttemptHistory() {
-        standardDefaults.removeObject(forKey: passcodeAttempts)
-    }
-    private func recordIncorrectPasscodeAttempt() {
-        var numberOfAttemptsSoFar = standardDefaults.integer(forKey: passcodeAttempts)
-        numberOfAttemptsSoFar += 1
-        standardDefaults.set(passcodeAttempts, forKey: passcodeAttempts)
-        if numberOfAttemptsSoFar >= model.passcodeAttemptLimit {
-            exceededLimit()
+            lockView.shake()
+            if self.lock.numberOfAttempts() == model.passcodeAttemptLimit {
+                exceededLimit()
+                return
+            }
+            self.lock.recordIncorrectPasscodeAttempt()
         }
     }
     private func exceededLimit() {
