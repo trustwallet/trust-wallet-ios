@@ -39,48 +39,95 @@ extension WKWebViewConfiguration {
             let callback = callbacks[id](error, value)
         }
 
-        const engine = ZeroClientProvider({
-            getAccounts: function(cb) {
-            return cb(null, ["\(address)"])
-        },
-        rpcUrl: "\(session.config.rpcURL.absoluteString)",
-        sendTransaction: function(tx, cb) {
+        function sendTransaction(tx, cb) {
             console.log("here." + tx)
             let id = addCallback(cb)
             webkit.messageHandlers.sendTransaction.postMessage({"name": "sendTransaction", "object": tx, id: id})
-        },
-        signTransaction: function(tx, cb) {
+        }
+
+        function signTransaction(tx, cb) {
             console.log("here2.", tx)
             let id = addCallback(cb)
             webkit.messageHandlers.signTransaction.postMessage({"name": "signTransaction", "object": tx, id: id})
-        },
-        signMessage: function(cb) {
-            console.log("here.4", cb)
-            let id = addCallback(cb)
-            webkit.messageHandlers.signMessage.postMessage({"name": "signMessage", "object": message, id: id})
-        },
-        signPersonalMessage: function(message, cb) {
+        }
+
+        function signPersonalMessage(message, cb) {
             console.log("here.5", cb)
             let id = addCallback(cb)
             webkit.messageHandlers.signPersonalMessage.postMessage({"name": "signPersonalMessage", "object": message, id: id})
-            }
-        })
-        engine.start()
-        var web3 = new Web3(engine)
+        }
+
+        var web3 = new Web3();
+        let trustProvider = new web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)")
+        let provider = new web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)")
+        web3.setProvider(trustProvider);
         window.web3 = web3
 
-        web3.eth.accounts = ["\(address)"]
-        web3.eth.getAccounts = function(cb) {
-            return cb(null, ["\(address)"])
-        }
-
-        web3.eth.getCoinbase = function(cb) {
-            return cb(null, "\(address)")
-        }
-        web3.eth.coinbase = "\(address)"
-
         web3.eth.defaultAccount = "\(address)"
-        web3.currentProvider.isMetaMask = true
+        web3.version.getNetwork = function(p) {
+            p(null, "\(session.config.chainID)")
+        }
+        web3.eth.getCoinbase = function(p) {
+            return p(null, "\(address)")
+        }
+        web3.eth.sendTransaction = function(p, cb) {
+            sendTransaction(p, cb)
+        }
+
+        function response(p, result) {
+            return {"id": p.id, "jsonrpc": p.jsonrpc, "result": result}
+        }
+
+        trustProvider.sendAsync = function(request, cb) {
+            console.log("sendAsync ", request);
+
+            switch (request.method) {
+                case "net_listening":
+                    cb(null, response(request, true))
+                    break;
+                case "net_version":
+                    cb(null, response(request, "\(session.config.chainID)"))
+                    break;
+                case "eth_accounts":
+                    cb(null, response(request, ["\(address)"]))
+                    break;
+                case "eth_sendTransaction":
+                    sendTransaction(request.params[0], cb)
+                    break
+                case "eth_coinbase":
+                    cb(null, response(request, "\(address)"))
+                    break
+                case "eth_sign":
+                    signPersonalMessage(request.params[0], cb)
+                    break
+                case "personal_sign":
+                    signPersonalMessage({data: request.params[0]}, cb)
+                    break
+                default:
+                    console.log("sendAsync return", request.method);
+                    provider.sendAsync(request, cb)
+                    break
+            }
+        }
+
+        trustProvider.send = function(p) {
+            console.log("send", p);
+
+            switch (p.method) {
+                case "net_listening":
+                    return true
+                case "net_version":
+                    return response(p, "\(session.config.chainID)")
+                case "eth_accounts":
+                    return response(p, ["\(address)"])
+                case "eth_coinbase":
+                    return response(p, "\(address)")
+                default:
+                    console.log("send return", p.method);
+                    return provider.send(p)
+            }
+        }
+
         """
         let userScript = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
         config.userContentController.add(messageHandler, name: Method.sendTransaction.rawValue)

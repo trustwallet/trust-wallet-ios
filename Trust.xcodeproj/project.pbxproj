@@ -256,6 +256,10 @@
 		29F1C85F200369BA003780D8 /* HelpUsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F1C85E200369BA003780D8 /* HelpUsViewModel.swift */; };
 		29F1C863200375D2003780D8 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F1C862200375D2003780D8 /* Wallet.swift */; };
 		29F1C865200384FE003780D8 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F1C864200384FE003780D8 /* Wallet.swift */; };
+		29FA00CC201CA63C002F7DC5 /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FA00CB201CA63C002F7DC5 /* Method.swift */; };
+		29FA00CE201CA64E002F7DC5 /* DappCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FA00CD201CA64E002F7DC5 /* DappCommand.swift */; };
+		29FA00D0201CA66A002F7DC5 /* DAppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FA00CF201CA66A002F7DC5 /* DAppError.swift */; };
+		29FA00D2201CA79F002F7DC5 /* web3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 29FA00D1201CA79F002F7DC5 /* web3.min.js */; };
 		29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB51F8298820036089F /* TransactionCoordinator.swift */; };
 		29FC0CB81F8299510036089F /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB71F8299510036089F /* Coordinator.swift */; };
 		29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC9BC51F830880000209CD /* MirgrationInitializer.swift */; };
@@ -296,7 +300,6 @@
 		771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */; };
 		775C00B520195BFB001B5EBC /* BrowserAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C00B420195BFB001B5EBC /* BrowserAction.swift */; };
 		778EAF7D1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */; };
-		778EAF831FF379AA00C8E2AB /* web3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 778EAF821FF379AA00C8E2AB /* web3.min.js */; };
 		77B3BF2B2017CC6F00EEC15A /* MarketplaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF2A2017CC6F00EEC15A /* MarketplaceViewController.swift */; };
 		77B3BF2F2017CD8300EEC15A /* MarketplaceItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF2D2017CD8300EEC15A /* MarketplaceItemTableViewCell.swift */; };
 		77B3BF302017CD8300EEC15A /* MarketplaceItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77B3BF2E2017CD8300EEC15A /* MarketplaceItemTableViewCell.xib */; };
@@ -589,6 +592,10 @@
 		29F1C85E200369BA003780D8 /* HelpUsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpUsViewModel.swift; sourceTree = "<group>"; };
 		29F1C862200375D2003780D8 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		29F1C864200384FE003780D8 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
+		29FA00CB201CA63C002F7DC5 /* Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
+		29FA00CD201CA64E002F7DC5 /* DappCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DappCommand.swift; sourceTree = "<group>"; };
+		29FA00CF201CA66A002F7DC5 /* DAppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppError.swift; sourceTree = "<group>"; };
+		29FA00D1201CA79F002F7DC5 /* web3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = web3.min.js; path = Trust/Vendors/Web3Swift/html/web3.min.js; sourceTree = SOURCE_ROOT; };
 		29FC0CB51F8298820036089F /* TransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCoordinator.swift; sourceTree = "<group>"; };
 		29FC0CB71F8299510036089F /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		29FC9BC51F830880000209CD /* MirgrationInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirgrationInitializer.swift; sourceTree = "<group>"; };
@@ -635,7 +642,6 @@
 		771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WordCollectionViewCell.xib; sourceTree = "<group>"; };
 		775C00B420195BFB001B5EBC /* BrowserAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserAction.swift; sourceTree = "<group>"; };
 		778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinatorTests.swift; sourceTree = "<group>"; };
-		778EAF821FF379AA00C8E2AB /* web3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = web3.min.js; sourceTree = "<group>"; };
 		77B3BF2A2017CC6F00EEC15A /* MarketplaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceViewController.swift; sourceTree = "<group>"; };
 		77B3BF2D2017CD8300EEC15A /* MarketplaceItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceItemTableViewCell.swift; sourceTree = "<group>"; };
 		77B3BF2E2017CD8300EEC15A /* MarketplaceItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarketplaceItemTableViewCell.xib; sourceTree = "<group>"; };
@@ -844,7 +850,7 @@
 		291794F61F95DBFC00539A30 /* html */ = {
 			isa = PBXGroup;
 			children = (
-				778EAF821FF379AA00C8E2AB /* web3.min.js */,
+				29FA00D1201CA79F002F7DC5 /* web3.min.js */,
 				291794F71F95DC0200539A30 /* index.html */,
 				771AA94A1FF76B8000D25403 /* demo.html */,
 			);
@@ -1800,6 +1806,9 @@
 				77B3BF312017CE3600EEC15A /* MarketplaceItem.swift */,
 				775C00B420195BFB001B5EBC /* BrowserAction.swift */,
 				29C70C7B201990540072E454 /* SendTransaction.swift */,
+				29FA00CB201CA63C002F7DC5 /* Method.swift */,
+				29FA00CD201CA64E002F7DC5 /* DappCommand.swift */,
+				29FA00CF201CA66A002F7DC5 /* DAppError.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2037,11 +2046,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				613D04891FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer in Resources */,
+				29FA00D2201CA79F002F7DC5 /* web3.min.js in Resources */,
 				771AA94B1FF76B8000D25403 /* demo.html in Resources */,
 				771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */,
 				291794FC1F95DE5F00539A30 /* index.html in Resources */,
 				296106CE1F777E410006164B /* LaunchScreen.storyboard in Resources */,
-				778EAF831FF379AA00C8E2AB /* web3.min.js in Resources */,
 				77B3BF302017CD8300EEC15A /* MarketplaceItemTableViewCell.xib in Resources */,
 				290B2B541F8F50030053C83E /* Localizable.strings in Resources */,
 				2912CD021F6A830700C6CBE3 /* Assets.xcassets in Resources */,
@@ -2331,6 +2340,7 @@
 				296421971F70C1F200EB363B /* ErrorView.swift in Sources */,
 				29358DA91F79FD1C00925D61 /* CALayer.swift in Sources */,
 				29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */,
+				29FA00CE201CA64E002F7DC5 /* DappCommand.swift in Sources */,
 				29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */,
 				290B2B651F91A4880053C83E /* TransactionsFooterView.swift in Sources */,
 				293B8B431F70815900356286 /* BalanceTitleView.swift in Sources */,
@@ -2402,6 +2412,7 @@
 				295996181FADB78200DB66A8 /* TransactionActionType.swift in Sources */,
 				29F1C8421FEB62ED003780D8 /* EditTokenTableCellViewModel.swift in Sources */,
 				2931122E1FC94E4200966EEA /* SettingsError.swift in Sources */,
+				29FA00D0201CA66A002F7DC5 /* DAppError.swift in Sources */,
 				291EC9DF1F7053C50004EDD0 /* NavigationController.swift in Sources */,
 				291795011F95F5E200539A30 /* GetBalance.swift in Sources */,
 				2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */,
@@ -2430,6 +2441,7 @@
 				299B5E451FD22FB40051361C /* ConfigureTransactionViewModel.swift in Sources */,
 				29F114EE1FA65DEF00114A29 /* ImportType.swift in Sources */,
 				29BDF1981FEE4DB00023A45F /* GasPriceConfiguration.swift in Sources */,
+				29FA00CC201CA63C002F7DC5 /* Method.swift in Sources */,
 				2963A28A1FC402940095447D /* LocalizedOperationObject.swift in Sources */,
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
 				294EC1D81FD7FBAB0065EB20 /* BiometryAuthenticationType.swift in Sources */,

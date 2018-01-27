@@ -3,6 +3,7 @@
 import Foundation
 import UIKit
 import BigInt
+import TrustKeystore
 
 protocol BrowserCoordinatorDelegate: class {
     func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator)
@@ -44,6 +45,46 @@ class BrowserCoordinator: Coordinator {
     @objc func dismiss() {
         navigationController.dismiss(animated: true, completion: nil)
     }
+
+    private func executeTransaction(account: Account, action: DappAction, callbackID: Int, transaction: UnconfirmedTransaction, type: ConfirmType) {
+        let configurator = TransactionConfigurator(
+            session: session,
+            account: account,
+            transaction: transaction
+        )
+        let coordinator = ConfirmCoordinator(
+            navigationController: UINavigationController(),
+            session: session,
+            configurator: configurator,
+            keystore: keystore,
+            account: account,
+            type: type
+        )
+        addCoordinator(coordinator)
+        coordinator.didCompleted = { [unowned self] result in
+            switch result {
+            case .success(let type):
+                switch type {
+                case .signedTransaction(let data):
+                    let callback = DappCallback(id: callbackID, value: .signTransaction(data))
+                    self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+                case .sentTransaction(let transaction):
+                    let callback = DappCallback(id: callbackID, value: .sendTransaction(transaction.id.data(using: .utf8)!))
+                    self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+                    self.delegate?.didSentTransaction(transaction: transaction, in: self)
+                }
+            case .failure:
+                self.rootViewController.notifyFinish(
+                    callbackID: callbackID,
+                    value: .failure(DAppError.cancelled)
+                )
+            }
+            self.removeCoordinator(coordinator)
+            self.navigationController.dismiss(animated: true, completion: nil)
+        }
+        coordinator.start()
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+    }
 }
 
 extension BrowserCoordinator: MarketplaceViewControllerDelegate {
@@ -59,41 +100,9 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
         case .real(let account):
             switch action {
             case .signTransaction(let unconfirmedTransaction):
-                let configurator = TransactionConfigurator(
-                    session: session,
-                    account: account,
-                    transaction: unconfirmedTransaction
-                )
-                let coordinator = ConfirmCoordinator(
-                    navigationController: UINavigationController(),
-                    session: session,
-                    configurator: configurator,
-                    keystore: keystore,
-                    account: account,
-                    type: .sign
-                )
-                addCoordinator(coordinator)
-                coordinator.didCompleted = { [unowned self] result in
-                    switch result {
-                    case .success(let type):
-                        switch type {
-                        case .signedTransaction(let data):
-                            let callback = DappCallback(id: callbackID, value: .signTransaction(data))
-                            self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
-                        case .sentTransaction(let transaction):
-                            self.delegate?.didSentTransaction(transaction: transaction, in: self)
-                        }
-                    case .failure:
-                        self.rootViewController.notifyFinish(
-                            callbackID: callbackID,
-                            value: .failure(DAppError.cancelled)
-                        )
-                    }
-                    self.removeCoordinator(coordinator)
-                    self.navigationController.dismiss(animated: true, completion: nil)
-                }
-                coordinator.start()
-                navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+                executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .sign)
+            case .sendTransaction(let unconfirmedTransaction):
+                executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .signThenSend)
             case .signMessage(let hexMessage):
                 let data = Data(hexString: hexMessage)!
                 let message = String(data: data, encoding: .utf8)!

@@ -6,63 +6,10 @@ import WebKit
 import JavaScriptCore
 import Result
 
-struct DappCommandObjectValue: Decodable {
-    public var value: String = ""
-    public init(from coder: Decoder) throws {
-        let container = try coder.singleValueContainer()
-        if let intValue = try? container.decode(Int.self) {
-            self.value = String(intValue)
-        } else {
-            self.value = try container.decode(String.self)
-        }
-    }
-}
-
-enum DappCallbackValue {
-    case signTransaction(Data)
-    case signMessage(Data)
-
-    var object: String {
-        switch self {
-        case .signTransaction(let data):
-            return data.hexEncoded
-        case .signMessage(let data):
-            return data.hexEncoded
-        }
-    }
-}
-
-enum DAppError: Error {
-    case cancelled
-}
-
-struct DappCallback {
-    let id: Int
-    let value: DappCallbackValue
-}
-
-struct DappCommand: Decodable {
-    let name: Method
-    let id: Int
-    let object: [String: DappCommandObjectValue]
-}
-
-enum Method: String, Decodable {
-    //case getAccounts
-    case sendTransaction
-    case signTransaction
-    case signPersonalMessage
-    case signMessage
-    case unknown
-
-    init(string: String) {
-        self = Method(rawValue: string) ?? .unknown
-    }
-}
-
 protocol BrowserViewControllerDelegate: class {
     func didCall(action: DappAction, callbackID: Int)
 }
+
 class BrowserViewController: UIViewController {
 
     private var myContext = 0
@@ -83,6 +30,7 @@ class BrowserViewController: UIViewController {
         if isDebug {
             webView.configuration.preferences.setValue(true, forKey: Keys.developerExtrasEnabled)
         }
+        webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
         return webView
     }()
     weak var delegate: BrowserViewControllerDelegate?
@@ -261,9 +209,7 @@ extension BrowserViewController: WKScriptMessageHandler {
         let action = DappAction.fromCommand(command)
 
         switch method {
-        case .sendTransaction, .signTransaction:
-            delegate?.didCall(action: action, callbackID: command.id)
-        case .signPersonalMessage:
+        case .sendTransaction, .signTransaction, .signPersonalMessage:
             delegate?.didCall(action: action, callbackID: command.id)
         case .signMessage, .unknown:
             break
