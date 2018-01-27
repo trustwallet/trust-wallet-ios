@@ -7,7 +7,7 @@ import JavaScriptCore
 extension WKWebViewConfiguration {
 
     static func make(for session: WalletSession, in messageHandler: WKScriptMessageHandler) -> WKWebViewConfiguration {
-        let address = session.account.address.description
+        let address = session.account.address.description.lowercased()
         let config = WKWebViewConfiguration()
         var js = ""
         if let filepath = Bundle.main.path(forResource: "web3.min", ofType: "js") {
