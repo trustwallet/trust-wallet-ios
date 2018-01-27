@@ -123,9 +123,8 @@ class BrowserViewController: UIViewController {
             progressView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
             progressView.heightAnchor.constraint(equalToConstant: 3),
         ])
-
-        webView.load(URLRequest(url: URL(string: Constants.dappsBrowserURL)!))
         webView.addObserver(self, forKeyPath: Keys.estimatedProgress, options: .new, context: &myContext)
+        goHome()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -157,6 +156,14 @@ class BrowserViewController: UIViewController {
         self.webView.evaluateJavaScript(script, completionHandler: nil)
     }
 
+    private func goHome() {
+        webView.load(URLRequest(url: URL(string: Constants.dappsBrowserURL)!))
+    }
+
+    private func reload() {
+        webView.reload()
+    }
+
     private func refreshURL() {
         browserNavBar?.textField.text = webView.url?.absoluteString
     }
@@ -183,6 +190,33 @@ class BrowserViewController: UIViewController {
     deinit {
         webView.removeObserver(self, forKeyPath: Keys.estimatedProgress)
     }
+
+    private func presentMoreOptions(sender: UIView) {
+        let alertController = makeMoreAlertSheet(sender: sender)
+        present(alertController, animated: true, completion: nil)
+    }
+
+    private func makeMoreAlertSheet(sender: UIView) -> UIAlertController {
+        let alertController = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        alertController.popoverPresentationController?.sourceView = sender
+        alertController.popoverPresentationController?.sourceRect = sender.centerRect
+        let homeAction = UIAlertAction(title: NSLocalizedString("browser.home.button.title", value: "Home", comment: ""), style: .default) { [unowned self] _ in
+            self.goHome()
+        }
+        let reloadAction = UIAlertAction(title: NSLocalizedString("browser.reload.button.title", value: "Reload", comment: ""), style: .default) { [unowned self] _ in
+            self.reload()
+        }
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
+
+        alertController.addAction(homeAction)
+        alertController.addAction(reloadAction)
+        alertController.addAction(cancelAction)
+        return alertController
+    }
 }
 
 extension BrowserViewController: BrowserNavigationBarDelegate {
@@ -192,6 +226,8 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
             webView.goForward()
         case .goBack:
             webView.goBack()
+        case .more(let sender):
+            presentMoreOptions(sender: sender)
         case .enter(let string):
             guard let url = URL(string: string) else { return }
             goTo(url: url)
