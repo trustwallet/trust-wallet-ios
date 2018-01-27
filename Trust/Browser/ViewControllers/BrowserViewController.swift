@@ -113,17 +113,17 @@ class BrowserViewController: UIViewController {
         webView.bringSubview(toFront: progressView)
 
         NSLayoutConstraint.activate([
-            webView.topAnchor.constraint(equalTo: view.topAnchor),
+            webView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            webView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor),
 
             progressView.topAnchor.constraint(equalTo: view.layoutGuide.topAnchor),
             progressView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
             progressView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
             progressView.heightAnchor.constraint(equalToConstant: 3),
         ])
-
+        view.backgroundColor = .white
         webView.load(URLRequest(url: URL(string: Constants.dappsBrowserURL)!))
         webView.addObserver(self, forKeyPath: Keys.estimatedProgress, options: .new, context: &myContext)
     }
