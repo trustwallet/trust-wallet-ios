@@ -24,7 +24,6 @@ target 'Trust' do
   pod 'JavaScriptKit' 
   pod 'CryptoSwift', :git=>'https://github.com/krzyzanowskim/CryptoSwift', :branch=>'master'
   pod 'Fabric'
-  pod 'SAMKeychain'
   pod 'Crashlytics'
   pod 'Kingfisher', '~> 4.0'
   pod 'TrustKeystore', :git=>'https://github.com/TrustWallet/trust-keystore', :branch=>'master'

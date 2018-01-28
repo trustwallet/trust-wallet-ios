@@ -2,15 +2,16 @@
 
 import UIKit
 import SAMKeychain
+import KeychainSwift
 
 class Lock {
     private struct Keys {
         static let service = "trust.lock"
         static let account = "trust.account"
     }
-    private let standardDefaults = UserDefaults.standard
     private let passcodeAttempts = "passcodeAttempts"
     private let maxAttemptTime = "maxAttemptTime"
+    private let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
     func isPasscodeSet() -> Bool {
         return currentPasscode() != nil
     }
@@ -28,26 +29,41 @@ class Lock {
         resetPasscodeAttemptHistory()
     }
     func numberOfAttempts() -> Int {
-        return standardDefaults.integer(forKey: passcodeAttempts)
+        guard let attempts = keychain.get(passcodeAttempts) else {
+            return 0
+        }
+        return Int(attempts)!
     }
     func resetPasscodeAttemptHistory() {
-        standardDefaults.removeObject(forKey: passcodeAttempts)
+         keychain.delete(passcodeAttempts)
     }
     func recordIncorrectPasscodeAttempt() {
-        var numberOfAttemptsSoFar = standardDefaults.integer(forKey: passcodeAttempts)
+        var numberOfAttemptsSoFar = numberOfAttempts()
         numberOfAttemptsSoFar += 1
-        standardDefaults.set(numberOfAttemptsSoFar, forKey: passcodeAttempts)
+        keychain.set(String(numberOfAttemptsSoFar), forKey: passcodeAttempts)
     }
     func recordedMaxAttemptTime() -> Date {
-        return standardDefaults.object(forKey: maxAttemptTime) as! Date
+        //This method is called only when we knew that maxAttemptTime is set. So no worries with !.
+        let timeString = keychain.get(maxAttemptTime)!
+        return dateFormatter().date(from: timeString)!
     }
     func incorrectMaxAttemptTimeIsSet() -> Bool {
-        return (standardDefaults.object(forKey: maxAttemptTime) != nil)
+        guard let timeString = keychain.get(maxAttemptTime), !timeString.isEmpty  else {
+            return false
+        }
+        return true
     }
     func recordIncorrectMaxAttemptTime() {
-        standardDefaults.set(Date(), forKey: maxAttemptTime)
+        let timeString = dateFormatter().string(from: Date())
+        keychain.set(timeString, forKey: maxAttemptTime)
     }
     func removeIncorrectMaxAttemptTime() {
-        standardDefaults.removeObject(forKey: maxAttemptTime)
+        keychain.delete(maxAttemptTime)
+    }
+    private func dateFormatter() -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.short
+        dateFormatter.timeStyle = DateFormatter.Style.short
+        return dateFormatter
     }
 }
