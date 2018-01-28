@@ -25,6 +25,7 @@ class LockView: UIView {
         characterView.translatesAutoresizingMaskIntoConstraints = false
     }
     private func configLabel() {
+        lockTitle.font = UIFont.systemFont(ofSize: 19)
         lockTitle.textAlignment = .center
         lockTitle.translatesAutoresizingMaskIntoConstraints = false
     }
