@@ -7,7 +7,10 @@ import Lokalise
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
     var window: UIWindow?
     var coordinator: AppCoordinator!
-    var protectionCoordinator: ProtectionCoordinator!
+    //This is separate coordinator for the protection of the sensitive information.
+    lazy var protectionCoordinator: ProtectionCoordinator = {
+        return ProtectionCoordinator()
+    }()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         do {
@@ -17,8 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         } catch {
             print("EtherKeystore init issue.")
         }
-        //This is separate coordinator for the protection of the sensitive information.
-        protectionCoordinator = ProtectionCoordinator()
         protectionCoordinator.didFinishLaunchingWithOptions()
         return true
     }
