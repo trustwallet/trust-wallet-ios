@@ -20,7 +20,7 @@ class LockEnterPasscodeCoordinator: Coordinator {
         }
     }
     func start() {
-        guard !passcodeViewIsActive else {
+        guard !passcodeViewIsActive && Lock().isPasscodeSet() else {
             return
         }
         passcodeViewIsActive = true
