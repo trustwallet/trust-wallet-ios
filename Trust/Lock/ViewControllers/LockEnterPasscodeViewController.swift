@@ -7,7 +7,7 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
     private lazy var lockEnterPasscodeViewModel: LockEnterPasscodeViewModel? = {
         return self.model as? LockEnterPasscodeViewModel
     }()
-    private let context = LAContext()
+    private var context: LAContext!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.lockView.lockTitle.text = lockEnterPasscodeViewModel?.initialLabelText
@@ -19,6 +19,7 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
             self.lockView.lockTitle.text = lockEnterPasscodeViewModel?.tryAfterOneMinute
             maxAttemptTimerValidation()
         }
+        context = LAContext()
         touchValidation()
     }
     override func enteredPasscode(_ passcode: String) {
@@ -65,7 +66,7 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
         }
         context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,localizedReason: reason) { [weak self](success,_) in
             if success {
-                DispatchQueue.main.async() {
+                DispatchQueue.main.async {
                     self?.lock.resetPasscodeAttemptHistory()
                     self?.lock.removeIncorrectMaxAttemptTime()
                     self?.lockView.lockTitle.text = self?.lockEnterPasscodeViewModel?.initialLabelText

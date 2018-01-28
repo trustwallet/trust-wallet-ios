@@ -32,6 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         Lokalise.shared.checkForUpdates { _, _ in }
         protectionCoordinator.applicationDidBecomeActive()
     }
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        protectionCoordinator.applicationWillEnterForeground()
+    }
     func application(_ application: UIApplication, shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplicationExtensionPointIdentifier) -> Bool {
         if extensionPointIdentifier == UIApplicationExtensionPointIdentifier.keyboard {
             return false
