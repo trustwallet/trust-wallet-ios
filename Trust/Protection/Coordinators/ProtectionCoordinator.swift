@@ -25,6 +25,11 @@ class ProtectionCoordinator: Coordinator {
         }
     }
     func didFinishLaunchingWithOptions() {
+        //Show passcode validation on start of the app.
+        lockEnterPasscodeCoordinator.start()
+    }
+    func applicationWillEnterForeground() {
+        //Show passcode validation on app relaunch.
         lockEnterPasscodeCoordinator.start()
     }
 }
