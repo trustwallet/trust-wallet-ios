@@ -9,6 +9,6 @@ class GasPriceConfigurationTests: XCTestCase {
     func testDefault() {
         XCTAssertEqual(BigInt(24000000000), GasPriceConfiguration.default)
         XCTAssertEqual(BigInt(1000000000), GasPriceConfiguration.min)
-        XCTAssertEqual(BigInt(200000000000), GasPriceConfiguration.max)
+        XCTAssertEqual(BigInt(250000000000), GasPriceConfiguration.max)
     }
 }

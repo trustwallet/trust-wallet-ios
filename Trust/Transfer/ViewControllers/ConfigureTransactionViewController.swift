@@ -92,7 +92,7 @@ class ConfigureTransactionViewController: FormViewController {
             $0.value = Float(gasPriceGwei) ?? 1
             $0.minimumValue = Float(GasPriceConfiguration.min / BigInt(UnitConfiguration.gasPriceUnit.rawValue))
             $0.maximumValue = Float(GasPriceConfiguration.max / BigInt(UnitConfiguration.gasPriceUnit.rawValue))
-            $0.steps = UInt(GasPriceConfiguration.max / GasPriceConfiguration.min)
+            $0.steps = UInt((GasPriceConfiguration.max / GasPriceConfiguration.min))
             $0.displayValueFor = { (rowValue: Float?) in
                 return "\(Int(rowValue ?? 1)) (Gwei)"
             }
@@ -110,7 +110,7 @@ class ConfigureTransactionViewController: FormViewController {
             $0.value = Float(configuration.gasLimit.description) ?? 21000
             $0.minimumValue = Float(GasLimitConfiguration.min)
             $0.maximumValue = Float(GasLimitConfiguration.max)
-            $0.steps = UInt(GasLimitConfiguration.max / GasLimitConfiguration.min)
+            $0.steps = UInt((GasLimitConfiguration.max - GasLimitConfiguration.min) / 1000)
             $0.displayValueFor = { (rowValue: Float?) in
                 return "\(Int(rowValue ?? 1))"
             }

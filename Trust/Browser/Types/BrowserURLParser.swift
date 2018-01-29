@@ -26,7 +26,7 @@ class BrowserURLParser {
         return values.isEmpty ? "http://" + string : string
     }
 
-    private func searchURL(for query: String) -> URL? {
+    func searchURL(for query: String) -> URL? {
         return URL(string: searchURL + query)!
     }
 }
