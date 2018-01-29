@@ -62,6 +62,10 @@ class AppCoordinator: NSObject, Coordinator {
             SkipBackupFilesInitializer(),
         ]
         initializers.forEach { $0.perform() }
+        //We should clean passcode if there is no wallets. This step is required for app reinstall.
+        if !keystore.hasWallets {
+           lock.deletePasscode()
+        }
     }
 
     func handleNotifications() {
