@@ -34,17 +34,15 @@ PODS:
   - RealmSwift (3.0.2):
     - Realm (= 3.0.2)
   - Result (3.2.4)
+  - SAMKeychain (1.5.3)
   - secp256k1_ios (0.1.1)
   - SeedStackViewController (0.4.0)
   - SipHash (1.2.0)
-  - SSKeychain (1.4.1)
   - StatefulViewController (3.0)
   - SwiftLint (0.24.1)
   - TrustKeystore (0.0.4):
     - CryptoSwift
     - secp256k1_ios (~> 0.1.0)
-  - VENTouchLock (1.12.0):
-    - SSKeychain (~> 1.0)
 
 DEPENDENCIES:
   - 1PasswordExtension
@@ -65,11 +63,11 @@ DEPENDENCIES:
   - QRCodeReaderViewController (from `https://github.com/yannickl/QRCodeReaderViewController.git`, branch `master`)
   - R.swift
   - RealmSwift
+  - SAMKeychain
   - SeedStackViewController
   - StatefulViewController
   - SwiftLint
   - TrustKeystore (from `https://github.com/TrustWallet/trust-keystore`, branch `master`)
-  - VENTouchLock
 
 EXTERNAL SOURCES:
   CryptoSwift:
@@ -121,15 +119,14 @@ SPEC CHECKSUMS:
   Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
   RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   secp256k1_ios: 3c94e6cce14ff03924cb6dc10c5017f17011b79d
   SeedStackViewController: 45e88ca1493a610e74d661d3feced7098f72dbd3
   SipHash: c6e9e43e9c531b5bc6602545130c26194a6d31ce
-  SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: 2e4b89feed5909c42c3735bbd6745f4345c4b772
   TrustKeystore: 8278387da38fecd480476f27206b3247862ab69c
-  VENTouchLock: 20d378b9c6173e2c054448aeb3fb2f40822a9f3f
 
-PODFILE CHECKSUM: a3c765ae3bd8d5a5844ca832e68d7588a5435bba
+PODFILE CHECKSUM: 1450fdcb62f76b1183cd7a7dd92e36130e7f7818
 
 COCOAPODS: 1.3.1
