@@ -66,4 +66,9 @@ class Lock {
         dateFormatter.timeStyle = DateFormatter.Style.short
         return dateFormatter
     }
+    func clear() {
+        deletePasscode()
+        resetPasscodeAttemptHistory()
+        removeIncorrectMaxAttemptTime()
+    }
 }
