@@ -163,6 +163,7 @@ class TokensDataStore {
     func addCustom(token: ERC20Token) {
         let newToken = TokenObject(
             contract: token.contract.description,
+            name: token.name,
             symbol: token.symbol,
             decimals: token.decimals,
             value: "0",

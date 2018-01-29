@@ -4,6 +4,7 @@ import TrustKeystore
 
 struct ERC20Token {
     let contract: Address
+    let name: String
     let symbol: String
     let decimals: Int
 }
