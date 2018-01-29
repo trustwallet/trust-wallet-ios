@@ -66,7 +66,7 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
         switch action {
         case .wallets:
             showAccounts()
-        case .RPCServer, .currency:
+        case .RPCServer, .currency, .dAppBrowser:
             restart(for: session.account)
         case .pushNotifications(let enabled):
             switch enabled {

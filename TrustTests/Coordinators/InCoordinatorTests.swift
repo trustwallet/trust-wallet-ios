@@ -7,11 +7,12 @@ import TrustKeystore
 class InCoordinatorTests: XCTestCase {
     
     func testShowTabBar() {
+        let config: Config = .make()
         let coordinator = InCoordinator(
             navigationController: FakeNavigationController(),
             wallet: .make(),
             keystore: FakeEtherKeystore(),
-            config: .make()
+            config: config
         )
 
         coordinator.start()
@@ -20,7 +21,7 @@ class InCoordinatorTests: XCTestCase {
 
         XCTAssertNotNil(tabbarController)
 
-        if isDebug {
+        if config.isdAppBroserEnabled {
             XCTAssert((tabbarController?.viewControllers?[0] as? UINavigationController)?.viewControllers[0] is BrowserViewController)
             XCTAssert((tabbarController?.viewControllers?[1] as? UINavigationController)?.viewControllers[0] is TransactionsViewController)
             XCTAssert((tabbarController?.viewControllers?[2] as? UINavigationController)?.viewControllers[0] is TokensViewController)

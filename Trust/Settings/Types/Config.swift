@@ -9,6 +9,7 @@ struct Config {
         static let isCryptoPrimaryCurrency = "isCryptoPrimaryCurrency"
         static let isDebugEnabled = "isDebugEnabled"
         static let currencyID = "currencyID"
+        static let dAppBrowser = "dAppBrowser"
     }
 
     let defaults: UserDefaults
@@ -55,6 +56,11 @@ struct Config {
     var isDebugEnabled: Bool {
         get { return defaults.bool(forKey: Keys.isDebugEnabled) }
         set { defaults.set(newValue, forKey: Keys.isDebugEnabled) }
+    }
+
+    var isdAppBroserEnabled: Bool {
+        get { return defaults.bool(forKey: Keys.dAppBrowser) }
+        set { defaults.set(newValue, forKey: Keys.dAppBrowser) }
     }
 
     var server: RPCServer {

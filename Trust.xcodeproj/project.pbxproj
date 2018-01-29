@@ -259,6 +259,7 @@
 		29FA00CE201CA64E002F7DC5 /* DappCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FA00CD201CA64E002F7DC5 /* DappCommand.swift */; };
 		29FA00D0201CA66A002F7DC5 /* DAppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FA00CF201CA66A002F7DC5 /* DAppError.swift */; };
 		29FA00D2201CA79F002F7DC5 /* web3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 29FA00D1201CA79F002F7DC5 /* web3.min.js */; };
+		29FA00D4201EC662002F7DC5 /* NSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FA00D3201EC662002F7DC5 /* NSObject.swift */; };
 		29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB51F8298820036089F /* TransactionCoordinator.swift */; };
 		29FC0CB81F8299510036089F /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC0CB71F8299510036089F /* Coordinator.swift */; };
 		29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FC9BC51F830880000209CD /* MirgrationInitializer.swift */; };
@@ -302,7 +303,6 @@
 		73C41C73201B5EFF00243C6C /* LockCreatePasscodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C41C72201B5EFF00243C6C /* LockCreatePasscodeViewModel.swift */; };
 		73C41C75201B65AD00243C6C /* LockCreatePasscodeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C41C74201B65AD00243C6C /* LockCreatePasscodeCoordinator.swift */; };
 		73C5CF45201A7CAB00C74316 /* LockPasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C5CF44201A7CAB00C74316 /* LockPasscodeViewController.swift */; };
-		771AA94B1FF76B8000D25403 /* demo.html in Resources */ = {isa = PBXBuildFile; fileRef = 771AA94A1FF76B8000D25403 /* demo.html */; };
 		771AA94E1FF971CD00D25403 /* DappAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA94D1FF971CD00D25403 /* DappAction.swift */; };
 		771AA960200D5E8800D25403 /* PassphraseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA95F200D5E8800D25403 /* PassphraseView.swift */; };
 		771AA962200D5EC700D25403 /* PassphraseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA961200D5EC700D25403 /* PassphraseViewModel.swift */; };
@@ -605,6 +605,7 @@
 		29FA00CD201CA64E002F7DC5 /* DappCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DappCommand.swift; sourceTree = "<group>"; };
 		29FA00CF201CA66A002F7DC5 /* DAppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppError.swift; sourceTree = "<group>"; };
 		29FA00D1201CA79F002F7DC5 /* web3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = web3.min.js; path = Trust/Vendors/Web3Swift/html/web3.min.js; sourceTree = SOURCE_ROOT; };
+		29FA00D3201EC662002F7DC5 /* NSObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSObject.swift; sourceTree = "<group>"; };
 		29FC0CB51F8298820036089F /* TransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCoordinator.swift; sourceTree = "<group>"; };
 		29FC0CB71F8299510036089F /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		29FC9BC51F830880000209CD /* MirgrationInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirgrationInitializer.swift; sourceTree = "<group>"; };
@@ -654,7 +655,6 @@
 		73C41C72201B5EFF00243C6C /* LockCreatePasscodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockCreatePasscodeViewModel.swift; sourceTree = "<group>"; };
 		73C41C74201B65AD00243C6C /* LockCreatePasscodeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockCreatePasscodeCoordinator.swift; sourceTree = "<group>"; };
 		73C5CF44201A7CAB00C74316 /* LockPasscodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockPasscodeViewController.swift; sourceTree = "<group>"; };
-		771AA94A1FF76B8000D25403 /* demo.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = demo.html; sourceTree = "<group>"; };
 		771AA94D1FF971CD00D25403 /* DappAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DappAction.swift; sourceTree = "<group>"; };
 		771AA95F200D5E8800D25403 /* PassphraseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseView.swift; sourceTree = "<group>"; };
 		771AA961200D5EC700D25403 /* PassphraseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseViewModel.swift; sourceTree = "<group>"; };
@@ -1381,6 +1381,7 @@
 				29C80D4A1FB51C460037B1E0 /* Decimal.swift */,
 				293112361FC9A24600966EEA /* UIGestureRecognizer+Closure.swift */,
 				29F1C85020032688003780D8 /* Address.swift */,
+				29FA00D3201EC662002F7DC5 /* NSObject.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2388,7 +2389,6 @@
 				295996121FAB067600DB66A8 /* DepositCoordinator.swift in Sources */,
 				29C70C7F20199AEB0072E454 /* WKWebViewConfiguration.swift in Sources */,
 				73ACEF0120163ED4003DD71D /* LockViewModel.swift in Sources */,
-				2985430C1FC188D200CB5081 /* ExchangeTokensField.swift in Sources */,
 				29AD8A041F93D6CD008E10E7 /* Constants.swift in Sources */,
 				29FF12FE1F75EA3F00AFD326 /* Keystore.swift in Sources */,
 				2963B6B11F9891F5003063C1 /* UIButton.swift in Sources */,
@@ -2443,6 +2443,7 @@
 				29BE3FD21F707DC300F6BFC2 /* TransactionDataCoordinator.swift in Sources */,
 				29F1C85120032688003780D8 /* Address.swift in Sources */,
 				295B61D11FE7B20400642E60 /* TokensHeaderView.swift in Sources */,
+				29FA00D4201EC662002F7DC5 /* NSObject.swift in Sources */,
 				291ED0921F6FA5D900E7E93A /* RequestViewController.swift in Sources */,
 				299B5E341FCBC5180051361C /* ConfirmPaymentViewModel.swift in Sources */,
 				771AA94E1FF971CD00D25403 /* DappAction.swift in Sources */,
@@ -2543,7 +2544,6 @@
 				29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */,
 				737EEDDA201BE3A8009D9D5D /* Lock.swift in Sources */,
 				29FF12F81F747D6C00AFD326 /* Error.swift in Sources */,
-				29282B581F7636840067F88D /* GetTokensRequest.swift in Sources */,
 				73BAA8D1201B2FBC00D6DD75 /* LockCreatePasscodeViewController.swift in Sources */,
 				29AD8A061F93DC8C008E10E7 /* PushDevice.swift in Sources */,
 				294DFBA91FE6EBFB004CEB56 /* NewTokenViewController.swift in Sources */,

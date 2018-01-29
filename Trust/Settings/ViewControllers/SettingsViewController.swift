@@ -36,9 +36,7 @@ class SettingsViewController: FormViewController {
         self.session = session
         super.init(nibName: nil, bundle: nil)
     }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -120,6 +118,16 @@ class SettingsViewController: FormViewController {
                 }
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settingsCurrency()
+            }
+
+            <<< SwitchRow {
+                $0.title = NSLocalizedString("settings.dappbroser.button.title", value: "dApp Browser", comment: "")
+                $0.value = config.isdAppBroserEnabled
+            }.onChange { [unowned self] row in
+                self.config.isdAppBroserEnabled = row.value ?? false
+                self.run(action: .dAppBrowser)
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_push_notifications()
             }
 
             +++ Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))
@@ -277,6 +285,10 @@ class SettingsViewController: FormViewController {
         if MFMailComposeViewController.canSendMail() {
             present(composerController, animated: true, completion: nil)
         }
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

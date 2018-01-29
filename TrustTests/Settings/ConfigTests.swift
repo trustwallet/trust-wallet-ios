@@ -28,5 +28,11 @@ class ConfigTests: XCTestCase {
 
         XCTAssertEqual(false, config.isCryptoPrimaryCurrency)
     }
+
+    func testTestDefaultdAppsBrowser() {
+        var config: Config = .make()
+
+        XCTAssertEqual(false, config.isdAppBroserEnabled)
+    }
 }
 

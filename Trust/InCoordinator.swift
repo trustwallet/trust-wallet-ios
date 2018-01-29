@@ -10,6 +10,26 @@ protocol InCoordinatorDelegate: class {
     func didUpdateAccounts(in coordinator: InCoordinator)
 }
 
+enum Tabs {
+    case browser
+    case transactions
+    case tokens
+    case settings
+
+    var className: String {
+        switch self {
+        case .browser:
+            return String(describing: BrowserViewController.self)
+        case .tokens:
+            return String(describing: TokensViewController.self)
+        case .transactions:
+            return String(describing: TransactionsViewController.self)
+        case .settings:
+            return String(describing: SettingsViewController.self)
+        }
+    }
+}
+
 class InCoordinator: Coordinator {
 
     let navigationController: UINavigationController
@@ -98,16 +118,18 @@ class InCoordinator: Coordinator {
             }
         }
 
-        let coordinator = BrowserCoordinator(session: session, keystore: keystore)
-        coordinator.delegate = self
-        coordinator.start()
-        coordinator.rootViewController.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
-            image: R.image.coins(),
-            selectedImage: nil
-        )
-        addCoordinator(coordinator)
-        tabBarController.viewControllers?.insert(coordinator.navigationController, at: 0)
+        if inCoordinatorViewModel.isdAppsBrowserAvailable {
+            let coordinator = BrowserCoordinator(session: session, keystore: keystore)
+            coordinator.delegate = self
+            coordinator.start()
+            coordinator.rootViewController.tabBarItem = UITabBarItem(
+                title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
+                image: R.image.coins(),
+                selectedImage: nil
+            )
+            addCoordinator(coordinator)
+            tabBarController.viewControllers?.insert(coordinator.navigationController, at: 0)
+        }
 
         if inCoordinatorViewModel.tokensAvailable {
             let tokenCoordinator = TokensCoordinator(
@@ -144,9 +166,20 @@ class InCoordinator: Coordinator {
         navigationController.setNavigationBarHidden(true, animated: false)
         addCoordinator(transactionCoordinator)
 
-        tabBarController.selectedIndex = 1
-
         keystore.recentlyUsedWallet = account
+
+        showTab(.transactions)
+    }
+
+    private func showTab(_ selectTab: Tabs) {
+        guard let viewControllers = tabBarController?.viewControllers else { return }
+        for controller in viewControllers {
+            if let nav = controller as? UINavigationController {
+                if nav.viewControllers[0].className == selectTab.className {
+                    tabBarController?.selectedViewController = nav
+                }
+            }
+        }
     }
 
     @objc func activateDebug() {
@@ -265,7 +298,7 @@ extension InCoordinator: PaymentCoordinatorDelegate {
             removeCoordinator(coordinator)
 
             // Once transaction sent, show transactions screen.
-            tabBarController?.selectedIndex = 0
+            showTab(.settings)
         case .signedTransaction: break
         }
     }
