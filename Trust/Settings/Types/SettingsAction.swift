@@ -6,6 +6,6 @@ enum SettingsAction {
     case wallets
     case RPCServer
     case currency
-    case dAppBrowser
+    case DAppsBrowser
     case pushNotifications(enabled: Bool)
 }

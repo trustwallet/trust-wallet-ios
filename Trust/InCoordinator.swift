@@ -118,13 +118,13 @@ class InCoordinator: Coordinator {
             }
         }
 
-        if inCoordinatorViewModel.isdAppsBrowserAvailable {
+        if inCoordinatorViewModel.isDAppsBrowserAvailable {
             let coordinator = BrowserCoordinator(session: session, keystore: keystore)
             coordinator.delegate = self
             coordinator.start()
             coordinator.rootViewController.tabBarItem = UITabBarItem(
                 title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
-                image: R.image.coins(),
+                image: R.image.dapps_icon(),
                 selectedImage: nil
             )
             addCoordinator(coordinator)

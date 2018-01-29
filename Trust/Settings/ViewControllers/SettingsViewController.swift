@@ -121,13 +121,13 @@ class SettingsViewController: FormViewController {
             }
 
             <<< SwitchRow {
-                $0.title = NSLocalizedString("settings.dappbroser.button.title", value: "dApp Browser", comment: "")
-                $0.value = config.isdAppBroserEnabled
+                $0.title = NSLocalizedString("settings.dappbroser.button.title", value: "DApps Browser", comment: "")
+                $0.value = config.isDAppsBrowserAvailable
             }.onChange { [unowned self] row in
-                self.config.isdAppBroserEnabled = row.value ?? false
-                self.run(action: .dAppBrowser)
+                self.config.isDAppsBrowserAvailable = row.value ?? false
+                self.run(action: .DAppsBrowser)
             }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_push_notifications()
+                cell.imageView?.image = R.image.dapps_icon()
             }
 
             +++ Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))

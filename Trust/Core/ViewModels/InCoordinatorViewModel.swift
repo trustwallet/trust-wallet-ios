@@ -20,7 +20,7 @@ struct InCoordinatorViewModel {
         return config.server.isTestNetwork
     }
 
-    var isdAppsBrowserAvailable: Bool {
-        return config.isdAppBroserEnabled
+    var isDAppsBrowserAvailable: Bool {
+        return config.isDAppsBrowserAvailable
     }
 }

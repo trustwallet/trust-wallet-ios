@@ -58,7 +58,7 @@ struct Config {
         set { defaults.set(newValue, forKey: Keys.isDebugEnabled) }
     }
 
-    var isdAppBroserEnabled: Bool {
+    var isDAppsBrowserAvailable: Bool {
         get { return defaults.bool(forKey: Keys.dAppBrowser) }
         set { defaults.set(newValue, forKey: Keys.dAppBrowser) }
     }
