@@ -32,7 +32,7 @@ class ConfigTests: XCTestCase {
     func testTestDefaultdAppsBrowser() {
         var config: Config = .make()
 
-        XCTAssertEqual(false, config.isdAppBroserEnabled)
+        XCTAssertEqual(false, config.isDAppsBrowserAvailable)
     }
 }
 
