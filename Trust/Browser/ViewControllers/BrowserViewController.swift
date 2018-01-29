@@ -30,11 +30,11 @@ class BrowserViewController: UIViewController {
         if isDebug {
             webView.configuration.preferences.setValue(true, forKey: Keys.developerExtrasEnabled)
         }
-        webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
         return webView
     }()
     weak var delegate: BrowserViewControllerDelegate?
     let decoder = JSONDecoder()
+    private let urlParser = BrowserURLParser()
 
     var browserNavBar: BrowserNavigationBar? {
         return navigationController?.navigationBar as? BrowserNavigationBar
@@ -178,7 +178,7 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
         case .more(let sender):
             presentMoreOptions(sender: sender)
         case .enter(let string):
-            guard let url = URL(string: string) else { return }
+            guard let url = urlParser.url(from: string) else { return }
             goTo(url: url)
         }
         reloadButtons()

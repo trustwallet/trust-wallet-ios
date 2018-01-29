@@ -319,6 +319,8 @@
 		77B3BF3A2017D72700EEC15A /* MarketplaceItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF392017D72700EEC15A /* MarketplaceItemViewModel.swift */; };
 		77B3BF3C201908ED00EEC15A /* ConfirmCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */; };
 		77B3BF4A2019247200EEC15A /* BrowserNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */; };
+		77E0E773201FAD06009B4B31 /* BrowserURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E0E772201FAD05009B4B31 /* BrowserURLParser.swift */; };
+		77E0E777201FAD36009B4B31 /* BrowserURLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E0E776201FAD36009B4B31 /* BrowserURLParserTests.swift */; };
 		CCA4FE331FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE321FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift */; };
 		CCA4FE361FD4282400749AE4 /* DeviceChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE351FD4282400749AE4 /* DeviceChecker.swift */; };
 		CCA4FE381FD428B300749AE4 /* JailbreakChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE371FD428B300749AE4 /* JailbreakChecker.swift */; };
@@ -671,6 +673,8 @@
 		77B3BF392017D72700EEC15A /* MarketplaceItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceItemViewModel.swift; sourceTree = "<group>"; };
 		77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCoordinator.swift; sourceTree = "<group>"; };
 		77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserNavigationBar.swift; sourceTree = "<group>"; };
+		77E0E772201FAD05009B4B31 /* BrowserURLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserURLParser.swift; sourceTree = "<group>"; };
+		77E0E776201FAD36009B4B31 /* BrowserURLParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowserURLParserTests.swift; path = TrustTests/Browser/Types/BrowserURLParserTests.swift; sourceTree = SOURCE_ROOT; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -791,6 +795,7 @@
 		2912CD0E1F6A830700C6CBE3 /* TrustTests */ = {
 			isa = PBXGroup;
 			children = (
+				77E0E774201FAD1C009B4B31 /* Browser */,
 				CCA4FE301FD3652100749AE4 /* Core */,
 				299B5E3C1FD143300051361C /* Export */,
 				299B5E351FCBCDE10051361C /* Transfer */,
@@ -1879,6 +1884,7 @@
 				29FA00CB201CA63C002F7DC5 /* Method.swift */,
 				29FA00CD201CA64E002F7DC5 /* DappCommand.swift */,
 				29FA00CF201CA66A002F7DC5 /* DAppError.swift */,
+				77E0E772201FAD05009B4B31 /* BrowserURLParser.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1918,6 +1924,23 @@
 				77B3BF392017D72700EEC15A /* MarketplaceItemViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		77E0E774201FAD1C009B4B31 /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				77E0E775201FAD25009B4B31 /* Types */,
+			);
+			name = Browser;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		77E0E775201FAD25009B4B31 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				77E0E776201FAD36009B4B31 /* BrowserURLParserTests.swift */,
+			);
+			path = Types;
 			sourceTree = "<group>";
 		};
 		9A0F00B2D545197C8F7691C2 /* Pods */ = {
@@ -2567,6 +2590,7 @@
 				2932488C1F88E689008A9818 /* OnePasswordConverter.swift in Sources */,
 				295996161FADAFE500DB66A8 /* TransactionAction.swift in Sources */,
 				299B5E291FCA8F040051361C /* GetERC20Balance.swift in Sources */,
+				77E0E773201FAD06009B4B31 /* BrowserURLParser.swift in Sources */,
 				73ACEF0520163F46003DD71D /* LockEnterPasscodeCoordinator.swift in Sources */,
 				29F1C863200375D2003780D8 /* Wallet.swift in Sources */,
 				29E6E06E1FE897EE0079265A /* BrowserViewController.swift in Sources */,
@@ -2677,6 +2701,7 @@
 				29AD8A0E1F93FF28008E10E7 /* WalletSession.swift in Sources */,
 				CCA4FE331FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift in Sources */,
 				29FF13011F75EAD900AFD326 /* FakeKeystore.swift in Sources */,
+				77E0E777201FAD36009B4B31 /* BrowserURLParserTests.swift in Sources */,
 				29FC9BCC1F831860000209CD /* PaymentCoordinator.swift in Sources */,
 				2961BD091FB14B6D00C4B840 /* Config.swift in Sources */,
 				290B2B6E1F92C3980053C83E /* UserDefaults.swift in Sources */,
