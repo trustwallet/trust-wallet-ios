@@ -36,7 +36,6 @@ class SettingsViewController: FormViewController {
         self.session = session
         super.init(nibName: nil, bundle: nil)
     }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 

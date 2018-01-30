@@ -10,7 +10,8 @@ class SettingsCoordinatorTests: XCTestCase {
             navigationController: FakeNavigationController(),
             keystore: FakeEtherKeystore(),
             session: .make(),
-            storage: FakeTransactionsStorage()
+            storage: FakeTransactionsStorage(),
+            balanceCoordinator: FakeGetBalanceCoordinator()
         )
         
         coordinator.showAccounts()
@@ -25,7 +26,8 @@ class SettingsCoordinatorTests: XCTestCase {
             navigationController: FakeNavigationController(),
             keystore: FakeEtherKeystore(),
             session: .make(),
-            storage: FakeTransactionsStorage()
+            storage: FakeTransactionsStorage(),
+            balanceCoordinator: FakeGetBalanceCoordinator()
         )
         storage.add([.make()])
         
@@ -33,7 +35,8 @@ class SettingsCoordinatorTests: XCTestCase {
         
         let accountCoordinator = AccountsCoordinator(
             navigationController: FakeNavigationController(),
-            keystore: FakeEtherKeystore()
+            keystore: FakeEtherKeystore(),
+            balanceCoordinator: FakeGetBalanceCoordinator()
         )
         
         coordinator.didDeleteAccount(account: .make(), in: accountCoordinator)
