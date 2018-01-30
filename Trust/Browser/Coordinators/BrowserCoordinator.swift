@@ -15,12 +15,6 @@ class BrowserCoordinator: Coordinator {
     let keystore: Keystore
     let navigationController: UINavigationController
 
-    lazy var marketplaceViewController: MarketplaceViewController = {
-        let controller = MarketplaceViewController(session: self.session)
-        controller.delegate = self
-        return controller
-    }()
-
     lazy var rootViewController: BrowserViewController = {
         let controller = BrowserViewController(session: self.session)
         controller.delegate = self
@@ -84,13 +78,6 @@ class BrowserCoordinator: Coordinator {
         }
         coordinator.start()
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
-    }
-}
-
-extension BrowserCoordinator: MarketplaceViewControllerDelegate {
-    func didSelectItem(item: MarketplaceItem, in viewController: MarketplaceViewController) {
-        rootViewController.goTo(url: URL(string: item.url)!)
-        navigationController.pushViewController(rootViewController, animated: true)
     }
 }
 
