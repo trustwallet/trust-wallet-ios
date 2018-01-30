@@ -6,7 +6,6 @@ import UIKit
 
 protocol BackupViewControllerDelegate: class {
     func didPressBackup(account: Account, in viewController: BackupViewController)
-    func didPressLater(account: Account, in viewController: BackupViewController)
 }
 
 class BackupViewController: UIViewController {
@@ -50,11 +49,6 @@ class BackupViewController: UIViewController {
         backupButton.setTitle(NSLocalizedString("export.backup.button.title", value: "Backup Wallet", comment: ""), for: .normal)
         backupButton.addTarget(self, action: #selector(backup), for: .touchUpInside)
 
-        let doItLaterButton = Button(size: .large, style: .border)
-        doItLaterButton.translatesAutoresizingMaskIntoConstraints = false
-        doItLaterButton.setTitle(NSLocalizedString("export.skip.button.title", value: "Do it later", comment: ""), for: .normal)
-        doItLaterButton.addTarget(self, action: #selector(later), for: .touchUpInside)
-
         let stackView = UIStackView(
             arrangedSubviews: [
                 warningImageView,
@@ -65,7 +59,6 @@ class BackupViewController: UIViewController {
                 neverStoredLabel,
                 .spacer(height: 15),
                 backupButton,
-                doItLaterButton,
             ]
         )
         stackView.axis = .vertical
@@ -85,17 +78,11 @@ class BackupViewController: UIViewController {
 
             backupButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             backupButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            doItLaterButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            doItLaterButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
         ])
     }
 
     @objc func backup() {
         delegate?.didPressBackup(account: account, in: self)
-    }
-
-    @objc func later() {
-        delegate?.didPressLater(account: account, in: self)
     }
 
     required init?(coder aDecoder: NSCoder) {

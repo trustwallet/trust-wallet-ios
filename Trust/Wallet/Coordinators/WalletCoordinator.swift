@@ -113,22 +113,6 @@ extension WalletCoordinator: BackupViewControllerDelegate {
     func didPressBackup(account: Account, in viewController: BackupViewController) {
         backup(account: account)
     }
-
-    func didPressLater(account: Account, in viewController: BackupViewController) {
-        navigationController.confirm(
-            title: "Watch out!",
-            message: "If this device is replaced or this app is deleted, neither you nor Trust Wallet can recover your funds without a backup",
-            okTitle: "I understand",
-            okStyle: .destructive
-        ) { result in
-            switch result {
-            case .success:
-                self.delegate?.didFinish(with: Wallet(type: .real(account)), in: self)
-            case .failure:
-                break
-            }
-        }
-    }
 }
 
 extension WalletCoordinator: BackupCoordinatorDelegate {
