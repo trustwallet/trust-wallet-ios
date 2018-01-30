@@ -1,5 +1,4 @@
 PODS:
-  - 1PasswordExtension (1.8.5)
   - Alamofire (4.6.0)
   - APIKit (3.1.1):
     - Result (~> 3.0)
@@ -45,7 +44,6 @@ PODS:
     - secp256k1_ios (~> 0.1.0)
 
 DEPENDENCIES:
-  - 1PasswordExtension
   - APIKit
   - BigInt (~> 3.0)
   - BonMot (~> 5.0)
@@ -97,7 +95,6 @@ CHECKOUT OPTIONS:
     :git: https://github.com/TrustWallet/trust-keystore
 
 SPEC CHECKSUMS:
-  1PasswordExtension: 0e95bdea64ec8ff2f4f693be5467a09fac42a83d
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   APIKit: 7460983f490d3bde6aaaaa4164d18c9865a6f91d
   BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
@@ -127,6 +124,6 @@ SPEC CHECKSUMS:
   SwiftLint: 2e4b89feed5909c42c3735bbd6745f4345c4b772
   TrustKeystore: 8278387da38fecd480476f27206b3247862ab69c
 
-PODFILE CHECKSUM: 1450fdcb62f76b1183cd7a7dd92e36130e7f7818
+PODFILE CHECKSUM: 617ddfda209e7f0203a468d28c76f08444da5628
 
 COCOAPODS: 1.3.1

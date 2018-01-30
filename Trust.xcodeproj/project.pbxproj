@@ -65,10 +65,6 @@
 		2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */; };
 		293248841F88CCD2008A9818 /* SplashState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293248831F88CCD2008A9818 /* SplashState.swift */; };
 		293248861F88CCE6008A9818 /* SplashError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293248851F88CCE6008A9818 /* SplashError.swift */; };
-		2932488A1F88D593008A9818 /* OnePasswordConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293248891F88D593008A9818 /* OnePasswordConfig.swift */; };
-		2932488C1F88E689008A9818 /* OnePasswordConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932488B1F88E689008A9818 /* OnePasswordConverter.swift */; };
-		2932488E1F88E69F008A9818 /* OnePasswordError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932488D1F88E69F008A9818 /* OnePasswordError.swift */; };
-		293248901F897787008A9818 /* OnePasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932488F1F897787008A9818 /* OnePasswordCoordinator.swift */; };
 		29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E271F6A903500E432A2 /* WelcomeViewModelTests.swift */; };
 		29358D991F78D1E400925D61 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29358D981F78D1E400925D61 /* SnapshotHelper.swift */; };
 		29358D9F1F78D5B700925D61 /* Screenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29358D9E1F78D5B700925D61 /* Screenshots.swift */; };
@@ -405,10 +401,6 @@
 		2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceCoordinator.swift; sourceTree = "<group>"; };
 		293248831F88CCD2008A9818 /* SplashState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashState.swift; sourceTree = "<group>"; };
 		293248851F88CCE6008A9818 /* SplashError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashError.swift; sourceTree = "<group>"; };
-		293248891F88D593008A9818 /* OnePasswordConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordConfig.swift; sourceTree = "<group>"; };
-		2932488B1F88E689008A9818 /* OnePasswordConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordConverter.swift; sourceTree = "<group>"; };
-		2932488D1F88E69F008A9818 /* OnePasswordError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordError.swift; sourceTree = "<group>"; };
-		2932488F1F897787008A9818 /* OnePasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordCoordinator.swift; sourceTree = "<group>"; };
 		29358D981F78D1E400925D61 /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		29358D9E1F78D5B700925D61 /* Screenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screenshots.swift; sourceTree = "<group>"; };
 		29358DA81F79FD1C00925D61 /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
@@ -1040,9 +1032,6 @@
 		293248881F88D586008A9818 /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				293248891F88D593008A9818 /* OnePasswordConfig.swift */,
-				2932488B1F88E689008A9818 /* OnePasswordConverter.swift */,
-				2932488D1F88E69F008A9818 /* OnePasswordError.swift */,
 				291A1B641F974E8600ADEC80 /* WalletEntryPoint.swift */,
 				29F114EF1FA6D53700114A29 /* ImportSelectionType.swift */,
 			);
@@ -1178,7 +1167,6 @@
 			isa = PBXGroup;
 			children = (
 				296AF9A21F733AB30058AF78 /* WalletCoordinator.swift */,
-				2932488F1F897787008A9818 /* OnePasswordCoordinator.swift */,
 				293E62701FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift */,
 			);
 			path = Coordinators;
@@ -2308,7 +2296,6 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Trust/Pods-Trust-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/1PasswordExtension/OnePasswordExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/APIKit/APIKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
@@ -2335,7 +2322,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OnePasswordExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APIKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
@@ -2421,7 +2407,6 @@
 				29AD8A091F93F8B2008E10E7 /* Session.swift in Sources */,
 				294DFB981FDF8CBB004CEB56 /* CrashReportInitializer.swift in Sources */,
 				291F52B91F6B880F00B369AB /* EtherKeystore.swift in Sources */,
-				293248901F897787008A9818 /* OnePasswordCoordinator.swift in Sources */,
 				29BB94971F6FCD60009B09CC /* SendViewModel.swift in Sources */,
 				296106D01F778A8D0006164B /* TransferType.swift in Sources */,
 				29E14FDB1F7F4F3D00185568 /* Transaction.swift in Sources */,
@@ -2440,7 +2425,6 @@
 				615F10591FCBEF7C008A45AF /* OnboardingPage.swift in Sources */,
 				2963B6B91F9A7EEA003063C1 /* CoinTicker.swift in Sources */,
 				29F114EC1FA448F400114A29 /* TokensCoordinator.swift in Sources */,
-				2932488E1F88E69F008A9818 /* OnePasswordError.swift in Sources */,
 				29F1C85820036926003780D8 /* AppTracker.swift in Sources */,
 				293E62711FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift in Sources */,
 				291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */,
@@ -2527,7 +2511,6 @@
 				299B5E3B1FD141B70051361C /* BackupViewModel.swift in Sources */,
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
-				2932488A1F88D593008A9818 /* OnePasswordConfig.swift in Sources */,
 				29F1C85A20036968003780D8 /* HelpUsCoordinator.swift in Sources */,
 				29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */,
 				290B2B671F9266630053C83E /* SettingsAction.swift in Sources */,
@@ -2564,7 +2547,6 @@
 				294DFBA31FE0E2EA004CEB56 /* TransactionValue.swift in Sources */,
 				2912CD2B1F6A833E00C6CBE3 /* TransactionsViewController.swift in Sources */,
 				775C00B520195BFB001B5EBC /* BrowserAction.swift in Sources */,
-				2932488C1F88E689008A9818 /* OnePasswordConverter.swift in Sources */,
 				295996161FADAFE500DB66A8 /* TransactionAction.swift in Sources */,
 				299B5E291FCA8F040051361C /* GetERC20Balance.swift in Sources */,
 				77E0E773201FAD06009B4B31 /* BrowserURLParser.swift in Sources */,

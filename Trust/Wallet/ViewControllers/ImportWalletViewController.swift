@@ -2,7 +2,6 @@
 
 import UIKit
 import Eureka
-import OnePasswordExtension
 import BonMot
 import TrustKeystore
 import QRCodeReaderViewController
@@ -49,10 +48,6 @@ class ImportWalletViewController: FormViewController {
         return form.rowBy(tag: Values.watch)
     }
 
-    lazy var onePasswordCoordinator: OnePasswordCoordinator = {
-        return OnePasswordCoordinator(keystore: self.keystore)
-    }()
-
     weak var delegate: ImportWalletViewControllerDelegate?
 
     init(
@@ -70,15 +65,6 @@ class ImportWalletViewController: FormViewController {
             UIBarButtonItem(image: R.image.import_options(), style: .done, target: self, action: #selector(importOptions)),
             UIBarButtonItem(image: R.image.qr_code_icon(), style: .done, target: self, action: #selector(openReader)),
         ]
-
-//        if OnePasswordExtension.shared().isAppExtensionAvailable() {
-//            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-//                image: R.image.onepasswordButton(),
-//                style: .done,
-//                target: self,
-//                action: #selector(onePasswordImport)
-//            )
-//        }
 
         if UserDefaults.standard.bool(forKey: "FASTLANE_SNAPSHOT") {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -213,22 +199,6 @@ class ImportWalletViewController: FormViewController {
                 self.displayError(error: error)
             }
         }
-    }
-
-    func onePasswordImport() {
-//        onePasswordCoordinator.importWallet(in: self) { [weak self] result in
-//            guard let `self` = self else { return }
-//            switch result {
-//            case .success(let password, let keystore):
-//                self.keystoreRow?.value = keystore
-//                self.keystoreRow?.reload()
-//                self.passwordRow?.value = password
-//                self.passwordRow?.reload()
-//                self.importWallet()
-//            case .failure(let error):
-//                self.displayError(error: error)
-//            }
-//        }
     }
 
     @objc func demo() {
