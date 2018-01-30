@@ -42,7 +42,7 @@ struct ConfigExplorer {
         case .classic:
             return "https://gastracker.io"
         case .kovan:
-            return "https://ropsten.etherscan.io"
+            return "https://kovan.etherscan.io"
         case .ropsten:
             return "https://ropsten.etherscan.io"
         case .rinkeby:
