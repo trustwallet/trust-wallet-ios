@@ -7,17 +7,20 @@ struct ConfirmPaymentDetailsViewModel {
 
     let transaction: PreviewTransaction
     let currentBalance: BalanceProtocol?
+    let currencyRate: CurrencyRate?
     let config: Config
     private let fullFormatter = EtherNumberFormatter.full
 
     init(
         transaction: PreviewTransaction,
         config: Config = Config(),
-        currentBalance: BalanceProtocol?
+        currentBalance: BalanceProtocol?,
+        currencyRate: CurrencyRate?
     ) {
         self.transaction = transaction
         self.currentBalance = currentBalance
         self.config = config
+        self.currencyRate = currencyRate
     }
 
     private var totalFee: BigInt {
@@ -63,12 +66,19 @@ struct ConfirmPaymentDetailsViewModel {
 
     var feeText: String {
         let fee = fullFormatter.string(from: totalFee)
-        let feeAndSymbol = String(
+        var feeAndSymbol = String(
             format: "%@ %@",
             fee.description,
             config.server.symbol
         )
-
+        if let feeInDouble = Double(fee), let price = currencyRate?.rates
+            .filter({ $0.code == config.server.symbol }).first {
+            feeAndSymbol += String(
+                format: " (~ %f %@)",
+                price.price * feeInDouble,
+                config.currency.rawValue
+            )
+        }
         let warningFee = BigInt(EthereumUnit.ether.rawValue) / BigInt(20)
         guard totalFee <= warningFee else {
             return feeAndSymbol + " - WARNING. HIGH FEE."

@@ -135,7 +135,8 @@ class ConfirmPaymentViewController: UIViewController {
     private func reloadView() {
         let viewModel = ConfirmPaymentDetailsViewModel(
             transaction: configurator.previewTransaction(),
-            currentBalance: self.session.balance
+            currentBalance: session.balance,
+            currencyRate: session.balanceCoordinator.currencyRate
         )
         self.configure(for: viewModel)
     }
