@@ -196,12 +196,20 @@ class SettingsViewController: FormViewController {
             }
 
             <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("settings.emailUs.button.title", value: "Email Us", comment: "")
+                button.title = NSLocalizedString("settings.emailUsReadFAQ.button.title", value: "Email Us (Read FAQ first)", comment: "")
             }.onCellSelection { _, _  in
                 self.sendUsEmail()
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_email()
             }
+
+            +++ Section(NSLocalizedString("settings.learnMore.label.title", value: "Learn More", comment: ""))
+
+            <<< link(
+                title: NSLocalizedString("settings.faq.button.title", value: "FAQ", comment: ""),
+                value: "https://trustwalletapp.com/faq.html",
+                image: R.image.settings_faq()
+            )
 
             <<< link(
                 title: NSLocalizedString("settings.privacyPolicy.button.title", value: "Privacy Policy", comment: ""),
