@@ -5,6 +5,7 @@ import Eureka
 import OnePasswordExtension
 import BonMot
 import TrustKeystore
+import QRCodeReaderViewController
 
 protocol ImportWalletViewControllerDelegate: class {
     func didImportAccount(account: Wallet, in viewController: ImportWalletViewController)
@@ -65,7 +66,10 @@ class ImportWalletViewController: FormViewController {
         super.viewDidLoad()
 
         title = viewModel.title
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.import_options(), style: .done, target: self, action: #selector(importOptions))
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: R.image.import_options(), style: .done, target: self, action: #selector(importOptions)),
+            UIBarButtonItem(image: R.image.qr_code_icon(), style: .done, target: self, action: #selector(openReader)),
+        ]
 
 //        if OnePasswordExtension.shared().isAppExtensionAvailable() {
 //            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -258,6 +262,30 @@ class ImportWalletViewController: FormViewController {
         present(controller, animated: true, completion: nil)
     }
 
+    @objc func openReader() {
+        let controller = QRCodeReaderViewController()
+        controller.delegate = self
+        present(controller, animated: true, completion: nil)
+    }
+
+    func setValueForCurrentField(string: String) {
+        let type = ImportSelectionType(title: segmentRow?.value)
+        switch type {
+        case .keystore:
+            keystoreRow?.value = string
+            keystoreRow?.reload()
+        case .privateKey:
+            privateKeyRow?.value = string
+            privateKeyRow?.reload()
+        case .watch:
+            watchRow?.value = string
+            watchRow?.reload()
+        case .mnemonic:
+            mnemonicRow?.value = string
+            mnemonicRow?.reload()
+        }
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -270,5 +298,17 @@ extension ImportWalletViewController: UIDocumentPickerDelegate {
             keystoreRow?.value = text
             keystoreRow?.reload()
         }
+    }
+}
+
+extension ImportWalletViewController: QRCodeReaderDelegate {
+    func readerDidCancel(_ reader: QRCodeReaderViewController!) {
+        reader.stopScanning()
+        reader.dismiss(animated: true, completion: nil)
+    }
+    func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
+        reader.stopScanning()
+        setValueForCurrentField(string: result)
+        reader.dismiss(animated: true)
     }
 }
