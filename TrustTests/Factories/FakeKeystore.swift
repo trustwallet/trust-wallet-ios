@@ -10,8 +10,8 @@ struct FakeKeystore: Keystore {
     var hasWallets: Bool {
         return wallets.count > 0
     }
-    var keystoreDirectory: String {
-        return "file://"
+    var keystoreDirectory: URL {
+        return URL(fileURLWithPath: "file://")
     }
     var wallets: [Wallet]
     var recentlyUsedWallet: Wallet?

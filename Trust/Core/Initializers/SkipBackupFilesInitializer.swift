@@ -4,19 +4,19 @@ import Foundation
 
 struct SkipBackupFilesInitializer: Initializer {
 
-    let paths: [String]
+    let urls: [URL]
 
-    init(paths: [String]) {
-        self.paths = paths
+    init(paths: [URL]) {
+        self.urls = paths
     }
 
     func perform() {
-        paths.forEach { addSkipBackupAttributeToItemAtURL(filePath: $0) }
+        urls.forEach { addSkipBackupAttributeToItemAtURL($0) }
     }
 
     @discardableResult
-    func addSkipBackupAttributeToItemAtURL(filePath: String) -> Bool {
-        let url = NSURL.fileURL(withPath: filePath) as NSURL
+    func addSkipBackupAttributeToItemAtURL(_ url: URL) -> Bool {
+        let url = NSURL.fileURL(withPath: url.path) as NSURL
         do {
             try url.setResourceValue(true, forKey: .isExcludedFromBackupKey)
             try url.setResourceValue(false, forKey: .isUbiquitousItemKey)

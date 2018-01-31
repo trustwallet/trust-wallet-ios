@@ -21,7 +21,7 @@ open class EtherKeystore: Keystore {
     private let datadir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     let keyStore: KeyStore
     private let defaultKeychainAccess: KeychainSwiftAccessOptions = .accessibleWhenUnlockedThisDeviceOnly
-    let keystoreDirectory: String
+    let keystoreDirectory: URL
 
     public init(
         keychain: KeychainSwift = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix),
@@ -30,10 +30,10 @@ open class EtherKeystore: Keystore {
         if !UIApplication.shared.isProtectedDataAvailable {
             throw EtherKeystoreError.protectionDisabled
         }
-        self.keystoreDirectory = datadir + keyStoreSubfolder
+        self.keystoreDirectory = URL(fileURLWithPath: datadir + keyStoreSubfolder)
         self.keychain = keychain
         self.keychain.synchronizable = false
-        self.keyStore = try KeyStore(keydir: URL(fileURLWithPath: keystoreDirectory))
+        self.keyStore = try KeyStore(keydir: keystoreDirectory)
     }
 
     var hasWallets: Bool {

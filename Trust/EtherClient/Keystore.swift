@@ -7,7 +7,7 @@ import TrustKeystore
 protocol Keystore {
     var hasWallets: Bool { get }
     var wallets: [Wallet] { get }
-    var keystoreDirectory: String { get }
+    var keystoreDirectory: URL { get }
     var recentlyUsedWallet: Wallet? { get set }
     static var current: Wallet? { get }
     @available(iOS 10.0, *)
