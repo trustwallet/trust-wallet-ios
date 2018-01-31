@@ -43,10 +43,10 @@ open class EtherKeystore: Keystore {
     private var watchAddresses: [String] {
         set {
             let data = NSKeyedArchiver.archivedData(withRootObject: newValue)
-            keychain.set(data, forKey: Keys.watchAddresses)
+            UserDefaults.standard.set(data, forKey: Keys.watchAddresses)
         }
         get {
-            guard let data = keychain.getData(Keys.watchAddresses) else { return [] }
+            guard let data = UserDefaults.standard.data(forKey: Keys.watchAddresses) else { return [] }
             return NSKeyedUnarchiver.unarchiveObject(with: data) as? [String] ?? []
         }
      }
