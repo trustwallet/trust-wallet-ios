@@ -39,7 +39,7 @@ PODS:
   - SipHash (1.2.0)
   - StatefulViewController (3.0)
   - SwiftLint (0.24.1)
-  - TrustKeystore (0.0.4):
+  - TrustKeystore (0.0.6):
     - CryptoSwift
     - secp256k1_ios (~> 0.1.0)
 
@@ -91,7 +91,7 @@ CHECKOUT OPTIONS:
     :commit: 80bd79cbeede842949b229f81bc6328f53701c5a
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
   TrustKeystore:
-    :commit: 0ab2d5254269e18c5ec7ec19cb539201eb9d153a
+    :commit: 55c0df59686967593c217d4d3520d67b4896a368
     :git: https://github.com/TrustWallet/trust-keystore
 
 SPEC CHECKSUMS:
@@ -122,7 +122,7 @@ SPEC CHECKSUMS:
   SipHash: c6e9e43e9c531b5bc6602545130c26194a6d31ce
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: 2e4b89feed5909c42c3735bbd6745f4345c4b772
-  TrustKeystore: 8278387da38fecd480476f27206b3247862ab69c
+  TrustKeystore: 4d8ba753df8345b30aaf2263bcc8c7b46bf7431c
 
 PODFILE CHECKSUM: 617ddfda209e7f0203a468d28c76f08444da5628
 
