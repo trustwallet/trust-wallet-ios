@@ -10,7 +10,7 @@ class TransactionSigningTests: XCTestCase {
         let address = Address(string: "0x3535353535353535353535353535353535353535")!
         let transaction = SignTransaction(
             value: BigInt("1000000000000000000"),
-            account: Account(address: address),
+            account: .make(address: address),
             to: address,
             nonce: 9,
             data: Data(),
@@ -27,7 +27,7 @@ class TransactionSigningTests: XCTestCase {
         let address = Address(string: "0x3535353535353535353535353535353535353535")!
         let transaction = SignTransaction(
             value: BigInt("1000000000000000000"),
-            account: Account(address: address),
+            account: .make(address: address),
             to: address,
             nonce: 9,
             data: Data(),
@@ -41,7 +41,7 @@ class TransactionSigningTests: XCTestCase {
     }
 
     func testSignTransaction() {
-        let account = Account(address: Address(data: Data(repeating: 0, count: 20)))
+        let account: Account = .make(address: Address(data: Data(repeating: 0, count: 20)))
         let transaction = SignTransaction(
             value: BigInt("1000000000000000000"),
             account: account,

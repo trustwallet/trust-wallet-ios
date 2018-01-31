@@ -10,6 +10,9 @@ struct FakeKeystore: Keystore {
     var hasWallets: Bool {
         return wallets.count > 0
     }
+    var keystoreDirectory: String {
+        return "file://"
+    }
     var wallets: [Wallet]
     var recentlyUsedWallet: Wallet?
 
@@ -39,7 +42,7 @@ struct FakeKeystore: Keystore {
 
     func createAccout(password: String) -> Account {
         //TODO: Implement
-        return Account(address: .make())
+        return .make(address: .make())
     }
 
     func importKeystore(value: String, password: String, newPassword: String) -> Result<Account, KeystoreError> {

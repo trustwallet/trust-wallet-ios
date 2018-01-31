@@ -59,7 +59,7 @@ class AppCoordinator: NSObject, Coordinator {
         let initializers: [Initializer] = [
             CrashReportInitializer(),
             LokaliseInitializer(),
-            SkipBackupFilesInitializer(),
+            SkipBackupFilesInitializer(paths: [keystore.keystoreDirectory]),
         ]
         initializers.forEach { $0.perform() }
         //We should clean passcode if there is no wallets. This step is required for app reinstall.
