@@ -43,7 +43,7 @@ open class EtherKeystore: Keystore {
     private var watchAddresses: [String] {
         set {
             let data = NSKeyedArchiver.archivedData(withRootObject: newValue)
-            UserDefaults.standard.set(data, forKey: Keys.watchAddresses)
+            return UserDefaults.standard.set(data, forKey: Keys.watchAddresses)
         }
         get {
             guard let data = UserDefaults.standard.data(forKey: Keys.watchAddresses) else { return [] }
