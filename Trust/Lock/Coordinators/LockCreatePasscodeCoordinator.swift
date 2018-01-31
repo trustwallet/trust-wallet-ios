@@ -17,6 +17,7 @@ class LockCreatePasscodeCoordinator: Coordinator {
         navigationController.pushViewController(lockViewController, animated: true)
     }
     func dismiss() {
+        
         navigationController.popViewController(animated: true)
     }
 }
