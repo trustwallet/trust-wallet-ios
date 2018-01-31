@@ -11,7 +11,8 @@ class FakeEtherKeystore: EtherKeystore {
         let uniqueString = NSUUID().uuidString
         try! self.init(
             keychain: KeychainSwift(keyPrefix: "fake" + uniqueString),
-            keyStoreSubfolder: "/" + uniqueString
+            keyStoreSubfolder: "/" + uniqueString,
+            userDefaults: UserDefaults.test
         )
     }
 

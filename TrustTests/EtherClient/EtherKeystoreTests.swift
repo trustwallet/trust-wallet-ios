@@ -242,4 +242,35 @@ class EtherKeystoreTests: XCTestCase {
         // s: '0x6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a029',
         // signature: '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a0291c'
     }
+
+    func testAddWatchAddress() {
+        let keystore = FakeEtherKeystore()
+        let address: Address = .make()
+        keystore.importWallet(type: ImportType.watch(address: address)) {_  in }
+
+        XCTAssertEqual(1, keystore.wallets.count)
+        XCTAssertEqual(address, keystore.wallets[0].address)
+    }
+
+    func testDeleteWatchAddress() {
+        let keystore = FakeEtherKeystore()
+        let address: Address = .make()
+
+        // TODO. Move this into sync calls
+        keystore.importWallet(type: ImportType.watch(address: address)) { result  in
+            switch result {
+            case .success(let wallet):
+                XCTAssertEqual(1, keystore.wallets.count)
+                XCTAssertEqual(address, keystore.wallets[0].address)
+
+                let _ = keystore.delete(wallet: wallet)
+
+                XCTAssertEqual(0, keystore.wallets.count)
+            case .failure:
+                XCTFail()
+            }
+        }
+
+        XCTAssertEqual(0, keystore.wallets.count)
+    }
 }

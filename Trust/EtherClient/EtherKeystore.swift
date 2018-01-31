@@ -22,10 +22,12 @@ open class EtherKeystore: Keystore {
     let keyStore: KeyStore
     private let defaultKeychainAccess: KeychainSwiftAccessOptions = .accessibleWhenUnlockedThisDeviceOnly
     let keystoreDirectory: URL
+    let userDefaults: UserDefaults
 
     public init(
         keychain: KeychainSwift = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix),
-        keyStoreSubfolder: String = "/keystore"
+        keyStoreSubfolder: String = "/keystore",
+        userDefaults: UserDefaults = UserDefaults.standard
     ) throws {
         if !UIApplication.shared.isProtectedDataAvailable {
             throw EtherKeystoreError.protectionDisabled
@@ -34,6 +36,7 @@ open class EtherKeystore: Keystore {
         self.keychain = keychain
         self.keychain.synchronizable = false
         self.keyStore = try KeyStore(keydir: keystoreDirectory)
+        self.userDefaults = userDefaults
     }
 
     var hasWallets: Bool {
@@ -43,10 +46,10 @@ open class EtherKeystore: Keystore {
     private var watchAddresses: [String] {
         set {
             let data = NSKeyedArchiver.archivedData(withRootObject: newValue)
-            return UserDefaults.standard.set(data, forKey: Keys.watchAddresses)
+            return userDefaults.set(data, forKey: Keys.watchAddresses)
         }
         get {
-            guard let data = UserDefaults.standard.data(forKey: Keys.watchAddresses) else { return [] }
+            guard let data = userDefaults.data(forKey: Keys.watchAddresses) else { return [] }
             return NSKeyedUnarchiver.unarchiveObject(with: data) as? [String] ?? []
         }
      }
