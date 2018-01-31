@@ -41,7 +41,7 @@ class AccountsViewController: UITableViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.register(UINib(nibName: AccountViewCell.identifier, bundle: nil), forCellReuseIdentifier: AccountViewCell.identifier)
+        tableView.register(R.nib.accountViewCell(), forCellReuseIdentifier: R.nib.accountViewCell.name)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
