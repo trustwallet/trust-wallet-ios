@@ -149,7 +149,8 @@ class ConfirmPaymentViewController: UIViewController {
         let controller = ConfigureTransactionViewController(
             configuration: configurator.configuration,
             transferType: configurator.transaction.transferType,
-            config: session.config
+            config: session.config,
+            currencyRate: session.balanceCoordinator.currencyRate
         )
         controller.delegate = self
         self.navigationController?.pushViewController(controller, animated: true)
