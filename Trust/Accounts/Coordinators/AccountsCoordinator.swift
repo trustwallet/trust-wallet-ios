@@ -15,10 +15,11 @@ class AccountsCoordinator: Coordinator {
 
     let navigationController: UINavigationController
     let keystore: Keystore
+    let balanceCoordinator: GetBalanceCoordinator
     var coordinators: [Coordinator] = []
 
     lazy var accountsViewController: AccountsViewController = {
-        let controller = AccountsViewController(keystore: keystore)
+        let controller = AccountsViewController(keystore: keystore, balanceCoordinator: balanceCoordinator)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add))
         controller.allowsAccountDeletion = true
@@ -30,11 +31,13 @@ class AccountsCoordinator: Coordinator {
 
     init(
         navigationController: UINavigationController,
-        keystore: Keystore
+        keystore: Keystore,
+        balanceCoordinator: GetBalanceCoordinator
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
+        self.balanceCoordinator = balanceCoordinator
     }
 
     func start() {

@@ -83,6 +83,7 @@ class InCoordinator: Coordinator {
         web3.start()
         let realm = self.realm(for: migration.config)
         let tokensStorage = TokensDataStore(realm: realm, account: account, config: config, web3: web3)
+        let balanceCoordinator =  GetBalanceCoordinator(web3: web3)
         let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
         let session = WalletSession(
             account: account,
@@ -117,7 +118,6 @@ class InCoordinator: Coordinator {
                 self?.activateDebug()
             }
         }
-
         if inCoordinatorViewModel.isDAppsBrowserAvailable {
             let coordinator = BrowserCoordinator(session: session, keystore: keystore)
             coordinator.delegate = self
@@ -130,7 +130,6 @@ class InCoordinator: Coordinator {
             addCoordinator(coordinator)
             tabBarController.viewControllers?.insert(coordinator.navigationController, at: 0)
         }
-
         if inCoordinatorViewModel.tokensAvailable {
             let tokenCoordinator = TokensCoordinator(
                 session: session,
@@ -143,11 +142,11 @@ class InCoordinator: Coordinator {
             addCoordinator(tokenCoordinator)
             tabBarController.viewControllers?.append(tokenCoordinator.navigationController)
         }
-
         let settingsCoordinator = SettingsCoordinator(
             keystore: keystore,
             session: session,
-            storage: transactionsStorage
+            storage: transactionsStorage,
+            balanceCoordinator: balanceCoordinator
         )
         settingsCoordinator.rootViewController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("settings.navigation.title", value: "Settings", comment: ""),
