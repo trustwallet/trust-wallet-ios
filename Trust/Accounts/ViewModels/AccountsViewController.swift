@@ -66,7 +66,7 @@ class AccountsViewController: UITableViewController {
         return viewModel.wallets.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: AccountViewCell.identifier, for: indexPath) as! AccountViewCell
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: R.nib.accountViewCell.name, for: indexPath) as! AccountViewCell
         cell.viewModel = getAccountViewModels(for: indexPath)
         cell.delegate = self
         return cell

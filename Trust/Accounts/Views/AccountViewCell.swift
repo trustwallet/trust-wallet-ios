@@ -14,7 +14,6 @@ class AccountViewCell: UITableViewCell {
     @IBOutlet weak var walletTypeImageView: UIImageView!
     @IBOutlet weak var addressLable: UILabel!
     @IBOutlet weak var balanceLable: UILabel!
-    static let identifier = "AccountViewCell"
     weak var delegate: AccountViewCellDelegate?
     var viewModel: AccountViewModel? {
         didSet {
