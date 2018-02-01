@@ -13,6 +13,7 @@ class ConfigureTransactionViewController: FormViewController {
     let configuration: TransactionConfiguration
     let config: Config
     let transferType: TransferType
+    let currencyRate: CurrencyRate?
     private let fullFormatter = EtherNumberFormatter.full
 
     struct Values {
@@ -60,11 +61,13 @@ class ConfigureTransactionViewController: FormViewController {
     init(
         configuration: TransactionConfiguration,
         transferType: TransferType,
-        config: Config
+        config: Config,
+        currencyRate: CurrencyRate?
     ) {
         self.configuration = configuration
         self.transferType = transferType
         self.config = config
+        self.currencyRate = currencyRate
 
         super.init(nibName: nil, bundle: nil)
 
@@ -140,7 +143,14 @@ class ConfigureTransactionViewController: FormViewController {
     }
 
     func recalculateTotalFee() {
-        totalFeeRow?.value = "\(fullFormatter.string(from: totalFee)) \(config.server.symbol)"
+
+        let fee = fullFormatter.string(from: totalFee)
+        var feeAndSymbol = "\(fee) \(config.server.symbol)"
+        if let feeInCurrency = currencyRate?.estimate(fee: fee, with: config.server.symbol) {
+            feeAndSymbol += " (\(feeInCurrency))"
+        }
+
+        totalFeeRow?.value = feeAndSymbol
         totalFeeRow?.updateCell()
     }
 
