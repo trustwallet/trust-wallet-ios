@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AccountViewCell" rowHeight="60" id="4vz-JX-rYg" customClass="AccountViewCell" customModule="Trust" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4vz-JX-rYg" id="iFR-Po-1R4">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="JUd-EF-Sra">
+                        <rect key="frame" x="36" y="0.0" width="327" height="55.5"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2t2-qW-Lcu">
+                                <rect key="frame" x="0.0" y="10.5" width="280.5" height="34.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Balance: 214.34 ETH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scJ-RY-qk3">
+                                        <rect key="frame" x="0.0" y="0.0" width="126" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0xdDFFF2b78463AB1cA781e853BB888FDfd06083d3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWW-wY-XEU">
+                                        <rect key="frame" x="0.0" y="21" width="280.5" height="13.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="wMR-ps-QHM">
+                                <rect key="frame" x="285.5" y="17" width="41.5" height="22"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="glasses" translatesAutoresizingMaskIntoConstraints="NO" id="mbU-gV-kxo">
+                                        <rect key="frame" x="0.0" y="3.5" width="15" height="15"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="15" id="JBT-UD-abn"/>
+                                            <constraint firstAttribute="height" constant="15" id="UFk-ew-jRu"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Io-0E-DkX">
+                                        <rect key="frame" x="20" y="0.0" width="21.5" height="22"/>
+                                        <connections>
+                                            <action selector="infoAction:" destination="4vz-JX-rYg" eventType="touchUpInside" id="Tap-C0-KrO"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="55" id="1ZN-y6-RDM"/>
+                        </constraints>
+                    </stackView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sdn-a4-wyz">
+                        <rect key="frame" x="16" y="24" width="8" height="8"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="B3m-hl-1c2"/>
+                            <constraint firstAttribute="width" constant="8" id="atZ-5v-Kxt"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="JUd-EF-Sra" firstAttribute="top" secondItem="iFR-Po-1R4" secondAttribute="top" id="0Qw-Iq-hqe"/>
+                    <constraint firstAttribute="bottom" secondItem="JUd-EF-Sra" secondAttribute="bottom" id="4NK-sm-aI3"/>
+                    <constraint firstItem="Sdn-a4-wyz" firstAttribute="centerY" secondItem="iFR-Po-1R4" secondAttribute="centerY" id="BHC-F8-v81"/>
+                    <constraint firstAttribute="trailing" secondItem="JUd-EF-Sra" secondAttribute="trailing" constant="12" id="E7l-FL-aPA"/>
+                    <constraint firstItem="Sdn-a4-wyz" firstAttribute="leading" secondItem="iFR-Po-1R4" secondAttribute="leadingMargin" id="YWd-tg-xFa"/>
+                    <constraint firstItem="JUd-EF-Sra" firstAttribute="top" secondItem="iFR-Po-1R4" secondAttribute="top" id="flI-mk-Cgp"/>
+                    <constraint firstAttribute="bottom" secondItem="JUd-EF-Sra" secondAttribute="bottom" id="frR-gE-q13"/>
+                    <constraint firstAttribute="bottom" secondItem="JUd-EF-Sra" secondAttribute="bottom" id="nuP-rE-vPn"/>
+                    <constraint firstItem="JUd-EF-Sra" firstAttribute="leading" secondItem="Sdn-a4-wyz" secondAttribute="trailing" constant="12" id="vSj-EX-Y1o"/>
+                    <constraint firstItem="JUd-EF-Sra" firstAttribute="top" secondItem="iFR-Po-1R4" secondAttribute="top" id="xrg-WN-Jt5"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="activeView" destination="Sdn-a4-wyz" id="fvc-Uv-B9b"/>
+                <outlet property="addressLable" destination="ZWW-wY-XEU" id="9Ad-PM-eKg"/>
+                <outlet property="balanceLable" destination="scJ-RY-qk3" id="TD3-qL-Mpo"/>
+                <outlet property="glassesImageView" destination="mbU-gV-kxo" id="Ry7-WR-mb2"/>
+                <outlet property="infoButton" destination="0Io-0E-DkX" id="FjW-Cs-BT6"/>
+                <outlet property="walletTypeImageView" destination="mbU-gV-kxo" id="B3W-b6-OAX"/>
+            </connections>
+            <point key="canvasLocation" x="-136.5" y="-72"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="glasses" width="33" height="33"/>
+    </resources>
+</document>

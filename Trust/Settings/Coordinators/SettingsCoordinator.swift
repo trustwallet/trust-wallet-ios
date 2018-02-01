@@ -16,8 +16,8 @@ class SettingsCoordinator: Coordinator {
     let keystore: Keystore
     let session: WalletSession
     let storage: TransactionsStorage
+    let balanceCoordinator: GetBalanceCoordinator
     weak var delegate: SettingsCoordinatorDelegate?
-
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
     var coordinators: [Coordinator] = []
 
@@ -32,13 +32,15 @@ class SettingsCoordinator: Coordinator {
         navigationController: UINavigationController = NavigationController(),
         keystore: Keystore,
         session: WalletSession,
-        storage: TransactionsStorage
+        storage: TransactionsStorage,
+        balanceCoordinator: GetBalanceCoordinator
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
         self.session = session
         self.storage = storage
+        self.balanceCoordinator = balanceCoordinator
     }
 
     func start() {
@@ -48,7 +50,8 @@ class SettingsCoordinator: Coordinator {
     @objc func showAccounts() {
         let coordinator = AccountsCoordinator(
             navigationController: NavigationController(),
-            keystore: keystore
+            keystore: keystore,
+            balanceCoordinator: balanceCoordinator
         )
         coordinator.delegate = self
         coordinator.start()
