@@ -14,7 +14,7 @@ class LockEnterPasscodeCoordinatorTest: XCTestCase {
         XCTAssertTrue(coordinator.passcodeViewIsActive)
         XCTAssertTrue(window.rootViewController is LockEnterPasscodeViewController)
     }
-    func testDismiss() {
+    func testStop() {
         let window = UIWindow()
         let viewModel = LockEnterPasscodeViewModel()
         let fakeLock = FakeLockProtocol()
@@ -22,7 +22,7 @@ class LockEnterPasscodeCoordinatorTest: XCTestCase {
         XCTAssertFalse(coordinator.passcodeViewIsActive)
         coordinator.start()
         XCTAssertTrue(coordinator.passcodeViewIsActive)
-        coordinator.dismiss()
+        coordinator.stop()
         XCTAssertTrue(window.isHidden)
         XCTAssertFalse(coordinator.passcodeViewIsActive)
     }

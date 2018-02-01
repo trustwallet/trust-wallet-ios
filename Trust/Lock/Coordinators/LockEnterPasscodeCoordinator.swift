@@ -17,7 +17,7 @@ class LockEnterPasscodeCoordinator: Coordinator {
         self.lock = lock
         lockEnterPasscodeViewController.willFinishWithResult = { [weak self] state in
             if state {
-                self?.dismiss()
+                self?.stop()
             }
         }
     }
@@ -29,7 +29,7 @@ class LockEnterPasscodeCoordinator: Coordinator {
         window.rootViewController = lockEnterPasscodeViewController
         window.makeKeyAndVisible()
     }
-    func dismiss() {
+    func stop() {
         passcodeViewIsActive = false
         window.isHidden = true
     }
