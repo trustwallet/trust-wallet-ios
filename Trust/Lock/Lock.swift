@@ -4,7 +4,11 @@ import UIKit
 import SAMKeychain
 import KeychainSwift
 
-class Lock {
+protocol LockInterface {
+    func isPasscodeSet() -> Bool
+}
+
+class Lock: LockInterface {
     private struct Keys {
         static let service = "trust.lock"
         static let account = "trust.account"

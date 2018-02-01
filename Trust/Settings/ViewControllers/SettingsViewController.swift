@@ -237,7 +237,7 @@ class SettingsViewController: FormViewController {
         lock.start()
         lock.lockViewController.willFinishWithResult = { result in
             completion?(result)
-            lock.dismiss()
+            lock.stop()
         }
     }
 
