@@ -71,13 +71,8 @@ struct ConfirmPaymentDetailsViewModel {
             fee.description,
             config.server.symbol
         )
-        if let feeInDouble = Double(fee), let price = currencyRate?.rates
-            .filter({ $0.code == config.server.symbol }).first {
-            feeAndSymbol += String(
-                format: " (~ %f %@)",
-                price.price * feeInDouble,
-                config.currency.rawValue
-            )
+        if let feeInCurrency = currencyRate?.estimate(fee: fee, with: config.server.symbol) {
+            feeAndSymbol += " (\(feeInCurrency))"
         }
         let warningFee = BigInt(EthereumUnit.ether.rawValue) / BigInt(20)
         guard totalFee <= warningFee else {
