@@ -63,7 +63,8 @@ class BrowserCoordinator: Coordinator {
                     let callback = DappCallback(id: callbackID, value: .signTransaction(data))
                     self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
                 case .sentTransaction(let transaction):
-                    let callback = DappCallback(id: callbackID, value: .sendTransaction(transaction.id.data(using: .utf8)!))
+                    let data = Data(hex: transaction.id)
+                    let callback = DappCallback(id: callbackID, value: .sendTransaction(data))
                     self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
                     self.delegate?.didSentTransaction(transaction: transaction, in: self)
                 }
