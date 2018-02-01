@@ -41,6 +41,8 @@ class AccountsViewController: UITableViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 55
         tableView.register(R.nib.accountViewCell(), forCellReuseIdentifier: R.nib.accountViewCell.name)
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -82,9 +84,6 @@ class AccountsViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         let account = self.account(for: indexPath)
         delegate?.didSelectAccount(account: account, in: self)
-    }
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 55
     }
     func confirmDelete(account: Wallet) {
         confirm(
