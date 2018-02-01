@@ -36,7 +36,13 @@ extension WKWebViewConfiguration {
             console.log("id", id)
             console.log("value", value)
             console.log("error", error)
-            let callback = callbacks[id](error, value)
+            if (error) {
+                let response = {"id": id, jsonrpc: "2.0", result: null, error: {message: error}}
+                callbacks[id](error, null)
+            } else {
+                let response = {"id": id, jsonrpc: "2.0", result: value}
+                callbacks[id](error, response)
+            }
         }
 
         function sendTransaction(tx, cb) {

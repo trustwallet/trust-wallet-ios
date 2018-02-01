@@ -15,14 +15,14 @@ struct DappCallback {
 
 enum DappCallbackValue {
     case signTransaction(Data)
-    case sendTransaction(Data)
+    case sentTransaction(Data)
     case signMessage(Data)
 
     var object: String {
         switch self {
         case .signTransaction(let data):
             return data.hexEncoded
-        case .sendTransaction(let data):
+        case .sentTransaction(let data):
             return data.hexEncoded
         case .signMessage(let data):
             return data.hexEncoded
