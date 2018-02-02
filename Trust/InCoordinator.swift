@@ -297,7 +297,7 @@ extension InCoordinator: PaymentCoordinatorDelegate {
             removeCoordinator(coordinator)
 
             // Once transaction sent, show transactions screen.
-            showTab(.settings)
+            showTab(.transactions)
         case .signedTransaction: break
         }
     }
