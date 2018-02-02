@@ -23,12 +23,9 @@ extension WKWebViewConfiguration {
 
         js +=
         """
-        let callbacksCount = 0;
         let callbacks = {};
-        function addCallback(cb) {
-            callbacksCount++
-            callbacks[callbacksCount] = cb
-            return callbacksCount
+        function addCallback(id, cb) {
+            callbacks[id] = cb
         }
 
         function executeCallback(id, error, value) {
@@ -43,23 +40,29 @@ extension WKWebViewConfiguration {
                 let response = {"id": id, jsonrpc: "2.0", result: value}
                 callbacks[id](error, response)
             }
+            delete callbacks[id]
         }
 
-        function sendTransaction(tx, cb) {
+        function sendTransaction(request, cb) {
+            let tx = request.params[0]
             console.log("here." + tx)
-            let id = addCallback(cb)
+            let id = request.id || 8888
+            addCallback(id, cb)
             webkit.messageHandlers.sendTransaction.postMessage({"name": "sendTransaction", "object": tx, id: id})
         }
 
         function signTransaction(tx, cb) {
             console.log("here2.", tx)
-            let id = addCallback(cb)
+            let id = request.id || 8888
+            addCallback(id, cb)
             webkit.messageHandlers.signTransaction.postMessage({"name": "signTransaction", "object": tx, id: id})
         }
 
-        function signPersonalMessage(message, cb) {
+        function signPersonalMessage(request, cb) {
+            let message = {data: request.params[0]}
+            let id = request.id || 8888
             console.log("here.5", cb)
-            let id = addCallback(cb)
+            addCallback(id, cb)
             webkit.messageHandlers.signPersonalMessage.postMessage({"name": "signPersonalMessage", "object": message, id: id})
         }
 
@@ -76,8 +79,9 @@ extension WKWebViewConfiguration {
         web3.eth.getCoinbase = function(p) {
             return p(null, "\(address)")
         }
-        web3.eth.sendTransaction = function(p, cb) {
-            sendTransaction(p, cb)
+        web3.eth.sendTransaction = function(request, cb) {
+            console.log("request", request)
+            sendTransaction(request, cb)
         }
 
         function response(p, result) {
@@ -98,19 +102,19 @@ extension WKWebViewConfiguration {
                     cb(null, response(request, ["\(address)"]))
                     break;
                 case "eth_sendTransaction":
-                    sendTransaction(request.params[0], cb)
+                    sendTransaction(request, cb)
                     break
                 case "eth_coinbase":
                     cb(null, response(request, "\(address)"))
                     break
                 case "eth_sign":
-                    signPersonalMessage(request.params[0], cb)
+                    signPersonalMessage(request, cb)
                     break
                 case "personal_sign":
-                    signPersonalMessage({data: request.params[0]}, cb)
+                    signPersonalMessage(request, cb)
                     break
                 default:
-                    console.log("sendAsync return", request.method);
+                    console.log("sendAsync return", request);
                     provider.sendAsync(request, cb)
                     break
             }
