@@ -13,6 +13,8 @@ class LockEnterPasscodeCoordinator: Coordinator {
     }()
     init(window: UIWindow, model: LockEnterPasscodeViewModel, lock: LockInterface = Lock()) {
         self.window = window
+        //We should show passcode window on the top of all windows.
+        self.window.windowLevel = UIWindowLevelStatusBar + 1.0
         self.model = model
         self.lock = lock
         lockEnterPasscodeViewController.willFinishWithResult = { [weak self] state in
@@ -22,7 +24,9 @@ class LockEnterPasscodeCoordinator: Coordinator {
         }
     }
     func start() {
-        guard !passcodeViewIsActive && lock.isPasscodeSet() else {
+        guard lock.isPasscodeSet() else {
+             //Due to the lazy init and navigation flow we should call viewWillAppear manually.
+            lockEnterPasscodeViewController.viewWillAppear(true)
             return
         }
         passcodeViewIsActive = true
