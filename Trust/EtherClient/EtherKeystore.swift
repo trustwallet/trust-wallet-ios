@@ -60,7 +60,9 @@ open class EtherKeystore: Keystore {
         }
         get {
             let address = keychain.get(Keys.recentlyUsedAddress)
-            return wallets.filter { $0.address.description == address }.first
+            return wallets.filter {
+                $0.address.description == address || $0.address.description.lowercased() == address?.lowercased()
+            }.first
         }
     }
 
