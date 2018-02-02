@@ -22,7 +22,12 @@ class EditTokenTableViewCell: UITableViewCell {
             tokenLabel.font = viewModel.titleFont
             tokenLabel.textColor = viewModel.titleTextColor
             tokenEnableSwitch.isOn = viewModel.isEnabled
-            tokenContractLabel.text = viewModel.contractText
+            if viewModel.contractText == nil {
+                tokenContractLabel.isHidden = true
+                tokenContractLabel.removeFromSuperview()
+            } else {
+                tokenContractLabel.text = viewModel.contractText
+            }
             tokenEnableSwitch.isHidden = viewModel.isSwitchHidden
             tokenImageView.kf.setImage(
                 with: viewModel.imageUrl,

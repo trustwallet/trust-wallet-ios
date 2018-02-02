@@ -36,18 +36,16 @@ struct TokenViewCellViewModel {
     }
 
     var currencyAmount: String? {
-        let noResult = "-"
-        guard let ticker = ticker else { return noResult }
+        guard let ticker = ticker else { return nil }
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
         let priceInUsd = Double(ticker.price) ?? 0
         let amount = tokenValue * priceInUsd
-        guard amount > 0 else { return noResult }
+        guard amount > 0 else { return nil }
         return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
     }
 
     var percentChange: String? {
-        let noResult = "-"
-        guard let ticker = ticker else { return noResult }
+        guard let ticker = ticker else { return nil }
         return "(" + ticker.percent_change_24h + "%)"
     }
 
