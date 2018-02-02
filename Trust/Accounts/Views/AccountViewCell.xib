@@ -23,24 +23,24 @@
                         <rect key="frame" x="36" y="0.0" width="327" height="55.5"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2t2-qW-Lcu">
-                                <rect key="frame" x="0.0" y="10.5" width="280.5" height="34.5"/>
+                                <rect key="frame" x="0.0" y="9.5" width="276" height="36.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Balance: 214.34 ETH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scJ-RY-qk3">
-                                        <rect key="frame" x="0.0" y="0.0" width="126" height="16"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="142.5" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0xdDFFF2b78463AB1cA781e853BB888FDfd06083d3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWW-wY-XEU">
-                                        <rect key="frame" x="0.0" y="21" width="280.5" height="13.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0xdDFFF2b78463AB1cA781e853BB888FDfd06083d3" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWW-wY-XEU">
+                                        <rect key="frame" x="0.0" y="23" width="276" height="13.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="wMR-ps-QHM">
-                                <rect key="frame" x="285.5" y="17" width="41.5" height="22"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wMR-ps-QHM">
+                                <rect key="frame" x="281" y="17" width="46" height="22"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="glasses" translatesAutoresizingMaskIntoConstraints="NO" id="mbU-gV-kxo">
                                         <rect key="frame" x="0.0" y="3.5" width="15" height="15"/>
@@ -50,7 +50,7 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Io-0E-DkX">
-                                        <rect key="frame" x="20" y="0.0" width="21.5" height="22"/>
+                                        <rect key="frame" x="25" y="0.0" width="21" height="22"/>
                                         <connections>
                                             <action selector="infoAction:" destination="4vz-JX-rYg" eventType="touchUpInside" id="Tap-C0-KrO"/>
                                         </connections>
