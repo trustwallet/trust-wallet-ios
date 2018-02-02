@@ -89,37 +89,28 @@ class BackupCoordinator: Coordinator {
     }
 
     func export(for account: Account) {
-        if let currentPassword = keystore.getPassword(for: account) {
-            let verifyController = UIAlertController.askPassword(
-                title: NSLocalizedString("export.enterPassword.textField.title", value: "Enter password to encrypt your wallet", comment: "")
-            ) { result in
-                switch result {
-                case .success(let newPassword):
-                    self.presentShareActivity(
-                        for: account,
-                        password: currentPassword,
-                        newPassword: newPassword
-                    )
-                case .failure: break
-                }
+        let coordinator = EnterPasswordCoordinator(account: account)
+        coordinator.delegate = self
+        coordinator.start()
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+        addCoordinator(coordinator)
+    }
+}
+
+extension BackupCoordinator: EnterPasswordCoordinatorDelegate {
+    func didCancel(in coordinator: EnterPasswordCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+    }
+
+    func didEnterPassword(password: String, account: Account, in coordinator: EnterPasswordCoordinator) {
+        coordinator.navigationController.dismiss(animated: true) { [unowned self] in
+            if let currentPassword = self.keystore.getPassword(for: account) {
+                self.presentShareActivity(for: account, password: currentPassword, newPassword: password)
+            } else {
+                self.presentShareActivity(for: account, password: password, newPassword: password)
             }
-            navigationController.present(verifyController, animated: true, completion: nil)
-        } else {
-            //FIXME: remove later. for old version, when password were missing in the keychain
-            let verifyController = UIAlertController.askPassword(
-                title: NSLocalizedString("export.enterCurrentPassword.textField.title", value: "Enter current password to export your wallet", comment: "")
-            ) { result in
-                switch result {
-                case .success(let newPassword):
-                    self.presentShareActivity(
-                        for: account,
-                        password: newPassword,
-                        newPassword: newPassword
-                    )
-                case .failure: break
-                }
-            }
-            navigationController.present(verifyController, animated: true, completion: nil)
         }
+        removeCoordinator(coordinator)
     }
 }
