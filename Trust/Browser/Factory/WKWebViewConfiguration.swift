@@ -73,19 +73,19 @@ extension WKWebViewConfiguration {
         window.web3 = web3
 
         web3.eth.defaultAccount = "\(address)"
-        web3.version.getNetwork = function(p) {
-            p(null, "\(session.config.chainID)")
+        web3.version.getNetwork = function(cb) {
+            cb(null, "\(session.config.chainID)")
         }
-        web3.eth.getCoinbase = function(p) {
-            return p(null, "\(address)")
+        web3.eth.getCoinbase = function(cb) {
+            return cb(null, "\(address)")
         }
         web3.eth.sendTransaction = function(request, cb) {
             console.log("request", request)
             sendTransaction(request, cb)
         }
 
-        function response(p, result) {
-            return {"id": p.id, "jsonrpc": p.jsonrpc, "result": result}
+        function response(request, result) {
+            return {"id": request.id, "jsonrpc": request.jsonrpc, "result": result}
         }
 
         trustProvider.sendAsync = function(request, cb) {
@@ -120,21 +120,21 @@ extension WKWebViewConfiguration {
             }
         }
 
-        trustProvider.send = function(p) {
-            console.log("send", p);
+        trustProvider.send = function(request) {
+            console.log("send", request);
 
-            switch (p.method) {
+            switch (request.method) {
                 case "net_listening":
                     return true
                 case "net_version":
-                    return response(p, "\(session.config.chainID)")
+                    return response(request, "\(session.config.chainID)")
                 case "eth_accounts":
-                    return response(p, ["\(address)"])
+                    return response(request, ["\(address)"])
                 case "eth_coinbase":
-                    return response(p, "\(address)")
+                    return response(request, "\(address)")
                 default:
-                    console.log("send return", p.method);
-                    return provider.send(p)
+                    console.log("send return", request.method);
+                    return provider.send(request)
             }
         }
 
