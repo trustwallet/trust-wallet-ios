@@ -2,6 +2,7 @@
 
 import Foundation
 import RealmSwift
+import TrustKeystore
 
 class TransactionsStorage {
 
@@ -40,7 +41,31 @@ class TransactionsStorage {
         realm.beginWrite()
         realm.add(items, update: true)
         try! realm.commitWrite()
+
+        // store contract addresses associated with transactions
+        let tokens = self.tokens(from: items)
+        if !tokens.isEmpty {
+            TokensDataStore.update(in: realm, tokens: tokens)
+        }
         return items
+    }
+
+    private func tokens(from transactions: [Transaction]) -> [Token] {
+        let tokens: [Token] = transactions.flatMap { transaction in
+            guard
+                let operation = transaction.localizedOperations.first,
+                let contract = Address(string: operation.contract ?? ""),
+                let name = operation.name,
+                let symbol = operation.symbol
+                else { return nil }
+            return Token(
+                address: contract,
+                name: name,
+                symbol: symbol,
+                decimals: operation.decimals
+            )
+        }
+        return tokens
     }
 
     func delete(_ items: [Transaction]) {
@@ -65,9 +90,8 @@ class TransactionsStorage {
     }
 
     func deleteAll() {
-        let objects = realm.objects(Transaction.self)
         try! realm.write {
-            realm.delete(objects)
+            realm.delete(realm.objects(Transaction.self))
         }
     }
 }

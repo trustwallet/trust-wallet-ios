@@ -34,7 +34,9 @@ class TransactionDataCoordinator {
     var updateTransactionsTimer: Timer?
 
     weak var delegate: TransactionDataCoordinatorDelegate?
-
+    private lazy var transactionsTracker: TransactionsTracker = {
+        return TransactionsTracker(sessionID: session.sessionID)
+    }()
     private let trustProvider = TrustProviderFactory.makeProvider()
 
     init(
@@ -52,6 +54,11 @@ class TransactionDataCoordinator {
         updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 15, target: BlockOperation { [weak self] in
             self?.fetchTransactions()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
+
+        // Start fetching all transactions process.
+        if transactionsTracker.fetchingState != .done {
+            initialFetch(for: session.account.address, page: 0) { _ in }
+        }
     }
 
     func fetch() {
@@ -65,19 +72,40 @@ class TransactionDataCoordinator {
             guard let transaction = storage.completedObjects.first else { return 1 }
             return transaction.blockNumber - 2000
         }()
-        trustProvider.request(.getTransactions(address: session.account.address.description, startBlock: startBlock)) { [weak self] result in
+        fetchTransaction(
+            for: session.account.address,
+            startBlock: startBlock
+        ) { [weak self] result in
             guard let `self` = self else { return }
+            switch result {
+            case .success(let transactions):
+                self.update(items: transactions)
+            case .failure(let error):
+                self.handleError(error: error)
+            }
+        }
+    }
+
+    private func fetchTransaction(
+        for address: Address,
+        startBlock: Int,
+        page: Int = 0,
+        completion: @escaping (Result<[Transaction], AnyError>) -> Void
+    ) {
+        NSLog("fetchTransaction: startBlock: \(startBlock), page: \(page)")
+
+        trustProvider.request(.getTransactions(address: address.description, startBlock: startBlock, page: page)) { result in
             switch result {
             case .success(let response):
                 do {
                     let rawTransactions = try response.map(ArrayResponse<RawTransaction>.self).docs
                     let transactions: [Transaction] = rawTransactions.flatMap { .from(transaction: $0) }
-                    self.update(items: transactions)
+                    completion(.success(transactions))
                 } catch {
-                    self.handleError(error: error)
+                    completion(.failure(AnyError(error)))
                 }
             case .failure(let error):
-                self.handleError(error: error)
+                completion(.failure(AnyError(error)))
             }
         }
     }
@@ -97,7 +125,7 @@ class TransactionDataCoordinator {
             guard let `self` = self else { return }
             switch result {
             case .success(let parsedTransaction):
-                NSLog("parsedTransaction \(parsedTransaction)")
+                // NSLog("parsedTransaction \(parsedTransaction)")
                 if transaction.date > Date().addingTimeInterval(Config.deleyedTransactionInternalSeconds) {
                     self.update(state: .completed, for: transaction)
                     self.update(items: [transaction])
@@ -110,7 +138,7 @@ class TransactionDataCoordinator {
                     guard let error = error as? JSONRPCError else { return }
                     switch error {
                     case .responseError(let code, let message, _):
-                        NSLog("code \(code), error: \(message)")
+                        // NSLog("code \(code), error: \(message)")
                         self.delete(transactions: [transaction])
                     case .resultObjectParseError:
                         if transaction.date > Date().addingTimeInterval(Config.deleteMissingInternalSeconds) {
@@ -161,6 +189,27 @@ class TransactionDataCoordinator {
     func delete(transactions: [Transaction]) {
         storage.delete(transactions)
         handleUpdateItems()
+    }
+
+    func initialFetch(
+        for address: Address,
+        page: Int,
+        completion: @escaping (Result<[Transaction], AnyError>) -> Void
+    ) {
+        fetchTransaction(for: address, startBlock: 1, page: page) { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let transactions):
+                self.update(items: transactions)
+                if !transactions.isEmpty && page <= 50 { // page limit to 50, otherwise you have too many transactions.
+                    self.initialFetch(for: address, page: page + 1, completion: completion)
+                } else {
+                    self.transactionsTracker.fetchingState = .done
+                }
+            case .failure:
+                self.transactionsTracker.fetchingState = .failed
+            }
+        }
     }
 
     func stop() {

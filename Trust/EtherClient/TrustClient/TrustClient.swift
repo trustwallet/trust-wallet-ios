@@ -5,7 +5,7 @@ import Moya
 
 enum TrustService {
     case prices(TokensPrice)
-    case getTransactions(address: String, startBlock: Int)
+    case getTransactions(address: String, startBlock: Int, page: Int)
     case getTransaction(ID: String)
     case register(device: PushDevice)
     case unregister(device: PushDevice)
@@ -56,8 +56,12 @@ extension TrustService: TargetType {
 
     var task: Task {
         switch self {
-        case .getTransactions(let address, let startBlock):
-            return .requestParameters(parameters: ["address": address, "startBlock": startBlock], encoding: URLEncoding())
+        case .getTransactions(let address, let startBlock, let page):
+            return .requestParameters(parameters: [
+                "address": address,
+                "startBlock": startBlock,
+                "page": page,
+            ], encoding: URLEncoding())
         case .getTransaction:
             return .requestPlain
         case .register(let device):

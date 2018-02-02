@@ -82,30 +82,21 @@ class TokensDataStore {
             .filter { !$0.isDisabled }
     }
 
-    func update(tokens: [Token]) {
+    static func update(in realm: Realm, tokens: [Token]) {
         realm.beginWrite()
         for token in tokens {
             let update: [String: Any] = [
-                "owner": account.address.description,
-                "chainID": config.chainID,
-                "contract": token.address?.description ?? "",
+                "contract": token.address.description,
                 "name": token.name,
                 "symbol": token.symbol,
                 "decimals": token.decimals,
             ]
-            realm.create(
-                TokenObject.self,
-                value: update,
-                update: true
-            )
+            realm.create(TokenObject.self, value: update, update: true)
         }
         try! realm.commitWrite()
     }
 
     func fetch() {
-        let contracts = uniqueContracts()
-        update(tokens: contracts)
-
         updatePrices()
         refreshBalance()
     }
@@ -207,6 +198,12 @@ class TokensDataStore {
         try! realm.commitWrite()
     }
 
+    func deleteAll() {
+        try! realm.write {
+            realm.delete(realm.objects(TokenObject.self))
+        }
+    }
+
     enum TokenUpdate {
         case value(BigInt)
         case isDisabled(Bool)
@@ -223,26 +220,6 @@ class TokensDataStore {
         }
     }
 
-    func uniqueContracts() -> [Token] {
-        let transactions = realm.objects(Transaction.self)
-            .sorted(byKeyPath: "date", ascending: false)
-            .filter { !$0.localizedOperations.isEmpty }
-
-        let tokens: [Token] = transactions.flatMap { transaction in
-            guard
-                let operation = transaction.localizedOperations.first,
-                let contract = operation.contract,
-                let name = operation.name,
-                let symbol = operation.symbol else { return nil }
-            return Token(
-                address: Address(string: contract),
-                name: name,
-                symbol: symbol,
-                decimals: operation.decimals
-            )
-        }
-        return tokens
-    }
     private func scheduledTimerForPricesUpdate() {
         pricesTimer = Timer.scheduledTimer(timeInterval: intervalToRefreshPrices, target: BlockOperation { [weak self] in
             self?.updatePrices()
