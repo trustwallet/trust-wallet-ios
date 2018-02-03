@@ -4,7 +4,8 @@ import UIKit
 @testable import Trust
 
 class FakeLockProtocol: LockInterface {
+    var passcodeSet = true
     func isPasscodeSet() -> Bool {
-        return true
+        return passcodeSet
     }
 }

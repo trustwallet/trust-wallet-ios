@@ -10,11 +10,9 @@ class ProtectionCoordinator: Coordinator {
     lazy var lockEnterPasscodeCoordinator: LockEnterPasscodeCoordinator = {
         return LockEnterPasscodeCoordinator(window: self.protectionWindow, model: LockEnterPasscodeViewModel())
     }()
-    let protectionWindow: UIWindow
+    let protectionWindow = UIWindow()
     init() {
-        let protection = UIWindow()
-        protection.windowLevel = UIWindowLevelStatusBar + 1.0
-        self.protectionWindow = UIWindow()
+        protectionWindow.windowLevel = UIWindowLevelStatusBar + 1.0
     }
     func applicationWillResignActive() {
         //We should show spalsh screen when protection is on. And app is susepndet.
