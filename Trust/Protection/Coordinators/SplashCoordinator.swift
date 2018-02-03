@@ -4,7 +4,6 @@ import UIKit
 
 class SplashCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
-    private var splashViewIsActive = false
     private let window: UIWindow
     private var splashView: SplashView
     init(window: UIWindow) {
@@ -12,9 +11,6 @@ class SplashCoordinator: Coordinator {
         self.splashView = SplashView()
     }
     func start() {
-        guard Lock().isPasscodeSet() else {
-            return
-        }
         window.isHidden = false
         window.addSubview(splashView)
         window.bringSubview(toFront: splashView)
@@ -26,7 +22,7 @@ class SplashCoordinator: Coordinator {
             splashView.trailingAnchor.constraint(equalTo: window.trailingAnchor),
         ])
     }
-    func dismiss() {
+    func stop() {
         splashView.removeFromSuperview()
     }
 }

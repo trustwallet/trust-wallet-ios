@@ -18,11 +18,14 @@ class ProtectionCoordinator: Coordinator {
     }
     func applicationWillResignActive() {
         //We should show spalsh screen when protection is on. And app is susepndet.
+        guard Lock().isPasscodeSet() else {
+            return
+        }
         splashCoordinator.start()
     }
     func applicationDidBecomeActive() {
         //We should dismiss spalsh screen when app become active.
-        splashCoordinator.dismiss()
+        splashCoordinator.stop()
         //We track protectionWasShown becouse of the TouchId that will trigger applicationDidBecomeActive method after valdiation.
         if !lockEnterPasscodeCoordinator.protectionWasShown {
             lockEnterPasscodeCoordinator.start()
