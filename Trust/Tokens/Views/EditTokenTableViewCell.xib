@@ -57,12 +57,7 @@
                             </switch>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="fRy-j2-9ES" secondAttribute="trailing" constant="54" id="21F-BB-xwK"/>
                             <constraint firstAttribute="bottom" secondItem="Tfc-cq-2hm" secondAttribute="bottom" constant="10" id="85M-T3-zGn"/>
-                            <constraint firstItem="fRy-j2-9ES" firstAttribute="leading" secondItem="Tfc-cq-2hm" secondAttribute="trailing" constant="5" id="9dD-UV-zlb"/>
-                            <constraint firstItem="fRy-j2-9ES" firstAttribute="top" secondItem="d5W-Lo-p3o" secondAttribute="top" id="KxX-Uv-DBb"/>
-                            <constraint firstItem="Uf5-TC-p3g" firstAttribute="leading" secondItem="fRy-j2-9ES" secondAttribute="trailing" constant="5" id="Y4H-GM-ZgJ"/>
-                            <constraint firstItem="Uf5-TC-p3g" firstAttribute="leading" secondItem="fRy-j2-9ES" secondAttribute="trailing" constant="5" id="oaE-Dj-eIy"/>
                             <constraint firstAttribute="trailing" secondItem="Uf5-TC-p3g" secondAttribute="trailing" id="pKu-nx-1qR"/>
                             <constraint firstAttribute="bottom" secondItem="fRy-j2-9ES" secondAttribute="bottom" constant="5" id="sQQ-18-ZYL"/>
                         </constraints>
