@@ -23,6 +23,7 @@ class EditTokenTableViewCell: UITableViewCell {
             tokenLabel.textColor = viewModel.titleTextColor
             tokenEnableSwitch.isOn = viewModel.isEnabled
             tokenContractLabel.text = viewModel.contractText
+            tokenContractLabel.isHidden = viewModel.isTokenContractLabelHidden
             tokenEnableSwitch.isHidden = viewModel.isSwitchHidden
             tokenImageView.kf.setImage(
                 with: viewModel.imageUrl,
