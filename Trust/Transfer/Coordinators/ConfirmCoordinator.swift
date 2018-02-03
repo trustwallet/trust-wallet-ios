@@ -50,7 +50,7 @@ class ConfirmCoordinator: Coordinator {
             case .success(let data):
                 self.didCompleted?(.success(data))
             case .failure(let error):
-                self.didCompleted?(.failure(error))
+                self.navigationController.displayError(error: error)
             }
         }
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))

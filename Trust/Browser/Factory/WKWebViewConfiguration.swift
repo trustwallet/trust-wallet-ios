@@ -24,8 +24,8 @@ extension WKWebViewConfiguration {
         js +=
         """
         let callbacks = {};
-        function addCallback(id, cb) {
-            callbacks[id] = cb
+        function addCallback(id, cb, isRPC = true) {
+            callbacks[id] = {cb, isRPC}
         }
 
         function executeCallback(id, error, value) {
@@ -33,13 +33,21 @@ extension WKWebViewConfiguration {
             console.log("id", id)
             console.log("value", value)
             console.log("error", error)
-            if (error) {
-                let response = {"id": id, jsonrpc: "2.0", result: null, error: {message: error}}
-                callbacks[id](error, null)
+            console.log("error", error)
+
+            let callback = callbacks[id].cb
+            if (callbacks[id].isRPC) {
+                if (error) {
+                    let response = {"id": id, jsonrpc: "2.0", result: null, error: {message: error}}
+                    callback(response, null)
+                } else {
+                    let response = {"id": id, jsonrpc: "2.0", result: value}
+                    callback(null, response)
+                }
             } else {
-                let response = {"id": id, jsonrpc: "2.0", result: value}
-                callbacks[id](error, response)
+                callback(error, value)
             }
+
             delete callbacks[id]
         }
 
@@ -79,9 +87,11 @@ extension WKWebViewConfiguration {
         web3.eth.getCoinbase = function(cb) {
             return cb(null, "\(address)")
         }
-        web3.eth.sendTransaction = function(request, cb) {
-            console.log("request", request)
-            sendTransaction(request, cb)
+        web3.eth.sendTransaction = function(transaction, cb) {
+            console.log("transaction", transaction)
+            let id = 99999
+            addCallback(id, cb, false)
+            webkit.messageHandlers.sendTransaction.postMessage({"name": "sendTransaction", "object": transaction, id: id})
         }
 
         function response(request, result) {
