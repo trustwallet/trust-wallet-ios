@@ -164,7 +164,7 @@ class SendViewController: FormViewController {
 
         let parsedValue: BigInt? = {
             switch transferType {
-            case .ether: // exchange doesn't really matter here
+            case .ether:
                 return EtherNumberFormatter.full.number(from: amountString, units: .ether)
             case .token(let token):
                 return EtherNumberFormatter.full.number(from: amountString, decimals: token.decimals)
