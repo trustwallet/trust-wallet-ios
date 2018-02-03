@@ -2,12 +2,10 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "onepassword-button.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "onepassword-button@2x.png",
       "scale" : "2x"
     },
     {
