@@ -155,7 +155,7 @@ class SendViewController: FormViewController {
         if self.currentPair.left == viewModel.symbol {
             amountString = amountRow?.value?.trimmed ?? ""
         } else {
-            amountString = String(pairValue).trimmed
+            amountString = String(format: "%f", self.pairValue).trimmed
         }
 
         guard let address = Address(string: addressString) else {
