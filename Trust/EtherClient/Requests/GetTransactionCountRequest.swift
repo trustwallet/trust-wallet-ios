@@ -8,6 +8,7 @@ struct GetTransactionCountRequest: JSONRPCKit.Request {
     typealias Response = Int
 
     let address: String
+    let state: String
 
     var method: String {
         return "eth_getTransactionCount"
@@ -16,7 +17,7 @@ struct GetTransactionCountRequest: JSONRPCKit.Request {
     var parameters: Any? {
         return [
             address,
-            "latest",
+            state,
         ]
     }
 

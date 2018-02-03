@@ -31,7 +31,10 @@ class SendTransactionCoordinator {
         if transaction.nonce >= 0 {
             signAndSend(transaction: transaction, completion: completion)
         } else {
-            let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(address: session.account.address.description)))
+            let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(
+                address: session.account.address.description,
+                state: "pending"
+            )))
             Session.send(request) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {
