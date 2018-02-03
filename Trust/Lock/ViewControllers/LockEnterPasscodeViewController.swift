@@ -7,6 +7,7 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
     private lazy var lockEnterPasscodeViewModel: LockEnterPasscodeViewModel? = {
         return self.model as? LockEnterPasscodeViewModel
     }()
+    var unlockWithResult: ((_ success: Bool, _ bioUnlock: Bool) -> Void)?
     private var context: LAContext!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +20,10 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
             self.lockView.lockTitle.text = lockEnterPasscodeViewModel?.tryAfterOneMinute
             maxAttemptTimerValidation()
         }
-        context = LAContext()
-        touchValidation()
+    }
+    func showBioMerickAuth() {
+        self.context = LAContext()
+        self.touchValidation()
     }
     override func enteredPasscode(_ passcode: String) {
         super.enteredPasscode(passcode)
@@ -28,7 +31,7 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
             lock.resetPasscodeAttemptHistory()
             lock.removeIncorrectMaxAttemptTime()
             self.lockView.lockTitle.text = lockEnterPasscodeViewModel?.initialLabelText
-            finish(withResult: true, animated: true)
+            unlock(withResult: true, bioUnlock: false)
         } else {
             let numberOfAttempts = self.lock.numberOfAttempts()
             let passcodeAttemptLimit = model.passcodeAttemptLimit()
@@ -57,6 +60,12 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
             self.showKeyboard()
         }
     }
+    private func unlock(withResult success: Bool, bioUnlock: Bool) {
+        self.view.endEditing(true)
+        if let unlock = unlockWithResult {
+            unlock(success, bioUnlock)
+        }
+    }
     private func canEvaluatePolicy() -> Bool {
         return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
@@ -64,13 +73,16 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
         guard canEvaluatePolicy(), let reason = lockEnterPasscodeViewModel?.loginReason else {
             return
         }
+        self.hideKeyboard()
         context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,localizedReason: reason) { [weak self](success,_) in
-            if success {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                if success {
                     self?.lock.resetPasscodeAttemptHistory()
                     self?.lock.removeIncorrectMaxAttemptTime()
                     self?.lockView.lockTitle.text = self?.lockEnterPasscodeViewModel?.initialLabelText
-                    self?.finish(withResult: true, animated: true)
+                    self?.unlock(withResult: true, bioUnlock: true)
+                 } else {
+                    self?.showKeyboard()
                 }
             }
         }

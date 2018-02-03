@@ -4,7 +4,7 @@ import UIKit
 
 class LockEnterPasscodeCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
-    var passcodeViewIsActive = false
+    var protectionWasShown = false
     private let window: UIWindow
     private let model: LockEnterPasscodeViewModel
     private let lock: LockInterface
@@ -13,28 +13,27 @@ class LockEnterPasscodeCoordinator: Coordinator {
     }()
     init(window: UIWindow, model: LockEnterPasscodeViewModel, lock: LockInterface = Lock()) {
         self.window = window
-        //We should show passcode window on the top of all windows.
-        self.window.windowLevel = UIWindowLevelStatusBar + 1.0
         self.model = model
         self.lock = lock
-        lockEnterPasscodeViewController.willFinishWithResult = { [weak self] state in
+        lockEnterPasscodeViewController.unlockWithResult = { [weak self] (state, bioUnlock) in
             if state {
                 self?.stop()
             }
+            self?.protectionWasShown = bioUnlock
         }
     }
     func start() {
         guard lock.isPasscodeSet() else {
-             //Due to the lazy init and navigation flow we should call viewWillAppear manually.
-            lockEnterPasscodeViewController.viewWillAppear(true)
             return
         }
-        passcodeViewIsActive = true
+        protectionWasShown = true
         window.rootViewController = lockEnterPasscodeViewController
         window.makeKeyAndVisible()
+        //Because of the usage of the window and rootViewController we are not able to receive properly view life circle events. So we should call this methods manually.
+        lockEnterPasscodeViewController.showKeyboard()
+        lockEnterPasscodeViewController.showBioMerickAuth()
     }
     func stop() {
-        passcodeViewIsActive = false
         window.isHidden = true
     }
 }

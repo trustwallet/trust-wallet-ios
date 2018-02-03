@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         } catch {
             print("EtherKeystore init issue.")
         }
-        protectionCoordinator.didFinishLaunchingWithOptions()
         return true
     }
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -32,9 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationDidBecomeActive(_ application: UIApplication) {
         Lokalise.shared.checkForUpdates { _, _ in }
         protectionCoordinator.applicationDidBecomeActive()
-    }
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        protectionCoordinator.applicationWillEnterForeground()
     }
     func application(_ application: UIApplication, shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplicationExtensionPointIdentifier) -> Bool {
         if extensionPointIdentifier == UIApplicationExtensionPointIdentifier.keyboard {

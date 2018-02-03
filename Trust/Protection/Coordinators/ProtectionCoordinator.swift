@@ -10,26 +10,25 @@ class ProtectionCoordinator: Coordinator {
     lazy var lockEnterPasscodeCoordinator: LockEnterPasscodeCoordinator = {
         return LockEnterPasscodeCoordinator(window: self.protectionWindow, model: LockEnterPasscodeViewModel())
     }()
-    let protectionWindow: UIWindow
+    let protectionWindow = UIWindow()
     init() {
-        self.protectionWindow = UIWindow()
+        protectionWindow.windowLevel = UIWindowLevelStatusBar + 1.0
     }
     func applicationWillResignActive() {
-        if !lockEnterPasscodeCoordinator.passcodeViewIsActive {
-            splashCoordinator.start()
+        //We should show spalsh screen when protection is on. And app is susepndet.
+        guard Lock().isPasscodeSet() else {
+            return
         }
+        splashCoordinator.start()
     }
     func applicationDidBecomeActive() {
-        if !lockEnterPasscodeCoordinator.passcodeViewIsActive {
-            splashCoordinator.dismiss()
+        //We should dismiss spalsh screen when app become active.
+        splashCoordinator.stop()
+        //We track protectionWasShown becouse of the TouchId that will trigger applicationDidBecomeActive method after valdiation.
+        if !lockEnterPasscodeCoordinator.protectionWasShown {
+            lockEnterPasscodeCoordinator.start()
+        } else {
+            lockEnterPasscodeCoordinator.protectionWasShown = false
         }
-    }
-    func didFinishLaunchingWithOptions() {
-        //Show passcode validation on start of the app.
-        lockEnterPasscodeCoordinator.start()
-    }
-    func applicationWillEnterForeground() {
-        //Show passcode validation on app relaunch.
-        lockEnterPasscodeCoordinator.start()
     }
 }
