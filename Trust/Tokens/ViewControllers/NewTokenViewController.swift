@@ -87,7 +87,7 @@ class NewTokenViewController: FormViewController {
         }
 
         let contract = contractRow?.value ?? ""
-        let name = symbolRow?.value ?? ""
+        let name = nameRow?.value ?? ""
         let symbol = symbolRow?.value ?? ""
         let decimals = Int(decimalsRow?.value ?? "") ?? 0
 
