@@ -84,7 +84,10 @@ class TransactionsViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
 
-        errorView = ErrorView(insets: insets, onRetry: fetch)
+        errorView = ErrorView(insets: insets, onRetry: { [weak self] in
+            self?.startLoading()
+            self?.dataCoordinator.fetch()
+        })
         loadingView = LoadingView(insets: insets)
         emptyView = {
             let view = TransactionsEmptyView(

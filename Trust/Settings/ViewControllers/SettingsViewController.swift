@@ -44,17 +44,20 @@ class SettingsViewController: FormViewController {
 
         form = Section()
 
-            <<< PushRow<RPCServer> {
-                $0.title = viewModel.networkTitle
-                $0.options = viewModel.servers
-                $0.value = RPCServer(chainID: config.chainID)
-                $0.selectorTitle = viewModel.networkTitle
+            <<< PushRow<RPCServer> { [weak self] in
+                guard let strongSelf = self else {
+                    return
+                }
+                $0.title = strongSelf.viewModel.networkTitle
+                $0.options = strongSelf.viewModel.servers
+                $0.value = RPCServer(chainID: strongSelf.config.chainID)
+                $0.selectorTitle = strongSelf.viewModel.networkTitle
                 $0.displayValueFor = { value in
                     return value?.name
                 }
-            }.onChange { row in
-                self.config.chainID = row.value?.chainID ?? RPCServer.main.chainID
-                self.run(action: .RPCServer)
+            }.onChange {[weak self] row in
+                self?.config.chainID = row.value?.chainID ?? RPCServer.main.chainID
+                self?.run(action: .RPCServer)
             }.onPresent { _, selectorController in
                 selectorController.enableDeselection = false
                 selectorController.sectionKeyForValue = { option in
@@ -81,11 +84,11 @@ class SettingsViewController: FormViewController {
 
             +++ Section()
 
-            <<< PushRow<Currency> {
-                $0.title = viewModel.currencyTitle
-                $0.selectorTitle = viewModel.currencyTitle
-                $0.options = viewModel.currency
-                $0.value = config.currency
+            <<< PushRow<Currency> { [weak self] in
+                $0.title = self?.viewModel.currencyTitle
+                $0.selectorTitle = self?.viewModel.currencyTitle
+                $0.options = self?.viewModel.currency
+                $0.value = self?.config.currency
                 $0.displayValueFor = { value in
                     let currencyCode = value?.rawValue ?? ""
                     if #available(iOS 10.0, *) {
@@ -94,10 +97,10 @@ class SettingsViewController: FormViewController {
                         return currencyCode
                     }
                 }
-            }.onChange { row in
+            }.onChange { [weak self]  row in
                 guard let value = row.value else { return }
-                self.config.currency = value
-                self.run(action: .currency)
+                self?.config.currency = value
+                self?.run(action: .currency)
             }.onPresent { _, selectorController in
                 selectorController.enableDeselection = false
                 selectorController.sectionKeyForValue = { option in
@@ -118,10 +121,9 @@ class SettingsViewController: FormViewController {
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settingsCurrency()
             }
-
-            <<< SwitchRow {
+            <<< SwitchRow { [weak self] in
                 $0.title = NSLocalizedString("settings.dappbroser.button.title", value: "DApps Browser", comment: "")
-                $0.value = config.isDAppsBrowserAvailable
+                $0.value = self?.config.isDAppsBrowserAvailable
             }.onChange { [unowned self] row in
                 self.config.isDAppsBrowserAvailable = row.value ?? false
                 self.run(action: .DAppsBrowser)
@@ -131,9 +133,9 @@ class SettingsViewController: FormViewController {
 
             +++ Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))
 
-            <<< SwitchRow {
-                $0.title = viewModel.passcodeTitle
-                $0.value = self.isPasscodeEnabled
+            <<< SwitchRow { [weak self] in
+                $0.title = self?.viewModel.passcodeTitle
+                $0.value = self?.isPasscodeEnabled
             }.onChange { [unowned self] row in
                 if row.value == true {
                     self.setPasscode { result in
@@ -188,16 +190,16 @@ class SettingsViewController: FormViewController {
 
             <<< AppFormAppearance.button { button in
                 button.title = NSLocalizedString("settings.rateUsAppStore.button.title", value: "Rate Us on App Store", comment: "")
-            }.onCellSelection { _, _  in
-                self.helpUsCoordinator.rateUs()
+            }.onCellSelection {[weak self] _, _  in
+                self?.helpUsCoordinator.rateUs()
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_rating()
             }
 
             <<< AppFormAppearance.button { button in
                 button.title = NSLocalizedString("settings.emailUsReadFAQ.button.title", value: "Email Us (Read FAQ first)", comment: "")
-            }.onCellSelection { _, _  in
-                self.sendUsEmail()
+            }.onCellSelection {[weak self] _, _  in
+                self?.sendUsEmail()
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_email()
             }
@@ -224,9 +226,9 @@ class SettingsViewController: FormViewController {
 
             +++ Section()
 
-            <<< TextRow {
+            <<< TextRow { [weak self] in
                 $0.title = NSLocalizedString("settings.version.label.title", value: "Version", comment: "")
-                $0.value = version()
+                $0.value = self?.version()
                 $0.disabled = true
             }
     }
