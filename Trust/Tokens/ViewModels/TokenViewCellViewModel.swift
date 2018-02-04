@@ -43,10 +43,10 @@ struct TokenViewCellViewModel {
         guard amount > 0 else { return nil }
         return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
     }
-
+    
     var percentChange: String? {
-        guard (ticker?.percent_change_24h.isEmpty)! else { return "(" + (ticker?.percent_change_24h)! + "%)" }
-        return nil
+        guard let percent_change_24h = ticker?.percent_change_24h, !percent_change_24h.isEmpty else { return nil }
+        return "(" + percent_change_24h + "%)"
     }
 
     var percentChangeColor: UIColor {
