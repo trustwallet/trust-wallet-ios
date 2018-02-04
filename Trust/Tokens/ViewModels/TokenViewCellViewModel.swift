@@ -46,7 +46,11 @@ struct TokenViewCellViewModel {
 
     var percentChange: String? {
         guard let ticker = ticker else { return nil }
-        return "(" + ticker.percent_change_24h + "%)"
+        let percentChange = ticker.percent_change_24h
+        if percentChange.isEmpty {
+            return nil
+        }
+        return "(" + percentChange + "%)"
     }
 
     var percentChangeColor: UIColor {
