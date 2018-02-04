@@ -30,11 +30,11 @@ class ConfigureTransactionViewController: FormViewController {
         )
     }()
 
-    private var gasPriceRow: SliderRow? {
-        return form.rowBy(tag: Values.gasPrice) as? SliderRow
+    private var gasPriceRow: SliderTextFieldRow? {
+        return form.rowBy(tag: Values.gasPrice) as? SliderTextFieldRow
     }
-    private var gasLimitRow: SliderRow? {
-        return form.rowBy(tag: Values.gasLimit) as? SliderRow
+    private var gasLimitRow: SliderTextFieldRow? {
+        return form.rowBy(tag: Values.gasLimit) as? SliderTextFieldRow
     }
     private var totalFeeRow: TextRow? {
         return form.rowBy(tag: Values.totalFee) as? TextRow
@@ -90,14 +90,14 @@ class ConfigureTransactionViewController: FormViewController {
             footer: viewModel.gasPriceFooterText
         )
 
-        <<< SliderRow(Values.gasPrice) {
-            $0.title = NSLocalizedString("configureTransaction.gasPrice.label.title", value: "Gas Price", comment: "")
+        <<< SliderTextFieldRow(Values.gasPrice) {
+            $0.title = NSLocalizedString("configureTransaction.gasPriceGwei.label.title", value: "Gas Price (Gwei)", comment: "")
             $0.value = Float(gasPriceGwei) ?? 1
             $0.minimumValue = Float(GasPriceConfiguration.min / BigInt(UnitConfiguration.gasPriceUnit.rawValue))
             $0.maximumValue = Float(GasPriceConfiguration.max / BigInt(UnitConfiguration.gasPriceUnit.rawValue))
             $0.steps = UInt((GasPriceConfiguration.max / GasPriceConfiguration.min))
             $0.displayValueFor = { (rowValue: Float?) in
-                return "\(Int(rowValue ?? 1)) (Gwei)"
+                return "\(Int(rowValue ?? 1))"
             }
             $0.onChange { [unowned self] _ in
                 self.recalculateTotalFee()
@@ -108,7 +108,7 @@ class ConfigureTransactionViewController: FormViewController {
             footer: viewModel.gasLimitFooterText
         )
 
-        <<< SliderRow(Values.gasLimit) {
+        <<< SliderTextFieldRow(Values.gasLimit) {
             $0.title = NSLocalizedString("configureTransaction.gasLimit.label.title", value: "Gas Limit", comment: "")
             $0.value = Float(configuration.gasLimit.description) ?? 21000
             $0.minimumValue = Float(GasLimitConfiguration.min)
