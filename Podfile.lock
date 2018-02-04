@@ -40,7 +40,7 @@ PODS:
   - StatefulViewController (3.0)
   - SwiftLint (0.24.1)
   - TrezorCrypto (0.0.2)
-  - TrustKeystore (0.1.1):
+  - TrustKeystore (0.1.2):
     - CryptoSwift
     - secp256k1_ios (~> 0.1.0)
     - TrezorCrypto
@@ -67,7 +67,7 @@ DEPENDENCIES:
   - SeedStackViewController
   - StatefulViewController
   - SwiftLint
-  - TrustKeystore (~> 0.1.1)
+  - TrustKeystore (~> 0.1.2)
 
 EXTERNAL SOURCES:
   CryptoSwift:
@@ -119,8 +119,8 @@ SPEC CHECKSUMS:
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: 2e4b89feed5909c42c3735bbd6745f4345c4b772
   TrezorCrypto: 83fd28a156e8a79ec8007d3cad58abe7206516de
-  TrustKeystore: 7a3c220ee190629d52610820584ef32c4428d623
+  TrustKeystore: cb74d62f3445920b087ba2d491f8785924c34453
 
-PODFILE CHECKSUM: b4fa1ee6b364c90d5c0b1c5f71ee44e89ac1b2cf
+PODFILE CHECKSUM: 80e793b6b0ff498925d5e8f0e9cf12ab7638a87d
 
 COCOAPODS: 1.4.0
