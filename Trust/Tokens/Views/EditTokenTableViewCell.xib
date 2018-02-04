@@ -49,7 +49,7 @@
                                     <constraint firstItem="Su7-1W-bDk" firstAttribute="centerY" secondItem="fRy-j2-9ES" secondAttribute="centerY" constant="10" id="VAL-9W-wbh"/>
                                 </constraints>
                             </stackView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uf5-TC-p3g">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uf5-TC-p3g">
                                 <rect key="frame" x="250" y="0.0" width="51" height="31"/>
                                 <connections>
                                     <action selector="didChangeSwitch:" destination="KGk-i7-Jjw" eventType="valueChanged" id="RNY-kW-3Zh"/>
