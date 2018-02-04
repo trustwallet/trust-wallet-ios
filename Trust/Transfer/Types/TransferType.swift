@@ -18,12 +18,12 @@ extension TransferType {
         }
     }
 
-    func contract() -> String {
+    func contract() -> Address {
         switch self {
         case .ether:
-            return TokensDataStore.etherToken(for: Config()).contract
+            return Address(string: TokensDataStore.etherToken(for: Config()).contract)!
         case .token(let token):
-            return token.contract
+            return Address(string: token.contract)!
         }
     }
 }

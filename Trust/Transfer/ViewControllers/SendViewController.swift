@@ -250,7 +250,6 @@ class SendViewController: FormViewController {
         UIView.setAnimationsEnabled(false)
         tableView.beginUpdates()
         if let containerView = tableView.footerView(forSection: 1) {
-            
             containerView.textLabel!.text = "~ \(String(format: "%f", self.pairValue)) " + "\(currentPair.right)"
             containerView.sizeToFit()
         }
@@ -259,7 +258,7 @@ class SendViewController: FormViewController {
     }
 
     private func updatePairPrice(with amount: Double) {
-        guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.contract], let price = Double(currentTokenInfo.price) else {
+        guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.destinationAddress.description], let price = Double(currentTokenInfo.price) else {
             return
         }
         if self.currentPair.left == viewModel.symbol {
@@ -271,7 +270,7 @@ class SendViewController: FormViewController {
     }
 
     private func isFiatViewHidden() -> Bool {
-        guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.contract], let _ = Double(currentTokenInfo.price) else {
+        guard let currentTokenInfo = storage.tickers?[viewModel.destinationAddress.description], let price = Double(currentTokenInfo.price), price > 0 else {
             return true
         }
         return false

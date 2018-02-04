@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import TrustKeystore
 
 struct SendViewModel {
 
@@ -24,7 +25,7 @@ struct SendViewModel {
         return transferType.symbol(server: config.server)
     }
 
-    var contract: String {
+    var destinationAddress: Address {
         return transferType.contract()
     }
 
