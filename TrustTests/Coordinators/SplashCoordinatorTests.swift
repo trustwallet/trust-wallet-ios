@@ -10,13 +10,12 @@ class SplashCoordinatorTests: XCTestCase {
         let coordinator = SplashCoordinator(window: window)
         coordinator.start()
         XCTAssertFalse(window.isHidden)
-        XCTAssertNotNil(window.subviews.first)
     }
     func testStop() {
         let window = UIWindow()
         let coordinator = SplashCoordinator(window: window)
         coordinator.start()
         coordinator.stop()
-        XCTAssertNil(window.subviews.first)
+        XCTAssertTrue(window.isHidden)
     }
 }
