@@ -5,14 +5,14 @@ import UIKit
 class LockEnterPasscodeCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     var protectionWasShown = false
-    private let window: UIWindow
+    private let window: UIWindow = UIWindow()
     private let model: LockEnterPasscodeViewModel
     private let lock: LockInterface
     private lazy var lockEnterPasscodeViewController: LockEnterPasscodeViewController = {
         return LockEnterPasscodeViewController(model: model)
     }()
-    init(window: UIWindow, model: LockEnterPasscodeViewModel, lock: LockInterface = Lock()) {
-        self.window = window
+    init(model: LockEnterPasscodeViewModel, lock: LockInterface = Lock()) {
+        self.window.windowLevel = UIWindowLevelStatusBar + 1.0
         self.model = model
         self.lock = lock
         lockEnterPasscodeViewController.unlockWithResult = { [weak self] (state, bioUnlock) in

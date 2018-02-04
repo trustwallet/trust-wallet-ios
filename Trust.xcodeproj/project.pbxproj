@@ -312,6 +312,7 @@
 		77872D292025116E0032D687 /* EnterPasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D282025116E0032D687 /* EnterPasswordCoordinator.swift */; };
 		77872D2D202514AD0032D687 /* EnterPasswordCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D2C202514AD0032D687 /* EnterPasswordCoordinatorTests.swift */; };
 		77872D322027AA4A0032D687 /* SliderTextFieldRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D312027AA4A0032D687 /* SliderTextFieldRow.swift */; };
+		77872D302026DC570032D687 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D2F2026DC570032D687 /* SplashViewController.swift */; };
 		778EAF7D1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */; };
 		77B3BF352017D0D000EEC15A /* MarketplaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF342017D0D000EEC15A /* MarketplaceViewModel.swift */; };
 		77B3BF3C201908ED00EEC15A /* ConfirmCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */; };
@@ -664,6 +665,7 @@
 		77872D282025116E0032D687 /* EnterPasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPasswordCoordinator.swift; sourceTree = "<group>"; };
 		77872D2C202514AD0032D687 /* EnterPasswordCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPasswordCoordinatorTests.swift; sourceTree = "<group>"; };
 		77872D312027AA4A0032D687 /* SliderTextFieldRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTextFieldRow.swift; sourceTree = "<group>"; };
+		77872D2F2026DC570032D687 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinatorTests.swift; sourceTree = "<group>"; };
 		77B3BF342017D0D000EEC15A /* MarketplaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceViewModel.swift; sourceTree = "<group>"; };
 		77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCoordinator.swift; sourceTree = "<group>"; };
@@ -1783,6 +1785,7 @@
 		732086B2201506AA0047F605 /* Protection */ = {
 			isa = PBXGroup;
 			children = (
+				77872D2E2026DC4E0032D687 /* ViewControllers */,
 				732086B3201507220047F605 /* Coordinators */,
 				732086B5201507220047F605 /* Views */,
 			);
@@ -1894,6 +1897,14 @@
 				77872D2C202514AD0032D687 /* EnterPasswordCoordinatorTests.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		77872D2E2026DC4E0032D687 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				77872D2F2026DC570032D687 /* SplashViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		778EAF7B1FF10AE000C8E2AB /* Coordinators */ = {
@@ -2523,6 +2534,7 @@
 				29BE3FD01F7071A200F6BFC2 /* UIColor.swift in Sources */,
 				73ACEEFB20163C94003DD71D /* LockView.swift in Sources */,
 				771AA964200D5EDB00D25403 /* WordCollectionViewCell.swift in Sources */,
+				77872D302026DC570032D687 /* SplashViewController.swift in Sources */,
 				2996F1481F6C9AE5005C33AE /* SettingsCoordinator.swift in Sources */,
 				29C80D4D1FB5202C0037B1E0 /* BalanceBaseViewModel.swift in Sources */,
 				29E14FD11F7F457D00185568 /* TransactionsStorage.swift in Sources */,
@@ -2880,7 +2892,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Trust/Trust.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 141;
 				DEVELOPMENT_TEAM = 9873B38DWV;
@@ -2890,8 +2902,8 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sixdays.trust;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "09b158f8-8b12-4ed4-8489-9514fc5e69aa";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development com.sixdays.trust";
+				PROVISIONING_PROFILE = "7edbff9c-3e3f-4ba3-b84f-19ac095b8e95";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.sixdays.trust";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7  armv7s";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2913,7 +2925,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sixdays.trust;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "36d4af79-beee-452d-a1eb-76d840b41c13";
+				PROVISIONING_PROFILE = "7edbff9c-3e3f-4ba3-b84f-19ac095b8e95";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.sixdays.trust";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "arm64 armv7  armv7s";
