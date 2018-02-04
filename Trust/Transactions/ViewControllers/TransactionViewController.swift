@@ -12,7 +12,8 @@ class TransactionViewController: UIViewController {
             transaction: self.transaction,
             config: self.config,
             chainState: self.session.chainState,
-            currentWallet: self.session.account
+            currentWallet: self.session.account,
+            currencyRate: self.session.balanceCoordinator.currencyRate
         )
     }()
     let stackViewController = StackViewController()
