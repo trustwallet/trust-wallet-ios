@@ -32,37 +32,34 @@ class TokensViewController: UIViewController {
     ) {
         self.account = account
         self.dataStore = dataStore
-
         tableView = UITableView(frame: .zero, style: .plain)
-
         super.init(nibName: nil, bundle: nil)
-
         dataStore.delegate = self
-
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
         view.addSubview(tableView)
-
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         ])
-
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
-
-        errorView = ErrorView(onRetry: fetch)
+        errorView = ErrorView(onRetry: { [weak self] in
+            self?.startLoading()
+            self?.dataStore.fetch()
+        })
         loadingView = LoadingView()
         emptyView = EmptyView(
             title: NSLocalizedString("emptyView.noTokens.label.title", value: "You haven't received any tokens yet!", comment: ""),
-            onRetry: fetch
-        )
-
+            onRetry: { [weak self] in
+                self?.startLoading()
+                self?.dataStore.fetch()
+        })
         refreshView(viewModel: viewModel)
     }
 
@@ -77,8 +74,8 @@ class TokensViewController: UIViewController {
     }
 
     func fetch() {
-        startLoading()
-        dataStore.fetch()
+        self.startLoading()
+        self.dataStore.fetch()
     }
 
     required init?(coder aDecoder: NSCoder) {
