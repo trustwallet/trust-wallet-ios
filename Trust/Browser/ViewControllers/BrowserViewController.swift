@@ -56,7 +56,7 @@ class BrowserViewController: UIViewController {
         view.addSubview(webView)
 
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.tintColor = Colors.blue
+        progressView.tintColor = Colors.darkBlue
         webView.addSubview(progressView)
         webView.bringSubview(toFront: progressView)
 

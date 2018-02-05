@@ -9,16 +9,20 @@ func applyStyle() {
     } else {
         UINavigationBar.appearance().isTranslucent = false
     }
-
-    UINavigationBar.appearance().tintColor = Colors.blue
+    UINavigationBar.appearance().tintColor = UIColor.white
+    UINavigationBar.appearance().setBackgroundImage(.filled(with: Colors.darkBlue), for: .default)
 
     UINavigationBar.appearance().titleTextAttributes = [
-        .foregroundColor: Colors.black,
+        .foregroundColor: UIColor.white,
     ]
+    UIButton.appearance().tintColor = UIColor.white
+
+    BalanceTitleView.appearance().titleTextColor = UIColor.white
+    BalanceTitleView.appearance().subTitleTextColor = UIColor(white: 0.9, alpha: 1)
 }
 
 struct Colors {
-    static let darkBlue = UIColor(hex: "1E76CE")
+    static let darkBlue = UIColor(hex: "3375BB")
     static let blue = UIColor(hex: "2e91db")
     static let red = UIColor(hex: "f7506c")
     static let veryLightRed = UIColor(hex: "FFF4F4")
