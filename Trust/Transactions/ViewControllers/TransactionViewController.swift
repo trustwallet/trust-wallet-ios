@@ -112,8 +112,7 @@ class TransactionViewController: UIViewController {
     }
 
     @objc func more() {
-        let controller = SFSafariViewController(url: viewModel.detailsURL)
-        present(controller, animated: true, completion: nil)
+        openURL(viewModel.detailsURL)
     }
 
     @objc func share(_ sender: UIBarButtonItem) {
