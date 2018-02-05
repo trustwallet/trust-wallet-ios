@@ -34,6 +34,7 @@ struct Colors {
     static let darkGray = UIColor(hex: "606060")
     static let black = UIColor(hex: "313849")
     static let lightBlack = UIColor(hex: "313849")
+    static let lightBlue = UIColor(hex: "007aff")
 }
 
 struct StyleLayout {

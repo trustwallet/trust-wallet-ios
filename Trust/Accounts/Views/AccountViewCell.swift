@@ -24,6 +24,7 @@ class AccountViewCell: UITableViewCell {
             glassesImageView.isHidden = !model.isWatch
             activeView.isHidden = !model.isActive
             addressLable.text = model.title
+            infoButton.tintColor = Colors.lightBlue
         }
     }
     override func prepareForReuse() {
