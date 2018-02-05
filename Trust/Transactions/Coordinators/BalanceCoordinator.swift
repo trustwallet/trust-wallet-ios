@@ -37,7 +37,7 @@ class BalanceCoordinator {
             guard let tokens = tokensModel, let eth = tokens.first(where: { $0 == etherToken }) else {
                 return
             }
-            var ticker = storage.coinTicker(for: eth)
+            var ticker = self?.storage.coinTicker(for: eth)
             self?.balance = Balance(value: BigInt(eth.value, radix: 10) ?? BigInt(0))
             self?.currencyRate = ticker?.rate
             self?.update()
