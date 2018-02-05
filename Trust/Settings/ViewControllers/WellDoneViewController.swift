@@ -23,7 +23,7 @@ class WellDoneViewController: UIViewController {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.text = NSLocalizedString("welldone.description.label.text", value: "Help us grow by sharing this app with your friends!", comment: "")
         descriptionLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        descriptionLabel.textColor = Colors.blue
+        descriptionLabel.textColor = Colors.darkBlue
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center
 
