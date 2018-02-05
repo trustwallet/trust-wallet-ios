@@ -103,7 +103,7 @@ class SendViewController: FormViewController {
         amountRightView.axis = .horizontal
 
         form = Section()
-            +++ Section(header: "", footer: isFiatViewHidden() ? "" : "~ \(String(format: "%f", self.pairValue)) " + "\(currentPair.right)")
+            +++ Section(header: "", footer: isFiatViewHidden() ? "" : "~ \(String(format: "%.2f", self.pairValue)) " + "\(currentPair.right)")
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
@@ -250,7 +250,7 @@ class SendViewController: FormViewController {
         UIView.setAnimationsEnabled(false)
         tableView.beginUpdates()
         if let containerView = tableView.footerView(forSection: 1) {
-            containerView.textLabel!.text = "~ \(String(format: "%f", self.pairValue)) " + "\(currentPair.right)"
+            containerView.textLabel!.text = "~ \(String(format: "%.2f", self.pairValue)) " + "\(currentPair.right)"
             containerView.sizeToFit()
         }
         tableView.endUpdates()
