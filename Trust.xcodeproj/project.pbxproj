@@ -305,6 +305,7 @@
 		771AA962200D5EC700D25403 /* PassphraseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA961200D5EC700D25403 /* PassphraseViewModel.swift */; };
 		771AA964200D5EDB00D25403 /* WordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA963200D5EDB00D25403 /* WordCollectionViewCell.swift */; };
 		771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */; };
+		7721A6BE202A5677004DB16C /* DecryptError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6BD202A5677004DB16C /* DecryptError.swift */; };
 		775C00B520195BFB001B5EBC /* BrowserAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C00B420195BFB001B5EBC /* BrowserAction.swift */; };
 		77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D222023F43B0032D687 /* TransactionsTracker.swift */; };
 		77872D25202505B70032D687 /* EnterPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D24202505B70032D687 /* EnterPasswordViewController.swift */; };
@@ -658,6 +659,7 @@
 		771AA961200D5EC700D25403 /* PassphraseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseViewModel.swift; sourceTree = "<group>"; };
 		771AA963200D5EDB00D25403 /* WordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCollectionViewCell.swift; sourceTree = "<group>"; };
 		771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WordCollectionViewCell.xib; sourceTree = "<group>"; };
+		7721A6BD202A5677004DB16C /* DecryptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecryptError.swift; sourceTree = "<group>"; };
 		775C00B420195BFB001B5EBC /* BrowserAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserAction.swift; sourceTree = "<group>"; };
 		77872D222023F43B0032D687 /* TransactionsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTracker.swift; sourceTree = "<group>"; };
 		77872D24202505B70032D687 /* EnterPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewController.swift; sourceTree = "<group>"; };
@@ -1367,6 +1369,7 @@
 				293112361FC9A24600966EEA /* UIGestureRecognizer+Closure.swift */,
 				29F1C85020032688003780D8 /* Address.swift */,
 				29FA00D3201EC662002F7DC5 /* NSObject.swift */,
+				7721A6BD202A5677004DB16C /* DecryptError.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2518,6 +2521,7 @@
 				2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */,
 				29C9F5F91F720BD30025C494 /* FloatLabelCell.swift in Sources */,
 				771AA960200D5E8800D25403 /* PassphraseView.swift in Sources */,
+				7721A6BE202A5677004DB16C /* DecryptError.swift in Sources */,
 				61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */,
 				29DBF2A71F9F145900327C60 /* StateViewModel.swift in Sources */,
 				2923D9B31FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift in Sources */,
