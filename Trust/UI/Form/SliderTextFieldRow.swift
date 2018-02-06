@@ -101,7 +101,7 @@ open class SliderTextFieldCell: Cell<Float>, CellType, UITextFieldDelegate {
         guard !awakeFromNibCalled else { return }
 
         textField.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        textField.widthAnchor.constraint(equalToConstant: 160).isActive = true
+        textField.widthAnchor.constraint(equalToConstant: 140).isActive = true
 
         let views: [String: Any] = ["titleLabel": titleLabel, "textField": textField, "slider": slider]
         let metrics = ["vPadding": 12.0, "spacing": 12.0]
@@ -156,6 +156,18 @@ open class SliderTextFieldCell: Cell<Float>, CellType, UITextFieldDelegate {
 
     @objc public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return true
+    }
+
+    open override func cellCanBecomeFirstResponder() -> Bool {
+        return !row.isDisabled && textField.canBecomeFirstResponder == true
+    }
+
+    open override func cellBecomeFirstResponder(withDirection: Direction) -> Bool {
+        return textField.becomeFirstResponder()
+    }
+
+    open override func cellResignFirstResponder() -> Bool {
+        return textField.resignFirstResponder()
     }
 }
 
