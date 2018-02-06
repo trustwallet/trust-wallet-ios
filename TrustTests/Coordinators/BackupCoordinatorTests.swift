@@ -13,6 +13,6 @@ class BackupCoordinatorTests: XCTestCase {
         )
         coordinator.start()
 
-        XCTAssertTrue(coordinator.navigationController.presentedViewController is UIAlertController)
+        XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is EnterPasswordViewController)
     }
 }
