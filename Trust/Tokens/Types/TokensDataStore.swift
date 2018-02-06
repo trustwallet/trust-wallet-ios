@@ -125,7 +125,7 @@ class TokensDataStore {
             }
         }
     }
-    private func refreshETHBalance() {
+    func refreshETHBalance() {
         self.getBalanceCoordinator.getEthBalance(for: self.account.address) {  [weak self] result in
             guard let `self` = self else { return }
             switch result {

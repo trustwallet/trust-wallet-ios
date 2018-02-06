@@ -5,6 +5,7 @@ import TrustKeystore
 
 enum RefreshType {
     case balance
+    case ethBalance
 }
 
 class WalletSession {
@@ -43,6 +44,8 @@ class WalletSession {
         switch type {
         case .balance:
             balanceCoordinator.refresh()
+        case .ethBalance:
+            balanceCoordinator.refreshEthBalance()
         }
     }
 

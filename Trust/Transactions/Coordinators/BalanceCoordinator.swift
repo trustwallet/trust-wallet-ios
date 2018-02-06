@@ -46,6 +46,9 @@ class BalanceCoordinator {
     func refresh() {
         self.storage.refreshBalance()
     }
+    func refreshEthBalance() {
+        self.storage.refreshETHBalance()
+    }
     func update() {
         delegate?.didUpdate(viewModel: viewModel)
     }
