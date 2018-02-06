@@ -83,7 +83,7 @@ struct TransactionDetailsViewModel {
         return transaction.from
     }
 
-    var gasFee: String {
+    var gasViewModel: GasViewModel {
         let gasUsed = BigInt(transaction.gasUsed) ?? BigInt()
         let gasPrice = BigInt(transaction.gasPrice) ?? BigInt()
         let gasLimit = BigInt(transaction.gas) ?? BigInt()
@@ -94,11 +94,11 @@ struct TransactionDetailsViewModel {
             }
         }()
 
-        let gasFeeString = fullFormatter.string(from: gasFee)
-        var feeAndSymbol = "\(gasFeeString) \(config.server.symbol)"
-        if let feeInCurrency = currencyRate?.estimate(fee: gasFeeString, with: config.server.symbol) {
-            feeAndSymbol += " (\(feeInCurrency))"
-        }
+        return GasViewModel(fee: gasFee, symbol: config.server.symbol, currencyRate: currencyRate, formatter: fullFormatter)
+    }
+
+    var gasFee: String {
+        let feeAndSymbol = gasViewModel.feeText
         return feeAndSymbol
     }
 

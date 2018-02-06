@@ -23,6 +23,10 @@ struct ConfirmPaymentDetailsViewModel {
         self.currencyRate = currencyRate
     }
 
+    private var gasViewModel: GasViewModel {
+        return GasViewModel(fee: totalFee, symbol: config.server.symbol, currencyRate: currencyRate, formatter: fullFormatter)
+    }
+
     private var totalFee: BigInt {
         return transaction.gasPrice * transaction.gasLimit
     }
@@ -65,15 +69,7 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     var feeText: String {
-        let fee = fullFormatter.string(from: totalFee)
-        var feeAndSymbol = String(
-            format: "%@ %@",
-            fee.description,
-            config.server.symbol
-        )
-        if let feeInCurrency = currencyRate?.estimate(fee: fee, with: config.server.symbol) {
-            feeAndSymbol += " (\(feeInCurrency))"
-        }
+        let feeAndSymbol = gasViewModel.feeText
         let warningFee = BigInt(EthereumUnit.ether.rawValue) / BigInt(20)
         guard totalFee <= warningFee else {
             return feeAndSymbol + " - WARNING. HIGH FEE."

@@ -56,6 +56,10 @@ class ConfigureTransactionViewController: FormViewController {
         return dataRow?.value ?? "0x"
     }
 
+    private var gasViewModel: GasViewModel {
+        return GasViewModel(fee: totalFee, symbol: config.server.symbol, currencyRate: currencyRate, formatter: fullFormatter)
+    }
+
     weak var delegate: ConfigureTransactionViewControllerDelegate?
 
     init(
@@ -143,13 +147,7 @@ class ConfigureTransactionViewController: FormViewController {
     }
 
     func recalculateTotalFee() {
-
-        let fee = fullFormatter.string(from: totalFee)
-        var feeAndSymbol = "\(fee) \(config.server.symbol)"
-        if let feeInCurrency = currencyRate?.estimate(fee: fee, with: config.server.symbol) {
-            feeAndSymbol += " (\(feeInCurrency))"
-        }
-
+        var feeAndSymbol = gasViewModel.feeText
         totalFeeRow?.value = feeAndSymbol
         totalFeeRow?.updateCell()
     }
