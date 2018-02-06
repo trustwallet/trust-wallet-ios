@@ -298,6 +298,7 @@ class SettingsViewController: FormViewController {
         iOS Version: \(UIDevice.current.systemVersion)
         Device Model: \(UIDevice.current.model)
         Trust Version: \(Bundle.main.fullVersion)
+        Current locale: \(String(describing: NSLocale.current.languageCode)) - \(Locale.preferredLanguages.first ?? "")
         """
     }
 
