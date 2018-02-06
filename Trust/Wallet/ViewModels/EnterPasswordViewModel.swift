@@ -9,7 +9,7 @@ struct EnterPasswordViewModel {
     }
 
     var headerSectionText: String {
-        return NSLocalizedString("enterPassword.password.header.placeholder", value: "Password used to encrypt you backup file to keep it secure", comment: "")
+        return NSLocalizedString("enterPassword.password.header.placeholder", value: "Password used to encrypt you backup file to keep it secure!", comment: "")
     }
 
     var passwordFieldPlaceholder: String {

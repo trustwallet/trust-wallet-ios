@@ -2,6 +2,7 @@
 
 import UIKit
 import Lokalise
+import Branch
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -21,6 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             print("EtherKeystore init issue.")
         }
         protectionCoordinator.didFinishLaunchingWithOptions()
+
+        Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: {params, error in
+            if error == nil {
+                print("params: %@", params as? [String: AnyObject] ?? {})
+            }
+        })
         return true
     }
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -41,6 +48,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         if extensionPointIdentifier == UIApplicationExtensionPointIdentifier.keyboard {
             return false
         }
+        return true
+    }
+
+    // Respond to URI scheme links
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        let branchHandled = Branch.getInstance().application(application,
+                                                             open: url,
+                                                             sourceApplication: sourceApplication,
+                                                             annotation: annotation
+        )
+        if !branchHandled {
+            // If not handled by Branch, do other deep link routing for the Facebook SDK, Pinterest SDK, etc
+        }
+
+        // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
+        return true
+    }
+
+    // Respond to Universal Links
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        Branch.getInstance().continue(userActivity)
         return true
     }
 }
