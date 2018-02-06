@@ -19,6 +19,8 @@ class TokenViewCell: UITableViewCell {
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.lineBreakMode = .byTruncatingMiddle
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.minimumScaleFactor = 0.7
 
         symbolImageView.translatesAutoresizingMaskIntoConstraints = false
         symbolImageView.contentMode = .scaleAspectFit
@@ -62,8 +64,8 @@ class TokenViewCell: UITableViewCell {
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            symbolImageView.widthAnchor.constraint(equalToConstant: 45),
-            symbolImageView.heightAnchor.constraint(equalToConstant: 45),
+            symbolImageView.widthAnchor.constraint(equalToConstant: 42),
+            symbolImageView.heightAnchor.constraint(equalToConstant: 42),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -StyleLayout.sideMargin),
