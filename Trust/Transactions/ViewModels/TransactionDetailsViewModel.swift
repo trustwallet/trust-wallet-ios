@@ -21,16 +21,19 @@ struct TransactionDetailsViewModel {
     private let chainState: ChainState
     private let shortFormatter = EtherNumberFormatter.short
     private let fullFormatter = EtherNumberFormatter.full
+    private let currencyRate: CurrencyRate?
 
     init(
         transaction: Transaction,
         config: Config,
         chainState: ChainState,
-        currentWallet: Wallet
+        currentWallet: Wallet,
+        currencyRate: CurrencyRate?
     ) {
         self.transaction = transaction
         self.config = config
         self.chainState = chainState
+        self.currencyRate = currencyRate
         self.transactionViewModel = TransactionViewModel(
             transaction: transaction,
             config: config,
@@ -80,7 +83,7 @@ struct TransactionDetailsViewModel {
         return transaction.from
     }
 
-    var gasFee: String {
+    var gasViewModel: GasViewModel {
         let gasUsed = BigInt(transaction.gasUsed) ?? BigInt()
         let gasPrice = BigInt(transaction.gasPrice) ?? BigInt()
         let gasLimit = BigInt(transaction.gas) ?? BigInt()
@@ -90,7 +93,13 @@ struct TransactionDetailsViewModel {
             case .pending, .unknown, .failed: return gasPrice * gasLimit
             }
         }()
-        return fullFormatter.string(from: gasFee) + " " + config.server.symbol
+
+        return GasViewModel(fee: gasFee, symbol: config.server.symbol, currencyRate: currencyRate, formatter: fullFormatter)
+    }
+
+    var gasFee: String {
+        let feeAndSymbol = gasViewModel.feeText
+        return feeAndSymbol
     }
 
     var confirmation: String {
