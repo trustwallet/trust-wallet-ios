@@ -16,7 +16,9 @@ func applyStyle() {
         .foregroundColor: UIColor.white,
     ]
     UIButton.appearance().tintColor = UIColor.white
+
     UIImageView.appearance().tintColor = Colors.lightBlue
+    UIImageView.appearance(whenContainedInInstancesOf: [BrowserNavigationBar.self]).tintColor = .white
 
     BalanceTitleView.appearance().titleTextColor = UIColor.white
     BalanceTitleView.appearance().subTitleTextColor = UIColor(white: 0.9, alpha: 1)
