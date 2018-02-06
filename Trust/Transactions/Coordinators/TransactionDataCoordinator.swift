@@ -202,7 +202,10 @@ class TransactionDataCoordinator {
             case .success(let transactions):
                 self.update(items: transactions)
                 if !transactions.isEmpty && page <= 50 { // page limit to 50, otherwise you have too many transactions.
-                    self.initialFetch(for: address, page: page + 1, completion: completion)
+                    let timeout = DispatchTime.now() + .milliseconds(300)
+                    DispatchQueue.main.asyncAfter(deadline: timeout) { [weak self] in
+                        self?.initialFetch(for: address, page: page + 1, completion: completion)
+                    }
                 } else {
                     self.transactionsTracker.fetchingState = .done
                 }
