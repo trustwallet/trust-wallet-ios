@@ -24,7 +24,7 @@ struct TokenViewCellViewModel {
     }
 
     var titleFont: UIFont {
-        return UIFont.systemFont(ofSize: 18, weight: .medium)
+        return UIFont.systemFont(ofSize: 16, weight: .medium)
     }
 
     var titleTextColor: UIColor {
@@ -43,7 +43,7 @@ struct TokenViewCellViewModel {
         guard amount > 0 else { return nil }
         return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
     }
-    
+
     var percentChange: String? {
         guard let percent_change_24h = ticker?.percent_change_24h, !percent_change_24h.isEmpty else { return nil }
         return "(" + percent_change_24h + "%)"
@@ -55,7 +55,7 @@ struct TokenViewCellViewModel {
     }
 
     var percentChangeFont: UIFont {
-        return UIFont.systemFont(ofSize: 14, weight: .light)
+        return UIFont.systemFont(ofSize: 13, weight: .light)
     }
 
     var amountTextColor: UIColor {
@@ -63,7 +63,7 @@ struct TokenViewCellViewModel {
     }
 
     var amountFont: UIFont {
-        return UIFont.systemFont(ofSize: 18, weight: .medium)
+        return UIFont.systemFont(ofSize: 17, weight: .medium)
     }
 
     var currencyAmountTextColor: UIColor {
