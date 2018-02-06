@@ -228,7 +228,7 @@ class SettingsViewController: FormViewController {
 
             <<< TextRow { [weak self] in
                 $0.title = NSLocalizedString("settings.version.label.title", value: "Version", comment: "")
-                $0.value = self?.version()
+                $0.value = Bundle.main.fullVersion
                 $0.disabled = true
             }
     }
@@ -240,12 +240,6 @@ class SettingsViewController: FormViewController {
             completion?(result)
             lock.stop()
         }
-    }
-
-    private func version() -> String {
-        let versionNumber = Bundle.main.versionNumber ?? ""
-        let buildNumber = Bundle.main.buildNumber ?? ""
-        return "\(versionNumber) (\(buildNumber))"
     }
 
     private func linkProvider(
@@ -289,11 +283,22 @@ class SettingsViewController: FormViewController {
         composerController.mailComposeDelegate = self
         composerController.setToRecipients([Constants.supportEmail])
         composerController.setSubject(NSLocalizedString("settings.feedback.email.title", value: "Trust Feedback", comment: ""))
-        composerController.setMessageBody("", isHTML: false)
+        composerController.setMessageBody(emailTemplate(), isHTML: false)
 
         if MFMailComposeViewController.canSendMail() {
             present(composerController, animated: true, completion: nil)
         }
+    }
+
+    private func emailTemplate() -> String {
+        return """
+        \n\n\n
+
+        Helpful information to developers:
+        iOS Version: \(UIDevice.current.systemVersion)
+        Device Model: \(UIDevice.current.model)
+        Trust Version: \(Bundle.main.fullVersion)
+        """
     }
 
     required init?(coder aDecoder: NSCoder) {
