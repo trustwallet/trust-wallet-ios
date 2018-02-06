@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import Eureka
 
 func applyStyle() {
 
@@ -16,6 +17,7 @@ func applyStyle() {
         .foregroundColor: UIColor.white,
     ]
     UIButton.appearance().tintColor = UIColor.white
+    UIButton.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = Colors.darkBlue
 
     UIImageView.appearance().tintColor = Colors.lightBlue
     UIImageView.appearance(whenContainedInInstancesOf: [BrowserNavigationBar.self]).tintColor = .white
