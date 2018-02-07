@@ -74,7 +74,7 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
             return
         }
         self.hideKeyboard()
-        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,localizedReason: reason) { [weak self](success,_) in
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { [weak self] success, _ in
             DispatchQueue.main.async {
                 if success {
                     self?.lock.resetPasscodeAttemptHistory()

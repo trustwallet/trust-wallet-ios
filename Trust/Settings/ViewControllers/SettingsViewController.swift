@@ -226,7 +226,7 @@ class SettingsViewController: FormViewController {
 
             +++ Section()
 
-            <<< TextRow { [weak self] in
+            <<< TextRow {
                 $0.title = NSLocalizedString("settings.version.label.title", value: "Version", comment: "")
                 $0.value = Bundle.main.fullVersion
                 $0.disabled = true

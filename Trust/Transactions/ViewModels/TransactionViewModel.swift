@@ -26,7 +26,10 @@ struct TransactionViewModel {
     }
 
     var direction: TransactionDirection {
-        if (currentWallet.address.description == transaction.from || currentWallet.address.description.lowercased() == transaction.from.lowercased()) { return .outgoing }
+        if currentWallet.address.description == transaction.from ||
+            currentWallet.address.description.lowercased() == transaction.from.lowercased() {
+            return .outgoing
+        }
         return .incoming
     }
 
