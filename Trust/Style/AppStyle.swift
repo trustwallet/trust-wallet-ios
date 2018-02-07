@@ -19,6 +19,8 @@ func applyStyle() {
     UIButton.appearance().tintColor = UIColor.white
     UIButton.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = Colors.darkBlue
 
+    UITextField.appearance().tintColor = Colors.blue
+
     UIImageView.appearance().tintColor = Colors.lightBlue
     UIImageView.appearance(whenContainedInInstancesOf: [BrowserNavigationBar.self]).tintColor = .white
 
