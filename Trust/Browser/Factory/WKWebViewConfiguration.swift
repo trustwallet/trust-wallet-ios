@@ -77,6 +77,7 @@ extension WKWebViewConfiguration {
         var web3 = new Web3();
         let trustProvider = new web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)")
         let provider = new web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)")
+        provider.isTrust = true
         web3.setProvider(trustProvider);
         window.web3 = web3
 
