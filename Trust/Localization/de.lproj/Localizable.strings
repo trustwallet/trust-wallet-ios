@@ -23,8 +23,6 @@
 "Empty" = "Leer";
 "emptyView.noTokens.label.title" = "Sie haben noch keine Tokens erhalten!";
 "errorView.description.label.title" = "Etwas ging schief, versuchen Sie es erneut.";
-"exchange.error.failedToGetRates" = "exchange.error.failedToGetRates";
-"exchange.error.wrongInput" = "exchange.error.wrongInput";
 "export.backup.button.title" = "Wallet sichern";
 "export.controlYourMoney.label.title" = "Da nur Sie Ihr Geld kontrollieren, müssen Sie Ihren Backup-Keystore speichern, falls diese App gelöscht wird.";
 "export.enterCurrentPassword.textField.title" = "Geben Sie das aktuelle Passwort ein, um Ihre Wallet zu exportieren";
@@ -87,7 +85,6 @@
 "welcome.privateAndSecure.label.title" = "Privat und sicher";
 "welcome.ultraReliable.label.description" = "Das schnellste Ethereum-Wallet-Erlebnis auf Mobilgeräten";
 "welcome.ultraReliable.label.title" = "Extrem zuverlässig";
-"exchange.tabbar.item.title" = "Wechsel";
 "tokens.navigation.title" = "Tokens";
 "tokens.tabbar.item.title" = "Tokens";
 "transactions.tabbar.item.title" = "Transaktionen";

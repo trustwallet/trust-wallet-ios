@@ -661,6 +661,9 @@
 		771AA963200D5EDB00D25403 /* WordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCollectionViewCell.swift; sourceTree = "<group>"; };
 		771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WordCollectionViewCell.xib; sourceTree = "<group>"; };
 		7721A6BD202A5677004DB16C /* DecryptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecryptError.swift; sourceTree = "<group>"; };
+		7721A6BF202B1D3E004DB16C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7721A6C0202B1D43004DB16C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7721A6C1202B1D5A004DB16C /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		775C00B420195BFB001B5EBC /* BrowserAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserAction.swift; sourceTree = "<group>"; };
 		77872D222023F43B0032D687 /* TransactionsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTracker.swift; sourceTree = "<group>"; };
 		77872D24202505B70032D687 /* EnterPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewController.swift; sourceTree = "<group>"; };
@@ -2131,6 +2134,9 @@
 				de,
 				it,
 				fr,
+				"zh-Hans",
+				"zh-Hant",
+				vi,
 			);
 			mainGroup = 2912CCEC1F6A830700C6CBE3;
 			productRefGroup = 2912CCF61F6A830700C6CBE3 /* Products */;
@@ -2773,6 +2779,9 @@
 				29FF6D6F2011E1EE00A3011C /* ar */,
 				29FF6D702011E1F300A3011C /* it */,
 				29FF6D712011E20500A3011C /* fr */,
+				7721A6BF202B1D3E004DB16C /* zh-Hans */,
+				7721A6C0202B1D43004DB16C /* zh-Hant */,
+				7721A6C1202B1D5A004DB16C /* vi */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

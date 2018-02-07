@@ -23,8 +23,6 @@
 "Empty" = "فارغ";
 "emptyView.noTokens.label.title" = "لم يتم استلام العملات  حتى الآن!";
 "errorView.description.label.title" = "حدث خطأ ما... حاول مرة أخرى.";
-"exchange.error.failedToGetRates" = "حدث خطأ في التحويل. لم يتم الحصول على الاسعار";
-"exchange.error.wrongInput" = "حدث خطأ في التحويل. ادخال خاطئ";
 "export.backup.button.title" = "محفظة احتياطية";
 "export.controlYourMoney.label.title" = " يجب حفظ  كيستورااحتياطي  في حالةتم  حذف هذا التطبيق.";
 "export.enterCurrentPassword.textField.title" = "أدخل كلمة المرور الحالية لتصدير محفظتك";
@@ -87,7 +85,6 @@
 "welcome.privateAndSecure.label.title" = "خاصة وآمنة";
 "welcome.ultraReliable.label.description" = "اسرع محفظة ايثريوم على الهاتف";
 "welcome.ultraReliable.label.title" = "اعتماد موثق";
-"exchange.tabbar.item.title" = "تبادل";
 "tokens.navigation.title" = "عملات";
 "tokens.tabbar.item.title" = "عملات";
 "transactions.tabbar.item.title" = "المعاملات";

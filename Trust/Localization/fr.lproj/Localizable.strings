@@ -23,8 +23,6 @@
 "Empty" = "Vide";
 "emptyView.noTokens.label.title" = "Vous n'avez encore reçu aucun jeton!";
 "errorView.description.label.title" = "Quelque chose s'est mal passé essaie encore.";
-"exchange.error.failedToGetRates" = "exchange.error.failedToGetRates";
-"exchange.error.wrongInput" = "exchange.error.wrongInput";
 "export.backup.button.title" = "Portefeuille de sauvegarde";
 "export.controlYourMoney.label.title" = "Puisque vous seul contrôlez votre argent, vous devrez sauvegarder votre fichier de clés de sauvegarde au cas où cette application serait supprimée.";
 "export.enterCurrentPassword.textField.title" = "Entrez le mot de passe actuel pour exporter votre portefeuille";
@@ -87,7 +85,6 @@
 "welcome.privateAndSecure.label.title" = "Privé et sécurisé";
 "welcome.ultraReliable.label.description" = "L'expérience de portefeuille Ethereum la plus rapide sur mobile";
 "welcome.ultraReliable.label.title" = "Ultra fiable";
-"exchange.tabbar.item.title" = "Échange";
 "tokens.navigation.title" = "Jetons";
 "tokens.tabbar.item.title" = "Jetons";
 "transactions.tabbar.item.title" = "Transactions";
