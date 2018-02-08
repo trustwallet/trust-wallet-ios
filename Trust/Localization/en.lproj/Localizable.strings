@@ -9,6 +9,17 @@
 "configureTransaction.gasPrice.label.description" = "The higher the gas price, the more expensive your transaction fee will be, but the quicker your tranasction will be processed by the %@ network.";
 "configureTransaction.gasPrice.label.title" = "Gas Price";
 "configureTransaction.totalNetworkFee.label.title" = "Total network fee";
+
+"transaction.confirmation.label.title" = "Confirmation";
+"transaction.from.label.title" = "From";
+"transaction.gasFee.label.title" = "Gas Fee";
+"transaction.gasLimit.label.title" = "Gas Limit";
+"transaction.gasPrice.label.title" = "Gas Price";
+"transaction.to.label.title" = "To";
+"transaction.time.label.title" = "Transaction time";
+"transaction.id.label.title" = "Transaction #";
+"transaction.blockNumber.label.title" = "Block #";
+
 "confirmPayment.confirm.button.title" = "Confirm";
 "confirmPayment.from.label.title" = "From";
 "confirmPayment.gasFee.label.title" = "Network Fee";
