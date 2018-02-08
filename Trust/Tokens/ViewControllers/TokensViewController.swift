@@ -62,7 +62,7 @@ class TokensViewController: UIViewController {
         })
         refreshView(viewModel: viewModel)
     }
-
+    //Remove after iOS 11.2 will patch this bug.
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.tintAdjustmentMode = .normal
