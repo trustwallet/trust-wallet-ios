@@ -75,11 +75,13 @@ extension WKWebViewConfiguration {
         }
 
         var web3 = new Web3();
-        let trustProvider = new web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)")
-        let provider = new web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)")
+        let trustProvider = new Web3.providers.HttpProvider("\(session.config.rpcURL.absoluteString)")
         trustProvider.isTrust = true
         web3.setProvider(trustProvider);
         window.web3 = web3
+        web3.currentProvider.isTrust = true
+        window.chrome = { webstore: true }
+
 
         web3.eth.defaultAccount = "\(address)"
         web3.version.getNetwork = function(cb) {
@@ -126,7 +128,7 @@ extension WKWebViewConfiguration {
                     break
                 default:
                     console.log("sendAsync return", request);
-                    provider.sendAsync(request, cb)
+                    Web3.providers.HttpProvider.prototype.sendAsync.apply(trustProvider, [request, cb])
                     break
             }
         }
@@ -145,7 +147,7 @@ extension WKWebViewConfiguration {
                     return response(request, "\(address)")
                 default:
                     console.log("send return", request.method);
-                    return provider.send(request)
+                    return Web3.providers.HttpProvider.prototype.send.apply(trustProvider, [request])
             }
         }
 
