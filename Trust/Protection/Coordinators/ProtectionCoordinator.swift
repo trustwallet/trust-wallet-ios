@@ -39,4 +39,8 @@ class ProtectionCoordinator: Coordinator {
     func applicationDidEnterBackground() {
         splashCoordinator.start()
     }
+
+    func applicationWillEnterForeground() {
+        splashCoordinator.stop()
+    }
 }
