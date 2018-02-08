@@ -16,6 +16,7 @@ class BrowserNavigationBar: UINavigationBar {
 
     private struct Layout {
         static let width: CGFloat = 34
+        static let moreButtonWidth: CGFloat = 24
     }
 
     override init(frame: CGRect) {
@@ -71,7 +72,7 @@ class BrowserNavigationBar: UINavigationBar {
 
             goForward.widthAnchor.constraint(equalToConstant: Layout.width),
             goBack.widthAnchor.constraint(equalToConstant: Layout.width),
-            moreButton.widthAnchor.constraint(equalToConstant: Layout.width/2),
+            moreButton.widthAnchor.constraint(equalToConstant: Layout.moreButtonWidth),
         ])
     }
 
