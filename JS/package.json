@@ -1,0 +1,27 @@
+{
+  "name": "trust-wallet",
+  "version": "0.0.1",
+  "description": "web3 injection",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/TrustWallet/trust-wallet-ios.git"
+  },
+  "keywords": [
+    "ethereum",
+    "swift",
+    "blockchain",
+    "wallet",
+    "ethereum-dapps",
+    "dapps"
+  ],
+  "author": "Trust <support@trustwalletapp.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/TrustWallet/trust-wallet-ios/issues"
+  },
+  "homepage": "https://github.com/TrustWallet/trust-wallet-ios#readme"
+}
