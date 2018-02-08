@@ -267,6 +267,8 @@
 		29FF6D6B2011D2AF00A3011C /* InCoordinatorError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF6D6A2011D2AF00A3011C /* InCoordinatorError.swift */; };
 		29FF6D73201200D500A3011C /* FieldAppereance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF6D72201200D500A3011C /* FieldAppereance.swift */; };
 		3CDDD1E2CD1B0180754B7992 /* Pods_Trust.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646C8C822C986358D7388602 /* Pods_Trust.framework */; };
+		4346ABBE202CFADA00309B67 /* trust-min.js in Resources */ = {isa = PBXBuildFile; fileRef = 4346ABBD202CFADA00309B67 /* trust-min.js */; };
+		4346ABC0202D106B00309B67 /* trust.js in Resources */ = {isa = PBXBuildFile; fileRef = 4346ABBF202D106A00309B67 /* trust.js */; };
 		613D04891FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer in Resources */ = {isa = PBXBuildFile; fileRef = 613D04881FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer */; };
 		613D048B1FDE162B008DE72E /* TrustProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613D048A1FDE162B008DE72E /* TrustProvider.swift */; };
 		615F10561FCBEF2E008A45AF /* OnboardingPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615F10551FCBEF2E008A45AF /* OnboardingPageViewModel.swift */; };
@@ -619,6 +621,9 @@
 		29FF6D702011E1F300A3011C /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		29FF6D712011E20500A3011C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		29FF6D72201200D500A3011C /* FieldAppereance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldAppereance.swift; sourceTree = "<group>"; };
+		4346ABBA202CFA2700309B67 /* JS */ = {isa = PBXFileReference; lastKnownFileType = folder; path = JS; sourceTree = SOURCE_ROOT; };
+		4346ABBD202CFADA00309B67 /* trust-min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "trust-min.js"; path = "JS/dist/trust-min.js"; sourceTree = "<group>"; };
+		4346ABBF202D106A00309B67 /* trust.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = trust.js; path = JS/dist/trust.js; sourceTree = "<group>"; };
 		477899BEAA4489DA423E8857 /* Pods-TrustUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4DB8204016307EAFC079EA48 /* Pods-Trust.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trust.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trust/Pods-Trust.debug.xcconfig"; sourceTree = "<group>"; };
 		613D04881FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "COMODO ECC Domain Validation Secure Server CA 2.cer"; sourceTree = "<group>"; };
@@ -741,6 +746,8 @@
 		2912CCEC1F6A830700C6CBE3 = {
 			isa = PBXGroup;
 			children = (
+				4346ABBF202D106A00309B67 /* trust.js */,
+				4346ABBD202CFADA00309B67 /* trust-min.js */,
 				2912CCF71F6A830700C6CBE3 /* Trust */,
 				2912CD0E1F6A830700C6CBE3 /* TrustTests */,
 				2912CD191F6A830700C6CBE3 /* TrustUITests */,
@@ -763,6 +770,7 @@
 		2912CCF71F6A830700C6CBE3 /* Trust */ = {
 			isa = PBXGroup;
 			children = (
+				4346ABBA202CFA2700309B67 /* JS */,
 				73ACEEF620163B4E003DD71D /* Lock */,
 				732086B2201506AA0047F605 /* Protection */,
 				29E6E0681FE897BB0079265A /* Browser */,
@@ -2155,6 +2163,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4346ABC0202D106B00309B67 /* trust.js in Resources */,
+				4346ABBE202CFADA00309B67 /* trust-min.js in Resources */,
 				613D04891FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer in Resources */,
 				29FA00D2201CA79F002F7DC5 /* web3.min.js in Resources */,
 				771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */,
