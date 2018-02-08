@@ -45,14 +45,14 @@ class TransactionViewController: UIViewController {
             .spacer(),
             header,
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
-            item(title: "From", value: viewModel.from),
-            item(title: "To", value: viewModel.to),
-            item(title: "Gas Fee", value: viewModel.gasFee),
-            item(title: "Confirmation", value: viewModel.confirmation),
+            item(title: viewModel.fromLabelTitle, value: viewModel.from),
+            item(title: viewModel.toLabelTitle, value: viewModel.to),
+            item(title: viewModel.gasFeeLabelTitle, value: viewModel.gasFee),
+            item(title: viewModel.confirmationLabelTitle, value: viewModel.confirmation),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
-            item(title: "Transaction #", value: viewModel.transactionID),
-            item(title: "Transaction time", value: viewModel.createdAt),
-            item(title: "Block #", value: viewModel.blockNumber),
+            item(title: viewModel.transactionIDLabelTitle, value: viewModel.transactionID),
+            item(title: viewModel.createdAtLabelTitle, value: viewModel.createdAt),
+            item(title: viewModel.blockNumberLabelTitle, value: viewModel.blockNumber),
         ]
 
         if viewModel.detailsAvailable {

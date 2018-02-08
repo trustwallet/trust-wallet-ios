@@ -226,7 +226,7 @@ class SettingsViewController: FormViewController {
 
             +++ Section()
 
-            <<< TextRow { [weak self] in
+            <<< TextRow {
                 $0.title = NSLocalizedString("settings.version.label.title", value: "Version", comment: "")
                 $0.value = Bundle.main.fullVersion
                 $0.disabled = true
@@ -298,7 +298,7 @@ class SettingsViewController: FormViewController {
         iOS Version: \(UIDevice.current.systemVersion)
         Device Model: \(UIDevice.current.model)
         Trust Version: \(Bundle.main.fullVersion)
-        Current locale: \(String(describing: NSLocale.current.languageCode)) - \(Locale.preferredLanguages.first ?? "")
+        Current locale: \(Locale.preferredLanguages.first ?? "")
         """
     }
 

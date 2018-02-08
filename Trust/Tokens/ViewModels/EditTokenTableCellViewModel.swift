@@ -46,14 +46,14 @@ struct EditTokenTableCellViewModel {
     private var isAvailableForChange: Bool {
         return token.contract == TokensDataStore.etherToken(for: config).contract ? true : false
     }
-    
+
     var contractText: String? {
         if !isAvailableForChange {
             return token.contract
         }
         return .none
     }
-    
+
     var isTokenContractLabelHidden: Bool {
         if contractText == nil {
             return true

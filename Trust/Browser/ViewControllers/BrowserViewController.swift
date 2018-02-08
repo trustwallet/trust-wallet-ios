@@ -195,6 +195,14 @@ extension BrowserViewController: WKNavigationDelegate {
         refreshURL()
         reloadButtons()
     }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        displayError(error: error)
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        displayError(error: error)
+    }
 }
 
 extension BrowserViewController: WKScriptMessageHandler {

@@ -24,8 +24,6 @@
 "Empty" = "Пусто";
 "emptyView.noTokens.label.title" = "Вы еще не получили никаких токенов!";
 "errorView.description.label.title" = "Что-то пошло не так ... Попробуйте еще раз.";
-"exchange.error.failedToGetRates" = "обмен. ошибка. не удалось получить тарифы";
-"exchange.error.wrongInput" = "обмен. ошибка. неправильный ввод";
 "export.backup.button.title" = "Резервное копирование";
 "export.controlYourMoney.label.title" = "Поскольку только вы контролируете свои деньги, вам нужно сохранить резервное хранилище ключей, если это приложение будет удалено.";
 "export.enterCurrentPassword.textField.title" = "Введите текущий пароль, чтобы экспортировать Ваш кошелек";
@@ -88,7 +86,6 @@
 "welcome.privateAndSecure.label.title" = "Конфиденциальный и Безопасный";
 "welcome.ultraReliable.label.description" = "Самый быстрый кошелек Ethereum на мобильных устройствах";
 "welcome.ultraReliable.label.title" = "Сверх надежный";
-"exchange.tabbar.item.title" = "Обменник";
 "tokens.navigation.title" = "Токены";
 "tokens.tabbar.item.title" = "Токены";
 "transactions.tabbar.item.title" = "Транзакции";

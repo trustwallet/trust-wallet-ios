@@ -23,8 +23,6 @@
 "Empty" = "Vacío";
 "emptyView.noTokens.label.title" = "¡Aún no has recibido ningún token!";
 "errorView.description.label.title" = "Algo salió mal, inténtalo de nuevo.";
-"exchange.error.failedToGetRates" = "Error al obtener las tarifas";
-"exchange.error.wrongInput" = "Entrada incorrecta";
 "export.backup.button.title" = "Hacer copia de seguridad";
 "export.controlYourMoney.label.title" = "Como solo tu controlas tu dinero, tendrás que guardar tu copia de seguridad en el caso de que esta aplicación sea eliminada.";
 "export.enterCurrentPassword.textField.title" = "Introduce tu contraseña para exportar tu cartera";
@@ -87,7 +85,6 @@
 "welcome.privateAndSecure.label.title" = "Privado y seguro";
 "welcome.ultraReliable.label.description" = "La experiencia de cartera Ethereum más rápida en dispositivos móviles";
 "welcome.ultraReliable.label.title" = "Ultra confiable";
-"exchange.tabbar.item.title" = "Intercambio";
 "tokens.navigation.title" = "Tokens";
 "tokens.tabbar.item.title" = "Tokens";
 "transactions.tabbar.item.title" = "Actas";

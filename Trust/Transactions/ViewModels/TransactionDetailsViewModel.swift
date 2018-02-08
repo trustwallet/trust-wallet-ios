@@ -54,6 +54,10 @@ struct TransactionDetailsViewModel {
         return TransactionDetailsViewModel.dateFormatter.string(from: transaction.date)
     }
 
+    var createdAtLabelTitle: String {
+        return NSLocalizedString("transaction.time.label.title", value: "Transaction time", comment: "")
+    }
+
     var detailsAvailable: Bool {
         switch config.server {
         case .main, .classic, .poa, .kovan, .ropsten, .rinkeby, .sokol: return true
@@ -72,6 +76,10 @@ struct TransactionDetailsViewModel {
         return transaction.id
     }
 
+    var transactionIDLabelTitle: String {
+        return NSLocalizedString("transaction.id.label.title", value: "Transaction #", comment: "")
+    }
+
     var to: String {
         guard let to = transaction.operation?.to else {
             return transaction.to
@@ -79,8 +87,16 @@ struct TransactionDetailsViewModel {
         return to
     }
 
+    var toLabelTitle: String {
+        return NSLocalizedString("transaction.to.label.title", value: "To", comment: "")
+    }
+
     var from: String {
         return transaction.from
+    }
+
+    var fromLabelTitle: String {
+        return NSLocalizedString("transaction.from.label.title", value: "From", comment: "")
     }
 
     var gasViewModel: GasViewModel {
@@ -102,6 +118,10 @@ struct TransactionDetailsViewModel {
         return feeAndSymbol
     }
 
+    var gasFeeLabelTitle: String {
+        return NSLocalizedString("transaction.gasFee.label.title", value: "Gas Fee", comment: "")
+    }
+
     var confirmation: String {
         guard let confirmation = chainState.confirmations(fromBlock: transaction.blockNumber) else {
             return "--"
@@ -109,8 +129,16 @@ struct TransactionDetailsViewModel {
         return String(confirmation)
     }
 
+    var confirmationLabelTitle: String {
+        return NSLocalizedString("transaction.confirmation.label.title", value: "Confirmation", comment: "")
+    }
+
     var blockNumber: String {
         return String(transaction.blockNumber)
+    }
+
+    var blockNumberLabelTitle: String {
+        return NSLocalizedString("transaction.blockNumber.label.title", value: "Block #", comment: "")
     }
 
     var amountAttributedString: NSAttributedString {
