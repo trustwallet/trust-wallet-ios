@@ -117,11 +117,9 @@ class SendViewController: FormViewController {
                 cell.textField.rightViewMode = .always
             }
     }
-    //Remove after iOS 11.2 will patch this bug.
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.tintAdjustmentMode = .normal
-        self.navigationController?.navigationBar.tintAdjustmentMode = .automatic
+        self.navigationController?.applyTintAdjustment()
     }
     func getGasPrice() {
         let request = EtherServiceRequest(batch: BatchFactory().create(GasPriceRequest()))
@@ -150,7 +148,7 @@ class SendViewController: FormViewController {
         } else {
             amountString = String(format: "%f", self.pairValue).trimmed
         }
-        amountString = validateCurrency(with: amountString)
+        amountString = amountString.validateDecimalSeparator()
         guard let address = Address(string: addressString) else {
             return displayError(error: AddressError.invalidAddress)
         }
@@ -252,16 +250,6 @@ class SendViewController: FormViewController {
         }
         return false
     }
-    func validateCurrency(with currencyString: String) -> String {
-        //We should validate separator pasted value. For example in France they use 0,1 in America 0.1. It should be replaced with textfield delegate,
-        let locale: Locale = .current
-        let decimalDotSeparator = "."
-        let decimalComaSeparator = ","
-        let localeDecimalSeparator = locale.decimalSeparator ?? decimalDotSeparator
-        //In this place we are serching for the wrong separator.
-        let replaceSeparator = locale.decimalSeparator == decimalDotSeparator ? decimalComaSeparator : decimalDotSeparator
-        return currencyString.replacingOccurrences(of: replaceSeparator, with: localeDecimalSeparator)
-    }
 }
 
 extension SendViewController: QRCodeReaderDelegate {
@@ -299,7 +287,7 @@ extension SendViewController: QRCodeReaderDelegate {
 extension SendViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
-        guard let total = text, let amount = Double(total.replacingOccurrences(of:",",with:".")) else {
+        guard let total = text, let amount = Double(total.replacingOccurrences(of: ",", with: ".")) else {
             //Should be done in another way.
             pairValue = 0.0
             updatePriceSection()

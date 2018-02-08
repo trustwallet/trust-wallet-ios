@@ -54,6 +54,17 @@ extension String {
     var add0x: String {
         return "0x" + self
     }
+    
+    func validateDecimalSeparator() -> String {
+        //We should validate separator pasted value. For example in France they use 0,1 in America 0.1. It should be replaced with textfield delegate,
+        let locale: Locale = .current
+        let decimalDotSeparator = "."
+        let decimalComaSeparator = ","
+        let localeDecimalSeparator = locale.decimalSeparator ?? decimalDotSeparator
+        //In this place we are serching for the wrong separator.
+        let replaceSeparator = locale.decimalSeparator == decimalDotSeparator ? decimalComaSeparator : decimalDotSeparator
+        return self.replacingOccurrences(of: replaceSeparator, with: localeDecimalSeparator)
+    }
 }
 
 extension String {
