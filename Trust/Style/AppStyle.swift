@@ -16,9 +16,7 @@ func applyStyle() {
     UINavigationBar.appearance().titleTextAttributes = [
         .foregroundColor: UIColor.white,
     ]
-    UIButton.appearance().tintColor = UIColor.white
-    UIButton.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = Colors.darkBlue
-
+    
     UITextField.appearance().tintColor = Colors.blue
 
     UIImageView.appearance().tintColor = Colors.lightBlue
