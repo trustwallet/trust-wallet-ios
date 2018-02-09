@@ -10,14 +10,9 @@ extension WKWebViewConfiguration {
         let address = session.account.address.description.lowercased()
         let config = WKWebViewConfiguration()
         var js = ""
-        if let filepath = Bundle.main.path(forResource: "trust", ofType: "js") {
+        if let filepath = Bundle.main.path(forResource: "trust-min", ofType: "js") {
             do {
                 js += try String(contentsOfFile: filepath)
-                    .replacingOccurrences(of: "\n", with: "\\n")
-                    .replacingOccurrences(of: "\r", with: "")
-                    .replacingOccurrences(of: "\\", with: "\\\\")
-                    //.replacingOccurrences(of: "\'", with: "\\\'")
-                    //.replacingOccurrences(of: "\"", with: "\\\"")
                 NSLog("Loaded Trust in page provider")
             } catch {
                 NSLog("Failed to load Trust in page provider")
@@ -29,7 +24,7 @@ extension WKWebViewConfiguration {
         js +=
         """
         
-        const addressHex = "\(address)
+        const addressHex = "\(address)"
         const rpcURL = "\(session.config.rpcURL.absoluteString)"
         const chainID = "\(session.config.chainID)"
         
