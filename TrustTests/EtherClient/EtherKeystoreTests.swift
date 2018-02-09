@@ -223,7 +223,7 @@ class EtherKeystoreTests: XCTestCase {
             return XCTFail()
         }
 
-        let signResult = keystore.signMessage(message: "Some data", account: account)
+        let signResult = keystore.signPersonalMessage("Some data", for: account)
 
         guard case let .success(data) = signResult else {
             return XCTFail()
