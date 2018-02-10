@@ -41,7 +41,6 @@ final class DecimalFormatter {
     func string(from number: NSNumber) -> String? {
         return self.numberFormatter.string(from: number)
     }
-    
     /// Validate string for the locale inconsistency.
     ///
     /// - Parameters:

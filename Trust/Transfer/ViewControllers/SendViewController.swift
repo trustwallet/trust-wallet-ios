@@ -49,6 +49,9 @@ class SendViewController: FormViewController {
     lazy var currentPair: Pair = {
         return Pair(left: viewModel.symbol, right: session.config.currency.rawValue)
     }()
+    lazy var decimalFormatter: DecimalFormatter = {
+        return DecimalFormatter()
+    }()
     init(
         session: WalletSession,
         storage: TokensDataStore,
@@ -148,16 +151,18 @@ class SendViewController: FormViewController {
         } else {
             amountString = String(format: "%f", self.pairValue).trimmed
         }
-        amountString = amountString.validateDecimalSeparator()
+        guard let validatedAmountString = decimalFormatter.number(from: amountString)?.stringValue else {
+            return
+        }
         guard let address = Address(string: addressString) else {
             return displayError(error: AddressError.invalidAddress)
         }
         let parsedValue: BigInt? = {
             switch transferType {
             case .ether:
-                return EtherNumberFormatter.full.number(from: amountString, units: .ether)
+                return EtherNumberFormatter.full.number(from: validatedAmountString, units: .ether)
             case .token(let token):
-                return EtherNumberFormatter.full.number(from: amountString, decimals: token.decimals)
+                return EtherNumberFormatter.full.number(from: validatedAmountString, decimals: token.decimals)
             }
         }()
         guard let value = parsedValue else {
@@ -287,13 +292,13 @@ extension SendViewController: QRCodeReaderDelegate {
 extension SendViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
-        guard let total = text, let amount = Double(total.replacingOccurrences(of: ",", with: ".")) else {
+        guard let total = text, let amount = decimalFormatter.number(from: total) else {
             //Should be done in another way.
             pairValue = 0.0
             updatePriceSection()
             return true
         }
-        self.updatePairPrice(with: amount)
+        self.updatePairPrice(with: amount.doubleValue)
         return true
     }
 }
