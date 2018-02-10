@@ -291,8 +291,15 @@ extension SendViewController: QRCodeReaderDelegate {
 
 extension SendViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
-        guard let total = text, let amount = decimalFormatter.number(from: total) else {
+        guard let input = textField.text else {
+            return true
+        }
+        //This is required to prevent user from input of numbers like 1.000.25 or 1,000,25.
+        if string == "," || string == "." ||  string == "'"{
+            return !input.contains(string)
+        }
+        let text = (input as NSString).replacingCharacters(in: range, with: string)
+        guard let amount = decimalFormatter.number(from: text) else {
             //Should be done in another way.
             pairValue = 0.0
             updatePriceSection()
