@@ -60,7 +60,7 @@ struct TransactionDetailsViewModel {
 
     var detailsAvailable: Bool {
         switch config.server {
-        case .main, .classic, .poa, .kovan, .ropsten, .rinkeby, .sokol: return true
+        case .main, .classic, .poa, .kovan, .ropsten, .rinkeby, .sokol, .custom: return true
         }
     }
 

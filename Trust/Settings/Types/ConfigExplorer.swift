@@ -30,6 +30,8 @@ struct ConfigExplorer {
                 return endpoint + "/txid/search/" + ID
             case .sokol:
                 return endpoint + "/tx/" + ID
+            case .custom:
+                return endpoint
             }
         }()
         return URL(string: urlString)!
@@ -51,6 +53,8 @@ struct ConfigExplorer {
             return "https://poaexplorer.com"
         case .sokol:
             return "https://sokol-explorer.poa.network"
+        case .custom:
+            return ""
         }
     }
 }

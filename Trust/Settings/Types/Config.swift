@@ -77,6 +77,8 @@ struct Config {
             case .rinkeby: return "https://rinkeby.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .poa: return "https://core.poa.network"
             case .sokol: return "https://sokol.poa.network"
+            case .custom(let custom):
+                return custom.endpoint
             }
         }()
         return URL(string: urlString)!
@@ -92,6 +94,8 @@ struct Config {
             case .rinkeby: return "https://rinkeby.trustwalletapp.com"
             case .poa: return "https://poa.trustwalletapp.com"
             case .sokol: return "https://trust-sokol.herokuapp.com"
+            case .custom(let custom):
+                return "" // Enable? make optional
             }
         }()
         return URL(string: urlString)!
