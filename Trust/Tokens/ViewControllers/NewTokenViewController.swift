@@ -92,7 +92,7 @@ class NewTokenViewController: FormViewController {
         let decimals = Int(decimalsRow?.value ?? "") ?? 0
 
         guard let address = Address(string: contract) else {
-            return displayError(error: AddressError.invalidAddress)
+            return displayError(error: Errors.invalidAddress)
         }
 
         let token = ERC20Token(
@@ -118,7 +118,7 @@ class NewTokenViewController: FormViewController {
         }
 
         guard CryptoAddressValidator.isValidAddress(value) else {
-            return displayError(error: AddressError.invalidAddress)
+            return displayError(error: Errors.invalidAddress)
         }
 
         updateContractValue(value: value)

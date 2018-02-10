@@ -152,10 +152,10 @@ class SendViewController: FormViewController {
             amountString = String(format: "%f", self.pairValue).trimmed
         }
         guard let validatedAmountString = decimalFormatter.number(from: amountString)?.stringValue else {
-            return
+            return displayError(error: Errors.invalidAddress)
         }
         guard let address = Address(string: addressString) else {
-            return displayError(error: AddressError.invalidAddress)
+            return displayError(error: Errors.invalidAddress)
         }
         let parsedValue: BigInt? = {
             switch transferType {
@@ -190,7 +190,7 @@ class SendViewController: FormViewController {
         }
 
         guard CryptoAddressValidator.isValidAddress(value) else {
-            return displayError(error: AddressError.invalidAddress)
+            return displayError(error: Errors.invalidAddress)
         }
         addressRow?.value = value
         addressRow?.reload()
