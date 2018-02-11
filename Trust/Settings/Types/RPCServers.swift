@@ -10,6 +10,7 @@ enum RPCServer {
     case poa
     case sokol
     case classic
+    case callisto
     case custom(CustomRPC)
 
     var chainID: Int {
@@ -21,6 +22,7 @@ enum RPCServer {
         case .poa: return 99
         case .sokol: return 77
         case .classic: return 61
+        case .callisto: return 104729
         case .custom(let custom):
             return custom.chainID
         }
@@ -35,6 +37,7 @@ enum RPCServer {
         case .poa: return "POA Network"
         case .sokol: return "Sokol"
         case .classic: return "Ethereum Classic"
+        case .callisto: return "Callisto"
         case .custom(let custom):
             return custom.name
         }
@@ -42,7 +45,7 @@ enum RPCServer {
 
     var isTestNetwork: Bool {
         switch self {
-        case .main, .poa, .classic, .custom: return false
+        case .main, .poa, .classic, .callisto, .custom: return false
         case .kovan, .ropsten, .rinkeby, .sokol: return true
         }
     }
@@ -51,6 +54,7 @@ enum RPCServer {
         switch self {
         case .main: return "ETH"
         case .classic: return "ETC"
+        case .callisto: return "CLO"
         case .kovan, .ropsten, .rinkeby: return "ETH"
         case .poa, .sokol: return "POA"
         case .custom(let custom):
@@ -67,6 +71,7 @@ enum RPCServer {
             switch name {
             case RPCServer.main.name: return .main
             case RPCServer.classic.name: return .classic
+            case RPCServer.callisto.name: return .callisto
             case RPCServer.kovan.name: return .kovan
             case RPCServer.ropsten.name: return .ropsten
             case RPCServer.rinkeby.name: return .rinkeby
@@ -82,6 +87,7 @@ enum RPCServer {
             switch chainID {
             case RPCServer.main.chainID: return .main
             case RPCServer.classic.chainID: return .classic
+            case RPCServer.callisto.chainID: return .callisto
             case RPCServer.kovan.chainID: return .kovan
             case RPCServer.ropsten.chainID: return .ropsten
             case RPCServer.rinkeby.chainID: return .rinkeby
