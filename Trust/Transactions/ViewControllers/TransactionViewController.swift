@@ -113,13 +113,15 @@ class TransactionViewController: UIViewController {
     }
 
     @objc func more() {
-        openURL(viewModel.detailsURL)
+        guard let url = viewModel.detailsURL else { return }
+        openURL(url)
     }
 
     @objc func share(_ sender: UIBarButtonItem) {
+        guard let item = viewModel.shareItem else { return }
         let activityViewController = UIActivityViewController(
             activityItems: [
-                viewModel.shareItem,
+                item,
             ],
             applicationActivities: nil
         )

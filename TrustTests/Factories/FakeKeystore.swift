@@ -78,7 +78,11 @@ struct FakeKeystore: Keystore {
         return .failure(KeystoreError.failedToSignTransaction)
     }
 
-    func signMessage(message: String, account: Account) -> Result<Data, KeystoreError> {
+    func signPersonalMessage(_ message: String, for account: Account) -> Result<Data, KeystoreError> {
+        return .failure(KeystoreError.failedToSignTransaction)
+    }
+
+    func signMessage(_ message: String, for account: Account) -> Result<Data, KeystoreError> {
         return .failure(KeystoreError.failedToSignMessage)
     }
 

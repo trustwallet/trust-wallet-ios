@@ -12,7 +12,8 @@ struct InCoordinatorViewModel {
 
     var tokensAvailable: Bool {
         switch config.server {
-        case .main, .classic, .kovan, .ropsten, .rinkeby, .poa, .sokol: return true
+        case .main, .classic, .kovan, .ropsten, .rinkeby, .poa, .sokol, .custom: return true
+        case .callisto: return false
         }
     }
 

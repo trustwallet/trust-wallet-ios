@@ -48,7 +48,7 @@ class SignMessageCoordinator: Coordinator {
             style: .default
         ) { [weak self] _ in
             guard let `self` = self else { return }
-            self.handleSignedMessage(message: message)
+            self.handleSignedPersonalMessage(message: message)
         }
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { [weak self] _ in
             guard let `self` = self else { return }
@@ -60,8 +60,8 @@ class SignMessageCoordinator: Coordinator {
         return alertController
     }
 
-    private func handleSignedMessage(message: String) {
-        let result = self.keystore.signMessage(message: message, account: self.account)
+    private func handleSignedPersonalMessage(message: String) {
+        let result = self.keystore.signPersonalMessage(message, for: self.account)
         switch result {
         case .success(let data):
             didComplete?(.success(data))

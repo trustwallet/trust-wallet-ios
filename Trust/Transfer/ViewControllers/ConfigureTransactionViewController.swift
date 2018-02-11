@@ -147,7 +147,7 @@ class ConfigureTransactionViewController: FormViewController {
     }
 
     func recalculateTotalFee() {
-        var feeAndSymbol = gasViewModel.feeText
+        let feeAndSymbol = gasViewModel.feeText
         totalFeeRow?.value = feeAndSymbol
         totalFeeRow?.updateCell()
     }

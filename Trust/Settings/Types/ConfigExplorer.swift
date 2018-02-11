@@ -12,9 +12,9 @@ struct ConfigExplorer {
         self.server = server
     }
 
-    func transactionURL(for ID: String) -> URL {
-        let endpoint = explorer(for: server)
-        let urlString: String = {
+    func transactionURL(for ID: String) -> URL? {
+        guard let endpoint = explorer(for: server) else { return .none }
+        let urlString: String? = {
             switch server {
             case .main:
                 return endpoint + "/tx/" + ID
@@ -30,12 +30,15 @@ struct ConfigExplorer {
                 return endpoint + "/txid/search/" + ID
             case .sokol:
                 return endpoint + "/tx/" + ID
+            case .custom, .callisto:
+                return .none
             }
         }()
-        return URL(string: urlString)!
+        guard let string = urlString else { return .none}
+        return URL(string: string)!
     }
 
-    private func explorer(for server: RPCServer) -> String {
+    private func explorer(for server: RPCServer) -> String? {
         switch server {
         case .main:
             return "https://etherscan.io"
@@ -51,6 +54,8 @@ struct ConfigExplorer {
             return "https://poaexplorer.com"
         case .sokol:
             return "https://sokol-explorer.poa.network"
+        case .custom, .callisto:
+            return .none
         }
     }
 }

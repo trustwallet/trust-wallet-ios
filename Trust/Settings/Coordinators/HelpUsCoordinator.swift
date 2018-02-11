@@ -13,7 +13,7 @@ class HelpUsCoordinator: Coordinator {
     init(
         navigationController: UINavigationController = NavigationController(),
         appTracker: AppTracker = AppTracker()
-        ) {
+    ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.appTracker = appTracker
