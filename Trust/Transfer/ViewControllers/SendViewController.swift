@@ -152,7 +152,7 @@ class SendViewController: FormViewController {
             amountString = String(format: "%f", self.pairValue).trimmed
         }
         guard let validatedAmountString = decimalFormatter.number(from: amountString)?.stringValue else {
-            return displayError(error: Errors.invalidAddress)
+            return displayError(error: Errors.invalidAmount)
         }
         guard let address = Address(string: addressString) else {
             return displayError(error: Errors.invalidAddress)
