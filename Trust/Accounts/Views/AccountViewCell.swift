@@ -20,7 +20,7 @@ class AccountViewCell: UITableViewCell {
             guard let model = viewModel else {
                 return
             }
-            balanceLable.text = String(format: NSLocalizedString("settings.wallets.balance", value: "Balance: %@ ETH", comment: ""), model.balance)
+            balanceLable.text = "\(model.balance) ETH"
             glassesImageView.isHidden = !model.isWatch
             activeView.isHidden = !model.isActive
             addressLable.text = model.title

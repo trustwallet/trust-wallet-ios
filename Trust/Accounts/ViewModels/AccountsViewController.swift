@@ -115,10 +115,12 @@ class AccountsViewController: UITableViewController {
     }
     private func refreshWalletBalances() {
        let addresses = wallets.flatMap { $0.address }
-       for (index, address) in addresses.enumerated() {
+       var counter = 0
+       for address in addresses {
             balanceCoordinator.getEthBalance(for: address, completion: { [weak self] (result) in
                 self?.balances[address] = result.value
-                if index == addresses.count - 1 {
+                counter += 1
+                if counter == addresses.count {
                     self?.tableView.reloadData()
                 }
             })
