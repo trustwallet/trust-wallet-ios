@@ -59,16 +59,14 @@ struct TransactionDetailsViewModel {
     }
 
     var detailsAvailable: Bool {
-        switch config.server {
-        case .main, .classic, .poa, .kovan, .ropsten, .rinkeby, .sokol, .custom: return true
-        }
+        return detailsURL != nil
     }
 
     var shareAvailable: Bool {
         return detailsAvailable
     }
 
-    var detailsURL: URL {
+    var detailsURL: URL? {
         return ConfigExplorer(server: config.server).transactionURL(for: transaction.id)
     }
 
@@ -145,7 +143,7 @@ struct TransactionDetailsViewModel {
         return transactionViewModel.fullAmountAttributedString
     }
 
-    var shareItem: URL {
+    var shareItem: URL? {
         return detailsURL
     }
 }
