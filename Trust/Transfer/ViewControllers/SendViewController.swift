@@ -16,19 +16,15 @@ protocol SendViewControllerDelegate: class {
         in viewController: SendViewController
     )
 }
-
 class SendViewController: FormViewController {
-
     private lazy var viewModel: SendViewModel = {
         return .init(transferType: self.transferType, config: Config())
     }()
     weak var delegate: SendViewControllerDelegate?
-
     struct Values {
         static let address = "address"
         static let amount = "amount"
     }
-
     struct Pair {
         let left: String
         let right: String
@@ -37,27 +33,25 @@ class SendViewController: FormViewController {
             return Pair(left: right, right: left)
         }
     }
-
     var pairValue = 0.0
     let session: WalletSession
     let account: Account
     let transferType: TransferType
     let storage: TokensDataStore
-
     var addressRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.address) as? TextFloatLabelRow
     }
     var amountRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
     }
-
     private var gasPrice: BigInt?
     private var data = Data()
-
     lazy var currentPair: Pair = {
         return Pair(left: viewModel.symbol, right: session.config.currency.rawValue)
     }()
-
+    lazy var decimalFormatter: DecimalFormatter = {
+        return DecimalFormatter()
+    }()
     init(
         session: WalletSession,
         storage: TokensDataStore,
@@ -126,7 +120,10 @@ class SendViewController: FormViewController {
                 cell.textField.rightViewMode = .always
             }
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.applyTintAdjustment()
+    }
     func getGasPrice() {
         let request = EtherServiceRequest(batch: BatchFactory().create(GasPriceRequest()))
         Session.send(request) { [weak self] result in
@@ -137,7 +134,6 @@ class SendViewController: FormViewController {
             }
         }
     }
-
     func clear() {
         let fields = [addressRow, amountRow]
         for field in fields {
@@ -145,11 +141,9 @@ class SendViewController: FormViewController {
             field?.reload()
         }
     }
-
     @objc func send() {
         let errors = form.validate()
         guard errors.isEmpty else { return }
-
         let addressString = addressRow?.value?.trimmed ?? ""
         var amountString = ""
         if self.currentPair.left == viewModel.symbol {
@@ -157,24 +151,23 @@ class SendViewController: FormViewController {
         } else {
             amountString = String(format: "%f", self.pairValue).trimmed
         }
-
-        guard let address = Address(string: addressString) else {
-            return displayError(error: AddressError.invalidAddress)
+        guard let validatedAmountString = decimalFormatter.number(from: amountString)?.stringValue else {
+            return displayError(error: Errors.invalidAmount)
         }
-
+        guard let address = Address(string: addressString) else {
+            return displayError(error: Errors.invalidAddress)
+        }
         let parsedValue: BigInt? = {
             switch transferType {
             case .ether:
-                return EtherNumberFormatter.full.number(from: amountString, units: .ether)
+                return EtherNumberFormatter.full.number(from: validatedAmountString, units: .ether)
             case .token(let token):
-                return EtherNumberFormatter.full.number(from: amountString, decimals: token.decimals)
+                return EtherNumberFormatter.full.number(from: validatedAmountString, decimals: token.decimals)
             }
         }()
-
         guard let value = parsedValue else {
             return displayError(error: SendInputErrors.wrongInput)
         }
-
         let transaction = UnconfirmedTransaction(
             transferType: transferType,
             value: value,
@@ -186,36 +179,28 @@ class SendViewController: FormViewController {
         )
         self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, in: self)
     }
-
     @objc func openReader() {
         let controller = QRCodeReaderViewController()
         controller.delegate = self
-
         present(controller, animated: true, completion: nil)
     }
-
     @objc func pasteAction() {
         guard let value = UIPasteboard.general.string?.trimmed else {
             return displayError(error: SendInputErrors.emptyClipBoard)
         }
 
         guard CryptoAddressValidator.isValidAddress(value) else {
-            return displayError(error: AddressError.invalidAddress)
+            return displayError(error: Errors.invalidAddress)
         }
-
         addressRow?.value = value
         addressRow?.reload()
-
         activateAmountView()
     }
-
     @objc func useMaxAmount() {
         guard let value = session.balance?.amountFull else { return }
-
         amountRow?.value = value
         amountRow?.reload()
     }
-
     @objc func fiatAction(sender: UIButton) {
         let swappedPair = currentPair.swapPair()
         //New pair for future calculation we should swap pair each time we press fiat button.
@@ -232,15 +217,12 @@ class SendViewController: FormViewController {
         //Set focuse on pair change.
         activateAmountView()
     }
-
     func activateAmountView() {
         amountRow?.cell.textField.becomeFirstResponder()
     }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
     private func updatePriceSection() {
         //Update section only if fiat view is visible.
         guard !isFiatViewHidden() else {
@@ -256,7 +238,6 @@ class SendViewController: FormViewController {
         tableView.endUpdates()
         UIView.setAnimationsEnabled(true)
     }
-
     private func updatePairPrice(with amount: Double) {
         guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.destinationAddress.description], let price = Double(currentTokenInfo.price) else {
             return
@@ -268,7 +249,6 @@ class SendViewController: FormViewController {
         }
         self.updatePriceSection()
     }
-
     private func isFiatViewHidden() -> Bool {
         guard let currentTokenInfo = storage.tickers?[viewModel.destinationAddress.description], let price = Double(currentTokenInfo.price), price > 0 else {
             return true
@@ -311,14 +291,21 @@ extension SendViewController: QRCodeReaderDelegate {
 
 extension SendViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
-        guard let total = text, let amount = Double(total) else {
+        guard let input = textField.text else {
+            return true
+        }
+        //This is required to prevent user from input of numbers like 1.000.25 or 1,000,25.
+        if string == "," || string == "." ||  string == "'"{
+            return !input.contains(string)
+        }
+        let text = (input as NSString).replacingCharacters(in: range, with: string)
+        guard let amount = decimalFormatter.number(from: text) else {
             //Should be done in another way.
             pairValue = 0.0
             updatePriceSection()
             return true
         }
-        self.updatePairPrice(with: amount)
+        self.updatePairPrice(with: amount.doubleValue)
         return true
     }
 }

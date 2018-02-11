@@ -62,11 +62,9 @@ class TokensViewController: UIViewController {
         })
         refreshView(viewModel: viewModel)
     }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.tintAdjustmentMode = .normal
-        self.navigationController?.navigationBar.tintAdjustmentMode = .automatic
+        self.navigationController?.applyTintAdjustment()
         fetch()
     }
     @objc func pullToRefresh() {
