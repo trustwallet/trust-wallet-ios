@@ -23,7 +23,7 @@
                         <rect key="frame" x="36" y="0.0" width="298" height="59.5"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2t2-qW-Lcu">
-                                <rect key="frame" x="0.0" y="11.5" width="242" height="36.5"/>
+                                <rect key="frame" x="0.0" y="11.5" width="239" height="36.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-- ETH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scJ-RY-qk3">
                                         <rect key="frame" x="0.0" y="0.0" width="47" height="18"/>
@@ -32,7 +32,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0xdDFFF2b78463AB1cA781e853BB888FDfd06083d3" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWW-wY-XEU">
-                                        <rect key="frame" x="0.0" y="23" width="242" height="13.5"/>
+                                        <rect key="frame" x="0.0" y="23" width="239" height="13.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -40,17 +40,18 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wMR-ps-QHM">
-                                <rect key="frame" x="252" y="19" width="46" height="22"/>
+                                <rect key="frame" x="249" y="19" width="49" height="22"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="glasses" translatesAutoresizingMaskIntoConstraints="NO" id="mbU-gV-kxo">
-                                        <rect key="frame" x="0.0" y="3.5" width="15" height="15"/>
+                                        <rect key="frame" x="0.0" y="2" width="18" height="18"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" priority="999" constant="15" id="JBT-UD-abn"/>
-                                            <constraint firstAttribute="height" priority="999" constant="15" id="UFk-ew-jRu"/>
+                                            <constraint firstAttribute="width" priority="999" constant="18" id="JBT-UD-abn"/>
+                                            <constraint firstAttribute="height" priority="999" constant="18" id="UFk-ew-jRu"/>
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Io-0E-DkX">
-                                        <rect key="frame" x="25" y="0.0" width="21" height="22"/>
+                                        <rect key="frame" x="28" y="0.0" width="21" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="luV-hy-3Li"/>
                                             <constraint firstAttribute="width" constant="21" id="seg-be-uoW"/>
@@ -107,6 +108,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="glasses" width="33" height="33"/>
+        <image name="glasses" width="42" height="42"/>
     </resources>
 </document>
