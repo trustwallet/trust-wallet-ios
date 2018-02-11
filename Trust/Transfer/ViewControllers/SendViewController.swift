@@ -78,8 +78,8 @@ class SendViewController: FormViewController {
         view.backgroundColor = viewModel.backgroundColor
 
         let recipientRightView = FieldAppereance.addressFieldRightView(
-            pasteAction: { self.pasteAction() },
-            qrAction: { self.openReader() }
+            pasteAction: { [unowned self] in self.pasteAction() },
+            qrAction: { [unowned self] in self.openReader() }
         )
 
         let maxButton = Button(size: .normal, style: .borderless)

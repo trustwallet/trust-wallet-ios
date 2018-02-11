@@ -41,8 +41,8 @@ class NewTokenViewController: FormViewController {
         title = viewModel.title
 
         let recipientRightView = FieldAppereance.addressFieldRightView(
-            pasteAction: { self.pasteAction() },
-            qrAction: { self.openReader() }
+            pasteAction: { [unowned self] in self.pasteAction() },
+            qrAction: { [unowned self] in self.openReader() }
         )
 
         form = Section()
