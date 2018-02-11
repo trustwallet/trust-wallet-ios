@@ -17,7 +17,7 @@ struct AccountViewModel {
         return wallet.type == .watch(wallet.address)
     }
     var balance: String {
-        return walletBalance?.amountFull ?? "0"
+        return walletBalance?.amountFull ?? "--"
     }
     var title: String {
         return wallet.address.description
