@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum RPCServer: String {
+enum RPCServer {
     case main
     case kovan
     case ropsten
@@ -10,6 +10,7 @@ enum RPCServer: String {
     case poa
     case sokol
     case classic
+    case custom(CustomRPC)
 
     var chainID: Int {
         switch self {
@@ -20,6 +21,8 @@ enum RPCServer: String {
         case .poa: return 99
         case .sokol: return 77
         case .classic: return 61
+        case .custom(let custom):
+            return custom.chainID
         }
     }
 
@@ -32,12 +35,14 @@ enum RPCServer: String {
         case .poa: return "POA Network"
         case .sokol: return "Sokol"
         case .classic: return "Ethereum Classic"
+        case .custom(let custom):
+            return custom.name
         }
     }
 
     var isTestNetwork: Bool {
         switch self {
-        case .main, .poa, .classic: return false
+        case .main, .poa, .classic, .custom: return false
         case .kovan, .ropsten, .rinkeby, .sokol: return true
         }
     }
@@ -48,6 +53,8 @@ enum RPCServer: String {
         case .classic: return "ETC"
         case .kovan, .ropsten, .rinkeby: return "ETH"
         case .poa, .sokol: return "POA"
+        case .custom(let custom):
+            return custom.symbol
         }
     }
 
@@ -83,5 +90,16 @@ enum RPCServer: String {
             default: return .main
             }
         }()
+    }
+}
+
+extension RPCServer: Equatable {
+    static func == (lhs: RPCServer, rhs: RPCServer) -> Bool {
+        switch (lhs, rhs) {
+        case (let .custom(lhs), let .custom(rhs)):
+            return lhs == rhs
+        case (let lhs, let rhs):
+            return lhs.chainID == rhs.chainID
+        }
     }
 }

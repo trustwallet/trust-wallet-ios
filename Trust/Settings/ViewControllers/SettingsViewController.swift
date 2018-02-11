@@ -64,6 +64,8 @@ class SettingsViewController: FormViewController {
                     switch option {
                     case .main, .classic, .poa: return ""
                     case .kovan, .ropsten, .rinkeby, .sokol: return NSLocalizedString("settings.network.test.label.title", value: "Test", comment: "")
+                    case .custom:
+                        return NSLocalizedString("settings.network.custom.label.title", value: "Custom", comment: "")
                     }
                 }
             }.cellSetup { cell, _ in
