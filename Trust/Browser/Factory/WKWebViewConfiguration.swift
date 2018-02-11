@@ -35,16 +35,23 @@ extension WKWebViewConfiguration {
           getAccounts: function (cb) { cb(null, [addressHex]) },
           signTransaction: function (tx, cb){
             console.log('signing a transaction', tx)
-            let id = tx.id || 8888
+            const { id = 8888 } = tx
             Trust.addCallback(id, cb)
             webkit.messageHandlers.signTransaction.postMessage({"name": "signTransaction", "object": tx, id: id})
           },
-          signPersonalMessage: function (request, cb) {
-            let message = {data: request.params[0]}
-            let id = request.id || 8888
-            console.log("signing a personal message", cb)
+          signMessage: function (msgParams, cb) {
+            const { data } = msgParams
+            const { id = 8888 } = msgParams
+            console.log("signing a message", msgParams)
             Trust.addCallback(id, cb)
-            webkit.messageHandlers.signPersonalMessage.postMessage({"name": "signPersonalMessage", "object": message, id: id})
+            webkit.messageHandlers.signMessage.postMessage({"name": "signMessage", "object": { data }, id: id})
+        },
+          signPersonalMessage: function (msgParams, cb) {
+            const { data } = msgParams
+            const { id = 8888 } = msgParams
+            console.log("signing a personal message", msgParams)
+            Trust.addCallback(id, cb)
+            webkit.messageHandlers.signPersonalMessage.postMessage({"name": "signPersonalMessage", "object": { data }, id: id})
           }
         })
 
