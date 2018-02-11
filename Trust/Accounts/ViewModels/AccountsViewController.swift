@@ -87,9 +87,9 @@ class AccountsViewController: UITableViewController {
     }
     func confirmDelete(account: Wallet) {
         confirm(
-            title: "Are you sure you would like to delete this wallet?",
-            message: "Make sure you have backup of your wallet",
-            okTitle: "Delete",
+            title: NSLocalizedString("accounts.confirm.delete.title", value: "Are you sure you would like to delete this wallet?", comment: ""),
+            message: NSLocalizedString("accounts.confirm.delete.message", value: "Make sure you have backup of your wallet.", comment: ""),
+            okTitle: NSLocalizedString("accounts.confirm.delete.okTitle", value: "Delete", comment: ""),
             okStyle: .destructive
         ) { result in
             switch result {
