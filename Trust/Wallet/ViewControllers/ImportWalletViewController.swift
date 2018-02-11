@@ -72,6 +72,11 @@ class ImportWalletViewController: FormViewController {
             }
         }
 
+        let recipientRightView = FieldAppereance.addressFieldRightView(
+            pasteAction: { [unowned self] in self.pasteAddressAction() },
+            qrAction: { [unowned self] in self.openReader() }
+        )
+
         form
             +++ Section {
                 var header = HeaderFooterView<InfoHeaderView>(.class)
@@ -136,6 +141,8 @@ class ImportWalletViewController: FormViewController {
             })
             }.cellUpdate { cell, _ in
                 cell.textField.placeholder = NSLocalizedString("Ethereum Address", value: "Ethereum Address", comment: "")
+                cell.textField.rightView = recipientRightView
+                cell.textField.rightViewMode = .always
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.password) {
@@ -254,6 +261,12 @@ class ImportWalletViewController: FormViewController {
             mnemonicRow?.value = string
             mnemonicRow?.reload()
         }
+    }
+
+    @objc func pasteAddressAction() {
+        let value = UIPasteboard.general.string?.trimmed
+        watchRow?.value = value
+        watchRow?.reload()
     }
 
     required init?(coder aDecoder: NSCoder) {
