@@ -69,6 +69,7 @@ class SendViewController: FormViewController {
         fiatButton.addTarget(self, action: #selector(fiatAction), for: .touchUpInside)
         fiatButton.isHidden = viewModel.isFiatViewHidden()
         let amountRightView = UIStackView(arrangedSubviews: [
+            maxButton,
             fiatButton,
         ])
         amountRightView.translatesAutoresizingMaskIntoConstraints = false
@@ -96,7 +97,7 @@ class SendViewController: FormViewController {
                 cell.textField.delegate = self
                 cell.textField.placeholder = "\(self?.viewModel.currentPair.left ?? "") " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
                 cell.textField.keyboardType = .decimalPad
-                cell.textField.rightView = amountRightView 
+                cell.textField.rightView = amountRightView
                 cell.textField.rightViewMode = .always
             }
     }
@@ -169,9 +170,10 @@ class SendViewController: FormViewController {
         activateAmountView()
     }
     @objc func useMaxAmount() {
-        guard let value = session.balance?.amountFull else { return }
-        amountRow?.value = value
-        amountRow?.reload()
+        switch transferType {
+        case .ether: self.updateMaxEthers()
+        case .token(let token): self.updateMaxTokens(token)
+        }
     }
     @objc func fiatAction(sender: UIButton) {
         let swappedPair = viewModel.currentPair.swapPair()

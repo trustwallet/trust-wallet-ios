@@ -129,9 +129,19 @@ class TransactionConfigurator {
         }
     }
 
+    func valueToSend() -> BigInt {
+        var value = transaction.value
+        if let balance = session.balance?.value,
+            balance == transaction.value {
+            // user tries to send max
+            value = transaction.value - configuration.gasLimit * configuration.gasPrice
+        }
+        return value
+    }
+
     func previewTransaction() -> PreviewTransaction {
         return PreviewTransaction(
-            value: transaction.value,
+            value: self.valueToSend(),
             account: account,
             address: transaction.to,
             contract: .none,
@@ -146,7 +156,7 @@ class TransactionConfigurator {
     func signTransaction() -> SignTransaction {
         let value: BigInt = {
             switch transaction.transferType {
-            case .ether: return transaction.value
+            case .ether: return self.valueToSend()
             case .token: return 0
             }
         }()

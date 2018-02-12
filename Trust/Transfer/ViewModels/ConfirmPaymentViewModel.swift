@@ -24,6 +24,10 @@ struct ConfirmPaymentViewModel {
         }
     }
 
+    var insufficientFundText: String {
+        return NSLocalizedString("send.error.insufficientFund", value: "Insufficient Fund", comment: "")
+    }
+
     var backgroundColor: UIColor {
         return .white
     }
