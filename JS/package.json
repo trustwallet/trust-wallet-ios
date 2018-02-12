@@ -1,0 +1,46 @@
+{
+  "name": "trust-wallet",
+  "version": "0.0.1",
+  "description": "web3 injection",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/TrustWallet/trust-wallet-ios.git"
+  },
+  "keywords": [
+    "ethereum",
+    "swift",
+    "blockchain",
+    "wallet",
+    "ethereum-dapps",
+    "dapps"
+  ],
+  "author": "Trust <support@trustwalletapp.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/TrustWallet/trust-wallet-ios/issues"
+  },
+  "homepage": "https://github.com/TrustWallet/trust-wallet-ios#readme",
+  "devDependencies": {
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browserify": "^15.2.0",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-minify": "^2.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-size": "^3.0.0",
+    "run-sequence": "^2.2.1",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "web3": "^0.20.4",
+    "web3-provider-engine": "^13.6.0"
+  }
+}

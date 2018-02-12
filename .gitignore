@@ -82,3 +82,10 @@ Trust.zip
 *.mobileprovision
 *.cer
 
+# VIM
+*.swp
+*.swo
+
+# node
+node_modules
+JS/staging
