@@ -20,8 +20,4 @@ struct InCoordinatorViewModel {
     var canActivateDebugMode: Bool {
         return config.server.isTestNetwork
     }
-
-    var isDAppsBrowserAvailable: Bool {
-        return config.isDAppsBrowserAvailable
-    }
 }

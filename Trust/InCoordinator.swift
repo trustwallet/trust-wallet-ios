@@ -118,18 +118,18 @@ class InCoordinator: Coordinator {
                 self?.activateDebug()
             }
         }
-        if inCoordinatorViewModel.isDAppsBrowserAvailable {
-            let coordinator = BrowserCoordinator(session: session, keystore: keystore)
-            coordinator.delegate = self
-            coordinator.start()
-            coordinator.rootViewController.tabBarItem = UITabBarItem(
-                title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
-                image: R.image.dapps_icon(),
-                selectedImage: nil
-            )
-            addCoordinator(coordinator)
-            tabBarController.viewControllers?.insert(coordinator.navigationController, at: 0)
-        }
+        
+        let coordinator = BrowserCoordinator(session: session, keystore: keystore)
+        coordinator.delegate = self
+        coordinator.start()
+        coordinator.rootViewController.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
+            image: R.image.dapps_icon(),
+            selectedImage: nil
+        )
+        addCoordinator(coordinator)
+        tabBarController.viewControllers?.insert(coordinator.navigationController, at: 0)
+
         if inCoordinatorViewModel.tokensAvailable {
             let tokenCoordinator = TokensCoordinator(
                 session: session,

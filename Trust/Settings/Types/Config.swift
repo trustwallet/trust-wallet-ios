@@ -58,11 +58,6 @@ struct Config {
         set { defaults.set(newValue, forKey: Keys.isDebugEnabled) }
     }
 
-    var isDAppsBrowserAvailable: Bool {
-        get { return defaults.bool(forKey: Keys.dAppBrowser) }
-        set { defaults.set(newValue, forKey: Keys.dAppBrowser) }
-    }
-
     var server: RPCServer {
         return RPCServer(chainID: chainID)
     }
