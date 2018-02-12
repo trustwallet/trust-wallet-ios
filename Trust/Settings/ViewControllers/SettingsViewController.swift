@@ -53,7 +53,7 @@ class SettingsViewController: FormViewController {
                 $0.value = RPCServer(chainID: strongSelf.config.chainID)
                 $0.selectorTitle = strongSelf.viewModel.networkTitle
                 $0.displayValueFor = { value in
-                    return value?.name
+                    return value?.displayName
                 }
             }.onChange {[weak self] row in
                 self?.config.chainID = row.value?.chainID ?? RPCServer.main.chainID

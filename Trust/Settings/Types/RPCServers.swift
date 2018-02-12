@@ -43,6 +43,13 @@ enum RPCServer {
         }
     }
 
+    var displayName: String {
+        if self.isTestNetwork {
+            return "\(self.name) (\(self.symbol))"
+        }
+        return self.name
+    }
+
     var isTestNetwork: Bool {
         switch self {
         case .main, .poa, .classic, .callisto, .custom: return false
