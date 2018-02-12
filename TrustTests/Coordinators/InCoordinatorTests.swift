@@ -86,4 +86,34 @@ class InCoordinatorTests: XCTestCase {
         XCTAssertTrue(coordinator.coordinators.last is PaymentCoordinator)
         XCTAssertTrue(controller is RequestViewController)
     }
+
+    func testShowTabDefault() {
+        let coordinator = InCoordinator(
+            navigationController: FakeNavigationController(),
+            wallet: .make(),
+            keystore: FakeEtherKeystore(),
+            config: .make()
+        )
+        coordinator.showTabBar(for: .make())
+
+        let viewController = (coordinator.tabBarController?.selectedViewController as? UINavigationController)?.viewControllers[0]
+
+        XCTAssert(viewController is TransactionsViewController)
+    }
+
+    func testShowTabTokens() {
+        let coordinator = InCoordinator(
+            navigationController: FakeNavigationController(),
+            wallet: .make(),
+            keystore: FakeEtherKeystore(),
+            config: .make()
+        )
+        coordinator.showTabBar(for: .make())
+
+        coordinator.showTab(.tokens)
+
+        let viewController = (coordinator.tabBarController?.selectedViewController as? UINavigationController)?.viewControllers[0]
+
+        XCTAssert(viewController is TokensViewController)
+    }
 }

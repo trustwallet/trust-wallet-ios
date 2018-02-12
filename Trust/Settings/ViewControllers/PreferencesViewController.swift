@@ -7,6 +7,14 @@ import Eureka
 class PreferencesViewController: FormViewController {
 
     let viewModel = PreferencesViewModel()
+    let preferences: PreferencesController
+
+    init(
+        preferences: PreferencesController = PreferencesController()
+    ) {
+        self.preferences = preferences
+        super.init(nibName: nil, bundle: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,21 +23,17 @@ class PreferencesViewController: FormViewController {
 
         form +++ Section()
 
-            <<< SwitchRow { [weak self] in
-                $0.title = viewModel.showTokensTabTitle
-                $0.value = viewModel.showTokensTabOnStart
-            }.onChange { [unowned self] row in
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.coins()
-            }
+        <<< SwitchRow {
+            $0.title = viewModel.showTokensTabTitle
+            $0.value = preferences.get(for: .showTokensOnLaunch)
+        }.onChange { [unowned self] row in
+            self.preferences.set(value: row.value ?? false, for: .showTokensOnLaunch)
+        }.cellSetup { cell, _ in
+            cell.imageView?.image = R.image.coins()
+        }
     }
 
-    override func valueHasBeenChanged(for row: BaseRow, oldValue: Any?, newValue: Any?) {
-        if row.section === form[0] {
-            print("Single Selection:\((row.section as! SelectableSection<ImageCheckRow<String>>).selectedRow()?.baseValue ?? "No row selected")")
-        }
-        else if row.section === form[1] {
-            print("Mutiple Selection:\((row.section as! SelectableSection<ImageCheckRow<String>>).selectedRows().map({$0.baseValue}))")
-        }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

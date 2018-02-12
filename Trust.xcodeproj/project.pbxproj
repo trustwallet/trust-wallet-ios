@@ -306,6 +306,11 @@
 		771A8471202F067D00528D28 /* NetworksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A8470202F067D00528D28 /* NetworksViewController.swift */; };
 		771A847320322F2500528D28 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A847220322F2500528D28 /* PreferencesViewController.swift */; };
 		771A847520322FD700528D28 /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A847420322FD700528D28 /* PreferencesViewModel.swift */; };
+		771A847A2032344D00528D28 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A84792032344D00528D28 /* PreferencesController.swift */; };
+		771A847D2032409000528D28 /* PreferenceOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A847C2032409000528D28 /* PreferenceOption.swift */; };
+		771A8480203240BB00528D28 /* PreferencesControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A847F203240BB00528D28 /* PreferencesControllerTests.swift */; };
+		771A84822032423800528D28 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A84812032423800528D28 /* PreferencesController.swift */; };
+		771A8485203242B400528D28 /* InCoordinatorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A8484203242B400528D28 /* InCoordinatorViewModelTests.swift */; };
 		771AA94E1FF971CD00D25403 /* DappAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA94D1FF971CD00D25403 /* DappAction.swift */; };
 		771AA960200D5E8800D25403 /* PassphraseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA95F200D5E8800D25403 /* PassphraseView.swift */; };
 		771AA962200D5EC700D25403 /* PassphraseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA961200D5EC700D25403 /* PassphraseViewModel.swift */; };
@@ -672,6 +677,11 @@
 		771A8470202F067D00528D28 /* NetworksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksViewController.swift; sourceTree = "<group>"; };
 		771A847220322F2500528D28 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		771A847420322FD700528D28 /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
+		771A84792032344D00528D28 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
+		771A847C2032409000528D28 /* PreferenceOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceOption.swift; sourceTree = "<group>"; };
+		771A847F203240BB00528D28 /* PreferencesControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesControllerTests.swift; sourceTree = "<group>"; };
+		771A84812032423800528D28 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
+		771A8484203242B400528D28 /* InCoordinatorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InCoordinatorViewModelTests.swift; sourceTree = "<group>"; };
 		771AA94D1FF971CD00D25403 /* DappAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DappAction.swift; sourceTree = "<group>"; };
 		771AA95F200D5E8800D25403 /* PassphraseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseView.swift; sourceTree = "<group>"; };
 		771AA961200D5EC700D25403 /* PassphraseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseViewModel.swift; sourceTree = "<group>"; };
@@ -753,6 +763,7 @@
 		290B2B681F92C0300053C83E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				771A847E203240AB00528D28 /* Controllers */,
 				778EAF7B1FF10AE000C8E2AB /* Coordinators */,
 				290B2B691F92C0440053C83E /* ConfigTests.swift */,
 				290B2B6B1F92C35B0053C83E /* RPCServerTests.swift */,
@@ -1373,6 +1384,7 @@
 		2996F1441F6C9875005C33AE /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				771A84782032343600528D28 /* Controllers */,
 				298542F11FBD593900CB5081 /* ViewModels */,
 				2977CAE41F7E0B69009682A0 /* Coordinators */,
 				29FC9BC71F83144D000209CD /* ViewControllers */,
@@ -1744,6 +1756,7 @@
 				294EC1D71FD7FBAB0065EB20 /* BiometryAuthenticationType.swift */,
 				739533961FEFF5FD0084AFAB /* Currency.swift */,
 				7721A6C7202EF81B004DB16C /* CustomRPC.swift */,
+				771A847C2032409000528D28 /* PreferenceOption.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1791,6 +1804,7 @@
 				29F1C864200384FE003780D8 /* Wallet.swift */,
 				732E0F512022754600B39C1F /* FakeLockProtocol.swift */,
 				73CBC760202139FB00374666 /* FakeGetBalanceCoordinator(.swift */,
+				771A84812032423800528D28 /* PreferencesController.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -1899,6 +1913,30 @@
 				73ACEEFE20163E08003DD71D /* PasscodeCharacterView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		771A84782032343600528D28 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				771A84792032344D00528D28 /* PreferencesController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		771A847E203240AB00528D28 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				771A847F203240BB00528D28 /* PreferencesControllerTests.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		771A8483203242A600528D28 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				771A8484203242B400528D28 /* InCoordinatorViewModelTests.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		771AA94C1FF971BB00D25403 /* Types */ = {
@@ -2014,6 +2052,7 @@
 		CCA4FE301FD3652100749AE4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				771A8483203242A600528D28 /* ViewModels */,
 				29F1C85420036879003780D8 /* Types */,
 				CCA4FE311FD3653300749AE4 /* Coordinators */,
 			);
@@ -2662,6 +2701,7 @@
 				615F105D1FCBF55E008A45AF /* OnboardingCollectionViewController.swift in Sources */,
 				29A0E1851F706B8C00BAAAED /* String.swift in Sources */,
 				296AF9A71F736EC70058AF78 /* RPCServers.swift in Sources */,
+				771A847A2032344D00528D28 /* PreferencesController.swift in Sources */,
 				296AF9A91F737F6F0058AF78 /* SendRawTransactionRequest.swift in Sources */,
 				293112121FC4F48400966EEA /* ServiceProvider.swift in Sources */,
 				73C5CF45201A7CAB00C74316 /* LockPasscodeViewController.swift in Sources */,
@@ -2688,6 +2728,7 @@
 				29F1C84C1FEC4F6F003780D8 /* TokensFooterView.swift in Sources */,
 				29F114F41FA8117C00114A29 /* SendCoordinator.swift in Sources */,
 				293B8B411F707F4600356286 /* TransactionViewModel.swift in Sources */,
+				771A847D2032409000528D28 /* PreferenceOption.swift in Sources */,
 				77B3BF4A2019247200EEC15A /* BrowserNavigationBar.swift in Sources */,
 				29BB94951F6FC54C009B09CC /* EthereumUnit.swift in Sources */,
 				29C70C712016C7780072E454 /* SentTransaction.swift in Sources */,
@@ -2737,6 +2778,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				771A8480203240BB00528D28 /* PreferencesControllerTests.swift in Sources */,
 				29F1C85620036887003780D8 /* AppTrackerTests.swift in Sources */,
 				29BDF19F1FEE51650023A45F /* GasLimitConfigurationTests.swift in Sources */,
 				290B2B6C1F92C35B0053C83E /* RPCServerTests.swift in Sources */,
@@ -2774,6 +2816,7 @@
 				2961BD091FB14B6D00C4B840 /* Config.swift in Sources */,
 				290B2B6E1F92C3980053C83E /* UserDefaults.swift in Sources */,
 				77872D2D202514AD0032D687 /* EnterPasswordCoordinatorTests.swift in Sources */,
+				771A8485203242B400528D28 /* InCoordinatorViewModelTests.swift in Sources */,
 				73CBC761202139FB00374666 /* FakeGetBalanceCoordinator(.swift in Sources */,
 				295996031FAA865800DB66A8 /* TokensCoordinatorTests.swift in Sources */,
 				29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */,
@@ -2784,6 +2827,7 @@
 				29E14FD51F7F470C00185568 /* TransactionsStorageTests.swift in Sources */,
 				61C359E22002AC9D0097B04D /* TransactionSigningTests.swift in Sources */,
 				299B5E381FCBCDF70051361C /* RequestViewModelTests.swift in Sources */,
+				771A84822032423800528D28 /* PreferencesController.swift in Sources */,
 				293E62731FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift in Sources */,
 				29FF130A1F75F67200AFD326 /* Address.swift in Sources */,
 				29BDF19D1FEE50E90023A45F /* GasPriceConfigurationTests.swift in Sources */,

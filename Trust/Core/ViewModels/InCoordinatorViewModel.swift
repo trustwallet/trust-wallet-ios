@@ -5,9 +5,14 @@ import Foundation
 struct InCoordinatorViewModel {
 
     let config: Config
+    let preferences: PreferencesController
 
-    init(config: Config) {
+    init(
+        config: Config,
+        preferences: PreferencesController = PreferencesController()
+    ) {
         self.config = config
+        self.preferences = preferences
     }
 
     var tokensAvailable: Bool {
@@ -19,5 +24,12 @@ struct InCoordinatorViewModel {
 
     var canActivateDebugMode: Bool {
         return config.server.isTestNetwork
+    }
+
+    var initialTab: Tabs {
+        guard preferences.get(for: .showTokensOnLaunch) else {
+            return .transactions
+        }
+        return .tokens
     }
 }

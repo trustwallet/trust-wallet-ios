@@ -45,6 +45,7 @@ class InCoordinator: Coordinator {
     var tabBarController: UITabBarController? {
         return self.navigationController.viewControllers.first as? UITabBarController
     }
+
     lazy var helpUsCoordinator: HelpUsCoordinator = {
         return HelpUsCoordinator(
             navigationController: navigationController,
@@ -118,7 +119,7 @@ class InCoordinator: Coordinator {
                 self?.activateDebug()
             }
         }
-        
+
         let coordinator = BrowserCoordinator(session: session, keystore: keystore)
         coordinator.delegate = self
         coordinator.start()
@@ -167,10 +168,10 @@ class InCoordinator: Coordinator {
 
         keystore.recentlyUsedWallet = account
 
-        showTab(.transactions)
+        showTab(inCoordinatorViewModel.initialTab)
     }
 
-    private func showTab(_ selectTab: Tabs) {
+    func showTab(_ selectTab: Tabs) {
         guard let viewControllers = tabBarController?.viewControllers else { return }
         for controller in viewControllers {
             if let nav = controller as? UINavigationController {
