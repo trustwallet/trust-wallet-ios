@@ -4,8 +4,8 @@ import Foundation
 import UIKit
 
 struct TransactionsSectionModel {
-    var header: String
-    var items: [Transaction]
+    let header: String
+    let items: [Transaction]
 }
 
 struct TransactionsViewModel {
