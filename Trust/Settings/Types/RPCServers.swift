@@ -44,10 +44,7 @@ enum RPCServer {
     }
 
     var displayName: String {
-        if self.isTestNetwork {
-            return "\(self.name) (\(self.symbol))"
-        }
-        return self.name
+        return "\(self.name) (\(self.symbol))"
     }
 
     var isTestNetwork: Bool {
