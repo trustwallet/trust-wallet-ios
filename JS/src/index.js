@@ -18,56 +18,11 @@ const Trust = {
     const web3 = new Web3(engine)
     context.web3 = web3
 
-    let web3Provider = new Web3Subprovider(new Web3.providers.HttpProvider(rpcUrl))
-
     engine.addProvider(hookedSubProvider = new HookedWalletSubprovider(options))
     engine.addProvider(new FilterSubprovider())
-    engine.addProvider()
+    engine.addProvider(new Web3Subprovider(new Web3.providers.HttpProvider(rpcUrl)))
 
-    web3Provider.prototype.send = function (payload) {
-      const self = this
     
-      let selectedAddress
-      let result = null
-      switch (payload.method) {
-    
-        case 'eth_accounts':
-          // read from localStorage
-          selectedAddress = self.publicConfigStore.getState().selectedAddress
-          result = selectedAddress ? [selectedAddress] : []
-          break
-    
-        case 'eth_coinbase':
-          // read from localStorage
-          selectedAddress = self.publicConfigStore.getState().selectedAddress
-          result = selectedAddress || null
-          break
-    
-        case 'eth_uninstallFilter':
-          self.sendAsync(payload, noop)
-          result = true
-          break
-    
-        case 'net_version':
-          const networkVersion = self.publicConfigStore.getState().networkVersion
-          result = networkVersion || null
-          break
-    
-        // throw not-supported Error
-        default:
-          var link = 'https://github.com/MetaMask/faq/blob/master/DEVELOPERS.md#dizzy-all-async---think-of-metamask-as-a-light-client'
-          var message = `The MetaMask Web3 object does not support synchronous methods like ${payload.method} without a callback parameter. See ${link} for details.`
-          throw new Error(message)
-    
-      }
-    
-      // return the result
-      return {
-        id: payload.id,
-        jsonrpc: payload.jsonrpc,
-        result: result,
-      }
-    }
     
     engine.on('error', err => console.error(err.stack))
     engine.isTrust = true
@@ -101,6 +56,51 @@ const Trust = {
 
 if (typeof context.Trust === 'undefined') {
   context.Trust = Trust
+}
+
+ProviderEngine.prototype.send = function (payload) {
+  const self = this
+
+  let selectedAddress
+  let result = null
+  switch (payload.method) {
+
+    case 'eth_accounts':
+      // read from localStorage
+      selectedAddress = self.publicConfigStore.getState().selectedAddress
+      result = selectedAddress ? [selectedAddress] : []
+      break
+
+    case 'eth_coinbase':
+      // read from localStorage
+      selectedAddress = self.publicConfigStore.getState().selectedAddress
+      result = selectedAddress || null
+      break
+
+    case 'eth_uninstallFilter':
+      self.sendAsync(payload, noop)
+      result = true
+      break
+
+    case 'net_version':
+      const networkVersion = self.publicConfigStore.getState().networkVersion
+      result = networkVersion || null
+      break
+
+    // throw not-supported Error
+    default:
+      var link = 'https://github.com/MetaMask/faq/blob/master/DEVELOPERS.md#dizzy-all-async---think-of-metamask-as-a-light-client'
+      var message = `The MetaMask Web3 object does not support synchronous methods like ${payload.method} without a callback parameter. See ${link} for details.`
+      throw new Error(message)
+
+  }
+
+  // return the result
+  return {
+    id: payload.id,
+    jsonrpc: payload.jsonrpc,
+    result: result,
+  }
 }
 
 module.exports = Trust
