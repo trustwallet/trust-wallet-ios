@@ -3,6 +3,11 @@
 import Foundation
 import UIKit
 
+struct TransactionsSectionModel {
+    var header: String
+    var items: [Transaction]
+}
+
 struct TransactionsViewModel {
 
     static let formatter: DateFormatter = {
@@ -11,7 +16,7 @@ struct TransactionsViewModel {
         return formatter
     }()
 
-    var items: [(date: String, transactions: [Transaction])] = []
+    var items: [TransactionsSectionModel] = []
     let config: Config
 
     init(
@@ -19,21 +24,10 @@ struct TransactionsViewModel {
         config: Config = Config()
     ) {
         self.config = config
-
-        var newItems: [String: [Transaction]] = [:]
-
-        for transaction in transactions {
-            let date = TransactionsViewModel.formatter.string(from: transaction.date)
-
-            var currentItems = newItems[date] ?? []
-            currentItems.append(transaction)
-            newItems[date] = currentItems
+        guard !transactions.isEmpty else {
+            return
         }
-        //TODO. IMPROVE perfomance
-        let tuple = newItems.map { (key, values) in return (date: key, transactions: values) }
-        items = tuple.sorted { (object1, object2) -> Bool in
-            return TransactionsViewModel.formatter.date(from: object1.date)! > TransactionsViewModel.formatter.date(from: object2.date)!
-        }
+        self.prepareSections(for: transactions)
     }
 
     var backgroundColor: UIColor {
@@ -61,15 +55,15 @@ struct TransactionsViewModel {
     }
 
     func numberOfItems(for section: Int) -> Int {
-        return items[section].transactions.count
+        return items[section].items.count
     }
 
     func item(for row: Int, section: Int) -> Transaction {
-        return items[section].transactions[row]
+        return items[section].items[row]
     }
 
     func titleForHeader(in section: Int) -> String {
-        let value = items[section].date
+        let value = items[section].header
         let date = TransactionsViewModel.formatter.date(from: value)!
         if NSCalendar.current.isDateInToday(date) {
             return NSLocalizedString("Today", value: "Today", comment: "")
@@ -79,7 +73,16 @@ struct TransactionsViewModel {
         }
         return value
     }
-
+    private mutating func prepareSections(for transactions: [Transaction]) {
+        let headerDates = NSOrderedSet(array: transactions.map { TransactionsViewModel.formatter.string(from: $0.date ) })
+        headerDates.forEach {
+            guard let dateKey = $0 as? String else {
+                return
+            }
+            let filteredTransactionByDate = transactions.filter { TransactionsViewModel.formatter.string(from: $0.date ) == dateKey }
+            items.append(TransactionsSectionModel( header: dateKey, items: filteredTransactionByDate ))
+        }
+    }
     var isBuyActionAvailable: Bool {
         switch config.server {
         case .main, .kovan, .classic, .callisto, .ropsten, .rinkeby, .poa, .sokol, .custom: return false
