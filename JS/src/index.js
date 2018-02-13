@@ -11,19 +11,19 @@ context.Web3 = Web3
 
 let callbacks = {}
 let hookedSubProvider
+let globalSyncOptions = {}
 
 const Trust = {
-  init (rpcUrl, options) { 
+  init (rpcUrl, options, syncOptions) { 
     const engine = new ProviderEngine()
     const web3 = new Web3(engine)
     context.web3 = web3
+    globalSyncOptions = syncOptions
 
     engine.addProvider(hookedSubProvider = new HookedWalletSubprovider(options))
     engine.addProvider(new FilterSubprovider())
     engine.addProvider(new Web3Subprovider(new Web3.providers.HttpProvider(rpcUrl)))
 
-    
-    
     engine.on('error', err => console.error(err.stack))
     engine.isTrust = true
     engine.start()
@@ -61,20 +61,16 @@ if (typeof context.Trust === 'undefined') {
 ProviderEngine.prototype.send = function (payload) {
   const self = this
 
-  let selectedAddress
   let result = null
   switch (payload.method) {
 
     case 'eth_accounts':
-      // read from localStorage
-      selectedAddress = self.publicConfigStore.getState().selectedAddress
-      result = selectedAddress ? [selectedAddress] : []
+      let address = globalSyncOptions.address
+      result = address || null
       break
 
     case 'eth_coinbase':
-      // read from localStorage
-      selectedAddress = self.publicConfigStore.getState().selectedAddress
-      result = selectedAddress || null
+      result = globalSyncOptions.address || null
       break
 
     case 'eth_uninstallFilter':
@@ -83,8 +79,7 @@ ProviderEngine.prototype.send = function (payload) {
       break
 
     case 'net_version':
-      const networkVersion = self.publicConfigStore.getState().networkVersion
-      result = networkVersion || null
+      result = globalSyncOptions.networkVersion || null
       break
 
     // throw not-supported Error
@@ -92,9 +87,7 @@ ProviderEngine.prototype.send = function (payload) {
       var link = 'https://github.com/MetaMask/faq/blob/master/DEVELOPERS.md#dizzy-all-async---think-of-metamask-as-a-light-client'
       var message = `The MetaMask Web3 object does not support synchronous methods like ${payload.method} without a callback parameter. See ${link} for details.`
       throw new Error(message)
-
   }
-
   // return the result
   return {
     id: payload.id,

@@ -53,6 +53,9 @@ extension WKWebViewConfiguration {
             Trust.addCallback(id, cb)
             webkit.messageHandlers.signPersonalMessage.postMessage({"name": "signPersonalMessage", "object": { data }, id: id})
           }
+        }, {
+            address: addressHex,
+            networkVersion: chainID
         })
 
         web3.setProvider = function () {
