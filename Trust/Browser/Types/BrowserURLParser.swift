@@ -27,6 +27,6 @@ class BrowserURLParser {
     }
 
     func searchURL(for query: String) -> URL? {
-        return URL(string: searchURL + query)!
+        return URL(string: searchURL + query)
     }
 }
