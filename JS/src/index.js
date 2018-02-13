@@ -18,11 +18,13 @@ const Trust = {
     const web3 = new Web3(engine)
     context.web3 = web3
 
+    let web3Provider = new Web3Subprovider(new Web3.providers.HttpProvider(rpcUrl))
+
     engine.addProvider(hookedSubProvider = new HookedWalletSubprovider(options))
     engine.addProvider(new FilterSubprovider())
-    engine.addProvider(new Web3Subprovider(new Web3.providers.HttpProvider(rpcUrl)))
+    engine.addProvider()
 
-    engine.prototype.send = function (payload) {
+    web3Provider.prototype.send = function (payload) {
       const self = this
     
       let selectedAddress
