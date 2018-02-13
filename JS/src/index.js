@@ -22,7 +22,7 @@ const Trust = {
 
     engine.addProvider(hookedSubProvider = new HookedWalletSubprovider(options))
     engine.addProvider(new FilterSubprovider())
-    engine.addProvider()
+    engine.addProvider(web3Provider)
 
     web3Provider.prototype.send = function (payload) {
       const self = this
