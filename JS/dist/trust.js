@@ -33338,30 +33338,36 @@ utils.intFromLE = intFromLE;
 
 },{"bn.js":59,"minimalistic-assert":330,"minimalistic-crypto-utils":331}],254:[function(require,module,exports){
 module.exports={
-  "_from": "elliptic@^6.0.0",
+  "_args": [
+    [
+      "elliptic@6.4.0",
+      "/Users/viktorradchenko/Documents/iOSProjects/trust-ios/JS"
+    ]
+  ],
+  "_from": "elliptic@6.4.0",
   "_id": "elliptic@6.4.0",
   "_inBundle": false,
   "_integrity": "sha1-ysmvh2LIWDYYcAPI3+GT5eLq5d8=",
   "_location": "/elliptic",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "version",
     "registry": true,
-    "raw": "elliptic@^6.0.0",
+    "raw": "elliptic@6.4.0",
     "name": "elliptic",
     "escapedName": "elliptic",
-    "rawSpec": "^6.0.0",
+    "rawSpec": "6.4.0",
     "saveSpec": null,
-    "fetchSpec": "^6.0.0"
+    "fetchSpec": "6.4.0"
   },
   "_requiredBy": [
     "/browserify-sign",
-    "/create-ecdh"
+    "/create-ecdh",
+    "/secp256k1"
   ],
   "_resolved": "https://registry.npmjs.org/elliptic/-/elliptic-6.4.0.tgz",
-  "_shasum": "cac9af8762c85836187003c8dfe193e5e2eae5df",
-  "_spec": "elliptic@^6.0.0",
-  "_where": "/Users/mishochu/Source/trust-wallet/trust-wallet-ios/node_modules/browserify-sign",
+  "_spec": "6.4.0",
+  "_where": "/Users/viktorradchenko/Documents/iOSProjects/trust-ios/JS",
   "author": {
     "name": "Fedor Indutny",
     "email": "fedor@indutny.com"
@@ -33369,7 +33375,6 @@ module.exports={
   "bugs": {
     "url": "https://github.com/indutny/elliptic/issues"
   },
-  "bundleDependencies": false,
   "dependencies": {
     "bn.js": "^4.4.0",
     "brorand": "^1.0.1",
@@ -33379,7 +33384,6 @@ module.exports={
     "minimalistic-assert": "^1.0.0",
     "minimalistic-crypto-utils": "^1.0.0"
   },
-  "deprecated": false,
   "description": "EC cryptography",
   "devDependencies": {
     "brfs": "^1.4.3",
@@ -57371,12 +57375,14 @@ context.Web3 = Web3;
 
 var callbacks = {};
 var hookedSubProvider = void 0;
+var globalSyncOptions = {};
 
 var Trust = {
-  init: function init(rpcUrl, options) {
+  init: function init(rpcUrl, options, syncOptions) {
     var engine = new ProviderEngine();
     var web3 = new Web3(engine);
     context.web3 = web3;
+    globalSyncOptions = syncOptions;
 
     engine.addProvider(hookedSubProvider = new HookedWalletSubprovider(options));
     engine.addProvider(new FilterSubprovider());
@@ -57417,6 +57423,44 @@ var Trust = {
 if (typeof context.Trust === 'undefined') {
   context.Trust = Trust;
 }
+
+ProviderEngine.prototype.send = function (payload) {
+  var self = this;
+
+  var result = null;
+  switch (payload.method) {
+
+    case 'eth_accounts':
+      var address = globalSyncOptions.address;
+      result = address || null;
+      break;
+
+    case 'eth_coinbase':
+      result = globalSyncOptions.address || null;
+      break;
+
+    case 'eth_uninstallFilter':
+      self.sendAsync(payload, noop);
+      result = true;
+      break;
+
+    case 'net_version':
+      result = globalSyncOptions.networkVersion || null;
+      break;
+
+    // throw not-supported Error
+    default:
+      var link = 'https://github.com/MetaMask/faq/blob/master/DEVELOPERS.md#dizzy-all-async---think-of-metamask-as-a-light-client';
+      var message = 'The MetaMask Web3 object does not support synchronous methods like ' + payload.method + ' without a callback parameter. See ' + link + ' for details.';
+      throw new Error(message);
+  }
+  // return the result
+  return {
+    id: payload.id,
+    jsonrpc: payload.jsonrpc,
+    result: result
+  };
+};
 
 module.exports = Trust;
 
