@@ -208,7 +208,6 @@ extension BrowserViewController: WKNavigationDelegate {
 extension BrowserViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 
-        let method = Method(string: message.name)
         guard let body = message.body as? [String: AnyObject],
             let jsonString = body.jsonString,
             let command = try? decoder.decode(DappCommand.self, from: jsonString.data(using: .utf8)!) else {
@@ -216,11 +215,6 @@ extension BrowserViewController: WKScriptMessageHandler {
         }
         let action = DappAction.fromCommand(command)
 
-        switch method {
-        case .sendTransaction, .signTransaction, .signPersonalMessage:
-            delegate?.didCall(action: action, callbackID: command.id)
-        case .signMessage, .unknown:
-            break
-        }
+        delegate?.didCall(action: action, callbackID: command.id)
     }
 }
