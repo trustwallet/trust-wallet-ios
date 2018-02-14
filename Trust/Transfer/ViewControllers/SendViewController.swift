@@ -328,7 +328,4 @@ extension SendViewController: UITextFieldDelegate {
         self.updatePairPrice(with: amount.doubleValue)
         return true
     }
-    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        return false
-    }
 }
