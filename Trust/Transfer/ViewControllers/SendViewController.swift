@@ -119,6 +119,7 @@ class SendViewController: FormViewController {
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
             }.cellUpdate {[weak self] cell, _ in
+                cell.textField.isCopyPasteDisabled = true
                 cell.textField.textAlignment = .left
                 cell.textField.delegate = self
                 cell.textField.placeholder = "\(self?.currentPair.left ?? "") " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
