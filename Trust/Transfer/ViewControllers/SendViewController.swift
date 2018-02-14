@@ -157,7 +157,10 @@ class SendViewController: FormViewController {
         if self.currentPair.left == viewModel.symbol {
             amountString = amountRow?.value?.trimmed ?? ""
         } else {
-            amountString = stringFormatter.formatter(for: self.pairValue).trimmed
+            guard let formatedValue = decimalFormatter.string(from: NSNumber(value: self.pairValue)) else {
+                return displayError(error: SendInputErrors.wrongInput)
+            }
+            amountString = formatedValue
         }
         guard let address = Address(string: addressString) else {
             return displayError(error: Errors.invalidAddress)
