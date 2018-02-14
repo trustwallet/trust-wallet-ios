@@ -235,13 +235,26 @@ open class EtherKeystore: Keystore {
         guard let account = getAccount(for: account.address) else {
             return .failure(.accountNotFound)
         }
-
         do {
             let data = try keyStore.export(account: account, password: password, newPassword: newPassword)
             return (.success(data))
         } catch {
             return (.failure(.failedToDecryptKey))
         }
+
+    }
+    //TODO: Add error message
+    func exportPrivateKey(account: Account) -> Result<String, KeystoreError> {
+        guard let password = getPassword(for: account) else {
+            return .failure(KeystoreError.accountNotFound)
+        }
+        do {
+            let privateKey = try keyStore.exportPrivateKey(account: account, password: password)
+            return .success(privateKey.hexString)
+        } catch {
+            return .failure(KeystoreError.failedToDecryptKey)
+        }
+
     }
 
     func delete(wallet: Wallet) -> Result<Void, KeystoreError> {
