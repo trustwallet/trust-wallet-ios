@@ -66,7 +66,7 @@ ProviderEngine.prototype.send = function (payload) {
 
     case 'eth_accounts':
       let address = globalSyncOptions.address
-      result = address || null
+      result = address ? [address] : [] || null
       break
 
     case 'eth_coinbase':
