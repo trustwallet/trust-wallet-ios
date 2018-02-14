@@ -44,6 +44,10 @@ class SendViewController: FormViewController {
     var amountRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
     }
+    private var allowedCharacters: String = {
+        let decimalSeparator = Locale.current.decimalSeparator ?? "."
+        return "0123456789" + decimalSeparator
+    }()
     private var gasPrice: BigInt?
     private var data = Data()
     lazy var currentPair: Pair = {
@@ -51,6 +55,9 @@ class SendViewController: FormViewController {
     }()
     lazy var decimalFormatter: DecimalFormatter = {
         return DecimalFormatter()
+    }()
+    lazy var stringFormatter: StringFormatter = {
+        return StringFormatter()
     }()
     init(
         session: WalletSession,
@@ -97,7 +104,7 @@ class SendViewController: FormViewController {
         amountRightView.axis = .horizontal
 
         form = Section()
-            +++ Section(header: "", footer: isFiatViewHidden() ? "" : "~ \(String(format: "%.2f", self.pairValue)) " + "\(currentPair.right)")
+            +++ Section(header: "", footer: isFiatViewHidden() ? "" : valueOfPairRepresantetion())
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
@@ -112,6 +119,7 @@ class SendViewController: FormViewController {
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
             }.cellUpdate {[weak self] cell, _ in
+                cell.textField.isCopyPasteDisabled = true
                 cell.textField.textAlignment = .left
                 cell.textField.delegate = self
                 cell.textField.placeholder = "\(self?.currentPair.left ?? "") " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
@@ -149,10 +157,7 @@ class SendViewController: FormViewController {
         if self.currentPair.left == viewModel.symbol {
             amountString = amountRow?.value?.trimmed ?? ""
         } else {
-            amountString = String(format: "%f", self.pairValue).trimmed
-        }
-        guard let validatedAmountString = decimalFormatter.number(from: amountString)?.stringValue else {
-            return displayError(error: Errors.invalidAmount)
+            amountString = stringFormatter.formatter(for: self.pairValue).trimmed
         }
         guard let address = Address(string: addressString) else {
             return displayError(error: Errors.invalidAddress)
@@ -160,9 +165,9 @@ class SendViewController: FormViewController {
         let parsedValue: BigInt? = {
             switch transferType {
             case .ether:
-                return EtherNumberFormatter.full.number(from: validatedAmountString, units: .ether)
+                return EtherNumberFormatter.full.number(from: amountString, units: .ether)
             case .token(let token):
-                return EtherNumberFormatter.full.number(from: validatedAmountString, decimals: token.decimals)
+                return EtherNumberFormatter.full.number(from: amountString, decimals: token.decimals)
             }
         }()
         guard let value = parsedValue else {
@@ -232,7 +237,7 @@ class SendViewController: FormViewController {
         UIView.setAnimationsEnabled(false)
         tableView.beginUpdates()
         if let containerView = tableView.footerView(forSection: 1) {
-            containerView.textLabel!.text = "~ \(String(format: "%.2f", self.pairValue)) " + "\(currentPair.right)"
+            containerView.textLabel!.text = valueOfPairRepresantetion()
             containerView.sizeToFit()
         }
         tableView.endUpdates()
@@ -287,6 +292,15 @@ extension SendViewController: QRCodeReaderDelegate {
         pairValue = 0.0
         updatePriceSection()
     }
+    private func valueOfPairRepresantetion() -> String {
+        var formattedString = ""
+        if self.currentPair.left == viewModel.symbol {
+            formattedString = StringFormatter().currency(with: self.pairValue, and: self.session.config.currency.rawValue)
+        } else {
+            formattedString = stringFormatter.formatter(for: self.pairValue)
+        }
+        return  "~ \(formattedString) " + "\(currentPair.right)"
+    }
 }
 
 extension SendViewController: UITextFieldDelegate {
@@ -294,8 +308,15 @@ extension SendViewController: UITextFieldDelegate {
         guard let input = textField.text else {
             return true
         }
+        //In this step we validate only allowed characters it is because of the iPad keyboard.
+        let characterSet = NSCharacterSet(charactersIn: self.allowedCharacters).inverted
+        let separatedChars = string.components(separatedBy: characterSet)
+        let filteredNumbersAndSeparator = separatedChars.joined(separator: "")
+        if string != filteredNumbersAndSeparator {
+            return false
+        }
         //This is required to prevent user from input of numbers like 1.000.25 or 1,000,25.
-        if string == "," || string == "." ||  string == "'"{
+        if string == "," || string == "." ||  string == "'" {
             return !input.contains(string)
         }
         let text = (input as NSString).replacingCharacters(in: range, with: string)

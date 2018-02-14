@@ -303,6 +303,8 @@
 		73CBC761202139FB00374666 /* FakeGetBalanceCoordinator(.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CBC760202139FB00374666 /* FakeGetBalanceCoordinator(.swift */; };
 		73D26837202E827E009777A1 /* DecimalFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D26836202E827E009777A1 /* DecimalFormatter.swift */; };
 		73D2683B202E8411009777A1 /* DecimalNumberFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D2683A202E8411009777A1 /* DecimalNumberFormatterTest.swift */; };
+		73ED85A520349BE400593BF3 /* StringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED85A420349BE400593BF3 /* StringFormatter.swift */; };
+		73ED85A72034BFEF00593BF3 /* UITextFieldAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */; };
 		771A8471202F067D00528D28 /* NetworksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A8470202F067D00528D28 /* NetworksViewController.swift */; };
 		771A847320322F2500528D28 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A847220322F2500528D28 /* PreferencesViewController.swift */; };
 		771A847520322FD700528D28 /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A847420322FD700528D28 /* PreferencesViewModel.swift */; };
@@ -674,6 +676,8 @@
 		73CBC760202139FB00374666 /* FakeGetBalanceCoordinator(.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FakeGetBalanceCoordinator(.swift"; sourceTree = "<group>"; };
 		73D26836202E827E009777A1 /* DecimalFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalFormatter.swift; sourceTree = "<group>"; };
 		73D2683A202E8411009777A1 /* DecimalNumberFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalNumberFormatterTest.swift; sourceTree = "<group>"; };
+		73ED85A420349BE400593BF3 /* StringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFormatter.swift; sourceTree = "<group>"; };
+		73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldAdditions.swift; sourceTree = "<group>"; };
 		771A8470202F067D00528D28 /* NetworksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksViewController.swift; sourceTree = "<group>"; };
 		771A847220322F2500528D28 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		771A847420322FD700528D28 /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
@@ -1416,6 +1420,7 @@
 				29FA00D3201EC662002F7DC5 /* NSObject.swift */,
 				7721A6BD202A5677004DB16C /* DecryptError.swift */,
 				737D1674202BDCB400B42DDE /* UINavigationController.swift */,
+				73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1505,6 +1510,7 @@
 				2995739E1FA1F294006F17FD /* QRURLParser.swift */,
 				298542F81FBE9A0100CB5081 /* CryptoAddressValidator.swift */,
 				61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */,
+				73ED85A420349BE400593BF3 /* StringFormatter.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -2712,6 +2718,7 @@
 				29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */,
 				296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */,
 				294DFB9E1FE0CA59004CEB56 /* TransactionsViewModel.swift in Sources */,
+				73ED85A72034BFEF00593BF3 /* UITextFieldAdditions.swift in Sources */,
 				2923D9B51FDA4E07000CF3F8 /* PasswordGenerator.swift in Sources */,
 				298542F51FBD8E6A00CB5081 /* ConfigExplorer.swift in Sources */,
 				29A13E2C1F6A955700E432A2 /* CreateWalletViewModel.swift in Sources */,
@@ -2749,6 +2756,7 @@
 				2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */,
 				2912CD321F6A83EE00C6CBE3 /* WelcomeViewController.swift in Sources */,
 				29F114F61FA8147300114A29 /* RequestCoordinator.swift in Sources */,
+				73ED85A520349BE400593BF3 /* StringFormatter.swift in Sources */,
 				293112101FC4ADCB00966EEA /* InCoordinatorViewModel.swift in Sources */,
 				293112351FC9A0D500966EEA /* CallRequest.swift in Sources */,
 				291F52A91F6B7BE100B369AB /* BlockNumber.swift in Sources */,
