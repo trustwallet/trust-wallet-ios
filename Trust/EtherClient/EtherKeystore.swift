@@ -243,16 +243,16 @@ open class EtherKeystore: Keystore {
         }
 
     }
-    //TODO: Add error message
-    func exportPrivateKey(account: Account) -> Result<String, KeystoreError> {
+    
+    func exportPrivateKey(account: Account) -> Result<Data, KeystoreError> {
         guard let password = getPassword(for: account) else {
             return .failure(KeystoreError.accountNotFound)
         }
         do {
             let privateKey = try keyStore.exportPrivateKey(account: account, password: password)
-            return .success(privateKey.hexString)
+            return .success(privateKey)
         } catch {
-            return .failure(KeystoreError.failedToDecryptKey)
+            return .failure(KeystoreError.failedToExportPrivateKey)
         }
 
     }
