@@ -29,6 +29,7 @@ target 'Trust' do
   pod 'Branch'
   # pod 'web3swift', :git=>'https://github.com/BANKEX/web3swift', :branch=>'master'
   pod 'SAMKeychain'
+  pod 'TrustWeb3Provider', :git=>'https://github.com/TrustWallet/trust-web3-provider', :branch=>'master'
 
   target 'TrustTests' do
     inherit! :search_paths
