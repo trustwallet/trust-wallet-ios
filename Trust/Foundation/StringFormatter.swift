@@ -13,6 +13,14 @@ final class StringFormatter {
         formatter.isLenient = true
         return formatter
     }()
+    /// decimalFormatter of a `StringFormatter` to represent curent locale.
+    private lazy var decimalFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ""
+        formatter.isLenient = true
+        return formatter
+    }()
     /// Converts a Double to a `currency String`.
     ///
     /// - Parameters:
@@ -22,6 +30,17 @@ final class StringFormatter {
     func currency(with value: Double, and currencyCode: String) -> String {
         let formatter = currencyFormatter
         formatter.currencyCode = currencyCode
+        return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
+    }
+    /// Converts a Double to a `token String`.
+    ///
+    /// - Parameters:
+    ///   - double: double to convert.
+    ///   - decimals: symbols after coma.
+    /// - Returns: Token `String` represenation.
+    func token(with value: Double, and decimals: Int) -> String {
+        let formatter = decimalFormatter
+        formatter.maximumFractionDigits = decimals
         return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
     }
     /// Converts a Double to a `String`.

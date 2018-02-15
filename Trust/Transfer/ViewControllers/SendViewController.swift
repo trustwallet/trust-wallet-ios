@@ -59,6 +59,14 @@ class SendViewController: FormViewController {
     lazy var stringFormatter: StringFormatter = {
         return StringFormatter()
     }()
+    lazy var decimals: Int = {
+        switch self.transferType {
+        case .ether:
+            return 8
+        case .token(let token):
+            return token.decimals
+        }
+    }()
     init(
         session: WalletSession,
         storage: TokensDataStore,
@@ -157,10 +165,7 @@ class SendViewController: FormViewController {
         if self.currentPair.left == viewModel.symbol {
             amountString = amountRow?.value?.trimmed ?? ""
         } else {
-            guard let formatedValue = decimalFormatter.string(from: NSNumber(value: self.pairValue)) else {
-                return displayError(error: SendInputErrors.wrongInput)
-            }
-            amountString = formatedValue
+            amountString = stringFormatter.token(with: self.pairValue, and: decimals)
         }
         guard let address = Address(string: addressString) else {
             return displayError(error: Errors.invalidAddress)
@@ -300,7 +305,7 @@ extension SendViewController: QRCodeReaderDelegate {
         if self.currentPair.left == viewModel.symbol {
             formattedString = StringFormatter().currency(with: self.pairValue, and: self.session.config.currency.rawValue)
         } else {
-            formattedString = stringFormatter.formatter(for: self.pairValue)
+            formattedString = stringFormatter.token(with: self.pairValue, and: decimals)
         }
         return  "~ \(formattedString) " + "\(currentPair.right)"
     }
