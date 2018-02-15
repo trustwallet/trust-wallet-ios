@@ -28,11 +28,13 @@ class ConfirmPaymentViewController: UIViewController {
     lazy var submitButton: UIButton = {
         let button = Button(size: .large, style: .solid)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(viewModel.sendButtonText, for: .normal)
+        button.setTitle(viewModel.actionButtonText, for: .normal)
         button.addTarget(self, action: #selector(send), for: .touchUpInside)
         return button
     }()
-    let viewModel = ConfirmPaymentViewModel()
+    lazy var viewModel: ConfirmPaymentViewModel = {
+        return ConfirmPaymentViewModel(type: self.confirmType)
+    }()
     var configurator: TransactionConfigurator
     let confirmType: ConfirmType
     var didCompleted: ((Result<ConfirmResult, AnyError>) -> Void)?

@@ -314,6 +314,7 @@
 		771A8480203240BB00528D28 /* PreferencesControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A847F203240BB00528D28 /* PreferencesControllerTests.swift */; };
 		771A84822032423800528D28 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A84812032423800528D28 /* PreferencesController.swift */; };
 		771A8485203242B400528D28 /* InCoordinatorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A8484203242B400528D28 /* InCoordinatorViewModelTests.swift */; };
+		771A8522203588C900528D28 /* ConfirmPaymentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A8521203588C900528D28 /* ConfirmPaymentViewModelTests.swift */; };
 		771AA94E1FF971CD00D25403 /* DappAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA94D1FF971CD00D25403 /* DappAction.swift */; };
 		771AA960200D5E8800D25403 /* PassphraseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA95F200D5E8800D25403 /* PassphraseView.swift */; };
 		771AA962200D5EC700D25403 /* PassphraseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA961200D5EC700D25403 /* PassphraseViewModel.swift */; };
@@ -688,6 +689,7 @@
 		771A847F203240BB00528D28 /* PreferencesControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesControllerTests.swift; sourceTree = "<group>"; };
 		771A84812032423800528D28 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
 		771A8484203242B400528D28 /* InCoordinatorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InCoordinatorViewModelTests.swift; sourceTree = "<group>"; };
+		771A8521203588C900528D28 /* ConfirmPaymentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPaymentViewModelTests.swift; sourceTree = "<group>"; };
 		771AA94D1FF971CD00D25403 /* DappAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DappAction.swift; sourceTree = "<group>"; };
 		771AA95F200D5E8800D25403 /* PassphraseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseView.swift; sourceTree = "<group>"; };
 		771AA961200D5EC700D25403 /* PassphraseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseViewModel.swift; sourceTree = "<group>"; };
@@ -1460,6 +1462,7 @@
 			isa = PBXGroup;
 			children = (
 				299B5E371FCBCDF70051361C /* RequestViewModelTests.swift */,
+				771A8521203588C900528D28 /* ConfirmPaymentViewModelTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2841,6 +2844,7 @@
 				771A84822032423800528D28 /* PreferencesController.swift in Sources */,
 				293E62731FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift in Sources */,
 				29FF130A1F75F67200AFD326 /* Address.swift in Sources */,
+				771A8522203588C900528D28 /* ConfirmPaymentViewModelTests.swift in Sources */,
 				73ED85A92034C42D00593BF3 /* StringFormatterTest.swift in Sources */,
 				29BDF19D1FEE50E90023A45F /* GasPriceConfigurationTests.swift in Sources */,
 				295996141FAB09A200DB66A8 /* DepositCoordinatorTests.swift in Sources */,

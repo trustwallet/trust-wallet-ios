@@ -5,12 +5,23 @@ import UIKit
 
 struct ConfirmPaymentViewModel {
 
+    let type: ConfirmType
+
+    init(type: ConfirmType) {
+        self.type = type
+    }
+
     var title: String {
         return NSLocalizedString("confirmPayment.confirm.button.title", value: "Confirm", comment: "")
     }
 
-    var sendButtonText: String {
-        return NSLocalizedString("Send", value: "Send", comment: "")
+    var actionButtonText: String {
+        switch type {
+        case .sign:
+            return NSLocalizedString("Approve", value: "Approve", comment: "")
+        case .signThenSend:
+            return NSLocalizedString("Send", value: "Send", comment: "")
+        }
     }
 
     var backgroundColor: UIColor {
