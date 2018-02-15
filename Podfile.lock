@@ -73,7 +73,7 @@ DEPENDENCIES:
   - StatefulViewController
   - SwiftLint
   - TrustKeystore (from `https://github.com/TrustWallet/trust-keystore`, branch `master`)
-  - TrustWeb3Provider (from `https://github.com/TrustWallet/trust-web3-provider`, commit `0ea5cc91225f7234a63ab3e98ec82e93cc61b49e`)
+  - TrustWeb3Provider (from `https://github.com/TrustWallet/trust-web3-provider`, branch `master`)
 
 EXTERNAL SOURCES:
   CryptoSwift:
@@ -88,7 +88,7 @@ EXTERNAL SOURCES:
     :branch: master
     :git: https://github.com/TrustWallet/trust-keystore
   TrustWeb3Provider:
-    :commit: 0ea5cc91225f7234a63ab3e98ec82e93cc61b49e
+    :branch: master
     :git: https://github.com/TrustWallet/trust-web3-provider
 
 CHECKOUT OPTIONS:
@@ -141,6 +141,6 @@ SPEC CHECKSUMS:
   TrustKeystore: 02614fb6b5c48fc65a0c485df7e22a44aec0c0d5
   TrustWeb3Provider: 338b49ccceec1658a8d0253027e36cda81fcd392
 
-PODFILE CHECKSUM: 9b5ef2bf6943dde5cb2fb9aba8f83b061887dcf4
+PODFILE CHECKSUM: bdcfd875c4b75276423f8ee9850432a90a6afefc
 
 COCOAPODS: 1.4.0
