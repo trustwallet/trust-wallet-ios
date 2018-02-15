@@ -47,7 +47,7 @@ PODS:
     - CryptoSwift
     - secp256k1_ios (~> 0.1.0)
     - TrezorCrypto
-  - TrustWeb3Provider (0.1.1)
+  - TrustWeb3Provider (0.1.2)
 
 DEPENDENCIES:
   - APIKit
@@ -105,7 +105,7 @@ CHECKOUT OPTIONS:
     :commit: bc1a833441535d16d2fe25de8ecb403350140b50
     :git: https://github.com/TrustWallet/trust-keystore
   TrustWeb3Provider:
-    :commit: 65edaeb95e1b97494d77f0fabd6b742bcaa61b20
+    :commit: c185b75d71db6391e2ab9f028d499afba7201cc5
     :git: https://github.com/TrustWallet/trust-web3-provider
 
 SPEC CHECKSUMS:
@@ -139,7 +139,7 @@ SPEC CHECKSUMS:
   SwiftLint: 2e4b89feed5909c42c3735bbd6745f4345c4b772
   TrezorCrypto: 7f87a2296cf13872b21565c29fd9f7882dd00803
   TrustKeystore: 02614fb6b5c48fc65a0c485df7e22a44aec0c0d5
-  TrustWeb3Provider: d0efbd177150d111c8cb3e327908115242972b0d
+  TrustWeb3Provider: f92bae73903d558c288df878bc1216d285056171
 
 PODFILE CHECKSUM: bdcfd875c4b75276423f8ee9850432a90a6afefc
 
