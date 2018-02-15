@@ -17,6 +17,7 @@ enum DappCallbackValue {
     case signTransaction(Data)
     case sentTransaction(Data)
     case signMessage(Data)
+    case signPersonalMessage(Data)
 
     var object: String {
         switch self {
@@ -25,6 +26,8 @@ enum DappCallbackValue {
         case .sentTransaction(let data):
             return data.hexEncoded
         case .signMessage(let data):
+            return data.hexEncoded
+        case .signPersonalMessage(let data):
             return data.hexEncoded
         }
     }

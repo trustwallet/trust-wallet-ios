@@ -6,6 +6,7 @@ import TrustKeystore
 
 enum DappAction {
     case signMessage(String)
+    case signPersonalMessage(String)
     case signTransaction(UnconfirmedTransaction)
     case sendTransaction(UnconfirmedTransaction)
     case unknown
@@ -13,15 +14,19 @@ enum DappAction {
 
 extension DappAction {
     static func fromCommand(_ command: DappCommand) -> DappAction {
+        NSLog("command.name \(command.name)")
+        NSLog("command.object \(command.object)")
         switch command.name {
         case .signTransaction:
             return .signTransaction(DappAction.makeUnconfirmedTransaction(command.object))
         case .sendTransaction:
             return .sendTransaction(DappAction.makeUnconfirmedTransaction(command.object))
-        case .signMessage, .signPersonalMessage:
-            NSLog("command.object \(command.object)")
+        case .signMessage:
             let data = command.object["data"]?.value ?? ""
             return .signMessage(data)
+        case .signPersonalMessage:
+            let data = command.object["data"]?.value ?? ""
+            return .signPersonalMessage(data)
         case .unknown:
             return .unknown
         }

@@ -80,6 +80,33 @@ class BrowserCoordinator: Coordinator {
         coordinator.start()
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
+
+    func signMessage(with type: SignMesageType, account: Account, callbackID: Int) {
+        let coordinator = SignMessageCoordinator(
+            navigationController: navigationController,
+            keystore: keystore,
+            account: account
+        )
+        coordinator.didComplete = { [unowned self] result in
+            switch result {
+            case .success(let data):
+                let callback: DappCallback
+                switch type {
+                case .message:
+                    callback = DappCallback(id: callbackID, value: .signMessage(data))
+                case .personalMessage:
+                    callback = DappCallback(id: callbackID, value: .signPersonalMessage(data))
+                }
+                self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+            case .failure:
+                self.rootViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
+            }
+            self.removeCoordinator(coordinator)
+        }
+        coordinator.delegate = self
+        addCoordinator(coordinator)
+        coordinator.start(with: type)
+    }
 }
 
 extension BrowserCoordinator: BrowserViewControllerDelegate {
@@ -92,27 +119,9 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
             case .sendTransaction(let unconfirmedTransaction):
                 executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .signThenSend)
             case .signMessage(let hexMessage):
-                let data = Data(hexString: hexMessage)!
-                let message = String(data: data, encoding: .utf8)!
-
-                let coordinator = SignMessageCoordinator(
-                    navigationController: navigationController,
-                    keystore: keystore,
-                    account: account
-                )
-                coordinator.didComplete = { [unowned self] result in
-                    switch result {
-                    case .success(let data):
-                        let callback = DappCallback(id: callbackID, value: .signMessage(data))
-                        self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
-                    case .failure:
-                        self.rootViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
-                    }
-                    self.removeCoordinator(coordinator)
-                }
-                coordinator.delegate = self
-                addCoordinator(coordinator)
-                coordinator.start(with: message)
+                signMessage(with: .message(Data(hex: hexMessage)), account: account, callbackID: callbackID)
+            case .signPersonalMessage(let hexMessage):
+                signMessage(with: .personalMessage(Data(hex: hexMessage)), account: account, callbackID: callbackID)
             case .unknown:
                 break
             }

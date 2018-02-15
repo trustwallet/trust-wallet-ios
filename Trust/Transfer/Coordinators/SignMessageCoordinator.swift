@@ -6,6 +6,11 @@ import TrustKeystore
 import CryptoSwift
 import Result
 
+enum SignMesageType {
+    case message(Data)
+    case personalMessage(Data)
+}
+
 protocol SignMessageCoordinatorDelegate: class {
     func didCancel(in coordinator: SignMessageCoordinator)
 }
@@ -31,16 +36,15 @@ class SignMessageCoordinator: Coordinator {
         self.account = account
     }
 
-    func start(with message: String) {
-
-        let alertController = makeAlertController(message: message)
+    func start(with type: SignMesageType) {
+        let alertController = makeAlertController(with: type)
         navigationController.present(alertController, animated: true, completion: nil)
     }
 
-    private func makeAlertController(message: String) -> UIAlertController {
+    private func makeAlertController(with type: SignMesageType) -> UIAlertController {
         let alertController = UIAlertController(
             title: NSLocalizedString("", value: "Confirm signing this message:", comment: ""),
-            message: message,
+            message: message(for: type),
             preferredStyle: .alert
         )
         let signAction = UIAlertAction(
@@ -48,7 +52,7 @@ class SignMessageCoordinator: Coordinator {
             style: .default
         ) { [weak self] _ in
             guard let `self` = self else { return }
-            self.handleSignedPersonalMessage(message: message)
+            self.handleSignedMessage(with: type)
         }
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { [weak self] _ in
             guard let `self` = self else { return }
@@ -60,8 +64,23 @@ class SignMessageCoordinator: Coordinator {
         return alertController
     }
 
-    private func handleSignedPersonalMessage(message: String) {
-        let result = self.keystore.signPersonalMessage(message, for: self.account)
+    func message(for type: SignMesageType) -> String {
+        switch type {
+        case .message(let data):
+            return data.hexEncoded
+        case .personalMessage(let data):
+            return String(data: data, encoding: .utf8)!
+        }
+    }
+
+    private func handleSignedMessage(with type: SignMesageType) {
+        let result: Result<Data, KeystoreError>
+        switch type {
+        case .message(let data):
+            result = keystore.signMessage(data, for: account)
+        case .personalMessage(let data):
+            result = keystore.signPersonalMessage(data, for: account)
+        }
         switch result {
         case .success(let data):
             didComplete?(.success(data))
