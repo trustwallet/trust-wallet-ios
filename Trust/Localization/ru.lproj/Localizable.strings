@@ -121,3 +121,4 @@
 "transaction.cell.sent.title" = "Отправлено";
 "transaction.cell.tokenTransfer.title" = "Transfer %@";
 "Yesterday" = "Вчера";
+"transactions.receive.button.title" = "Получить";

@@ -9,17 +9,6 @@
 "configureTransaction.gasPrice.label.description" = "The higher the gas price, the more expensive your transaction fee will be, but the quicker your tranasction will be processed by the %@ network.";
 "configureTransaction.gasPrice.label.title" = "Gas Price";
 "configureTransaction.totalNetworkFee.label.title" = "Total network fee";
-
-"transaction.confirmation.label.title" = "Confirmation";
-"transaction.from.label.title" = "From";
-"transaction.gasFee.label.title" = "Gas Fee";
-"transaction.gasLimit.label.title" = "Gas Limit";
-"transaction.gasPrice.label.title" = "Gas Price";
-"transaction.to.label.title" = "To";
-"transaction.time.label.title" = "Transaction time";
-"transaction.id.label.title" = "Transaction #";
-"transaction.blockNumber.label.title" = "Block #";
-
 "confirmPayment.confirm.button.title" = "Confirm";
 "confirmPayment.from.label.title" = "From";
 "confirmPayment.gasFee.label.title" = "Network Fee";
@@ -154,7 +143,7 @@
 "enterPassword.password.header.placeholder" = "Password used to encrypt you backup file to keep it secure!";
 "enterPassword.password.textField.placeholder" = "Password";
 "lock.create.passcode.view.model.confirm" = "Please re-enter your passcode";
-"lock.create.passcode.view.model.initial" = "Enter a new password";
+"lock.create.passcode.view.model.initial" = "Enter a new passcode";
 "lock.create.passcode.view.model.title" = "Set Passcode";
 "lock.enter.passcode.view.model.incorrect.passcode" = "Incorrect passcode. You have %d attempts.";
 "lock.enter.passcode.view.model.initial" = "Enter your passcode.";
@@ -170,3 +159,21 @@
 "transaction.cell.failed.title" = "Failed";
 "transaction.cell.pending.title" = "Pending";
 "transactions.receive.button.title" = "Receive";
+"accounts.confirm.delete.message" = "Make sure you have backup of your wallet.";
+"accounts.confirm.delete.okTitle" = "Delete";
+"accounts.confirm.delete.title" = "Are you sure you would like to delete this wallet?";
+"Approve" = "Approve";
+"Chain ID" = "Chain ID";
+"Endpoint" = "Endpoint";
+"send.error.invalidAmount" = "Invalid Amount";
+"settings.customNetwork.navigation.title" = "Custom Network";
+"settings.network.custom.label.title" = "Custom";
+"settings.preferences.button.title" = "Show Tokens on Launch";
+"settings.preferences.title" = "Preferences";
+"transaction.blockNumber.label.title" = "Block #";
+"transaction.confirmation.label.title" = "Confirmation";
+"transaction.from.label.title" = "From";
+"transaction.gasFee.label.title" = "Gas Fee";
+"transaction.id.label.title" = "Transaction #";
+"transaction.time.label.title" = "Transaction time";
+"transaction.to.label.title" = "To";
