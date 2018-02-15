@@ -47,6 +47,7 @@ PODS:
     - CryptoSwift
     - secp256k1_ios (~> 0.1.0)
     - TrezorCrypto
+  - TrustWeb3Provider (0.1.0)
 
 DEPENDENCIES:
   - APIKit
@@ -72,6 +73,7 @@ DEPENDENCIES:
   - StatefulViewController
   - SwiftLint
   - TrustKeystore (from `https://github.com/TrustWallet/trust-keystore`, branch `master`)
+  - TrustWeb3Provider (from `https://github.com/TrustWallet/trust-web3-provider`, branch `master`)
 
 EXTERNAL SOURCES:
   CryptoSwift:
@@ -85,6 +87,9 @@ EXTERNAL SOURCES:
   TrustKeystore:
     :branch: master
     :git: https://github.com/TrustWallet/trust-keystore
+  TrustWeb3Provider:
+    :branch: master
+    :git: https://github.com/TrustWallet/trust-web3-provider
 
 CHECKOUT OPTIONS:
   CryptoSwift:
@@ -99,6 +104,9 @@ CHECKOUT OPTIONS:
   TrustKeystore:
     :commit: bc1a833441535d16d2fe25de8ecb403350140b50
     :git: https://github.com/TrustWallet/trust-keystore
+  TrustWeb3Provider:
+    :commit: 202b125cb4f538d1ce65e11974bf583570e9a4a7
+    :git: https://github.com/TrustWallet/trust-web3-provider
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
@@ -131,7 +139,8 @@ SPEC CHECKSUMS:
   SwiftLint: 2e4b89feed5909c42c3735bbd6745f4345c4b772
   TrezorCrypto: 7f87a2296cf13872b21565c29fd9f7882dd00803
   TrustKeystore: 02614fb6b5c48fc65a0c485df7e22a44aec0c0d5
+  TrustWeb3Provider: 0829ae5d02a9e79e96f927acf94bc3b438c8023d
 
-PODFILE CHECKSUM: c822d5e2373476315b6a83c8f096bdb9c846e467
+PODFILE CHECKSUM: bdcfd875c4b75276423f8ee9850432a90a6afefc
 
 COCOAPODS: 1.4.0

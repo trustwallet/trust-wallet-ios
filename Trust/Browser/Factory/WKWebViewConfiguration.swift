@@ -10,7 +10,12 @@ extension WKWebViewConfiguration {
         let address = session.account.address.description.lowercased()
         let config = WKWebViewConfiguration()
         var js = ""
-        if let filepath = Bundle.main.path(forResource: "trust-min", ofType: "js") {
+
+        guard
+            let bundlePath = Bundle.main.path(forResource: "TrustWeb3Provider", ofType: "bundle"),
+            let bundle = Bundle(path: bundlePath) else { return config }
+
+        if let filepath = bundle.path(forResource: "trust-min", ofType: "js") {
             do {
                 js += try String(contentsOfFile: filepath)
                 NSLog("Loaded Trust in page provider")
