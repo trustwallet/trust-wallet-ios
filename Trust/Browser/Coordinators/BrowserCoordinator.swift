@@ -81,10 +81,7 @@ class BrowserCoordinator: Coordinator {
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
-    func signMessage(with type: SignMesageType, account: Account, callbackID: Int, message: String) {
-        let data = Data(hexString: message)!
-        //let message = String(data: data, encoding: .utf8)!
-
+    func signMessage(with type: SignMesageType, account: Account, callbackID: Int) {
         let coordinator = SignMessageCoordinator(
             navigationController: navigationController,
             keystore: keystore,
@@ -108,7 +105,7 @@ class BrowserCoordinator: Coordinator {
         }
         coordinator.delegate = self
         addCoordinator(coordinator)
-        coordinator.start(with: type, message: message)
+        coordinator.start(with: type)
     }
 }
 
@@ -122,9 +119,9 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
             case .sendTransaction(let unconfirmedTransaction):
                 executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .signThenSend)
             case .signMessage(let hexMessage):
-                signMessage(with: .message, account: account, callbackID: callbackID, message: hexMessage)
+                signMessage(with: .message(Data(hex: hexMessage)), account: account, callbackID: callbackID)
             case .signPersonalMessage(let hexMessage):
-                signMessage(with: .personalMessage, account: account, callbackID: callbackID, message: hexMessage)
+                signMessage(with: .personalMessage(Data(hex: hexMessage)), account: account, callbackID: callbackID)
             case .unknown:
                 break
             }
