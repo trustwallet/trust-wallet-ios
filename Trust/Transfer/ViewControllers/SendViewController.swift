@@ -124,7 +124,7 @@ class SendViewController: FormViewController {
                 cell.textField.delegate = self
                 cell.textField.placeholder = "\(self?.currentPair.left ?? "") " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
                 cell.textField.keyboardType = .decimalPad
-                cell.textField.rightView = amountRightView
+                //cell.textField.rightView = amountRightView // TODO: Enable fiat functionality once fixed
                 cell.textField.rightViewMode = .always
             }
     }
