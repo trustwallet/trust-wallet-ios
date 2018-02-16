@@ -71,12 +71,17 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
             showAccounts()
         case .RPCServer, .currency, .DAppsBrowser:
             restart(for: session.account)
-        case .pushNotifications(let enabled):
-            switch enabled {
-            case true:
+        case .pushNotifications(let change):
+            switch change {
+            case .state(let isEnabled):
+                switch isEnabled {
+                case true:
+                    pushNotificationsRegistrar.register()
+                case false:
+                    pushNotificationsRegistrar.unregister()
+                }
+            case .preferences:
                 pushNotificationsRegistrar.register()
-            case false:
-                pushNotificationsRegistrar.unregister()
             }
         }
     }

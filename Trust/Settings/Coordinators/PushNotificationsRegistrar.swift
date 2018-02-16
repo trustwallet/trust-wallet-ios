@@ -29,7 +29,8 @@ class PushNotificationsRegistrar {
         let device = PushDevice(
             deviceID: UIDevice.current.identifierForVendor!.uuidString,
             token: "",
-            wallets: []
+            wallets: [],
+            preferences: NotificationsViewController.getPreferences()
         )
 
         trustProvider.request(.unregister(device: device)) { _ in }
@@ -44,7 +45,8 @@ class PushNotificationsRegistrar {
         let device = PushDevice(
             deviceID: UIDevice.current.identifierForVendor!.uuidString,
             token: token,
-            wallets: addresses.map { $0.description }
+            wallets: addresses.map { $0.description },
+            preferences: NotificationsViewController.getPreferences()
         )
 
         trustProvider.request(.register(device: device)) { _ in }

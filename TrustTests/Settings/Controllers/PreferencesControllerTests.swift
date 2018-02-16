@@ -5,10 +5,11 @@ import XCTest
 
 class PreferencesControllerTests: XCTestCase {
 
-    func testShowTokensOnStartDefault() {
+    func testDefaultValues() {
         let controller = PreferencesController(userDefaults: .test)
 
         XCTAssertEqual(controller.get(for: .showTokensOnLaunch), false)
+        XCTAssertEqual(controller.get(for: .airdropNotifications), false)
     }
 
     func testShowTokensOnStartDisable() {

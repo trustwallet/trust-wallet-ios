@@ -21,13 +21,6 @@ class SettingsViewController: FormViewController {
     var isPasscodeEnabled: Bool {
         return lock.isPasscodeSet()
     }
-    static var isPushNotificationEnabled: Bool {
-        guard let settings = UIApplication.shared.currentUserNotificationSettings
-            else {
-                return false
-        }
-        return UIApplication.shared.isRegisteredForRemoteNotifications && !settings.types.isEmpty
-    }
     lazy var viewModel: SettingsViewModel = {
         return SettingsViewModel(isDebug: isDebug)
     }()
@@ -36,6 +29,7 @@ class SettingsViewController: FormViewController {
         self.session = session
         super.init(nibName: nil, bundle: nil)
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -102,14 +96,20 @@ class SettingsViewController: FormViewController {
                 cell.imageView?.image = R.image.settings_lock()
             }
 
-            <<< SwitchRow {
-                $0.title = NSLocalizedString("settings.pushNotifications.button.title", value: "Push Notifications", comment: "")
-                $0.value = SettingsViewController.isPushNotificationEnabled
-            }.onChange { [unowned self] row in
-                let enabled = row.value ?? false
-                self.run(action: .pushNotifications(enabled: enabled))
-            }.cellSetup { cell, _ in
+            <<< AppFormAppearance.button { row in
+                row.cellStyle = .value1
+                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+                    let controller = NotificationsViewController()
+                    controller.didChange = { [weak self] change in
+                        self?.run(action: .pushNotifications(change))
+                    }
+                    return controller
+                }, onDismiss: { _ in
+            })
+            }.cellUpdate { cell, _ in
                 cell.imageView?.image = R.image.settings_push_notifications()
+                cell.textLabel?.text = NSLocalizedString("settings.pushNotifications.title", value: "Push Notifications", comment: "")
+                cell.accessoryType = .disclosureIndicator
             }
 
             +++ Section()
@@ -121,11 +121,7 @@ class SettingsViewController: FormViewController {
                 $0.value = self?.config.currency
                 $0.displayValueFor = { value in
                     let currencyCode = value?.rawValue ?? ""
-                    if #available(iOS 10.0, *) {
-                        return currencyCode + " - " + (NSLocale.current.localizedString(forCurrencyCode: currencyCode) ?? "")
-                    } else {
-                        return currencyCode
-                    }
+                    return currencyCode + " - " + (NSLocale.current.localizedString(forCurrencyCode: currencyCode) ?? "")
                 }
             }.onChange { [weak self]  row in
                 guard let value = row.value else { return }
@@ -155,8 +151,8 @@ class SettingsViewController: FormViewController {
             <<< AppFormAppearance.button { row in
                 row.cellStyle = .value1
                 row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
-                    return PreferencesViewController() }, onDismiss: { _ in
-                })
+                    return PreferencesViewController()
+                }, onDismiss: { _ in })
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_preferences()

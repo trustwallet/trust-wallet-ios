@@ -6,4 +6,5 @@ struct PushDevice: Encodable {
     let deviceID: String
     let token: String
     let wallets: [String]
+    let preferences: Preferences
 }
