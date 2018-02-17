@@ -5,8 +5,8 @@ import UIKit
 import Eureka
 import JSONRPCKit
 import APIKit
-import QRCodeReaderViewController
 import BigInt
+import QRCodeReaderViewController
 import TrustKeystore
 
 protocol SendViewControllerDelegate: class {
@@ -25,15 +25,6 @@ class SendViewController: FormViewController {
         static let address = "address"
         static let amount = "amount"
     }
-    struct Pair {
-        let left: String
-        let right: String
-
-        func swapPair() -> Pair {
-            return Pair(left: right, right: left)
-        }
-    }
-    var pairValue = 0.0
     let session: WalletSession
     let account: Account
     let transferType: TransferType
@@ -48,25 +39,7 @@ class SendViewController: FormViewController {
         let decimalSeparator = Locale.current.decimalSeparator ?? "."
         return "0123456789" + decimalSeparator
     }()
-    private var gasPrice: BigInt?
     private var data = Data()
-    lazy var currentPair: Pair = {
-        return Pair(left: viewModel.symbol, right: session.config.currency.rawValue)
-    }()
-    lazy var decimalFormatter: DecimalFormatter = {
-        return DecimalFormatter()
-    }()
-    lazy var stringFormatter: StringFormatter = {
-        return StringFormatter()
-    }()
-    lazy var decimals: Int = {
-        switch self.transferType {
-        case .ether:
-            return 8
-        case .token(let token):
-            return token.decimals
-        }
-    }()
     init(
         session: WalletSession,
         storage: TokensDataStore,
@@ -77,42 +50,33 @@ class SendViewController: FormViewController {
         self.account = account
         self.transferType = transferType
         self.storage = storage
-
         super.init(nibName: nil, bundle: nil)
-
         storage.updatePrices()
         getGasPrice()
-
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
-
         let recipientRightView = FieldAppereance.addressFieldRightView(
             pasteAction: { [unowned self] in self.pasteAction() },
             qrAction: { [unowned self] in self.openReader() }
         )
-
         let maxButton = Button(size: .normal, style: .borderless)
         maxButton.translatesAutoresizingMaskIntoConstraints = false
         maxButton.setTitle(NSLocalizedString("send.max.button.title", value: "Max", comment: ""), for: .normal)
         maxButton.addTarget(self, action: #selector(useMaxAmount), for: .touchUpInside)
-
         let fiatButton = Button(size: .normal, style: .borderless)
         fiatButton.translatesAutoresizingMaskIntoConstraints = false
-        fiatButton.setTitle(currentPair.right, for: .normal)
+        fiatButton.setTitle(viewModel.currentPair.right, for: .normal)
         fiatButton.addTarget(self, action: #selector(fiatAction), for: .touchUpInside)
         fiatButton.isHidden = isFiatViewHidden()
-
         let amountRightView = UIStackView(arrangedSubviews: [
             fiatButton,
         ])
-
         amountRightView.translatesAutoresizingMaskIntoConstraints = false
         amountRightView.distribution = .equalSpacing
         amountRightView.spacing = 1
         amountRightView.axis = .horizontal
-
         form = Section()
-            +++ Section(header: "", footer: isFiatViewHidden() ? "" : valueOfPairRepresantetion())
+            +++ Section(header: "", footer: isFiatViewHidden() ? "" : viewModel.pairRateRepresantetion())
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
@@ -130,7 +94,7 @@ class SendViewController: FormViewController {
                 cell.textField.isCopyPasteDisabled = true
                 cell.textField.textAlignment = .left
                 cell.textField.delegate = self
-                cell.textField.placeholder = "\(self?.currentPair.left ?? "") " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
+                cell.textField.placeholder = "\(self?.viewModel.currentPair.left ?? "") " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
                 cell.textField.keyboardType = .decimalPad
                 //cell.textField.rightView = amountRightView // TODO: Enable fiat functionality once fixed
                 cell.textField.rightViewMode = .always
@@ -145,7 +109,7 @@ class SendViewController: FormViewController {
         Session.send(request) { [weak self] result in
             switch result {
             case .success(let balance):
-                self?.gasPrice = BigInt(balance.drop0x, radix: 16)
+                self?.viewModel.gasPrice = BigInt(balance.drop0x, radix: 16)
             case .failure: break
             }
         }
@@ -161,12 +125,7 @@ class SendViewController: FormViewController {
         let errors = form.validate()
         guard errors.isEmpty else { return }
         let addressString = addressRow?.value?.trimmed ?? ""
-        var amountString = ""
-        if self.currentPair.left == viewModel.symbol {
-            amountString = amountRow?.value?.trimmed ?? ""
-        } else {
-            amountString = stringFormatter.token(with: self.pairValue, and: decimals)
-        }
+        let amountString = viewModel.amount
         guard let address = Address(string: addressString) else {
             return displayError(error: Errors.invalidAddress)
         }
@@ -187,7 +146,7 @@ class SendViewController: FormViewController {
             to: address,
             data: data,
             gasLimit: .none,
-            gasPrice: gasPrice,
+            gasPrice: viewModel.gasPrice,
             nonce: .none
         )
         self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, in: self)
@@ -215,16 +174,16 @@ class SendViewController: FormViewController {
         amountRow?.reload()
     }
     @objc func fiatAction(sender: UIButton) {
-        let swappedPair = currentPair.swapPair()
+        let swappedPair = viewModel.currentPair.swapPair()
         //New pair for future calculation we should swap pair each time we press fiat button.
-        self.currentPair = swappedPair
+        viewModel.currentPair = swappedPair
         //Update button title.
-        sender.setTitle(currentPair.right, for: .normal)
+        sender.setTitle(viewModel.currentPair.right, for: .normal)
         //Reset amountRow value.
         amountRow?.value = nil
         amountRow?.reload()
         //Reset pair value.
-        pairValue = 0.0
+        viewModel.pairRate = 0.0
         //Update section.
         updatePriceSection()
         //Set focuse on pair change.
@@ -245,22 +204,26 @@ class SendViewController: FormViewController {
         UIView.setAnimationsEnabled(false)
         tableView.beginUpdates()
         if let containerView = tableView.footerView(forSection: 1) {
-            containerView.textLabel!.text = valueOfPairRepresantetion()
+            containerView.textLabel!.text = viewModel.pairRateRepresantetion()
             containerView.sizeToFit()
         }
         tableView.endUpdates()
         UIView.setAnimationsEnabled(true)
     }
-    private func updatePairPrice(with amount: Double) {
-        guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.destinationAddress.description], let price = Double(currentTokenInfo.price) else {
+    private func updatePairPrice(with amount: Decimal) {
+        guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.destinationAddress.description], let price = Decimal(string: currentTokenInfo.price) else {
             return
         }
-        if self.currentPair.left == viewModel.symbol {
-            pairValue = amount * price
-        } else {
-            pairValue = amount / price
-        }
+        viewModel.updatePaitRate(with: price, and: amount)
         self.updatePriceSection()
+    }
+    private func updateAmount(with stringAmount: String) {
+        if viewModel.currentPair.left == viewModel.symbol {
+            viewModel.amount  = stringAmount.isEmpty ? "0" : stringAmount
+        } else {
+            //In case of the fiat value we should take pair rate.
+            viewModel.amount  = viewModel.rate
+        }
     }
     private func isFiatViewHidden() -> Bool {
         guard let currentTokenInfo = storage.tickers?[viewModel.destinationAddress.description], let price = Double(currentTokenInfo.price), price > 0 else {
@@ -269,7 +232,6 @@ class SendViewController: FormViewController {
         return false
     }
 }
-
 extension SendViewController: QRCodeReaderDelegate {
     func readerDidCancel(_ reader: QRCodeReaderViewController!) {
         reader.stopScanning()
@@ -297,20 +259,10 @@ extension SendViewController: QRCodeReaderDelegate {
             amountRow?.value = ""
         }
         amountRow?.reload()
-        pairValue = 0.0
+        viewModel.pairRate = 0.0
         updatePriceSection()
     }
-    private func valueOfPairRepresantetion() -> String {
-        var formattedString = ""
-        if self.currentPair.left == viewModel.symbol {
-            formattedString = StringFormatter().currency(with: self.pairValue, and: self.session.config.currency.rawValue)
-        } else {
-            formattedString = stringFormatter.token(with: self.pairValue, and: decimals)
-        }
-        return  "~ \(formattedString) " + "\(currentPair.right)"
-    }
 }
-
 extension SendViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let input = textField.text else {
@@ -327,14 +279,14 @@ extension SendViewController: UITextFieldDelegate {
         if string == "," || string == "." ||  string == "'" {
             return !input.contains(string)
         }
-        let text = (input as NSString).replacingCharacters(in: range, with: string)
-        guard let amount = decimalFormatter.number(from: text) else {
-            //Should be done in another way.
-            pairValue = 0.0
-            updatePriceSection()
-            return true
-        }
-        self.updatePairPrice(with: amount.doubleValue)
+        //Total amount of the user input.
+        let stringAmount = (input as NSString).replacingCharacters(in: range, with: string)
+        //Convert to deciaml for pair rate update.
+        let amount = Decimal(string: stringAmount) ?? 0
+        //Update of the pair rate.
+        self.updatePairPrice(with: amount)
+        //Update of the total amount.
+        self.updateAmount(with: stringAmount)
         return true
     }
 }

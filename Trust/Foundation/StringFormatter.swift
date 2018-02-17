@@ -21,27 +21,27 @@ final class StringFormatter {
         formatter.isLenient = true
         return formatter
     }()
-    /// Converts a Double to a `currency String`.
+    /// Converts a Decimal to a `currency String`.
     ///
     /// - Parameters:
-    ///   - double: double to convert.
+    ///   - value: Decimal to convert.
     ///   - currencyCode: code of the currency.
     /// - Returns: Currency `String` represenation.
-    func currency(with value: Double, and currencyCode: String) -> String {
+    func currency(with value: Decimal, and currencyCode: String) -> String {
         let formatter = currencyFormatter
         formatter.currencyCode = currencyCode
-        return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
+        return formatter.string(for: value) ?? "\(value)"
     }
-    /// Converts a Double to a `token String`.
+    /// Converts a Decimal to a `token String`.
     ///
     /// - Parameters:
-    ///   - double: double to convert.
+    ///   - value: Decimal to convert.
     ///   - decimals: symbols after coma.
     /// - Returns: Token `String` represenation.
-    func token(with value: Double, and decimals: Int) -> String {
+    func token(with value: Decimal, and decimals: Int) -> String {
         let formatter = decimalFormatter
         formatter.maximumFractionDigits = decimals
-        return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
+        return formatter.string(for: value) ?? "\(value)"
     }
     /// Converts a Double to a `String`.
     ///
