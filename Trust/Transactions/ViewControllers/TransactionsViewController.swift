@@ -106,7 +106,6 @@ class TransactionsViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         fetch()
     }
 
@@ -184,8 +183,12 @@ extension TransactionsViewController: TransactionDataCoordinatorDelegate {
         case .failure(let error):
             endLoading(error: error)
         }
-        tableView.reloadData()
-
+        if let visibleRows = tableView.indexPathsForVisibleRows, !visibleRows.isEmpty {
+            let visibleSections = visibleRows.map { $0.section }
+            tableView.reloadSections(IndexSet(visibleSections), with: .none)
+        } else {
+            tableView.reloadData()
+        }
         if refreshControl.isRefreshing {
             refreshControl.endRefreshing()
         }
