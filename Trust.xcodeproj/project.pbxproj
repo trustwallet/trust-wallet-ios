@@ -288,6 +288,7 @@
 		737EEDDA201BE3A8009D9D5D /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EEDD9201BE3A8009D9D5D /* Lock.swift */; };
 		7391DC8C203715DF002C5ADE /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7391DC8B203715DF002C5ADE /* Pair.swift */; };
 		7391DC922038C0AC002C5ADE /* BrowserURLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7391DC912038C0AC002C5ADE /* BrowserURLParserTests.swift */; };
+		7391DC962038C135002C5ADE /* SendViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7391DC952038C135002C5ADE /* SendViewModelTest.swift */; };
 		739533971FEFF5FD0084AFAB /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739533961FEFF5FD0084AFAB /* Currency.swift */; };
 		73958DC720263525000A40EB /* SplashCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73958DC620263525000A40EB /* SplashCoordinatorTests.swift */; };
 		73ACEEF5201631A3003DD71D /* ProtectionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ACEEF4201631A2003DD71D /* ProtectionCoordinator.swift */; };
@@ -668,6 +669,7 @@
 		737EEDD9201BE3A8009D9D5D /* Lock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		7391DC8B203715DF002C5ADE /* Pair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
 		7391DC912038C0AC002C5ADE /* BrowserURLParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserURLParserTests.swift; sourceTree = "<group>"; };
+		7391DC952038C135002C5ADE /* SendViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewModelTest.swift; sourceTree = "<group>"; };
 		739533961FEFF5FD0084AFAB /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		73958DC620263525000A40EB /* SplashCoordinatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashCoordinatorTests.swift; sourceTree = "<group>"; };
 		73ACEEF4201631A2003DD71D /* ProtectionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectionCoordinator.swift; sourceTree = "<group>"; };
@@ -851,6 +853,7 @@
 		2912CD0E1F6A830700C6CBE3 /* TrustTests */ = {
 			isa = PBXGroup;
 			children = (
+				7391DC932038C11C002C5ADE /* Send */,
 				7391DC8F2038C070002C5ADE /* Browser */,
 				77872D2A202514930032D687 /* Wallet */,
 				CCA4FE301FD3652100749AE4 /* Core */,
@@ -1905,6 +1908,22 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
+		7391DC932038C11C002C5ADE /* Send */ = {
+			isa = PBXGroup;
+			children = (
+				7391DC942038C11C002C5ADE /* ViewModel */,
+			);
+			path = Send;
+			sourceTree = "<group>";
+		};
+		7391DC942038C11C002C5ADE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7391DC952038C135002C5ADE /* SendViewModelTest.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		73ACEEF620163B4E003DD71D /* Lock */ = {
 			isa = PBXGroup;
 			children = (
@@ -2829,6 +2848,7 @@
 				296106CC1F776FD00006164B /* WalletCoordinatorTests.swift in Sources */,
 				298542FE1FBEADEF00CB5081 /* TransactionViewModelTests.swift in Sources */,
 				295B61D61FE7FC8300642E60 /* FakeTokensDataStore.swift in Sources */,
+				7391DC962038C135002C5ADE /* SendViewModelTest.swift in Sources */,
 				291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */,
 				732E0F542022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift in Sources */,
 				298543001FBEAE2F00CB5081 /* ChainState.swift in Sources */,

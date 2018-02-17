@@ -83,7 +83,7 @@ struct SendViewModel {
     /// - Parameters:
     ///   - price: Decimal cuurent price of the token.
     ///   - amount: Decimal current amount to send.
-    mutating func updatePaitRate(with price: Decimal, and amount: Decimal)  {
+    mutating func updatePaitRate(with price: Decimal, and amount: Decimal) {
         if currentPair.left == symbol {
             pairRate = amount * price
         } else {
