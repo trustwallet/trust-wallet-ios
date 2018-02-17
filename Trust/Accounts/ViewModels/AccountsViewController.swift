@@ -30,6 +30,8 @@ class AccountsViewController: UITableViewController {
     private var balances: [Address: Balance?] = [:]
     private let keystore: Keystore
     private let balanceCoordinator: GetBalanceCoordinator
+    private let config = Config()
+
     init(
         keystore: Keystore,
         balanceCoordinator: GetBalanceCoordinator
@@ -129,7 +131,7 @@ class AccountsViewController: UITableViewController {
     private func getAccountViewModels(for path: IndexPath) -> AccountViewModel {
         let account = self.account(for: path)
         let balance = self.balances[account.address].flatMap { $0 }
-        let model = AccountViewModel(wallet: account, current: EtherKeystore.current, walletBalance: balance)
+        let model = AccountViewModel(server: config.server, wallet: account, current: EtherKeystore.current, walletBalance: balance)
         return model
     }
     required init?(coder aDecoder: NSCoder) {

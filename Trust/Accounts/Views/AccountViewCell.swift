@@ -20,7 +20,7 @@ class AccountViewCell: UITableViewCell {
             guard let model = viewModel else {
                 return
             }
-            balanceLable.text = "\(model.balance) ETH"
+            balanceLable.text = model.balanceText
             glassesImageView.isHidden = !model.isWatch
             activeView.isHidden = !model.isActive
             addressLable.text = model.title

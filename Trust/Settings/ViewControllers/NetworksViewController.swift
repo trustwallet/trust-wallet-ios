@@ -15,7 +15,6 @@ class NetworksViewController: FormViewController {
         tableView.isEditing = false
         let nameList = ["1"]
 
-
         let section =  MultivaluedSection(multivaluedOptions: .None, footer: "")
         for _ in 1..<4 {
             section <<< PickerInlineRow<String> {
