@@ -78,7 +78,10 @@ class AccountsCoordinator: Coordinator {
                 coordinator.start()
                 self.addCoordinator(coordinator)
             }
+            let exportTitle = NSLocalizedString("wallets.export.alertSheet.title", value: "Export Private Key", comment: "The title of the export button in the wallet's action sheet")
+            let exportPrivateKeyAction = UIAlertAction(title: exportTitle, style: .default, handler: nil)
             controller.addAction(backupKeystoreAction)
+            controller.addAction(exportPrivateKeyAction)
         case .watch:
             break
         }
