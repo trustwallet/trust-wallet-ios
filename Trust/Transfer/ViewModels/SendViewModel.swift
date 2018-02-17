@@ -7,10 +7,6 @@ import JSONRPCKit
 import APIKit
 
 struct SendViewModel {
-    /// decimalFormatter of a `SendViewModel` to represent decimal values with respect of the curent locale.
-    lazy var decimalFormatter: DecimalFormatter = {
-        return DecimalFormatter()
-    }()
     /// stringFormatter of a `SendViewModel` to represent string values with respect of the curent locale.
     lazy var stringFormatter: StringFormatter = {
         return StringFormatter()
