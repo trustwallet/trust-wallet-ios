@@ -13,7 +13,7 @@ class BranchCoordinator {
     func didFinishLaunchingWithOptions(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: { params, error in
             guard
-                error != nil,
+                error == nil,
                 let params = params as? [String: AnyObject] else {
                     return
             }
