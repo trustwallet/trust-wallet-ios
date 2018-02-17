@@ -12,6 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     lazy var protectionCoordinator: ProtectionCoordinator = {
         return ProtectionCoordinator()
     }()
+    let branchCoordinator = BranchCoordinator()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         do {
@@ -22,20 +23,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             print("EtherKeystore init issue.")
         }
         protectionCoordinator.didFinishLaunchingWithOptions()
-
-        Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: {params, error in
-            if error == nil {
-                print("params: %@", params as? [String: AnyObject] ?? {})
-            }
-        })
+        branchCoordinator.didFinishLaunchingWithOptions(launchOptions: launchOptions)
         return true
     }
+
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         coordinator.didRegisterForRemoteNotificationsWithDeviceToken(deviceToken: deviceToken)
     }
+
     func applicationWillResignActive(_ application: UIApplication) {
         protectionCoordinator.applicationWillResignActive()
     }
+
     func applicationDidBecomeActive(_ application: UIApplication) {
         Lokalise.shared.checkForUpdates { _, _ in }
         protectionCoordinator.applicationDidBecomeActive()
@@ -54,6 +53,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             return false
         }
         return true
+    }
+
+    func application(
+        _ application: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        Branch.getInstance().handlePushNotification(userInfo)
     }
 
     // Respond to URI scheme links
