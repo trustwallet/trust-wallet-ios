@@ -73,7 +73,7 @@ struct TransactionsViewModel {
         }
         return value
     }
-    private mutating func prepareSections(for transactions: [Transaction]) {
+    mutating func prepareSections(for transactions: [Transaction]) {
         let headerDates = NSOrderedSet(array: transactions.map { TransactionsViewModel.formatter.string(from: $0.date ) })
         headerDates.forEach {
             guard let dateKey = $0 as? String else {

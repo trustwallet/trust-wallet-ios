@@ -183,12 +183,7 @@ extension TransactionsViewController: TransactionDataCoordinatorDelegate {
         case .failure(let error):
             endLoading(error: error)
         }
-        if let visibleRows = tableView.indexPathsForVisibleRows, !visibleRows.isEmpty {
-            let visibleSections = visibleRows.map { $0.section }
-            tableView.reloadSections(IndexSet(visibleSections), with: .none)
-        } else {
-            tableView.reloadData()
-        }
+        tableView.reloadData()
         if refreshControl.isRefreshing {
             refreshControl.endRefreshing()
         }
