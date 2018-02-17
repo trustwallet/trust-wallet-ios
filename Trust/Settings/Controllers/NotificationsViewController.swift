@@ -21,6 +21,7 @@ class NotificationsViewController: FormViewController {
     private struct Keys {
         static let pushNotifications = "pushNotifications"
         static let airdropNotifications = "airdropNotifications"
+        static let payment = "payment"
     }
 
     var didChange: ((_ change: NotificationChanged) -> Void)?
@@ -28,6 +29,10 @@ class NotificationsViewController: FormViewController {
     private static var isPushNotificationEnabled: Bool {
         guard let settings = UIApplication.shared.currentUserNotificationSettings else { return false }
         return UIApplication.shared.isRegisteredForRemoteNotifications && !settings.types.isEmpty
+    }
+
+    private var showOptionsCondition: Condition {
+        return Condition.predicate(NSPredicate(format: "$\(Keys.pushNotifications) == false"))
     }
 
     init(
@@ -53,16 +58,28 @@ class NotificationsViewController: FormViewController {
                 cell.imageView?.image = R.image.settings_push_notifications()
             }
 
-        +++ Section()
+        +++ Section(
+        footer: NSLocalizedString("settings.pushNotifications.allowPushNotifications.footer", value: "You will be notified for sent and received transactions.", comment: "")) {
+            $0.hidden = showOptionsCondition
+        }
+            <<< SwitchRow(Keys.payment) {
+                $0.title = NSLocalizedString("settings.pushNotifications.payment.button.title", value: "Sent and Receive", comment: "")
+                $0.value = true
+                $0.hidden = showOptionsCondition
+                $0.disabled = Condition(booleanLiteral: true)
+            }.cellSetup { cell, _ in
+                cell.switchControl.isEnabled = false
+            }
+        +++ Section(
+        footer: NSLocalizedString("settings.pushNotifications.airdrop.footer", value: "Occasionally you will receive offers to participate in airdrops from our official partners.", comment: "")) {
+            $0.hidden = showOptionsCondition
+        }
             <<< SwitchRow(Keys.airdropNotifications) {
-                $0.title = NSLocalizedString("settings.pushNotifications.airdrop.button.title", value: "Airdrops notifications", comment: "")
+                $0.title = NSLocalizedString("settings.pushNotifications.airdrop.button.title", value: "Airdrops from partners", comment: "")
                 $0.value = preferencesController.get(for: .airdropNotifications)
-                $0.hidden = Condition.predicate(NSPredicate(format: "$\(Keys.pushNotifications) == false"))
             }.onChange { [unowned self] row in
                 self.preferencesController.set(value: row.value ?? false, for: .airdropNotifications)
                 self.updatePreferences()
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_airdrop()
             }
     }
 
