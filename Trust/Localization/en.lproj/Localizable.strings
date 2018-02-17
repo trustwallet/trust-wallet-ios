@@ -75,6 +75,7 @@
 "transactions.noTransactions.label.title" = "No Transactions Yet!";
 "wallet.navigation.title" = "Wallets";
 "wallets.backup.alertSheet.title" = "Backup Keystore";
+"wallets.export.alertSheet.title" = "Export Private Key";
 "welcome.createWallet.button.title" = "CREATE WALLET";
 "welcome.erc20.label.description" = "Support for ERC20 tokens by default. ";
 "welcome.erc20.label.title" = "ERC20 Compatible";
