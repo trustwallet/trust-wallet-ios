@@ -25,12 +25,16 @@ struct TransactionViewModel {
         self.currentWallet = currentWallet
     }
 
+    var transactionTo: String {
+        guard let operation = transaction.operation else { return transaction.to }
+        return operation.to
+    }
+
     var direction: TransactionDirection {
-        if currentWallet.address.description == transaction.from ||
-            currentWallet.address.description.lowercased() == transaction.from.lowercased() {
-            return .outgoing
+        if currentWallet.address.description == transactionTo || currentWallet.address.description.lowercased() == transactionTo.lowercased() {
+            return .incoming
         }
-        return .incoming
+        return .outgoing
     }
 
     var confirmations: Int? {
