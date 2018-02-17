@@ -34,7 +34,7 @@ struct ConfigExplorer {
                 return .none
             }
         }()
-        guard let string = urlString else { return .none}
+        guard let string = urlString else { return .none }
         return URL(string: string)!
     }
 

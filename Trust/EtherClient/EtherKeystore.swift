@@ -243,7 +243,7 @@ open class EtherKeystore: Keystore {
         }
 
     }
-    
+
     func exportPrivateKey(account: Account) -> Result<Data, KeystoreError> {
         guard let password = getPassword(for: account) else {
             return .failure(KeystoreError.accountNotFound)
