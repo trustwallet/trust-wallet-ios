@@ -24,11 +24,17 @@
 "emptyView.noTokens.label.title" = "You haven't received any tokens yet!";
 "errorView.description.label.title" = "Something went wrong... Try again.";
 "export.backup.button.title" = "Backup Wallet";
+"export.privateKey.title" = "Your Private Key";
 "export.controlYourMoney.label.title" = "Since only you control your money, you'll need to save your backup keystore in case this app is deleted.";
 "export.enterCurrentPassword.textField.title" = "Enter current password to export your wallet";
 "export.enterPassword.textField.title" = "Enter password to encrypt your wallet";
 "export.neverStored.label.title" = "Your wallet is never saved to cloud storage or standard device backups.";
 "export.noBackup.label.title" = "No backup, no %@.";
+"export.noKPrivateKey.label.title" = "No Private Key for wallet";
+"export.copied.private.key.text" = "Private Key Copied";
+"export.your.private.key" = "Your Private Key";
+"export.PrivateKey.nav.title" = "Export Private Key";
+"export.copy.btn.tiltle" = "Copy Private Key";
 "export.presentBackupOptions.label.title" = "Preparing backup options...";
 "export.skip.button.title" = "Do it later";
 "importWallet.importingIndicator.label.title" = "Importing wallet...";
