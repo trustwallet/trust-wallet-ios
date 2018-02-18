@@ -1,10 +1,11 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import XCTest
+import BigInt
 @testable import Trust
 
 class SendViewModelTest: XCTestCase {
-    var sendViewModel = SendViewModel(transferType: .ether(destination: .none), config: .make(), storage: FakeTokensDataStore())
+    var sendViewModel = SendViewModel(transferType: .ether(destination: .none), config: .make(), storage: FakeTokensDataStore(), balance: Balance(value: BigInt(0.998544373 * pow(10, 18))))
     var decimalFormatter = DecimalFormatter()
     override func setUp() {
         sendViewModel.amount = "198212312.123123"
@@ -50,5 +51,14 @@ class SendViewModelTest: XCTestCase {
     }
     func testDecimals() {
         XCTAssertEqual(18, sendViewModel.decimals)
+    }
+    func testMaxEther() {
+        XCTAssertEqual("0.998544373", sendViewModel.sendMaxAmount())
+    }
+    func testMaxEtherUSD() {
+        if sendViewModel.currentPair.left == sendViewModel.symbol {
+            sendViewModel.currentPair = sendViewModel.currentPair.swapPair()
+        }
+        XCTAssertEqual("\(0.998544373 * 947.102)", sendViewModel.sendMaxAmount())
     }
 }

@@ -38,14 +38,18 @@ struct SendViewModel {
     let config: Config
     /// storage of a `SendViewModel` to know pair rate.
     let storage: TokensDataStore
+    /// current wallet balance
+    let balance: Balance?
     init(
         transferType: TransferType,
         config: Config,
-        storage: TokensDataStore
+        storage: TokensDataStore,
+        balance: Balance?
     ) {
         self.transferType = transferType
         self.config = config
         self.storage = storage
+        self.balance = balance
     }
     var title: String {
         return "Send \(symbol)"
@@ -78,6 +82,26 @@ struct SendViewModel {
     mutating func sendAmount() -> String {
         return amount
     }
+    /// maximum amount to send.
+    ///
+    /// - Returns: `String` that represent amount to send.
+    mutating func sendMaxAmount() -> String {
+        var amount = "0.0"
+        switch transferType {
+        case .ether: amount = balance?.amountFull ?? "0.0"
+        case .token(let token): amount = EtherNumberFormatter.full.string(from: token.valueBigInt, decimals: token.decimals)
+        }
+        self.amount = amount
+        if currentPair.left != self.symbol {
+            guard let decimal = Decimal(string: amount),
+                let price = currentPairPrice() else {
+                return "0.0"
+            }
+            amount = (decimal * price).description
+        }
+        return amount
+    }
+
     /// Update of the current pair rate.
     ///
     /// - Parameters:
@@ -107,10 +131,17 @@ struct SendViewModel {
     /// - Parameters:
     ///   - amount: Decimal amount to calculate price.
     mutating func updatePairPrice(with amount: Decimal) {
-        guard let rates = storage.tickers, let currentTokenInfo = rates[destinationAddress.description], let price = Decimal(string: currentTokenInfo.price) else {
+        guard let price = self.currentPairPrice() else {
             return
         }
         updatePaitRate(with: price, and: amount)
+    }
+    /// Get pair price with ticker
+    func currentPairPrice() -> Decimal? {
+        guard let rates = storage.tickers, let currentTokenInfo = rates[destinationAddress.description], let price = Decimal(string: currentTokenInfo.price) else {
+            return nil
+        }
+        return price
     }
     /// If ther is ticker for this pair show fiat view.
     func isFiatViewHidden() -> Bool {

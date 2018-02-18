@@ -18,7 +18,7 @@ protocol SendViewControllerDelegate: class {
 }
 class SendViewController: FormViewController {
     private lazy var viewModel: SendViewModel = {
-        return .init(transferType: self.transferType, config: Config(), storage: self.storage)
+        return .init(transferType: self.transferType, config: Config(), storage: self.storage, balance: self.session.balance)
     }()
     weak var delegate: SendViewControllerDelegate?
     struct Values {
@@ -170,10 +170,11 @@ class SendViewController: FormViewController {
         activateAmountView()
     }
     @objc func useMaxAmount() {
-        switch transferType {
-        case .ether: self.updateMaxEthers()
-        case .token(let token): self.updateMaxTokens(token)
-        }
+        let amount = viewModel.sendMaxAmount()
+        viewModel.updatePairPrice(with: Decimal(string: amount) ?? 0)
+        updatePriceSection()
+        amountRow?.value = amount
+        amountRow?.reload()
     }
     @objc func fiatAction(sender: UIButton) {
         let swappedPair = viewModel.currentPair.swapPair()
@@ -213,58 +214,11 @@ class SendViewController: FormViewController {
         UIView.setAnimationsEnabled(true)
     }
 
-    private func currentPairPrice() -> Double? {
-        guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.destinationAddress.description], let price = Double(currentTokenInfo.price) else {
-            return nil
-        }
-        return price
-    }
-
-    private func updatePairPrice(with amount: Double) {
-        guard let price = currentPairPrice() else {
-            return
-        }
-        if self.currentPair.left == viewModel.symbol {
-            pairValue = amount * price
-        } else {
-            pairValue = amount / price
-        }
-        self.updatePriceSection()
-    }
-
     private func isFiatViewHidden() -> Bool {
         guard let currentTokenInfo = storage.tickers?[viewModel.destinationAddress.description], let price = Double(currentTokenInfo.price), price > 0 else {
             return true
         }
         return false
-    }
-
-    private func updateMaxEthers() {
-        guard let amount = session.balance else {
-            return
-        }
-
-        updateAmountRow(value: amount.amountFull)
-    }
-
-    private func updateMaxTokens(_ token: TokenObject) {
-        let amount = EtherNumberFormatter.full.string(from: token.valueBigInt, decimals: token.decimals)
-        updateAmountRow(value: amount)
-    }
-
-    private func updateAmountRow(value: String) {
-        guard let amount = Double(value),
-            let price = currentPairPrice() else {
-            return
-        }
-        if self.currentPair.left == viewModel.symbol {
-            amountRow?.value = value
-            updatePairPrice(with: amount)
-        } else {
-            amountRow?.value = String(amount * price)
-            updatePairPrice(with: amount * price)
-        }
-        amountRow?.reload()
     }
 }
 extension SendViewController: QRCodeReaderDelegate {

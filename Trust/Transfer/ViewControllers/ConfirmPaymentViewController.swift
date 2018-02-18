@@ -159,7 +159,7 @@ class ConfirmPaymentViewController: UIViewController {
             submitButton.setTitle(viewModel.insufficientFundText, for: .normal)
         } else {
             submitButton.isEnabled = true
-            submitButton.setTitle(viewModel.sendButtonText, for: .normal)
+            submitButton.setTitle(viewModel.actionButtonText, for: .normal)
         }
     }
 
