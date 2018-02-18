@@ -15,6 +15,7 @@ class AccountsCoordinator: Coordinator {
 
     let navigationController: UINavigationController
     let keystore: Keystore
+    let session: WalletSession
     let balanceCoordinator: GetBalanceCoordinator
     var coordinators: [Coordinator] = []
 
@@ -32,11 +33,13 @@ class AccountsCoordinator: Coordinator {
     init(
         navigationController: UINavigationController,
         keystore: Keystore,
+        session: WalletSession,
         balanceCoordinator: GetBalanceCoordinator
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
+        self.session = session
         self.balanceCoordinator = balanceCoordinator
     }
 
@@ -79,7 +82,16 @@ class AccountsCoordinator: Coordinator {
                 self.addCoordinator(coordinator)
             }
             let exportTitle = NSLocalizedString("wallets.export.alertSheet.title", value: "Export Private Key", comment: "The title of the export button in the wallet's action sheet")
-            let exportPrivateKeyAction = UIAlertAction(title: exportTitle, style: .default, handler: nil)
+            let exportPrivateKeyAction = UIAlertAction(title: exportTitle, style: .default) { _ in
+                let coord = ExportPrivateKeyCoordinator(
+                    navigationController: self.navigationController,
+                    keystore: self.keystore,
+                    account: account
+                )
+                coord.delegate = self
+                coord.start()
+                self.addCoordinator(coord)
+            }
             controller.addAction(backupKeystoreAction)
             controller.addAction(exportPrivateKeyAction)
         case .watch:
@@ -139,6 +151,13 @@ extension AccountsCoordinator: BackupCoordinatorDelegate {
     }
 
     func didFinish(account: Account, in coordinator: BackupCoordinator) {
+        removeCoordinator(coordinator)
+    }
+}
+
+extension AccountsCoordinator: ExportPrivateKeyCoordinatorDelegate {
+    func didCancel(in coordinator: ExportPrivateKeyCoordinator) {
+        delegate?.didCancel(in: self)
         removeCoordinator(coordinator)
     }
 }
