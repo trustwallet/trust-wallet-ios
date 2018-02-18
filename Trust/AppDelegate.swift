@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        protectionCoordinator.applicationWillResignActive()
+
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

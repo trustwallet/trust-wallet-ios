@@ -20,27 +20,18 @@ class ProtectionCoordinator: Coordinator {
         lockEnterPasscodeCoordinator.start()
     }
 
-    func applicationWillResignActive() {
-        splashCoordinator.start()
-    }
-
     func applicationDidBecomeActive() {
-        //We track protectionWasShown because of the Touch ID that will trigger applicationDidBecomeActive method after valdiation.
-        if !lockEnterPasscodeCoordinator.protectionWasShown {
-            lockEnterPasscodeCoordinator.start()
-        } else {
-            lockEnterPasscodeCoordinator.protectionWasShown = false
-        }
-
-        //We should dismiss spalsh screen when app become active.
         splashCoordinator.stop()
+        lockEnterPasscodeCoordinator.showAuthentication()
     }
 
     func applicationDidEnterBackground() {
         splashCoordinator.start()
+        lockEnterPasscodeCoordinator.start()
     }
 
     func applicationWillEnterForeground() {
         splashCoordinator.stop()
+        lockEnterPasscodeCoordinator.showAuthentication()
     }
 }
