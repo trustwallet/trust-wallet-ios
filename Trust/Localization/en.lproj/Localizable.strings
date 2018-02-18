@@ -177,3 +177,9 @@
 "transaction.id.label.title" = "Transaction #";
 "transaction.time.label.title" = "Transaction time";
 "transaction.to.label.title" = "To";
+"settings.allowPushNotifications.button.title" = "Allow Push Notifications";
+"settings.pushNotifications.airdrop.button.title" = "Airdrops from partners";
+"settings.pushNotifications.airdrop.footer" = "Occasionally you will receive offers to participate in airdrops from our official partners.";
+"settings.pushNotifications.allowPushNotifications.footer" = "You will be notified for sent and received transactions.";
+"settings.pushNotifications.payment.button.title" = "Sent and Receive";
+"settings.pushNotifications.title" = "Push Notifications";
