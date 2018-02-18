@@ -18,7 +18,7 @@ protocol SendViewControllerDelegate: class {
 }
 class SendViewController: FormViewController {
     private lazy var viewModel: SendViewModel = {
-        return .init(transferType: self.transferType, config: Config())
+        return .init(transferType: self.transferType, config: Config(), storage: self.storage)
     }()
     weak var delegate: SendViewControllerDelegate?
     struct Values {
@@ -67,7 +67,7 @@ class SendViewController: FormViewController {
         fiatButton.translatesAutoresizingMaskIntoConstraints = false
         fiatButton.setTitle(viewModel.currentPair.right, for: .normal)
         fiatButton.addTarget(self, action: #selector(fiatAction), for: .touchUpInside)
-        fiatButton.isHidden = isFiatViewHidden()
+        fiatButton.isHidden = viewModel.isFiatViewHidden()
         let amountRightView = UIStackView(arrangedSubviews: [
             fiatButton,
         ])
@@ -76,7 +76,7 @@ class SendViewController: FormViewController {
         amountRightView.spacing = 1
         amountRightView.axis = .horizontal
         form = Section()
-            +++ Section(header: "", footer: isFiatViewHidden() ? "" : viewModel.pairRateRepresantetion())
+            +++ Section(header: "", footer: viewModel.isFiatViewHidden() ? "" : viewModel.pairRateRepresantetion())
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
@@ -96,7 +96,7 @@ class SendViewController: FormViewController {
                 cell.textField.delegate = self
                 cell.textField.placeholder = "\(self?.viewModel.currentPair.left ?? "") " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
                 cell.textField.keyboardType = .decimalPad
-                //cell.textField.rightView = amountRightView // TODO: Enable fiat functionality once fixed
+                cell.textField.rightView = amountRightView 
                 cell.textField.rightViewMode = .always
             }
     }
@@ -197,7 +197,7 @@ class SendViewController: FormViewController {
     }
     private func updatePriceSection() {
         //Update section only if fiat view is visible.
-        guard !isFiatViewHidden() else {
+        guard !viewModel.isFiatViewHidden() else {
             return
         }
         //We use this section update to prevent update of the all section including cells.
@@ -209,19 +209,6 @@ class SendViewController: FormViewController {
         }
         tableView.endUpdates()
         UIView.setAnimationsEnabled(true)
-    }
-    private func updatePairPrice(with amount: Decimal) {
-        guard let rates = storage.tickers, let currentTokenInfo = rates[viewModel.destinationAddress.description], let price = Decimal(string: currentTokenInfo.price) else {
-            return
-        }
-        viewModel.updatePaitRate(with: price, and: amount)
-        self.updatePriceSection()
-    }
-    private func isFiatViewHidden() -> Bool {
-        guard let currentTokenInfo = storage.tickers?[viewModel.destinationAddress.description], let price = Double(currentTokenInfo.price), price > 0 else {
-            return true
-        }
-        return false
     }
 }
 extension SendViewController: QRCodeReaderDelegate {
@@ -276,7 +263,8 @@ extension SendViewController: UITextFieldDelegate {
         //Convert to deciaml for pair rate update.
         let amount = Decimal(string: stringAmount) ?? 0
         //Update of the pair rate.
-        updatePairPrice(with: amount)
+        viewModel.updatePairPrice(with: amount)
+        updatePriceSection()
         //Update of the total amount.
         viewModel.updateAmount(with: stringAmount)
         return true

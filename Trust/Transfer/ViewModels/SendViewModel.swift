@@ -36,12 +36,16 @@ struct SendViewModel {
     let transferType: TransferType
     /// config of a `SendViewModel` to know configuration of the current account.
     let config: Config
+    /// storage of a `SendViewModel` to know pair rate.
+    let storage: TokensDataStore
     init(
         transferType: TransferType,
-        config: Config
+        config: Config,
+        storage: TokensDataStore
     ) {
         self.transferType = transferType
         self.config = config
+        self.storage = storage
     }
     var title: String {
         return "Send \(symbol)"
@@ -97,5 +101,22 @@ struct SendViewModel {
             //In case of the fiat value we should take pair rate.
             amount  = rate
         }
+    }
+    /// Update of the pair price with ticker.
+    ///
+    /// - Parameters:
+    ///   - amount: Decimal amount to calculate price.
+    mutating func updatePairPrice(with amount: Decimal) {
+        guard let rates = storage.tickers, let currentTokenInfo = rates[destinationAddress.description], let price = Decimal(string: currentTokenInfo.price) else {
+            return
+        }
+        updatePaitRate(with: price, and: amount)
+    }
+    /// If ther is ticker for this pair show fiat view.
+    func isFiatViewHidden() -> Bool {
+        guard let currentTokenInfo = storage.tickers?[destinationAddress.description], let price = Decimal(string: currentTokenInfo.price), price > 0 else {
+            return true
+        }
+        return false
     }
 }
