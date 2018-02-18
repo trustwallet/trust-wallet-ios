@@ -213,13 +213,6 @@ class SendViewController: FormViewController {
         tableView.endUpdates()
         UIView.setAnimationsEnabled(true)
     }
-
-    private func isFiatViewHidden() -> Bool {
-        guard let currentTokenInfo = storage.tickers?[viewModel.destinationAddress.description], let price = Double(currentTokenInfo.price), price > 0 else {
-            return true
-        }
-        return false
-    }
 }
 extension SendViewController: QRCodeReaderDelegate {
     func readerDidCancel(_ reader: QRCodeReaderViewController!) {
