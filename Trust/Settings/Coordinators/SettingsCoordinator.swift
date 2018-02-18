@@ -51,6 +51,7 @@ class SettingsCoordinator: Coordinator {
         let coordinator = AccountsCoordinator(
             navigationController: NavigationController(),
             keystore: keystore,
+            session: session,
             balanceCoordinator: balanceCoordinator
         )
         coordinator.delegate = self
