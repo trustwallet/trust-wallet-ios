@@ -217,14 +217,6 @@ class SendViewController: FormViewController {
         viewModel.updatePaitRate(with: price, and: amount)
         self.updatePriceSection()
     }
-    private func updateAmount(with stringAmount: String) {
-        if viewModel.currentPair.left == viewModel.symbol {
-            viewModel.amount  = stringAmount.isEmpty ? "0" : stringAmount
-        } else {
-            //In case of the fiat value we should take pair rate.
-            viewModel.amount  = viewModel.rate
-        }
-    }
     private func isFiatViewHidden() -> Bool {
         guard let currentTokenInfo = storage.tickers?[viewModel.destinationAddress.description], let price = Double(currentTokenInfo.price), price > 0 else {
             return true
@@ -284,9 +276,9 @@ extension SendViewController: UITextFieldDelegate {
         //Convert to deciaml for pair rate update.
         let amount = Decimal(string: stringAmount) ?? 0
         //Update of the pair rate.
-        self.updatePairPrice(with: amount)
+        updatePairPrice(with: amount)
         //Update of the total amount.
-        self.updateAmount(with: stringAmount)
+        viewModel.updateAmount(with: stringAmount)
         return true
     }
 }

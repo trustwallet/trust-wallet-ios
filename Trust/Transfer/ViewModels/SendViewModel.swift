@@ -86,4 +86,16 @@ struct SendViewModel {
             pairRate = amount / price
         }
     }
+    /// Update of the amount to send.
+    ///
+    /// - Parameters:
+    ///   - stringAmount: String fiat string amount.
+    mutating func updateAmount(with stringAmount: String) {
+        if currentPair.left == symbol {
+            amount  = stringAmount.isEmpty ? "0" : stringAmount
+        } else {
+            //In case of the fiat value we should take pair rate.
+            amount  = rate
+        }
+    }
 }
