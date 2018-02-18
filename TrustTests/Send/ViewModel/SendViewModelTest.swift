@@ -5,18 +5,21 @@ import XCTest
 
 class SendViewModelTest: XCTestCase {
     var sendViewModel = SendViewModel(transferType: .ether(destination: .none), config: .make())
+    var decimalFormatter = DecimalFormatter()
     override func setUp() {
         sendViewModel.amount = "198212312.123123"
         super.setUp()
     }
     func testPairRateRepresantetio() {
+        let expectedFiatResult = sendViewModel.stringFormatter.currency(with: 128.9, and: sendViewModel.config.currency.rawValue)
         sendViewModel.pairRate = 128.9
         let fiatRepresentation = sendViewModel.pairRateRepresantetion()
-        XCTAssertEqual("~ 128.90 USD", fiatRepresentation)
+        XCTAssertEqual("~ \(expectedFiatResult) USD", fiatRepresentation)
+        let expectedCryptoResult = sendViewModel.stringFormatter.token(with: 298981.983212, and: sendViewModel.decimals)
         sendViewModel.pairRate = 298981.983212
         sendViewModel.currentPair = sendViewModel.currentPair.swapPair()
         let cryptoRepresentation = sendViewModel.pairRateRepresantetion()
-        XCTAssertEqual("~ 298981.983212 ETH", cryptoRepresentation)
+        XCTAssertEqual("~ \(expectedCryptoResult) ETH", cryptoRepresentation)
     }
     func testUpdatePairRate() {
         XCTAssertEqual(0.0, sendViewModel.pairRate)
@@ -26,14 +29,21 @@ class SendViewModelTest: XCTestCase {
         sendViewModel.updatePaitRate(with: 24.3, and: 967)
         XCTAssertEqual(sendViewModel.pairRate.doubleValue, 39.794238683127, accuracy: 0.000000000001)
     }
+    func testAmountUpdate() {
+        XCTAssertEqual("198212312.123123", sendViewModel.amount)
+        sendViewModel.updateAmount(with: "1.245")
+        XCTAssertEqual("1.245", sendViewModel.amount)
+    }
     func testRate() {
+        let expectedFiatResult = sendViewModel.stringFormatter.currency(with: 298.124453, and: sendViewModel.config.currency.rawValue)
         sendViewModel.pairRate = 298.124453
         _ = sendViewModel.pairRateRepresantetion()
-        XCTAssertEqual("298.12", sendViewModel.rate)
+        XCTAssertEqual(expectedFiatResult, sendViewModel.rate)
+        let expectedCryptoResult = sendViewModel.stringFormatter.token(with: 12.53453, and: sendViewModel.decimals)
         sendViewModel.pairRate = 12.53453
         sendViewModel.currentPair = sendViewModel.currentPair.swapPair()
         _ = sendViewModel.pairRateRepresantetion()
-        XCTAssertEqual("12.53453", sendViewModel.rate)
+        XCTAssertEqual(expectedCryptoResult, sendViewModel.rate)
     }
     func testAmount() {
         XCTAssertEqual("198212312.123123", sendViewModel.amount)
