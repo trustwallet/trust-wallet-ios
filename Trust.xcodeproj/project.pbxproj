@@ -286,6 +286,9 @@
 		732E0F542022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */; };
 		737D1675202BDCB400B42DDE /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737D1674202BDCB400B42DDE /* UINavigationController.swift */; };
 		737EEDDA201BE3A8009D9D5D /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EEDD9201BE3A8009D9D5D /* Lock.swift */; };
+		7391DC8C203715DF002C5ADE /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7391DC8B203715DF002C5ADE /* Pair.swift */; };
+		7391DC922038C0AC002C5ADE /* BrowserURLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7391DC912038C0AC002C5ADE /* BrowserURLParserTests.swift */; };
+		7391DC962038C135002C5ADE /* SendViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7391DC952038C135002C5ADE /* SendViewModelTest.swift */; };
 		739533971FEFF5FD0084AFAB /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739533961FEFF5FD0084AFAB /* Currency.swift */; };
 		73958DC720263525000A40EB /* SplashCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73958DC620263525000A40EB /* SplashCoordinatorTests.swift */; };
 		73ACEEF5201631A3003DD71D /* ProtectionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ACEEF4201631A2003DD71D /* ProtectionCoordinator.swift */; };
@@ -664,6 +667,9 @@
 		732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockCreatePasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
 		737D1674202BDCB400B42DDE /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		737EEDD9201BE3A8009D9D5D /* Lock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
+		7391DC8B203715DF002C5ADE /* Pair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
+		7391DC912038C0AC002C5ADE /* BrowserURLParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserURLParserTests.swift; sourceTree = "<group>"; };
+		7391DC952038C135002C5ADE /* SendViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewModelTest.swift; sourceTree = "<group>"; };
 		739533961FEFF5FD0084AFAB /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		73958DC620263525000A40EB /* SplashCoordinatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashCoordinatorTests.swift; sourceTree = "<group>"; };
 		73ACEEF4201631A2003DD71D /* ProtectionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectionCoordinator.swift; sourceTree = "<group>"; };
@@ -847,8 +853,9 @@
 		2912CD0E1F6A830700C6CBE3 /* TrustTests */ = {
 			isa = PBXGroup;
 			children = (
+				7391DC932038C11C002C5ADE /* Send */,
+				7391DC8F2038C070002C5ADE /* Browser */,
 				77872D2A202514930032D687 /* Wallet */,
-				77E0E774201FAD1C009B4B31 /* Browser */,
 				CCA4FE301FD3652100749AE4 /* Core */,
 				299B5E3C1FD143300051361C /* Export */,
 				299B5E351FCBCDE10051361C /* Transfer */,
@@ -1546,6 +1553,7 @@
 				299B5E331FCBC5180051361C /* ConfirmPaymentViewModel.swift */,
 				29E6E0711FEA200D0079265A /* ConfirmPaymentDetailsViewModel.swift */,
 				299B5E441FD22FB40051361C /* ConfigureTransactionViewModel.swift */,
+				7391DC8B203715DF002C5ADE /* Pair.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1884,6 +1892,38 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		7391DC8F2038C070002C5ADE /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				7391DC902038C070002C5ADE /* Types */,
+			);
+			path = Browser;
+			sourceTree = "<group>";
+		};
+		7391DC902038C070002C5ADE /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				7391DC912038C0AC002C5ADE /* BrowserURLParserTests.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		7391DC932038C11C002C5ADE /* Send */ = {
+			isa = PBXGroup;
+			children = (
+				7391DC942038C11C002C5ADE /* ViewModel */,
+			);
+			path = Send;
+			sourceTree = "<group>";
+		};
+		7391DC942038C11C002C5ADE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7391DC952038C135002C5ADE /* SendViewModelTest.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		73ACEEF620163B4E003DD71D /* Lock */ = {
 			isa = PBXGroup;
 			children = (
@@ -2029,23 +2069,6 @@
 				77B3BF342017D0D000EEC15A /* MarketplaceViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		77E0E774201FAD1C009B4B31 /* Browser */ = {
-			isa = PBXGroup;
-			children = (
-				77E0E775201FAD25009B4B31 /* Types */,
-			);
-			name = Browser;
-			path = "New Group";
-			sourceTree = "<group>";
-		};
-		77E0E775201FAD25009B4B31 /* Types */ = {
-			isa = PBXGroup;
-			children = (
-				77E0E776201FAD36009B4B31 /* BrowserURLParserTests.swift */,
-			);
-			path = Types;
 			sourceTree = "<group>";
 		};
 		9A0F00B2D545197C8F7691C2 /* Pods */ = {
@@ -2607,6 +2630,7 @@
 				29E9CFCF1FE7347200017744 /* ERC20Token.swift in Sources */,
 				29FF6D73201200D500A3011C /* FieldAppereance.swift in Sources */,
 				29C9F5FB1F720C050025C494 /* FloatLabelTextField.swift in Sources */,
+				7391DC8C203715DF002C5ADE /* Pair.swift in Sources */,
 				293248861F88CCE6008A9818 /* SplashError.swift in Sources */,
 				296421951F70C1EC00EB363B /* LoadingView.swift in Sources */,
 				2961BD071FB146EB00C4B840 /* ChainState.swift in Sources */,
@@ -2824,6 +2848,7 @@
 				296106CC1F776FD00006164B /* WalletCoordinatorTests.swift in Sources */,
 				298542FE1FBEADEF00CB5081 /* TransactionViewModelTests.swift in Sources */,
 				295B61D61FE7FC8300642E60 /* FakeTokensDataStore.swift in Sources */,
+				7391DC962038C135002C5ADE /* SendViewModelTest.swift in Sources */,
 				291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */,
 				732E0F542022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift in Sources */,
 				298543001FBEAE2F00CB5081 /* ChainState.swift in Sources */,
@@ -2831,7 +2856,6 @@
 				29AD8A0E1F93FF28008E10E7 /* WalletSession.swift in Sources */,
 				CCA4FE331FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift in Sources */,
 				29FF13011F75EAD900AFD326 /* FakeKeystore.swift in Sources */,
-				77E0E777201FAD36009B4B31 /* BrowserURLParserTests.swift in Sources */,
 				29FC9BCC1F831860000209CD /* PaymentCoordinator.swift in Sources */,
 				732E0F522022754600B39C1F /* FakeLockProtocol.swift in Sources */,
 				2961BD091FB14B6D00C4B840 /* Config.swift in Sources */,
@@ -2841,6 +2865,7 @@
 				73CBC761202139FB00374666 /* FakeGetBalanceCoordinator(.swift in Sources */,
 				295996031FAA865800DB66A8 /* TokensCoordinatorTests.swift in Sources */,
 				29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */,
+				7391DC922038C0AC002C5ADE /* BrowserURLParserTests.swift in Sources */,
 				73958DC720263525000A40EB /* SplashCoordinatorTests.swift in Sources */,
 				29F114FA1FA817A800114A29 /* RequestCoordinatorTests.swift in Sources */,
 				2977CAE01F7DEEB0009682A0 /* FakeEtherKeystore.swift in Sources */,
