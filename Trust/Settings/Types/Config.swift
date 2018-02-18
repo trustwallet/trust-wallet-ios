@@ -67,7 +67,7 @@ struct Config {
             switch server {
             case .main: return "https://mainnet.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .classic: return "https://mewapi.epool.io/"
-            case .callisto: return "https://callisto.network/" //TODO Add endpoint
+            case .callisto: return "https://rpc.callisto.network"
             case .kovan: return "https://kovan.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .ropsten: return "https://ropsten.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .rinkeby: return "https://rinkeby.infura.io/llyrtzQ3YhkdESt2Fzrk"
