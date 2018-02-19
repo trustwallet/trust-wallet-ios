@@ -29,7 +29,6 @@ class TokensDataStore {
     weak var delegate: TokensDataStoreDelegate?
     let realm: Realm
     var tickers: [String: CoinTicker]? = .none
-    var pricesTimer: Timer?
     var ethTimer: Timer?
     //We should refresh prices every 5 minutes.
     let intervalToRefreshPrices = 300.0
@@ -59,8 +58,7 @@ class TokensDataStore {
         self.web3 = web3
         self.realm = realm
         self.addEthToken()
-        self.scheduledTimerForPricesUpdate()
-        self.scheduledTimerForEthBalanceUpdate()
+        scheduledTimerForEthBalanceUpdate()
         NotificationCenter.default.addObserver(self, selector: #selector(TokensDataStore.stopTimers), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TokensDataStore.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
     }
@@ -221,16 +219,8 @@ class TokensDataStore {
             }
         }
     }
-    private func scheduledTimerForPricesUpdate() {
-        guard pricesTimer == nil else {
-            return
-        }
-        pricesTimer = Timer.scheduledTimer(timeInterval: intervalToRefreshPrices, target: BlockOperation { [weak self] in
-            self?.updatePrices()
-        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
-    }
     private func scheduledTimerForEthBalanceUpdate() {
-        guard pricesTimer == nil else {
+        guard ethTimer == nil else {
             return
         }
         ethTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in
@@ -238,20 +228,15 @@ class TokensDataStore {
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
     @objc func stopTimers() {
-        pricesTimer?.invalidate()
-        pricesTimer = nil
         ethTimer?.invalidate()
-        pricesTimer = nil
+        ethTimer = nil
     }
     @objc func restartTimers() {
-        scheduledTimerForPricesUpdate()
         scheduledTimerForEthBalanceUpdate()
     }
     deinit {
         NotificationCenter.default.removeObserver(self)
-        pricesTimer?.invalidate()
-        pricesTimer = nil
         ethTimer?.invalidate()
-        pricesTimer = nil
+        ethTimer = nil
     }
 }
