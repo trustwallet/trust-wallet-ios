@@ -3,7 +3,6 @@
 import Foundation
 import TrustKeystore
 import UIKit
-import StackViewController
 import MBProgressHUD
 
 class ExportPrivateKeyViewConroller: UIViewController {
@@ -79,6 +78,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: view.layoutGuide.leadingAnchor, constant: StyleLayout.sideMargin),
             stackView.trailingAnchor.constraint(equalTo: view.layoutGuide.trailingAnchor, constant: -StyleLayout.sideMargin),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.layoutGuide.bottomAnchor, constant: -180),
+
             revalQRCodeButton.trailingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.trailingAnchor),
             revalQRCodeButton.leadingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.leadingAnchor),
 
