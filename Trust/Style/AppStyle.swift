@@ -44,5 +44,5 @@ struct Colors {
 
 struct StyleLayout {
     static let sideMargin: CGFloat = 15
-    static let bottomMargin: CGFloat = 250
+    static let bottomMargin: CGFloat = 180
 }
