@@ -71,7 +71,7 @@ class AccountsCoordinator: Coordinator {
         switch account.type {
         case .real(let account):
             let actionTitle = NSLocalizedString("wallets.backup.alertSheet.title", value: "Backup Keystore", comment: "The title of the backup button in the wallet's action sheet")
-            let backupKeystoreAction = UIAlertAction(title: actionTitle, style: .default) { _ in
+            let backupKeystoreAction = UIAlertAction(title: actionTitle, style: .default) { [unowned self] _ in
                 let coordinator = BackupCoordinator(
                     navigationController: self.navigationController,
                     keystore: self.keystore,
@@ -82,15 +82,16 @@ class AccountsCoordinator: Coordinator {
                 self.addCoordinator(coordinator)
             }
             let exportTitle = NSLocalizedString("wallets.export.alertSheet.title", value: "Export Private Key", comment: "The title of the export button in the wallet's action sheet")
-            let exportPrivateKeyAction = UIAlertAction(title: exportTitle, style: .default) { _ in
-                let coord = ExportPrivateKeyCoordinator(
+            let exportPrivateKeyAction = UIAlertAction(title: exportTitle, style: .default) { [unowned self] _ in
+
+                let coordinator = ExportPrivateKeyCoordinator(
                     navigationController: self.navigationController,
                     keystore: self.keystore,
                     account: account
                 )
-                coord.delegate = self
-                coord.start()
-                self.addCoordinator(coord)
+                coordinator.delegate = self
+                coordinator.start()
+                self.addCoordinator(coordinator)
             }
             controller.addAction(backupKeystoreAction)
             controller.addAction(exportPrivateKeyAction)

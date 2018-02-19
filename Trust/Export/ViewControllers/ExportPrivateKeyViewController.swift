@@ -8,9 +8,6 @@ import MBProgressHUD
 
 class ExportPrivateKeyViewConroller: UIViewController {
 
-    let stackViewController = StackViewController()
-    var context = CIContext()
-
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,7 +19,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
         let button = Button(size: .normal, style: .border)
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(unBlur))
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(viewModel.btnTitlte, for: .normal)
+        button.setTitle(viewModel.revealButtonTitle, for: .normal)
         button.addGestureRecognizer(longGesture)
         return button
     }()
@@ -32,7 +29,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
         label.text = viewModel.headlineText
-        label.textColor = .red
+        label.textColor = Colors.red
         return label
     }()
 
@@ -40,9 +37,10 @@ class ExportPrivateKeyViewConroller: UIViewController {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = viewModel.warningText
-        label.textColor = .red
+        label.textColor = Colors.red
         label.textAlignment = .center
         label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
 
@@ -50,48 +48,44 @@ class ExportPrivateKeyViewConroller: UIViewController {
 
     init(
         viewModel: ExportPrivateKeyViewModel
-        ) {
-        self.viewModel = viewModel
+    ) {
 
-        stackViewController.scrollView.alwaysBounceVertical = true
+        self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
 
         view.backgroundColor = viewModel.backgroundColor
 
-        displayStackViewController()
+        let stackView = UIStackView(
+            arrangedSubviews: [
+            hintLabel,
+            .spacer(),
+            imageView,
+            warningKeyLabel,
+            .spacer(height: 15),
+            revalQRCodeButton,
+            ]
+        )
+        stackView.axis = .vertical
+        stackView.spacing = 20
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
 
-        stackViewController.addItem(hintLabel)
-
-        stackViewController.addItem(imageView)
-        stackViewController.addItem(warningKeyLabel)
-        stackViewController.addItem(revalQRCodeButton)
+        view.backgroundColor = viewModel.backgroundColor
+        view.addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            revalQRCodeButton.trailingAnchor.constraint(equalTo: stackViewController.stackView.layoutMarginsGuide.trailingAnchor),
-            revalQRCodeButton.leadingAnchor.constraint(equalTo: stackViewController.stackView.layoutMarginsGuide.leadingAnchor),
+            stackView.topAnchor.constraint(greaterThanOrEqualTo: view.layoutGuide.topAnchor, constant: StyleLayout.sideMargin),
+            stackView.leadingAnchor.constraint(equalTo: view.layoutGuide.leadingAnchor, constant: StyleLayout.sideMargin),
+            stackView.trailingAnchor.constraint(equalTo: view.layoutGuide.trailingAnchor, constant: -StyleLayout.sideMargin),
+            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.layoutGuide.bottomAnchor, constant: -180),
+            revalQRCodeButton.trailingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.trailingAnchor),
+            revalQRCodeButton.leadingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.leadingAnchor),
 
             imageView.widthAnchor.constraint(equalToConstant: 260),
             imageView.heightAnchor.constraint(equalToConstant: 260),
             ])
-
-        changeQRCode(value: 0)
-    }
-
-    private func displayStackViewController() {
-        addChildViewController(stackViewController)
-        view.addSubview(stackViewController.view)
-        _ = stackViewController.view.activateSuperviewHuggingConstraints()
-        stackViewController.didMove(toParentViewController: self)
-
-        stackViewController.stackView.spacing = 20
-        stackViewController.stackView.alignment = .center
-        stackViewController.stackView.layoutMargins = UIEdgeInsets(top: 20, left: 15, bottom: 0, right: 15)
-        stackViewController.stackView.isLayoutMarginsRelativeArrangement = true
-    }
-
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        changeQRCode(value: Int(textField.text ?? "0") ?? 0)
+        createQRCode()
     }
 
     func blur(image: UIImageView) {
@@ -112,11 +106,8 @@ class ExportPrivateKeyViewConroller: UIViewController {
         }
     }
 
-    func changeQRCode(value: Int) {
+    func createQRCode() {
         let string = viewModel.privateKey
-
-        // EIP67 format not being used much yet, use hex value for now
-        // let string = "ethereum:\(account.address.address)?value=\(value)"
 
         DispatchQueue.global(qos: .background).async {
             let image = self.generateQRCode(from: string)

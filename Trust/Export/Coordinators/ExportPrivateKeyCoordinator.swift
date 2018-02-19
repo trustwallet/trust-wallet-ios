@@ -4,7 +4,6 @@ import Foundation
 import UIKit
 import TrustKeystore
 
-
 protocol ExportPrivateKeyCoordinatorDelegate: class {
     func didCancel(in coordinator: ExportPrivateKeyCoordinator)
 }
@@ -24,12 +23,11 @@ class ExportPrivateKeyCoordinator: Coordinator {
                      accout: account)
     }()
 
-    
     init(
         navigationController: UINavigationController,
         keystore: Keystore,
         account: Account
-        ) {
+    ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
@@ -43,7 +41,7 @@ class ExportPrivateKeyCoordinator: Coordinator {
     func makeExportViewController() -> ExportPrivateKeyViewConroller {
         let controller = ExportPrivateKeyViewConroller(viewModel: viewModel)
 
-        controller.navigationItem.title = String(format: NSLocalizedString("export.PrivateKey.nav.title", value: "Export Private Key", comment: ""))
+        controller.navigationItem.title = NSLocalizedString("export.privateKey.navigation.title", value: "Export Private Key", comment: "")
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss))
 
         return controller
@@ -53,4 +51,3 @@ class ExportPrivateKeyCoordinator: Coordinator {
         delegate?.didCancel(in: self)
     }
 }
-
