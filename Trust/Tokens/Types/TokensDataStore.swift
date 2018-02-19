@@ -29,8 +29,8 @@ class TokensDataStore {
     weak var delegate: TokensDataStoreDelegate?
     let realm: Realm
     var tickers: [String: CoinTicker]? = .none
-    var pricesTimer = Timer()
-    var ethTimer = Timer()
+    var pricesTimer: Timer?
+    var ethTimer: Timer?
     //We should refresh prices every 5 minutes.
     let intervalToRefreshPrices = 300.0
     //We should refresh balance of the ETH every 10 seconds.
@@ -61,6 +61,8 @@ class TokensDataStore {
         self.addEthToken()
         self.scheduledTimerForPricesUpdate()
         self.scheduledTimerForEthBalanceUpdate()
+        NotificationCenter.default.addObserver(self, selector: #selector(TokensDataStore.stopTimers), name: .UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TokensDataStore.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
     }
     private func addEthToken() {
         //Check if we have previos values.
@@ -69,19 +71,16 @@ class TokensDataStore {
             add(tokens: [etherToken])
         }
     }
-
     var objects: [TokenObject] {
         return realm.objects(TokenObject.self)
             .sorted(byKeyPath: "contract", ascending: true)
             .filter { !$0.contract.isEmpty }
     }
-
     var enabledObject: [TokenObject] {
         return realm.objects(TokenObject.self)
             .sorted(byKeyPath: "contract", ascending: true)
             .filter { !$0.isDisabled }
     }
-
     static func update(in realm: Realm, tokens: [Token]) {
         realm.beginWrite()
         for token in tokens {
@@ -95,12 +94,10 @@ class TokensDataStore {
         }
         try! realm.commitWrite()
     }
-
     func fetch() {
         updatePrices()
         refreshBalance()
     }
-
     func refreshBalance() {
         guard !enabledObject.isEmpty else {
             updateDelegate()
@@ -142,15 +139,12 @@ class TokensDataStore {
         let tokensViewModel = TokensViewModel( tokens: enabledObject, tickers: tickers )
         delegate?.didUpdate(result: .success( tokensViewModel ))
     }
-
     func coinTicker(for token: TokenObject) -> CoinTicker? {
         return tickers?[token.contract]
     }
-
     func handleError(error: Error) {
         delegate?.didUpdate(result: .failure(TokenError.failedToFetch))
     }
-
     func addCustom(token: ERC20Token) {
         let newToken = TokenObject(
             contract: token.contract.description,
@@ -162,7 +156,6 @@ class TokensDataStore {
         )
         add(tokens: [newToken])
     }
-
     func updatePrices() {
         let tokens = objects.map { TokenPrice(contract: $0.contract, symbol: $0.symbol) }
         let tokensPrice = TokensPrice(
@@ -183,7 +176,6 @@ class TokensDataStore {
             } catch { }
         }
     }
-
     @discardableResult
     func add(tokens: [TokenObject]) -> [TokenObject] {
         realm.beginWrite()
@@ -191,24 +183,20 @@ class TokensDataStore {
         try! realm.commitWrite()
         return tokens
     }
-
     func delete(tokens: [TokenObject]) {
         realm.beginWrite()
         realm.delete(tokens)
         try! realm.commitWrite()
     }
-
     func deleteAll() {
         try! realm.write {
             realm.delete(realm.objects(TokenObject.self))
         }
     }
-
     enum TokenUpdate {
         case value(BigInt)
         case isDisabled(Bool)
     }
-
     func update(token: TokenObject, action: TokenUpdate) {
         try! realm.write {
             switch action {
@@ -219,20 +207,37 @@ class TokensDataStore {
             }
         }
     }
-
     private func scheduledTimerForPricesUpdate() {
+        guard pricesTimer == nil else {
+            return
+        }
         pricesTimer = Timer.scheduledTimer(timeInterval: intervalToRefreshPrices, target: BlockOperation { [weak self] in
             self?.updatePrices()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
     private func scheduledTimerForEthBalanceUpdate() {
+        guard pricesTimer == nil else {
+            return
+        }
         ethTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in
             self?.refreshETHBalance()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
+    @objc func stopTimers() {
+        pricesTimer?.invalidate()
+        pricesTimer = nil
+        ethTimer?.invalidate()
+        pricesTimer = nil
+    }
+    @objc func restartTimers() {
+        scheduledTimerForPricesUpdate()
+        scheduledTimerForEthBalanceUpdate()
+    }
     deinit {
-        //We should make sure that timer is invalidate.
-        pricesTimer.invalidate()
-        ethTimer.invalidate()
+        NotificationCenter.default.removeObserver(self)
+        pricesTimer?.invalidate()
+        pricesTimer = nil
+        ethTimer?.invalidate()
+        pricesTimer = nil
     }
 }

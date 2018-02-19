@@ -33,18 +33,30 @@ class ChainState {
     ) {
         self.config = config
         self.defaults = config.defaults
-        self.updateLatestBlock = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(fetch), userInfo: nil, repeats: true)
+        NotificationCenter.default.addObserver(self, selector: #selector(ChainState.stopTimers), name: .UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ChainState.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
+        runScheduledTimers()
     }
-
     func start() {
         fetch()
     }
-
     func stop() {
         updateLatestBlock?.invalidate()
         updateLatestBlock = nil
     }
-
+    @objc func stopTimers() {
+        updateLatestBlock?.invalidate()
+        updateLatestBlock = nil
+    }
+    @objc func restartTimers() {
+        runScheduledTimers()
+    }
+    private func runScheduledTimers() {
+        guard updateLatestBlock == nil else {
+            return
+        }
+        self.updateLatestBlock = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(fetch), userInfo: nil, repeats: true)
+    }
     @objc func fetch() {
         let request = EtherServiceRequest(batch: BatchFactory().create(BlockNumberRequest()))
         Session.send(request) { [weak self] result in
@@ -56,12 +68,15 @@ class ChainState {
             }
         }
     }
-
     func confirmations(fromBlock: Int) -> Int? {
         guard fromBlock > 0 else { return nil }
         let block = latestBlock - fromBlock
         guard latestBlock != 0, block > 0 else { return nil }
         return max(0, block)
     }
-
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        updateLatestBlock?.invalidate()
+        updateLatestBlock = nil
+    }
 }
