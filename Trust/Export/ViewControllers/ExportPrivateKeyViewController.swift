@@ -5,7 +5,6 @@ import TrustKeystore
 import UIKit
 import StackViewController
 import MBProgressHUD
-import CoreImage
 
 class ExportPrivateKeyViewConroller: UIViewController {
 
