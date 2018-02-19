@@ -109,11 +109,12 @@ struct SendViewModel {
     }
     mutating func formattedMaxAmount(_ max: String) -> String {
         var formattedString = ""
-        guard let decimal = Decimal(string: max) else {
+        guard let number = DecimalFormatter().number(from: max) else {
             return formattedString
         }
+        let decimal = number.decimalValue
         if currentPair.left != symbol {
-            formattedString = decimal.description
+            formattedString = stringFormatter.currency(with: decimal, and: config.currency.rawValue, keepFraction: true)
         } else {
             formattedString = stringFormatter.token(with: decimal, and: decimals)
         }
