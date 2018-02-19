@@ -24,10 +24,10 @@ class SendViewModelTest: XCTestCase {
     }
     func testUpdatePairRate() {
         XCTAssertEqual(0.0, sendViewModel.pairRate)
-        sendViewModel.updatePaitRate(with: 1.8, and: 300.2)
+        sendViewModel.updatePairRate(with: 1.8, and: 300.2)
         XCTAssertEqual(540.36, sendViewModel.pairRate)
         sendViewModel.currentPair = sendViewModel.currentPair.swapPair()
-        sendViewModel.updatePaitRate(with: 24.3, and: 967)
+        sendViewModel.updatePairRate(with: 24.3, and: 967)
         XCTAssertEqual(sendViewModel.pairRate.doubleValue, 39.794238683127, accuracy: 0.000000000001)
     }
     func testAmountUpdate() {

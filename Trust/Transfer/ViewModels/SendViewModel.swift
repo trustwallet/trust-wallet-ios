@@ -91,8 +91,8 @@ struct SendViewModel {
         case .ether: amount = balance?.amountFull ?? "0.0"
         case .token(let token): amount = EtherNumberFormatter.full.string(from: token.valueBigInt, decimals: token.decimals)
         }
-        self.amount = amount
-        if currentPair.left != self.symbol {
+        updateAmount(with: amount)
+        if currentPair.left != symbol {
             guard let decimal = Decimal(string: amount),
                 let price = currentPairPrice() else {
                 return "0.0"
@@ -101,13 +101,24 @@ struct SendViewModel {
         }
         return amount
     }
-
+    mutating func formattedMaxAmount(_ max: String) -> String {
+        var formattedString = ""
+        guard let decimal = Decimal(string: max) else {
+            return formattedString
+        }
+        if currentPair.left != symbol {
+            formattedString = stringFormatter.currency(with: decimal, and: config.currency.rawValue)
+        } else {
+            formattedString = stringFormatter.token(with: decimal, and: decimals)
+        }
+        return formattedString
+    }
     /// Update of the current pair rate.
     ///
     /// - Parameters:
     ///   - price: Decimal cuurent price of the token.
     ///   - amount: Decimal current amount to send.
-    mutating func updatePaitRate(with price: Decimal, and amount: Decimal) {
+    mutating func updatePairRate(with price: Decimal, and amount: Decimal) {
         if currentPair.left == symbol {
             pairRate = amount * price
         } else {
@@ -134,7 +145,7 @@ struct SendViewModel {
         guard let price = self.currentPairPrice() else {
             return
         }
-        updatePaitRate(with: price, and: amount)
+        updatePairRate(with: price, and: amount)
     }
     /// Get pair price with ticker
     func currentPairPrice() -> Decimal? {
