@@ -31,10 +31,10 @@
 "export.neverStored.label.title" = "Your wallet is never saved to cloud storage or standard device backups.";
 "export.noBackup.label.title" = "No backup, no %@.";
 "export.noKPrivateKey.label.title" = "No Private Key for wallet";
-"export.copied.private.key.text" = "Private Key Copied";
-"export.your.private.key" = "Your Private Key";
+"export.warning.private.key" = "Export at your own risk!";
+"export.warningTwo.private.key" = "If anyone gets ahold of your private key, they can take your entire wallet!";
 "export.PrivateKey.nav.title" = "Export Private Key";
-"export.copy.btn.tiltle" = "Copy Private Key";
+"export.reveal.btn.title" = "Hold to Reveal";
 "export.presentBackupOptions.label.title" = "Preparing backup options...";
 "export.skip.button.title" = "Do it later";
 "importWallet.importingIndicator.label.title" = "Importing wallet...";

@@ -20,7 +20,7 @@ struct ExportPrivateKeyViewModel {
     }
 
     var headlineText: String {
-        return String(format: NSLocalizedString("export.your.private.key", value: "Your Private Key.", comment: ""))
+        return String(format: NSLocalizedString("export.warning.private.key", value: "Export at your own risk!", comment: ""))
     }
 
     var privateKey: String {
@@ -32,12 +32,12 @@ struct ExportPrivateKeyViewModel {
         }
     }
 
-    var copyTitlte: String {
-        return String(format: NSLocalizedString("export.copy.btn.title", value: "Copy Private Key", comment: ""))
+    var btnTitlte: String {
+        return String(format: NSLocalizedString("export.reveal.btn.title", value: "Hold to Reveal", comment: ""))
     }
 
-    var copied: String {
-        return String(format: NSLocalizedString("export.copied.private.key.text", value: "Private Key Copied", comment: ""))
+    var warningText: String {
+        return String(format: NSLocalizedString("export.warningTwo.private.key", value: "If anyone gets ahold of your private key, they can take your entire wallet!", comment: ""))
     }
 
     var backgroundColor: UIColor {

@@ -5,23 +5,26 @@ import TrustKeystore
 import UIKit
 import StackViewController
 import MBProgressHUD
+import CoreImage
 
 class ExportPrivateKeyViewConroller: UIViewController {
 
-
     let stackViewController = StackViewController()
+    var context = CIContext()
 
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        blur(image: imageView)
         return imageView
     }()
 
-    lazy var copyButton: UIButton = {
+    lazy var revalQRCodeButton: UIButton = {
         let button = Button(size: .normal, style: .border)
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(unBlur))
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(viewModel.copyTitlte, for: .normal)
-        button.addTarget(self, action: #selector(copyAddress), for: .touchUpInside)
+        button.setTitle(viewModel.btnTitlte, for: .normal)
+        button.addGestureRecognizer(longGesture)
         return button
     }()
 
@@ -30,16 +33,17 @@ class ExportPrivateKeyViewConroller: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
         label.text = viewModel.headlineText
+        label.textColor = .red
         return label
     }()
 
-    lazy var keyLabel: UILabel = {
+    lazy var warningKeyLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = viewModel.privateKey
+        label.text = viewModel.warningText
+        label.textColor = .red
         label.textAlignment = .center
-        label.minimumScaleFactor = 0.5
-        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
         return label
     }()
 
@@ -61,12 +65,12 @@ class ExportPrivateKeyViewConroller: UIViewController {
         stackViewController.addItem(hintLabel)
 
         stackViewController.addItem(imageView)
-        stackViewController.addItem(keyLabel)
-        stackViewController.addItem(copyButton)
+        stackViewController.addItem(warningKeyLabel)
+        stackViewController.addItem(revalQRCodeButton)
 
         NSLayoutConstraint.activate([
-            copyButton.trailingAnchor.constraint(equalTo: stackViewController.stackView.layoutMarginsGuide.trailingAnchor),
-            copyButton.leadingAnchor.constraint(equalTo: stackViewController.stackView.layoutMarginsGuide.leadingAnchor),
+            revalQRCodeButton.trailingAnchor.constraint(equalTo: stackViewController.stackView.layoutMarginsGuide.trailingAnchor),
+            revalQRCodeButton.leadingAnchor.constraint(equalTo: stackViewController.stackView.layoutMarginsGuide.leadingAnchor),
 
             imageView.widthAnchor.constraint(equalToConstant: 260),
             imageView.heightAnchor.constraint(equalToConstant: 260),
@@ -91,13 +95,22 @@ class ExportPrivateKeyViewConroller: UIViewController {
         changeQRCode(value: Int(textField.text ?? "0") ?? 0)
     }
 
-    @objc func copyAddress() {
-        UIPasteboard.general.string = viewModel.privateKey
+    func blur(image: UIImageView) {
+        let blur = UIBlurEffect(style: .extraLight)
+        let view = UIVisualEffectView(effect: blur)
 
-        let hud = MBProgressHUD.showAdded(to: view, animated: true)
-        hud.mode = .text
-        hud.label.text = viewModel.copied
-        hud.hide(animated: true, afterDelay: 1.5)
+        view.frame = image.bounds
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.alpha = CGFloat(0.95)
+
+        image.addSubview(view)
+    }
+
+    @objc func unBlur() {
+        for view in imageView.subviews {
+            guard let view = view as? UIVisualEffectView else { return }
+            view.removeFromSuperview()
+        }
     }
 
     func changeQRCode(value: Int) {
