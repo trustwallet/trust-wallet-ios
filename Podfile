@@ -1,4 +1,4 @@
-platform :ios, '9.0'
+platform :ios, '10.0'
 inhibit_all_warnings!
 source 'https://github.com/CocoaPods/Specs.git'
 
@@ -25,7 +25,7 @@ target 'Trust' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Kingfisher', '~> 4.0'
-  pod 'TrustKeystore', :git=>'https://github.com/TrustWallet/trust-keystore', :branch=>'master'
+  pod 'TrustKeystore', '~> 0.2.0'
   pod 'Branch'
   # pod 'web3swift', :git=>'https://github.com/BANKEX/web3swift', :branch=>'master'
   pod 'SAMKeychain'

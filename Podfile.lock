@@ -43,7 +43,8 @@ PODS:
   - StatefulViewController (3.0)
   - SwiftLint (0.24.1)
   - TrezorCrypto (0.0.4)
-  - TrustKeystore (0.1.3):
+  - TrustKeystore (0.2.0):
+    - BigInt
     - CryptoSwift
     - secp256k1_ios (~> 0.1.0)
     - TrezorCrypto
@@ -72,7 +73,7 @@ DEPENDENCIES:
   - SeedStackViewController
   - StatefulViewController
   - SwiftLint
-  - TrustKeystore (from `https://github.com/TrustWallet/trust-keystore`, branch `master`)
+  - TrustKeystore (~> 0.2.0)
   - TrustWeb3Provider (from `https://github.com/TrustWallet/trust-web3-provider`, branch `master`)
 
 EXTERNAL SOURCES:
@@ -84,9 +85,6 @@ EXTERNAL SOURCES:
   QRCodeReaderViewController:
     :branch: master
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
-  TrustKeystore:
-    :branch: master
-    :git: https://github.com/TrustWallet/trust-keystore
   TrustWeb3Provider:
     :branch: master
     :git: https://github.com/TrustWallet/trust-web3-provider
@@ -101,9 +99,6 @@ CHECKOUT OPTIONS:
   QRCodeReaderViewController:
     :commit: 80bd79cbeede842949b229f81bc6328f53701c5a
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
-  TrustKeystore:
-    :commit: bc1a833441535d16d2fe25de8ecb403350140b50
-    :git: https://github.com/TrustWallet/trust-keystore
   TrustWeb3Provider:
     :commit: c185b75d71db6391e2ab9f028d499afba7201cc5
     :git: https://github.com/TrustWallet/trust-web3-provider
@@ -138,9 +133,9 @@ SPEC CHECKSUMS:
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: 2e4b89feed5909c42c3735bbd6745f4345c4b772
   TrezorCrypto: 7f87a2296cf13872b21565c29fd9f7882dd00803
-  TrustKeystore: 02614fb6b5c48fc65a0c485df7e22a44aec0c0d5
+  TrustKeystore: fdfb8001522a3d66cb73bae0d55510ac7bbf56e1
   TrustWeb3Provider: f92bae73903d558c288df878bc1216d285056171
 
-PODFILE CHECKSUM: bdcfd875c4b75276423f8ee9850432a90a6afefc
+PODFILE CHECKSUM: 0078c513f062b14f751cd949b172c03d9c870114
 
 COCOAPODS: 1.4.0
