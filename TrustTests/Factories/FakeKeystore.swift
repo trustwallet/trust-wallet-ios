@@ -6,19 +6,22 @@ import TrustKeystore
 import Result
 
 struct FakeKeystore: Keystore {
-    static var current: Wallet?
+    static var current: Trust.Wallet?
     var hasWallets: Bool {
         return wallets.count > 0
     }
-    var keystoreDirectory: URL {
+    var keysDirectory: URL {
         return URL(fileURLWithPath: "file://")
     }
-    var wallets: [Wallet]
-    var recentlyUsedWallet: Wallet?
+    var walletsDirectory: URL {
+        return URL(fileURLWithPath: "file://")
+    }
+    var wallets: [Trust.Wallet]
+    var recentlyUsedWallet: Trust.Wallet?
 
     init(
-        wallets: [Wallet] = [],
-        recentlyUsedWallet: Wallet? = .none
+        wallets: [Trust.Wallet] = [],
+        recentlyUsedWallet: Trust.Wallet? = .none
     ) {
         self.wallets = wallets
         self.recentlyUsedWallet = recentlyUsedWallet
@@ -28,7 +31,7 @@ struct FakeKeystore: Keystore {
         completion(.success(.make()))
     }
 
-    func importWallet(type: ImportType, completion: @escaping (Result<Wallet, KeystoreError>) -> Void) {
+    func importWallet(type: ImportType, completion: @escaping (Result<Trust.Wallet, KeystoreError>) -> Void) {
         //TODO: Implement
     }
 
@@ -64,12 +67,12 @@ struct FakeKeystore: Keystore {
         return .failure(KeystoreError.failedToSignTransaction)
     }
 
-    func delete(wallet wallet: Wallet) -> Result<Void, KeystoreError> {
+    func delete(wallet wallet: Trust.Wallet) -> Result<Void, KeystoreError> {
         //TODO: Implement
         return .failure(KeystoreError.failedToSignTransaction)
     }
 
-    func delete(wallet: Wallet, completion: @escaping (Result<Void, KeystoreError>) -> Void) {
+    func delete(wallet: Trust.Wallet, completion: @escaping (Result<Void, KeystoreError>) -> Void) {
         completion(.failure(KeystoreError.failedToSignTransaction))
     }
 
@@ -104,8 +107,8 @@ struct FakeKeystore: Keystore {
 
 extension FakeKeystore {
     static func make(
-        wallets: [Wallet] = [],
-        recentlyUsedWallet: Wallet? = .none
+        wallets: [Trust.Wallet] = [],
+        recentlyUsedWallet: Trust.Wallet? = .none
     ) -> FakeKeystore {
         return FakeKeystore(
             wallets: wallets,
