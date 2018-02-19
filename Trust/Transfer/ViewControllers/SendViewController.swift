@@ -171,7 +171,6 @@ class SendViewController: FormViewController {
     }
     @objc func useMaxAmount() {
         let amount = viewModel.sendMaxAmount()
-        viewModel.updatePairPrice(with: Decimal(string: amount) ?? 0)
         updatePriceSection()
         amountRow?.value = viewModel.formattedMaxAmount(amount)
         amountRow?.reload()

@@ -86,20 +86,26 @@ struct SendViewModel {
     ///
     /// - Returns: `String` that represent amount to send.
     mutating func sendMaxAmount() -> String {
-        var amount = "0.0"
+        var max = "0.0"
         switch transferType {
-        case .ether: amount = balance?.amountFull ?? "0.0"
-        case .token(let token): amount = EtherNumberFormatter.full.string(from: token.valueBigInt, decimals: token.decimals)
+        case .ether: max = balance?.amountFull ?? "0.0"
+        case .token(let token): max = EtherNumberFormatter.full.string(from: token.valueBigInt, decimals: token.decimals)
         }
-        updateAmount(with: amount)
+        guard let decimal = Decimal(string: max) else {
+            return "0.0"
+        }
         if currentPair.left != symbol {
-            guard let decimal = Decimal(string: amount),
-                let price = currentPairPrice() else {
+            guard let price = currentPairPrice() else {
                 return "0.0"
             }
-            amount = (decimal * price).description
+            self.amount = formattedMaxAmount(max)
+            max = (decimal * price).description
+            updatePairPrice(with: decimal * price)
+        } else {
+            self.amount = formattedMaxAmount(max)
+            updatePairPrice(with: decimal)
         }
-        return amount
+        return max
     }
     mutating func formattedMaxAmount(_ max: String) -> String {
         var formattedString = ""
@@ -107,7 +113,7 @@ struct SendViewModel {
             return formattedString
         }
         if currentPair.left != symbol {
-            formattedString = stringFormatter.currency(with: decimal, and: config.currency.rawValue)
+            formattedString = decimal.description
         } else {
             formattedString = stringFormatter.token(with: decimal, and: decimals)
         }
