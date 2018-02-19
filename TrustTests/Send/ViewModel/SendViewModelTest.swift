@@ -5,7 +5,7 @@ import BigInt
 @testable import Trust
 
 class SendViewModelTest: XCTestCase {
-    var sendViewModel = SendViewModel(transferType: .ether(destination: .none), config: .make(), storage: FakeTokensDataStore(), balance: Balance(value: BigInt(0.998544373 * pow(10, 18))))
+    var sendViewModel = SendViewModel(transferType: .ether(destination: .none), config: .make(), storage: FakeTokensDataStore(), balance: Balance(value: EtherNumberFormatter.full.number(from: "11274.90261871", units: .ether)!))
     var decimalFormatter = DecimalFormatter()
     override func setUp() {
         sendViewModel.amount = "198212312.123123"
@@ -53,12 +53,16 @@ class SendViewModelTest: XCTestCase {
         XCTAssertEqual(18, sendViewModel.decimals)
     }
     func testMaxEther() {
-        XCTAssertEqual("0.998544373", sendViewModel.sendMaxAmount())
+        let max = sendViewModel.sendMaxAmount()
+        print(Locale.current.decimalSeparator)
+        XCTAssertEqual("11274.90261871", max)
+        XCTAssertEqual("11,274.90261871", sendViewModel.formattedMaxAmount(max))
     }
     func testMaxEtherUSD() {
         if sendViewModel.currentPair.left == sendViewModel.symbol {
             sendViewModel.currentPair = sendViewModel.currentPair.swapPair()
         }
-        XCTAssertEqual("\(0.998544373 * 947.102)", sendViewModel.sendMaxAmount())
+        let amount =
+        XCTAssertEqual("10,678,482.81998547842", sendViewModel.sendMaxAmount())
     }
 }
