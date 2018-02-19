@@ -1,10 +1,11 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import XCTest
+import BigInt
 @testable import Trust
 
 class SendViewModelTest: XCTestCase {
-    var sendViewModel = SendViewModel(transferType: .ether(destination: .none), config: .make(), storage: FakeTokensDataStore())
+    var sendViewModel = SendViewModel(transferType: .ether(destination: .none), config: .make(), storage: FakeTokensDataStore(), balance: Balance(value: EtherNumberFormatter.full.number(from: "11274.90261871", units: .ether)!))
     var decimalFormatter = DecimalFormatter()
     override func setUp() {
         sendViewModel.amount = "198212312.123123"
@@ -23,10 +24,10 @@ class SendViewModelTest: XCTestCase {
     }
     func testUpdatePairRate() {
         XCTAssertEqual(0.0, sendViewModel.pairRate)
-        sendViewModel.updatePaitRate(with: 1.8, and: 300.2)
+        sendViewModel.updatePairRate(with: 1.8, and: 300.2)
         XCTAssertEqual(540.36, sendViewModel.pairRate)
         sendViewModel.currentPair = sendViewModel.currentPair.swapPair()
-        sendViewModel.updatePaitRate(with: 24.3, and: 967)
+        sendViewModel.updatePairRate(with: 24.3, and: 967)
         XCTAssertEqual(sendViewModel.pairRate.doubleValue, 39.794238683127, accuracy: 0.000000000001)
     }
     func testAmountUpdate() {
@@ -50,5 +51,18 @@ class SendViewModelTest: XCTestCase {
     }
     func testDecimals() {
         XCTAssertEqual(18, sendViewModel.decimals)
+    }
+    func testMaxEther() {
+        let max = sendViewModel.sendMaxAmount()
+        print(Locale.current.decimalSeparator)
+        XCTAssertEqual("11274.90261871", max)
+        XCTAssertEqual("11,274.90261871", sendViewModel.formattedMaxAmount(max))
+    }
+    func testMaxEtherUSD() {
+        if sendViewModel.currentPair.left == sendViewModel.symbol {
+            sendViewModel.currentPair = sendViewModel.currentPair.swapPair()
+        }
+        let amount =
+        XCTAssertEqual("10,678,482.81998547842", sendViewModel.sendMaxAmount())
     }
 }

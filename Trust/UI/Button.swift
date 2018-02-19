@@ -40,6 +40,10 @@ enum ButtonStyle: Int {
         }
     }
 
+    var backgroundColorDisabled: UIColor {
+        return Colors.darkGray
+    }
+
     var cornerRadius: CGFloat {
         switch self {
         case .solid, .border: return 5
@@ -114,6 +118,8 @@ class Button: UIButton {
         setTitleColor(style.textColorHighlighted, for: .highlighted)
         setBackgroundColor(style.backgroundColorHighlighted, forState: .highlighted)
         setBackgroundColor(style.backgroundColorHighlighted, forState: .selected)
+        setBackgroundColor(style.backgroundColorDisabled, forState: .disabled)
+
         contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
     }
 
