@@ -21,21 +21,24 @@ open class EtherKeystore: Keystore {
     private let datadir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     let keyStore: KeyStore
     private let defaultKeychainAccess: KeychainSwiftAccessOptions = .accessibleWhenUnlockedThisDeviceOnly
-    let keystoreDirectory: URL
+    let keysDirectory: URL
+    let walletsDirectory: URL
     let userDefaults: UserDefaults
 
     public init(
         keychain: KeychainSwift = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix),
-        keyStoreSubfolder: String = "/keystore",
+        keysSubfolder: String = "/keystore",
+        walletsSubfolder: String = "/wallets",
         userDefaults: UserDefaults = UserDefaults.standard
     ) throws {
         if !UIApplication.shared.isProtectedDataAvailable {
             throw EtherKeystoreError.protectionDisabled
         }
-        self.keystoreDirectory = URL(fileURLWithPath: datadir + keyStoreSubfolder)
+        self.keysDirectory = URL(fileURLWithPath: datadir + keysSubfolder)
+        self.walletsDirectory = URL(fileURLWithPath: datadir + walletsSubfolder)
         self.keychain = keychain
         self.keychain.synchronizable = false
-        self.keyStore = try KeyStore(keydir: keystoreDirectory)
+        self.keyStore = try KeyStore(keyDirectory: keysDirectory, walletDirectory: walletsDirectory)
         self.userDefaults = userDefaults
     }
 
@@ -181,7 +184,7 @@ open class EtherKeystore: Keystore {
     }
 
     func createAccout(password: String) -> Account {
-        let account = try! keyStore.createAccount(password: password)
+        let account = try! keyStore.createAccount(password: password, type: .encryptedKey)
         let _ = setPassword(password, for: account)
         return account
     }
@@ -376,7 +379,7 @@ open class EtherKeystore: Keystore {
             return .failure(KeystoreError.failedToImportPrivateKey)
         }
         do {
-            let key = try Key(password: passphrase, key: data)
+            let key = try KeystoreKey(password: passphrase, key: data)
             let data = try JSONEncoder().encode(key)
             let dict = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
             return .success(dict)

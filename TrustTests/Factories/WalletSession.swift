@@ -6,7 +6,7 @@ import TrustKeystore
 
 extension WalletSession {
     static func make(
-        account: Wallet = .make(),
+        account: Trust.Wallet = .make(),
         config: Config = .make(),
         web3: Web3Swift = Web3Swift()
     ) -> WalletSession {

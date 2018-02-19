@@ -9,10 +9,7 @@ extension Account {
         address: Address = .make(),
         url: URL = URL(fileURLWithPath: "")
     ) -> Account {
-        return Account(
-            address: address,
-            url: url
-        )
+        return Account(address: address, type: .encryptedKey, url: url)
     }
 }
 

@@ -28,8 +28,8 @@ class InCoordinatorTests: XCTestCase {
     }
 
     func testChangeRecentlyUsedAccount() {
-        let account1: Wallet = .make(type: .watch(Address(string: "0x1000000000000000000000000000000000000000")!))
-        let account2: Wallet = .make(type: .watch(Address(string: "0x2000000000000000000000000000000000000000")!))
+        let account1: Trust.Wallet = .make(type: .watch(Address(string: "0x1000000000000000000000000000000000000000")!))
+        let account2: Trust.Wallet = .make(type: .watch(Address(string: "0x2000000000000000000000000000000000000000")!))
 
         let keystore = FakeKeystore(
             wallets: [

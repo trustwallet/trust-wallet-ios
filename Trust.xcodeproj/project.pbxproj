@@ -343,7 +343,6 @@
 		77B3BF3C201908ED00EEC15A /* ConfirmCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */; };
 		77B3BF4A2019247200EEC15A /* BrowserNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */; };
 		77E0E773201FAD06009B4B31 /* BrowserURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E0E772201FAD05009B4B31 /* BrowserURLParser.swift */; };
-		77E0E777201FAD36009B4B31 /* BrowserURLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E0E776201FAD36009B4B31 /* BrowserURLParserTests.swift */; };
 		77E81D94203687FB00534C99 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E81D93203687FB00534C99 /* NotificationsViewController.swift */; };
 		77E81D962036883B00534C99 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E81D952036883B00534C99 /* NotificationsViewModel.swift */; };
 		BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */; };
@@ -727,7 +726,6 @@
 		77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCoordinator.swift; sourceTree = "<group>"; };
 		77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserNavigationBar.swift; sourceTree = "<group>"; };
 		77E0E772201FAD05009B4B31 /* BrowserURLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserURLParser.swift; sourceTree = "<group>"; };
-		77E0E776201FAD36009B4B31 /* BrowserURLParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowserURLParserTests.swift; path = TrustTests/Browser/Types/BrowserURLParserTests.swift; sourceTree = SOURCE_ROOT; };
 		77E81D93203687FB00534C99 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		77E81D952036883B00534C99 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2990,7 +2988,6 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
-				VALID_ARCHS = arm64;
 			};
 			name = Debug;
 		};
@@ -3044,7 +3041,6 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = arm64;
 			};
 			name = Release;
 		};
@@ -3068,7 +3064,6 @@
 				PROVISIONING_PROFILE = "7edbff9c-3e3f-4ba3-b84f-19ac095b8e95";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.sixdays.trust";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "arm64 armv7  armv7s";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -3091,7 +3086,6 @@
 				PROVISIONING_PROFILE = "7edbff9c-3e3f-4ba3-b84f-19ac095b8e95";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.sixdays.trust";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "arm64 armv7  armv7s";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
