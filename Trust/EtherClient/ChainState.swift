@@ -40,6 +40,7 @@ class ChainState {
     func start() {
         fetch()
     }
+
     func stop() {
         updateLatestBlock?.invalidate()
         updateLatestBlock = nil
@@ -68,6 +69,7 @@ class ChainState {
             }
         }
     }
+
     func confirmations(fromBlock: Int) -> Int? {
         guard fromBlock > 0 else { return nil }
         let block = latestBlock - fromBlock

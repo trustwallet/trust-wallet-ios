@@ -81,6 +81,7 @@ class TransactionDataCoordinator {
         fetchTransactions()
         fetchPendingTransactions()
     }
+
     @objc func fetchTransactions() {
         let startBlock: Int = {
             guard let transaction = storage.completedObjects.first else { return 1 }
