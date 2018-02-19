@@ -38,14 +38,18 @@ struct SendViewModel {
     let config: Config
     /// storage of a `SendViewModel` to know pair rate.
     let storage: TokensDataStore
+    /// current wallet balance
+    let balance: Balance?
     init(
         transferType: TransferType,
         config: Config,
-        storage: TokensDataStore
+        storage: TokensDataStore,
+        balance: Balance?
     ) {
         self.transferType = transferType
         self.config = config
         self.storage = storage
+        self.balance = balance
     }
     var title: String {
         return "Send \(symbol)"
@@ -78,12 +82,49 @@ struct SendViewModel {
     mutating func sendAmount() -> String {
         return amount
     }
+    /// maximum amount to send.
+    ///
+    /// - Returns: `String` that represent amount to send.
+    mutating func sendMaxAmount() -> String {
+        var max = "0.0"
+        switch transferType {
+        case .ether: max = balance?.amountFull ?? "0.0"
+        case .token(let token): max = EtherNumberFormatter.full.string(from: token.valueBigInt, decimals: token.decimals)
+        }
+        guard let decimal = Decimal(string: max) else {
+            return "0.0"
+        }
+        if currentPair.left != symbol {
+            guard let price = currentPairPrice() else {
+                return "0.0"
+            }
+            self.amount = formattedMaxAmount(max)
+            max = (decimal * price).description
+            updatePairPrice(with: decimal * price)
+        } else {
+            self.amount = formattedMaxAmount(max)
+            updatePairPrice(with: decimal)
+        }
+        return max
+    }
+    mutating func formattedMaxAmount(_ max: String) -> String {
+        var formattedString = ""
+        guard let decimal = Decimal(string: max) else {
+            return formattedString
+        }
+        if currentPair.left != symbol {
+            formattedString = decimal.description
+        } else {
+            formattedString = stringFormatter.token(with: decimal, and: decimals)
+        }
+        return formattedString
+    }
     /// Update of the current pair rate.
     ///
     /// - Parameters:
     ///   - price: Decimal cuurent price of the token.
     ///   - amount: Decimal current amount to send.
-    mutating func updatePaitRate(with price: Decimal, and amount: Decimal) {
+    mutating func updatePairRate(with price: Decimal, and amount: Decimal) {
         if currentPair.left == symbol {
             pairRate = amount * price
         } else {
@@ -107,10 +148,17 @@ struct SendViewModel {
     /// - Parameters:
     ///   - amount: Decimal amount to calculate price.
     mutating func updatePairPrice(with amount: Decimal) {
-        guard let rates = storage.tickers, let currentTokenInfo = rates[destinationAddress.description], let price = Decimal(string: currentTokenInfo.price) else {
+        guard let price = self.currentPairPrice() else {
             return
         }
-        updatePaitRate(with: price, and: amount)
+        updatePairRate(with: price, and: amount)
+    }
+    /// Get pair price with ticker
+    func currentPairPrice() -> Decimal? {
+        guard let rates = storage.tickers, let currentTokenInfo = rates[destinationAddress.description], let price = Decimal(string: currentTokenInfo.price) else {
+            return nil
+        }
+        return price
     }
     /// If ther is ticker for this pair show fiat view.
     func isFiatViewHidden() -> Bool {

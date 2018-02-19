@@ -18,7 +18,7 @@ protocol SendViewControllerDelegate: class {
 }
 class SendViewController: FormViewController {
     private lazy var viewModel: SendViewModel = {
-        return .init(transferType: self.transferType, config: Config(), storage: self.storage)
+        return .init(transferType: self.transferType, config: Config(), storage: self.storage, balance: self.session.balance)
     }()
     weak var delegate: SendViewControllerDelegate?
     struct Values {
@@ -69,6 +69,7 @@ class SendViewController: FormViewController {
         fiatButton.addTarget(self, action: #selector(fiatAction), for: .touchUpInside)
         fiatButton.isHidden = viewModel.isFiatViewHidden()
         let amountRightView = UIStackView(arrangedSubviews: [
+            maxButton,
             fiatButton,
         ])
         amountRightView.translatesAutoresizingMaskIntoConstraints = false
@@ -96,7 +97,7 @@ class SendViewController: FormViewController {
                 cell.textField.delegate = self
                 cell.textField.placeholder = "\(self?.viewModel.currentPair.left ?? "") " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
                 cell.textField.keyboardType = .decimalPad
-                cell.textField.rightView = amountRightView 
+                cell.textField.rightView = amountRightView
                 cell.textField.rightViewMode = .always
             }
     }
@@ -169,8 +170,9 @@ class SendViewController: FormViewController {
         activateAmountView()
     }
     @objc func useMaxAmount() {
-        guard let value = session.balance?.amountFull else { return }
-        amountRow?.value = value
+        let amount = viewModel.sendMaxAmount()
+        updatePriceSection()
+        amountRow?.value = viewModel.formattedMaxAmount(amount)
         amountRow?.reload()
     }
     @objc func fiatAction(sender: UIButton) {
