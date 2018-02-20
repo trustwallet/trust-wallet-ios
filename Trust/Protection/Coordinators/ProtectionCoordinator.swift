@@ -22,7 +22,6 @@ class ProtectionCoordinator: Coordinator {
 
     func applicationDidBecomeActive() {
         splashCoordinator.stop()
-        lockEnterPasscodeCoordinator.showAuthentication()
     }
 
     func applicationWillResignActive() {
@@ -36,6 +35,6 @@ class ProtectionCoordinator: Coordinator {
 
     func applicationWillEnterForeground() {
         splashCoordinator.stop()
-        lockEnterPasscodeCoordinator.showAuthentication()
+        lockEnterPasscodeCoordinator.start()
     }
 }

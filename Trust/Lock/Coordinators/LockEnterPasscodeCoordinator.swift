@@ -27,6 +27,7 @@ class LockEnterPasscodeCoordinator: Coordinator {
         }
         window.rootViewController = lockEnterPasscodeViewController
         window.makeKeyAndVisible()
+        showAuthentication()
     }
 
     func showAuthentication() {
