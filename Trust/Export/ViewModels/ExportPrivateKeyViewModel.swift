@@ -5,18 +5,15 @@ import TrustKeystore
 
 struct ExportPrivateKeyViewModel {
 
-    let config: Config
     let keystore: Keystore
-    let accout: Account
+    let account: Account
 
     init(
-        config: Config = Config(),
         keystore: Keystore,
-        accout: Account
+        account: Account
     ) {
-        self.config = config
         self.keystore = keystore
-        self.accout = accout
+        self.account = account
     }
 
     var headlineText: String {
@@ -25,7 +22,7 @@ struct ExportPrivateKeyViewModel {
 
     var privateKey: String {
         do {
-            let key = try keystore.exportPrivateKey(account: accout).dematerialize()
+            let key = try keystore.exportPrivateKey(account: account).dematerialize()
             return key.hexString
         } catch {
             return NSLocalizedString("export.noKPrivateKey.label.title", value: "No Private Key for wallet", comment: "")
@@ -33,11 +30,11 @@ struct ExportPrivateKeyViewModel {
     }
 
     var revealButtonTitle: String {
-        return NSLocalizedString("export.reveal.btn.title", value: "Hold to Reveal", comment: "")
+        return NSLocalizedString("export.reveal.button.title", value: "Hold to Reveal", comment: "")
     }
 
     var warningText: String {
-        return NSLocalizedString("export.warningTwo.private.key", value: "If anyone gets ahold of your private key, they can take your entire wallet!", comment: "")
+        return NSLocalizedString("export.warningTwo.private.key", value: "Anyone with your Private Key can have FULL access to your wallet", comment: "")
     }
 
     var backgroundColor: UIColor {

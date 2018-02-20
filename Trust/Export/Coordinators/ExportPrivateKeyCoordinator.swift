@@ -20,7 +20,7 @@ class ExportPrivateKeyCoordinator: Coordinator {
     }()
     private lazy var viewModel: ExportPrivateKeyViewModel = {
         return .init(keystore: keystore,
-                     accout: account)
+                     account: account)
     }()
 
     init(
@@ -40,10 +40,8 @@ class ExportPrivateKeyCoordinator: Coordinator {
 
     func makeExportViewController() -> ExportPrivateKeyViewConroller {
         let controller = ExportPrivateKeyViewConroller(viewModel: viewModel)
-
         controller.navigationItem.title = NSLocalizedString("export.privateKey.navigation.title", value: "Export Private Key", comment: "")
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss))
-
         return controller
     }
 

@@ -39,7 +39,6 @@ class ExportPrivateKeyViewConroller: UIViewController {
         label.textColor = Colors.red
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
         return label
     }()
 
@@ -58,26 +57,25 @@ class ExportPrivateKeyViewConroller: UIViewController {
         let stackView = UIStackView(
             arrangedSubviews: [
             hintLabel,
-            .spacer(),
             imageView,
             warningKeyLabel,
-            .spacer(height: 15),
             revalQRCodeButton,
-            ]
-        )
+
+        ])
         stackView.axis = .vertical
         stackView.spacing = 20
         stackView.alignment = .center
+        stackView.distribution = .equalSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         view.backgroundColor = viewModel.backgroundColor
         view.addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(greaterThanOrEqualTo: view.layoutGuide.topAnchor, constant: StyleLayout.sideMargin),
+            stackView.topAnchor.constraint(equalTo: view.layoutGuide.topAnchor, constant: StyleLayout.sideMargin),
             stackView.leadingAnchor.constraint(equalTo: view.layoutGuide.leadingAnchor, constant: StyleLayout.sideMargin),
             stackView.trailingAnchor.constraint(equalTo: view.layoutGuide.trailingAnchor, constant: -StyleLayout.sideMargin),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.layoutGuide.bottomAnchor, constant: -180),
+            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.layoutGuide.bottomAnchor, constant: -StyleLayout.sideMargin),
 
             revalQRCodeButton.trailingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.trailingAnchor),
             revalQRCodeButton.leadingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.leadingAnchor),
