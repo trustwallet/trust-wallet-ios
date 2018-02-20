@@ -95,7 +95,7 @@ class SettingsViewController: FormViewController {
                 cell.imageView?.image = R.image.settings_lock()
             }
 
-            <<< AppFormAppearance.button { row in
+            <<< AppFormAppearance.button { [weak self] row in
                 row.cellStyle = .value1
                 row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
                     let controller = NotificationsViewController()
