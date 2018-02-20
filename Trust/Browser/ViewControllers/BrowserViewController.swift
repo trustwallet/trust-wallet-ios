@@ -167,7 +167,7 @@ class BrowserViewController: UIViewController {
         let reloadAction = UIAlertAction(title: NSLocalizedString("browser.reload.button.title", value: "Reload", comment: ""), style: .default) { [unowned self] _ in
             self.reload()
         }
-        let shareAction = UIAlertAction(title: NSLocalizedString("browser.refresh.button.title", value: "Refresh", comment: ""), style: .default) { [unowned self] _ in
+        let shareAction = UIAlertAction(title: NSLocalizedString("browser.share.button.title", value: "Share", comment: ""), style: .default) { [unowned self] _ in
             self.share()
         }
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
