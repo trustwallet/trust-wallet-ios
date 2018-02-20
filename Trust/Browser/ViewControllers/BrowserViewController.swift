@@ -107,7 +107,9 @@ class BrowserViewController: UIViewController {
     }
 
     private func goHome() {
-        webView.load(URLRequest(url: URL(string: Constants.dappsBrowserURL)!))
+        guard let url = URL(string: Constants.dappsBrowserURL) else { return }
+        webView.load(URLRequest(url: url))
+        browserNavBar?.textField.text = url.absoluteString
     }
 
     private func reload() {
