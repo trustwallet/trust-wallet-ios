@@ -77,7 +77,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
             stackView.topAnchor.constraint(greaterThanOrEqualTo: view.layoutGuide.topAnchor, constant: StyleLayout.sideMargin),
             stackView.leadingAnchor.constraint(equalTo: view.layoutGuide.leadingAnchor, constant: StyleLayout.sideMargin),
             stackView.trailingAnchor.constraint(equalTo: view.layoutGuide.trailingAnchor, constant: -StyleLayout.sideMargin),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.layoutGuide.bottomAnchor, constant: -StyleLayout.bottomMargin),
+            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.layoutGuide.bottomAnchor, constant: -180),
 
             revalQRCodeButton.trailingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.trailingAnchor),
             revalQRCodeButton.leadingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.leadingAnchor),
