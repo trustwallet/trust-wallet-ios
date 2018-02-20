@@ -3,7 +3,6 @@
 import UIKit
 import Eureka
 import StoreKit
-import MessageUI
 
 protocol SettingsViewControllerDelegate: class {
     func didAction(action: SettingsAction, in viewController: SettingsViewController)
@@ -160,21 +159,7 @@ class SettingsViewController: FormViewController {
                 cell.accessoryType = .disclosureIndicator
             }
 
-            +++ Section(NSLocalizedString("settings.openSourceDevelopment.label.title", value: "Open Source Development", comment: ""))
-
-            <<< link(
-                title: NSLocalizedString("settings.sourceCode.button.title", value: "Source Code", comment: ""),
-                value: "https://github.com/TrustWallet/trust-wallet-ios",
-                image: R.image.settings_open_source()
-            )
-
-            <<< link(
-                title: NSLocalizedString("settings.reportBug.button.title", value: "Report a Bug", comment: ""),
-                value: "https://github.com/TrustWallet/trust-wallet-ios/issues/new",
-                image: R.image.settings_bug()
-            )
-
-            +++ Section(NSLocalizedString("settings.community.label.title", value: "Community", comment: ""))
+            +++ Section(NSLocalizedString("settings.joinCommunity.label.title", value: "Join Community", comment: ""))
 
             <<< linkProvider(type: .twitter)
             <<< linkProvider(type: .telegram)
@@ -191,39 +176,25 @@ class SettingsViewController: FormViewController {
 
             <<< AppFormAppearance.button { button in
                 button.title = NSLocalizedString("settings.rateUsAppStore.button.title", value: "Rate Us on App Store", comment: "")
-            }.onCellSelection {[weak self] _, _  in
+            }.onCellSelection { [weak self] _, _  in
                 self?.helpUsCoordinator.rateUs()
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_rating()
             }
 
-            <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("settings.emailUsReadFAQ.button.title", value: "Email Us (Read FAQ first)", comment: "")
-            }.onCellSelection {[weak self] _, _  in
-                self?.sendUsEmail()
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_email()
+            +++ Section()
+
+            <<< AppFormAppearance.button { row in
+                row.cellStyle = .value1
+                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+                    return SupportViewController()
+            }, onDismiss: { _ in })
+            }.cellUpdate { cell, _ in
+                cell.textLabel?.textColor = .black
+                cell.imageView?.image = R.image.settings_terms()
+                cell.textLabel?.text = NSLocalizedString("settings.support.title", value: "Support", comment: "")
+                cell.accessoryType = .disclosureIndicator
             }
-
-            +++ Section(NSLocalizedString("settings.learnMore.label.title", value: "Learn More", comment: ""))
-
-            <<< link(
-                title: NSLocalizedString("settings.faq.button.title", value: "FAQ", comment: ""),
-                value: "https://trustwalletapp.com/faq.html",
-                image: R.image.settings_faq()
-            )
-
-            <<< link(
-                title: NSLocalizedString("settings.privacyPolicy.button.title", value: "Privacy Policy", comment: ""),
-                value: "https://trustwalletapp.com/privacy-policy.html",
-                image: R.image.settings_privacy_policy()
-            )
-
-            <<< link(
-                title: NSLocalizedString("settings.termsOfService.button.title", value: "Terms of Service", comment: ""),
-                value: "https://trustwalletapp.com/terms.html",
-                image: R.image.settings_terms()
-            )
 
             +++ Section()
 
@@ -259,57 +230,11 @@ class SettingsViewController: FormViewController {
         }
     }
 
-    private func link(
-        title: String,
-        value: String,
-        image: UIImage?
-    ) -> ButtonRow {
-        return AppFormAppearance.button {
-            $0.title = title
-            $0.value = value
-        }.onCellSelection { [unowned self] (_, row) in
-            guard let value = row.value, let url = URL(string: value) else { return }
-            self.openURL(url)
-        }.cellSetup { cell, _ in
-            cell.imageView?.image = image
-        }
-    }
-
     func run(action: SettingsAction) {
         delegate?.didAction(action: action, in: self)
     }
 
-    func sendUsEmail() {
-        let composerController = MFMailComposeViewController()
-        composerController.mailComposeDelegate = self
-        composerController.setToRecipients([Constants.supportEmail])
-        composerController.setSubject(NSLocalizedString("settings.feedback.email.title", value: "Trust Feedback", comment: ""))
-        composerController.setMessageBody(emailTemplate(), isHTML: false)
-
-        if MFMailComposeViewController.canSendMail() {
-            present(composerController, animated: true, completion: nil)
-        }
-    }
-
-    private func emailTemplate() -> String {
-        return """
-        \n\n\n
-
-        Helpful information to developers:
-        iOS Version: \(UIDevice.current.systemVersion)
-        Device Model: \(UIDevice.current.model)
-        Trust Version: \(Bundle.main.fullVersion)
-        Current locale: \(Locale.preferredLanguages.first ?? "")
-        """
-    }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension SettingsViewController: MFMailComposeViewControllerDelegate {
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true, completion: nil)
     }
 }
