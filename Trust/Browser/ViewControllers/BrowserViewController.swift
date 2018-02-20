@@ -74,7 +74,7 @@ class BrowserViewController: UIViewController {
         ])
         view.backgroundColor = .white
         webView.addObserver(self, forKeyPath: Keys.estimatedProgress, options: .new, context: &myContext)
-        webView.addObserver(self, forKeyPath: Keys.URL, options: .new, context: &myContext)
+        webView.addObserver(self, forKeyPath: Keys.URL, options: [.new, .initial], context: &myContext)
         goHome()
     }
 
@@ -86,7 +86,6 @@ class BrowserViewController: UIViewController {
         super.viewWillAppear(animated)
 
         browserNavBar?.browserDelegate = self
-        refreshURL()
         reloadButtons()
     }
 
@@ -199,7 +198,6 @@ extension BrowserViewController: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        refreshURL()
         reloadButtons()
     }
 
