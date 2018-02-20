@@ -45,22 +45,37 @@ class TransactionDataCoordinator {
     ) {
         self.session = session
         self.storage = storage
+        NotificationCenter.default.addObserver(self, selector: #selector(TransactionDataCoordinator.stopTimers), name: .UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TransactionDataCoordinator.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
     }
 
     func start() {
+        runScheduledTimers()
+        // Start fetching all transactions process.
+        if transactionsTracker.fetchingState != .done {
+            initialFetch(for: session.account.address, page: 0) { _ in }
+        }
+    }
+    @objc func stopTimers() {
+        timer?.invalidate()
+        timer = nil
+        updateTransactionsTimer?.invalidate()
+        updateTransactionsTimer = nil
+    }
+    @objc func restartTimers() {
+        runScheduledTimers()
+    }
+    private func runScheduledTimers() {
+        guard timer == nil, updateTransactionsTimer == nil else {
+            return
+        }
         timer = Timer.scheduledTimer(timeInterval: 5, target: BlockOperation { [weak self] in
             self?.fetchPending()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
         updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 15, target: BlockOperation { [weak self] in
             self?.fetchTransactions()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
-
-        // Start fetching all transactions process.
-        if transactionsTracker.fetchingState != .done {
-            initialFetch(for: session.account.address, page: 0) { _ in }
-        }
     }
-
     func fetch() {
         session.refresh(.balance)
         fetchTransactions()
@@ -214,11 +229,10 @@ class TransactionDataCoordinator {
             }
         }
     }
-
     func stop() {
+        NotificationCenter.default.removeObserver(self)
         timer?.invalidate()
         timer = nil
-
         updateTransactionsTimer?.invalidate()
         updateTransactionsTimer = nil
     }
