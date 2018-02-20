@@ -52,15 +52,4 @@ class SendViewModelTest: XCTestCase {
     func testDecimals() {
         XCTAssertEqual(18, sendViewModel.decimals)
     }
-    func testMaxEther() {
-        let max = sendViewModel.sendMaxAmount()
-        let amount = sendViewModel.amount
-        XCTAssertEqual("11274.90261871", amount)
-    }
-    func testMaxEtherUSD() {
-        if sendViewModel.currentPair.left == sendViewModel.symbol {
-            sendViewModel.currentPair = sendViewModel.currentPair.swapPair()
-        }
-        //todo
-    }
 }

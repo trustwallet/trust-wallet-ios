@@ -35,6 +35,7 @@ class SendViewController: FormViewController {
     var amountRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
     }
+    var maxButton: UIButton?
     private var allowedCharacters: String = {
         let decimalSeparator = Locale.current.decimalSeparator ?? "."
         return "0123456789" + decimalSeparator
@@ -60,6 +61,7 @@ class SendViewController: FormViewController {
             qrAction: { [unowned self] in self.openReader() }
         )
         let maxButton = Button(size: .normal, style: .borderless)
+        self.maxButton = maxButton
         maxButton.translatesAutoresizingMaskIntoConstraints = false
         maxButton.setTitle(NSLocalizedString("send.max.button.title", value: "Max", comment: ""), for: .normal)
         maxButton.addTarget(self, action: #selector(useMaxAmount), for: .touchUpInside)
@@ -170,9 +172,8 @@ class SendViewController: FormViewController {
         activateAmountView()
     }
     @objc func useMaxAmount() {
-        let amount = viewModel.sendMaxAmount()
+        amountRow?.value = viewModel.sendMaxAmount()
         updatePriceSection()
-        amountRow?.value = viewModel.formattedMaxAmount(amount)
         amountRow?.reload()
     }
     @objc func fiatAction(sender: UIButton) {
@@ -181,6 +182,8 @@ class SendViewController: FormViewController {
         viewModel.currentPair = swappedPair
         //Update button title.
         sender.setTitle(viewModel.currentPair.right, for: .normal)
+        //Hide max button
+        maxButton?.isHidden = viewModel.currentPair.left != viewModel.symbol
         //Reset amountRow value.
         amountRow?.value = nil
         amountRow?.reload()
