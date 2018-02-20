@@ -18,6 +18,7 @@ class BrowserViewController: UIViewController {
     private struct Keys {
         static let estimatedProgress = "estimatedProgress"
         static let developerExtrasEnabled = "developerExtrasEnabled"
+        static let URL = "URL"
     }
 
     lazy var webView: WKWebView = {
@@ -73,6 +74,7 @@ class BrowserViewController: UIViewController {
         ])
         view.backgroundColor = .white
         webView.addObserver(self, forKeyPath: Keys.estimatedProgress, options: .new, context: &myContext)
+        webView.addObserver(self, forKeyPath: Keys.URL, options: .new, context: &myContext)
         goHome()
     }
 
@@ -133,11 +135,16 @@ class BrowserViewController: UIViewController {
                 progressView.progress = progress
                 progressView.isHidden = progress == 1
             }
+        } else if keyPath == Keys.URL {
+            if let url = webView.url {
+                self.browserNavBar?.textField.text = url.absoluteString
+            }
         }
     }
 
     deinit {
         webView.removeObserver(self, forKeyPath: Keys.estimatedProgress)
+        webView.removeObserver(self, forKeyPath: Keys.URL)
     }
 
     private func presentMoreOptions(sender: UIView) {
