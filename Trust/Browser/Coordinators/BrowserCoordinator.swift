@@ -87,7 +87,8 @@ class BrowserCoordinator: Coordinator {
             keystore: keystore,
             account: account
         )
-        coordinator.didComplete = { [unowned self] result in
+        coordinator.didComplete = { [weak self] result in
+            guard let `self` = self else { return }
             switch result {
             case .success(let data):
                 let callback: DappCallback
