@@ -165,12 +165,29 @@ class BrowserViewController: UIViewController {
         let reloadAction = UIAlertAction(title: NSLocalizedString("browser.reload.button.title", value: "Reload", comment: ""), style: .default) { [unowned self] _ in
             self.reload()
         }
+        let shareAction = UIAlertAction(title: NSLocalizedString("browser.refresh.button.title", value: "Refresh", comment: ""), style: .default) { [unowned self] _ in
+            self.share()
+        }
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
 
         alertController.addAction(homeAction)
         alertController.addAction(reloadAction)
+        alertController.addAction(shareAction)
         alertController.addAction(cancelAction)
         return alertController
+    }
+
+    private func makeShareController(url: URL) -> UIActivityViewController {
+        return UIActivityViewController(activityItems: [url], applicationActivities: nil)
+    }
+
+    private func share() {
+        guard let url = webView.url else { return }
+        guard let navigationController = navigationController else { return }
+        let controller = makeShareController(url: url)
+        controller.popoverPresentationController?.sourceView = navigationController.view
+        controller.popoverPresentationController?.sourceRect = navigationController.view.centerRect
+        navigationController.present(controller, animated: true, completion: nil)
     }
 }
 
