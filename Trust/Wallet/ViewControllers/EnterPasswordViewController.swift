@@ -43,7 +43,8 @@ class EnterPasswordViewController: FormViewController {
 
         let ruleMin = RuleMinLength(minLength: 6)
 
-        form = Section()
+        form
+            +++ Section()
 
             +++ Section(header: "", footer: viewModel.headerSectionText)
 
@@ -56,9 +57,10 @@ class EnterPasswordViewController: FormViewController {
                 cell.textField.placeholder = self.viewModel.passwordFieldPlaceholder
             }
 
-            <<< AppFormAppearance.textFieldFloat(tag: Values.confirmPassword) {
+            <<< AppFormAppearance.textFieldFloat(tag: Values.confirmPassword) { [unowned self] in
                 $0.add(rule: RuleRequired())
                 $0.add(rule: ruleMin)
+                $0.add(rule: RuleEqualsToRow(form: self.form, tag: Values.password, msg: self.viewModel.passwordNoMatch))
                 $0.validationOptions = .validatesOnDemand
             }.cellUpdate { [unowned self] cell, _ in
                 cell.textField.isSecureTextEntry = true

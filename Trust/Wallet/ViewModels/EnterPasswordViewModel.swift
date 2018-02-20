@@ -19,4 +19,8 @@ struct EnterPasswordViewModel {
     var confirmPasswordFieldPlaceholder: String {
         return NSLocalizedString("enterPassword.confirmPassword.textField.placeholder", value: "Confirm Password", comment: "")
     }
+
+    var passwordNoMatch: String {
+        return NSLocalizedString("enterPassword.passwordNoMatch.error", value: "Passwords don't match!", comment: "")
+    }
 }
