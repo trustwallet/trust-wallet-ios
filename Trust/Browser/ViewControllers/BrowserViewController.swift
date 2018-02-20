@@ -189,6 +189,14 @@ class BrowserViewController: UIViewController {
         controller.popoverPresentationController?.sourceRect = navigationController.view.centerRect
         navigationController.present(controller, animated: true, completion: nil)
     }
+
+    func handleError(error: Error) {
+        if error.code == NSURLErrorCancelled {
+            return
+        } else {
+            displayError(error: error)
+        }
+    }
 }
 
 extension BrowserViewController: BrowserNavigationBarDelegate {
@@ -219,11 +227,11 @@ extension BrowserViewController: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        displayError(error: error)
+        handleError(error: error)
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        displayError(error: error)
+        handleError(error: error)
     }
 }
 
