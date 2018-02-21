@@ -10,13 +10,13 @@ func applyStyle() {
     } else {
         UINavigationBar.appearance().isTranslucent = false
     }
-    UINavigationBar.appearance().tintColor = UIColor.white
+    UINavigationBar.appearance().tintColor = AppStyle.navigationBarTintColor
     UINavigationBar.appearance().setBackgroundImage(.filled(with: Colors.darkBlue), for: .default)
 
     UINavigationBar.appearance().titleTextAttributes = [
         .foregroundColor: UIColor.white,
     ]
-    
+
     UITextField.appearance().tintColor = Colors.blue
 
     UIImageView.appearance().tintColor = Colors.lightBlue
@@ -40,6 +40,11 @@ struct Colors {
     static let black = UIColor(hex: "313849")
     static let lightBlack = UIColor(hex: "313849")
     static let lightBlue = UIColor(hex: "007aff")
+}
+
+struct AppStyle {
+    static let navigationBarTintColor = UIColor.white
+    static let docPickerNavigationBarTintColor = Colors.blue
 }
 
 struct StyleLayout {
