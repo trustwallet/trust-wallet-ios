@@ -145,22 +145,9 @@ class ConfirmPaymentViewController: UIViewController {
     }
 
     private func updateSubmitButton() {
-        guard let balance = session.balance else {
-            return
-        }
-
-        let transaction = configurator.previewTransaction()
-        var value = transaction.gasPrice * transaction.gasLimit
-        if case TransferType.ether(_) = transaction.transferType {
-            value += transaction.value
-        }
-        if value > balance.value {
-            submitButton.isEnabled = false
-            submitButton.setTitle(viewModel.insufficientFundText, for: .normal)
-        } else {
-            submitButton.isEnabled = true
-            submitButton.setTitle(viewModel.actionButtonText, for: .normal)
-        }
+        submitButton.isEnabled = configurator.isValidBalance()
+        let text = configurator.isValidBalance() ? viewModel.actionButtonText : viewModel.insufficientFundText
+        submitButton.setTitle(text, for: .normal)
     }
 
     private func reloadView() {
