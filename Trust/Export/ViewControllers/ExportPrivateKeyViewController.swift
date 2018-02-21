@@ -117,12 +117,12 @@ class ExportPrivateKeyViewConroller: UIViewController {
     func createQRCode() {
         hud.show(animated: true)
         DispatchQueue.global(qos: .background).async { [weak self] in
-            guard let weakSelf = self else { return }
-            let string = weakSelf.viewModel.privateKey
-            let image = weakSelf.generateQRCode(from: string)
+            guard let `self` = self else { return }
+            let string = self.viewModel.privateKey
+            let image = self.generateQRCode(from: string)
             DispatchQueue.main.async {
-                weakSelf.imageView.image = image
-                weakSelf.hud.hide(animated: true)
+                self.imageView.image = image
+                self.hud.hide(animated: true)
             }
         }
     }
