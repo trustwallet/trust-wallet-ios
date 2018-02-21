@@ -46,6 +46,13 @@ class ExportPrivateKeyViewConroller: UIViewController {
         return label
     }()
 
+    lazy var hud: MBProgressHUD = {
+        let hud = MBProgressHUD.showAdded(to: imageView, animated: true)
+        hud.mode = .text
+        hud.label.text = NSLocalizedString("export.qrCode.loading.label", value: "Generating QR Code", comment: "")
+        return hud
+    }()
+
     let viewModel: ExportPrivateKeyViewModel
 
     init(
@@ -108,15 +115,14 @@ class ExportPrivateKeyViewConroller: UIViewController {
     }
 
     func createQRCode() {
-        let hud = MBProgressHUD.showAdded(to: imageView, animated: true)
-        hud.mode = .text
-        hud.label.text = NSLocalizedString("export.qrCode.loading.label", value: "Generating QrCode", comment: "")
+        hud.show(animated: true)
         DispatchQueue.global(qos: .background).async { [weak self] in
-            guard let string = self?.viewModel.privateKey else { return }
-            let image = self?.generateQRCode(from: string)
+            guard let weakSelf = self else { return }
+            let string = weakSelf.viewModel.privateKey
+            let image = weakSelf.generateQRCode(from: string)
             DispatchQueue.main.async {
-                self?.imageView.image = image
-                hud.hide(animated: true)
+                weakSelf.imageView.image = image
+                weakSelf.hud.hide(animated: true)
             }
         }
     }
