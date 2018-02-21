@@ -6,7 +6,7 @@ class TrustDocumentPickerViewController: UIDocumentPickerViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UINavigationBar.appearance().tintColor = Colors.blue
+        UINavigationBar.appearance().tintColor = AppStyle.docPickerNavigationBarTintColor
     }
 
     override func viewWillDisappear(_ animated: Bool) {
