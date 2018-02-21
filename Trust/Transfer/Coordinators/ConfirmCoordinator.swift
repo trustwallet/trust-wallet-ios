@@ -31,6 +31,7 @@ class ConfirmCoordinator: Coordinator {
         type: ConfirmType
     ) {
         self.navigationController = navigationController
+        self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
         self.configurator = configurator
         self.keystore = keystore
