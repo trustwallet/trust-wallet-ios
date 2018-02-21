@@ -184,7 +184,7 @@ class SendViewController: FormViewController {
         //Update button title.
         sender.setTitle(viewModel.currentPair.right, for: .normal)
         //Hide max button
-        maxButton.isHidden = viewModel.currentPair.left != viewModel.symbol
+        maxButton.isHidden = viewModel.isMaxButtonHidden()
         //Reset amountRow value.
         amountRow?.value = nil
         amountRow?.reload()

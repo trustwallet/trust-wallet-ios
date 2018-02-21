@@ -154,4 +154,8 @@ struct SendViewModel {
     mutating func decimalAmount(with stringAmount: String) -> Decimal {
         return stringFormatter.decimal(with: stringAmount) ?? 0
     }
+    /// If ther is need to show max button.
+    mutating func isMaxButtonHidden() -> Bool {
+        return currentPair.left != symbol
+    }
 }

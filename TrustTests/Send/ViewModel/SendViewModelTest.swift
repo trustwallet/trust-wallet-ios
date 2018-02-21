@@ -61,4 +61,9 @@ class SendViewModelTest: XCTestCase {
         let bigAmount = sendViewModel.decimalAmount(with: "100000000\(curentLocaleSeparator)000000000000001")
         XCTAssertEqual(100000000.000000000000001, bigAmount)
     }
+    func testMaxButtonVisability() {
+        XCTAssertEqual(false, sendViewModel.isMaxButtonHidden())
+        sendViewModel.currentPair = sendViewModel.currentPair.swapPair()
+        XCTAssertEqual(true, sendViewModel.isMaxButtonHidden())
+    }
 }
