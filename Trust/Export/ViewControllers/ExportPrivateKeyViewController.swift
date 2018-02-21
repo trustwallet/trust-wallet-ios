@@ -8,7 +8,7 @@ import MBProgressHUD
 class ExportPrivateKeyViewConroller: UIViewController {
 
     private struct Layout {
-        static var imageViewWidth: CGFloat = 260
+        static var widthAndHeight: CGFloat = 260
     }
 
     lazy var imageView: UIImageView = {
@@ -83,8 +83,8 @@ class ExportPrivateKeyViewConroller: UIViewController {
             revalQRCodeButton.trailingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.trailingAnchor),
             revalQRCodeButton.leadingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.leadingAnchor),
 
-            imageView.widthAnchor.constraint(lessThanOrEqualToConstant: Layout.imageViewWidth),
-            imageView.heightAnchor.constraint(equalToConstant: Layout.imageViewWidth),
+            imageView.widthAnchor.constraint(lessThanOrEqualToConstant: Layout.widthAndHeight),
+            imageView.heightAnchor.constraint(equalToConstant: Layout.widthAndHeight),
         ])
         createQRCode()
     }
