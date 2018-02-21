@@ -108,11 +108,15 @@ class ExportPrivateKeyViewConroller: UIViewController {
     }
 
     func createQRCode() {
-        DispatchQueue.global(qos: .background).async {
-            let string = self.viewModel.privateKey
-            let image = self.generateQRCode(from: string)
+        let hud = MBProgressHUD.showAdded(to: imageView, animated: true)
+        hud.mode = .text
+        hud.label.text = NSLocalizedString("export.qrCode.loading.label", value: "Generating QrCode", comment: "")
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let string = self?.viewModel.privateKey else { return }
+            let image = self?.generateQRCode(from: string)
             DispatchQueue.main.async {
-                self.imageView.image = image
+                self?.imageView.image = image
+                hud.hide(animated: true)
             }
         }
     }
