@@ -6,6 +6,7 @@ import TrustKeystore
 import Result
 
 struct FakeKeystore: Keystore {
+
     static var current: Trust.Wallet?
     var hasWallets: Bool {
         return wallets.count > 0
@@ -102,6 +103,11 @@ struct FakeKeystore: Keystore {
     func convertPrivateKeyToKeystoreFile(privateKey: String, passphrase: String) -> Result<[String : Any], KeystoreError> {
         //TODO: Implement
         return .failure(KeystoreError.failedToSignTransaction)
+    }
+
+    func exportPrivateKey(account: Account) -> Result<Data, KeystoreError> {
+        //TODO: Implement
+        return .failure(KeystoreError.failedToExportPrivateKey)
     }
 }
 

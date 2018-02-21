@@ -15,6 +15,7 @@ class AccountsCoordinator: Coordinator {
 
     let navigationController: UINavigationController
     let keystore: Keystore
+    let session: WalletSession
     let balanceCoordinator: GetBalanceCoordinator
     var coordinators: [Coordinator] = []
 
@@ -32,11 +33,13 @@ class AccountsCoordinator: Coordinator {
     init(
         navigationController: UINavigationController,
         keystore: Keystore,
+        session: WalletSession,
         balanceCoordinator: GetBalanceCoordinator
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
+        self.session = session
         self.balanceCoordinator = balanceCoordinator
     }
 
@@ -68,7 +71,7 @@ class AccountsCoordinator: Coordinator {
         switch account.type {
         case .real(let account):
             let actionTitle = NSLocalizedString("wallets.backup.alertSheet.title", value: "Backup Keystore", comment: "The title of the backup button in the wallet's action sheet")
-            let backupKeystoreAction = UIAlertAction(title: actionTitle, style: .default) { _ in
+            let backupKeystoreAction = UIAlertAction(title: actionTitle, style: .default) { [unowned self] _ in
                 let coordinator = BackupCoordinator(
                     navigationController: self.navigationController,
                     keystore: self.keystore,
@@ -78,7 +81,20 @@ class AccountsCoordinator: Coordinator {
                 coordinator.start()
                 self.addCoordinator(coordinator)
             }
+            let exportTitle = NSLocalizedString("wallets.export.alertSheet.title", value: "Export Private Key", comment: "The title of the export button in the wallet's action sheet")
+            let exportPrivateKeyAction = UIAlertAction(title: exportTitle, style: .default) { [unowned self] _ in
+
+                let coordinator = ExportPrivateKeyCoordinator(
+                    navigationController: self.navigationController,
+                    keystore: self.keystore,
+                    account: account
+                )
+                coordinator.delegate = self
+                coordinator.start()
+                self.addCoordinator(coordinator)
+            }
             controller.addAction(backupKeystoreAction)
+            controller.addAction(exportPrivateKeyAction)
         case .watch:
             break
         }
@@ -136,6 +152,13 @@ extension AccountsCoordinator: BackupCoordinatorDelegate {
     }
 
     func didFinish(account: Account, in coordinator: BackupCoordinator) {
+        removeCoordinator(coordinator)
+    }
+}
+
+extension AccountsCoordinator: ExportPrivateKeyCoordinatorDelegate {
+    func didCancel(in coordinator: ExportPrivateKeyCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
     }
 }

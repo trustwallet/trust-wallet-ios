@@ -36,6 +36,7 @@ class SettingsCoordinatorTests: XCTestCase {
         let accountCoordinator = AccountsCoordinator(
             navigationController: FakeNavigationController(),
             keystore: FakeEtherKeystore(),
+            session: .make(),
             balanceCoordinator: FakeGetBalanceCoordinator()
         )
         

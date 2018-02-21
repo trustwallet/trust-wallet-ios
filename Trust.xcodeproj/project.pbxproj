@@ -347,6 +347,9 @@
 		77E0E773201FAD06009B4B31 /* BrowserURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E0E772201FAD05009B4B31 /* BrowserURLParser.swift */; };
 		77E81D94203687FB00534C99 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E81D93203687FB00534C99 /* NotificationsViewController.swift */; };
 		77E81D962036883B00534C99 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E81D952036883B00534C99 /* NotificationsViewModel.swift */; };
+		A2B7ECAA2038122200828E7D /* ExportPrivateKeyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECA92038122200828E7D /* ExportPrivateKeyCoordinator.swift */; };
+		A2B7ECAC2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAB2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift */; };
+		A2B7ECAE2039001300828E7D /* ExportPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */; };
 		BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */; };
 		BBF4F9B72029D0B3009E04C0 /* GasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF4F9B62029D0B2009E04C0 /* GasViewModel.swift */; };
 		CCA4FE331FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE321FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift */; };
@@ -733,6 +736,9 @@
 		77E81D93203687FB00534C99 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		77E81D952036883B00534C99 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A2B7ECA92038122200828E7D /* ExportPrivateKeyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPrivateKeyCoordinator.swift; sourceTree = "<group>"; };
+		A2B7ECAB2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPrivateKeyViewModel.swift; sourceTree = "<group>"; };
+		A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPrivateKeyViewController.swift; sourceTree = "<group>"; };
 		A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B13A87D3BA5167741E5D0801 /* Pods-Trust.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trust.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trust/Pods-Trust.release.xcconfig"; sourceTree = "<group>"; };
@@ -1185,6 +1191,7 @@
 			isa = PBXGroup;
 			children = (
 				29DBF2A21F9DBFF400327C60 /* BackupCoordinator.swift */,
+				A2B7ECA92038122200828E7D /* ExportPrivateKeyCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1487,6 +1494,7 @@
 			isa = PBXGroup;
 			children = (
 				299B5E3A1FD141B70051361C /* BackupViewModel.swift */,
+				A2B7ECAB2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1634,6 +1642,7 @@
 			isa = PBXGroup;
 			children = (
 				29DBF2A01F9DA6EF00327C60 /* BackupViewController.swift */,
+				A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2639,6 +2648,7 @@
 				293248861F88CCE6008A9818 /* SplashError.swift in Sources */,
 				296421951F70C1EC00EB363B /* LoadingView.swift in Sources */,
 				2961BD071FB146EB00C4B840 /* ChainState.swift in Sources */,
+				A2B7ECAC2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift in Sources */,
 				73D26837202E827E009777A1 /* DecimalFormatter.swift in Sources */,
 				29285B421F6FB3E60044CF29 /* SendViewController.swift in Sources */,
 				2996F14D1F6CA743005C33AE /* UIViewController.swift in Sources */,
@@ -2744,6 +2754,7 @@
 				77E0E773201FAD06009B4B31 /* BrowserURLParser.swift in Sources */,
 				73ACEF0520163F46003DD71D /* LockEnterPasscodeCoordinator.swift in Sources */,
 				29F1C863200375D2003780D8 /* Wallet.swift in Sources */,
+				A2B7ECAA2038122200828E7D /* ExportPrivateKeyCoordinator.swift in Sources */,
 				29E6E06E1FE897EE0079265A /* BrowserViewController.swift in Sources */,
 				2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */,
 				615F105D1FCBF55E008A45AF /* OnboardingCollectionViewController.swift in Sources */,
@@ -2754,6 +2765,7 @@
 				293112121FC4F48400966EEA /* ServiceProvider.swift in Sources */,
 				73C5CF45201A7CAB00C74316 /* LockPasscodeViewController.swift in Sources */,
 				2912CD2F1F6A83A100C6CBE3 /* ImportWalletViewController.swift in Sources */,
+				A2B7ECAE2039001300828E7D /* ExportPrivateKeyViewController.swift in Sources */,
 				7721A6D0202EFD07004DB16C /* AddCustomNetworkCoordinator.swift in Sources */,
 				2996F1461F6C98B3005C33AE /* SettingsViewController.swift in Sources */,
 				2963B6AD1F981A96003063C1 /* TransactionAppearance.swift in Sources */,
