@@ -35,7 +35,13 @@ class SendViewController: FormViewController {
     var amountRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
     }
-    var maxButton: UIButton?
+    lazy var maxButton: UIButton = {
+        let button = Button(size: .normal, style: .borderless)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(NSLocalizedString("send.max.button.title", value: "Max", comment: ""), for: .normal)
+        button.addTarget(self, action: #selector(useMaxAmount), for: .touchUpInside)
+        return button
+    }()
     private var allowedCharacters: String = {
         let decimalSeparator = Locale.current.decimalSeparator ?? "."
         return "0123456789" + decimalSeparator
@@ -60,11 +66,6 @@ class SendViewController: FormViewController {
             pasteAction: { [unowned self] in self.pasteAction() },
             qrAction: { [unowned self] in self.openReader() }
         )
-        let maxButton = Button(size: .normal, style: .borderless)
-        self.maxButton = maxButton
-        maxButton.translatesAutoresizingMaskIntoConstraints = false
-        maxButton.setTitle(NSLocalizedString("send.max.button.title", value: "Max", comment: ""), for: .normal)
-        maxButton.addTarget(self, action: #selector(useMaxAmount), for: .touchUpInside)
         let fiatButton = Button(size: .normal, style: .borderless)
         fiatButton.translatesAutoresizingMaskIntoConstraints = false
         fiatButton.setTitle(viewModel.currentPair.right, for: .normal)
@@ -183,7 +184,7 @@ class SendViewController: FormViewController {
         //Update button title.
         sender.setTitle(viewModel.currentPair.right, for: .normal)
         //Hide max button
-        maxButton?.isHidden = viewModel.currentPair.left != viewModel.symbol
+        maxButton.isHidden = viewModel.currentPair.left != viewModel.symbol
         //Reset amountRow value.
         amountRow?.value = nil
         amountRow?.reload()
