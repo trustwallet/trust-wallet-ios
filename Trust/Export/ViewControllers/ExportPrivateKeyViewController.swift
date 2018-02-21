@@ -7,6 +7,10 @@ import MBProgressHUD
 
 class ExportPrivateKeyViewConroller: UIViewController {
 
+    private struct Layout {
+        static var imageViewWidth: CGFloat = 260
+    }
+
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,7 +64,6 @@ class ExportPrivateKeyViewConroller: UIViewController {
             imageView,
             warningKeyLabel,
             revalQRCodeButton,
-
         ])
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -80,9 +83,9 @@ class ExportPrivateKeyViewConroller: UIViewController {
             revalQRCodeButton.trailingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.trailingAnchor),
             revalQRCodeButton.leadingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.leadingAnchor),
 
-            imageView.widthAnchor.constraint(equalToConstant: 260),
-            imageView.heightAnchor.constraint(equalToConstant: 260),
-            ])
+            imageView.widthAnchor.constraint(lessThanOrEqualToConstant: Layout.imageViewWidth),
+            imageView.heightAnchor.constraint(equalToConstant: Layout.imageViewWidth),
+        ])
         createQRCode()
     }
 
@@ -105,9 +108,8 @@ class ExportPrivateKeyViewConroller: UIViewController {
     }
 
     func createQRCode() {
-        let string = viewModel.privateKey
-
         DispatchQueue.global(qos: .background).async {
+            let string = self.viewModel.privateKey
             let image = self.generateQRCode(from: string)
             DispatchQueue.main.async {
                 self.imageView.image = image
