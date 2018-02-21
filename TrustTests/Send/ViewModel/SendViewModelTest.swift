@@ -52,4 +52,13 @@ class SendViewModelTest: XCTestCase {
     func testDecimals() {
         XCTAssertEqual(18, sendViewModel.decimals)
     }
+    func testStringToDecimal() {
+        let curentLocaleSeparator = Locale.current.decimalSeparator ?? "."
+        let amount = sendViewModel.decimalAmount(with: "256\(curentLocaleSeparator)32")
+        XCTAssertEqual(256.32, amount)
+        let failAmount = sendViewModel.decimalAmount(with: "xxxxx")
+        XCTAssertEqual(0, failAmount)
+        let bigAmount = sendViewModel.decimalAmount(with: "100000000\(curentLocaleSeparator)000000000000001")
+        XCTAssertEqual(100000000.000000000000001, bigAmount)
+    }
 }

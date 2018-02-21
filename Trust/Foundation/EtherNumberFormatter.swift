@@ -105,7 +105,24 @@ final class EtherNumberFormatter {
         }
         return "\(integerString).\(fractionalString)"
     }
-
+    /// Formats a `BigInt` to a Decimal.
+    ///
+    /// - Parameters:
+    ///   - number: number to format
+    ///   - decimals: decimal places used for scaling values.
+    /// - Returns: Decimal representation
+    func decimal(from number: BigInt, decimals: Int) -> Decimal? {
+        precondition(minimumFractionDigits >= 0)
+        precondition(maximumFractionDigits >= 0)
+        let dividend = BigInt(10).power(decimals)
+        let (integerPart, remainder) = number.quotientAndRemainder(dividingBy: dividend)
+        let integerString = integerPart.description
+        let fractionalString = self.fractionalString(from: BigInt(sign: .plus, magnitude: remainder.magnitude), decimals: decimals)
+        if fractionalString.isEmpty {
+            return Decimal(string: integerString)
+        }
+        return Decimal(string: "\(integerString).\(fractionalString)")
+    }
     private func integerString(from: BigInt) -> String {
         var string = from.description
         let end = from.sign == .minus ? 1 : 0

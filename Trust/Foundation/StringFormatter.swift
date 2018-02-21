@@ -43,6 +43,17 @@ final class StringFormatter {
         formatter.maximumFractionDigits = decimals
         return formatter.string(for: value) ?? "\(value)"
     }
+    /// Converts a String to a `Decimal`.
+    ///
+    /// - Parameters:
+    ///   - value: String to convert.
+    /// - Returns: Decimal represenation.
+    func decimal(with value: String) -> Decimal? {
+        let formatter = decimalFormatter
+        formatter.generatesDecimalNumbers = true
+        formatter.decimalSeparator = Locale.current.decimalSeparator
+        return formatter.number(from: value) as? Decimal
+    }
     /// Converts a Double to a `String`.
     ///
     /// - Parameters:

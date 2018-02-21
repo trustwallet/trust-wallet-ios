@@ -266,7 +266,7 @@ extension SendViewController: UITextFieldDelegate {
         //Total amount of the user input.
         let stringAmount = (input as NSString).replacingCharacters(in: range, with: string)
         //Convert to deciaml for pair rate update.
-        let amount = Decimal(string: stringAmount) ?? 0
+        let amount = viewModel.decimalAmount(with: stringAmount)
         //Update of the pair rate.
         viewModel.updatePairPrice(with: amount)
         updatePriceSection()
