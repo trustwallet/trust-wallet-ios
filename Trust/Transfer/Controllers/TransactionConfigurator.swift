@@ -192,22 +192,16 @@ class TransactionConfigurator {
         var gasValue = transaction.gasPrice * transaction.gasLimit
         //Amount of the tokens.
         var tokenValue = BigInt(0)
-        var tokenObject: TokenObject?
         //We check if it is ETH or token operation.
         switch transaction.transferType {
         case .ether:
             gasValue += transaction.value
+            return gasValue <= balance.value
         case .token(let token):
-            tokenObject = token
             tokenValue += transaction.value
+            let isEnoughOfEther = gasValue <= balance.value
+            let isEnoughOfTokens = tokenValue <= token.valueBigInt
+            return isEnoughOfTokens && isEnoughOfEther
         }
-        let isEnoughOfEther = gasValue <= balance.value
-        //If it is ETH transaction validate only isEnoughOfEther
-        guard let token = tokenObject else {
-            return isEnoughOfEther
-        }
-        let isEnoughOfTokens = tokenValue <= token.valueBigInt
-        //If it is token operation validate token amount and eth for transaction fees.
-        return isEnoughOfTokens && isEnoughOfEther
     }
 }
