@@ -40,4 +40,15 @@ class TransactionConfiguratorTests: XCTestCase {
         XCTAssertEqual(BigInt(GasPriceConfiguration.default), configurator.configuration.gasPrice)
         XCTAssertEqual(BigInt(90000), configurator.configuration.gasLimit)
     }
+    
+    func testBalanceValidation() {
+        let emptyBalance = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(gasLimit: BigInt(90000), gasPrice: .none))
+        XCTAssertEqual(false, emptyBalance.isValidBalance())
+        let ethBalance = TransactionConfigurator(session: .makeWithEthBalance(), account: .make(), transaction: .make(gasLimit: BigInt(90000), gasPrice: .none))
+        XCTAssertEqual(true, ethBalance.isValidBalance())
+        let ethBalanceForTokens = TransactionConfigurator(session: .makeWithEthBalance(), account: .make(), transaction: .makeToken(gasLimit: BigInt(90000), gasPrice: .none))
+        XCTAssertEqual(true, ethBalanceForTokens.isValidBalance())
+        let ethBalanceForTokensNotEnought = TransactionConfigurator(session: .makeWithEthBalance(), account: .make(), transaction: .makeNotEnoughtToken(gasLimit: BigInt(90000), gasPrice: .none))
+        XCTAssertEqual(false, ethBalanceForTokensNotEnought.isValidBalance())
+    }
 }
