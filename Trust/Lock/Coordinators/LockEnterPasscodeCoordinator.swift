@@ -33,6 +33,7 @@ class LockEnterPasscodeCoordinator: Coordinator {
 
         lockEnterPasscodeViewController.showKeyboard()
         lockEnterPasscodeViewController.showBioMerickAuth()
+        lockEnterPasscodeViewController.cleanUserInput()
     }
 
     func stop() {

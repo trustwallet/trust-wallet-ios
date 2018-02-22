@@ -25,6 +25,9 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
         self.context = LAContext()
         self.touchValidation()
     }
+    func cleanUserInput() {
+        self.clearPasscode()
+    }
     override func enteredPasscode(_ passcode: String) {
         super.enteredPasscode(passcode)
         if lock.isPasscodeValid(passcode: passcode) {
