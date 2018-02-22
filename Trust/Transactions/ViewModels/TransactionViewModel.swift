@@ -25,6 +25,11 @@ struct TransactionViewModel {
         self.currentWallet = currentWallet
     }
 
+    var transactionFrom: String {
+        guard let operation = transaction.operation else { return transaction.from }
+        return operation.from
+    }
+
     var transactionTo: String {
         guard let operation = transaction.operation else { return transaction.to }
         return operation.to

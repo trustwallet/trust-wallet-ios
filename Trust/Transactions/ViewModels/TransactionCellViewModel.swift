@@ -76,8 +76,8 @@ struct TransactionCellViewModel {
 
     var subTitle: String {
         switch transactionViewModel.direction {
-        case .incoming: return "\(transaction.from)"
-        case .outgoing: return "\(transaction.to)"
+        case .incoming: return "\(transactionViewModel.transactionFrom)"
+        case .outgoing: return "\(transactionViewModel.transactionTo)"
         }
     }
 
