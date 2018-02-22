@@ -27,6 +27,17 @@ struct ConfirmPaymentDetailsViewModel {
         return GasViewModel(fee: totalFee, symbol: config.server.symbol, currencyRate: currencyRate, formatter: fullFormatter)
     }
 
+    private var totalViewModel: GasViewModel {
+
+        var value: BigInt = totalFee
+
+        if case TransferType.ether(_) = transaction.transferType {
+            value += transaction.value
+        }
+
+        return GasViewModel(fee: value, symbol: config.server.symbol, currencyRate: currencyRate, formatter: fullFormatter)
+    }
+
     private var totalFee: BigInt {
         return transaction.gasPrice * transaction.gasLimit
     }
@@ -87,6 +98,14 @@ struct ConfirmPaymentDetailsViewModel {
 
     var amountTextColor: UIColor {
         return Colors.red
+    }
+
+    var totalTitle: String {
+        return NSLocalizedString("confirmPayment.total.label.title", value: "Total", comment: "")
+    }
+
+    var totalText: String {
+        return totalViewModel.feeText
     }
 
     var dataTitle: String {

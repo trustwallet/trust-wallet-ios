@@ -48,6 +48,7 @@
 "send.error.emptyClipBoard" = "Empty ClipBoard";
 "send.error.invalidAddress" = "Invalid Address";
 "send.error.wrongInput" = "Wrong Input";
+"send.error.insufficientFund" = "Insufficient Fund";
 "send.max.button.title" = "Max";
 "send.paste.button.title" = "Paste";
 "send.recipientAddress.textField.placeholder" = "Recipient Address";

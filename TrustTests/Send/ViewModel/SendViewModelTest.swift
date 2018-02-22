@@ -1,10 +1,11 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import XCTest
+import BigInt
 @testable import Trust
 
 class SendViewModelTest: XCTestCase {
-    var sendViewModel = SendViewModel(transferType: .ether(destination: .none), config: .make(), storage: FakeTokensDataStore())
+    var sendViewModel = SendViewModel(transferType: .ether(destination: .none), config: .make(), storage: FakeTokensDataStore(), balance: Balance(value: BigInt("11274902618710000000000")))
     var decimalFormatter = DecimalFormatter()
     override func setUp() {
         sendViewModel.amount = "198212312.123123"
@@ -23,10 +24,10 @@ class SendViewModelTest: XCTestCase {
     }
     func testUpdatePairRate() {
         XCTAssertEqual(0.0, sendViewModel.pairRate)
-        sendViewModel.updatePaitRate(with: 1.8, and: 300.2)
+        sendViewModel.updatePairRate(with: 1.8, and: 300.2)
         XCTAssertEqual(540.36, sendViewModel.pairRate)
         sendViewModel.currentPair = sendViewModel.currentPair.swapPair()
-        sendViewModel.updatePaitRate(with: 24.3, and: 967)
+        sendViewModel.updatePairRate(with: 24.3, and: 967)
         XCTAssertEqual(sendViewModel.pairRate.doubleValue, 39.794238683127, accuracy: 0.000000000001)
     }
     func testAmountUpdate() {
@@ -50,5 +51,19 @@ class SendViewModelTest: XCTestCase {
     }
     func testDecimals() {
         XCTAssertEqual(18, sendViewModel.decimals)
+    }
+    func testStringToDecimal() {
+        let curentLocaleSeparator = Locale.current.decimalSeparator ?? "."
+        let amount = sendViewModel.decimalAmount(with: "256\(curentLocaleSeparator)32")
+        XCTAssertEqual(256.32, amount)
+        let failAmount = sendViewModel.decimalAmount(with: "xxxxx")
+        XCTAssertEqual(0, failAmount)
+        let bigAmount = sendViewModel.decimalAmount(with: "100000000\(curentLocaleSeparator)000000000000001")
+        XCTAssertEqual(100000000.000000000000001, bigAmount)
+    }
+    func testMaxButtonVisability() {
+        XCTAssertEqual(false, sendViewModel.isMaxButtonHidden())
+        sendViewModel.currentPair = sendViewModel.currentPair.swapPair()
+        XCTAssertEqual(true, sendViewModel.isMaxButtonHidden())
     }
 }

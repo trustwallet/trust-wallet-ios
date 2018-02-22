@@ -79,7 +79,7 @@ class ConfirmPaymentViewController: UIViewController {
         header.translatesAutoresizingMaskIntoConstraints = false
         header.amountLabel.attributedText = detailsViewModel.amountAttributedString
 
-        let items: [UIView] = [
+        var items: [UIView] = [
             .spacer(),
             header,
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
@@ -109,13 +109,22 @@ class ConfirmPaymentViewController: UIViewController {
             ) { [unowned self] _, _, _ in
                 self.edit()
             },
-            TransactionAppearance.item(
-                title: detailsViewModel.dataTitle,
-                subTitle: detailsViewModel.dataText
-            ) { [unowned self] _, _, _ in
-                self.edit()
-            },
         ]
+
+        // show total ether
+        if case TransferType.ether(_) = configurator.transaction.transferType {
+            items.append(TransactionAppearance.item(
+                title: detailsViewModel.totalTitle,
+                subTitle: detailsViewModel.totalText
+            ))
+        }
+
+        items.append(TransactionAppearance.item(
+            title: detailsViewModel.dataTitle,
+            subTitle: detailsViewModel.dataText
+        ) { [unowned self] _, _, _ in
+            self.edit()
+        })
 
         for item in items {
             stackViewController.addItem(item)
@@ -132,6 +141,13 @@ class ConfirmPaymentViewController: UIViewController {
         ])
 
         displayChildViewController(viewController: stackViewController)
+        updateSubmitButton()
+    }
+
+    private func updateSubmitButton() {
+        submitButton.isEnabled = configurator.isValidBalance()
+        let text = configurator.isValidBalance() ? viewModel.actionButtonText : viewModel.insufficientFundText
+        submitButton.setTitle(text, for: .normal)
     }
 
     private func reloadView() {
