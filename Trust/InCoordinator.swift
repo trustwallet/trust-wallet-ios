@@ -10,26 +10,6 @@ protocol InCoordinatorDelegate: class {
     func didUpdateAccounts(in coordinator: InCoordinator)
 }
 
-enum Tabs {
-    case browser
-    case transactions
-    case tokens
-    case settings
-
-    var className: String {
-        switch self {
-        case .browser:
-            return String(describing: BrowserViewController.self)
-        case .tokens:
-            return String(describing: TokensViewController.self)
-        case .transactions:
-            return String(describing: TransactionsViewController.self)
-        case .settings:
-            return String(describing: SettingsViewController.self)
-        }
-    }
-}
-
 class InCoordinator: Coordinator {
 
     let navigationController: UINavigationController
@@ -173,13 +153,18 @@ class InCoordinator: Coordinator {
 
     func showTab(_ selectTab: Tabs) {
         guard let viewControllers = tabBarController?.viewControllers else { return }
-        for controller in viewControllers {
-            if let nav = controller as? UINavigationController {
-                if nav.viewControllers[0].className == selectTab.className {
-                    tabBarController?.selectedViewController = nav
-                }
+        guard let nav = viewControllers[selectTab.index] as? UINavigationController else { return }
+
+        switch selectTab {
+        case .browser(let openURL):
+            if let openURL = openURL, let controller = nav.viewControllers[0] as? BrowserViewController {
+                controller.goTo(url: openURL)
             }
+        case .settings, .tokens, .transactions:
+            break
         }
+
+        tabBarController?.selectedViewController = nav
     }
 
     @objc func activateDebug() {
@@ -286,6 +271,10 @@ extension InCoordinator: SettingsCoordinatorDelegate {
 extension InCoordinator: TokensCoordinatorDelegate {
     func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator) {
         showPaymentFlow(for: type)
+    }
+
+    func didPress(on token: NonFungibleToken, in coordinator: TokensCoordinator) {
+        showTab(.browser(openURL: token.externalLinkURL))
     }
 }
 

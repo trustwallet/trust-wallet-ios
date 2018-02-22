@@ -8,15 +8,15 @@ import TrustKeystore
 
 protocol TokensViewControllerDelegate: class {
     func didPressAddToken( in viewController: UIViewController)
-    func didSelect(token: TokenObject, in viewController: UIViewController)
-    func didDelete(token: TokenObject, in viewController: UIViewController)
+    func didSelect(token: TokenItem, in viewController: UIViewController)
+    func didDelete(token: TokenItem, in viewController: UIViewController)
 }
 
 class TokensViewController: UIViewController {
 
     private let dataStore: TokensDataStore
 
-    var viewModel: TokensViewModel = TokensViewModel(tokens: [], tickers: .none) {
+    var viewModel: TokensViewModel = TokensViewModel(tokens: [], nonFungibleTokens: [], tickers: .none) {
         didSet {
             refreshView(viewModel: viewModel)
         }
@@ -47,6 +47,7 @@ class TokensViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         ])
+        tableView.register(R.nib.nonFungibleTokenViewCell(), forCellReuseIdentifier: R.nib.nonFungibleTokenViewCell.name)
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
         errorView = ErrorView(onRetry: { [weak self] in
@@ -164,15 +165,21 @@ extension TokensViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let token = viewModel.item(for: indexPath.row, section: indexPath.section)
-
-        let cell = TokenViewCell(style: .default, reuseIdentifier: TokenViewCell.identifier)
-        cell.configure(
-            viewModel: .init(
-                token: token,
-                ticker: viewModel.ticker(for: token)
+        switch token {
+        case .token(let token):
+            let cell = TokenViewCell(style: .default, reuseIdentifier: TokenViewCell.identifier)
+            cell.configure(
+                viewModel: .init(
+                    token: token,
+                    ticker: viewModel.ticker(for: token)
+                )
             )
-        )
-        return cell
+            return cell
+        case .nonFungibleTokens(let token):
+            let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.nonFungibleTokenViewCell.name, for: indexPath) as! NonFungibleTokenViewCell
+            cell.configure(viewModel: .init(token: token))
+            return cell
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -3,16 +3,24 @@
 import Foundation
 import UIKit
 
+enum TokenItem {
+    case token(TokenObject)
+    case nonFungibleTokens(NonFungibleToken)
+}
+
 struct TokensViewModel {
 
-    var tokens: [TokenObject] = []
-    var tickers: [String: CoinTicker]?
+    let tokens: [TokenObject]
+    let tickers: [String: CoinTicker]?
+    let nonFungibleTokens: [NonFungibleToken]
 
     init(
         tokens: [TokenObject],
+        nonFungibleTokens: [NonFungibleToken],
         tickers: [String: CoinTicker]?
     ) {
         self.tokens = tokens
+        self.nonFungibleTokens = nonFungibleTokens
         self.tickers = tickers
     }
 
@@ -58,19 +66,30 @@ struct TokensViewModel {
     }
 
     var hasContent: Bool {
-        return !tokens.isEmpty
+        return !tokens.isEmpty || !nonFungibleTokens.isEmpty
     }
 
     var numberOfSections: Int {
-        return 1
+        return 2
     }
 
     func numberOfItems(for section: Int) -> Int {
-        return tokens.count
+        switch section {
+        case 0:
+            return tokens.count
+        case 1:
+            return nonFungibleTokens.count
+        default: return 0
+        }
     }
 
-    func item(for row: Int, section: Int) -> TokenObject {
-        return tokens[row]
+    func item(for row: Int, section: Int) -> TokenItem {
+        switch section {
+        case 0:
+            return .token(tokens[row])
+        default:
+            return .nonFungibleTokens(nonFungibleTokens[row])
+        }
     }
 
     func ticker(for token: TokenObject) -> CoinTicker? {
@@ -79,7 +98,12 @@ struct TokensViewModel {
 
     func canDelete(for row: Int, section: Int) -> Bool {
         let token = item(for: row, section: section)
-        return token.isCustom
+        switch token {
+        case .token(let token):
+             return token.isCustom
+        case .nonFungibleTokens:
+            return false
+        }
     }
 
     var footerTitle: String {

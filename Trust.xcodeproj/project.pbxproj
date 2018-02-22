@@ -333,6 +333,13 @@
 		775C00B520195BFB001B5EBC /* BrowserAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C00B420195BFB001B5EBC /* BrowserAction.swift */; };
 		775DF42B203693CD009CD082 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF42A203693CD009CD082 /* Preferences.swift */; };
 		775DF42D2037D338009CD082 /* BranchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF42C2037D338009CD082 /* BranchCoordinator.swift */; };
+		775DF436203DFF2D009CD082 /* OpenseaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF435203DFF2D009CD082 /* OpenseaClient.swift */; };
+		775DF439203DFF62009CD082 /* OpenseaToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF438203DFF62009CD082 /* OpenseaToken.swift */; };
+		775DF43B203E0018009CD082 /* OpenseaArrayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF43A203E0018009CD082 /* OpenseaArrayResponse.swift */; };
+		775DF43E203E38D2009CD082 /* NonFungibleTokenViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF43C203E38D2009CD082 /* NonFungibleTokenViewCell.swift */; };
+		775DF43F203E38D3009CD082 /* NonFungibleTokenViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 775DF43D203E38D2009CD082 /* NonFungibleTokenViewCell.xib */; };
+		775DF441203E3A5D009CD082 /* NonFungibleTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF440203E3A5D009CD082 /* NonFungibleTokenViewModel.swift */; };
+		775DF443203E5685009CD082 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF442203E5685009CD082 /* Tabs.swift */; };
 		77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D222023F43B0032D687 /* TransactionsTracker.swift */; };
 		77872D25202505B70032D687 /* EnterPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D24202505B70032D687 /* EnterPasswordViewController.swift */; };
 		77872D27202505C00032D687 /* EnterPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D26202505C00032D687 /* EnterPasswordViewModel.swift */; };
@@ -722,6 +729,13 @@
 		775C00B420195BFB001B5EBC /* BrowserAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserAction.swift; sourceTree = "<group>"; };
 		775DF42A203693CD009CD082 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		775DF42C2037D338009CD082 /* BranchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchCoordinator.swift; sourceTree = "<group>"; };
+		775DF435203DFF2D009CD082 /* OpenseaClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenseaClient.swift; path = Trust/Vendors/Opensea/OpenseaClient.swift; sourceTree = SOURCE_ROOT; };
+		775DF438203DFF62009CD082 /* OpenseaToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenseaToken.swift; sourceTree = "<group>"; };
+		775DF43A203E0018009CD082 /* OpenseaArrayResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenseaArrayResponse.swift; sourceTree = "<group>"; };
+		775DF43C203E38D2009CD082 /* NonFungibleTokenViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenViewCell.swift; sourceTree = "<group>"; };
+		775DF43D203E38D2009CD082 /* NonFungibleTokenViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NonFungibleTokenViewCell.xib; sourceTree = "<group>"; };
+		775DF440203E3A5D009CD082 /* NonFungibleTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenViewModel.swift; sourceTree = "<group>"; };
+		775DF442203E5685009CD082 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		77872D222023F43B0032D687 /* TransactionsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTracker.swift; sourceTree = "<group>"; };
 		77872D24202505B70032D687 /* EnterPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewController.swift; sourceTree = "<group>"; };
 		77872D26202505C00032D687 /* EnterPasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewModel.swift; sourceTree = "<group>"; };
@@ -1061,6 +1075,7 @@
 		291F52AA1F6B805400B369AB /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				775DF434203DFF0A009CD082 /* Opensea */,
 				2981C29A1FC18F6000537E43 /* Changelly */,
 				298542E61FBA9BA900CB5081 /* ShapeShift */,
 				295996041FAAFC9400DB66A8 /* Coinbase */,
@@ -1330,6 +1345,8 @@
 				29F1C8451FEB6664003780D8 /* EditTokenTableViewCell.swift */,
 				29F1C8461FEB6664003780D8 /* EditTokenTableViewCell.xib */,
 				29F1C84B1FEC4F6F003780D8 /* TokensFooterView.swift */,
+				775DF43C203E38D2009CD082 /* NonFungibleTokenViewCell.swift */,
+				775DF43D203E38D2009CD082 /* NonFungibleTokenViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1352,6 +1369,7 @@
 				29E9CFCC1FE7343C00017744 /* NewTokenViewModel.swift */,
 				29F1C8411FEB62ED003780D8 /* EditTokenTableCellViewModel.swift */,
 				29F1C8491FEB6D6B003780D8 /* EditTokenViewModel.swift */,
+				775DF440203E3A5D009CD082 /* NonFungibleTokenViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1711,6 +1729,7 @@
 			children = (
 				29E9CFD11FE737FE00017744 /* TrustRealmConfiguration.swift */,
 				29F1C85720036926003780D8 /* AppTracker.swift */,
+				775DF442203E5685009CD082 /* Tabs.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2039,6 +2058,25 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		775DF434203DFF0A009CD082 /* Opensea */ = {
+			isa = PBXGroup;
+			children = (
+				775DF437203DFF54009CD082 /* Model */,
+				775DF435203DFF2D009CD082 /* OpenseaClient.swift */,
+			);
+			name = Opensea;
+			path = "New Group1";
+			sourceTree = "<group>";
+		};
+		775DF437203DFF54009CD082 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				775DF438203DFF62009CD082 /* OpenseaToken.swift */,
+				775DF43A203E0018009CD082 /* OpenseaArrayResponse.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		77872D2A202514930032D687 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
@@ -2291,6 +2329,7 @@
 				29FA00D2201CA79F002F7DC5 /* web3.min.js in Resources */,
 				771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */,
 				291794FC1F95DE5F00539A30 /* index.html in Resources */,
+				775DF43F203E38D3009CD082 /* NonFungibleTokenViewCell.xib in Resources */,
 				296106CE1F777E410006164B /* LaunchScreen.storyboard in Resources */,
 				290B2B541F8F50030053C83E /* Localizable.strings in Resources */,
 				2912CD021F6A830700C6CBE3 /* Assets.xcassets in Resources */,
@@ -2657,6 +2696,7 @@
 				2996F14D1F6CA743005C33AE /* UIViewController.swift in Sources */,
 				2959961F1FAE759700DB66A8 /* RawTransaction.swift in Sources */,
 				73ACEEFF20163E08003DD71D /* PasscodeCharacterView.swift in Sources */,
+				775DF43B203E0018009CD082 /* OpenseaArrayResponse.swift in Sources */,
 				295B61D41FE7D5B500642E60 /* CurrencyFormatter.swift in Sources */,
 				775DF42B203693CD009CD082 /* Preferences.swift in Sources */,
 				296421991F70C1F900EB363B /* EmptyView.swift in Sources */,
@@ -2673,6 +2713,7 @@
 				291795011F95F5E200539A30 /* GetBalance.swift in Sources */,
 				2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */,
 				29C9F5F91F720BD30025C494 /* FloatLabelCell.swift in Sources */,
+				775DF443203E5685009CD082 /* Tabs.swift in Sources */,
 				771AA960200D5E8800D25403 /* PassphraseView.swift in Sources */,
 				7721A6BE202A5677004DB16C /* DecryptError.swift in Sources */,
 				61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */,
@@ -2709,8 +2750,10 @@
 				61DCE17B2001A6BE0053939F /* RLP.swift in Sources */,
 				29E6E0701FEA12910079265A /* TransactionConfigurator.swift in Sources */,
 				299B5E3B1FD141B70051361C /* BackupViewModel.swift in Sources */,
+				775DF43E203E38D2009CD082 /* NonFungibleTokenViewCell.swift in Sources */,
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
+				775DF439203DFF62009CD082 /* OpenseaToken.swift in Sources */,
 				29F1C85A20036968003780D8 /* HelpUsCoordinator.swift in Sources */,
 				29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */,
 				290B2B671F9266630053C83E /* SettingsAction.swift in Sources */,
@@ -2822,11 +2865,13 @@
 				290B2B701F930AB90053C83E /* PushNotificationsRegistrar.swift in Sources */,
 				739533971FEFF5FD0084AFAB /* Currency.swift in Sources */,
 				298542F31FBD594D00CB5081 /* SettingsViewModel.swift in Sources */,
+				775DF441203E3A5D009CD082 /* NonFungibleTokenViewModel.swift in Sources */,
 				296106CA1F764AB60006164B /* TokensDataStore.swift in Sources */,
 				CCA4FE381FD428B300749AE4 /* JailbreakChecker.swift in Sources */,
 				291A1B651F974E8600ADEC80 /* WalletEntryPoint.swift in Sources */,
 				2959960E1FAB05C200DB66A8 /* TransactionsEmptyView.swift in Sources */,
 				29BB94931F6FC380009B09CC /* BalanceViewModel.swift in Sources */,
+				775DF436203DFF2D009CD082 /* OpenseaClient.swift in Sources */,
 				29D03F1D1F712183006E548C /* Button.swift in Sources */,
 				291794FF1F95F5CE00539A30 /* Web3Request.swift in Sources */,
 				CCCD74FD1FD2D38D004A087D /* CheckDeviceCoordinator.swift in Sources */,

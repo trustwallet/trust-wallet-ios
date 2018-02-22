@@ -5,6 +5,7 @@ import UIKit
 
 protocol TokensCoordinatorDelegate: class {
     func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator)
+    func didPress(on token: NonFungibleToken, in coordinator: TokensCoordinator)
 }
 
 class TokensCoordinator: Coordinator {
@@ -80,23 +81,32 @@ class TokensCoordinator: Coordinator {
 }
 
 extension TokensCoordinator: TokensViewControllerDelegate {
-    func didSelect(token: TokenObject, in viewController: UIViewController) {
+    func didSelect(token: TokenItem, in viewController: UIViewController) {
 
-        let type: TokenType = {
-            return TokensDataStore.etherToken(for: session.config) == token ? .ether : .token
-        }()
+        switch token {
+        case .token(let token):
+            let type: TokenType = {
+                return TokensDataStore.etherToken(for: session.config) == token ? .ether : .token
+            }()
 
-        switch type {
-        case .ether:
-            delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
-        case .token:
-            delegate?.didPress(for: .send(type: .token(token)), in: self)
+            switch type {
+            case .ether:
+                delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
+            case .token:
+                delegate?.didPress(for: .send(type: .token(token)), in: self)
+            }
+        case .nonFungibleTokens(let token):
+            delegate?.didPress(on: token, in: self)
         }
     }
 
-    func didDelete(token: TokenObject, in viewController: UIViewController) {
-        storage.delete(tokens: [token])
-        tokensViewController.fetch()
+    func didDelete(token: TokenItem, in viewController: UIViewController) {
+        switch token {
+        case .token(let token):
+            storage.delete(tokens: [token])
+            tokensViewController.fetch()
+        case .nonFungibleTokens: break
+        }
     }
 
     func didPressAddToken(in viewController: UIViewController) {

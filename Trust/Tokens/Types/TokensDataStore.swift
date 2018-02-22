@@ -22,7 +22,7 @@ class TokensDataStore {
         return GetBalanceCoordinator(web3: self.web3)
     }()
     private let provider = TrustProviderFactory.makeProvider()
-
+    private let openseaProvider = MoyaProvider<OpenseaService>()
     let account: Wallet
     let config: Config
     let web3: Web3Swift
@@ -46,6 +46,8 @@ class TokensDataStore {
             isCustom: false
         )
     }
+
+    private var nonFungibleTokens: [NonFungibleToken] = []
 
     init(
         realm: Realm,
@@ -139,7 +141,11 @@ class TokensDataStore {
     }
     func updateDelegate() {
         tokensModel.value = enabledObject
-        let tokensViewModel = TokensViewModel( tokens: enabledObject, tickers: tickers )
+        let tokensViewModel = TokensViewModel(
+            tokens: enabledObject,
+            nonFungibleTokens: nonFungibleTokens,
+            tickers: tickers
+        )
         delegate?.didUpdate(result: .success( tokensViewModel ))
     }
 
@@ -181,6 +187,34 @@ class TokensDataStore {
                 }
                 self.updateDelegate()
             } catch { }
+        }
+    }
+
+    func fetchNFT() {
+        fetchNonFungibleTokens { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let objects):
+                self.nonFungibleTokens = objects
+                self.updateDelegate()
+            case .failure: break
+            }
+        }
+    }
+
+    func fetchNonFungibleTokens(completion: @escaping (Result<[NonFungibleToken], AnyError>) -> Void) {
+        openseaProvider.request(.assets(address: account.address.description)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    let tokens = try response.map(OpenseaArrayResponse<NonFungibleToken>.self).assets
+                    completion(.success(tokens))
+                } catch {
+                    completion(.failure(AnyError(error)))
+                }
+            case .failure(let error):
+                completion(.failure(AnyError(error)))
+            }
         }
     }
 
