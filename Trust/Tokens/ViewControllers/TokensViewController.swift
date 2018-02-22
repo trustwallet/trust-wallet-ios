@@ -21,6 +21,26 @@ class TokensViewController: UIViewController {
             refreshView(viewModel: viewModel)
         }
     }
+    lazy var header: TokensHeaderView = {
+        let header = TokensHeaderView(frame: .zero)
+        header.amountLabel.text = viewModel.headerBalance ?? "-"
+        header.amountLabel.textColor = viewModel.headerBalanceTextColor
+        header.backgroundColor = viewModel.headerBackgroundColor
+        header.amountLabel.font = viewModel.headerBalanceFont
+        header.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
+        return header
+    }()
+    lazy var footer: TokensFooterView = {
+        let footer = TokensFooterView(frame: .zero)
+        footer.textLabel.text = viewModel.footerTitle
+        footer.textLabel.font = viewModel.footerTextFont
+        footer.textLabel.textColor = viewModel.footerTextColor
+        footer.frame.size = footer.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
+        footer.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(missingToken))
+        )
+        return footer
+    }()
     let account: Wallet
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
@@ -47,6 +67,7 @@ class TokensViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         ])
+        tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
         tableView.register(R.nib.nonFungibleTokenViewCell(), forCellReuseIdentifier: R.nib.nonFungibleTokenViewCell.name)
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
@@ -61,6 +82,8 @@ class TokensViewController: UIViewController {
                 self?.startLoading()
                 self?.dataStore.fetch()
         })
+        tableView.tableHeaderView = header
+        tableView.tableFooterView = footer
         refreshView(viewModel: viewModel)
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -85,26 +108,8 @@ class TokensViewController: UIViewController {
     func refreshView(viewModel: TokensViewModel) {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
-
-        let header = TokensHeaderView(frame: .zero)
         header.amountLabel.text = viewModel.headerBalance
-        header.amountLabel.textColor = viewModel.headerBalanceTextColor
-        header.backgroundColor = viewModel.headerBackgroundColor
-        header.amountLabel.font = viewModel.headerBalanceFont
-        header.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
-        tableView.tableHeaderView = header
-
-        let footer = TokensFooterView(frame: .zero)
         footer.textLabel.text = viewModel.footerTitle
-        footer.textLabel.font = viewModel.footerTextFont
-        footer.textLabel.textColor = viewModel.footerTextColor
-        footer.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
-
-        footer.addGestureRecognizer(
-            UITapGestureRecognizer(target: self, action: #selector(missingToken))
-        )
-
-        tableView.tableFooterView = footer
     }
 
     @objc func missingToken() {
@@ -167,7 +172,7 @@ extension TokensViewController: UITableViewDataSource {
         let token = viewModel.item(for: indexPath.row, section: indexPath.section)
         switch token {
         case .token(let token):
-            let cell = TokenViewCell(style: .default, reuseIdentifier: TokenViewCell.identifier)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TokenViewCell.identifier, for: indexPath) as! TokenViewCell
             cell.configure(
                 viewModel: .init(
                     token: token,
