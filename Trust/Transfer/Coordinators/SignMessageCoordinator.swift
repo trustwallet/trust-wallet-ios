@@ -65,19 +65,33 @@ class SignMessageCoordinator: Coordinator {
     }
 
     func message(for type: SignMesageType) -> String {
-        switch type {
-        case .message(let data):
+        let data: Data = {
+            switch type {
+            case .message(let data), .personalMessage(let data):
+                return data
+            }
+        }()
+        guard let message = String(data: data, encoding: .utf8) else {
             return data.hexEncoded
-        case .personalMessage(let data):
-            return String(data: data, encoding: .utf8)!
         }
+        return message
+    }
+
+    func isMessage(data: Data) -> Bool {
+        guard let _ = String(data: data, encoding: .utf8) else { return false}
+        return true
     }
 
     private func handleSignedMessage(with type: SignMesageType) {
         let result: Result<Data, KeystoreError>
         switch type {
         case .message(let data):
-            result = keystore.signMessage(data, for: account)
+            // FIXME. If hash just sign it, otherwise call sign message
+            if isMessage(data: data) {
+                result = keystore.signMessage(data, for: account)
+            } else {
+                result = keystore.signHash(data, for: account)
+            }
         case .personalMessage(let data):
             result = keystore.signPersonalMessage(data, for: account)
         }

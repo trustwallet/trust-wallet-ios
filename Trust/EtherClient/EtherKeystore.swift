@@ -308,17 +308,20 @@ open class EtherKeystore: Keystore {
     func signPersonalMessage(_ data: Data, for account: Account) -> Result<Data, KeystoreError> {
         let message = String(data: data, encoding: .utf8)!
         let formattedMessage: String = "\u{19}Ethereum Signed Message:\n" + "\(message.count)" + message
-        let hash = formattedMessage.data(using: .utf8)?.sha3(.keccak256)
-        return signMessage(hash!, for: account)
+        return signMessage(formattedMessage.data(using: .utf8)!, for: account)
     }
 
-    func signMessage(_ data: Data, for account: Account) -> Result<Data, KeystoreError> {
+    func signMessage(_ message: Data, for account: Account) -> Result<Data, KeystoreError> {
+        return signHash(message.sha3(.keccak256), for: account)
+    }
+
+    func signHash(_ hash: Data, for account: Account) -> Result<Data, KeystoreError> {
         guard
             let password = getPassword(for: account) else {
                 return .failure(KeystoreError.failedToSignMessage)
         }
         do {
-            var data = try keyStore.signHash(data, account: account, password: password)
+            var data = try keyStore.signHash(hash, account: account, password: password)
             // TODO: Make it configurable, instead of overriding last byte.
             data[64] += 27
             return .success(data)

@@ -90,6 +90,10 @@ struct FakeKeystore: Keystore {
         return .failure(KeystoreError.failedToSignMessage)
     }
 
+    func signHash(_ hash: Data, for account: Account) -> Result<Data, KeystoreError> {
+        return .failure(KeystoreError.failedToSignTransaction)
+    }
+
     func signTransaction(_ signTransaction: SignTransaction) -> Result<Data, KeystoreError> {
         //TODO: Implement
         return .failure(KeystoreError.failedToSignTransaction)
