@@ -23,7 +23,7 @@ class TokensViewController: UIViewController {
     }
     lazy var header: TokensHeaderView = {
         let header = TokensHeaderView(frame: .zero)
-        header.amountLabel.text = viewModel.headerBalance
+        header.amountLabel.text = viewModel.headerBalance ?? "-"
         header.amountLabel.textColor = viewModel.headerBalanceTextColor
         header.backgroundColor = viewModel.headerBackgroundColor
         header.amountLabel.font = viewModel.headerBalanceFont
