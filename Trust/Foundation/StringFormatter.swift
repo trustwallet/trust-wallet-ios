@@ -27,8 +27,8 @@ final class StringFormatter {
     ///   - value: Decimal to convert.
     ///   - currencyCode: code of the currency.
     /// - Returns: Currency `String` represenation.
-    func currency(with value: Decimal, and currencyCode: String, keepFraction: Bool = false) -> String {
-        let formatter = keepFraction ? decimalFormatter : currencyFormatter
+    func currency(with value: Decimal, and currencyCode: String) -> String {
+        let formatter = currencyFormatter
         formatter.currencyCode = currencyCode
         return formatter.string(for: value) ?? "\(value)"
     }
