@@ -47,6 +47,7 @@ class TokensViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         ])
+        tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
         tableView.register(R.nib.nonFungibleTokenViewCell(), forCellReuseIdentifier: R.nib.nonFungibleTokenViewCell.name)
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
@@ -167,7 +168,7 @@ extension TokensViewController: UITableViewDataSource {
         let token = viewModel.item(for: indexPath.row, section: indexPath.section)
         switch token {
         case .token(let token):
-            let cell = TokenViewCell(style: .default, reuseIdentifier: TokenViewCell.identifier)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TokenViewCell.identifier, for: indexPath) as! TokenViewCell
             cell.configure(
                 viewModel: .init(
                     token: token,
