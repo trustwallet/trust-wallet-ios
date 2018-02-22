@@ -46,7 +46,7 @@ extension UnconfirmedTransaction {
     }
     static func makeNotEnoughtToken(
         transferType: TransferType = .token( TokenObject(contract: "0xe41d2489571d322189246dafa5ebde1f4699f498", name: "0x project", symbol: "ZRX", decimals: 6, value: "30000000", isCustom: true, isDisabled: false)),
-        value: BigInt = BigInt(900),
+        value: BigInt = BigInt(9000000000000),
         to: Address = .make(),
         data: Data = Data(),
         gasLimit: BigInt? = BigInt(100000),
