@@ -30,8 +30,6 @@ class TokensDataStore {
     let realm: Realm
     var tickers: [String: CoinTicker]? = .none
     var ethTimer: Timer?
-    //We should refresh prices every 5 minutes.
-    let intervalToRefreshPrices = 300.0
     //We should refresh balance of the ETH every 10 seconds.
     let intervalToETHRefresh = 10.0
     var tokensModel: Subscribable<[TokenObject]> = Subscribable(nil)
