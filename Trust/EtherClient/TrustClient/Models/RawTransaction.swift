@@ -29,11 +29,11 @@ struct RawTransaction: Decodable {
         case gasPrice
         case input
         case gasUsed
-        case operationsLocalized = "operations"
+        case operations = "operations"
         case error = "error"
     }
 
-    let operationsLocalized: [LocalizedOperation]?
+    let operations: [LocalizedOperation]?
 }
 
 extension Transaction {
@@ -60,7 +60,7 @@ extension Transaction {
             gasUsed: transaction.gasUsed,
             nonce: String(transaction.nonce),
             date: NSDate(timeIntervalSince1970: TimeInterval(transaction.timeStamp) ?? 0) as Date,
-            localizedOperations: LocalizedOperationObject.from(operations: transaction.operationsLocalized),
+            localizedOperations: LocalizedOperationObject.from(operations: transaction.operations),
             state: state
         )
     }
