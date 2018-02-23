@@ -133,8 +133,11 @@ class TransactionConfigurator {
         var value = transaction.value
         if let balance = session.balance?.value,
             balance == transaction.value {
-            // user tries to send max
             value = transaction.value - configuration.gasLimit * configuration.gasPrice
+            //We work only with positive numbers.
+            if value.sign == .minus {
+                value = BigInt(value.magnitude)
+            }
         }
         return value
     }
