@@ -27,6 +27,7 @@ class EnterPasswordCoordinator: Coordinator {
         account: Account
     ) {
         self.navigationController = navigationController
+        self.navigationController.modalPresentationStyle = .formSheet
         self.account = account
     }
 

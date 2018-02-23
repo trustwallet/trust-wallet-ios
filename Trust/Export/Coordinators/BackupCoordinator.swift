@@ -25,6 +25,7 @@ class BackupCoordinator: Coordinator {
         account: Account
     ) {
         self.navigationController = navigationController
+        self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
         self.account = account
     }
