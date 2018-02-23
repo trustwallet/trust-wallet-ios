@@ -101,7 +101,7 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     var totalTitle: String {
-        return NSLocalizedString("confirmPayment.total.label.title", value: "Total", comment: "")
+        return NSLocalizedString("confirmPayment.maxTotal.label.title", value: "Max Total", comment: "")
     }
 
     var totalText: String {
