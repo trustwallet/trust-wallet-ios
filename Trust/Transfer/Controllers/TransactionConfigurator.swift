@@ -195,11 +195,11 @@ class TransactionConfigurator {
         switch transaction.transferType {
         case .ether:
             totalGasValue += transaction.value
-            return totalGasValue <= balance.value
+            return totalGasValue < balance.value
         case .token(let token):
             let tokenValue = transaction.value
-            let isEnoughOfEther = totalGasValue <= balance.value
-            let isEnoughOfTokens = tokenValue <= token.valueBigInt
+            let isEnoughOfEther = totalGasValue < balance.value
+            let isEnoughOfTokens = tokenValue < token.valueBigInt
             return isEnoughOfTokens && isEnoughOfEther
         }
     }
