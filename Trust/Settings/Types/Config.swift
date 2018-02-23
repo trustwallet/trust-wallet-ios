@@ -66,7 +66,7 @@ struct Config {
         let urlString: String = {
             switch server {
             case .main: return "https://mainnet.infura.io/llyrtzQ3YhkdESt2Fzrk"
-            case .classic: return "https://mewapi.epool.io/"
+            case .classic: return "https://web3.gastracker.io"
             case .callisto: return "https://rpc.callisto.network"
             case .kovan: return "https://kovan.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .ropsten: return "https://ropsten.infura.io/llyrtzQ3YhkdESt2Fzrk"
