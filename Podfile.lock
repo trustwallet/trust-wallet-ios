@@ -48,7 +48,7 @@ PODS:
     - CryptoSwift
     - secp256k1_ios (~> 0.1.0)
     - TrezorCrypto
-  - TrustWeb3Provider (0.1.2)
+  - TrustWeb3Provider (0.1.3)
 
 DEPENDENCIES:
   - APIKit
@@ -100,7 +100,7 @@ CHECKOUT OPTIONS:
     :commit: 80bd79cbeede842949b229f81bc6328f53701c5a
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
   TrustWeb3Provider:
-    :commit: c185b75d71db6391e2ab9f028d499afba7201cc5
+    :commit: 52b1eb869f513f18a7c3b4b0e698848a57830cc3
     :git: https://github.com/TrustWallet/trust-web3-provider
 
 SPEC CHECKSUMS:
@@ -134,7 +134,7 @@ SPEC CHECKSUMS:
   SwiftLint: 2e4b89feed5909c42c3735bbd6745f4345c4b772
   TrezorCrypto: 7f87a2296cf13872b21565c29fd9f7882dd00803
   TrustKeystore: b9fc8e0d72de3e8f9c97f46802172d6f14a004aa
-  TrustWeb3Provider: f92bae73903d558c288df878bc1216d285056171
+  TrustWeb3Provider: ac0bdf19b4c6c4d6ec0f03ddb85b83e32bda3a9a
 
 PODFILE CHECKSUM: 96387e48b1c54a170c146c01f8b7f294590cac00
 
