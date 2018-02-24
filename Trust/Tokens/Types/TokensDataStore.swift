@@ -140,6 +140,7 @@ class TokensDataStore {
     func updateDelegate() {
         tokensModel.value = enabledObject
         let tokensViewModel = TokensViewModel(
+            config: self.config,
             tokens: enabledObject,
             nonFungibleTokens: nonFungibleTokens,
             tickers: tickers

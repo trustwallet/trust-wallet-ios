@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import TrustKeystore
 
 protocol TokensCoordinatorDelegate: class {
     func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator)
@@ -59,8 +60,31 @@ class TokensCoordinator: Coordinator {
         return controller
     }
 
+    func editTokenViewController(token: TokenItem) -> NewTokenViewController {
+        let controller = newTokenViewController()
+        switch token {
+        case .token(let token):
+            guard let address = Address(string: token.contract) else {
+                return controller
+            }
+            let token = ERC20Token(contract: address, name: token.name, symbol: token.symbol, decimals: token.decimals)
+            controller.placeholder = token
+        default:
+            break
+        }
+        return controller
+    }
+
     @objc func addToken() {
         let controller = newTokenViewController()
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .formSheet
+        navigationController.present(nav, animated: true, completion: nil)
+    }
+
+    func editToken(_ token: TokenItem) {
+        let controller = editTokenViewController(token: token)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .formSheet
@@ -107,6 +131,10 @@ extension TokensCoordinator: TokensViewControllerDelegate {
             tokensViewController.fetch()
         case .nonFungibleTokens: break
         }
+    }
+
+    func didEdit(token: TokenItem, in viewController: UIViewController) {
+        editToken(token)
     }
 
     func didPressAddToken(in viewController: UIViewController) {

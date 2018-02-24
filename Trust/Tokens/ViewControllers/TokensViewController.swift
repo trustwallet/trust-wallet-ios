@@ -10,13 +10,14 @@ protocol TokensViewControllerDelegate: class {
     func didPressAddToken( in viewController: UIViewController)
     func didSelect(token: TokenItem, in viewController: UIViewController)
     func didDelete(token: TokenItem, in viewController: UIViewController)
+    func didEdit(token: TokenItem, in viewController: UIViewController)
 }
 
 class TokensViewController: UIViewController {
 
     private let dataStore: TokensDataStore
 
-    var viewModel: TokensViewModel = TokensViewModel(tokens: [], nonFungibleTokens: [], tickers: .none) {
+    var viewModel: TokensViewModel = TokensViewModel(config: nil, tokens: [], nonFungibleTokens: [], tickers: .none) {
         didSet {
             refreshView(viewModel: viewModel)
         }
@@ -132,13 +133,23 @@ extension TokensViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return viewModel.canDelete(for: indexPath.row, section: indexPath.section)
+        return viewModel.canEdit(for: indexPath.row, section: indexPath.section)
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete {
-            delegate?.didDelete(token: viewModel.item(for: indexPath.row, section: indexPath.section), in: self)
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+
+        if !viewModel.canEdit(for: indexPath.row, section: indexPath.section) {
+            return []
         }
+
+        let token = viewModel.item(for: indexPath.row, section: indexPath.section)
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") {[unowned self] (_, _) in
+            self.delegate?.didDelete(token: token, in: self)
+        }
+        let edit = UITableViewRowAction(style: .normal, title: "Edit") {[unowned self] (_, _) in
+            self.delegate?.didEdit(token: token, in: self)
+        }
+        return [delete, edit]
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
