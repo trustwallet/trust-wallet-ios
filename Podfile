@@ -17,10 +17,9 @@ target 'Trust' do
   pod 'SwiftLint'
   pod 'SeedStackViewController'
   pod 'RealmSwift'
-  pod 'BonMot', '~> 5.0'
   pod 'Lokalise'
   pod 'Moya', '~> 10.0.1'
-  pod 'JavaScriptKit' 
+  pod 'JavaScriptKit'
   pod 'CryptoSwift', :git=>'https://github.com/krzyzanowskim/CryptoSwift', :branch=>'master'
   pod 'Fabric'
   pod 'Crashlytics'
@@ -57,4 +56,3 @@ post_install do |installer|
     end
   end
 end
-
