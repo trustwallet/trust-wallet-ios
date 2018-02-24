@@ -85,6 +85,7 @@ class NewTokenViewController: FormViewController {
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.decimals) { [unowned self] in
                 $0.add(rule: RuleRequired())
+                $0.add(rule: RuleMaxLength(maxLength: 32))
                 $0.validationOptions = .validatesOnDemand
                 $0.title = NSLocalizedString("Decimals", value: "Decimals", comment: "")
                 $0.cell.textField.keyboardType = .decimalPad
