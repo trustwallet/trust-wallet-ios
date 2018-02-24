@@ -133,8 +133,11 @@ class TransactionConfigurator {
         var value = transaction.value
         if let balance = session.balance?.value,
             balance == transaction.value {
-            // user tries to send max
             value = transaction.value - configuration.gasLimit * configuration.gasPrice
+            //We work only with positive numbers.
+            if value.sign == .minus {
+                value = BigInt(value.magnitude)
+            }
         }
         return value
     }
@@ -195,11 +198,11 @@ class TransactionConfigurator {
         switch transaction.transferType {
         case .ether:
             totalGasValue += transaction.value
-            return totalGasValue <= balance.value
+            return totalGasValue < balance.value
         case .token(let token):
             let tokenValue = transaction.value
-            let isEnoughOfEther = totalGasValue <= balance.value
-            let isEnoughOfTokens = tokenValue <= token.valueBigInt
+            let isEnoughOfEther = totalGasValue < balance.value
+            let isEnoughOfTokens = tokenValue < token.valueBigInt
             return isEnoughOfTokens && isEnoughOfEther
         }
     }
