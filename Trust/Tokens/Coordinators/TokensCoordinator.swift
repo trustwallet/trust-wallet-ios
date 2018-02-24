@@ -54,29 +54,30 @@ class TokensCoordinator: Coordinator {
         navigationController.viewControllers = [rootViewController]
     }
 
-    func newTokenViewController() -> NewTokenViewController {
-        let controller = NewTokenViewController()
+    func newTokenViewController(token: ERC20Token?) -> NewTokenViewController {
+        let controller = NewTokenViewController(token: token)
         controller.delegate = self
         return controller
     }
 
     func editTokenViewController(token: TokenItem) -> NewTokenViewController {
-        let controller = newTokenViewController()
         switch token {
         case .token(let token):
-            guard let address = Address(string: token.contract) else {
-                return controller
-            }
-            let token = ERC20Token(contract: address, name: token.name, symbol: token.symbol, decimals: token.decimals)
-            controller.placeholder = token
-        default:
-            break
+            let token: ERC20Token? = {
+                guard let address = Address(string: token.contract) else {
+                    return .none
+                }
+                return ERC20Token(contract: address, name: token.name, symbol: token.symbol, decimals: token.decimals)
+            }()
+            return newTokenViewController(token: token)
+        case .nonFungibleTokens:
+            // Disabled to edit.
+            return newTokenViewController(token: .none)
         }
-        return controller
     }
 
     @objc func addToken() {
-        let controller = newTokenViewController()
+        let controller = newTokenViewController(token: .none)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .formSheet

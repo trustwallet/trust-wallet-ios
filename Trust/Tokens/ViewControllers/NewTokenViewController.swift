@@ -11,14 +11,9 @@ protocol NewTokenViewControllerDelegate: class {
 
 class NewTokenViewController: FormViewController {
 
-    var viewModel = NewTokenViewModel()
-    var placeholder: ERC20Token? {
-        didSet {
-            if self.placeholder != nil {
-                viewModel = NewTokenViewModel(isEditing: true)
-            }
-        }
-    }
+    lazy var viewModel: NewTokenViewModel = {
+        return NewTokenViewModel(token: token)
+    }()
 
     private struct Values {
         static let contract = "contract"
@@ -42,6 +37,13 @@ class NewTokenViewController: FormViewController {
         return form.rowBy(tag: Values.decimals) as? TextFloatLabelRow
     }
 
+    private let token: ERC20Token?
+
+    init(token: ERC20Token?) {
+        self.token = token
+        super.init(nibName: nil, bundle: nil)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -56,39 +58,37 @@ class NewTokenViewController: FormViewController {
 
             +++ Section()
 
-            <<< AppFormAppearance.textFieldFloat(tag: Values.contract) {
+            <<< AppFormAppearance.textFieldFloat(tag: Values.contract) { [unowned self] in
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
                 $0.title = NSLocalizedString("Contract Address", value: "Contract Address", comment: "")
-                $0.value = self.placeholder?.contract.description
+                $0.value = self.viewModel.contract
             }.cellUpdate { cell, _ in
                 cell.textField.textAlignment = .left
                 cell.textField.rightView = recipientRightView
                 cell.textField.rightViewMode = .always
             }
 
-            <<< AppFormAppearance.textFieldFloat(tag: Values.name) {
+            <<< AppFormAppearance.textFieldFloat(tag: Values.name) { [unowned self] in
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
                 $0.title = NSLocalizedString("Name", value: "Name", comment: "")
-                $0.value = self.placeholder?.name
+                $0.value = self.viewModel.name
             }
 
-            <<< AppFormAppearance.textFieldFloat(tag: Values.symbol) {
+            <<< AppFormAppearance.textFieldFloat(tag: Values.symbol) { [unowned self] in
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
                 $0.title = NSLocalizedString("Symbol", value: "Symbol", comment: "")
-                $0.value = self.placeholder?.symbol
+                $0.value = self.viewModel.symbol
             }
 
-            <<< AppFormAppearance.textFieldFloat(tag: Values.decimals) {
+            <<< AppFormAppearance.textFieldFloat(tag: Values.decimals) { [unowned self] in
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
                 $0.title = NSLocalizedString("Decimals", value: "Decimals", comment: "")
                 $0.cell.textField.keyboardType = .decimalPad
-                if let decimals = self.placeholder?.decimals {
-                    $0.value = "\(decimals)"
-                }
+                $0.value = self.viewModel.decimals
             }
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(finish))
@@ -138,6 +138,10 @@ class NewTokenViewController: FormViewController {
     private func updateContractValue(value: String) {
         contractRow?.value = value
         contractRow?.reload()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
