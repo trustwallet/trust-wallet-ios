@@ -4,7 +4,6 @@ PODS:
     - Result (~> 3.0)
   - BigInt (3.0.1):
     - SipHash (~> 1.2)
-  - BonMot (5.0)
   - Branch (0.22.5):
     - Branch/Core (= 0.22.5)
   - Branch/Core (0.22.5)
@@ -53,7 +52,6 @@ PODS:
 DEPENDENCIES:
   - APIKit
   - BigInt (~> 3.0)
-  - BonMot (~> 5.0)
   - Branch
   - Crashlytics
   - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift`, branch `master`)
@@ -107,7 +105,6 @@ SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   APIKit: 7460983f490d3bde6aaaaa4164d18c9865a6f91d
   BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
-  BonMot: 3ff354572f2aa9295d3760947f7578490cb810be
   Branch: 4f0482418d99e77d15b0e6065ef216c10e24797b
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   CryptoSwift: 475ae2a25439f52412686d68b854c0ca724c8dfd
@@ -136,6 +133,6 @@ SPEC CHECKSUMS:
   TrustKeystore: b9fc8e0d72de3e8f9c97f46802172d6f14a004aa
   TrustWeb3Provider: ac0bdf19b4c6c4d6ec0f03ddb85b83e32bda3a9a
 
-PODFILE CHECKSUM: 96387e48b1c54a170c146c01f8b7f294590cac00
+PODFILE CHECKSUM: f6ba1746f62eeaaabee0dc8db12e09eb1e17a0e8
 
 COCOAPODS: 1.4.0
