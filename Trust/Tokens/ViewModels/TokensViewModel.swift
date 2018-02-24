@@ -13,7 +13,7 @@ struct TokensViewModel {
     let tokens: [TokenObject]
     let tickers: [String: CoinTicker]?
     let nonFungibleTokens: [NonFungibleToken]
-    var config: Config?
+    var config = Config()
 
     init(
         config: Config?,
@@ -21,7 +21,9 @@ struct TokensViewModel {
         nonFungibleTokens: [NonFungibleToken],
         tickers: [String: CoinTicker]?
     ) {
-        self.config = config
+        if let cfg = config {
+            self.config = cfg
+        }
         self.tokens = tokens
         self.nonFungibleTokens = nonFungibleTokens
         self.tickers = tickers
@@ -103,10 +105,8 @@ struct TokensViewModel {
         let token = item(for: row, section: section)
         switch token {
         case .token(let token):
-            if let config = self.config {
-                if token.symbol == config.server.symbol {
-                    return false
-                }
+            if token.symbol == config.server.symbol {
+                return false
             }
             return token.isCustom
         case .nonFungibleTokens:
