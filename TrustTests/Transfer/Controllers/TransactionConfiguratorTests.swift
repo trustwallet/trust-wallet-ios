@@ -47,17 +47,23 @@ class TransactionConfiguratorTests: XCTestCase {
     }
     
     func testBalanceValidationWithETHTransaction() {
-        let ethBalance = TransactionConfigurator(session: .makeWithEthBalance(), account: .make(), transaction: .make(gasLimit: BigInt(90000), gasPrice: .none))
+        let ethBalance = TransactionConfigurator(session: .makeWithEthBalance(amount: "10000000000000000000"), account: .make(), transaction: .make(gasLimit: BigInt(90000), gasPrice: .none))
         XCTAssertEqual(true, ethBalance.isValidBalance())
     }
     
     func testBalanceValidationWithTokensTransaction() {
-        let ethBalanceForTokens = TransactionConfigurator(session: .makeWithEthBalance(), account: .make(), transaction: .makeToken(gasLimit: BigInt(90000), gasPrice: .none))
+        let ethBalanceForTokens = TransactionConfigurator(session: .makeWithEthBalance(amount: "10000000000000000000"), account: .make(), transaction: .makeToken(gasLimit: BigInt(90000), gasPrice: .none))
         XCTAssertEqual(true, ethBalanceForTokens.isValidBalance())
     }
     
     func testBalanceValidationForNotEnoughtTokensTransaction() {
-        let ethBalanceForTokensNotEnought = TransactionConfigurator(session: .makeWithEthBalance(), account: .make(), transaction: .makeNotEnoughtToken(gasLimit: BigInt(90000), gasPrice: .none))
+        let ethBalanceForTokensNotEnought = TransactionConfigurator(session: .makeWithEthBalance(amount: "1000000"), account: .make(), transaction: .makeNotEnoughtToken(gasLimit: BigInt(90000), gasPrice: .none))
         XCTAssertEqual(false, ethBalanceForTokensNotEnought.isValidBalance())
+    }
+    
+    func testValueToSent() {
+        let configurator = TransactionConfigurator(session: .makeWithEthBalance(amount:"1"), account: .make(), transaction: .make(gasLimit: BigInt(900000000000000), gasPrice: .none))
+        let value = configurator.valueToSend()
+        XCTAssertEqual(.plus, value.sign)
     }
 }

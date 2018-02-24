@@ -22,10 +22,11 @@ extension WalletSession {
     static func makeWithEthBalance(
         account: Trust.Wallet = .make(),
         config: Config = .make(),
-        web3: Web3Swift = Web3Swift()
+        web3: Web3Swift = Web3Swift(),
+        amount: String
         ) -> WalletSession {
         let balance =  BalanceCoordinator(account: account, config: config, storage: FakeTokensDataStore())
-        balance.balance = Balance(value:BigInt("11274902618710000000000"))
+        balance.balance = Balance(value:BigInt(amount)!)
         return WalletSession(
             account: account,
             config: config,
