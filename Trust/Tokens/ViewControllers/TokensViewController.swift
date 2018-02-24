@@ -143,10 +143,10 @@ extension TokensViewController: UITableViewDelegate {
         }
 
         let token = viewModel.item(for: indexPath.row, section: indexPath.section)
-        let delete = UITableViewRowAction(style: .destructive, title: "Delete") {[unowned self] (_, _) in
+        let delete = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Delete", value: "Delete", comment: "")) {[unowned self] (_, _) in
             self.delegate?.didDelete(token: token, in: self)
         }
-        let edit = UITableViewRowAction(style: .normal, title: "Edit") {[unowned self] (_, _) in
+        let edit = UITableViewRowAction(style: .normal, title: NSLocalizedString("Edit", value: "Edit", comment: "")) {[unowned self] (_, _) in
             self.delegate?.didEdit(token: token, in: self)
         }
         return [delete, edit]
