@@ -13,12 +13,15 @@ struct TokensViewModel {
     let tokens: [TokenObject]
     let tickers: [String: CoinTicker]?
     let nonFungibleTokens: [NonFungibleToken]
+    var config: Config?
 
     init(
+        config: Config?,
         tokens: [TokenObject],
         nonFungibleTokens: [NonFungibleToken],
         tickers: [String: CoinTicker]?
     ) {
+        self.config = config
         self.tokens = tokens
         self.nonFungibleTokens = nonFungibleTokens
         self.tickers = tickers
@@ -96,11 +99,16 @@ struct TokensViewModel {
         return tickers?[token.contract]
     }
 
-    func canDelete(for row: Int, section: Int) -> Bool {
+    func canEdit(for row: Int, section: Int) -> Bool {
         let token = item(for: row, section: section)
         switch token {
         case .token(let token):
-             return token.isCustom
+            if let config = self.config {
+                if token.symbol == config.server.symbol {
+                    return false
+                }
+            }
+            return token.isCustom
         case .nonFungibleTokens:
             return false
         }

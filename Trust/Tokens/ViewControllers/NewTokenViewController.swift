@@ -11,7 +11,14 @@ protocol NewTokenViewControllerDelegate: class {
 
 class NewTokenViewController: FormViewController {
 
-    let viewModel = NewTokenViewModel()
+    var viewModel = NewTokenViewModel()
+    var placeholder: ERC20Token? {
+        didSet {
+            if self.placeholder != nil {
+                viewModel = NewTokenViewModel(isEditing: true)
+            }
+        }
+    }
 
     private struct Values {
         static let contract = "contract"
@@ -53,6 +60,7 @@ class NewTokenViewController: FormViewController {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
                 $0.title = NSLocalizedString("Contract Address", value: "Contract Address", comment: "")
+                $0.value = self.placeholder?.contract.description
             }.cellUpdate { cell, _ in
                 cell.textField.textAlignment = .left
                 cell.textField.rightView = recipientRightView
@@ -63,12 +71,14 @@ class NewTokenViewController: FormViewController {
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
                 $0.title = NSLocalizedString("Name", value: "Name", comment: "")
+                $0.value = self.placeholder?.name
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.symbol) {
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
                 $0.title = NSLocalizedString("Symbol", value: "Symbol", comment: "")
+                $0.value = self.placeholder?.symbol
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.decimals) {
@@ -76,12 +86,15 @@ class NewTokenViewController: FormViewController {
                 $0.validationOptions = .validatesOnDemand
                 $0.title = NSLocalizedString("Decimals", value: "Decimals", comment: "")
                 $0.cell.textField.keyboardType = .decimalPad
+                if let decimals = self.placeholder?.decimals {
+                    $0.value = "\(decimals)"
+                }
             }
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(addToken))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(finish))
     }
 
-    @objc func addToken() {
+    @objc func finish() {
         guard form.validate().isEmpty else {
             return
         }
@@ -101,14 +114,12 @@ class NewTokenViewController: FormViewController {
             symbol: symbol,
             decimals: decimals
         )
-
         delegate?.didAddToken(token: token, in: self)
     }
 
     @objc func openReader() {
         let controller = QRCodeReaderViewController()
         controller.delegate = self
-
         present(controller, animated: true, completion: nil)
     }
 
