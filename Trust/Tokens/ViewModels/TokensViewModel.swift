@@ -13,17 +13,15 @@ struct TokensViewModel {
     let tokens: [TokenObject]
     let tickers: [String: CoinTicker]?
     let nonFungibleTokens: [NonFungibleToken]
-    var config = Config()
+    let config: Config
 
     init(
-        config: Config?,
+        config: Config = Config(),
         tokens: [TokenObject],
         nonFungibleTokens: [NonFungibleToken],
         tickers: [String: CoinTicker]?
     ) {
-        if let cfg = config {
-            self.config = cfg
-        }
+        self.config = config
         self.tokens = tokens
         self.nonFungibleTokens = nonFungibleTokens
         self.tickers = tickers

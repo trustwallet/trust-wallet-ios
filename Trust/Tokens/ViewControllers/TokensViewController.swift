@@ -17,7 +17,7 @@ class TokensViewController: UIViewController {
 
     private let dataStore: TokensDataStore
 
-    var viewModel: TokensViewModel = TokensViewModel(config: nil, tokens: [], nonFungibleTokens: [], tickers: .none) {
+    var viewModel: TokensViewModel = TokensViewModel(tokens: [], nonFungibleTokens: [], tickers: .none) {
         didSet {
             refreshView(viewModel: viewModel)
         }
