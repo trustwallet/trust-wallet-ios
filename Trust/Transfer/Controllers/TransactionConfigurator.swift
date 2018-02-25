@@ -203,6 +203,7 @@ class TransactionConfigurator {
         case .ether:
             if transaction.value > balance.value {
                 etherSufficient = false
+                gasSufficient = false
             } else {
                 if totalGasValue + transaction.value > balance.value {
                     gasSufficient = false
