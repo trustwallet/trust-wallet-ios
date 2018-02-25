@@ -45,14 +45,14 @@ class TransactionConfiguratorTests: XCTestCase {
         let emptyBalance = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(gasLimit: BigInt(90000), gasPrice: .none))
         let status = emptyBalance.balanceValidStatus()
         XCTAssertEqual(true, status.sufficient)
-        XCTAssertEqual(.none, status.insufficientTextKey)
+        XCTAssertEqual(.correct, status.insufficientTextKey)
     }
     
     func testBalanceValidationWithEthTransaction() {
         let ethBalance = TransactionConfigurator(session: .makeWithEthBalance(amount: "10000000000000000000"), account: .make(), transaction: .make(gasLimit: BigInt(90000), gasPrice: .none))
         let status = ethBalance.balanceValidStatus()
         XCTAssertEqual(true, status.sufficient)
-        XCTAssertEqual(.none, status.insufficientTextKey)
+        XCTAssertEqual(.correct, status.insufficientTextKey)
     }
 
     func testBalanceValidationWithInsufficientEthTransaction() {
@@ -73,7 +73,7 @@ class TransactionConfiguratorTests: XCTestCase {
         let ethBalanceForTokens = TransactionConfigurator(session: .makeWithEthBalance(amount: "10000000000000000000"), account: .make(), transaction: .makeToken(gasLimit: BigInt(90000), gasPrice: BigInt(21000000000)))
         let status = ethBalanceForTokens.balanceValidStatus()
         XCTAssertEqual(true, status.sufficient)
-        XCTAssertEqual(.none, status.insufficientTextKey)
+        XCTAssertEqual(.correct, status.insufficientTextKey)
     }
     
     func testBalanceValidationWithInsufficientTokensTransaction() {

@@ -13,7 +13,7 @@ extension BalanceStatus {
         case insufficientEther
         case insufficientGas
         case insufficientToken
-        case none
+        case correct
 
         var string: String {
             switch self {
@@ -23,14 +23,10 @@ extension BalanceStatus {
                 return "send.error.insufficientGas"
             case .insufficientToken:
                 return "send.error.insufficientToken"
-            case .none:
+            case .correct:
                 return ""
             }
         }
-    }
-
-    private func _L(_ key: String, value: String? = .none) -> String {
-        return NSLocalizedString(key, value: value ?? key, comment: "")
     }
 
     var sufficient: Bool {
@@ -59,18 +55,20 @@ extension BalanceStatus {
                 return .insufficientGas
             }
         }
-        return .none
+        return .correct
     }
 
     var insufficientText: String {
         let key = insufficientTextKey
-        if key == Key.insufficientEther {
-            return _L(key.string, value: "Insufficient ethers")
-        } else if key == Key.insufficientGas {
-            return _L(key.string, value: "Insufficient ethers for gas fee")
-        } else if key == Key.insufficientToken {
-            return _L(key.string, value: "Insufficient tokens")
+        switch key {
+        case .insufficientEther:
+            return NSLocalizedString(key.string, value: "Insufficient ethers", comment: "")
+        case .insufficientGas:
+            return NSLocalizedString(key.string, value: "Insufficient ethers for gas fee", comment: "")
+        case .insufficientToken:
+            return NSLocalizedString(key.string, value: "Insufficient tokens", comment: "")
+        case .correct:
+            return ""
         }
-        return ""
     }
 }
