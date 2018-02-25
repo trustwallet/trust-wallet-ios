@@ -43,22 +43,51 @@ class TransactionConfiguratorTests: XCTestCase {
     
     func testBalanceValidationWithNoBalance() {
         let emptyBalance = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(gasLimit: BigInt(90000), gasPrice: .none))
-        XCTAssertEqual(true, emptyBalance.isValidBalance())
+        let status = emptyBalance.balanceValidStatus()
+        XCTAssertEqual(true, status.sufficient)
+        XCTAssertEqual(.correct, status.insufficientTextKey)
     }
     
-    func testBalanceValidationWithETHTransaction() {
+    func testBalanceValidationWithEthTransaction() {
         let ethBalance = TransactionConfigurator(session: .makeWithEthBalance(amount: "10000000000000000000"), account: .make(), transaction: .make(gasLimit: BigInt(90000), gasPrice: .none))
-        XCTAssertEqual(true, ethBalance.isValidBalance())
+        let status = ethBalance.balanceValidStatus()
+        XCTAssertEqual(true, status.sufficient)
+        XCTAssertEqual(.correct, status.insufficientTextKey)
+    }
+
+    func testBalanceValidationWithInsufficientEthTransaction() {
+        let ethBalance = TransactionConfigurator(session: .makeWithEthBalance(amount: "900000"), account: .make(), transaction: .make(value: BigInt(1000000), gasLimit: BigInt(90000), gasPrice: .none))
+        let status = ethBalance.balanceValidStatus()
+        XCTAssertEqual(false, status.sufficient)
+        XCTAssertEqual(.insufficientEther, status.insufficientTextKey)
+    }
+
+    func testBalanceValidationWithInsufficientGasTransaction() {
+        let ethBalance = TransactionConfigurator(session: .makeWithEthBalance(amount: "100000000000000"), account: .make(), transaction: .make(gasLimit: BigInt(100000000000000), gasPrice: BigInt(21000000000)))
+        let status = ethBalance.balanceValidStatus()
+        XCTAssertEqual(false, status.sufficient)
+        XCTAssertEqual(.insufficientGas, status.insufficientTextKey)
     }
     
     func testBalanceValidationWithTokensTransaction() {
-        let ethBalanceForTokens = TransactionConfigurator(session: .makeWithEthBalance(amount: "10000000000000000000"), account: .make(), transaction: .makeToken(gasLimit: BigInt(90000), gasPrice: .none))
-        XCTAssertEqual(true, ethBalanceForTokens.isValidBalance())
+        let ethBalanceForTokens = TransactionConfigurator(session: .makeWithEthBalance(amount: "10000000000000000000"), account: .make(), transaction: .makeToken(gasLimit: BigInt(90000), gasPrice: BigInt(21000000000)))
+        let status = ethBalanceForTokens.balanceValidStatus()
+        XCTAssertEqual(true, status.sufficient)
+        XCTAssertEqual(.correct, status.insufficientTextKey)
     }
     
-    func testBalanceValidationForNotEnoughtTokensTransaction() {
-        let ethBalanceForTokensNotEnought = TransactionConfigurator(session: .makeWithEthBalance(amount: "1000000"), account: .make(), transaction: .makeNotEnoughtToken(gasLimit: BigInt(90000), gasPrice: .none))
-        XCTAssertEqual(false, ethBalanceForTokensNotEnought.isValidBalance())
+    func testBalanceValidationWithInsufficientTokensTransaction() {
+        let ethBalanceForTokensNotEnough = TransactionConfigurator(session: .makeWithEthBalance(amount: "1000000"), account: .make(), transaction: .makeNotEnoughtToken(gasLimit: BigInt(90000), gasPrice: .none))
+        let status = ethBalanceForTokensNotEnough.balanceValidStatus()
+        XCTAssertEqual(false, status.sufficient)
+        XCTAssertEqual(.insufficientToken, status.insufficientTextKey)
+    }
+
+    func testBalanceValidationForTokensWithInsufficientGasTransaction() {
+        let emptyBalance = TransactionConfigurator(session: .makeWithEthBalance(amount: "1"), account: .make(), transaction: .makeToken(gasLimit: BigInt(90000), gasPrice: BigInt(21000000000)))
+        let status = emptyBalance.balanceValidStatus()
+        XCTAssertEqual(false, status.sufficient)
+        XCTAssertEqual(.insufficientGas, status.insufficientTextKey)
     }
     
     func testValueToSent() {

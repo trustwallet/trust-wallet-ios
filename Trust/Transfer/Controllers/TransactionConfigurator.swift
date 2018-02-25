@@ -187,23 +187,38 @@ class TransactionConfigurator {
         self.configuration = configuration
     }
 
-    func isValidBalance() -> Bool {
+    func balanceValidStatus() -> BalanceStatus {
+        var etherSufficient = true
+        var gasSufficient = true
+        var tokenSufficient = true
+
         guard let balance = session.balance else {
-            return true
+            return .ether(etherSufficient: etherSufficient, gasSufficient: gasSufficient)
         }
         let transaction = previewTransaction()
-        var totalGasValue = transaction.gasPrice * transaction.gasLimit
+        let totalGasValue = transaction.gasPrice * transaction.gasLimit
 
         //We check if it is ETH or token operation.
         switch transaction.transferType {
         case .ether:
-            totalGasValue += transaction.value
-            return totalGasValue < balance.value
+            if transaction.value > balance.value {
+                etherSufficient = false
+                gasSufficient = false
+            } else {
+                if totalGasValue + transaction.value > balance.value {
+                    gasSufficient = false
+                }
+            }
+            return .ether(etherSufficient: etherSufficient, gasSufficient: gasSufficient)
         case .token(let token):
-            let tokenValue = transaction.value
-            let isEnoughOfEther = totalGasValue < balance.value
-            let isEnoughOfTokens = tokenValue < token.valueBigInt
-            return isEnoughOfTokens && isEnoughOfEther
+            if totalGasValue > balance.value {
+                etherSufficient = false
+                gasSufficient = false
+            }
+            if transaction.value > token.valueBigInt {
+                tokenSufficient = false
+            }
+            return .token(tokenSufficient: tokenSufficient, gasSufficient: gasSufficient)
         }
     }
 }
