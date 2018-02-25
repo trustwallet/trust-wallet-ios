@@ -28,6 +28,7 @@ class BrowserViewController: UIViewController {
         )
         webView.allowsBackForwardNavigationGestures = true
         webView.navigationDelegate = self
+        webView.uiDelegate = self
         if isDebug {
             webView.configuration.preferences.setValue(true, forKey: Keys.developerExtrasEnabled)
         }
@@ -234,6 +235,22 @@ extension BrowserViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         handleError(error: error)
+    }
+}
+
+extension BrowserViewController: WKUIDelegate {
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+
+        if let isMainFrame = navigationAction.targetFrame?.isMainFrame, isMainFrame {
+            webView.load(navigationAction.request)
+            return nil
+        } else {
+            let newWebview = WKWebView(frame: webView.bounds, configuration: configuration)
+            self.webView.removeFromSuperview()
+            self.webView = newWebview
+            self.view.addSubview(newWebview)
+            return newWebview
+        }
     }
 }
 
