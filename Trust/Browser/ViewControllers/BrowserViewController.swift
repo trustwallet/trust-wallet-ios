@@ -240,17 +240,10 @@ extension BrowserViewController: WKNavigationDelegate {
 
 extension BrowserViewController: WKUIDelegate {
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-
-        if let isMainFrame = navigationAction.targetFrame?.isMainFrame, isMainFrame {
+        if navigationAction.targetFrame == nil {
             webView.load(navigationAction.request)
-            return nil
-        } else {
-            let newWebview = WKWebView(frame: webView.bounds, configuration: configuration)
-            self.webView.removeFromSuperview()
-            self.webView = newWebview
-            self.view.addSubview(newWebview)
-            return newWebview
         }
+        return nil
     }
 }
 
