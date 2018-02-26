@@ -89,16 +89,13 @@ class TokensViewController: UIViewController {
         refreshControl.beginRefreshing()
         fetch()
     }
-
     func fetch() {
         self.startLoading()
         self.dataStore.fetch()
     }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
     func refreshHeaderAndFooterView() {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
@@ -136,6 +133,9 @@ class TokensViewController: UIViewController {
                 self?.endLoading(animated: true, error: error, completion: nil)
             }
             self?.refreshHeaderAndFooterView()
+            if strongSelf.refreshControl.isRefreshing {
+                strongSelf.refreshControl.endRefreshing()
+            }
         }
     }
 }
