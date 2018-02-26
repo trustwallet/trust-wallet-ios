@@ -70,9 +70,6 @@ class TokensCoordinator: Coordinator {
                 return ERC20Token(contract: address, name: token.name, symbol: token.symbol, decimals: token.decimals)
             }()
             return newTokenViewController(token: token)
-        case .nonFungibleTokens:
-            // Disabled to edit.
-            return newTokenViewController(token: .none)
         }
     }
 
@@ -120,8 +117,6 @@ extension TokensCoordinator: TokensViewControllerDelegate {
             case .token:
                 delegate?.didPress(for: .send(type: .token(token)), in: self)
             }
-        case .nonFungibleTokens(let token):
-            delegate?.didPress(on: token, in: self)
         }
     }
 
@@ -130,7 +125,6 @@ extension TokensCoordinator: TokensViewControllerDelegate {
         case .token(let token):
             storage.delete(tokens: [token])
             tokensViewController.fetch()
-        case .nonFungibleTokens: break
         }
     }
 

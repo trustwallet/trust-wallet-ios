@@ -6,7 +6,6 @@ import RealmSwift
 
 enum TokenItem {
     case token(TokenObject)
-    case nonFungibleTokens(NonFungibleToken)
 }
 
 struct TokensViewModel {
@@ -93,7 +92,7 @@ struct TokensViewModel {
     /// - Returns: `Double` price of the token.
     private func amount(for token: TokenObject) -> Double {
         guard let tickers = realmDataStore.tickers else { return 0 }
-        guard !token.valueBigInt.isZero, let tickersSymbol = tickers[token.contract] else { return 0 }
+        guard let tickersSymbol = tickers[token.contract] else { return 0 }
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
         let price = Double(tickersSymbol.price) ?? 0
         return tokenValue * price
@@ -111,7 +110,7 @@ struct TokensViewModel {
     /// - Parameters:
     ///   - path: of the item.
     /// - Returns: `TokenItem` in the current data source.
-    func item(for path:IndexPath) -> TokenItem {
+    func item(for path: IndexPath) -> TokenItem {
         return .token(tokens[path.row])
     }
     /// Can cell be editable.
@@ -119,14 +118,11 @@ struct TokensViewModel {
     /// - Parameters:
     ///   - path: of the item.
     /// - Returns: `Bool` if cell is editable.
-    func canEdit(for path:IndexPath) -> Bool {
+    func canEdit(for path: IndexPath) -> Bool {
         let token = item(for: path)
         switch token {
         case .token(let token):
             return token.isCustom
-        case .nonFungibleTokens:
-            return false
         }
-        return true
     }
 }
