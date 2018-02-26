@@ -102,7 +102,6 @@ class TokensViewController: UIViewController {
         header.amountLabel.text = viewModel.headerBalance
         footer.textLabel.text = viewModel.footerTitle
     }
-
     @objc func missingToken() {
         delegate?.didPressAddToken(in: self)
     }
@@ -125,6 +124,7 @@ class TokensViewController: UIViewController {
                     let model = strongSelf.viewModel.cellViewModel(for: indexPath)
                     if let cell = tableView.cellForRow(at: indexPath) as? TokenViewCell {
                         cell.configure(viewModel: model)
+                        cell.flashBackground() 
                     }
                 }
                 tableView.endUpdates()
