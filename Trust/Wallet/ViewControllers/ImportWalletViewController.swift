@@ -144,7 +144,7 @@ class ImportWalletViewController: FormViewController {
                  return self.segmentRow?.value != ImportSelectionType.watch.title
             })
             }.cellUpdate { cell, _ in
-                cell.textField.placeholder = NSLocalizedString("Ethereum Address", value: "Ethereum Address", comment: "")
+                cell.textField.placeholder = self.viewModel.watchAddressPlaceholder
                 cell.textField.rightView = recipientRightView
                 cell.textField.rightViewMode = .always
             }
