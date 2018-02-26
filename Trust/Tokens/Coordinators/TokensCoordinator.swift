@@ -19,7 +19,6 @@ class TokensCoordinator: Coordinator {
 
     lazy var tokensViewController: TokensViewController = {
         let controller = TokensViewController(
-            account: session.account,
             dataStore: storage
         )
         controller.delegate = self

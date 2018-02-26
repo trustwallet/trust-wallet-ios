@@ -125,4 +125,13 @@ struct TokensViewModel {
             return token.isCustom
         }
     }
+    /// View model for cell.
+    ///
+    /// - Parameters:
+    ///   - path: of the item.
+    /// - Returns: `TokenViewCellViewModel` model to update cell.
+    func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
+        let token = tokens[path.row]
+        return TokenViewCellViewModel(token: token, ticker: realmDataStore.coinTicker(for: token))
+    }
 }
