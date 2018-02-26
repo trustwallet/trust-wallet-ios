@@ -147,7 +147,11 @@ open class EtherKeystore: Keystore {
                 }
             }
         case .watch(let address):
-            self.watchAddresses = [watchAddresses, [address.description]].flatMap { $0 }
+            let addressString = address.description
+            guard !watchAddresses.contains(addressString) else {
+                return completion(.failure(.duplicateAccount))
+            }
+            self.watchAddresses = [watchAddresses, [addressString]].flatMap { $0 }
             completion(.success(Wallet(type: .watch(address))))
         }
     }
