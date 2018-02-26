@@ -101,7 +101,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
         let blur = UIBlurEffect(style: .dark)
         let view = UIVisualEffectView(effect: blur)
 
-        view.frame = image.bounds
+        view.frame = CGRect(x: -130, y: -5, width: Layout.widthAndHeight, height: 10) // Needed to postion blur in corrct space, setting to image.bounds = 0,0,0,0, thus the postion is incorrect.
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.alpha = CGFloat(0.95)
 
