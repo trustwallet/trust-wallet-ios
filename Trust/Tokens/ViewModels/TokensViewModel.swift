@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 enum TokenItem {
     case token(TokenObject)
@@ -9,24 +10,74 @@ enum TokenItem {
 }
 
 struct TokensViewModel {
-
-    let tokens: [TokenObject]
-    let tickers: [String: CoinTicker]?
-    let nonFungibleTokens: [NonFungibleToken]
+    /// config of a `TokensViewModel` to give access configuration info.
     let config: Config
-
+    /// realmDataStore of a `TokensViewModel` to give access to Realm instance.
+    let realmDataStore: TokensDataStore
+    /// tokens of a `TokensViewModel` to represent current tokens in the data store.
+    let tokens: Results<TokenObject>
+    /// tokensObserver of a `TokensViewModel` to track changes in the data store.
+    var tokensObserver: NotificationToken?
+    /// tableView of a `TokensViewModel` reference to the UITableView.
+    weak var tableView: UITableView!
+    /// headerBalance of a `TokensViewModel` color of the balance background view.
+    var headerBalance: String? {
+        return amount
+    }
+    /// headerBalance of a `TokensViewModel` total amount in fiat value.
+    var headerBalanceTextColor: UIColor {
+        return Colors.black
+    }
+    /// headerBackgroundColor of a `TokensViewModel` total amount in fiat value.
+    var headerBackgroundColor: UIColor {
+        return .white
+    }
+    /// headerBalanceFont of a `TokensViewModel` font for balance lable.
+    var headerBalanceFont: UIFont {
+        return UIFont.systemFont(ofSize: 26, weight: .medium)
+    }
+    /// title of a `TokensViewModel` title of the view controller.
+    var title: String {
+        return NSLocalizedString("tokens.navigation.title", value: "Tokens", comment: "")
+    }
+    /// backgroundColor of a `TokensViewModel` color of the background.
+    var backgroundColor: UIColor {
+        return .white
+    }
+    /// hasContent of a `TokensViewModel` where to show empty state for table view.
+    var hasContent: Bool {
+        return !tokens.isEmpty
+    }
+    /// footerTitle of a `TokensViewModel` localized footer lable title.
+    var footerTitle: String {
+        return NSLocalizedString("tokens.footer.label.title", value: "Tokens will appear automagically. + to add manually.", comment: "")
+    }
+    /// footerTextColor of a `TokensViewModel` footer view text color.
+    var footerTextColor: UIColor {
+        return Colors.black
+    }
+    /// footerTextFont of a `TokensViewModel` footer lable text font.
+    var footerTextFont: UIFont {
+        return UIFont.systemFont(ofSize: 13, weight: .light)
+    }
+    /// Custom init
+    ///
+    /// - Parameters:
+    ///   - config: current config of the app.
+    ///   - realmDataStore: data store.
     init(
         config: Config = Config(),
-        tokens: [TokenObject],
-        nonFungibleTokens: [NonFungibleToken],
-        tickers: [String: CoinTicker]?
+        realmDataStore: TokensDataStore
     ) {
         self.config = config
-        self.tokens = tokens
-        self.nonFungibleTokens = nonFungibleTokens
-        self.tickers = tickers
+        self.realmDataStore = realmDataStore
+        self.tokens = realmDataStore.tokens
     }
-
+    /// Start observation of the tokens.
+    mutating func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<TokenObject>>) -> Void) {
+        tokensObserver = tokens.observe(block)
+    }
+    /// amount of a `TokensViewModel` total amount of the all tokens in current fiat value.
     private var amount: String? {
         var totalAmount: Double = 0
         tokens.forEach { token in
@@ -35,92 +86,47 @@ struct TokensViewModel {
         guard totalAmount != 0 else { return "--" }
         return CurrencyFormatter.formatter.string(from: NSNumber(value: totalAmount))
     }
-
+    /// Amount in fiar value per token.
+    ///
+    /// - Parameters:
+    ///   - token: current token to fetch price for.
+    /// - Returns: `Double` price of the token.
     private func amount(for token: TokenObject) -> Double {
-        guard let tickers = tickers else { return 0 }
+        guard let tickers = realmDataStore.tickers else { return 0 }
         guard !token.valueBigInt.isZero, let tickersSymbol = tickers[token.contract] else { return 0 }
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
         let price = Double(tickersSymbol.price) ?? 0
         return tokenValue * price
     }
-
-    var headerBalance: String? {
-        return amount
-    }
-
-    var headerBalanceTextColor: UIColor {
-        return Colors.black
-    }
-
-    var headerBackgroundColor: UIColor {
-        return .white
-    }
-
-    var headerBalanceFont: UIFont {
-        return UIFont.systemFont(ofSize: 26, weight: .medium)
-    }
-
-    var title: String {
-        return NSLocalizedString("tokens.navigation.title", value: "Tokens", comment: "")
-    }
-
-    var backgroundColor: UIColor {
-        return .white
-    }
-
-    var hasContent: Bool {
-        return !tokens.isEmpty || !nonFungibleTokens.isEmpty
-    }
-
-    var numberOfSections: Int {
-        return 2
-    }
-
+    /// Numbers of items in table view section.
+    ///
+    /// - Parameters:
+    ///   - section: for wahat section to return items count.
+    /// - Returns: `Int` number of items per section.
     func numberOfItems(for section: Int) -> Int {
-        switch section {
-        case 0:
-            return tokens.count
-        case 1:
-            return nonFungibleTokens.count
-        default: return 0
-        }
+        return tokens.count
     }
-
-    func item(for row: Int, section: Int) -> TokenItem {
-        switch section {
-        case 0:
-            return .token(tokens[row])
-        default:
-            return .nonFungibleTokens(nonFungibleTokens[row])
-        }
+    /// TokenItem for index path.
+    ///
+    /// - Parameters:
+    ///   - path: of the item.
+    /// - Returns: `TokenItem` in the current data source.
+    func item(for path:IndexPath) -> TokenItem {
+        return .token(tokens[path.row])
     }
-
-    func ticker(for token: TokenObject) -> CoinTicker? {
-        return tickers?[token.contract]
-    }
-
-    func canEdit(for row: Int, section: Int) -> Bool {
-        let token = item(for: row, section: section)
+    /// Can cell be editable.
+    ///
+    /// - Parameters:
+    ///   - path: of the item.
+    /// - Returns: `Bool` if cell is editable.
+    func canEdit(for path:IndexPath) -> Bool {
+        let token = item(for: path)
         switch token {
         case .token(let token):
-            if token.symbol == config.server.symbol {
-                return false
-            }
             return token.isCustom
         case .nonFungibleTokens:
             return false
         }
-    }
-
-    var footerTitle: String {
-        return NSLocalizedString("tokens.footer.label.title", value: "Tokens will appear automagically. + to add manually.", comment: "")
-    }
-
-    var footerTextColor: UIColor {
-        return Colors.black
-    }
-
-    var footerTextFont: UIFont {
-        return UIFont.systemFont(ofSize: 13, weight: .light)
+        return true
     }
 }

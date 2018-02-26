@@ -17,10 +17,14 @@ protocol TokensDataStoreDelegate: class {
 }
 
 class TokensDataStore {
-
     private lazy var getBalanceCoordinator: GetBalanceCoordinator = {
         return GetBalanceCoordinator(web3: self.web3)
     }()
+    /// tokens of a `TokensDataStore` to represent curent enabled tokens.
+    var tokens: Results<TokenObject> {
+        return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO"))
+            .sorted(byKeyPath: "contract", ascending: true)
+    }
     private let provider = TrustProviderFactory.makeProvider()
     private let openseaProvider = MoyaProvider<OpenseaService>()
     let account: Wallet
@@ -139,13 +143,15 @@ class TokensDataStore {
     }
     func updateDelegate() {
         tokensModel.value = enabledObject
+        /*
         let tokensViewModel = TokensViewModel(
             config: config,
             tokens: enabledObject,
             nonFungibleTokens: nonFungibleTokens,
             tickers: tickers
         )
-        delegate?.didUpdate(result: .success( tokensViewModel ))
+        //delegate?.didUpdate(result: .success( tokensViewModel ))
+         */
     }
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
@@ -184,7 +190,6 @@ class TokensDataStore {
                     dict[ticker.contract] = ticker
                     return dict
                 }
-                self.updateDelegate()
             } catch { }
         }
     }
