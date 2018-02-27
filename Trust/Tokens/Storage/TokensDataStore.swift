@@ -8,64 +8,54 @@ import BigInt
 import Moya
 import TrustKeystore
 
-enum TokenError: Error {
-    case failedToFetch
-}
-
-protocol TokensDataStoreDelegate: class {
-    func didUpdate(result: Result<TokensViewModel, TokenError>)
+/// Enum of the token actions.
+///
+/// - Cases:
+///   - updateValue: of the token.
+///   - disable: token.
+enum TokenAction {
+    case updateValue(BigInt)
+    case disable(Bool)
 }
 
 class TokensDataStore {
-    private lazy var getBalanceCoordinator: GetBalanceCoordinator = {
-        return GetBalanceCoordinator(web3: self.web3)
-    }()
     /// tokens of a `TokensDataStore` to represent curent enabled tokens.
     var tokens: Results<TokenObject> {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO"))
             .sorted(byKeyPath: "contract", ascending: true)
     }
-    private let provider = TrustProviderFactory.makeProvider()
-    private let openseaProvider = MoyaProvider<OpenseaService>()
-    let account: Wallet
+    /// config of a `TokensDataStore` current configuration of the app.
     let config: Config
-    let web3: Web3Swift
-    weak var delegate: TokensDataStoreDelegate?
+    /// realm of a `TokensDataStore` instance of the Realm database.
     let realm: Realm
-    var tickers: [String: CoinTicker]? = .none
-    var ethTimer: Timer?
-    //We should refresh balance of the ETH every 10 seconds.
-    let intervalToETHRefresh = 10.0
-    var tokensModel: Subscribable<[TokenObject]> = Subscribable(nil)
-
-    static func etherToken(for config: Config) -> TokenObject {
-        return TokenObject(
-            contract: "0x0000000000000000000000000000000000000000",
-            name: config.server.name,
-            symbol: config.server.symbol,
-            decimals: config.server.decimals,
-            value: "0",
-            isCustom: false
-        )
+    /// tickers of a `TokensDataStore` ticker for each token price in current fiat currency.
+    private var tickers: [CoinTicker] = []
+    /// objects of a `TokensDataStore` all tokens that are in Realm database.
+    var objects: [TokenObject] {
+        return realm.objects(TokenObject.self)
+            .sorted(byKeyPath: "contract", ascending: true)
+            .filter { !$0.contract.isEmpty }
     }
-
-    private var nonFungibleTokens: [NonFungibleToken] = []
-
+    /// enabledObject of a `TokensDataStore` all enabled tokens that are in Realm database.
+    var enabledObject: [TokenObject] {
+        return realm.objects(TokenObject.self)
+            .sorted(byKeyPath: "contract", ascending: true)
+            .filter { !$0.isDisabled }
+    }
+    /// Constrcutor.
+    ///
+    /// - Parameters:
+    ///   - realm: instance of the Realm database.
+    ///   - config: configuration of the app.
     init(
         realm: Realm,
-        account: Wallet,
-        config: Config,
-        web3: Web3Swift
+        config: Config
     ) {
-        self.account = account
         self.config = config
-        self.web3 = web3
         self.realm = realm
         self.addEthToken()
-        scheduledTimerForEthBalanceUpdate()
-        NotificationCenter.default.addObserver(self, selector: #selector(TokensDataStore.stopTimers), name: .UIApplicationWillResignActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TokensDataStore.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
     }
+    /// Add eth as first token.
     private func addEthToken() {
         //Check if we have previos values.
         let etherToken = TokensDataStore.etherToken(for: config)
@@ -73,95 +63,18 @@ class TokensDataStore {
             add(tokens: [etherToken])
         }
     }
-
-    var objects: [TokenObject] {
-        return realm.objects(TokenObject.self)
-            .sorted(byKeyPath: "contract", ascending: true)
-            .filter { !$0.contract.isEmpty }
-    }
-
-    var enabledObject: [TokenObject] {
-        return realm.objects(TokenObject.self)
-            .sorted(byKeyPath: "contract", ascending: true)
-            .filter { !$0.isDisabled }
-    }
-
-    static func update(in realm: Realm, tokens: [Token]) {
-        realm.beginWrite()
-        for token in tokens {
-            let update: [String: Any] = [
-                "contract": token.address.description,
-                "name": token.name,
-                "symbol": token.symbol,
-                "decimals": token.decimals,
-            ]
-            realm.create(TokenObject.self, value: update, update: true)
-        }
-        try! realm.commitWrite()
-    }
-
-    func fetch() {
-        updatePrices()
-        refreshBalance()
-    }
-
-    func refreshBalance() {
-        guard !enabledObject.isEmpty else {
-            updateDelegate()
-            return
-        }
-        let etherToken = TokensDataStore.etherToken(for: config)
-        let updateTokens = enabledObject.filter { $0 != etherToken }
-        var count = 0
-        for tokenObject in updateTokens {
-            guard let contract = Address(string: tokenObject.contract) else { return }
-            getBalanceCoordinator.getBalance(for: account.address, contract: contract) { [weak self] result in
-                guard let `self` = self else { return }
-                switch result {
-                case .success(let balance):
-                    self.update(token: tokenObject, action: .value(balance))
-                case .failure: break
-                }
-                count += 1
-                if count == updateTokens.count {
-                    self.refreshETHBalance()
-                }
-            }
-        }
-    }
-    func refreshETHBalance() {
-        self.getBalanceCoordinator.getEthBalance(for: self.account.address) {  [weak self] result in
-            guard let `self` = self else { return }
-            switch result {
-            case .success(let balance):
-                let etherToken = TokensDataStore.etherToken(for: self.config)
-                self.update(token: self.objects.first (where: { $0.contract == etherToken.contract })!, action: .value(balance.value))
-                self.updateDelegate()
-            case .failure: break
-            }
-        }
-    }
-    func updateDelegate() {
-        tokensModel.value = enabledObject
-        /*
-        let tokensViewModel = TokensViewModel(
-            config: config,
-            tokens: enabledObject,
-            nonFungibleTokens: nonFungibleTokens,
-            tickers: tickers
-        )
-        //delegate?.didUpdate(result: .success( tokensViewModel ))
-         */
-    }
-
+    /// Ticker for requested token.
+    ///
+    /// - Parameters:
+    ///   - token: to fetch ticker.
+    /// - Returns: `CoinTicker` ticker for token.
     func coinTicker(for token: TokenObject) -> CoinTicker? {
-        return tickers?[token.contract]
+        return tickers.first(where: { $0.contract == token.contract })
     }
-
-    func handleError(error: Error) {
-        delegate?.didUpdate(result: .failure(TokenError.failedToFetch))
-    }
-
+    /// Add custom ERC-20 token.
+    ///
+    /// - Parameters:
+    ///   - token: ERC-20 to add.
     func addCustom(token: ERC20Token) {
         let newToken = TokenObject(
             contract: token.contract.description,
@@ -173,110 +86,78 @@ class TokensDataStore {
         )
         add(tokens: [newToken])
     }
-
-    func updatePrices() {
-        let tokens = objects.map { TokenPrice(contract: $0.contract, symbol: $0.symbol) }
-        let tokensPrice = TokensPrice(
-            currency: config.currency.rawValue,
-            tokens: tokens
-        )
-        provider.request(.prices(tokensPrice)) { [weak self] result in
-            guard let `self` = self else { return }
-            guard case .success(let response) = result else { return }
-            do {
-                let tickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
-                self.tickers = tickers.reduce([String: CoinTicker]()) { (dict, ticker) -> [String: CoinTicker] in
-                    var dict = dict
-                    dict[ticker.contract] = ticker
-                    return dict
-                }
-            } catch { }
-        }
-    }
-
-    func fetchNFT() {
-        fetchNonFungibleTokens { [weak self] result in
-            guard let `self` = self else { return }
-            switch result {
-            case .success(let objects):
-                self.nonFungibleTokens = objects
-                self.updateDelegate()
-            case .failure: break
-            }
-        }
-    }
-
-    func fetchNonFungibleTokens(completion: @escaping (Result<[NonFungibleToken], AnyError>) -> Void) {
-        openseaProvider.request(.assets(address: account.address.description)) { result in
-            switch result {
-            case .success(let response):
-                do {
-                    let tokens = try response.map(OpenseaArrayResponse<NonFungibleToken>.self).assets
-                    completion(.success(tokens))
-                } catch {
-                    completion(.failure(AnyError(error)))
-                }
-            case .failure(let error):
-                completion(.failure(AnyError(error)))
-            }
-        }
-    }
-
-    @discardableResult
-    func add(tokens: [TokenObject]) -> [TokenObject] {
+    /// Add tokens to database.
+    ///
+    /// - Parameters:
+    ///   - tokens: array to add.
+    func add(tokens: [TokenObject]) {
         realm.beginWrite()
         realm.add(tokens, update: true)
         try! realm.commitWrite()
-        return tokens
     }
-
+    /// Delete token from database.
+    ///
+    /// - Parameters:
+    ///   - tokens: array to delete.
     func delete(tokens: [TokenObject]) {
         realm.beginWrite()
         realm.delete(tokens)
         try! realm.commitWrite()
     }
-
+    /// Delete all token from database.
     func deleteAll() {
         try! realm.write {
             realm.delete(realm.objects(TokenObject.self))
         }
     }
-
-    enum TokenUpdate {
-        case value(BigInt)
-        case isDisabled(Bool)
-    }
-
-    func update(token: TokenObject, action: TokenUpdate) {
+    /// Update token with action.
+    ///
+    /// - Parameters:
+    ///   - token: to update.
+    ///   - action: to perform.
+    func update(token: TokenObject, action: TokenAction) {
         try! realm.write {
             switch action {
-            case .value(let value):
-                if token.value !=  value.description {
+            case .updateValue(let value):
+                if token.value != value.description {
                     token.value = value.description
                 }
-            case .isDisabled(let value):
+            case .disable(let value):
                 token.isDisabled = value
             }
         }
     }
-    private func scheduledTimerForEthBalanceUpdate() {
-        guard ethTimer == nil else {
-            return
+    /// Update or add new tokens to database from transactions.
+    ///
+    /// - Parameters:
+    ///   - realm: instance of the Realm database.
+    ///   - tokens: to add or update.
+    static func update(in realm: Realm, tokens: [Token]) {
+        realm.beginWrite()
+        for token in tokens {
+            let update: [String: Any] = [
+                "contract": token.address.description,
+                "name": token.name,
+                "symbol": token.symbol,
+                "decimals": token.decimals,
+                ]
+            realm.create(TokenObject.self, value: update, update: true)
         }
-        ethTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in
-            self?.refreshETHBalance()
-        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
+        try! realm.commitWrite()
     }
-    @objc func stopTimers() {
-        ethTimer?.invalidate()
-        ethTimer = nil
-    }
-    @objc func restartTimers() {
-        scheduledTimerForEthBalanceUpdate()
-    }
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-        ethTimer?.invalidate()
-        ethTimer = nil
+    /// ETH token constrcutor.
+    ///
+    /// - Parameters:
+    ///   - config: parameters of the token.
+    /// - Returns: `TokenObject` ETH token.
+    static func etherToken(for config: Config) -> TokenObject {
+        return TokenObject(
+            contract: "0x0000000000000000000000000000000000000000",
+            name: config.server.name,
+            symbol: config.server.symbol,
+            decimals: config.server.decimals,
+            value: "0",
+            isCustom: false
+        )
     }
 }
