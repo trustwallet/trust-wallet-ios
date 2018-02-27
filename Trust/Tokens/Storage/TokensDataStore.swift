@@ -29,7 +29,7 @@ class TokensDataStore {
     /// realm of a `TokensDataStore` instance of the Realm database.
     let realm: Realm
     /// tickers of a `TokensDataStore` ticker for each token price in current fiat currency.
-    private var tickers: [CoinTicker] = []
+    var tickers: [CoinTicker] = []
     /// objects of a `TokensDataStore` all tokens that are in Realm database.
     var objects: [TokenObject] {
         return realm.objects(TokenObject.self)
