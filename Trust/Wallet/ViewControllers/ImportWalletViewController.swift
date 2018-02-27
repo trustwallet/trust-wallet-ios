@@ -22,6 +22,7 @@ class ImportWalletViewController: FormViewController {
         static let watch = "watch"
         static let mnemonic = "mnemonic"
     }
+    
     lazy var pargraphStyle: NSMutableParagraphStyle = {
         let style = NSMutableParagraphStyle()
         style.lineHeightMultiple = 1.25

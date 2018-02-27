@@ -90,14 +90,15 @@ class ExportPrivateKeyViewConroller: UIViewController {
             revalQRCodeButton.trailingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.trailingAnchor),
             revalQRCodeButton.leadingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.leadingAnchor),
 
-            imageView.widthAnchor.constraint(lessThanOrEqualToConstant: Layout.widthAndHeight),
             imageView.heightAnchor.constraint(equalToConstant: Layout.widthAndHeight),
+            imageView.trailingAnchor.constraint(lessThanOrEqualTo: stackView.layoutMarginsGuide.trailingAnchor, constant: StyleLayout.sideMargin * 2.5),
+            imageView.leadingAnchor.constraint(lessThanOrEqualTo: stackView.layoutMarginsGuide.leadingAnchor, constant: StyleLayout.sideMargin * 2.5),
+
         ])
-        createQRCode()
     }
 
     func blur(image: UIImageView) {
-        let blur = UIBlurEffect(style: .extraLight)
+        let blur = UIBlurEffect(style: .dark)
         let view = UIVisualEffectView(effect: blur)
 
         view.frame = image.bounds
@@ -108,6 +109,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
     }
 
     @objc func unBlur() {
+        createQRCode()
         for view in imageView.subviews {
             guard let view = view as? UIVisualEffectView else { return }
             view.removeFromSuperview()
