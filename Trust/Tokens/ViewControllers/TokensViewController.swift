@@ -124,7 +124,6 @@ class TokensViewController: UIViewController {
                     let model = strongSelf.viewModel.cellViewModel(for: indexPath)
                     if let cell = tableView.cellForRow(at: indexPath) as? TokenViewCell {
                         cell.configure(viewModel: model)
-                        cell.flashBackground() 
                     }
                 }
                 tableView.endUpdates()

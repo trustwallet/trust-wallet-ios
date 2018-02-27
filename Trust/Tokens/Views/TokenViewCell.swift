@@ -102,11 +102,4 @@ class TokenViewCell: UITableViewCell {
 
         backgroundColor = viewModel.backgroundColor
     }
-    func flashBackground() {
-        backgroundView = UIView()
-        backgroundView!.backgroundColor = Colors.lightBlue
-        UIView.animate(withDuration: 2.0, animations: {
-            self.backgroundView!.backgroundColor = UIColor.white
-        })
-    }
 }
