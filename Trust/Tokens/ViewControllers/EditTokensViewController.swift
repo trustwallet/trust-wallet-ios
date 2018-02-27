@@ -87,10 +87,10 @@ class EditTokensViewController: UITableViewController {
 
 extension EditTokensViewController: EditTokenTableViewCellDelegate {
     func didChangeState(state: Bool, in cell: EditTokenTableViewCell) {
-
-    guard let indexPath = tableView.indexPath(for: cell) else { return }
-
-    storage.update(token: token(for: indexPath), action: .isDisabled(!state))
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            return
+        }
+        storage.update(token: token(for: indexPath), action: .disable(!state))
     }
 }
 
