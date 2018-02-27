@@ -42,7 +42,7 @@ class TokensDataStore {
             .sorted(byKeyPath: "contract", ascending: true)
             .filter { !$0.isDisabled }
     }
-    /// Constrcutor.
+    /// Construtor.
     ///
     /// - Parameters:
     ///   - realm: instance of the Realm database.
