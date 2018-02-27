@@ -28,7 +28,11 @@ struct ConfirmPaymentViewModel {
         return .white
     }
 
-    func getInsufficientText(_ status: BalanceStatus, config: Config, transferType: TransferType) -> String {
+    func getActionButtonText(_ status: BalanceStatus, config: Config, transferType: TransferType) -> String {
+        if status.sufficient {
+            return actionButtonText
+        }
+
         let format = status.insufficientText
         let networkSymbol = config.server.symbol
 

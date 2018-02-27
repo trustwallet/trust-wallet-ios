@@ -146,12 +146,9 @@ class ConfirmPaymentViewController: UIViewController {
 
     private func updateSubmitButton() {
         let status = configurator.balanceValidStatus()
+        let buttonTitle = viewModel.getActionButtonText(status, config: configurator.session.config, transferType: configurator.transaction.transferType)
         submitButton.isEnabled = status.sufficient
-        if status.sufficient {
-            submitButton.setTitle(viewModel.actionButtonText, for: .normal)
-        } else {
-            submitButton.setTitle(viewModel.getInsufficientText(status, config: configurator.session.config, transferType: configurator.transaction.transferType), for: .normal)
-        }
+        submitButton.setTitle(buttonTitle, for: .normal)
     }
 
     private func reloadView() {
