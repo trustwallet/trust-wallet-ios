@@ -27,4 +27,33 @@ struct ConfirmPaymentViewModel {
     var backgroundColor: UIColor {
         return .white
     }
+
+    func getActionButtonText(_ status: BalanceStatus, config: Config, transferType: TransferType) -> String {
+        if status.sufficient {
+            return actionButtonText
+        }
+
+        let format = status.insufficientText
+        let networkSymbol = config.server.symbol
+
+        switch transferType {
+        case .ether:
+            return String(format: format, networkSymbol)
+        case .token(let token):
+            switch status {
+            case .token(let tokenSufficient, let gasSufficient):
+                if !tokenSufficient {
+                    return String(format: format, token.symbol)
+                }
+                if !gasSufficient {
+                    return String(format: format, networkSymbol)
+                }
+                // should not be here
+                return ""
+            case .ether:
+                // should not be here
+                return ""
+            }
+        }
+    }
 }

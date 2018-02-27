@@ -62,11 +62,11 @@ extension BalanceStatus {
         let key = insufficientTextKey
         switch key {
         case .insufficientEther:
-            return NSLocalizedString(key.string, value: "Insufficient ethers", comment: "")
+            return NSLocalizedString(key.string, value: "Insufficient %@ balance", comment: "")
         case .insufficientGas:
-            return NSLocalizedString(key.string, value: "Insufficient ethers for gas fee", comment: "")
+            return NSLocalizedString(key.string, value: "Insufficient %@ to cover gas fee", comment: "")
         case .insufficientToken:
-            return NSLocalizedString(key.string, value: "Insufficient tokens", comment: "")
+            return NSLocalizedString(key.string, value: "Insufficient %@ token balance", comment: "")
         case .correct:
             return ""
         }
