@@ -75,6 +75,9 @@ struct TokensViewModel {
         self.realmDataStore = realmDataStore
         self.tokensNetwork = tokensNetwork
         self.tokens = realmDataStore.tokens
+        updateEthBalance()
+        updateTokensBalances()
+        updateTickers()
     }
     /// Start observation of the tokens.
     mutating func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<TokenObject>>) -> Void) {
@@ -147,8 +150,8 @@ struct TokensViewModel {
     /// Update current eth balance.
     func updateEthBalance() {
         tokensNetwork.ethBalance { result in
-            guard let balance = result else { return }
-            self.realmDataStore.update(token: TokensDataStore.etherToken(for: self.config), action: TokenAction.updateValue(balance.value))
+            guard let balance = result, let token = self.realmDataStore.objects.first (where: { $0.name == self.config.server.name })  else { return }
+            self.realmDataStore.update(token: token, action: .updateValue(balance.value))
         }
     }
     /// Update tokens balance.
