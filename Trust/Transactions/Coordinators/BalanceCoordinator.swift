@@ -18,7 +18,7 @@ class BalanceCoordinator {
     var balance: Balance?
     var currencyRate: CurrencyRate?
     weak var delegate: BalanceCoordinatorDelegate?
-    var ethTokenObservation : NotificationToken?
+    var ethTokenObservation: NotificationToken?
     var viewModel: BalanceViewModel {
         return BalanceViewModel(
             balance: balance,
