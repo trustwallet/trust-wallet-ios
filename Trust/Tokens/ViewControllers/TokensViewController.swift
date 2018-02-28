@@ -39,7 +39,10 @@ class TokensViewController: UIViewController {
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
     weak var delegate: TokensViewControllerDelegate?
-
+    /// ethTimer of a `TokensViewController` to shedule eth balance update.
+    var ethTimer: Timer?
+    /// intervalToETHRefresh of a `TokensViewController` interval for eth balance update.
+    let intervalToETHRefresh = 10.0
     init(
         viewModel: TokensViewModel
     ) {
@@ -77,6 +80,10 @@ class TokensViewController: UIViewController {
         tableView.tableHeaderView = header
         tableView.tableFooterView = footer
         refreshHeaderAndFooterView()
+        sheduleBalanceUpdate()
+        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.stopTimer), name: .UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.restartTimer), name: .UIApplicationDidBecomeActive, object: nil)
+
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -136,6 +143,26 @@ class TokensViewController: UIViewController {
                 strongSelf.refreshControl.endRefreshing()
             }
         }
+    }
+    //Invalidate and stop timer.
+    @objc func stopTimer() {
+        ethTimer?.invalidate()
+        ethTimer = nil
+    }
+    // Restart timer with sheduling of the new one.
+    @objc func restartTimer() {
+        sheduleBalanceUpdate()
+    }
+    // Set timer to update eth balance.
+    private func sheduleBalanceUpdate() {
+        ethTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in
+            self?.viewModel.updateEthBalance()
+        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
+    }
+    // Unsubscribe from the notifications and stop timer.
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        stopTimer()
     }
 }
 extension TokensViewController: StatefulViewController {
