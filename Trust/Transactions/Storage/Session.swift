@@ -40,15 +40,6 @@ class WalletSession {
         self.chainState.start()
     }
 
-    func refresh(_ type: RefreshType) {
-        switch type {
-        case .balance:
-            balanceCoordinator.refresh()
-        case .ethBalance:
-            balanceCoordinator.refreshEthBalance()
-        }
-    }
-
     func stop() {
         chainState.stop()
     }

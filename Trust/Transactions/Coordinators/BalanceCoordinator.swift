@@ -29,10 +29,7 @@ class BalanceCoordinator {
     ) {
         self.account = account
         self.storage = storage
-        self.storage.refreshBalance()
-
-        let etherToken = TokensDataStore.etherToken(for: config)
-
+        /*
         storage.tokensModel.subscribe {[weak self] tokensModel in
             guard let tokens = tokensModel, let eth = tokens.first(where: { $0 == etherToken }) else {
                 return
@@ -42,12 +39,7 @@ class BalanceCoordinator {
             self?.currencyRate = ticker?.rate
             self?.update()
         }
-    }
-    func refresh() {
-        self.storage.refreshBalance()
-    }
-    func refreshEthBalance() {
-        self.storage.refreshETHBalance()
+        */
     }
     func update() {
         delegate?.didUpdate(viewModel: viewModel)
