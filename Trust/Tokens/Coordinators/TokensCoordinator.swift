@@ -16,11 +16,11 @@ class TokensCoordinator: Coordinator {
     let keystore: Keystore
     var coordinators: [Coordinator] = []
     let storage: TokensDataStore
+    let network: TokensNetwork
 
     lazy var tokensViewController: TokensViewController = {
-        let controller = TokensViewController(
-            dataStore: storage
-        )
+        let tokensViewModel = TokensViewModel(realmDataStore: storage, tokensNetwork: network)
+        let controller = TokensViewController(viewModel: tokensViewModel)
         controller.delegate = self
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
@@ -36,13 +36,15 @@ class TokensCoordinator: Coordinator {
         navigationController: UINavigationController = NavigationController(),
         session: WalletSession,
         keystore: Keystore,
-        tokensStorage: TokensDataStore
+        tokensStorage: TokensDataStore,
+        network: TokensNetwork
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
         self.keystore = keystore
         self.storage = tokensStorage
+        self.network = network
     }
 
     func start() {

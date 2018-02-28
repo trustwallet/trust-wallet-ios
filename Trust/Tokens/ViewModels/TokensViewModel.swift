@@ -13,6 +13,8 @@ struct TokensViewModel {
     let config: Config
     /// realmDataStore of a `TokensViewModel` to give access to Realm instance.
     let realmDataStore: TokensDataStore
+    /// tokensNetwork of a `TokensViewModel` to give access to do network requests.
+    var tokensNetwork: TokensNetworkProtocol
     /// tokens of a `TokensViewModel` to represent current tokens in the data store.
     let tokens: Results<TokenObject>
     /// tokensObserver of a `TokensViewModel` to track changes in the data store.
@@ -66,10 +68,13 @@ struct TokensViewModel {
     ///   - realmDataStore: data store.
     init(
         config: Config = Config(),
-        realmDataStore: TokensDataStore
+        realmDataStore: TokensDataStore,
+        tokensNetwork: TokensNetworkProtocol
+        
     ) {
         self.config = config
         self.realmDataStore = realmDataStore
+        self.tokensNetwork = tokensNetwork
         self.tokens = realmDataStore.tokens
     }
     /// Start observation of the tokens.
@@ -132,5 +137,28 @@ struct TokensViewModel {
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
         return TokenViewCellViewModel(token: token, ticker: realmDataStore.coinTicker(for: token))
+    }
+    /// Update enabled tokens tickers.
+    func updateTickers() {
+        tokensNetwork.tickers(for: realmDataStore.enabledObject) { result in
+            guard let tickers = result else { return }
+            self.realmDataStore.tickers = tickers
+        }
+    }
+    /// Update current eth balance.
+    func updateEthBalance() {
+        tokensNetwork.ethBalance { result in
+            guard let balance = result else { return }
+            self.realmDataStore.update(token: TokensDataStore.etherToken(for: self.config), action: TokenAction.updateValue(balance.value))
+        }
+    }
+    /// Update tokens balance.
+    func updateTokensBalances() {
+        realmDataStore.enabledObject.forEach { token in
+            tokensNetwork.tokenBalance(for: token) { result in
+                guard let balance = result.1 else { return }
+                self.realmDataStore.update(token: result.0, action: TokenAction.updateValue(balance.value))
+            }
+        }
     }
 }

@@ -56,7 +56,6 @@ class TransactionsViewController: UIViewController {
         self.tokensStorage = tokensStorage
         super.init(nibName: nil, bundle: nil)
 
-        tokensStorage.updatePrices()
         view.backgroundColor = viewModel.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self

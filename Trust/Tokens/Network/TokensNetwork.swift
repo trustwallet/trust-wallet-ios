@@ -7,15 +7,15 @@ import TrustKeystore
 protocol TrustNetworkProtocol {
     var provider: MoyaProvider<TrustService> { get }
     var balanceService: TokensBalanceService { get }
-    var account: Account { get }
+    var account: Wallet { get }
     var config: Config { get }
-    init(provider: MoyaProvider<TrustService>, balanceService: TokensBalanceService, account: Account, config: Config)
+    init(provider: MoyaProvider<TrustService>, balanceService: TokensBalanceService, account: Wallet, config: Config)
 }
 
 protocol TokensNetworkProtocol: TrustNetworkProtocol {
     func tickers(for tokens:[TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void)
     func ethBalance(completion: @escaping (_ balance: Balance?) -> Void)
-    func tokenBalance(for token:TokenObject, completion: @escaping (_ token: Balance?) -> Void)
+    func tokenBalance(for token:TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void)
 }
 
 class TokensNetwork: TokensNetworkProtocol {
@@ -26,7 +26,7 @@ class TokensNetwork: TokensNetworkProtocol {
     /// balanceService of a `TokensNetwork` to obteint tokens balance.
     var balanceService: TokensBalanceService
     /// account of a `TokensNetwork` curent user account reference.
-    var account: Account
+    var account: Wallet
     /// Construtor.
     ///
     /// - Parameters:
@@ -34,7 +34,7 @@ class TokensNetwork: TokensNetworkProtocol {
     ///   - balanceService: to obteint tokens balance.
     ///   - account: of the user.
     ///   - config: to configurate network requests.
-    required init(provider: MoyaProvider<TrustService>, balanceService: TokensBalanceService, account: Account, config: Config) {
+    required init(provider: MoyaProvider<TrustService>, balanceService: TokensBalanceService, account: Wallet, config: Config) {
         self.provider = provider
         self.balanceService = balanceService
         self.account = account
@@ -82,17 +82,17 @@ class TokensNetwork: TokensNetworkProtocol {
     /// - Parameters:
     ///   - token: to fetch balance.
     ///   - completion: to return token balance.
-    func tokenBalance(for token:TokenObject, completion: @escaping (_ token: Balance?) -> Void) {
+    func tokenBalance(for token:TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void) {
         guard let contract = Address(string: token.contract) else {
-            completion(nil)
+            completion((token,nil))
             return
         }
         balanceService.getBalance(for: account.address, contract: contract) { result in
             switch result {
             case .success(let balance):
-                completion(Balance(value: balance))
+                completion((token,Balance(value: balance)))
             case .failure:
-                completion(nil)
+                completion((token,nil))
             }
         }
     }

@@ -58,7 +58,6 @@ class SendViewController: FormViewController {
         self.transferType = transferType
         self.storage = storage
         super.init(nibName: nil, bundle: nil)
-        storage.updatePrices()
         getGasPrice()
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor

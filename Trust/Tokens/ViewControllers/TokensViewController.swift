@@ -15,7 +15,6 @@ protocol TokensViewControllerDelegate: class {
 }
 
 class TokensViewController: UIViewController {
-    private let dataStore: TokensDataStore
     fileprivate var viewModel: TokensViewModel
     lazy var header: TokensHeaderView = {
         let header = TokensHeaderView(frame: .zero)
@@ -42,10 +41,9 @@ class TokensViewController: UIViewController {
     weak var delegate: TokensViewControllerDelegate?
 
     init(
-        dataStore: TokensDataStore
+        viewModel: TokensViewModel
     ) {
-        self.dataStore = dataStore
-        self.viewModel = TokensViewModel(realmDataStore: dataStore)
+        self.viewModel = viewModel
         tableView = UITableView(frame: .zero, style: .plain)
         super.init(nibName: nil, bundle: nil)
         self.tokensObservation()
@@ -67,14 +65,14 @@ class TokensViewController: UIViewController {
         tableView.addSubview(refreshControl)
         errorView = ErrorView(onRetry: { [weak self] in
             self?.startLoading()
-            self?.dataStore.fetch()
+            self?.fetch()
         })
         loadingView = LoadingView()
         emptyView = EmptyView(
             title: NSLocalizedString("emptyView.noTokens.label.title", value: "You haven't received any tokens yet!", comment: ""),
             onRetry: { [weak self] in
                 self?.startLoading()
-                self?.dataStore.fetch()
+                self?.fetch()
         })
         tableView.tableHeaderView = header
         tableView.tableFooterView = footer
@@ -91,7 +89,9 @@ class TokensViewController: UIViewController {
     }
     func fetch() {
         self.startLoading()
-        self.dataStore.fetch()
+        self.viewModel.updateTickers()
+        self.viewModel.updateEthBalance()
+        self.viewModel.updateTokensBalances()
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
