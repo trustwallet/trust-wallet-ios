@@ -59,8 +59,10 @@ enum RPCServer {
         case .main: return "ETH"
         case .classic: return "ETC"
         case .callisto: return "CLO"
-        case .kovan, .ropsten, .rinkeby: return "ETH"
-        case .poa, .sokol: return "POA"
+        case .ropsten, .rinkeby: return "ETH"
+        case .kovan: return "KETH"
+        case .poa: return "POA"
+        case .sokol: return "SPOA"
         case .custom(let custom):
             return custom.symbol
         }

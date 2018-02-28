@@ -48,9 +48,9 @@
 "send.error.emptyClipBoard" = "Empty ClipBoard";
 "send.error.invalidAddress" = "Invalid Address";
 "send.error.wrongInput" = "Wrong Input";
-"send.error.insufficientEther" = "Insufficient ethers";
-"send.error.insufficientGas" = "Insufficient ethers for gas fee";
-"send.error.insufficientToken" = "Insufficient token";
+"send.error.insufficientEther" = "Insufficient %@ balance";
+"send.error.insufficientGas" = "Insufficient %@ to cover gas fee";
+"send.error.insufficientToken" = "Insufficient %@ token balance";
 "send.max.button.title" = "Max";
 "send.paste.button.title" = "Paste";
 "send.recipientAddress.textField.placeholder" = "Recipient Address";
