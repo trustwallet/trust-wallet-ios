@@ -6,8 +6,8 @@ import JavaScriptCore
 
 extension WKWebViewConfiguration {
 
-    static func make(for session: WalletSession, in messageHandler: WKScriptMessageHandler) -> WKWebViewConfiguration {
-        let address = session.account.address.description.lowercased()
+    static func make(for account: Wallet,with sessionConfig: Config, in messageHandler: WKScriptMessageHandler) -> WKWebViewConfiguration {
+        let address = account.address.description.lowercased()
         let config = WKWebViewConfiguration()
         var js = ""
 
@@ -29,8 +29,8 @@ extension WKWebViewConfiguration {
         js +=
         """
         const addressHex = "\(address)"
-        const rpcURL = "\(session.config.rpcURL.absoluteString)"
-        const chainID = "\(session.config.chainID)"
+        const rpcURL = "\(sessionConfig.rpcURL.absoluteString)"
+        const chainID = "\(sessionConfig.chainID)"
 
         function executeCallback (id, error, value) {
           Trust.executeCallback(id, error, value)

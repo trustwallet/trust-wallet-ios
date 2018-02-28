@@ -13,7 +13,8 @@ protocol BrowserViewControllerDelegate: class {
 class BrowserViewController: UIViewController {
 
     private var myContext = 0
-    let session: WalletSession
+    let account: Wallet
+    let sessionConfig: Config
 
     private struct Keys {
         static let estimatedProgress = "estimatedProgress"
@@ -44,13 +45,15 @@ class BrowserViewController: UIViewController {
     let progressView = UIProgressView(progressViewStyle: .default)
 
     lazy var config: WKWebViewConfiguration = {
-        return WKWebViewConfiguration.make(for: session, in: self)
+        return WKWebViewConfiguration.make(for: account, with: sessionConfig, in: self)
     }()
 
     init(
-        session: WalletSession
+        account: Wallet,
+        config: Config
     ) {
-        self.session = session
+        self.account = account
+        self.sessionConfig = config
 
         super.init(nibName: nil, bundle: nil)
 

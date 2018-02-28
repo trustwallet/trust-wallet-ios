@@ -16,7 +16,7 @@ class BrowserCoordinator: Coordinator {
     let navigationController: UINavigationController
 
     lazy var rootViewController: BrowserViewController = {
-        let controller = BrowserViewController(session: self.session)
+        let controller = BrowserViewController(account: session.account, config: session.config)
         controller.delegate = self
         return controller
     }()
