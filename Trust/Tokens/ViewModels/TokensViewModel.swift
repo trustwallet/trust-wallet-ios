@@ -156,7 +156,7 @@ struct TokensViewModel {
     }
     /// Update tokens balance.
     func updateTokensBalances() {
-        realmDataStore.enabledObject.filter{ $0.name != self.config.server.name }.forEach { token in
+        realmDataStore.enabledObject.filter { $0.name != self.config.server.name }.forEach { token in
             tokensNetwork.tokenBalance(for: token) { result in
                 guard let balance = result.1 else { return }
                 self.realmDataStore.update(token: result.0, action: TokenAction.updateValue(balance.value))
