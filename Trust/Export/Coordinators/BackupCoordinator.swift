@@ -5,7 +5,6 @@ import UIKit
 import Result
 import TrustKeystore
 
-
 protocol BackupCoordinatorDelegate: class {
     func didCancel(coordinator: BackupCoordinator)
     func didFinish(account: Account, in coordinator: BackupCoordinator)

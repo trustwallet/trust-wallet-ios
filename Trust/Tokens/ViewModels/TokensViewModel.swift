@@ -70,7 +70,6 @@ struct TokensViewModel {
         config: Config = Config(),
         realmDataStore: TokensDataStore,
         tokensNetwork: TokensNetworkProtocol
-        
     ) {
         self.config = config
         self.realmDataStore = realmDataStore
@@ -96,7 +95,7 @@ struct TokensViewModel {
     ///   - token: current token to fetch price for.
     /// - Returns: `Double` price of the token.
     private func amount(for token: TokenObject) -> Double {
-        guard let tickersSymbol = realmDataStore.tickers.first(where: {$0.contract == token.contract}) else { return 0 }
+        guard let tickersSymbol = realmDataStore.tickers.first(where: { $0.contract == token.contract }) else { return 0 }
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
         let price = Double(tickersSymbol.price) ?? 0
         return tokenValue * price

@@ -13,9 +13,9 @@ protocol TrustNetworkProtocol {
 }
 
 protocol TokensNetworkProtocol: TrustNetworkProtocol {
-    func tickers(for tokens:[TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void)
+    func tickers(for tokens: [TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void)
     func ethBalance(completion: @escaping (_ balance: Balance?) -> Void)
-    func tokenBalance(for token:TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void)
+    func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void)
 }
 
 class TokensNetwork: TokensNetworkProtocol {
@@ -45,7 +45,7 @@ class TokensNetwork: TokensNetworkProtocol {
     /// - Parameters:
     ///   - tokens: to fetch tickers.
     ///   - completion: to return array of `CoinTicker`.
-    func tickers(for tokens:[TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void){
+    func tickers(for tokens: [TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void) {
         let tokensPriceToFetch = TokensPrice(
             currency: config.currency.rawValue,
             tokens: tokens.map { TokenPrice(contract: $0.contract, symbol: $0.symbol) }
@@ -82,17 +82,17 @@ class TokensNetwork: TokensNetworkProtocol {
     /// - Parameters:
     ///   - token: to fetch balance.
     ///   - completion: to return token balance.
-    func tokenBalance(for token:TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void) {
+    func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void) {
         guard let contract = Address(string: token.contract) else {
-            completion((token,nil))
+            completion((token, nil))
             return
         }
         balanceService.getBalance(for: account.address, contract: contract) { result in
             switch result {
             case .success(let balance):
-                completion((token,Balance(value: balance)))
+                completion((token, Balance(value: balance)))
             case .failure:
-                completion((token,nil))
+                completion((token, nil))
             }
         }
     }
