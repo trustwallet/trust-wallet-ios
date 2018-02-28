@@ -35,10 +35,14 @@ class BalanceCoordinator {
         self.storage = storage
         balanceObservation()
     }
-    func balanceObservation() {
+    func refresh() {
+        balanceObservation()
+    }
+    private func balanceObservation() {
         guard let token = storage.enabledObject.first(where: { $0.name == config.server.name }) else {
             return
         }
+        updateBalance(for: token, with: nil)
         ethTokenObservation = token.observe {[weak self] change in
             switch change {
             case .change(let properties):
@@ -46,10 +50,7 @@ class BalanceCoordinator {
                     guard property.name == "value", let property = property.newValue as? String else {
                         return
                     }
-                    var ticker = self?.storage.coinTicker(for: token)
-                    self?.balance = Balance(value: BigInt(property) ?? BigInt(0))
-                    self?.currencyRate = ticker?.rate
-                    self?.update()
+                    self?.updateBalance(for: token, with: BigInt(property))
                 }
             case .error(let error):
                 print("An error occurred with \(token.name): \(error)")
@@ -58,7 +59,13 @@ class BalanceCoordinator {
             }
         }
     }
-    func update() {
+    private func update() {
         delegate?.didUpdate(viewModel: viewModel)
+    }
+    private func updateBalance(for token: TokenObject, with value: BigInt?) {
+        var ticker = self.storage.coinTicker(for: token)
+        self.balance = Balance(value: value ?? token.valueBigInt)
+        self.currencyRate = ticker?.rate
+        self.update()
     }
 }

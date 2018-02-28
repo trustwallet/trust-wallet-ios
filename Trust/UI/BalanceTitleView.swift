@@ -107,6 +107,7 @@ extension BalanceTitleView {
         case .token(let token):
             view.viewModel = BalanceTokenViewModel(token: token)
         }
+        session.refresh()
         return view
     }
 }
