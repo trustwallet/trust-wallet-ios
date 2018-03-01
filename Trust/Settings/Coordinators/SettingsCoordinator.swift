@@ -16,7 +16,7 @@ class SettingsCoordinator: Coordinator {
     let keystore: Keystore
     let session: WalletSession
     let storage: TransactionsStorage
-    let balanceCoordinator: GetBalanceCoordinator
+    let balanceCoordinator: TokensBalanceService
     weak var delegate: SettingsCoordinatorDelegate?
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
     var coordinators: [Coordinator] = []
@@ -33,7 +33,7 @@ class SettingsCoordinator: Coordinator {
         keystore: Keystore,
         session: WalletSession,
         storage: TransactionsStorage,
-        balanceCoordinator: GetBalanceCoordinator
+        balanceCoordinator: TokensBalanceService
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet

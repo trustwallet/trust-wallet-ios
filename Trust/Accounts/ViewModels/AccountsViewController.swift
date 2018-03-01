@@ -29,12 +29,12 @@ class AccountsViewController: UITableViewController {
     }
     private var balances: [Address: Balance?] = [:]
     private let keystore: Keystore
-    private let balanceCoordinator: GetBalanceCoordinator
+    private let balanceCoordinator: TokensBalanceService
     private let config = Config()
 
     init(
         keystore: Keystore,
-        balanceCoordinator: GetBalanceCoordinator
+        balanceCoordinator: TokensBalanceService
     ) {
         self.keystore = keystore
         self.balanceCoordinator = balanceCoordinator

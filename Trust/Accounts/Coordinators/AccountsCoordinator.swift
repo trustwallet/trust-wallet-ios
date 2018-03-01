@@ -16,7 +16,7 @@ class AccountsCoordinator: Coordinator {
     let navigationController: UINavigationController
     let keystore: Keystore
     let session: WalletSession
-    let balanceCoordinator: GetBalanceCoordinator
+    let balanceCoordinator: TokensBalanceService
     var coordinators: [Coordinator] = []
 
     lazy var accountsViewController: AccountsViewController = {
@@ -34,7 +34,7 @@ class AccountsCoordinator: Coordinator {
         navigationController: UINavigationController,
         keystore: Keystore,
         session: WalletSession,
-        balanceCoordinator: GetBalanceCoordinator
+        balanceCoordinator: TokensBalanceService
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet

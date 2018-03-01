@@ -16,12 +16,11 @@ class TokensCoordinator: Coordinator {
     let keystore: Keystore
     var coordinators: [Coordinator] = []
     let storage: TokensDataStore
+    let network: TokensNetworkProtocol
 
     lazy var tokensViewController: TokensViewController = {
-        let controller = TokensViewController(
-            account: session.account,
-            dataStore: storage
-        )
+        let tokensViewModel = TokensViewModel(realmDataStore: storage, tokensNetwork: network)
+        let controller = TokensViewController(viewModel: tokensViewModel)
         controller.delegate = self
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
@@ -37,13 +36,15 @@ class TokensCoordinator: Coordinator {
         navigationController: UINavigationController = NavigationController(),
         session: WalletSession,
         keystore: Keystore,
-        tokensStorage: TokensDataStore
+        tokensStorage: TokensDataStore,
+        network: TokensNetworkProtocol
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
         self.keystore = keystore
         self.storage = tokensStorage
+        self.network = network
     }
 
     func start() {
@@ -70,9 +71,6 @@ class TokensCoordinator: Coordinator {
                 return ERC20Token(contract: address, name: token.name, symbol: token.symbol, decimals: token.decimals)
             }()
             return newTokenViewController(token: token)
-        case .nonFungibleTokens:
-            // Disabled to edit.
-            return newTokenViewController(token: .none)
         }
     }
 
@@ -120,8 +118,6 @@ extension TokensCoordinator: TokensViewControllerDelegate {
             case .token:
                 delegate?.didPress(for: .send(type: .token(token)), in: self)
             }
-        case .nonFungibleTokens(let token):
-            delegate?.didPress(on: token, in: self)
         }
     }
 
@@ -130,7 +126,6 @@ extension TokensCoordinator: TokensViewControllerDelegate {
         case .token(let token):
             storage.delete(tokens: [token])
             tokensViewController.fetch()
-        case .nonFungibleTokens: break
         }
     }
 

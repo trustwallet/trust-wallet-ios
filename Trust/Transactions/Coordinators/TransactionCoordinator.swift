@@ -59,7 +59,6 @@ class TransactionCoordinator: Coordinator {
             account: account,
             dataCoordinator: dataCoordinator,
             session: session,
-            tokensStorage: tokensStorage,
             viewModel: viewModel
         )
 

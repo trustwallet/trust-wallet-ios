@@ -77,7 +77,7 @@ class TransactionDataCoordinator {
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
     func fetch() {
-        session.refresh(.balance)
+        session.refresh()
         fetchTransactions()
         fetchPendingTransactions()
     }
