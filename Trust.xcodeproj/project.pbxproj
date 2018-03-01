@@ -287,6 +287,7 @@
 		73200B6C20477FF900118A82 /* FakeTokensNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B6B20477FF900118A82 /* FakeTokensNetwork.swift */; };
 		73200B7020488C9300118A82 /* TrustNetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B6F20488C9300118A82 /* TrustNetworkProtocol.swift */; };
 		73200B732048A7FC00118A82 /* TokensViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B722048A7FC00118A82 /* TokensViewModelTest.swift */; };
+		73200B752048B67E00118A82 /* NonFungibleTokenObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B742048B67E00118A82 /* NonFungibleTokenObject.swift */; };
 		732086B9201508690047F605 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732086B8201508690047F605 /* SplashCoordinator.swift */; };
 		732E0F502022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */; };
 		732E0F522022754600B39C1F /* FakeLockProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F512022754600B39C1F /* FakeLockProtocol.swift */; };
@@ -688,6 +689,7 @@
 		73200B6B20477FF900118A82 /* FakeTokensNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTokensNetwork.swift; sourceTree = "<group>"; };
 		73200B6F20488C9300118A82 /* TrustNetworkProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustNetworkProtocol.swift; sourceTree = "<group>"; };
 		73200B722048A7FC00118A82 /* TokensViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensViewModelTest.swift; sourceTree = "<group>"; };
+		73200B742048B67E00118A82 /* NonFungibleTokenObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenObject.swift; sourceTree = "<group>"; };
 		732086B8201508690047F605 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
 		732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
 		732E0F512022754600B39C1F /* FakeLockProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeLockProtocol.swift; sourceTree = "<group>"; };
@@ -1399,6 +1401,7 @@
 				294DFBAD1FE6F254004CEB56 /* TokenObject.swift */,
 				29E9CFCE1FE7347200017744 /* ERC20Token.swift */,
 				29C0FCE4200EBAF6004A13CB /* TokenType.swift */,
+				73200B742048B67E00118A82 /* NonFungibleTokenObject.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2693,6 +2696,7 @@
 				615F10561FCBEF2E008A45AF /* OnboardingPageViewModel.swift in Sources */,
 				29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */,
 				29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */,
+				73200B752048B67E00118A82 /* NonFungibleTokenObject.swift in Sources */,
 				73200B6A2045B8AC00118A82 /* TokensNetwork.swift in Sources */,
 				77872D27202505C00032D687 /* EnterPasswordViewModel.swift in Sources */,
 				29F1C85F200369BA003780D8 /* HelpUsViewModel.swift in Sources */,
