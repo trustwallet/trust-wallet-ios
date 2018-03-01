@@ -8,41 +8,29 @@ import BigInt
 import Moya
 import TrustKeystore
 
-/// Enum of the token actions.
-///
-/// - Cases:
-///   - updateValue: of the token.
-///   - disable: token.
 enum TokenAction {
     case updateValue(BigInt)
     case disable(Bool)
 }
 
 class TokensDataStore {
-    
     var tokens: Results<TokenObject> {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO"))
             .sorted(byKeyPath: "contract", ascending: true)
     }
-    
     let config: Config
-    
     let realm: Realm
-    
     var tickers: [CoinTicker] = []
-    
     var objects: [TokenObject] {
         return realm.objects(TokenObject.self)
             .sorted(byKeyPath: "contract", ascending: true)
             .filter { !$0.contract.isEmpty }
     }
-    
     var enabledObject: [TokenObject] {
         return realm.objects(TokenObject.self)
             .sorted(byKeyPath: "contract", ascending: true)
             .filter { !$0.isDisabled }
     }
-    
     init(
         realm: Realm,
         config: Config
@@ -51,18 +39,15 @@ class TokensDataStore {
         self.realm = realm
         self.addEthToken()
     }
-    
     private func addEthToken() {
         let etherToken = TokensDataStore.etherToken(for: config)
         if objects.first(where: { $0 == etherToken }) == nil {
             add(tokens: [etherToken])
         }
     }
-    
     func coinTicker(for token: TokenObject) -> CoinTicker? {
         return tickers.first(where: { $0.contract == token.contract })
     }
-
     func addCustom(token: ERC20Token) {
         let newToken = TokenObject(
             contract: token.contract.description,
@@ -74,25 +59,21 @@ class TokensDataStore {
         )
         add(tokens: [newToken])
     }
-
     func add(tokens: [TokenObject]) {
         realm.beginWrite()
         realm.add(tokens, update: true)
         try! realm.commitWrite()
     }
-
     func delete(tokens: [TokenObject]) {
         realm.beginWrite()
         realm.delete(tokens)
         try! realm.commitWrite()
     }
-    
     func deleteAll() {
         try! realm.write {
             realm.delete(realm.objects(TokenObject.self))
         }
     }
-    
     func update(token: TokenObject, action: TokenAction) {
         try! realm.write {
             switch action {
@@ -103,7 +84,6 @@ class TokensDataStore {
             }
         }
     }
-
     static func update(in realm: Realm, tokens: [Token]) {
         realm.beginWrite()
         for token in tokens {
@@ -117,7 +97,6 @@ class TokensDataStore {
         }
         try! realm.commitWrite()
     }
-    
     static func etherToken(for config: Config) -> TokenObject {
         return TokenObject(
             contract: "0x0000000000000000000000000000000000000000",
