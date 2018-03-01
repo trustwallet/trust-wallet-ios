@@ -16,7 +16,7 @@ class TokensCoordinator: Coordinator {
     let keystore: Keystore
     var coordinators: [Coordinator] = []
     let storage: TokensDataStore
-    let network: TokensNetwork
+    let network: TokensNetworkProtocol
 
     lazy var tokensViewController: TokensViewController = {
         let tokensViewModel = TokensViewModel(realmDataStore: storage, tokensNetwork: network)
@@ -37,7 +37,7 @@ class TokensCoordinator: Coordinator {
         session: WalletSession,
         keystore: Keystore,
         tokensStorage: TokensDataStore,
-        network: TokensNetwork
+        network: TokensNetworkProtocol
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
