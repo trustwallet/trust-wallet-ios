@@ -108,7 +108,6 @@ class TokensViewController: UIViewController {
     @objc func missingToken() {
         delegate?.didPressAddToken(in: self)
     }
-    /// Token observation.
     private func tokensObservation() {
         viewModel.setTokenObservation { [weak self] (changes: RealmCollectionChange) in
             guard let strongSelf = self else { return }
@@ -140,22 +139,18 @@ class TokensViewController: UIViewController {
             }
         }
     }
-   
     @objc func stopTimer() {
         etherFetchTimer?.invalidate()
         etherFetchTimer = nil
     }
-    
     @objc func restartTimer() {
         sheduleBalanceUpdate()
     }
-    
     private func sheduleBalanceUpdate() {
         etherFetchTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in
             self?.viewModel.updateEthBalance()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
-    
     deinit {
         NotificationCenter.default.removeObserver(self)
         stopTimer()
