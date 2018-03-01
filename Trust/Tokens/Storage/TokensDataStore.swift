@@ -119,9 +119,7 @@ class TokensDataStore {
         try! realm.write {
             switch action {
             case .updateValue(let value):
-                if token.value != value.description {
-                    token.value = value.description
-                }
+                token.value = value.description
             case .disable(let value):
                 token.isDisabled = value
             }
