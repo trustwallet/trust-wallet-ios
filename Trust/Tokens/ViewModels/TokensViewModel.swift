@@ -163,4 +163,9 @@ struct TokensViewModel {
             }
         }
     }
+    func fetch() {
+        updateTickers()
+        updateEthBalance()
+        updateTokensBalances()
+    }
 }

@@ -39,9 +39,7 @@ class TokensViewController: UIViewController {
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
     weak var delegate: TokensViewControllerDelegate?
-    /// ethTimer of a `TokensViewController` to shedule eth balance update.
-    var ethTimer: Timer?
-    /// intervalToETHRefresh of a `TokensViewController` interval for eth balance update.
+    var etherFetchTimer: Timer?
     let intervalToETHRefresh = 10.0
     init(
         viewModel: TokensViewModel
@@ -96,9 +94,7 @@ class TokensViewController: UIViewController {
     }
     func fetch() {
         self.startLoading()
-        self.viewModel.updateTickers()
-        self.viewModel.updateEthBalance()
-        self.viewModel.updateTokensBalances()
+        self.viewModel.fetch()
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -144,22 +140,22 @@ class TokensViewController: UIViewController {
             }
         }
     }
-    //Invalidate and stop timer.
+   
     @objc func stopTimer() {
-        ethTimer?.invalidate()
-        ethTimer = nil
+        etherFetchTimer?.invalidate()
+        etherFetchTimer = nil
     }
-    // Restart timer with sheduling of the new one.
+    
     @objc func restartTimer() {
         sheduleBalanceUpdate()
     }
-    // Set timer to update eth balance.
+    
     private func sheduleBalanceUpdate() {
-        ethTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in
+        etherFetchTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in
             self?.viewModel.updateEthBalance()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
-    // Unsubscribe from the notifications and stop timer.
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
         stopTimer()

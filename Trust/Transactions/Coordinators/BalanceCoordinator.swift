@@ -52,10 +52,8 @@ class BalanceCoordinator {
                     }
                     self?.updateBalance(for: token, with: BigInt(property))
                 }
-            case .error(let error):
-                print("An error occurred with \(token.name): \(error)")
-            case .deleted:
-                print("The \(token.name) object was deleted.")
+            case .error, .deleted:
+                break
             }
         }
     }

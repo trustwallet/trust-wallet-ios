@@ -4,14 +4,6 @@ import UIKit
 import Moya
 import TrustKeystore
 
-protocol TrustNetworkProtocol {
-    var provider: MoyaProvider<TrustService> { get }
-    var balanceService: TokensBalanceService { get }
-    var account: Wallet { get }
-    var config: Config { get }
-    init(provider: MoyaProvider<TrustService>, balanceService: TokensBalanceService, account: Wallet, config: Config)
-}
-
 protocol TokensNetworkProtocol: TrustNetworkProtocol {
     func tickers(for tokens: [TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void)
     func ethBalance(completion: @escaping (_ balance: Balance?) -> Void)
@@ -20,13 +12,13 @@ protocol TokensNetworkProtocol: TrustNetworkProtocol {
 
 class TokensNetwork: TokensNetworkProtocol {
     /// provider of a `TokensNetwork` to make network requests.
-    var provider: MoyaProvider<TrustService>
+    let provider: MoyaProvider<TrustService>
     /// config of a `TokensNetwork` to have current configuration of the app.
-    var config: Config
+    let config: Config
     /// balanceService of a `TokensNetwork` to obteint tokens balance.
-    var balanceService: TokensBalanceService
+    let balanceService: TokensBalanceService
     /// account of a `TokensNetwork` curent user account reference.
-    var account: Wallet
+    let account: Wallet
     /// Construtor.
     ///
     /// - Parameters:
