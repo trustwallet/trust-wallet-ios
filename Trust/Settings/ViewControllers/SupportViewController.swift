@@ -9,7 +9,6 @@ import MessageUI
 class SupportViewController: FormViewController {
 
     let viewModel = SupportViewModel()
-    
     init() {
         super.init(nibName: nil, bundle: nil)
     }

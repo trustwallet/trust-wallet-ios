@@ -5,6 +5,7 @@ import APIKit
 import JSONRPCKit
 import Result
 import BigInt
+import RealmSwift
 
 protocol BalanceCoordinatorDelegate: class {
     func didUpdate(viewModel: BalanceViewModel)
@@ -13,9 +14,11 @@ protocol BalanceCoordinatorDelegate: class {
 class BalanceCoordinator {
     let account: Wallet
     let storage: TokensDataStore
+    let config: Config
     var balance: Balance?
     var currencyRate: CurrencyRate?
     weak var delegate: BalanceCoordinatorDelegate?
+    var ethTokenObservation: NotificationToken?
     var viewModel: BalanceViewModel {
         return BalanceViewModel(
             balance: balance,
@@ -28,28 +31,39 @@ class BalanceCoordinator {
         storage: TokensDataStore
     ) {
         self.account = account
+        self.config = config
         self.storage = storage
-        self.storage.refreshBalance()
-
-        let etherToken = TokensDataStore.etherToken(for: config)
-
-        storage.tokensModel.subscribe {[weak self] tokensModel in
-            guard let tokens = tokensModel, let eth = tokens.first(where: { $0 == etherToken }) else {
-                return
-            }
-            var ticker = self?.storage.coinTicker(for: eth)
-            self?.balance = Balance(value: BigInt(eth.value, radix: 10) ?? BigInt(0))
-            self?.currencyRate = ticker?.rate
-            self?.update()
-        }
+        balanceObservation()
     }
     func refresh() {
-        self.storage.refreshBalance()
+        balanceObservation()
     }
-    func refreshEthBalance() {
-        self.storage.refreshETHBalance()
+    private func balanceObservation() {
+        guard let token = storage.enabledObject.first(where: { $0.name == config.server.name }) else {
+            return
+        }
+        updateBalance(for: token, with: nil)
+        ethTokenObservation = token.observe {[weak self] change in
+            switch change {
+            case .change(let properties):
+                for property in properties {
+                    guard property.name == "value", let property = property.newValue as? String else {
+                        return
+                    }
+                    self?.updateBalance(for: token, with: BigInt(property))
+                }
+            case .error, .deleted:
+                break
+            }
+        }
     }
-    func update() {
+    private func update() {
         delegate?.didUpdate(viewModel: viewModel)
+    }
+    private func updateBalance(for token: TokenObject, with value: BigInt?) {
+        var ticker = self.storage.coinTicker(for: token)
+        self.balance = Balance(value: value ?? token.valueBigInt)
+        self.currencyRate = ticker?.rate
+        self.update()
     }
 }

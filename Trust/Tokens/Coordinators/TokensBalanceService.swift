@@ -7,7 +7,7 @@ import APIKit
 import Result
 import TrustKeystore
 
-class GetBalanceCoordinator {
+class TokensBalanceService {
 
     private let web3: Web3Swift
 
