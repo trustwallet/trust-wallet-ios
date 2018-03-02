@@ -45,7 +45,7 @@ class TransactionConfiguratorTests: XCTestCase {
         let emptyBalance = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(gasLimit: BigInt(90000), gasPrice: .none))
         let status = emptyBalance.balanceValidStatus()
         XCTAssertEqual(false, status.sufficient)
-        XCTAssertEqual(.insufficientEther, status.insufficientTextKey)
+        XCTAssertEqual(.insufficientGas, status.insufficientTextKey)
     }
     
     func testBalanceValidationWithEthTransaction() {
