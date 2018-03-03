@@ -307,6 +307,7 @@
 		73B1A6B6204B4789001F546C /* NonFungibleTokensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6B5204B4789001F546C /* NonFungibleTokensViewController.swift */; };
 		73B1A6B8204B4893001F546C /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6B7204B4893001F546C /* MasterViewController.swift */; };
 		73B1A6BC204B4FB6001F546C /* NonFungibleTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6BB204B4FB6001F546C /* NonFungibleTokenViewModel.swift */; };
+		73B1A6BE204B55FA001F546C /* NonFungibleTokenCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6BD204B55FA001F546C /* NonFungibleTokenCellViewModel.swift */; };
 		73BAA8D1201B2FBC00D6DD75 /* LockCreatePasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BAA8D0201B2FBC00D6DD75 /* LockCreatePasscodeViewController.swift */; };
 		73BAA8D3201B2FF800D6DD75 /* LockEnterPasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BAA8D2201B2FF800D6DD75 /* LockEnterPasscodeViewController.swift */; };
 		73C41C71201B46AD00243C6C /* LockEnterPasscodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C41C70201B46AD00243C6C /* LockEnterPasscodeViewModel.swift */; };
@@ -711,6 +712,7 @@
 		73B1A6B5204B4789001F546C /* NonFungibleTokensViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokensViewController.swift; sourceTree = "<group>"; };
 		73B1A6B7204B4893001F546C /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		73B1A6BB204B4FB6001F546C /* NonFungibleTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenViewModel.swift; sourceTree = "<group>"; };
+		73B1A6BD204B55FA001F546C /* NonFungibleTokenCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenCellViewModel.swift; sourceTree = "<group>"; };
 		73BAA8D0201B2FBC00D6DD75 /* LockCreatePasscodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockCreatePasscodeViewController.swift; sourceTree = "<group>"; };
 		73BAA8D2201B2FF800D6DD75 /* LockEnterPasscodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeViewController.swift; sourceTree = "<group>"; };
 		73C41C70201B46AD00243C6C /* LockEnterPasscodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeViewModel.swift; sourceTree = "<group>"; };
@@ -1397,6 +1399,7 @@
 				29F1C8411FEB62ED003780D8 /* EditTokenTableCellViewModel.swift */,
 				29F1C8491FEB6D6B003780D8 /* EditTokenViewModel.swift */,
 				73B1A6BB204B4FB6001F546C /* NonFungibleTokenViewModel.swift */,
+				73B1A6BD204B55FA001F546C /* NonFungibleTokenCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2803,6 +2806,7 @@
 				29BDF1981FEE4DB00023A45F /* GasPriceConfiguration.swift in Sources */,
 				29FA00CC201CA63C002F7DC5 /* Method.swift in Sources */,
 				2963A28A1FC402940095447D /* LocalizedOperationObject.swift in Sources */,
+				73B1A6BE204B55FA001F546C /* NonFungibleTokenCellViewModel.swift in Sources */,
 				73200B7020488C9300118A82 /* TrustNetworkProtocol.swift in Sources */,
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
 				294EC1D81FD7FBAB0065EB20 /* BiometryAuthenticationType.swift in Sources */,

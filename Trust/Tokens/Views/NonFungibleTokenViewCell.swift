@@ -9,11 +9,12 @@ class NonFungibleTokenViewCell: UITableViewCell {
     @IBOutlet weak var annotationTextLabel: UILabel!
     @IBOutlet weak var nameTextLabel: UILabel!
 
-    func configure(viewModel: NonFungibleTokenViewModel) {
-        //tokenImageView.kf.setImage(
-        //    with: viewModel.imageURL,
-        //    placeholder: nil
-        //)
-        //nameTextLabel.text = viewModel.name
+    func configure(viewModel: NonFungibleTokenCellViewModel) {
+        tokenImageView.kf.setImage(
+            with: viewModel.imagePath,
+            placeholder: nil
+        )
+        nameTextLabel.text = viewModel.name
+        annotationTextLabel.text = viewModel.annotation
     }
 }
