@@ -3,8 +3,9 @@
 import UIKit
 
 class NonFungibleTokensViewController: UIViewController {
-    init(
-        ) {
+    fileprivate var viewModel: NonFungibleTokenViewModel
+    init(viewModel: NonFungibleTokenViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     required init?(coder aDecoder: NSCoder) {

@@ -306,7 +306,7 @@
 		73ACEF0520163F46003DD71D /* LockEnterPasscodeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ACEF0420163F46003DD71D /* LockEnterPasscodeCoordinator.swift */; };
 		73B1A6B6204B4789001F546C /* NonFungibleTokensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6B5204B4789001F546C /* NonFungibleTokensViewController.swift */; };
 		73B1A6B8204B4893001F546C /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6B7204B4893001F546C /* MasterViewController.swift */; };
-		73B1A6BA204B4E49001F546C /* NonFungibleTokenDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6B9204B4E49001F546C /* NonFungibleTokenDataStore.swift */; };
+		73B1A6BC204B4FB6001F546C /* NonFungibleTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6BB204B4FB6001F546C /* NonFungibleTokenViewModel.swift */; };
 		73BAA8D1201B2FBC00D6DD75 /* LockCreatePasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BAA8D0201B2FBC00D6DD75 /* LockCreatePasscodeViewController.swift */; };
 		73BAA8D3201B2FF800D6DD75 /* LockEnterPasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BAA8D2201B2FF800D6DD75 /* LockEnterPasscodeViewController.swift */; };
 		73C41C71201B46AD00243C6C /* LockEnterPasscodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C41C70201B46AD00243C6C /* LockEnterPasscodeViewModel.swift */; };
@@ -347,7 +347,6 @@
 		775DF43B203E0018009CD082 /* OpenseaArrayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF43A203E0018009CD082 /* OpenseaArrayResponse.swift */; };
 		775DF43E203E38D2009CD082 /* NonFungibleTokenViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF43C203E38D2009CD082 /* NonFungibleTokenViewCell.swift */; };
 		775DF43F203E38D3009CD082 /* NonFungibleTokenViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 775DF43D203E38D2009CD082 /* NonFungibleTokenViewCell.xib */; };
-		775DF441203E3A5D009CD082 /* NonFungibleTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF440203E3A5D009CD082 /* NonFungibleTokenViewModel.swift */; };
 		775DF443203E5685009CD082 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF442203E5685009CD082 /* Tabs.swift */; };
 		77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D222023F43B0032D687 /* TransactionsTracker.swift */; };
 		77872D25202505B70032D687 /* EnterPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D24202505B70032D687 /* EnterPasswordViewController.swift */; };
@@ -711,7 +710,7 @@
 		73ACEF0420163F46003DD71D /* LockEnterPasscodeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeCoordinator.swift; sourceTree = "<group>"; };
 		73B1A6B5204B4789001F546C /* NonFungibleTokensViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokensViewController.swift; sourceTree = "<group>"; };
 		73B1A6B7204B4893001F546C /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		73B1A6B9204B4E49001F546C /* NonFungibleTokenDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenDataStore.swift; sourceTree = "<group>"; };
+		73B1A6BB204B4FB6001F546C /* NonFungibleTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenViewModel.swift; sourceTree = "<group>"; };
 		73BAA8D0201B2FBC00D6DD75 /* LockCreatePasscodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockCreatePasscodeViewController.swift; sourceTree = "<group>"; };
 		73BAA8D2201B2FF800D6DD75 /* LockEnterPasscodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeViewController.swift; sourceTree = "<group>"; };
 		73C41C70201B46AD00243C6C /* LockEnterPasscodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeViewModel.swift; sourceTree = "<group>"; };
@@ -755,7 +754,6 @@
 		775DF43A203E0018009CD082 /* OpenseaArrayResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenseaArrayResponse.swift; sourceTree = "<group>"; };
 		775DF43C203E38D2009CD082 /* NonFungibleTokenViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenViewCell.swift; sourceTree = "<group>"; };
 		775DF43D203E38D2009CD082 /* NonFungibleTokenViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NonFungibleTokenViewCell.xib; sourceTree = "<group>"; };
-		775DF440203E3A5D009CD082 /* NonFungibleTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenViewModel.swift; sourceTree = "<group>"; };
 		775DF442203E5685009CD082 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		77872D222023F43B0032D687 /* TransactionsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTracker.swift; sourceTree = "<group>"; };
 		77872D24202505B70032D687 /* EnterPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewController.swift; sourceTree = "<group>"; };
@@ -1398,7 +1396,7 @@
 				29E9CFCC1FE7343C00017744 /* NewTokenViewModel.swift */,
 				29F1C8411FEB62ED003780D8 /* EditTokenTableCellViewModel.swift */,
 				29F1C8491FEB6D6B003780D8 /* EditTokenViewModel.swift */,
-				775DF440203E3A5D009CD082 /* NonFungibleTokenViewModel.swift */,
+				73B1A6BB204B4FB6001F546C /* NonFungibleTokenViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1938,7 +1936,6 @@
 			isa = PBXGroup;
 			children = (
 				73200B662044B22600118A82 /* TokensDataStore.swift */,
-				73B1A6B9204B4E49001F546C /* NonFungibleTokenDataStore.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -2685,7 +2682,6 @@
 				296421971F70C1F200EB363B /* ErrorView.swift in Sources */,
 				29358DA91F79FD1C00925D61 /* CALayer.swift in Sources */,
 				29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */,
-				73B1A6BA204B4E49001F546C /* NonFungibleTokenDataStore.swift in Sources */,
 				77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */,
 				29FA00CE201CA64E002F7DC5 /* DappCommand.swift in Sources */,
 				29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */,
@@ -2882,6 +2878,7 @@
 				2996F1461F6C98B3005C33AE /* SettingsViewController.swift in Sources */,
 				2963B6AD1F981A96003063C1 /* TransactionAppearance.swift in Sources */,
 				29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */,
+				73B1A6BC204B4FB6001F546C /* NonFungibleTokenViewModel.swift in Sources */,
 				296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */,
 				294DFB9E1FE0CA59004CEB56 /* TransactionsViewModel.swift in Sources */,
 				73ED85A72034BFEF00593BF3 /* UITextFieldAdditions.swift in Sources */,
@@ -2930,7 +2927,6 @@
 				290B2B701F930AB90053C83E /* PushNotificationsRegistrar.swift in Sources */,
 				739533971FEFF5FD0084AFAB /* Currency.swift in Sources */,
 				298542F31FBD594D00CB5081 /* SettingsViewModel.swift in Sources */,
-				775DF441203E3A5D009CD082 /* NonFungibleTokenViewModel.swift in Sources */,
 				CCA4FE381FD428B300749AE4 /* JailbreakChecker.swift in Sources */,
 				291A1B651F974E8600ADEC80 /* WalletEntryPoint.swift in Sources */,
 				2959960E1FAB05C200DB66A8 /* TransactionsEmptyView.swift in Sources */,

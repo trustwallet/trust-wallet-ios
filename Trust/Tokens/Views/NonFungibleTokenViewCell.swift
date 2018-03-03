@@ -13,10 +13,10 @@ class NonFungibleTokenViewCell: UITableViewCell {
     }
 
     func configure(viewModel: NonFungibleTokenViewModel) {
-        tokenImageView.kf.setImage(
-            with: viewModel.imageURL,
-            placeholder: nil
-        )
-        nameTextLabel.text = viewModel.name
+        //tokenImageView.kf.setImage(
+        //    with: viewModel.imageURL,
+        //    placeholder: nil
+        //)
+        //nameTextLabel.text = viewModel.name
     }
 }

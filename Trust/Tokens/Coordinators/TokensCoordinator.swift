@@ -25,7 +25,9 @@ class TokensCoordinator: Coordinator {
         return controller
     }()
     lazy var nonFungibleTokensViewController: NonFungibleTokensViewController = {
-        return NonFungibleTokensViewController()
+        let nonFungibleTokenViewModel = NonFungibleTokenViewModel(realmDataStore: storage, tokensNetwork: network)
+        let controller = NonFungibleTokensViewController(viewModel: nonFungibleTokenViewModel)
+        return controller
     }()
     lazy var masterViewController: MasterViewController = {
         let masterViewController = MasterViewController(tokensViewController: self.tokensViewController, nonFungibleTokensViewController: self.nonFungibleTokensViewController)
