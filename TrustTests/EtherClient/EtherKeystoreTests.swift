@@ -303,4 +303,20 @@ class EtherKeystoreTests: XCTestCase {
 
         XCTAssertEqual(0, keystore.wallets.count)
     }
+
+    func testKeychainKeyPrivateKey() {
+        let keystore = FakeEtherKeystore()
+        let address = Address(string: "0x5e9c27156a612a2d516c74c7a80af107856f8539")!
+        let key = keystore.keychainKey(for: .make(address: address, type: .encryptedKey))
+
+        XCTAssertEqual(key, address.description.lowercased())
+    }
+
+    func testKeychainKeyHDWallet() {
+        let keystore = FakeEtherKeystore()
+        let address = Address(string: "0x5e9c27156a612a2d516c74c7a80af107856f8539")!
+        let key = keystore.keychainKey(for: .make(address: address, type: .hierarchicalDeterministicWallet))
+
+        XCTAssertEqual(key, "hd-wallet-" + address.description)
+    }
 }
