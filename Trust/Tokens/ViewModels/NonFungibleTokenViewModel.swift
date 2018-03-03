@@ -18,4 +18,11 @@ struct NonFungibleTokenViewModel {
         self.tokensNetwork = tokensNetwork
         self.tokens = realmDataStore.nonFungibleTokens
     }
+    mutating func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<NonFungibleTokenObject>>) -> Void) {
+        tokensObserver = tokens.observe(block)
+    }
+    func cellViewModel(for path: IndexPath) -> NonFungibleTokenCellViewModel {
+        let token = tokens[path.row]
+        return NonFungibleTokenCellViewModel(token: token)
+    }
 }

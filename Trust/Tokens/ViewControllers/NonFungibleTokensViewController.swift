@@ -2,6 +2,7 @@
 
 import UIKit
 import StatefulViewController
+import RealmSwift
 
 class NonFungibleTokensViewController: UIViewController {
     fileprivate var viewModel: NonFungibleTokenViewModel
@@ -17,6 +18,7 @@ class NonFungibleTokensViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
         view.addSubview(tableView)
+        tableView.register(NonFungibleTokenViewCell.self, forCellReuseIdentifier: NonFungibleTokenViewCell.identifier)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -34,7 +36,37 @@ class NonFungibleTokensViewController: UIViewController {
             onRetry: { [weak self] in
                 self?.startLoading()
         })
-
+        tokensObservation()
+    }
+    private func tokensObservation() {
+        viewModel.setTokenObservation { [weak self] (changes: RealmCollectionChange) in
+            guard let strongSelf = self else { return }
+            let tableView = strongSelf.tableView
+            switch changes {
+            case .initial:
+                tableView.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                tableView.beginUpdates()
+                tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) },
+                                     with: .automatic)
+                tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) },
+                                     with: .automatic)
+                for row in modifications {
+                    let indexPath = IndexPath(row: row, section: 0)
+                    let model = strongSelf.viewModel.cellViewModel(for: indexPath)
+                    if let cell = tableView.cellForRow(at: indexPath) as? NonFungibleTokenViewCell {
+                        cell.configure(viewModel: model)
+                    }
+                }
+                tableView.endUpdates()
+                self?.endLoading()
+            case .error(let error):
+                self?.endLoading(animated: true, error: error, completion: nil)
+            }
+            if strongSelf.refreshControl.isRefreshing {
+                strongSelf.refreshControl.endRefreshing()
+            }
+        }
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
