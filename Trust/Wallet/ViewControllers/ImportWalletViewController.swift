@@ -22,7 +22,7 @@ class ImportWalletViewController: FormViewController {
         static let watch = "watch"
         static let mnemonic = "mnemonic"
     }
-    
+
     lazy var pargraphStyle: NSMutableParagraphStyle = {
         let style = NSMutableParagraphStyle()
         style.lineHeightMultiple = 1.25
@@ -100,9 +100,9 @@ class ImportWalletViewController: FormViewController {
 
             <<< SegmentedRow<String>(Values.segment) {
                 $0.options = [
-                    //ImportSelectionType.mnemonic.title,
                     ImportSelectionType.keystore.title,
                     ImportSelectionType.privateKey.title,
+                    ImportSelectionType.mnemonic.title,
                     ImportSelectionType.watch.title,
                 ]
                 $0.value = ImportSelectionType.keystore.title
