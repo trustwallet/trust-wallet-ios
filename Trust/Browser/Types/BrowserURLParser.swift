@@ -27,6 +27,7 @@ class BrowserURLParser {
     }
 
     func searchURL(for query: String) -> URL? {
+        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return .none }
         return URL(string: searchURL + query)
     }
 }

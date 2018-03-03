@@ -38,6 +38,7 @@ class BrowserNavigationBar: UINavigationBar {
         textField.leftViewMode = .always
         textField.autoresizingMask = [.flexibleWidth]
         textField.setContentHuggingPriority(.required, for: .horizontal)
+        textField.placeholder = NSLocalizedString("browser.url.textfield.placeholder", value: "Search or enter website url", comment: "")
 
         goBack.translatesAutoresizingMaskIntoConstraints = false
         goBack.setImage(R.image.toolbarBack(), for: .normal)
