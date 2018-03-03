@@ -69,15 +69,20 @@ class SendTransactionCoordinator {
 
         switch signedTransaction {
         case .success(let data):
+            let transaction = SentTransaction(
+                id: data.sha3(.keccak256).hexEncoded,
+                original: transaction,
+                data: data
+            )
             switch confirmType {
             case .sign:
-                completion(.success(.signedTransaction(data)))
+                completion(.success(.signedTransaction(transaction)))
             case .signThenSend:
                 let request = EtherServiceRequest(batch: BatchFactory().create(SendRawTransactionRequest(signedTransaction: data.hexEncoded)))
                 Session.send(request) { result in
                     switch result {
-                    case .success(let transactionID):
-                        completion(.success(.sentTransaction(SentTransaction(id: transactionID, original: transaction, hash: data.sha3(.keccak256)))))
+                    case .success:
+                        completion(.success(.sentTransaction(transaction)))
                     case .failure(let error):
                         completion(.failure(AnyError(error)))
                     }
