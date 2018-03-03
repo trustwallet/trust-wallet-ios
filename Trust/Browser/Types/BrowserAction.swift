@@ -8,4 +8,5 @@ enum BrowserAction {
     case goForward
     case more(sender: UIView)
     case enter(String)
+    case beginEditing
 }

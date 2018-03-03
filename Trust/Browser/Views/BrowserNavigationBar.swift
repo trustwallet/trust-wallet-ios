@@ -100,4 +100,8 @@ extension BrowserNavigationBar: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        browserDelegate?.did(action: .beginEditing)
+    }
 }
