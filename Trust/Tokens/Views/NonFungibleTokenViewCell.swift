@@ -6,11 +6,8 @@ import Kingfisher
 class NonFungibleTokenViewCell: UITableViewCell {
 
     @IBOutlet weak var tokenImageView: UIImageView!
+    @IBOutlet weak var annotationTextLabel: UILabel!
     @IBOutlet weak var nameTextLabel: UILabel!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
 
     func configure(viewModel: NonFungibleTokenViewModel) {
         //tokenImageView.kf.setImage(
