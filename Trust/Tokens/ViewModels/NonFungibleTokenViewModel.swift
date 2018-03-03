@@ -25,4 +25,7 @@ struct NonFungibleTokenViewModel {
         let token = tokens[path.row]
         return NonFungibleTokenCellViewModel(token: token)
     }
+    var hasContent: Bool {
+        return !tokens.isEmpty
+    }
 }

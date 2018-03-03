@@ -81,7 +81,7 @@ class NonFungibleTokensViewController: UIViewController {
 }
 extension NonFungibleTokensViewController: StatefulViewController {
     func hasContent() -> Bool {
-        return true
+        return viewModel.hasContent
     }
 }
 extension NonFungibleTokensViewController: UITableViewDelegate {
@@ -91,7 +91,9 @@ extension NonFungibleTokensViewController: UITableViewDelegate {
 }
 extension NonFungibleTokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: NonFungibleTokenViewCell.identifier, for: indexPath) as! NonFungibleTokenViewCell
+        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
+        return cell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.tokens.count
