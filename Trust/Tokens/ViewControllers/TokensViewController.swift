@@ -16,12 +16,6 @@ protocol TokensViewControllerDelegate: class {
 
 class TokensViewController: UIViewController {
     fileprivate var viewModel: TokensViewModel
-    fileprivate lazy var segmentController: UISegmentedControl = {
-        let items = [NSLocalizedString("Tokens", value: "Tokens", comment: ""), NSLocalizedString("Collectable", value: "Collectable", comment: "")]
-        let segmentController = UISegmentedControl(items: items)
-        segmentController.selectedSegmentIndex = 0
-        return segmentController
-    }()
     lazy var header: TokensHeaderView = {
         let header = TokensHeaderView(frame: .zero)
         header.amountLabel.text = viewModel.headerBalance ?? "-"
@@ -54,7 +48,6 @@ class TokensViewController: UIViewController {
         tableView = UITableView(frame: .zero, style: .plain)
         super.init(nibName: nil, bundle: nil)
         self.tokensObservation()
-        self.navigationItem.titleView = segmentController
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -158,6 +151,7 @@ class TokensViewController: UIViewController {
             self?.viewModel.updateEthBalance()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
         stopTimer()

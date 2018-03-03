@@ -22,14 +22,21 @@ class TokensCoordinator: Coordinator {
         let tokensViewModel = TokensViewModel(realmDataStore: storage, tokensNetwork: network)
         let controller = TokensViewController(viewModel: tokensViewModel)
         controller.delegate = self
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
         return controller
+    }()
+    lazy var nonFungibleTokensViewController: NonFungibleTokensViewController = {
+        return NonFungibleTokensViewController()
+    }()
+    lazy var masterViewController: MasterViewController = {
+        let masterViewController = MasterViewController(tokensViewController: self.tokensViewController, nonFungibleTokensViewController: self.nonFungibleTokensViewController)
+        masterViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+        masterViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
+        return masterViewController
     }()
     weak var delegate: TokensCoordinatorDelegate?
 
-    lazy var rootViewController: TokensViewController = {
-        return self.tokensViewController
+    lazy var rootViewController: MasterViewController = {
+        return self.masterViewController
     }()
 
     init(
