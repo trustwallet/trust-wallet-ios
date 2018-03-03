@@ -6,6 +6,7 @@ import TrustKeystore
 struct SentTransaction {
     let id: String
     let original: SignTransaction
+    let hash: Data
 }
 
 extension SentTransaction {
