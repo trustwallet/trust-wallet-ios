@@ -41,52 +41,67 @@ class AccountsViewController: UITableViewController {
         super.init(style: .grouped)
         fetch()
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 55
         tableView.register(R.nib.accountViewCell(), forCellReuseIdentifier: R.nib.accountViewCell.name)
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetch()
         refreshWalletBalances()
     }
+
     func fetch() {
         wallets = keystore.wallets
     }
+
     func configure(viewModel: AccountsViewModel) {
         title = headerTitle ?? viewModel.title
     }
-    func account(for indexPath: IndexPath) -> Wallet {
-        return viewModel.wallets[indexPath.row]
+
+    func account(for indexPath: IndexPath) -> Wallet? {
+        return viewModel.wallet(for: indexPath)
     }
+
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return viewModel.numberOfSections
     }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.wallets.count
+        return viewModel.numberOfRows(in: section)
     }
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: R.nib.accountViewCell.name, for: indexPath) as! AccountViewCell
         cell.viewModel = getAccountViewModels(for: indexPath)
         cell.delegate = self
         return cell
     }
+
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return allowsAccountDeletion && (EtherKeystore.current != viewModel.wallets[indexPath.row] || viewModel.wallets.count == 1)
+        return allowsAccountDeletion && (EtherKeystore.current != viewModel.wallet(for: indexPath) || viewModel.isLastWallet)
     }
+
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete {
-            let account = self.account(for: indexPath)
+        if editingStyle == UITableViewCellEditingStyle.delete, let account = self.account(for: indexPath) {
             confirmDelete(account: account)
         }
     }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel.titleForHeader(in: section)
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let account = self.account(for: indexPath)
+        guard let account = self.account(for: indexPath) else { return }
         delegate?.didSelectAccount(account: account, in: self)
     }
+
     func confirmDelete(account: Wallet) {
         confirm(
             title: NSLocalizedString("accounts.confirm.delete.title", value: "Are you sure you would like to delete this wallet?", comment: ""),
@@ -101,6 +116,7 @@ class AccountsViewController: UITableViewController {
             }
         }
     }
+
     func delete(account: Wallet) {
         navigationController?.displayLoading(text: NSLocalizedString("Deleting", value: "Deleting", comment: ""))
         keystore.delete(wallet: account) { [weak self] result in
@@ -115,6 +131,7 @@ class AccountsViewController: UITableViewController {
             }
         }
     }
+
     private func refreshWalletBalances() {
        let addresses = wallets.flatMap { $0.address }
        var counter = 0
@@ -128,16 +145,19 @@ class AccountsViewController: UITableViewController {
             })
         }
     }
+
     private func getAccountViewModels(for path: IndexPath) -> AccountViewModel {
-        let account = self.account(for: path)
+        let account = self.account(for: path)! // Avoid force unwrap
         let balance = self.balances[account.address].flatMap { $0 }
         let model = AccountViewModel(server: config.server, wallet: account, current: EtherKeystore.current, walletBalance: balance)
         return model
     }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
 extension AccountsViewController: AccountViewCellDelegate {
     func accountViewCell(_ cell: AccountViewCell, didTapInfoViewForAccount account: Wallet) {
         self.delegate?.didSelectInfoForAccount(account: account, sender: cell.infoButton, in: self)
