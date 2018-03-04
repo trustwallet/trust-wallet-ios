@@ -18,8 +18,8 @@ class TokensDataStore {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO"))
             .sorted(byKeyPath: "contract", ascending: true)
     }
-    var nonFungibleTokens: Results<NonFungibleTokenObject> {
-        return realm.objects(NonFungibleTokenObject.self).sorted(byKeyPath: "type", ascending: true)
+    var nonFungibleTokens: Results<NonFungibleTokenCategory> {
+        return realm.objects(NonFungibleTokenCategory.self).sorted(byKeyPath: "name", ascending: true)
     }
     let config: Config
     let realm: Realm

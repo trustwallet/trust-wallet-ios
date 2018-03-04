@@ -8,7 +8,7 @@ protocol TokensNetworkProtocol: TrustNetworkProtocol {
     func tickers(for tokens: [TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void)
     func ethBalance(completion: @escaping (_ balance: Balance?) -> Void)
     func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void)
-    func assets(completion: @escaping (_ result: ([AssetCategory]?)) -> Void) 
+    func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void)
 }
 
 class TokensNetwork: TokensNetworkProtocol {
@@ -73,12 +73,12 @@ class TokensNetwork: TokensNetworkProtocol {
         }
     }
     
-    func assets(completion: @escaping (_ result: ([AssetCategory]?)) -> Void) {
+    func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void) {
         provider.request(.assets(address: account.address.description)) { result in
             switch result {
             case .success(let response):
                 do {
-                    let tokens = try response.map(ArrayResponse<AssetCategory>.self).docs
+                    let tokens = try response.map(ArrayResponse<NonFungibleTokenCategory>.self).docs
                     completion(tokens)
                 } catch {
                     completion(nil)
