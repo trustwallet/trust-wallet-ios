@@ -8,6 +8,8 @@ import Result
 
 protocol BrowserViewControllerDelegate: class {
     func didCall(action: DappAction, callbackID: Int)
+    func didAddBookmark(bookmark: BookmarkObject)
+    func didOpenBookmarks()
 }
 
 class BrowserViewController: UIViewController {
@@ -175,10 +177,18 @@ class BrowserViewController: UIViewController {
             self.share()
         }
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
+        let addBookmarkAction = UIAlertAction(title: NSLocalizedString("browser.addbookmark.button.title", value: "Add Bookmark", comment: ""), style: .default) { [unowned self] _ in
+            self.addBookmark()
+        }
+        let viewBookmarksAction = UIAlertAction(title: NSLocalizedString("browser.bookmarks.button.title", value: "Bookmarks", comment: ""), style: .default) { [unowned self] _ in
+            self.showBookmarks()
+        }
 
         alertController.addAction(homeAction)
         alertController.addAction(reloadAction)
         alertController.addAction(shareAction)
+        alertController.addAction(addBookmarkAction)
+        alertController.addAction(viewBookmarksAction)
         alertController.addAction(cancelAction)
         return alertController
     }
@@ -194,6 +204,16 @@ class BrowserViewController: UIViewController {
         controller.popoverPresentationController?.sourceView = navigationController.view
         controller.popoverPresentationController?.sourceRect = navigationController.view.centerRect
         navigationController.present(controller, animated: true, completion: nil)
+    }
+
+    private func addBookmark() {
+        print("Add Bookmark pressed")
+        guard let url = webView.url else { return }
+        //Save this to user bookmarks
+    }
+    
+    private func showBookmarks() {
+        delegate?.didOpenBookmarks()
     }
 
     func handleError(error: Error) {

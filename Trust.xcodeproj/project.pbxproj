@@ -359,6 +359,11 @@
 		77E0E773201FAD06009B4B31 /* BrowserURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E0E772201FAD05009B4B31 /* BrowserURLParser.swift */; };
 		77E81D94203687FB00534C99 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E81D93203687FB00534C99 /* NotificationsViewController.swift */; };
 		77E81D962036883B00534C99 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E81D952036883B00534C99 /* NotificationsViewModel.swift */; };
+		903682EF204A6C3700013479 /* BookmarkCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682EE204A6C3700013479 /* BookmarkCoordinator.swift */; };
+		903682F1204A6DB800013479 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682F0204A6DB800013479 /* BookmarkViewController.swift */; };
+		903682F4204A714C00013479 /* BookmarksStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682F3204A714C00013479 /* BookmarksStore.swift */; };
+		903682F6204A71B000013479 /* BookmarkObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682F5204A71B000013479 /* BookmarkObject.swift */; };
+		903682F8204AC52F00013479 /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682F7204AC52F00013479 /* BookmarkViewModel.swift */; };
 		A2B7ECAA2038122200828E7D /* ExportPrivateKeyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECA92038122200828E7D /* ExportPrivateKeyCoordinator.swift */; };
 		A2B7ECAC2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAB2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift */; };
 		A2B7ECAE2039001300828E7D /* ExportPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */; };
@@ -764,6 +769,11 @@
 		77E81D93203687FB00534C99 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		77E81D952036883B00534C99 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
+		903682EE204A6C3700013479 /* BookmarkCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCoordinator.swift; sourceTree = "<group>"; };
+		903682F0204A6DB800013479 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
+		903682F3204A714C00013479 /* BookmarksStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksStore.swift; sourceTree = "<group>"; };
+		903682F5204A71B000013479 /* BookmarkObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkObject.swift; sourceTree = "<group>"; };
+		903682F7204AC52F00013479 /* BookmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
 		A2B7ECA92038122200828E7D /* ExportPrivateKeyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPrivateKeyCoordinator.swift; sourceTree = "<group>"; };
 		A2B7ECAB2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPrivateKeyViewModel.swift; sourceTree = "<group>"; };
 		A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPrivateKeyViewController.swift; sourceTree = "<group>"; };
@@ -1720,6 +1730,7 @@
 		29E6E0681FE897BB0079265A /* Browser */ = {
 			isa = PBXGroup;
 			children = (
+				903682F2204A712E00013479 /* Storage */,
 				29C70C7D20199ADE0072E454 /* Factory */,
 				77B3BF332017D0C400EEC15A /* ViewModel */,
 				77B3BF2C2017CD1A00EEC15A /* Views */,
@@ -1734,6 +1745,7 @@
 			isa = PBXGroup;
 			children = (
 				29E6E06B1FE897D90079265A /* BrowserCoordinator.swift */,
+				903682EE204A6C3700013479 /* BookmarkCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1742,6 +1754,7 @@
 			isa = PBXGroup;
 			children = (
 				29E6E06D1FE897EE0079265A /* BrowserViewController.swift */,
+				903682F0204A6DB800013479 /* BookmarkViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2092,6 +2105,7 @@
 				29FA00CD201CA64E002F7DC5 /* DappCommand.swift */,
 				29FA00CF201CA66A002F7DC5 /* DAppError.swift */,
 				77E0E772201FAD05009B4B31 /* BrowserURLParser.swift */,
+				903682F5204A71B000013479 /* BookmarkObject.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2169,8 +2183,17 @@
 			isa = PBXGroup;
 			children = (
 				77B3BF342017D0D000EEC15A /* MarketplaceViewModel.swift */,
+				903682F7204AC52F00013479 /* BookmarkViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		903682F2204A712E00013479 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				903682F3204A714C00013479 /* BookmarksStore.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 		9A0F00B2D545197C8F7691C2 /* Pods */ = {
@@ -2668,8 +2691,10 @@
 				291ED08F1F6F613200E7E93A /* GetTransactionRequest.swift in Sources */,
 				294EC1DA1FD8E4E60065EB20 /* GasPriceRequest.swift in Sources */,
 				295A59381F71C1B90092F0FC /* AccountsCoordinator.swift in Sources */,
+				903682F8204AC52F00013479 /* BookmarkViewModel.swift in Sources */,
 				299B5E2D1FCBC0660051361C /* BalanceProtocol.swift in Sources */,
 				296421971F70C1F200EB363B /* ErrorView.swift in Sources */,
+				903682F1204A6DB800013479 /* BookmarkViewController.swift in Sources */,
 				29358DA91F79FD1C00925D61 /* CALayer.swift in Sources */,
 				29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */,
 				77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */,
@@ -2708,6 +2733,7 @@
 				293E62711FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift in Sources */,
 				291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */,
 				29BE3FD21F707DC300F6BFC2 /* TransactionDataCoordinator.swift in Sources */,
+				903682EF204A6C3700013479 /* BookmarkCoordinator.swift in Sources */,
 				29F1C85120032688003780D8 /* Address.swift in Sources */,
 				295B61D11FE7B20400642E60 /* TokensHeaderView.swift in Sources */,
 				29FA00D4201EC662002F7DC5 /* NSObject.swift in Sources */,
@@ -2744,6 +2770,7 @@
 				2959961F1FAE759700DB66A8 /* RawTransaction.swift in Sources */,
 				73ACEEFF20163E08003DD71D /* PasscodeCharacterView.swift in Sources */,
 				775DF43B203E0018009CD082 /* OpenseaArrayResponse.swift in Sources */,
+				903682F4204A714C00013479 /* BookmarksStore.swift in Sources */,
 				295B61D41FE7D5B500642E60 /* CurrencyFormatter.swift in Sources */,
 				775DF42B203693CD009CD082 /* Preferences.swift in Sources */,
 				296421991F70C1F900EB363B /* EmptyView.swift in Sources */,
@@ -2801,6 +2828,7 @@
 				299B5E3B1FD141B70051361C /* BackupViewModel.swift in Sources */,
 				775DF43E203E38D2009CD082 /* NonFungibleTokenViewCell.swift in Sources */,
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
+				903682F6204A71B000013479 /* BookmarkObject.swift in Sources */,
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
 				775DF439203DFF62009CD082 /* OpenseaToken.swift in Sources */,
 				29F1C85A20036968003780D8 /* HelpUsCoordinator.swift in Sources */,

@@ -4,6 +4,7 @@ import Foundation
 import UIKit
 import BigInt
 import TrustKeystore
+import RealmSwift
 
 protocol BrowserCoordinatorDelegate: class {
     func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator)
@@ -22,6 +23,8 @@ class BrowserCoordinator: Coordinator {
     }()
 
     weak var delegate: BrowserCoordinatorDelegate?
+    
+    private let bookmarksStore: BookmarksStore
 
     init(
         session: WalletSession,
@@ -30,6 +33,7 @@ class BrowserCoordinator: Coordinator {
         self.navigationController = UINavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
         self.session = session
         self.keystore = keystore
+        self.bookmarksStore = BookmarksStore(realm: try! Realm())
     }
 
     func start() {
@@ -80,6 +84,17 @@ class BrowserCoordinator: Coordinator {
         coordinator.start()
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
+    
+    func showBookmarks() {
+        let coordinator = BookmarksCoordinator(
+            navigationController: NavigationController(),
+            store: bookmarksStore
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+    }
 
     func signMessage(with type: SignMesageType, account: Account, callbackID: Int) {
         let coordinator = SignMessageCoordinator(
@@ -110,6 +125,26 @@ class BrowserCoordinator: Coordinator {
     }
 }
 
+extension BrowserCoordinator: BookmarksCoordinatorDelegate {
+    func didCancel(in coordinator: BookmarksCoordinator) {
+        //todo
+    }
+    
+    func didSelectBookmark(bookmark: BookmarkObject, in coordinator: BookmarksCoordinator) {
+        //todo
+    }
+    
+    func didAddBookmark(bookmark: BookmarkObject, in coordinator: BookmarksCoordinator) {
+        //todo
+    }
+    
+    func didDeleteBookmark(bookmark: BookmarkObject, in coordinator: BookmarksCoordinator) {
+        //todo
+    }
+    
+    
+}
+
 extension BrowserCoordinator: BrowserViewControllerDelegate {
     func didCall(action: DappAction, callbackID: Int) {
         switch session.account.type {
@@ -128,6 +163,12 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
             }
         case .watch: break
         }
+    }
+    func didAddBookmark(bookmark: BookmarkObject) {
+        //TODO
+    }
+    func didOpenBookmarks() {
+        showBookmarks()
     }
 }
 
