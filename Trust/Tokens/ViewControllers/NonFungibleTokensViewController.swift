@@ -5,11 +5,11 @@ import StatefulViewController
 import RealmSwift
 
 class NonFungibleTokensViewController: UIViewController {
-    
+
     fileprivate var viewModel: NonFungibleTokenViewModel
     
     let tableView: UITableView
-    
+
     let refreshControl = UIRefreshControl()
 
     init(
@@ -35,13 +35,13 @@ class NonFungibleTokensViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
         errorView = ErrorView(onRetry: { [weak self] in
-            self?.startLoading()
+            self?.fetch()
         })
         loadingView = LoadingView()
         emptyView = EmptyView(
             title: NSLocalizedString("emptyView.noNonTokens.label.title", value: "You haven't received any non fungible tokens yet!", comment: ""),
             onRetry: { [weak self] in
-                self?.startLoading()
+                self?.fetch()
         })
         tokensObservation()
         fetch()
@@ -54,6 +54,7 @@ class NonFungibleTokensViewController: UIViewController {
             switch changes {
             case .initial:
                 tableView.reloadData()
+                self?.endLoading()
             case .update(_, let deletions, let insertions, let modifications):
                 tableView.beginUpdates()
                 var insertIndexSet = IndexSet()
@@ -94,7 +95,7 @@ class NonFungibleTokensViewController: UIViewController {
         startLoading()
         viewModel.fetchAssets()
     }
-    
+
     fileprivate func hederView(for section: Int) -> UIView {
         let conteiner = UIView()
         conteiner.backgroundColor = viewModel.headerBackgroundColor
@@ -131,19 +132,19 @@ extension NonFungibleTokensViewController: UITableViewDataSource {
         cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfItems(in: section)
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.numberOfSections()
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return hederView(for: section)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }

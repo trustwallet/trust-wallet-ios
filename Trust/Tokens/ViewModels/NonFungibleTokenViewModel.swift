@@ -65,15 +65,15 @@ struct NonFungibleTokenViewModel {
         let token = tokens[path.section].items[path.row]
         return NonFungibleTokenCellViewModel(token: token)
     }
-    
+
     func numberOfItems(in section: Int) -> Int {
         return tokens[section].items.count
     }
-    
+
     func numberOfSections() -> Int {
         return Array(tokens).map { $0.name }.count
     }
-    
+
     func title(for section: Int) -> String {
         return tokens[section].name
     }
