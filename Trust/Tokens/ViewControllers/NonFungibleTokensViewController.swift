@@ -5,10 +5,12 @@ import StatefulViewController
 import RealmSwift
 
 class NonFungibleTokensViewController: UIViewController {
+    
     fileprivate var viewModel: NonFungibleTokenViewModel
+    
     let tableView: UITableView
+    
     let refreshControl = UIRefreshControl()
-    private let trustProvider = TrustProviderFactory.makeProvider()
 
     init(
         viewModel: NonFungibleTokenViewModel
@@ -41,6 +43,7 @@ class NonFungibleTokensViewController: UIViewController {
                 self?.startLoading()
         })
         tokensObservation()
+        fetch()
     }
 
     private func tokensObservation() {
@@ -88,25 +91,9 @@ class NonFungibleTokensViewController: UIViewController {
         fetch()
     }
 
-    @objc func fetch() {
+    func fetch() {
         startLoading()
-        trustProvider.request(.assets(address: viewModel.address.description)) { [weak self] result in
-            guard let `self` = self else { return }
-            switch result {
-            case .success(let response):
-                do {
-                    let tokens = try response.map(ArrayResponse<AssetCategory>.self).docs
-                    // TODO: Implement storage
-                    //let assets: [[NonFungibleTokenObject]] = tokens.map { .from(category: $0) }
-                    //viewModel.storage.add(tokens: assets)
-                } catch {
-                    self.endLoading(error: error)
-                }
-                self.endLoading()
-            case .failure(let error):
-                self.endLoading(error: error)
-            }
-        }
+        viewModel.fetchAssets()
     }
 }
 
