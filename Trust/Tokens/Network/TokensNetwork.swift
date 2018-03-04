@@ -46,7 +46,7 @@ class TokensNetwork: TokensNetworkProtocol {
             }
         }
     }
-    
+
     func ethBalance(completion: @escaping (_ balance: Balance?) -> Void) {
         balanceService.getEthBalance(for: account.address) { result in
             switch result {
@@ -57,7 +57,7 @@ class TokensNetwork: TokensNetworkProtocol {
             }
         }
     }
-    
+
     func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void) {
         guard let contract = Address(string: token.contract) else {
             completion((token, nil))
@@ -72,7 +72,7 @@ class TokensNetwork: TokensNetworkProtocol {
             }
         }
     }
-    
+
     func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void) {
         provider.request(.assets(address: account.address.description)) { result in
             switch result {

@@ -15,7 +15,9 @@ protocol TokensViewControllerDelegate: class {
 }
 
 class TokensViewController: UIViewController {
+
     fileprivate var viewModel: TokensViewModel
+
     lazy var header: TokensHeaderView = {
         let header = TokensHeaderView(frame: .zero)
         header.amountLabel.text = viewModel.headerBalance ?? "-"
@@ -25,6 +27,7 @@ class TokensViewController: UIViewController {
         header.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
         return header
     }()
+
     lazy var footer: TokensFooterView = {
         let footer = TokensFooterView(frame: .zero)
         footer.textLabel.text = viewModel.footerTitle
@@ -36,11 +39,17 @@ class TokensViewController: UIViewController {
         )
         return footer
     }()
+
     let tableView: UITableView
+
     let refreshControl = UIRefreshControl()
+
     weak var delegate: TokensViewControllerDelegate?
+
     var etherFetchTimer: Timer?
+
     let intervalToETHRefresh = 10.0
+
     init(
         viewModel: TokensViewModel
     ) {
@@ -82,31 +91,38 @@ class TokensViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.restartTimer), name: .UIApplicationDidBecomeActive, object: nil)
 
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.applyTintAdjustment()
         fetch()
     }
+
     @objc func pullToRefresh() {
         refreshControl.beginRefreshing()
         fetch()
     }
+
     func fetch() {
         self.startLoading()
         self.viewModel.fetch()
     }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     func refreshHeaderAndFooterView() {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
         header.amountLabel.text = viewModel.headerBalance
         footer.textLabel.text = viewModel.footerTitle
     }
+
     @objc func missingToken() {
         delegate?.didPressAddToken(in: self)
     }
+
     private func tokensObservation() {
         viewModel.setTokenObservation { [weak self] (changes: RealmCollectionChange) in
             guard let strongSelf = self else { return }
@@ -138,13 +154,16 @@ class TokensViewController: UIViewController {
             }
         }
     }
+
     @objc func stopTimer() {
         etherFetchTimer?.invalidate()
         etherFetchTimer = nil
     }
+
     @objc func restartTimer() {
         sheduleBalanceUpdate()
     }
+
     private func sheduleBalanceUpdate() {
         etherFetchTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in
             self?.viewModel.updateEthBalance()
