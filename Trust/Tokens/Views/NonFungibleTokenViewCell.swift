@@ -5,18 +5,20 @@ import Kingfisher
 
 class NonFungibleTokenViewCell: UITableViewCell {
 
-    @IBOutlet weak var tokenImageView: UIImageView!
-    @IBOutlet weak var nameTextLabel: UILabel!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    static let identifier = "NonFungibleTokenViewCell"
 
-    func configure(viewModel: NonFungibleTokenViewModel) {
+    @IBOutlet weak var tokenImageView: UIImageView!
+
+    @IBOutlet weak var annotationTextLabel: UILabel!
+
+    @IBOutlet weak var nameTextLabel: UILabel!
+
+    func configure(viewModel: NonFungibleTokenCellViewModel) {
         tokenImageView.kf.setImage(
-            with: viewModel.imageURL,
-            placeholder: nil
+            with: viewModel.imagePath,
+            placeholder: UIImage(named: "launch_screen_logo")
         )
         nameTextLabel.text = viewModel.name
+        annotationTextLabel.text = viewModel.annotation
     }
 }

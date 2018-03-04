@@ -281,12 +281,14 @@
 		61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */; };
 		61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */; };
 		664D11A12007D59F0041A0B0 /* EstimateGasRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */; };
+		7302405C204C65DF00B327DF /* NonFungibleTokenCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7302405B204C65DF00B327DF /* NonFungibleTokenCategory.swift */; };
 		73200B642040B9D700118A82 /* CryptoAddressValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B632040B9D700118A82 /* CryptoAddressValidatorTest.swift */; };
 		73200B672044B22600118A82 /* TokensDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B662044B22600118A82 /* TokensDataStore.swift */; };
 		73200B6A2045B8AC00118A82 /* TokensNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B692045B8AC00118A82 /* TokensNetwork.swift */; };
 		73200B6C20477FF900118A82 /* FakeTokensNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B6B20477FF900118A82 /* FakeTokensNetwork.swift */; };
 		73200B7020488C9300118A82 /* TrustNetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B6F20488C9300118A82 /* TrustNetworkProtocol.swift */; };
 		73200B732048A7FC00118A82 /* TokensViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B722048A7FC00118A82 /* TokensViewModelTest.swift */; };
+		73200B752048B67E00118A82 /* NonFungibleTokenObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B742048B67E00118A82 /* NonFungibleTokenObject.swift */; };
 		732086B9201508690047F605 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732086B8201508690047F605 /* SplashCoordinator.swift */; };
 		732E0F502022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */; };
 		732E0F522022754600B39C1F /* FakeLockProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F512022754600B39C1F /* FakeLockProtocol.swift */; };
@@ -303,6 +305,10 @@
 		73ACEEFF20163E08003DD71D /* PasscodeCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ACEEFE20163E08003DD71D /* PasscodeCharacterView.swift */; };
 		73ACEF0120163ED4003DD71D /* LockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ACEF0020163ED4003DD71D /* LockViewModel.swift */; };
 		73ACEF0520163F46003DD71D /* LockEnterPasscodeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ACEF0420163F46003DD71D /* LockEnterPasscodeCoordinator.swift */; };
+		73B1A6B6204B4789001F546C /* NonFungibleTokensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6B5204B4789001F546C /* NonFungibleTokensViewController.swift */; };
+		73B1A6B8204B4893001F546C /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6B7204B4893001F546C /* MasterViewController.swift */; };
+		73B1A6BC204B4FB6001F546C /* NonFungibleTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6BB204B4FB6001F546C /* NonFungibleTokenViewModel.swift */; };
+		73B1A6BE204B55FA001F546C /* NonFungibleTokenCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6BD204B55FA001F546C /* NonFungibleTokenCellViewModel.swift */; };
 		73BAA8D1201B2FBC00D6DD75 /* LockCreatePasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BAA8D0201B2FBC00D6DD75 /* LockCreatePasscodeViewController.swift */; };
 		73BAA8D3201B2FF800D6DD75 /* LockEnterPasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BAA8D2201B2FF800D6DD75 /* LockEnterPasscodeViewController.swift */; };
 		73C41C71201B46AD00243C6C /* LockEnterPasscodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C41C70201B46AD00243C6C /* LockEnterPasscodeViewModel.swift */; };
@@ -343,7 +349,6 @@
 		775DF43B203E0018009CD082 /* OpenseaArrayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF43A203E0018009CD082 /* OpenseaArrayResponse.swift */; };
 		775DF43E203E38D2009CD082 /* NonFungibleTokenViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF43C203E38D2009CD082 /* NonFungibleTokenViewCell.swift */; };
 		775DF43F203E38D3009CD082 /* NonFungibleTokenViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 775DF43D203E38D2009CD082 /* NonFungibleTokenViewCell.xib */; };
-		775DF441203E3A5D009CD082 /* NonFungibleTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF440203E3A5D009CD082 /* NonFungibleTokenViewModel.swift */; };
 		775DF443203E5685009CD082 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF442203E5685009CD082 /* Tabs.swift */; };
 		77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D222023F43B0032D687 /* TransactionsTracker.swift */; };
 		77872D25202505B70032D687 /* EnterPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D24202505B70032D687 /* EnterPasswordViewController.swift */; };
@@ -682,12 +687,14 @@
 		61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherNumberFormatterTests.swift; sourceTree = "<group>"; };
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateGasRequest.swift; sourceTree = "<group>"; };
+		7302405B204C65DF00B327DF /* NonFungibleTokenCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenCategory.swift; sourceTree = "<group>"; };
 		73200B632040B9D700118A82 /* CryptoAddressValidatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoAddressValidatorTest.swift; sourceTree = "<group>"; };
 		73200B662044B22600118A82 /* TokensDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensDataStore.swift; sourceTree = "<group>"; };
 		73200B692045B8AC00118A82 /* TokensNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNetwork.swift; sourceTree = "<group>"; };
 		73200B6B20477FF900118A82 /* FakeTokensNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTokensNetwork.swift; sourceTree = "<group>"; };
 		73200B6F20488C9300118A82 /* TrustNetworkProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustNetworkProtocol.swift; sourceTree = "<group>"; };
 		73200B722048A7FC00118A82 /* TokensViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensViewModelTest.swift; sourceTree = "<group>"; };
+		73200B742048B67E00118A82 /* NonFungibleTokenObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenObject.swift; sourceTree = "<group>"; };
 		732086B8201508690047F605 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
 		732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
 		732E0F512022754600B39C1F /* FakeLockProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeLockProtocol.swift; sourceTree = "<group>"; };
@@ -704,6 +711,10 @@
 		73ACEEFE20163E08003DD71D /* PasscodeCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeCharacterView.swift; sourceTree = "<group>"; };
 		73ACEF0020163ED4003DD71D /* LockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockViewModel.swift; sourceTree = "<group>"; };
 		73ACEF0420163F46003DD71D /* LockEnterPasscodeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeCoordinator.swift; sourceTree = "<group>"; };
+		73B1A6B5204B4789001F546C /* NonFungibleTokensViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokensViewController.swift; sourceTree = "<group>"; };
+		73B1A6B7204B4893001F546C /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		73B1A6BB204B4FB6001F546C /* NonFungibleTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenViewModel.swift; sourceTree = "<group>"; };
+		73B1A6BD204B55FA001F546C /* NonFungibleTokenCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenCellViewModel.swift; sourceTree = "<group>"; };
 		73BAA8D0201B2FBC00D6DD75 /* LockCreatePasscodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockCreatePasscodeViewController.swift; sourceTree = "<group>"; };
 		73BAA8D2201B2FF800D6DD75 /* LockEnterPasscodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeViewController.swift; sourceTree = "<group>"; };
 		73C41C70201B46AD00243C6C /* LockEnterPasscodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeViewModel.swift; sourceTree = "<group>"; };
@@ -747,7 +758,6 @@
 		775DF43A203E0018009CD082 /* OpenseaArrayResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenseaArrayResponse.swift; sourceTree = "<group>"; };
 		775DF43C203E38D2009CD082 /* NonFungibleTokenViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenViewCell.swift; sourceTree = "<group>"; };
 		775DF43D203E38D2009CD082 /* NonFungibleTokenViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NonFungibleTokenViewCell.xib; sourceTree = "<group>"; };
-		775DF440203E3A5D009CD082 /* NonFungibleTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenViewModel.swift; sourceTree = "<group>"; };
 		775DF442203E5685009CD082 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		77872D222023F43B0032D687 /* TransactionsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTracker.swift; sourceTree = "<group>"; };
 		77872D24202505B70032D687 /* EnterPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewController.swift; sourceTree = "<group>"; };
@@ -1376,6 +1386,8 @@
 				296106C51F7645CC0006164B /* TokensViewController.swift */,
 				294DFBA81FE6EBFB004CEB56 /* NewTokenViewController.swift */,
 				29F1C83D1FEB5C91003780D8 /* EditTokensViewController.swift */,
+				73B1A6B5204B4789001F546C /* NonFungibleTokensViewController.swift */,
+				73B1A6B7204B4893001F546C /* MasterViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1388,7 +1400,8 @@
 				29E9CFCC1FE7343C00017744 /* NewTokenViewModel.swift */,
 				29F1C8411FEB62ED003780D8 /* EditTokenTableCellViewModel.swift */,
 				29F1C8491FEB6D6B003780D8 /* EditTokenViewModel.swift */,
-				775DF440203E3A5D009CD082 /* NonFungibleTokenViewModel.swift */,
+				73B1A6BB204B4FB6001F546C /* NonFungibleTokenViewModel.swift */,
+				73B1A6BD204B55FA001F546C /* NonFungibleTokenCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1399,6 +1412,8 @@
 				294DFBAD1FE6F254004CEB56 /* TokenObject.swift */,
 				29E9CFCE1FE7347200017744 /* ERC20Token.swift */,
 				29C0FCE4200EBAF6004A13CB /* TokenType.swift */,
+				73200B742048B67E00118A82 /* NonFungibleTokenObject.swift */,
+				7302405B204C65DF00B327DF /* NonFungibleTokenCategory.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2653,6 +2668,7 @@
 				73ACEF0120163ED4003DD71D /* LockViewModel.swift in Sources */,
 				29AD8A041F93D6CD008E10E7 /* Constants.swift in Sources */,
 				29FF12FE1F75EA3F00AFD326 /* Keystore.swift in Sources */,
+				73B1A6B8204B4893001F546C /* MasterViewController.swift in Sources */,
 				2963B6B11F9891F5003063C1 /* UIButton.swift in Sources */,
 				29F114F21FA7966300114A29 /* PrivateKeyRule.swift in Sources */,
 				77E81D962036883B00534C99 /* NotificationsViewModel.swift in Sources */,
@@ -2693,6 +2709,7 @@
 				615F10561FCBEF2E008A45AF /* OnboardingPageViewModel.swift in Sources */,
 				29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */,
 				29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */,
+				73200B752048B67E00118A82 /* NonFungibleTokenObject.swift in Sources */,
 				73200B6A2045B8AC00118A82 /* TokensNetwork.swift in Sources */,
 				77872D27202505C00032D687 /* EnterPasswordViewModel.swift in Sources */,
 				29F1C85F200369BA003780D8 /* HelpUsViewModel.swift in Sources */,
@@ -2792,6 +2809,7 @@
 				29BDF1981FEE4DB00023A45F /* GasPriceConfiguration.swift in Sources */,
 				29FA00CC201CA63C002F7DC5 /* Method.swift in Sources */,
 				2963A28A1FC402940095447D /* LocalizedOperationObject.swift in Sources */,
+				73B1A6BE204B55FA001F546C /* NonFungibleTokenCellViewModel.swift in Sources */,
 				73200B7020488C9300118A82 /* TrustNetworkProtocol.swift in Sources */,
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
 				294EC1D81FD7FBAB0065EB20 /* BiometryAuthenticationType.swift in Sources */,
@@ -2837,6 +2855,7 @@
 				771A847520322FD700528D28 /* PreferencesViewModel.swift in Sources */,
 				296AF9A51F736BA20058AF78 /* Config.swift in Sources */,
 				615F10621FCD3F0F008A45AF /* OnboardingPageStyle.swift in Sources */,
+				73B1A6B6204B4789001F546C /* NonFungibleTokensViewController.swift in Sources */,
 				2912CD341F6A849C00C6CBE3 /* WelcomeViewModel.swift in Sources */,
 				7721A6C8202EF81B004DB16C /* CustomRPC.swift in Sources */,
 				29E9CFCD1FE7343C00017744 /* NewTokenViewModel.swift in Sources */,
@@ -2853,6 +2872,7 @@
 				A2B7ECAA2038122200828E7D /* ExportPrivateKeyCoordinator.swift in Sources */,
 				29E6E06E1FE897EE0079265A /* BrowserViewController.swift in Sources */,
 				2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */,
+				7302405C204C65DF00B327DF /* NonFungibleTokenCategory.swift in Sources */,
 				615F105D1FCBF55E008A45AF /* OnboardingCollectionViewController.swift in Sources */,
 				29A0E1851F706B8C00BAAAED /* String.swift in Sources */,
 				296AF9A71F736EC70058AF78 /* RPCServers.swift in Sources */,
@@ -2866,6 +2886,7 @@
 				2996F1461F6C98B3005C33AE /* SettingsViewController.swift in Sources */,
 				2963B6AD1F981A96003063C1 /* TransactionAppearance.swift in Sources */,
 				29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */,
+				73B1A6BC204B4FB6001F546C /* NonFungibleTokenViewModel.swift in Sources */,
 				296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */,
 				294DFB9E1FE0CA59004CEB56 /* TransactionsViewModel.swift in Sources */,
 				73ED85A72034BFEF00593BF3 /* UITextFieldAdditions.swift in Sources */,
@@ -2914,7 +2935,6 @@
 				290B2B701F930AB90053C83E /* PushNotificationsRegistrar.swift in Sources */,
 				739533971FEFF5FD0084AFAB /* Currency.swift in Sources */,
 				298542F31FBD594D00CB5081 /* SettingsViewModel.swift in Sources */,
-				775DF441203E3A5D009CD082 /* NonFungibleTokenViewModel.swift in Sources */,
 				CCA4FE381FD428B300749AE4 /* JailbreakChecker.swift in Sources */,
 				291A1B651F974E8600ADEC80 /* WalletEntryPoint.swift in Sources */,
 				2959960E1FAB05C200DB66A8 /* TransactionsEmptyView.swift in Sources */,

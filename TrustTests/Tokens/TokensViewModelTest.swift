@@ -5,7 +5,7 @@ import XCTest
 import BigInt
 
 class TokensViewModelTest: XCTestCase {
-    let model = TokensViewModel(realmDataStore: FakeTokensDataStore(), tokensNetwork: FakeTokensNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: FakeGetBalanceCoordinator(), account: .make(), config: .make()))
+    let model = TokensViewModel(store: FakeTokensDataStore(), tokensNetwork: FakeTokensNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: FakeGetBalanceCoordinator(), account: .make(), config: .make()))
     let firstItem = IndexPath(row: 0, section: 0)
     func testNumberOfTokens() {
         XCTAssertEqual(1, model.numberOfItems(for: 0))
@@ -24,7 +24,7 @@ class TokensViewModelTest: XCTestCase {
     }
     func testUpdateTicker() {
         model.updateTickers()
-        let ethTicker = model.realmDataStore.tickers.first
+        let ethTicker = model.store.tickers.first
         XCTAssertNotNil(ethTicker)
         XCTAssertEqual("800", ethTicker?.price)
     }

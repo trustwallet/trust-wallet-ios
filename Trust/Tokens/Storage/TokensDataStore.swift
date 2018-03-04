@@ -18,6 +18,9 @@ class TokensDataStore {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO"))
             .sorted(byKeyPath: "contract", ascending: true)
     }
+    var nonFungibleTokens: Results<NonFungibleTokenCategory> {
+        return realm.objects(NonFungibleTokenCategory.self).sorted(byKeyPath: "name", ascending: true)
+    }
     let config: Config
     let realm: Realm
     var tickers: [CoinTicker] = []
@@ -30,6 +33,9 @@ class TokensDataStore {
         return realm.objects(TokenObject.self)
             .sorted(byKeyPath: "contract", ascending: true)
             .filter { !$0.isDisabled }
+    }
+    var nonFungibleObjects: [NonFungibleTokenObject] {
+        return realm.objects(NonFungibleTokenObject.self).map { $0 }
     }
     init(
         realm: Realm,
@@ -59,12 +65,12 @@ class TokensDataStore {
         )
         add(tokens: [newToken])
     }
-    func add(tokens: [TokenObject]) {
+    func add(tokens: [Object]) {
         realm.beginWrite()
         realm.add(tokens, update: true)
         try! realm.commitWrite()
     }
-    func delete(tokens: [TokenObject]) {
+    func delete(tokens: [Object]) {
         realm.beginWrite()
         realm.delete(tokens)
         try! realm.commitWrite()
@@ -72,6 +78,7 @@ class TokensDataStore {
     func deleteAll() {
         try! realm.write {
             realm.delete(realm.objects(TokenObject.self))
+            realm.delete(realm.objects(NonFungibleTokenObject.self))
         }
     }
     func update(token: TokenObject, action: TokenAction) {

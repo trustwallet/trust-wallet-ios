@@ -16,6 +16,6 @@ class TokensCoordinatorTests: XCTestCase {
         
         coordinator.start()
         
-        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is TokensViewController)
+        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is MasterViewController)
     }
 }
