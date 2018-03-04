@@ -77,7 +77,7 @@ extension TrustService: TargetType {
         case .marketplace(let chainID):
             return .requestParameters(parameters: ["chainID": chainID], encoding: URLEncoding())
         case .assets(let address):
-            return .requestParameters(parameters: ["chainID": address], encoding: URLEncoding())
+            return .requestParameters(parameters: ["address": address], encoding: URLEncoding())
         }
     }
 
