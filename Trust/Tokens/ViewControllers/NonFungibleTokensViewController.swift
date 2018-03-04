@@ -97,6 +97,8 @@ class NonFungibleTokensViewController: UIViewController {
                 do {
                     let tokens = try response.map(ArrayResponse<AssetCategory>.self).docs
                     // TODO: Implement storage
+                    //let assets: [[NonFungibleTokenObject]] = tokens.map { .from(category: $0) }
+                    //viewModel.storage.add(tokens: assets)
                 } catch {
                     self.endLoading(error: error)
                 }

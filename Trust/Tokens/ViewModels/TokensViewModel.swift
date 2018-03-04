@@ -10,7 +10,7 @@ enum TokenItem {
 
 struct TokensViewModel {
     let config: Config
-    let realmDataStore: TokensDataStore
+    let store: TokensDataStore
     var tokensNetwork: TokensNetworkProtocol
     let tokens: Results<TokenObject>
     var tokensObserver: NotificationToken?
@@ -46,13 +46,13 @@ struct TokensViewModel {
     }
     init(
         config: Config = Config(),
-        realmDataStore: TokensDataStore,
+        store: TokensDataStore,
         tokensNetwork: TokensNetworkProtocol
     ) {
         self.config = config
-        self.realmDataStore = realmDataStore
+        self.store = store
         self.tokensNetwork = tokensNetwork
-        self.tokens = realmDataStore.tokens
+        self.tokens = store.tokens
         updateEthBalance()
         updateTokensBalances()
         updateTickers()
@@ -69,7 +69,7 @@ struct TokensViewModel {
         return CurrencyFormatter.formatter.string(from: NSNumber(value: totalAmount))
     }
     private func amount(for token: TokenObject) -> Double {
-        guard let tickersSymbol = realmDataStore.tickers.first(where: { $0.contract == token.contract }) else { return 0 }
+        guard let tickersSymbol = store.tickers.first(where: { $0.contract == token.contract }) else { return 0 }
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
         let price = Double(tickersSymbol.price) ?? 0
         return tokenValue * price
@@ -89,25 +89,25 @@ struct TokensViewModel {
     }
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
-        return TokenViewCellViewModel(token: token, ticker: realmDataStore.coinTicker(for: token))
+        return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token))
     }
     func updateTickers() {
-        tokensNetwork.tickers(for: realmDataStore.enabledObject) { result in
+        tokensNetwork.tickers(for: store.enabledObject) { result in
             guard let tickers = result else { return }
-            self.realmDataStore.tickers = tickers
+            self.store.tickers = tickers
         }
     }
     func updateEthBalance() {
         tokensNetwork.ethBalance { result in
-            guard let balance = result, let token = self.realmDataStore.objects.first (where: { $0.name == self.config.server.name })  else { return }
-            self.realmDataStore.update(token: token, action: .updateValue(balance.value))
+            guard let balance = result, let token = self.store.objects.first (where: { $0.name == self.config.server.name })  else { return }
+            self.store.update(token: token, action: .updateValue(balance.value))
         }
     }
     func updateTokensBalances() {
-        realmDataStore.enabledObject.filter { $0.name != self.config.server.name }.forEach { token in
+        store.enabledObject.filter { $0.name != self.config.server.name }.forEach { token in
             tokensNetwork.tokenBalance(for: token) { result in
                 guard let balance = result.1 else { return }
-                self.realmDataStore.update(token: result.0, action: TokenAction.updateValue(balance.value))
+                self.store.update(token: result.0, action: TokenAction.updateValue(balance.value))
             }
         }
     }

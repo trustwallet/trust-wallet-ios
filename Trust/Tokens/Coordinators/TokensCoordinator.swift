@@ -15,17 +15,17 @@ class TokensCoordinator: Coordinator {
     let session: WalletSession
     let keystore: Keystore
     var coordinators: [Coordinator] = []
-    let storage: TokensDataStore
+    let store: TokensDataStore
     let network: TokensNetworkProtocol
 
     lazy var tokensViewController: TokensViewController = {
-        let tokensViewModel = TokensViewModel(realmDataStore: storage, tokensNetwork: network)
+        let tokensViewModel = TokensViewModel(store: store, tokensNetwork: network)
         let controller = TokensViewController(viewModel: tokensViewModel)
         controller.delegate = self
         return controller
     }()
     lazy var nonFungibleTokensViewController: NonFungibleTokensViewController = {
-        let nonFungibleTokenViewModel = NonFungibleTokenViewModel(address: session.account.address, storage: storage, tokensNetwork: network)
+        let nonFungibleTokenViewModel = NonFungibleTokenViewModel(address: session.account.address, storage: store, tokensNetwork: network)
         let controller = NonFungibleTokensViewController(viewModel: nonFungibleTokenViewModel)
         return controller
     }()
@@ -52,7 +52,7 @@ class TokensCoordinator: Coordinator {
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
         self.keystore = keystore
-        self.storage = tokensStorage
+        self.store = tokensStorage
         self.network = network
     }
 
@@ -106,7 +106,7 @@ class TokensCoordinator: Coordinator {
     @objc func edit() {
         let controller = EditTokensViewController(
             session: session,
-            storage: storage
+            storage: store
         )
         navigationController.pushViewController(controller, animated: true)
     }
@@ -133,7 +133,7 @@ extension TokensCoordinator: TokensViewControllerDelegate {
     func didDelete(token: TokenItem, in viewController: UIViewController) {
         switch token {
         case .token(let token):
-            storage.delete(tokens: [token])
+            store.delete(tokens: [token])
             tokensViewController.fetch()
         }
     }
@@ -149,7 +149,7 @@ extension TokensCoordinator: TokensViewControllerDelegate {
 
 extension TokensCoordinator: NewTokenViewControllerDelegate {
     func didAddToken(token: ERC20Token, in viewController: NewTokenViewController) {
-        storage.addCustom(token: token)
+        store.addCustom(token: token)
         tokensViewController.fetch()
         dismiss()
     }
