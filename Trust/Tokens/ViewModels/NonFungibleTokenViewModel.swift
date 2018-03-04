@@ -17,6 +17,22 @@ struct NonFungibleTokenViewModel {
     
     let address: Address
     
+    var headerBackgroundColor: UIColor {
+        return UIColor(hex: "fafafa")
+    }
+    
+    var headerTitleTextColor: UIColor {
+        return UIColor(hex: "555357")
+    }
+    
+    var headerTitleFont: UIFont {
+        return UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
+    }
+    
+    var headerBorderColor: UIColor {
+        return UIColor(hex: "e1e1e1")
+    }
+    
     var hasContent: Bool {
         return !tokens.isEmpty
     }
@@ -48,5 +64,17 @@ struct NonFungibleTokenViewModel {
     func cellViewModel(for path: IndexPath) -> NonFungibleTokenCellViewModel {
         let token = tokens[path.section].items[path.row]
         return NonFungibleTokenCellViewModel(token: token)
+    }
+    
+    func numberOfItems(in section: Int) -> Int {
+        return tokens[section].items.count
+    }
+    
+    func numberOfSections() -> Int {
+        return Array(tokens).map { $0.name }.count
+    }
+    
+    func title(for section: Int) -> String {
+        return tokens[section].name
     }
 }

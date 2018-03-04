@@ -46,12 +46,12 @@ class NonFungibleTokenObject: Object, Decodable {
     
     convenience required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: NonFungibleTokenCodingKeys.self)
-        let id = try container.decode(String.self, forKey: .id)
-        let contract = try container.decode(String.self, forKey: .contract)
-        let name = try container.decode(String.self, forKey: .name)
-        let annotation = try container.decode(String.self, forKey: .annotation)
-        let imagePath = try container.decode(String.self, forKey: .imagePath)
-        let externalPath = try container.decode(String.self, forKey: .externalPath)
+        let id = try container.decodeIfPresent(String.self, forKey: .id)  ?? ""
+        let contract = try container.decodeIfPresent(String.self, forKey: .contract)  ?? ""
+        let name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
+        let annotation = try container.decodeIfPresent(String.self, forKey: .annotation) ?? ""
+        let imagePath = try container.decodeIfPresent(String.self, forKey: .imagePath) ?? ""
+        let externalPath = try container.decodeIfPresent(String.self, forKey: .externalPath) ?? ""
         self.init(id: id, contract: contract, name: name, annotation: annotation, imagePath: imagePath, externalPath: externalPath)
     }
     

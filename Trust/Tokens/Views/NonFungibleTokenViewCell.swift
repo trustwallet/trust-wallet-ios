@@ -8,7 +8,9 @@ class NonFungibleTokenViewCell: UITableViewCell {
     static let identifier = "NonFungibleTokenViewCell"
 
     @IBOutlet weak var tokenImageView: UIImageView!
+    
     @IBOutlet weak var annotationTextLabel: UILabel!
+    
     @IBOutlet weak var nameTextLabel: UILabel!
 
     func configure(viewModel: NonFungibleTokenCellViewModel) {

@@ -83,7 +83,7 @@ class TokensNetwork: TokensNetworkProtocol {
                 } catch {
                     completion(nil)
                 }
-            case .failure(_):
+            case .failure:
                     completion(nil)
             }
         }

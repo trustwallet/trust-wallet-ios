@@ -16,15 +16,16 @@ class NonFungibleTokensViewController: UIViewController {
         viewModel: NonFungibleTokenViewModel
     ) {
         self.viewModel = viewModel
-        self.tableView = UITableView(frame: .zero, style: .plain)
+        self.tableView = UITableView(frame: .zero, style: .grouped)
         super.init(nibName: nil, bundle: nil)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
+        tableView.allowsSelection = false
         view.addSubview(tableView)
-        tableView.register(NonFungibleTokenViewCell.self, forCellReuseIdentifier: NonFungibleTokenViewCell.identifier)
+        tableView.register(R.nib.nonFungibleTokenViewCell(), forCellReuseIdentifier: NonFungibleTokenViewCell.identifier)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -55,17 +56,15 @@ class NonFungibleTokensViewController: UIViewController {
                 tableView.reloadData()
             case .update(_, let deletions, let insertions, let modifications):
                 tableView.beginUpdates()
-                tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) },
-                                     with: .automatic)
-                tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) },
-                                     with: .automatic)
-                for row in modifications {
-                    let indexPath = IndexPath(row: row, section: 0)
-                    let model = strongSelf.viewModel.cellViewModel(for: indexPath)
-                    if let cell = tableView.cellForRow(at: indexPath) as? NonFungibleTokenViewCell {
-                        cell.configure(viewModel: model)
-                    }
-                }
+                var insertIndexSet = IndexSet()
+                insertions.forEach { insertIndexSet.insert($0) }
+                tableView.insertSections(insertIndexSet, with: insertions.count == 1 ? .top : .automatic)
+                var deleteIndexSet = IndexSet()
+                deletions.forEach { deleteIndexSet.insert($0) }
+                tableView.deleteSections(deleteIndexSet, with: .automatic)
+                var updateIndexSet = IndexSet()
+                modifications.forEach { updateIndexSet.insert($0) }
+                tableView.reloadSections(updateIndexSet, with: .none)
                 tableView.endUpdates()
                 self?.endLoading()
             case .error(let error):
@@ -95,6 +94,23 @@ class NonFungibleTokensViewController: UIViewController {
         startLoading()
         viewModel.fetchAssets()
     }
+    
+    fileprivate func hederView(for section: Int) -> UIView {
+        let conteiner = UIView()
+        conteiner.backgroundColor = viewModel.headerBackgroundColor
+        let title = UILabel()
+        title.text = viewModel.title(for: section)
+        title.sizeToFit()
+        title.textColor = viewModel.headerTitleTextColor
+        title.font = viewModel.headerTitleFont
+        conteiner.addSubview(title)
+        title.translatesAutoresizingMaskIntoConstraints = false
+        let horConstraint = NSLayoutConstraint(item: title, attribute: .centerX, relatedBy: .equal, toItem: conteiner, attribute: .centerX, multiplier: 1.0, constant: 0.0)
+        let verConstraint = NSLayoutConstraint(item: title, attribute: .centerY, relatedBy: .equal, toItem: conteiner, attribute: .centerY, multiplier: 1.0, constant: 0.0)
+        let leftConstraint = NSLayoutConstraint(item: title, attribute: .left, relatedBy: .equal, toItem: conteiner, attribute: .left, multiplier: 1.0, constant: 20.0)
+        conteiner.addConstraints([horConstraint, verConstraint, leftConstraint])
+        return conteiner
+    }
 }
 
 extension NonFungibleTokensViewController: StatefulViewController {
@@ -115,7 +131,20 @@ extension NonFungibleTokensViewController: UITableViewDataSource {
         cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
         return cell
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.tokens.count
+        return viewModel.numberOfItems(in: section)
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numberOfSections()
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return hederView(for: section)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
     }
 }

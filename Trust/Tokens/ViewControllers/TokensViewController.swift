@@ -61,7 +61,6 @@ class TokensViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         ])
         tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
-        tableView.register(R.nib.nonFungibleTokenViewCell(), forCellReuseIdentifier: R.nib.nonFungibleTokenViewCell.name)
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
         errorView = ErrorView(onRetry: { [weak self] in
