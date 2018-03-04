@@ -10,10 +10,18 @@ enum DeteilsViewType: Int {
 class MasterViewController: UIViewController {
     fileprivate lazy var segmentController: UISegmentedControl = {
         let items = [NSLocalizedString("Tokens", value: "Tokens", comment: ""), NSLocalizedString("Collectable", value: "Collectable", comment: "")]
-        let segmentController = UISegmentedControl(items: items)
-        segmentController.selectedSegmentIndex = DeteilsViewType.tokens.rawValue
-        segmentController.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
-        return segmentController
+        let segmentedControl = UISegmentedControl(items: items)
+        segmentedControl.selectedSegmentIndex = DeteilsViewType.tokens.rawValue
+        segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
+        let titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        let selectedTextAttributes = [NSAttributedStringKey.foregroundColor: Colors.blue]
+        segmentedControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+        segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .normal)
+        segmentedControl.setDividerImage(UIImage.filled(with: UIColor.white), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+        for selectView in segmentedControl.subviews {
+            selectView.tintColor = UIColor.white
+        }
+        return segmentedControl
     }()
 
     var tokensViewController: TokensViewController
