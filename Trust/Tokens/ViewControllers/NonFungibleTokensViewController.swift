@@ -8,7 +8,11 @@ class NonFungibleTokensViewController: UIViewController {
     fileprivate var viewModel: NonFungibleTokenViewModel
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
-    init(viewModel: NonFungibleTokenViewModel) {
+    private let trustProvider = TrustProviderFactory.makeProvider()
+
+    init(
+        viewModel: NonFungibleTokenViewModel
+    ) {
         self.viewModel = viewModel
         self.tableView = UITableView(frame: .zero, style: .plain)
         super.init(nibName: nil, bundle: nil)
@@ -24,7 +28,7 @@ class NonFungibleTokensViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            ])
+        ])
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
         errorView = ErrorView(onRetry: { [weak self] in
@@ -38,6 +42,7 @@ class NonFungibleTokensViewController: UIViewController {
         })
         tokensObservation()
     }
+
     private func tokensObservation() {
         viewModel.setTokenObservation { [weak self] (changes: RealmCollectionChange) in
             guard let strongSelf = self else { return }
@@ -68,27 +73,53 @@ class NonFungibleTokensViewController: UIViewController {
             }
         }
     }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.applyTintAdjustment()
     }
+
     @objc func pullToRefresh() {
         refreshControl.beginRefreshing()
+        fetch()
+    }
+
+    @objc func fetch() {
+        startLoading()
+        trustProvider.request(.assets(address: viewModel.address.description)) { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let response):
+                do {
+                    let tokens = try response.map(ArrayResponse<AssetCategory>.self).docs
+                    // TODO: Implement storage
+                } catch {
+                    self.endLoading(error: error)
+                }
+                self.endLoading()
+            case .failure(let error):
+                self.endLoading(error: error)
+            }
+        }
     }
 }
+
 extension NonFungibleTokensViewController: StatefulViewController {
     func hasContent() -> Bool {
         return viewModel.hasContent
     }
 }
+
 extension NonFungibleTokensViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
 }
+
 extension NonFungibleTokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NonFungibleTokenViewCell.identifier, for: indexPath) as! NonFungibleTokenViewCell
