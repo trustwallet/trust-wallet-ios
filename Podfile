@@ -43,6 +43,11 @@ target 'Trust' do
 
 end
 
+target 'OpenInTrust' do
+  use_frameworks!
+  pod 'Result'
+end
+
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     if ['JSONRPCKit'].include? target.name

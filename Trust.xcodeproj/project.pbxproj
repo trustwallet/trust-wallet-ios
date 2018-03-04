@@ -381,10 +381,19 @@
 		A2B7ECAA2038122200828E7D /* ExportPrivateKeyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECA92038122200828E7D /* ExportPrivateKeyCoordinator.swift */; };
 		A2B7ECAC2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAB2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift */; };
 		A2B7ECAE2039001300828E7D /* ExportPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */; };
+		AEF49BA38D544DEB40BE8C5C /* Pods_OpenInTrust.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486727FADFF5D4F43B985920 /* Pods_OpenInTrust.framework */; };
 		BB03A86D20416AF600649DA0 /* BalanceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A86C20416AF600649DA0 /* BalanceStatus.swift */; };
 		BB03A8712042B01300649DA0 /* BalanceStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A8702042B01300649DA0 /* BalanceStatusTests.swift */; };
 		BB1CC266203BA4440042E56C /* SendMaxAmountTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1CC265203BA4440042E56C /* SendMaxAmountTest.swift */; };
 		BB1CC27A203D061B0042E56C /* TrustDocumentPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1CC279203D061B0042E56C /* TrustDocumentPickerViewController.swift */; };
+		BB3B8691204BB1C60061FCBA /* OpenInTrustController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B8690204BB1C60061FCBA /* OpenInTrustController.swift */; };
+		BB3B8698204BB1C60061FCBA /* OpenInTrust.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BB3B868E204BB1C60061FCBA /* OpenInTrust.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BB3B869E204BB2190061FCBA /* OpenInTrustViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B869D204BB2190061FCBA /* OpenInTrustViewModel.swift */; };
+		BB3B86A2204BB2C80061FCBA /* OpenInTrustError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86A1204BB2C80061FCBA /* OpenInTrustError.swift */; };
+		BB3B86A7204BBC9F0061FCBA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB3B86A6204BBC9F0061FCBA /* Media.xcassets */; };
+		BB3B86AB204BC5540061FCBA /* OpenInTrustError+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86AA204BC5540061FCBA /* OpenInTrustError+Message.swift */; };
+		BB3B86AD204BC5A10061FCBA /* OpenInTrustScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86AC204BC5A10061FCBA /* OpenInTrustScheme.swift */; };
+		BB3B86AE204BCBF80061FCBA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB3B86B0204BCBF80061FCBA /* InfoPlist.strings */; };
 		BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */; };
 		BBB61E122050993A00428BBD /* BrowserErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB61E112050993A00428BBD /* BrowserErrorView.swift */; };
 		BBF4F9B72029D0B3009E04C0 /* GasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF4F9B62029D0B2009E04C0 /* GasViewModel.swift */; };
@@ -411,9 +420,31 @@
 			remoteGlobalIDString = 2912CCF41F6A830700C6CBE3;
 			remoteInfo = etherwallet;
 		};
+		BB3B8696204BB1C60061FCBA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2912CCED1F6A830700C6CBE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB3B868D204BB1C60061FCBA;
+			remoteInfo = OpenInTrust;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		BB3B869C204BB1C60061FCBA /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BB3B8698204BB1C60061FCBA /* OpenInTrust.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		0249A950D0A85BC02315CF14 /* Pods-OpenInTrust.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenInTrust.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenInTrust/Pods-OpenInTrust.release.xcconfig"; sourceTree = "<group>"; };
 		0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		290B2B551F8F50030053C83E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		290B2B5A1F8F551E0053C83E /* LokaliseInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LokaliseInitializer.swift; sourceTree = "<group>"; };
@@ -688,6 +719,7 @@
 		29FF6D712011E20500A3011C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		29FF6D72201200D500A3011C /* FieldAppereance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldAppereance.swift; sourceTree = "<group>"; };
 		477899BEAA4489DA423E8857 /* Pods-TrustUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		486727FADFF5D4F43B985920 /* Pods_OpenInTrust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenInTrust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DB8204016307EAFC079EA48 /* Pods-Trust.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trust.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trust/Pods-Trust.debug.xcconfig"; sourceTree = "<group>"; };
 		613D04881FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "COMODO ECC Domain Validation Secure Server CA 2.cer"; sourceTree = "<group>"; };
 		613D048A1FDE162B008DE72E /* TrustProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustProvider.swift; sourceTree = "<group>"; };
@@ -813,6 +845,16 @@
 		BB03A8702042B01300649DA0 /* BalanceStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceStatusTests.swift; sourceTree = "<group>"; };
 		BB1CC265203BA4440042E56C /* SendMaxAmountTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMaxAmountTest.swift; sourceTree = "<group>"; };
 		BB1CC279203D061B0042E56C /* TrustDocumentPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustDocumentPickerViewController.swift; sourceTree = "<group>"; };
+		BB3B868E204BB1C60061FCBA /* OpenInTrust.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenInTrust.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB3B8690204BB1C60061FCBA /* OpenInTrustController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInTrustController.swift; sourceTree = "<group>"; };
+		BB3B8695204BB1C60061FCBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB3B869D204BB2190061FCBA /* OpenInTrustViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInTrustViewModel.swift; sourceTree = "<group>"; };
+		BB3B86A1204BB2C80061FCBA /* OpenInTrustError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInTrustError.swift; sourceTree = "<group>"; };
+		BB3B86A6204BBC9F0061FCBA /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		BB3B86AA204BC5540061FCBA /* OpenInTrustError+Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OpenInTrustError+Message.swift"; sourceTree = "<group>"; };
+		BB3B86AC204BC5A10061FCBA /* OpenInTrustScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInTrustScheme.swift; sourceTree = "<group>"; };
+		BB3B86AF204BCBF80061FCBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BB3B86B1204BD77C0061FCBA /* OpenInTrust.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenInTrust.entitlements; sourceTree = "<group>"; };
 		BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrencyRate+Fee.swift"; sourceTree = "<group>"; };
 		BBB61E112050993A00428BBD /* BrowserErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserErrorView.swift; sourceTree = "<group>"; };
 		BBF4F9B62029D0B2009E04C0 /* GasViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GasViewModel.swift; sourceTree = "<group>"; };
@@ -822,6 +864,7 @@
 		CCA4FE391FD42B4100749AE4 /* FakeJailbreakChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeJailbreakChecker.swift; sourceTree = "<group>"; };
 		CCCD74FC1FD2D38D004A087D /* CheckDeviceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDeviceCoordinator.swift; sourceTree = "<group>"; };
 		DDF643F2D99BCE8E6139C057 /* Pods-TrustTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.release.xcconfig"; sourceTree = "<group>"; };
+		EDDE40D2792D1D5C7E404CAA /* Pods-OpenInTrust.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenInTrust.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OpenInTrust/Pods-OpenInTrust.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -846,6 +889,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D2831CD94641E5166E3A798 /* Pods_TrustUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB3B868B204BB1C60061FCBA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AEF49BA38D544DEB40BE8C5C /* Pods_OpenInTrust.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -877,6 +928,7 @@
 				2912CCF71F6A830700C6CBE3 /* Trust */,
 				2912CD0E1F6A830700C6CBE3 /* TrustTests */,
 				2912CD191F6A830700C6CBE3 /* TrustUITests */,
+				BB3B868F204BB1C60061FCBA /* OpenInTrust */,
 				2912CCF61F6A830700C6CBE3 /* Products */,
 				9A0F00B2D545197C8F7691C2 /* Pods */,
 				FAD3F374A5C639BD900944DB /* Frameworks */,
@@ -889,6 +941,7 @@
 				2912CCF51F6A830700C6CBE3 /* Trust.app */,
 				2912CD0B1F6A830700C6CBE3 /* TrustTests.xctest */,
 				2912CD161F6A830700C6CBE3 /* TrustUITests.xctest */,
+				BB3B868E204BB1C60061FCBA /* OpenInTrust.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2265,8 +2318,50 @@
 				DDF643F2D99BCE8E6139C057 /* Pods-TrustTests.release.xcconfig */,
 				477899BEAA4489DA423E8857 /* Pods-TrustUITests.debug.xcconfig */,
 				A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */,
+				EDDE40D2792D1D5C7E404CAA /* Pods-OpenInTrust.debug.xcconfig */,
+				0249A950D0A85BC02315CF14 /* Pods-OpenInTrust.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		BB3B868F204BB1C60061FCBA /* OpenInTrust */ = {
+			isa = PBXGroup;
+			children = (
+				BB3B86B1204BD77C0061FCBA /* OpenInTrust.entitlements */,
+				BB3B86A4204BB9310061FCBA /* ViewControllers */,
+				BB3B86A5204BB9490061FCBA /* Types */,
+				BB3B86A3204BB9250061FCBA /* ViewModel */,
+				BB3B8695204BB1C60061FCBA /* Info.plist */,
+				BB3B86A6204BBC9F0061FCBA /* Media.xcassets */,
+				BB3B86B0204BCBF80061FCBA /* InfoPlist.strings */,
+			);
+			path = OpenInTrust;
+			sourceTree = "<group>";
+		};
+		BB3B86A3204BB9250061FCBA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BB3B869D204BB2190061FCBA /* OpenInTrustViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		BB3B86A4204BB9310061FCBA /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BB3B8690204BB1C60061FCBA /* OpenInTrustController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		BB3B86A5204BB9490061FCBA /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				BB3B86A1204BB2C80061FCBA /* OpenInTrustError.swift */,
+				BB3B86AA204BC5540061FCBA /* OpenInTrustError+Message.swift */,
+				BB3B86AC204BC5A10061FCBA /* OpenInTrustScheme.swift */,
+			);
+			path = Types;
 			sourceTree = "<group>";
 		};
 		CCA4FE301FD3652100749AE4 /* Core */ = {
@@ -2311,6 +2406,7 @@
 				646C8C822C986358D7388602 /* Pods_Trust.framework */,
 				A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */,
 				0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */,
+				486727FADFF5D4F43B985920 /* Pods_OpenInTrust.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2331,10 +2427,12 @@
 				2909B06A324FDD6FB858F676 /* [CP] Copy Pods Resources */,
 				29282B511F7629DB0067F88D /* Run SwiftLint */,
 				294DFB961FDF8C6A004CEB56 /* ShellScript */,
+				BB3B869C204BB1C60061FCBA /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BB3B8697204BB1C60061FCBA /* PBXTargetDependency */,
 			);
 			name = Trust;
 			productName = etherwallet;
@@ -2383,13 +2481,32 @@
 			productReference = 2912CD161F6A830700C6CBE3 /* TrustUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		BB3B868D204BB1C60061FCBA /* OpenInTrust */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB3B869B204BB1C60061FCBA /* Build configuration list for PBXNativeTarget "OpenInTrust" */;
+			buildPhases = (
+				C7376552DD6084CE802A6C66 /* [CP] Check Pods Manifest.lock */,
+				BB3B868A204BB1C60061FCBA /* Sources */,
+				BB3B868B204BB1C60061FCBA /* Frameworks */,
+				BB3B868C204BB1C60061FCBA /* Resources */,
+				B67B5166CBE5393D2C872474 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenInTrust;
+			productName = OpenInTrust;
+			productReference = BB3B868E204BB1C60061FCBA /* OpenInTrust.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		2912CCED1F6A830700C6CBE3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0900;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0910;
 				TargetAttributes = {
 					2912CCF41F6A830700C6CBE3 = {
@@ -2397,6 +2514,9 @@
 						LastSwiftMigration = 0910;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
 							com.apple.DataProtection = {
 								enabled = 1;
 							};
@@ -2421,6 +2541,15 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2912CCF41F6A830700C6CBE3;
 					};
+					BB3B868D204BB1C60061FCBA = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+						};
+					};
 				};
 			};
 			buildConfigurationList = 2912CCF01F6A830700C6CBE3 /* Build configuration list for PBXProject "Trust" */;
@@ -2438,6 +2567,7 @@
 				"zh-Hans",
 				"zh-Hant",
 				vi,
+				Base,
 			);
 			mainGroup = 2912CCEC1F6A830700C6CBE3;
 			productRefGroup = 2912CCF61F6A830700C6CBE3 /* Products */;
@@ -2447,6 +2577,7 @@
 				2912CCF41F6A830700C6CBE3 /* Trust */,
 				2912CD0A1F6A830700C6CBE3 /* TrustTests */,
 				2912CD151F6A830700C6CBE3 /* TrustUITests */,
+				BB3B868D204BB1C60061FCBA /* OpenInTrust */,
 			);
 		};
 /* End PBXProject section */
@@ -2482,6 +2613,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				294DFBA61FE11CAE004CEB56 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB3B868C204BB1C60061FCBA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB3B86AE204BCBF80061FCBA /* InfoPlist.strings in Resources */,
+				BB3B86A7204BBC9F0061FCBA /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2608,6 +2748,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B67B5166CBE5393D2C872474 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenInTrust/Pods-OpenInTrust-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C7376552DD6084CE802A6C66 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OpenInTrust-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EB2D49CBEF37022D8861D8E0 /* [CP] Check Pods Manifest.lock */ = {
@@ -3123,6 +3296,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BB3B868A204BB1C60061FCBA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB3B86A2204BB2C80061FCBA /* OpenInTrustError.swift in Sources */,
+				BB3B86AD204BC5A10061FCBA /* OpenInTrustScheme.swift in Sources */,
+				BB3B869E204BB2190061FCBA /* OpenInTrustViewModel.swift in Sources */,
+				BB3B86AB204BC5540061FCBA /* OpenInTrustError+Message.swift in Sources */,
+				BB3B8691204BB1C60061FCBA /* OpenInTrustController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -3135,6 +3320,11 @@
 			isa = PBXTargetDependency;
 			target = 2912CCF41F6A830700C6CBE3 /* Trust */;
 			targetProxy = 2912CD171F6A830700C6CBE3 /* PBXContainerItemProxy */;
+		};
+		BB3B8697204BB1C60061FCBA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB3B868D204BB1C60061FCBA /* OpenInTrust */;
+			targetProxy = BB3B8696204BB1C60061FCBA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3154,6 +3344,14 @@
 				7721A6C1202B1D5A004DB16C /* vi */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		BB3B86B0204BCBF80061FCBA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BB3B86AF204BCBF80061FCBA /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -3276,6 +3474,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4DB8204016307EAFC079EA48 /* Pods-Trust.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Trust/Trust.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -3300,8 +3499,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B13A87D3BA5167741E5D0801 /* Pods-Trust.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Trust/Trust.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 174;
@@ -3387,6 +3588,47 @@
 			};
 			name = Release;
 		};
+		BB3B8699204BB1C60061FCBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EDDE40D2792D1D5C7E404CAA /* Pods-OpenInTrust.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = ExtensionIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = OpenInTrust/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sixdays.trust.OpenInTrust;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BB3B869A204BB1C60061FCBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0249A950D0A85BC02315CF14 /* Pods-OpenInTrust.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = ExtensionIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = OpenInTrust/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sixdays.trust.OpenInTrust;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3422,6 +3664,15 @@
 			buildConfigurations = (
 				2912CD261F6A830700C6CBE3 /* Debug */,
 				2912CD271F6A830700C6CBE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BB3B869B204BB1C60061FCBA /* Build configuration list for PBXNativeTarget "OpenInTrust" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB3B8699204BB1C60061FCBA /* Debug */,
+				BB3B869A204BB1C60061FCBA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
