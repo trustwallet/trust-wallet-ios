@@ -11,7 +11,7 @@ struct NonFungibleTokenViewModel {
     
     var tokensNetwork: TokensNetworkProtocol
     
-    let tokens: Results<NonFungibleTokenObject>
+    let tokens: Results<NonFungibleTokenCategory>
     
     var tokensObserver: NotificationToken?
     
@@ -35,18 +35,18 @@ struct NonFungibleTokenViewModel {
     }
     
     func fetchAssets() {
-        self.tokensNetwork.assets { (restul, x) in
-            
+        self.tokensNetwork.assets { assets in
+            guard let tokens = assets else { return }
+            self.storage.add(tokens: tokens)
         }
     }
 
-    mutating func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<NonFungibleTokenObject>>) -> Void) {
+    mutating func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<NonFungibleTokenCategory>>) -> Void) {
         tokensObserver = tokens.observe(block)
     }
 
     func cellViewModel(for path: IndexPath) -> NonFungibleTokenCellViewModel {
-        let token = tokens[path.row]
+        let token = tokens[path.section].items[path.row]
         return NonFungibleTokenCellViewModel(token: token)
     }
-
 }
