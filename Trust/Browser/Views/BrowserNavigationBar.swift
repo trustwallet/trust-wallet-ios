@@ -23,7 +23,6 @@ class BrowserNavigationBar: UINavigationBar {
         super.init(frame: frame)
 
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.keyboardType = .URL
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 5
         textField.layer.borderWidth = 0.5
