@@ -29,12 +29,10 @@ class OpenInTrustController: UIViewController {
     }
 
     func run() {
-        guard let context = extensionContext else {
+        guard extensionContext != .none else {
             showError(.invalidContext)
             return
         }
-        // setup view model
-        viewModel = OpenInTrustViewModel(context: context)
         guard let provider = viewModel.findItemProvider() else {
             return showError(.invalidProvider)
         }
