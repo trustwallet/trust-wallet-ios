@@ -3,14 +3,14 @@
 import Foundation
 import URLNavigator
 
-extension BrowserCoordinator: URLNavigable {
+extension InCoordinator: URLNavigable {
     func register(with navigator: Navigator) {
-        navigator.handle("trust://browse") { url, _, _ in
+        navigator.handle("trust://browser") { url, _, _ in
             guard let target = url.queryParameters["target"],
                 let targetUrl = URL(string: target) else {
-                return false
+                    return false
             }
-            self.rootViewController.goTo(url: targetUrl)
+            self.showTab(.browser(openURL: targetUrl))
             return true
         }
     }

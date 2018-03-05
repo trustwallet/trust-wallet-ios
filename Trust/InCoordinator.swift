@@ -49,6 +49,7 @@ class InCoordinator: Coordinator {
         self.config = config
         self.appTracker = appTracker
         self.navigator = navigator
+        self.register(with: navigator)
     }
 
     func start() {

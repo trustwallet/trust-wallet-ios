@@ -7,7 +7,7 @@ struct SchemeBuilder {
     let scheme = "trust"
 
     func build() -> URL {
-        let url = URL(string: "\(scheme)://browse?target=\(target.absoluteString)") ?? URL(string: "\(scheme)://")!
+        let url = URL(string: "\(scheme)://browser?target=\(target.absoluteString)") ?? URL(string: "\(scheme)://")!
         return url
     }
 }

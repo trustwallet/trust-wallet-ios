@@ -3,6 +3,11 @@
 import Foundation
 
 extension OpenInTrustError {
+
+    public var errorDescription: String {
+        return message
+    }
+
     var message: String {
         switch self {
         case .invalidContext:

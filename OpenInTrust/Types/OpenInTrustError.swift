@@ -2,7 +2,7 @@
 
 import UIKit
 
-enum OpenInTrustError: Error {
+enum OpenInTrustError: LocalizedError {
     case invalidContext
     case invalidProvider
     case invalidURL

@@ -5,7 +5,10 @@ import MobileCoreServices
 
 class OpenInTrustController: UIViewController {
 
-    var viewModel = OpenInTrustViewModel(context: NSExtensionContext())
+    lazy var viewModel: OpenInTrustViewModel = {
+        let viewModel = OpenInTrustViewModel(context: self.extensionContext ?? NSExtensionContext())
+        return viewModel
+    }()
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
