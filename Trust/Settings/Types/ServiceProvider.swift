@@ -7,12 +7,14 @@ enum URLServiceProvider {
     case twitter
     case telegram
     case facebook
+    case discord
 
     var title: String {
         switch self {
         case .twitter: return "Twitter"
         case .telegram: return "Telegram Group"
         case .facebook: return "Facebook"
+        case .discord: return "Discord"
         }
     }
 
@@ -24,6 +26,7 @@ enum URLServiceProvider {
             return URL(string: "tg://resolve?domain=\(Constants.telegramUsername)")
         case .facebook:
             return URL(string: "fb://profile?id=\(Constants.facebookUsername)")
+        case .discord: return nil
         }
     }
 
@@ -39,6 +42,8 @@ enum URLServiceProvider {
             return "https://telegram.me/\(Constants.telegramUsername)"
         case .facebook:
             return "https://www.facebook.com/\(Constants.facebookUsername)"
+        case .discord:
+            return "https://discord.gg/ahPWeHk"
         }
     }
 
@@ -47,6 +52,7 @@ enum URLServiceProvider {
         case .twitter: return R.image.settings_twitter()
         case .telegram: return R.image.settings_telegram()
         case .facebook: return R.image.settings_facebook()
+        case .discord: return R.image.settings_discord()
         }
     }
 }
