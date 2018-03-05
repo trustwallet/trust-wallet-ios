@@ -67,7 +67,9 @@ class OpenInTrustController: UIViewController {
         }))
         alert.popoverPresentationController?.sourceView = view
         alert.popoverPresentationController?.sourceRect = view.frame
-        present(alert, animated: true, completion: nil)
+        dispatch_main_safe {
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
     private func openUrl(_ url: URL) {
@@ -88,7 +90,7 @@ class OpenInTrustController: UIViewController {
         }))
         alert.popoverPresentationController?.sourceView = view
         alert.popoverPresentationController?.sourceRect = view.frame
-        DispatchQueue.main.async {
+        dispatch_main_safe {
             self.present(alert, animated: true, completion: nil)
         }
     }
