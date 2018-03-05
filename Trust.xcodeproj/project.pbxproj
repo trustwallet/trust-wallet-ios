@@ -394,6 +394,9 @@
 		BB3B86AB204BC5540061FCBA /* OpenInTrustError+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86AA204BC5540061FCBA /* OpenInTrustError+Message.swift */; };
 		BB3B86AD204BC5A10061FCBA /* OpenInTrustScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86AC204BC5A10061FCBA /* OpenInTrustScheme.swift */; };
 		BB3B86AE204BCBF80061FCBA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB3B86B0204BCBF80061FCBA /* InfoPlist.strings */; };
+		BB3B86BD204CE9730061FCBA /* URLNavigatorCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86BC204CE9730061FCBA /* URLNavigatorCoordinator.swift */; };
+		BB3B86BF204CECBC0061FCBA /* URLNavigable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86BE204CECBC0061FCBA /* URLNavigable.swift */; };
+		BB3B86C3204CFADC0061FCBA /* BrowserCoordinator+Navigable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86C2204CFADC0061FCBA /* BrowserCoordinator+Navigable.swift */; };
 		BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */; };
 		BBB61E122050993A00428BBD /* BrowserErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB61E112050993A00428BBD /* BrowserErrorView.swift */; };
 		BBF4F9B72029D0B3009E04C0 /* GasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF4F9B62029D0B2009E04C0 /* GasViewModel.swift */; };
@@ -855,6 +858,9 @@
 		BB3B86AC204BC5A10061FCBA /* OpenInTrustScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInTrustScheme.swift; sourceTree = "<group>"; };
 		BB3B86AF204BCBF80061FCBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BB3B86B1204BD77C0061FCBA /* OpenInTrust.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenInTrust.entitlements; sourceTree = "<group>"; };
+		BB3B86BC204CE9730061FCBA /* URLNavigatorCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLNavigatorCoordinator.swift; sourceTree = "<group>"; };
+		BB3B86BE204CECBC0061FCBA /* URLNavigable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLNavigable.swift; sourceTree = "<group>"; };
+		BB3B86C2204CFADC0061FCBA /* BrowserCoordinator+Navigable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserCoordinator+Navigable.swift"; sourceTree = "<group>"; };
 		BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrencyRate+Fee.swift"; sourceTree = "<group>"; };
 		BBB61E112050993A00428BBD /* BrowserErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserErrorView.swift; sourceTree = "<group>"; };
 		BBF4F9B62029D0B2009E04C0 /* GasViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GasViewModel.swift; sourceTree = "<group>"; };
@@ -1848,6 +1854,7 @@
 			children = (
 				29E6E06B1FE897D90079265A /* BrowserCoordinator.swift */,
 				903682EE204A6C3700013479 /* BookmarkCoordinator.swift */,
+				BB3B86C2204CFADC0061FCBA /* BrowserCoordinator+Navigable.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1867,6 +1874,7 @@
 				29E9CFD11FE737FE00017744 /* TrustRealmConfiguration.swift */,
 				29F1C85720036926003780D8 /* AppTracker.swift */,
 				775DF442203E5685009CD082 /* Tabs.swift */,
+				BB3B86BE204CECBC0061FCBA /* URLNavigable.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2396,6 +2404,7 @@
 			children = (
 				CCCD74FC1FD2D38D004A087D /* CheckDeviceCoordinator.swift */,
 				775DF42C2037D338009CD082 /* BranchCoordinator.swift */,
+				BB3B86BC204CE9730061FCBA /* URLNavigatorCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -2847,6 +2856,7 @@
 				"${BUILT_PRODUCTS_DIR}/StatefulViewController/StatefulViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/TrezorCrypto/TrezorCrypto.framework",
 				"${BUILT_PRODUCTS_DIR}/TrustKeystore/TrustKeystore.framework",
+				"${BUILT_PRODUCTS_DIR}/URLNavigator/URLNavigator.framework",
 				"${BUILT_PRODUCTS_DIR}/secp256k1_ios/secp256k1_ios.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -2875,6 +2885,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatefulViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrezorCrypto.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustKeystore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/URLNavigator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1_ios.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2973,6 +2984,7 @@
 				291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */,
 				903682EF204A6C3700013479 /* BookmarkCoordinator.swift in Sources */,
 				29F1C85120032688003780D8 /* Address.swift in Sources */,
+				BB3B86C3204CFADC0061FCBA /* BrowserCoordinator+Navigable.swift in Sources */,
 				295B61D11FE7B20400642E60 /* TokensHeaderView.swift in Sources */,
 				29FA00D4201EC662002F7DC5 /* NSObject.swift in Sources */,
 				291ED0921F6FA5D900E7E93A /* RequestViewController.swift in Sources */,
@@ -3086,6 +3098,7 @@
 				61C359E02002AA5A0097B04D /* TransactionSigning.swift in Sources */,
 				73ACEEF5201631A3003DD71D /* ProtectionCoordinator.swift in Sources */,
 				29C0FCE1200DA94A004A13CB /* SignMessageCoordinator.swift in Sources */,
+				BB3B86BD204CE9730061FCBA /* URLNavigatorCoordinator.swift in Sources */,
 				29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */,
 				2963B6BF1F9AB9A2003063C1 /* ContractERC20Transfer.swift in Sources */,
 				29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */,
@@ -3115,6 +3128,7 @@
 				291F52A21F6B6DCF00B369AB /* EtherClient.swift in Sources */,
 				299B5E421FD2298E0051361C /* ConfigureTransactionViewController.swift in Sources */,
 				294DFBA31FE0E2EA004CEB56 /* TransactionValue.swift in Sources */,
+				BB3B86BF204CECBC0061FCBA /* URLNavigable.swift in Sources */,
 				2912CD2B1F6A833E00C6CBE3 /* TransactionsViewController.swift in Sources */,
 				775C00B520195BFB001B5EBC /* BrowserAction.swift in Sources */,
 				BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */,

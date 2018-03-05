@@ -12,18 +12,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     lazy var protectionCoordinator: ProtectionCoordinator = {
         return ProtectionCoordinator()
     }()
-    let branchCoordinator = BranchCoordinator()
+    let urlNavigatorCoordinator = URLNavigatorCoordinator()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         do {
             let keystore = try EtherKeystore()
-            coordinator = AppCoordinator(window: window!, keystore: keystore)
+            coordinator = AppCoordinator(window: window!, keystore: keystore, navigator: urlNavigatorCoordinator.navigator)
             coordinator.start()
         } catch {
             print("EtherKeystore init issue.")
         }
         protectionCoordinator.didFinishLaunchingWithOptions()
-        branchCoordinator.didFinishLaunchingWithOptions(launchOptions: launchOptions)
+        urlNavigatorCoordinator.branch.didFinishLaunchingWithOptions(launchOptions: launchOptions)
         return true
     }
 
@@ -64,17 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     // Respond to URI scheme links
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        let branchHandled = Branch.getInstance().application(application,
-                                                             open: url,
-                                                             sourceApplication: sourceApplication,
-                                                             annotation: annotation
-        )
-        if !branchHandled {
-            // If not handled by Branch, do other deep link routing for the Facebook SDK, Pinterest SDK, etc
-        }
-
-        // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
-        return true
+        return urlNavigatorCoordinator.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
     // Respond to Universal Links
