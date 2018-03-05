@@ -38,6 +38,7 @@ class BrowserNavigationBar: UINavigationBar {
         textField.leftViewMode = .always
         textField.autoresizingMask = [.flexibleWidth]
         textField.setContentHuggingPriority(.required, for: .horizontal)
+        textField.placeholder = NSLocalizedString("browser.url.textfield.placeholder", value: "Search or enter website url", comment: "")
 
         goBack.translatesAutoresizingMaskIntoConstraints = false
         goBack.setImage(R.image.toolbarBack(), for: .normal)
@@ -98,5 +99,9 @@ extension BrowserNavigationBar: UITextFieldDelegate {
         browserDelegate?.did(action: .enter(textField.text ?? ""))
         textField.resignFirstResponder()
         return true
+    }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        browserDelegate?.did(action: .beginEditing)
     }
 }

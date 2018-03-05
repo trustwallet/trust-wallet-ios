@@ -12,7 +12,7 @@ enum ConfirmType {
 }
 
 enum ConfirmResult {
-    case signedTransaction(Data)
+    case signedTransaction(SentTransaction)
     case sentTransaction(SentTransaction)
 }
 

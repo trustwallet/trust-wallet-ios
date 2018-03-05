@@ -8,12 +8,17 @@ protocol TokensNetworkProtocol: TrustNetworkProtocol {
     func tickers(for tokens: [TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void)
     func ethBalance(completion: @escaping (_ balance: Balance?) -> Void)
     func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void)
+    func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void)
 }
 
 class TokensNetwork: TokensNetworkProtocol {
+    
     let provider: MoyaProvider<TrustService>
+    
     let config: Config
+    
     let balanceService: TokensBalanceService
+    
     let account: Wallet
 
     required init(provider: MoyaProvider<TrustService>, balanceService: TokensBalanceService, account: Wallet, config: Config) {
@@ -22,6 +27,7 @@ class TokensNetwork: TokensNetworkProtocol {
         self.account = account
         self.config = config
     }
+    
     func tickers(for tokens: [TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void) {
         let tokensPriceToFetch = TokensPrice(
             currency: config.currency.rawValue,
@@ -40,6 +46,7 @@ class TokensNetwork: TokensNetworkProtocol {
             }
         }
     }
+
     func ethBalance(completion: @escaping (_ balance: Balance?) -> Void) {
         balanceService.getEthBalance(for: account.address) { result in
             switch result {
@@ -50,6 +57,7 @@ class TokensNetwork: TokensNetworkProtocol {
             }
         }
     }
+
     func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void) {
         guard let contract = Address(string: token.contract) else {
             completion((token, nil))
@@ -61,6 +69,22 @@ class TokensNetwork: TokensNetworkProtocol {
                 completion((token, Balance(value: balance)))
             case .failure:
                 completion((token, nil))
+            }
+        }
+    }
+
+    func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void) {
+        provider.request(.assets(address: account.address.description)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    let tokens = try response.map(ArrayResponse<NonFungibleTokenCategory>.self).docs
+                    completion(tokens)
+                } catch {
+                    completion(nil)
+                }
+            case .failure:
+                    completion(nil)
             }
         }
     }

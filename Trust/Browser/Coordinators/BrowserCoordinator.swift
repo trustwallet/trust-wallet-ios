@@ -59,10 +59,13 @@ class BrowserCoordinator: Coordinator {
             switch result {
             case .success(let type):
                 switch type {
-                case .signedTransaction(let data):
-                    let callback = DappCallback(id: callbackID, value: .signTransaction(data))
+                case .signedTransaction(let transaction):
+                    // on signing we pass signed hex of the transaction
+                    let callback = DappCallback(id: callbackID, value: .signTransaction(transaction.data))
                     self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+                    self.delegate?.didSentTransaction(transaction: transaction, in: self)
                 case .sentTransaction(let transaction):
+                    // on send transaction we pass transaction ID only.
                     let data = Data(hex: transaction.id)
                     let callback = DappCallback(id: callbackID, value: .sentTransaction(data))
                     self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))

@@ -5,45 +5,70 @@ import XCTest
 
 class BrowserURLParserTests: XCTestCase {
     
-//    func testQueryReturnsSearchEngineURL() {
-//        let parser = BrowserURLParser()
-//        let query = "1"
-//        let result = parser.url(from: query)
-//        let expetected = parser.searchURL + query
-//
-//        XCTAssertEqual(expetected, result?.absoluteString)
-//    }
+    func testQueryReturnsSearchEngineURL() {
+        let parser = BrowserURLParser()
+        let query = "1"
+        let result = parser.url(from: query)
+        let expected = "https://\(parser.searchHost)/search?q=1"
+
+        XCTAssertEqual(result?.absoluteString, expected)
+    }
+
+    func testEscapeQuery() {
+        let parser = BrowserURLParser()
+        let query = "1 2?a=b&c"
+        let result = parser.url(from: query)
+        let expected = "https://\(parser.searchHost)/search?q=1%202?a%3Db%26c"
+
+        XCTAssertEqual(result?.absoluteString, expected)
+    }
 
     func testParseDomain() {
         let parser = BrowserURLParser()
         let query = "trustwalletapp.com"
         let result = parser.url(from: query)
 
-        XCTAssertEqual("http://" + query, result?.absoluteString)
+        XCTAssertEqual(result?.absoluteString, "https://trustwalletapp.com")
     }
 
     func testParseHttp() {
         let parser = BrowserURLParser()
-        let query = "http://trustwalletapp.com"
-        let result = parser.url(from: query)
+        let string = "http://trustwalletapp.com"
+        let result = parser.url(from: string)
 
-        XCTAssertEqual(query, result?.absoluteString)
+        XCTAssertEqual(string, result?.absoluteString)
     }
 
     func testParseHttps() {
         let parser = BrowserURLParser()
-        let query = "https://trustwalletapp.com"
-        let result = parser.url(from: query)
+        let string = "https://trustwalletapp.com"
+        let result = parser.url(from: string)
 
-        XCTAssertEqual(query, result?.absoluteString)
+        XCTAssertEqual(string, result?.absoluteString)
+    }
+
+    func testParseDomainWithPath() {
+        let parser = BrowserURLParser()
+        let string = "trustwalletapp.com/path?q=1"
+        let result = parser.url(from: string)
+
+        XCTAssertEqual(result?.absoluteString, "https://\(string)")
+    }
+
+    func testParseLongDomain() {
+        let parser = BrowserURLParser()
+        let string = "test.trustwalletapp.info"
+        let result = parser.url(from: string)
+
+        XCTAssertEqual(result?.absoluteString, "https://\(string)")
     }
 
     func testSearchURL() {
         let parser = BrowserURLParser()
         let query = "test"
-        let result = parser.searchURL(for: query)
-        let expeted = parser.searchURL + query
+        let result = parser.buildSearchURL(for: query)
+        let expeted = "https://\(parser.searchHost)/search?q=test"
 
-        XCTAssertEqual(expeted, result?.absoluteString)
+        XCTAssertEqual(result.absoluteString, expeted)
     }
 }

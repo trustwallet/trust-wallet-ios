@@ -120,6 +120,10 @@ class BrowserViewController: UIViewController {
         webView.reload()
     }
 
+    private func stopLoading() {
+        webView.stopLoading()
+    }
+
     private func refreshURL() {
         browserNavBar?.textField.text = webView.url?.absoluteString
     }
@@ -217,6 +221,8 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
         case .enter(let string):
             guard let url = urlParser.url(from: string) else { return }
             goTo(url: url)
+        case .beginEditing:
+            stopLoading()
         }
         reloadButtons()
     }
