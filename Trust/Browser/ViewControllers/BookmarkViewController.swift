@@ -9,7 +9,6 @@ protocol BookmarkViewControllerDelegate: class {
 
 class BookmarkViewController: UITableViewController {
     weak var delegate: BookmarkViewControllerDelegate?
-    var headerTitle: String?
 
     var viewModel: BookmarkViewModel {
         return BookmarkViewModel(
@@ -20,6 +19,7 @@ class BookmarkViewController: UITableViewController {
     var bookmarks: [Bookmark] = [] {
         didSet {
             tableView.reloadData()
+            configure(viewModel: viewModel)
         }
     }
 
@@ -48,7 +48,7 @@ class BookmarkViewController: UITableViewController {
     }
 
     func configure(viewModel: BookmarkViewModel) {
-        title = headerTitle ?? viewModel.title
+        title = viewModel.title
     }
 
     func bookmark(for indexPath: IndexPath) -> Bookmark {
