@@ -7,7 +7,11 @@ struct BookmarkViewModel {
     init(bookmarks: [Bookmark]) {
         self.bookmarks = bookmarks
     }
-    
+
+    var hasBookmarks: Bool {
+        return !bookmarks.isEmpty
+    }
+
     var title: String {
         return NSLocalizedString("browser.bookmarks.title", value: "Bookmarks", comment: "")
     }
