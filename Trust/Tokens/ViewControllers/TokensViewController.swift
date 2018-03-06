@@ -27,8 +27,8 @@ class TokensViewController: UIViewController {
         header.backgroundColor = viewModel.headerBackgroundColor
         header.amountLabel.font = viewModel.headerBalanceFont
         header.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
-        header.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
-        header.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
+        header.buttonsView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
+        header.buttonsView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
         return header
     }()
 
