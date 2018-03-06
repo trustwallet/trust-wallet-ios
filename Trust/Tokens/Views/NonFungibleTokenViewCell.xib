@@ -21,13 +21,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ksR-t8-E57">
-                        <rect key="frame" x="16" y="10" width="86" height="86"/>
+                        <rect key="frame" x="8" y="4" width="98" height="97.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="86" id="PaH-sC-U33"/>
+                            <constraint firstAttribute="width" constant="98" id="PaH-sC-U33"/>
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="hLs-Kp-jha">
-                        <rect key="frame" x="110" y="11" width="320" height="84"/>
+                        <rect key="frame" x="118" y="11" width="320" height="84"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8X-nk-yXc">
                                 <rect key="frame" x="0.0" y="0.0" width="31.5" height="42.5"/>
@@ -47,11 +47,11 @@
                 <constraints>
                     <constraint firstItem="hLs-Kp-jha" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="3RJ-T6-bqH"/>
                     <constraint firstItem="hLs-Kp-jha" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="7SU-cP-6d2"/>
-                    <constraint firstAttribute="bottom" secondItem="ksR-t8-E57" secondAttribute="bottom" constant="9.5" id="9Hs-cj-sgu"/>
-                    <constraint firstItem="ksR-t8-E57" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Gd2-o9-rLb"/>
-                    <constraint firstItem="hLs-Kp-jha" firstAttribute="leading" secondItem="ksR-t8-E57" secondAttribute="trailing" constant="8" id="lRh-hI-7eY"/>
+                    <constraint firstAttribute="bottom" secondItem="ksR-t8-E57" secondAttribute="bottom" constant="4" id="9Hs-cj-sgu"/>
+                    <constraint firstItem="ksR-t8-E57" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Gd2-o9-rLb"/>
+                    <constraint firstItem="hLs-Kp-jha" firstAttribute="leading" secondItem="ksR-t8-E57" secondAttribute="trailing" constant="12" id="lRh-hI-7eY"/>
                     <constraint firstItem="hLs-Kp-jha" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="qPy-BP-th6"/>
-                    <constraint firstItem="ksR-t8-E57" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="s2D-HX-LgI"/>
+                    <constraint firstItem="ksR-t8-E57" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="s2D-HX-LgI"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

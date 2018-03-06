@@ -25,7 +25,7 @@ class NonFungibleTokensViewController: UIViewController {
         tableView.backgroundColor = .white
         tableView.allowsSelection = false
         view.addSubview(tableView)
-        tableView.register(R.nib.nonFungibleTokenViewCell(), forCellReuseIdentifier: NonFungibleTokenViewCell.identifier)
+        tableView.register(R.nib.nonFungibleTokenViewCell(), forCellReuseIdentifier: R.nib.nonFungibleTokenViewCell.name)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -122,13 +122,13 @@ extension NonFungibleTokensViewController: StatefulViewController {
 
 extension NonFungibleTokensViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 100
     }
 }
 
 extension NonFungibleTokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NonFungibleTokenViewCell.identifier, for: indexPath) as! NonFungibleTokenViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.nonFungibleTokenViewCell.name, for: indexPath) as! NonFungibleTokenViewCell
         cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
         return cell
     }
@@ -146,6 +146,6 @@ extension NonFungibleTokensViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        return StyleLayout.TableView.heightForHeaderInSection
     }
 }
