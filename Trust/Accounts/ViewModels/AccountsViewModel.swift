@@ -66,7 +66,7 @@ struct AccountsViewModel {
         case Sections.hdWallets:
             return hdWallets.isEmpty ? .none : NSLocalizedString("wallet.section.hdWallet.title", value: "HD Wallet", comment: "")
         case Sections.regularWallets:
-            return regularWallets.isEmpty ? .none : NSLocalizedString("wallet.section.regularWallet.title", value: "Regular Wallet", comment: "")
+            return .none
         default: return .none
         }
     }
