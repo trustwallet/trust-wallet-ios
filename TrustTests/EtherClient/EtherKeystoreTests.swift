@@ -155,7 +155,7 @@ class EtherKeystoreTests: XCTestCase {
 
         XCTAssertNil(keystore.recentlyUsedWallet)
 
-        let account = Wallet(type: .real(keystore.createAccout(password: password)))
+        let account = Wallet(type: .privateKey(keystore.createAccout(password: password)))
 
         keystore.recentlyUsedWallet = account
 
@@ -169,7 +169,7 @@ class EtherKeystoreTests: XCTestCase {
     func testDeleteAccount() {
         let keystore = FakeEtherKeystore()
         let password = "test"
-        let wallet = Wallet(type: .real(keystore.createAccout(password: password)))
+        let wallet = Wallet(type: .privateKey(keystore.createAccout(password: password)))
 
         XCTAssertEqual(1, keystore.wallets.count)
 

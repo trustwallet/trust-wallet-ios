@@ -215,7 +215,7 @@ class ImportWalletViewController: FormViewController {
 
     @objc func demo() {
         //Used for taking screenshots to the App Store by snapshot
-        let demoWallet = Wallet(type: .watch(Address(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")!))
+        let demoWallet = Wallet(type: .address(Address(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")!))
         delegate?.didImportAccount(account: demoWallet, in: self)
     }
 

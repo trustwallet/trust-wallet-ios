@@ -5,24 +5,26 @@ import TrustKeystore
 
 struct AccountsViewModel {
 
+    private struct Sections {
+        static let hdWallets = 0
+        static let regularWallets = 1
+    }
+
     private let regularWallets: [Wallet]
     private let hdWallets: [Wallet]
 
     init(wallets: [Wallet]) {
         self.hdWallets = wallets.filter { wallet in
             switch wallet.type {
-            case .real(let account):
-                return account.type == .hierarchicalDeterministicWallet
-            case .watch:
-                return false
+            case .hd: return true
+            case .privateKey, .address: return false
             }
         }
         self.regularWallets = wallets.filter { wallet in
             switch wallet.type {
-            case .real(let account):
-                return account.type == .encryptedKey
-            case .watch:
+            case .privateKey, .address:
                 return true
+            case .hd: return false
             }
         }
     }
@@ -37,9 +39,9 @@ struct AccountsViewModel {
 
     func wallet(for indexPath: IndexPath) -> Wallet? {
         switch indexPath.section {
-        case 0:
+        case Sections.hdWallets:
             return hdWallets[indexPath.row]
-        case 1:
+        case Sections.regularWallets:
             return regularWallets[indexPath.row]
         default: return .none
         }
@@ -47,9 +49,9 @@ struct AccountsViewModel {
 
     func numberOfRows(in section: Int) -> Int {
         switch section {
-        case 0:
+        case Sections.hdWallets:
             return hdWallets.count
-        case 1:
+        case Sections.regularWallets:
             return regularWallets.count
         default: return 0
         }
@@ -61,11 +63,18 @@ struct AccountsViewModel {
 
     func titleForHeader(in section: Int) -> String? {
         switch section {
-        case 0:
+        case Sections.hdWallets:
             return hdWallets.isEmpty ? .none : NSLocalizedString("wallet.section.hdWallet.title", value: "HD Wallet", comment: "")
-        case 1:
+        case Sections.regularWallets:
             return regularWallets.isEmpty ? .none : NSLocalizedString("wallet.section.regularWallet.title", value: "Regular Wallet", comment: "")
         default: return .none
         }
+    }
+
+    func headerHeight(in section: Int) -> CGFloat {
+        guard let _ = titleForHeader(in: section) else {
+            return 0
+        }
+        return StyleLayout.TableView.heightForHeaderInSection
     }
 }

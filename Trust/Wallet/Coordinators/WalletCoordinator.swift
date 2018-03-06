@@ -120,8 +120,8 @@ extension WalletCoordinator: BackupCoordinatorDelegate {
         removeCoordinator(coordinator)
     }
 
-    func didFinish(account: Account, in coordinator: BackupCoordinator) {
+    func didFinish(wallet: Wallet, in coordinator: BackupCoordinator) {
         removeCoordinator(coordinator)
-        didCreateAccount(account: Wallet(type: .real(account)))
+        didCreateAccount(account: wallet)
     }
 }

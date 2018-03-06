@@ -9,6 +9,7 @@ struct AccountViewModel {
     let current: Wallet?
     let walletBalance: Balance?
     let server: RPCServer
+
     init(
         server: RPCServer,
         wallet: Wallet,
@@ -20,8 +21,9 @@ struct AccountViewModel {
         self.current = current
         self.walletBalance = walletBalance
     }
+
     var isWatch: Bool {
-        return wallet.type == .watch(wallet.address)
+        return wallet.type == .address(wallet.address)
     }
 
     var balanceText: String {
