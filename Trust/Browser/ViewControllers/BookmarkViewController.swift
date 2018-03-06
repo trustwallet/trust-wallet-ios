@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 protocol BookmarkViewControllerDelegate: class {
     func didSelectBookmark(_ bookmark: Bookmark, in viewController: BookmarkViewController)
@@ -63,6 +64,11 @@ class BookmarkViewController: UITableViewController {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "newCell")
         cell.textLabel?.text = viewModel.bookmarks[indexPath.row].title
         cell.detailTextLabel?.text = viewModel.bookmarks[indexPath.row].url
+        cell.imageView?.kf.setImage(
+            with: URL(string: "\(viewModel.bookmarks[indexPath.row].url)favicon.ico"),
+            placeholder: R.image.launch_screen_logo())
+        cell.imageView?.layer.cornerRadius = 15
+        cell.imageView?.layer.masksToBounds = true
         return cell
     }
 
