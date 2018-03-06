@@ -23,10 +23,18 @@ class SettingsViewController: FormViewController {
     lazy var viewModel: SettingsViewModel = {
         return SettingsViewModel(isDebug: isDebug)
     }()
+
+    lazy var networkStateView: NetworkStateView = {
+        let view = NetworkStateView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     let session: WalletSession
     init(session: WalletSession) {
         self.session = session
         super.init(nibName: nil, bundle: nil)
+        self.chaineStateObservation()
     }
 
     override func viewDidLoad() {
@@ -228,6 +236,12 @@ class SettingsViewController: FormViewController {
             }
         }.cellSetup { cell, _ in
             cell.imageView?.image = type.image
+        }
+    }
+
+    private func chaineStateObservation() {
+        self.session.chainState.chainStateCompletion = { [weak self] state in
+            self?.networkStateView.currentState = state == true ? .good : .bad
         }
     }
 

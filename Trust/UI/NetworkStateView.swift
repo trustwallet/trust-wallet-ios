@@ -6,15 +6,12 @@ class NetworkStateView: UIView {
 
     enum NetworkCondition {
         case good
-        case average
         case bad
 
         func localizedTitle() -> String {
             switch self {
             case .good:
                 return NSLocalizedString("network.state.good", value: "Good", comment: "Good")
-            case .average:
-                return NSLocalizedString("network.state.average", value: "Average", comment: "Average")
             case .bad:
                 return NSLocalizedString("network.state.bad", value: "Bad", comment: "Bad")
             }
@@ -24,8 +21,6 @@ class NetworkStateView: UIView {
             switch self {
             case .good:
                 return UIColor.green
-            case .average:
-                return UIColor.yellow
             case .bad:
                 return UIColor.red
             }
@@ -69,7 +64,7 @@ class NetworkStateView: UIView {
     }
 
     private func updateLayout() {
-        guard let state = currentState else {
+        guard let state = currentState, state != currentState else {
             return
         }
 
