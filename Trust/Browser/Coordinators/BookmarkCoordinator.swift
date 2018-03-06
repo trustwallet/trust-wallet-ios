@@ -6,26 +6,19 @@ import UIKit
 protocol BookmarksCoordinatorDelegate: class {
     func didCancel(in coordinator: BookmarksCoordinator)
     func didSelectBookmark(bookmark: Bookmark, in coordinator: BookmarksCoordinator)
-    func didAddBookmark(bookmark: Bookmark, in coordinator: BookmarksCoordinator)
-    func didDeleteBookmark(bookmark: Bookmark, in coordinator: BookmarksCoordinator)
 }
 
 class BookmarksCoordinator: Coordinator {
     let navigationController: UINavigationController
     let store: BookmarksStore
     var coordinators: [Coordinator] = []
-    
     lazy var bookmarksViewController: BookmarkViewController = {
         let controller = BookmarkViewController(store: store)
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss))
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add))
-        controller.allowsBookmarkDeletion = true
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         controller.delegate = self
         return controller
     }()
-    
     weak var delegate: BookmarksCoordinatorDelegate?
-    
     init(
         navigationController: UINavigationController,
         store: BookmarksStore
@@ -33,25 +26,16 @@ class BookmarksCoordinator: Coordinator {
         self.navigationController = navigationController
         self.store = store
     }
-    
     func start() {
         navigationController.pushViewController(bookmarksViewController, animated: false)
     }
-    
     @objc func dismiss() {
         delegate?.didCancel(in: self)
-    }
-    
-    @objc func add() {
-        //Add
     }
 }
 
 extension BookmarksCoordinator: BookmarkViewControllerDelegate {
     func didSelectBookmark(bookmark: Bookmark, in viewController: BookmarkViewController) {
         delegate?.didSelectBookmark(bookmark: bookmark, in: self)
-    }
-    func didDeleteBookmark(bookmark: Bookmark, in viewController: BookmarkViewController) {
-        delegate?.didDeleteBookmark(bookmark: bookmark, in: self)
     }
 }

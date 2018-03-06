@@ -5,11 +5,25 @@ import RealmSwift
 
 class Bookmark: Object {
     @objc dynamic var url: String = ""
-    
+    @objc dynamic var title: String = ""
+    @objc dynamic var id: Int = 0
+
     convenience init(
-            url: String = ""
+            url: String = "",
+            title: String = ""
         ) {
         self.init()
         self.url = url
+        self.title = title
+        self.id = incrementID()
+    }
+
+    override class func primaryKey() -> String? {
+        return "id"
+    }
+
+    func incrementID() -> Int {
+        let realm = try! Realm()
+        return (realm.objects(Bookmark.self).max(ofProperty: "id") as Int? ?? 0) + 1
     }
 }

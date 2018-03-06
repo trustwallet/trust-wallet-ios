@@ -5,12 +5,10 @@ import UIKit
 
 protocol BookmarkViewControllerDelegate: class {
     func didSelectBookmark(bookmark: Bookmark, in viewController: BookmarkViewController)
-    func didDeleteBookmark(bookmark: Bookmark, in viewController: BookmarkViewController)
 }
 
 class BookmarkViewController: UITableViewController {
     weak var delegate: BookmarkViewControllerDelegate?
-    var allowsBookmarkDeletion: Bool = true
     var headerTitle: String?
     var viewModel: BookmarkViewModel {
         return BookmarkViewModel(
@@ -43,8 +41,7 @@ class BookmarkViewController: UITableViewController {
         fetch()
     }
     func fetch() {
-        //FIXME: Get these from store
-        bookmarks = [Bookmark(url: "ayee")]
+        bookmarks = Array(store.bookmarks)
     }
     func configure(viewModel: BookmarkViewModel) {
         title = headerTitle ?? viewModel.title
@@ -61,36 +58,37 @@ class BookmarkViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //let cell = self.tableView.dequeueReusableCell(withIdentifier: "newCell", for: indexPath)
         let cell = UITableViewCell()
-        cell.textLabel?.text = viewModel.bookmarks[indexPath.row].url
+        cell.textLabel?.text = viewModel.bookmarks[indexPath.row].title
         return cell
     }
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return allowsBookmarkDeletion
+        return true
     }
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete {
+        if editingStyle == .delete {
             let bookmark = self.bookmark(for: indexPath)
-            confirmDelete(bookmark: bookmark)
+            confirmDelete(bookmark: bookmark, index: indexPath)
         }
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let bookmark = self.bookmark(for: indexPath)
         delegate?.didSelectBookmark(bookmark: bookmark, in: self)
     }
-    func confirmDelete(bookmark: Bookmark) {
+    func confirmDelete(bookmark: Bookmark, index: IndexPath) {
         confirm(title: NSLocalizedString("browser.bookmarks.confirm.delete.title", value: "Are you sure you would like to delete this bookmark?", comment: ""),
                 okTitle: NSLocalizedString("browser.bookmarks.confirm.delete.okTitle", value: "Delete", comment: ""),
                 okStyle: .destructive) { result in
                     switch result {
                     case .success:
-                        self.delete(bookmark: bookmark)
+                        self.delete(bookmark: bookmark, index: index)
                     case .failure: break
                     }
         }
     }
-    func delete(bookmark: Bookmark) {
+    func delete(bookmark: Bookmark, index: IndexPath) {
         store.delete(bookmarks: [bookmark])
-        delegate?.didDeleteBookmark(bookmark: bookmark, in: self)
+        //FIXME: How do we add an animation to this? Can't do it manually since remove() already removes it
+        self.bookmarks.remove(at: index.row)
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

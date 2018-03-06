@@ -9,7 +9,7 @@ import Result
 protocol BrowserViewControllerDelegate: class {
     func didCall(action: DappAction, callbackID: Int)
     func didAddBookmark(bookmark: Bookmark)
-    func didOpenBookmarks()
+    func didOpenBookmarkList()
 }
 
 class BrowserViewController: UIViewController {
@@ -207,13 +207,13 @@ class BrowserViewController: UIViewController {
     }
 
     private func addBookmark() {
-        print("Add Bookmark pressed")
-        guard let url = webView.url else { return }
-        //Save this to user bookmarks
+        guard let url = webView.url?.absoluteString else { return }
+        guard let title = webView.title else { return }
+        delegate?.didAddBookmark(bookmark: Bookmark(url: url, title: title))
     }
-    
+
     private func showBookmarks() {
-        delegate?.didOpenBookmarks()
+        delegate?.didOpenBookmarkList()
     }
 
     func handleError(error: Error) {

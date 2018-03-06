@@ -23,7 +23,7 @@ class BrowserCoordinator: Coordinator {
     }()
 
     weak var delegate: BrowserCoordinatorDelegate?
-    
+
     private let bookmarksStore: BookmarksStore
 
     init(
@@ -95,6 +95,10 @@ class BrowserCoordinator: Coordinator {
         addCoordinator(coordinator)
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
+    
+    func openBookmark(bookmark: Bookmark) {
+        rootViewController.goTo(url: URL(string: bookmark.url)!)
+    }
 
     func signMessage(with type: SignMesageType, account: Account, callbackID: Int) {
         let coordinator = SignMessageCoordinator(
@@ -127,22 +131,15 @@ class BrowserCoordinator: Coordinator {
 
 extension BrowserCoordinator: BookmarksCoordinatorDelegate {
     func didCancel(in coordinator: BookmarksCoordinator) {
-        //todo
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
-    
+
     func didSelectBookmark(bookmark: Bookmark, in coordinator: BookmarksCoordinator) {
-        //todo
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+        openBookmark(bookmark: bookmark)
     }
-    
-    func didAddBookmark(bookmark: Bookmark, in coordinator: BookmarksCoordinator) {
-        //todo
-    }
-    
-    func didDeleteBookmark(bookmark: Bookmark, in coordinator: BookmarksCoordinator) {
-        //todo
-    }
-    
-    
 }
 
 extension BrowserCoordinator: BrowserViewControllerDelegate {
@@ -165,9 +162,9 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
         }
     }
     func didAddBookmark(bookmark: Bookmark) {
-        //TODO
+        bookmarksStore.add(bookmarks: [bookmark])
     }
-    func didOpenBookmarks() {
+    func didOpenBookmarkList() {
         showBookmarks()
     }
 }
