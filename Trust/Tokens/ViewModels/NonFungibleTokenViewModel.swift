@@ -1,20 +1,79 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
-import Foundation
+import RealmSwift
+import TrustKeystore
 
 struct NonFungibleTokenViewModel {
-
-    let token: NonFungibleToken
-
-    init(token: NonFungibleToken) {
-        self.token = token
+    
+    let config: Config
+    let storage: TokensDataStore
+    var tokensNetwork: TokensNetworkProtocol
+    let tokens: Results<NonFungibleTokenCategory>
+    var tokensObserver: NotificationToken?
+    let address: Address
+    
+    var headerBackgroundColor: UIColor {
+        return UIColor(hex: "fafafa")
+    }
+    
+    var headerTitleTextColor: UIColor {
+        return UIColor(hex: "555357")
     }
 
-    var name: String {
-        return token.name
+    var headerTitleFont: UIFont {
+        return UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
     }
 
-    var imageURL: URL? {
-        return token.imageURL
+    var headerBorderColor: UIColor {
+        return UIColor(hex: "e1e1e1")
+    }
+
+    var hasContent: Bool {
+        return !tokens.isEmpty
+    }
+
+    init(
+        address: Address,
+        config: Config = Config(),
+        storage: TokensDataStore,
+        tokensNetwork: TokensNetworkProtocol
+    ) {
+        self.address = address
+        self.config = config
+        self.storage = storage
+        self.tokensNetwork = tokensNetwork
+        self.tokens = storage.nonFungibleTokens
+    }
+
+    func fetchAssets() {
+        self.tokensNetwork.assets { assets in
+            guard let tokens = assets else { return }
+            self.storage.add(tokens: tokens)
+        }
+    }
+
+    mutating func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<NonFungibleTokenCategory>>) -> Void) {
+        tokensObserver = tokens.observe(block)
+    }
+
+    func token(for path: IndexPath) -> NonFungibleTokenObject {
+        return tokens[path.section].items[path.row]
+    }
+
+    func cellViewModel(for path: IndexPath) -> NonFungibleTokenCellViewModel {
+        let token = self.token(for: path)
+        return NonFungibleTokenCellViewModel(token: token)
+    }
+
+    func numberOfItems(in section: Int) -> Int {
+        return tokens[section].items.count
+    }
+
+    func numberOfSections() -> Int {
+        return Array(tokens).map { $0.name }.count
+    }
+
+    func title(for section: Int) -> String {
+        return tokens[section].name
     }
 }

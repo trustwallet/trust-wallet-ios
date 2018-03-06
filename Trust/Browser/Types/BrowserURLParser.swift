@@ -3,31 +3,35 @@
 import Foundation
 
 class BrowserURLParser {
+    let urlRegEx = try! NSRegularExpression(pattern: "^(http(s)?://)?[a-z0-9-_]+(\\.[a-z0-9-_]+)+(/)?", options: .caseInsensitive)
+    let validSchemes = ["http", "https"]
+    let searchHost: String
 
-    private let defaultURL = "google.com"
-    let searchURL = "https://www.google.com/search?q="
-    let schemes = ["http", "https"]
-
-    init() {
-
+    init(searchHost: String = "www.google.com") {
+        self.searchHost = searchHost
     }
 
+    /// Determines if a string is an address or a search query and returns the appropriate URL.
     func url(from string: String) -> URL? {
-        let urlString = appendScheme(for: string)
-        let component = NSURLComponents(string: urlString)
-        guard let componentURL = component?.url, let _ = component?.host  else {
-            return searchURL(for: string)
+        let range = NSRange(string.startIndex ..< string.endIndex, in: string)
+        if urlRegEx.firstMatch(in: string, options: .anchored, range: range) != nil {
+            if !validSchemes.contains(where: { string.hasPrefix("\($0)://") }) {
+                return URL(string: "https://" + string)
+            } else {
+                return URL(string: string)
+            }
         }
-        return componentURL
+
+        return buildSearchURL(for: string)
     }
 
-    func appendScheme(for string: String) -> String {
-        let values = schemes.filter { string.hasPrefix($0) }
-        return values.isEmpty ? "http://" + string : string
-    }
-
-    func searchURL(for query: String) -> URL? {
-        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return .none }
-        return URL(string: searchURL + query)
+    /// Builds a search URL from a seach query string.
+    func buildSearchURL(for query: String) -> URL {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = searchHost
+        components.path = "/search"
+        components.queryItems = [URLQueryItem(name: "q", value: query)]
+        return try! components.asURL()
     }
 }

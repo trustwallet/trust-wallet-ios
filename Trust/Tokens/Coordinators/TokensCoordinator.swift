@@ -6,7 +6,7 @@ import TrustKeystore
 
 protocol TokensCoordinatorDelegate: class {
     func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator)
-    func didPress(on token: NonFungibleToken, in coordinator: TokensCoordinator)
+    func didPress(on token: NonFungibleTokenObject, in coordinator: TokensCoordinator)
 }
 
 class TokensCoordinator: Coordinator {
@@ -15,21 +15,31 @@ class TokensCoordinator: Coordinator {
     let session: WalletSession
     let keystore: Keystore
     var coordinators: [Coordinator] = []
-    let storage: TokensDataStore
+    let store: TokensDataStore
     let network: TokensNetworkProtocol
 
     lazy var tokensViewController: TokensViewController = {
-        let tokensViewModel = TokensViewModel(realmDataStore: storage, tokensNetwork: network)
+        let tokensViewModel = TokensViewModel(store: store, tokensNetwork: network)
         let controller = TokensViewController(viewModel: tokensViewModel)
         controller.delegate = self
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
         return controller
+    }()
+    lazy var nonFungibleTokensViewController: NonFungibleTokensViewController = {
+        let nonFungibleTokenViewModel = NonFungibleTokenViewModel(address: session.account.address, storage: store, tokensNetwork: network)
+        let controller = NonFungibleTokensViewController(viewModel: nonFungibleTokenViewModel)
+        controller.delegate = self
+        return controller
+    }()
+    lazy var masterViewController: MasterViewController = {
+        let masterViewController = MasterViewController(tokensViewController: self.tokensViewController, nonFungibleTokensViewController: self.nonFungibleTokensViewController)
+        masterViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
+        masterViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
+        return masterViewController
     }()
     weak var delegate: TokensCoordinatorDelegate?
 
-    lazy var rootViewController: TokensViewController = {
-        return self.tokensViewController
+    lazy var rootViewController: MasterViewController = {
+        return self.masterViewController
     }()
 
     init(
@@ -43,7 +53,7 @@ class TokensCoordinator: Coordinator {
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
         self.keystore = keystore
-        self.storage = tokensStorage
+        self.store = tokensStorage
         self.network = network
     }
 
@@ -97,7 +107,7 @@ class TokensCoordinator: Coordinator {
     @objc func edit() {
         let controller = EditTokensViewController(
             session: session,
-            storage: storage
+            storage: store
         )
         navigationController.pushViewController(controller, animated: true)
     }
@@ -124,7 +134,7 @@ extension TokensCoordinator: TokensViewControllerDelegate {
     func didDelete(token: TokenItem, in viewController: UIViewController) {
         switch token {
         case .token(let token):
-            storage.delete(tokens: [token])
+            store.delete(tokens: [token])
             tokensViewController.fetch()
         }
     }
@@ -140,8 +150,14 @@ extension TokensCoordinator: TokensViewControllerDelegate {
 
 extension TokensCoordinator: NewTokenViewControllerDelegate {
     func didAddToken(token: ERC20Token, in viewController: NewTokenViewController) {
-        storage.addCustom(token: token)
+        store.addCustom(token: token)
         tokensViewController.fetch()
         dismiss()
+    }
+}
+
+extension TokensCoordinator: NonFungibleTokensViewControllerDelegate {
+    func didSelectToken(_ token: NonFungibleTokenObject) {
+        delegate?.didPress(on: token, in: self)
     }
 }

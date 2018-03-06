@@ -23,7 +23,6 @@ class BrowserNavigationBar: UINavigationBar {
         super.init(frame: frame)
 
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.keyboardType = .URL
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 5
         textField.layer.borderWidth = 0.5
@@ -99,5 +98,9 @@ extension BrowserNavigationBar: UITextFieldDelegate {
         browserDelegate?.did(action: .enter(textField.text ?? ""))
         textField.resignFirstResponder()
         return true
+    }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        browserDelegate?.did(action: .beginEditing)
     }
 }

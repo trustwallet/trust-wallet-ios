@@ -205,18 +205,22 @@ extension TransactionsViewController: UITableViewDataSource {
         )
         return cell
     }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfItems(for: section)
     }
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return hederView(for: section)
     }
+
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.layer.addBorder(edge: .top, color: viewModel.headerBorderColor, thickness: 0.5)
         view.layer.addBorder(edge: .bottom, color: viewModel.headerBorderColor, thickness: 0.5)
     }
+
     //Method heightForHeaderInSection is required for iOS 10.
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        return StyleLayout.TableView.heightForHeaderInSection
     }
 }

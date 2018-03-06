@@ -49,4 +49,8 @@ struct AppStyle {
 
 struct StyleLayout {
     static let sideMargin: CGFloat = 15
+
+    struct TableView {
+        static let heightForHeaderInSection: CGFloat = 30
+    }
 }

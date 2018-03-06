@@ -6,6 +6,7 @@ import Moya
 import BigInt
 
 class FakeTokensNetwork: TokensNetworkProtocol {
+
     var provider: MoyaProvider<TrustService>
     
     var balanceService: TokensBalanceService
@@ -35,5 +36,8 @@ class FakeTokensNetwork: TokensNetworkProtocol {
     func tokenBalance(for token: TokenObject, completion: @escaping ((TokenObject, Balance?)) -> Void) {
         completion((token, Balance(value: BigInt(400))))
     }
-    
+
+    func assets(completion: @escaping (([NonFungibleTokenCategory]?)) -> Void) {
+        
+    }
 }
