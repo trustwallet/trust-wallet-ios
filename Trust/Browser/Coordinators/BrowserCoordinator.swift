@@ -135,7 +135,7 @@ extension BrowserCoordinator: BookmarksCoordinatorDelegate {
         removeCoordinator(coordinator)
     }
 
-    func didSelectBookmark(bookmark: Bookmark, in coordinator: BookmarkCoordinator) {
+    func didSelectBookmark(_ bookmark: Bookmark, in coordinator: BookmarkCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
         openBookmark(bookmark: bookmark)

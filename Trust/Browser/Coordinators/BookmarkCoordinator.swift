@@ -5,7 +5,7 @@ import UIKit
 
 protocol BookmarksCoordinatorDelegate: class {
     func didCancel(in coordinator: BookmarkCoordinator)
-    func didSelectBookmark(bookmark: Bookmark, in coordinator: BookmarkCoordinator)
+    func didSelectBookmark(_ bookmark: Bookmark, in coordinator: BookmarkCoordinator)
 }
 
 class BookmarkCoordinator: Coordinator {
@@ -35,7 +35,7 @@ class BookmarkCoordinator: Coordinator {
 }
 
 extension BookmarkCoordinator: BookmarkViewControllerDelegate {
-    func didSelectBookmark(bookmark: Bookmark, in viewController: BookmarkViewController) {
-        delegate?.didSelectBookmark(bookmark: bookmark, in: self)
+    func didSelectBookmark(_ bookmark: Bookmark, in viewController: BookmarkViewController) {
+        delegate?.didSelectBookmark(bookmark, in: self)
     }
 }
