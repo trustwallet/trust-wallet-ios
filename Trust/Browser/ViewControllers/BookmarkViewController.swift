@@ -60,9 +60,9 @@ class BookmarkViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let cell = self.tableView.dequeueReusableCell(withIdentifier: "newCell", for: indexPath)
-        let cell = UITableViewCell()
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "newCell")
         cell.textLabel?.text = viewModel.bookmarks[indexPath.row].title
+        cell.detailTextLabel?.text = viewModel.bookmarks[indexPath.row].url
         return cell
     }
 
