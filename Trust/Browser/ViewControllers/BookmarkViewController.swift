@@ -84,7 +84,7 @@ class BookmarkViewController: UITableViewController {
 
     func confirmDelete(bookmark: Bookmark, index: IndexPath) {
         confirm(title: NSLocalizedString("browser.bookmarks.confirm.delete.title", value: "Are you sure you would like to delete this bookmark?", comment: ""),
-                okTitle: NSLocalizedString("browser.bookmarks.confirm.delete.okTitle", value: "Delete", comment: ""),
+                okTitle: NSLocalizedString("Delete", value: "Delete", comment: ""),
                 okStyle: .destructive) { result in
                     switch result {
                     case .success:
