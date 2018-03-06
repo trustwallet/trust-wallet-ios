@@ -23,15 +23,23 @@ class SettingsViewController: FormViewController {
     lazy var viewModel: SettingsViewModel = {
         return SettingsViewModel(isDebug: isDebug)
     }()
+
+    lazy var networkStateView: NetworkStateView = {
+        let view = NetworkStateView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     let session: WalletSession
     init(session: WalletSession) {
         self.session = session
         super.init(nibName: nil, bundle: nil)
+        self.chaineStateObservation()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: networkStateView)
         title = NSLocalizedString("settings.navigation.title", value: "Settings", comment: "")
         let account = session.account
 
@@ -228,6 +236,12 @@ class SettingsViewController: FormViewController {
             }
         }.cellSetup { cell, _ in
             cell.imageView?.image = type.image
+        }
+    }
+
+    private func chaineStateObservation() {
+        self.session.chainState.chainStateCompletion = { [weak self] state in
+            self?.networkStateView.currentState = state == true ? .good : .bad
         }
     }
 
