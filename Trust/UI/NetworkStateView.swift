@@ -53,7 +53,7 @@ class NetworkStateView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .left
-        label.textColor = UIColor.lightGray
+        label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
@@ -64,7 +64,7 @@ class NetworkStateView: UIView {
     }
 
     private func updateLayout() {
-        guard let state = currentState, state != currentState else {
+        guard let state = currentState else {
             return
         }
 
