@@ -17,7 +17,7 @@ class NetworkStateView: UIView {
             }
         }
 
-        func color() -> Colors {
+        func color() -> UIColor {
             switch self {
             case .good:
                 return Colors.green
