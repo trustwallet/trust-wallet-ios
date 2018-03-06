@@ -39,6 +39,7 @@ class SettingsViewController: FormViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: networkStateView)
         title = NSLocalizedString("settings.navigation.title", value: "Settings", comment: "")
         let account = session.account
 
