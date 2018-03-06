@@ -3,8 +3,8 @@
 import Foundation
 
 struct BookmarkViewModel {
-    let bookmarks: [BookmarkObject]
-    init(bookmarks: [BookmarkObject]) {
+    let bookmarks: [Bookmark]
+    init(bookmarks: [Bookmark]) {
         self.bookmarks = bookmarks
     }
     

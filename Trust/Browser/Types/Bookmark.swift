@@ -3,7 +3,7 @@
 import Foundation
 import RealmSwift
 
-class BookmarkObject: Object {
+class Bookmark: Object {
     @objc dynamic var url: String = ""
     
     convenience init(

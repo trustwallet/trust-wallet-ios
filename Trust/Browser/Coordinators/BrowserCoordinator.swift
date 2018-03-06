@@ -130,15 +130,15 @@ extension BrowserCoordinator: BookmarksCoordinatorDelegate {
         //todo
     }
     
-    func didSelectBookmark(bookmark: BookmarkObject, in coordinator: BookmarksCoordinator) {
+    func didSelectBookmark(bookmark: Bookmark, in coordinator: BookmarksCoordinator) {
         //todo
     }
     
-    func didAddBookmark(bookmark: BookmarkObject, in coordinator: BookmarksCoordinator) {
+    func didAddBookmark(bookmark: Bookmark, in coordinator: BookmarksCoordinator) {
         //todo
     }
     
-    func didDeleteBookmark(bookmark: BookmarkObject, in coordinator: BookmarksCoordinator) {
+    func didDeleteBookmark(bookmark: Bookmark, in coordinator: BookmarksCoordinator) {
         //todo
     }
     
@@ -164,7 +164,7 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
         case .watch: break
         }
     }
-    func didAddBookmark(bookmark: BookmarkObject) {
+    func didAddBookmark(bookmark: Bookmark) {
         //TODO
     }
     func didOpenBookmarks() {

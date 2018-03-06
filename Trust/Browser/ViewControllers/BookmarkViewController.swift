@@ -4,8 +4,8 @@ import Foundation
 import UIKit
 
 protocol BookmarkViewControllerDelegate: class {
-    func didSelectBookmark(bookmark: BookmarkObject, in viewController: BookmarkViewController)
-    func didDeleteBookmark(bookmark: BookmarkObject, in viewController: BookmarkViewController)
+    func didSelectBookmark(bookmark: Bookmark, in viewController: BookmarkViewController)
+    func didDeleteBookmark(bookmark: Bookmark, in viewController: BookmarkViewController)
 }
 
 class BookmarkViewController: UITableViewController {
@@ -20,7 +20,7 @@ class BookmarkViewController: UITableViewController {
     var hasBookmarks: Bool {
         return !store.bookmarks.isEmpty
     }
-    var bookmarks: [BookmarkObject] = [] {
+    var bookmarks: [Bookmark] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -44,12 +44,12 @@ class BookmarkViewController: UITableViewController {
     }
     func fetch() {
         //FIXME: Get these from store
-        bookmarks = [BookmarkObject(url: "ayee")]
+        bookmarks = [Bookmark(url: "ayee")]
     }
     func configure(viewModel: BookmarkViewModel) {
         title = headerTitle ?? viewModel.title
     }
-    func bookmark(for indexPath: IndexPath) -> BookmarkObject {
+    func bookmark(for indexPath: IndexPath) -> Bookmark {
         return viewModel.bookmarks[indexPath.row]
     }
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -77,7 +77,7 @@ class BookmarkViewController: UITableViewController {
         let bookmark = self.bookmark(for: indexPath)
         delegate?.didSelectBookmark(bookmark: bookmark, in: self)
     }
-    func confirmDelete(bookmark: BookmarkObject) {
+    func confirmDelete(bookmark: Bookmark) {
         confirm(title: NSLocalizedString("browser.bookmarks.confirm.delete.title", value: "Are you sure you would like to delete this bookmark?", comment: ""),
                 okTitle: NSLocalizedString("browser.bookmarks.confirm.delete.okTitle", value: "Delete", comment: ""),
                 okStyle: .destructive) { result in
@@ -88,7 +88,7 @@ class BookmarkViewController: UITableViewController {
                     }
         }
     }
-    func delete(bookmark: BookmarkObject) {
+    func delete(bookmark: Bookmark) {
         store.delete(bookmarks: [bookmark])
         delegate?.didDeleteBookmark(bookmark: bookmark, in: self)
     }

@@ -4,8 +4,8 @@ import Foundation
 import RealmSwift
 
 class BookmarksStore {
-    var bookmarks: Results<BookmarkObject> {
-        return realm.objects(BookmarkObject.self)
+    var bookmarks: Results<Bookmark> {
+        return realm.objects(Bookmark.self)
     }
     let realm: Realm
     init(
@@ -13,12 +13,12 @@ class BookmarksStore {
     ) {
         self.realm = realm
     }
-    func add(bookmarks: [BookmarkObject]) {
+    func add(bookmarks: [Bookmark]) {
         realm.beginWrite()
         realm.add(bookmarks, update: true)
         try! realm.commitWrite()
     }
-    func delete(bookmarks: [BookmarkObject]) {
+    func delete(bookmarks: [Bookmark]) {
         realm.beginWrite()
         realm.delete(bookmarks)
         try! realm.commitWrite()

@@ -8,7 +8,7 @@ import Result
 
 protocol BrowserViewControllerDelegate: class {
     func didCall(action: DappAction, callbackID: Int)
-    func didAddBookmark(bookmark: BookmarkObject)
+    func didAddBookmark(bookmark: Bookmark)
     func didOpenBookmarks()
 }
 
