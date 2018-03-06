@@ -17,12 +17,12 @@ class NetworkStateView: UIView {
             }
         }
 
-        func color() -> UIColor {
+        func color() -> Colors {
             switch self {
             case .good:
-                return UIColor.green
+                return Colors.green
             case .bad:
-                return UIColor.red
+                return Colors.red
             }
         }
     }
