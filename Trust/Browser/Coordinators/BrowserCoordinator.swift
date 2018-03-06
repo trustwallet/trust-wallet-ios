@@ -86,7 +86,7 @@ class BrowserCoordinator: Coordinator {
     }
     
     func showBookmarks() {
-        let coordinator = BookmarksCoordinator(
+        let coordinator = BookmarkCoordinator(
             navigationController: NavigationController(),
             store: bookmarksStore
         )
@@ -130,12 +130,12 @@ class BrowserCoordinator: Coordinator {
 }
 
 extension BrowserCoordinator: BookmarksCoordinatorDelegate {
-    func didCancel(in coordinator: BookmarksCoordinator) {
+    func didCancel(in coordinator: BookmarkCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
     }
 
-    func didSelectBookmark(bookmark: Bookmark, in coordinator: BookmarksCoordinator) {
+    func didSelectBookmark(bookmark: Bookmark, in coordinator: BookmarkCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
         openBookmark(bookmark: bookmark)

@@ -4,11 +4,11 @@ import Foundation
 import UIKit
 
 protocol BookmarksCoordinatorDelegate: class {
-    func didCancel(in coordinator: BookmarksCoordinator)
-    func didSelectBookmark(bookmark: Bookmark, in coordinator: BookmarksCoordinator)
+    func didCancel(in coordinator: BookmarkCoordinator)
+    func didSelectBookmark(bookmark: Bookmark, in coordinator: BookmarkCoordinator)
 }
 
-class BookmarksCoordinator: Coordinator {
+class BookmarkCoordinator: Coordinator {
     let navigationController: UINavigationController
     let store: BookmarksStore
     var coordinators: [Coordinator] = []
@@ -34,7 +34,7 @@ class BookmarksCoordinator: Coordinator {
     }
 }
 
-extension BookmarksCoordinator: BookmarkViewControllerDelegate {
+extension BookmarkCoordinator: BookmarkViewControllerDelegate {
     func didSelectBookmark(bookmark: Bookmark, in viewController: BookmarkViewController) {
         delegate?.didSelectBookmark(bookmark: bookmark, in: self)
     }
