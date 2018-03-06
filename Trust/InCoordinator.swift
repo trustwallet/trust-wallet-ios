@@ -275,8 +275,8 @@ extension InCoordinator: TokensCoordinatorDelegate {
         showPaymentFlow(for: type)
     }
 
-    func didPress(on token: NonFungibleToken, in coordinator: TokensCoordinator) {
-        showTab(.browser(openURL: token.externalLinkURL))
+    func didPress(on token: NonFungibleTokenObject, in coordinator: TokensCoordinator) {
+        showTab(.browser(openURL: token.extentalURL))
     }
 }
 

@@ -66,4 +66,8 @@ class NonFungibleTokenObject: Object, Decodable {
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
         super.init(realm: realm, schema: schema)
     }
+
+    var extentalURL: URL? {
+        return URL(string: externalPath)
+    }
 }

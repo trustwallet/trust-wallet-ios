@@ -4,13 +4,17 @@ import UIKit
 import StatefulViewController
 import RealmSwift
 
+protocol NonFungibleTokensViewControllerDelegate: class {
+    func didSelectToken(_ token: NonFungibleTokenObject)
+}
+
 class NonFungibleTokensViewController: UIViewController {
 
-    fileprivate var viewModel: NonFungibleTokenViewModel
-    
+    private var viewModel: NonFungibleTokenViewModel
     let tableView: UITableView
-
     let refreshControl = UIRefreshControl()
+
+    weak var delegate: NonFungibleTokensViewControllerDelegate?
 
     init(
         viewModel: NonFungibleTokenViewModel
@@ -23,7 +27,6 @@ class NonFungibleTokensViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
-        tableView.allowsSelection = false
         view.addSubview(tableView)
         tableView.register(R.nib.nonFungibleTokenViewCell(), forCellReuseIdentifier: R.nib.nonFungibleTokenViewCell.name)
         NSLayoutConstraint.activate([
@@ -123,6 +126,11 @@ extension NonFungibleTokensViewController: StatefulViewController {
 extension NonFungibleTokensViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.didSelectToken(viewModel.token(for: indexPath))
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
