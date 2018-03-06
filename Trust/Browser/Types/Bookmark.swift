@@ -24,6 +24,6 @@ class Bookmark: Object {
 
     func incrementID() -> Int {
         let realm = try! Realm()
-        return (realm.objects(Bookmark.self).max(ofProperty: "id") as Int? ?? 0) + 1
+        return (realm.objects(Bookmark.self).max(ofProperty: "id") as Int? ?? 1) + 1
     }
 }
