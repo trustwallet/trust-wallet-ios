@@ -34,6 +34,7 @@ class TransactionsViewController: UIViewController {
     lazy var footerView: TransactionsFooterView = {
         let footerView = TransactionsFooterView(frame: .zero)
         footerView.translatesAutoresizingMaskIntoConstraints = false
+        footerView.setTopBorder()
         footerView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
         footerView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
         return footerView

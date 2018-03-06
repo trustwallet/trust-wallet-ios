@@ -16,6 +16,7 @@ class TokensHeaderView: UIView {
     lazy var buttonsView: TransactionsFooterView = {
         let footerView = TransactionsFooterView(frame: .zero)
         footerView.translatesAutoresizingMaskIntoConstraints = false
+        footerView.setBottomBorder()
         return footerView
     }()
 
