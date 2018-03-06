@@ -34,10 +34,10 @@ class TokensHeaderView: UIView {
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin + 10),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin * 2),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -StyleLayout.sideMargin - 10),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 
