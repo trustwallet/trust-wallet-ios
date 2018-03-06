@@ -133,9 +133,9 @@ class TokensViewController: UIViewController {
             case .update(_, let deletions, let insertions, let modifications):
                 tableView.beginUpdates()
                 tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) },
-                                     with: .automatic)
+                                     with: .none)
                 tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) },
-                                     with: .automatic)
+                                     with: .none)
                 for row in modifications {
                     let indexPath = IndexPath(row: row, section: 0)
                     let model = strongSelf.viewModel.cellViewModel(for: indexPath)

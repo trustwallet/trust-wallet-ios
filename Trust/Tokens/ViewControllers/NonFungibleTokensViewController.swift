@@ -59,10 +59,10 @@ class NonFungibleTokensViewController: UIViewController {
                 tableView.beginUpdates()
                 var insertIndexSet = IndexSet()
                 insertions.forEach { insertIndexSet.insert($0) }
-                tableView.insertSections(insertIndexSet, with: insertions.count == 1 ? .top : .automatic)
+                tableView.insertSections(insertIndexSet, with: insertions.count == 1 ? .top : .none)
                 var deleteIndexSet = IndexSet()
                 deletions.forEach { deleteIndexSet.insert($0) }
-                tableView.deleteSections(deleteIndexSet, with: .automatic)
+                tableView.deleteSections(deleteIndexSet, with: .none)
                 var updateIndexSet = IndexSet()
                 modifications.forEach { updateIndexSet.insert($0) }
                 tableView.reloadSections(updateIndexSet, with: .none)
