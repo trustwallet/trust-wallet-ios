@@ -39,12 +39,6 @@ class TransactionsViewController: UIViewController {
         return footerView
     }()
 
-    lazy var networkStateView: NetworkStateView = {
-        let view = NetworkStateView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
     let insets = UIEdgeInsets(top: 130, left: 0, bottom: ButtonSize.extraLarge.height + 84, right: 0)
 
     init(
@@ -104,12 +98,6 @@ class TransactionsViewController: UIViewController {
 
         navigationItem.titleView = titleView
         titleView.viewModel = BalanceViewModel()
-
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        chaineStateObservation()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: networkStateView)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -146,12 +134,6 @@ class TransactionsViewController: UIViewController {
 
     func configure(viewModel: TransactionsViewModel) {
         self.viewModel = viewModel
-    }
-
-    private func chaineStateObservation() {
-        self.session.chainState.chainStateCompletion = { [weak self] state in
-            self?.networkStateView.currentState = state == true ? .good : .bad
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
