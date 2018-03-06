@@ -84,7 +84,7 @@ class BrowserCoordinator: Coordinator {
         coordinator.start()
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
-    
+
     func showBookmarks() {
         let coordinator = BookmarkCoordinator(
             navigationController: NavigationController(),
@@ -95,9 +95,10 @@ class BrowserCoordinator: Coordinator {
         addCoordinator(coordinator)
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
-    
+
     func openBookmark(bookmark: Bookmark) {
-        rootViewController.goTo(url: URL(string: bookmark.url)!)
+        guard let url = URL(string: bookmark.url) else { return }
+        rootViewController.goTo(url: url)
     }
 
     func signMessage(with type: SignMesageType, account: Account, callbackID: Int) {
