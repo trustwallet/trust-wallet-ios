@@ -25,7 +25,7 @@ class SettingsViewController: FormViewController {
     }()
 
     lazy var networkStateView: NetworkStateView = {
-        let view = NetworkStateView()
+        let view = NetworkStateView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
