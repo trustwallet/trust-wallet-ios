@@ -96,8 +96,7 @@ class BookmarkViewController: UITableViewController {
 
     func delete(bookmark: Bookmark, index: IndexPath) {
         store.delete(bookmarks: [bookmark])
-        //FIXME: How do we add an animation to this? Can't do it manually since remove() already removes it
-        self.bookmarks.remove(at: index.row)
+        fetch()
     }
 
     required init?(coder aDecoder: NSCoder) {
