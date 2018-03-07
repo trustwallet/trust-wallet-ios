@@ -63,7 +63,7 @@ class AccountsViewController: UITableViewController {
         title = headerTitle ?? viewModel.title
     }
 
-    func account(for indexPath: IndexPath) -> Wallet? {
+    func wallet(for indexPath: IndexPath) -> Wallet? {
         return viewModel.wallet(for: indexPath)
     }
 
@@ -87,8 +87,8 @@ class AccountsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete, let account = self.account(for: indexPath) {
-            confirmDelete(account: account)
+        if editingStyle == UITableViewCellEditingStyle.delete, let wallet = self.wallet(for: indexPath) {
+            confirmDelete(wallet: wallet)
         }
     }
 
@@ -102,11 +102,11 @@ class AccountsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let account = self.account(for: indexPath) else { return }
-        delegate?.didSelectAccount(account: account, in: self)
+        guard let wallet = self.wallet(for: indexPath) else { return }
+        delegate?.didSelectAccount(account: wallet, in: self)
     }
 
-    func confirmDelete(account: Wallet) {
+    func confirmDelete(wallet: Wallet) {
         confirm(
             title: NSLocalizedString("accounts.confirm.delete.title", value: "Are you sure you would like to delete this wallet?", comment: ""),
             message: NSLocalizedString("accounts.confirm.delete.message", value: "Make sure you have backup of your wallet.", comment: ""),
@@ -115,21 +115,21 @@ class AccountsViewController: UITableViewController {
         ) { result in
             switch result {
             case .success:
-                self.delete(account: account)
+                self.delete(wallet: wallet)
             case .failure: break
             }
         }
     }
 
-    func delete(account: Wallet) {
+    func delete(wallet: Wallet) {
         navigationController?.displayLoading(text: NSLocalizedString("Deleting", value: "Deleting", comment: ""))
-        keystore.delete(wallet: account) { [weak self] result in
+        keystore.delete(wallet: wallet) { [weak self] result in
             guard let `self` = self else { return }
             self.navigationController?.hideLoading()
             switch result {
             case .success:
                 self.fetch()
-                self.delegate?.didDeleteAccount(account: account, in: self)
+                self.delegate?.didDeleteAccount(account: wallet, in: self)
             case .failure(let error):
                 self.displayError(error: error)
             }
@@ -151,7 +151,7 @@ class AccountsViewController: UITableViewController {
     }
 
     private func getAccountViewModels(for path: IndexPath) -> AccountViewModel {
-        let account = self.account(for: path)! // Avoid force unwrap
+        let account = self.wallet(for: path)! // Avoid force unwrap
         let balance = self.balances[account.address].flatMap { $0 }
         let model = AccountViewModel(server: config.server, wallet: account, current: EtherKeystore.current, walletBalance: balance)
         return model
