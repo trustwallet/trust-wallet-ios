@@ -23,7 +23,7 @@ class BrowserViewController: UIViewController {
         static let UserAgent = "Trust"
     }
 
-    private lazy var userAgent: String = {
+    private lazy var userClient: String = {
         return Keys.UserAgent + "/" + (Bundle.main.versionNumber ?? "")
     }()
 
@@ -101,10 +101,8 @@ class BrowserViewController: UIViewController {
 
     private func injectUserAgent() {
         webView.evaluateJavaScript("navigator.userAgent") { [weak self] result, _ in
-            guard let `self` = self else { return }
-            if let currentUserAgent = result as? String {
-                self.webView.customUserAgent = currentUserAgent + " " + self.userAgent
-            }
+            guard let `self` = self, let currentUserAgent = result as? String else { return }
+            self.webView.customUserAgent = currentUserAgent + " " + self.userClient
         }
     }
 
