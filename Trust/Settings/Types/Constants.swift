@@ -28,5 +28,6 @@ public struct UnitConfiguration {
 }
 
 public struct URLSchemes {
-    public static let browser = "trust://browser"
+    public static let trust = "trust://"
+    public static let browser = trust + "browser"
 }
