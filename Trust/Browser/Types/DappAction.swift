@@ -3,6 +3,7 @@
 import Foundation
 import BigInt
 import TrustKeystore
+import WebKit
 
 enum DappAction {
     case signMessage(String)
@@ -55,5 +56,15 @@ extension DappAction {
             gasPrice: gasPrice,
             nonce: nonce
         )
+    }
+
+    static func fromMessage(_ message: WKScriptMessage) -> DappCommand? {
+        let decoder = JSONDecoder()
+        guard let body = message.body as? [String: AnyObject],
+            let jsonString = body.jsonString,
+            let command = try? decoder.decode(DappCommand.self, from: jsonString.data(using: .utf8)!) else {
+                return .none
+        }
+        return command
     }
 }

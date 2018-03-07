@@ -41,7 +41,6 @@ class BrowserViewController: UIViewController {
         return webView
     }()
     weak var delegate: BrowserViewControllerDelegate?
-    let decoder = JSONDecoder()
     private let urlParser = BrowserURLParser()
 
     var browserNavBar: BrowserNavigationBar? {
@@ -271,12 +270,7 @@ extension BrowserViewController: WKUIDelegate {
 
 extension BrowserViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-
-        guard let body = message.body as? [String: AnyObject],
-            let jsonString = body.jsonString,
-            let command = try? decoder.decode(DappCommand.self, from: jsonString.data(using: .utf8)!) else {
-                return
-        }
+        guard let command = DappAction.fromMessage(message) else { return }
         let action = DappAction.fromCommand(command)
 
         delegate?.didCall(action: action, callbackID: command.id)
