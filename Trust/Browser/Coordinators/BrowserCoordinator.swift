@@ -129,7 +129,9 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
             case .unknown:
                 break
             }
-        case .address: break
+        case .address:
+            self.rootViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
+            self.navigationController.displayError(error: InCoordinatorError.onlyWatchAccount)
         }
     }
 }
