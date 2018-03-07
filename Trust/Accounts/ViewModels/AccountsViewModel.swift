@@ -73,8 +73,12 @@ struct AccountsViewModel {
 
     func headerHeight(in section: Int) -> CGFloat {
         guard let _ = titleForHeader(in: section) else {
-            return 0
+            return 0.01
         }
         return StyleLayout.TableView.heightForHeaderInSection
+    }
+
+    func footerHeight(in section: Int) -> CGFloat {
+        return headerHeight(in: section)
     }
 }

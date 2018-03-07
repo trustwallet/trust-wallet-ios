@@ -100,6 +100,10 @@ class AccountsViewController: UITableViewController {
         return viewModel.headerHeight(in: section)
     }
 
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return viewModel.footerHeight(in: section)
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let wallet = self.wallet(for: indexPath) else { return }
