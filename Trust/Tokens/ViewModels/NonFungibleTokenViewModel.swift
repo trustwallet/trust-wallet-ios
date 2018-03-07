@@ -6,15 +6,10 @@ import TrustKeystore
 struct NonFungibleTokenViewModel {
     
     let config: Config
-    
     let storage: TokensDataStore
-    
     var tokensNetwork: TokensNetworkProtocol
-    
     let tokens: Results<NonFungibleTokenCategory>
-    
     var tokensObserver: NotificationToken?
-    
     let address: Address
     
     var headerBackgroundColor: UIColor {
@@ -24,19 +19,19 @@ struct NonFungibleTokenViewModel {
     var headerTitleTextColor: UIColor {
         return UIColor(hex: "555357")
     }
-    
+
     var headerTitleFont: UIFont {
         return UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
     }
-    
+
     var headerBorderColor: UIColor {
         return UIColor(hex: "e1e1e1")
     }
-    
+
     var hasContent: Bool {
         return !tokens.isEmpty
     }
-    
+
     init(
         address: Address,
         config: Config = Config(),
@@ -49,7 +44,7 @@ struct NonFungibleTokenViewModel {
         self.tokensNetwork = tokensNetwork
         self.tokens = storage.nonFungibleTokens
     }
-    
+
     func fetchAssets() {
         self.tokensNetwork.assets { assets in
             guard let tokens = assets else { return }
@@ -61,8 +56,12 @@ struct NonFungibleTokenViewModel {
         tokensObserver = tokens.observe(block)
     }
 
+    func token(for path: IndexPath) -> NonFungibleTokenObject {
+        return tokens[path.section].items[path.row]
+    }
+
     func cellViewModel(for path: IndexPath) -> NonFungibleTokenCellViewModel {
-        let token = tokens[path.section].items[path.row]
+        let token = self.token(for: path)
         return NonFungibleTokenCellViewModel(token: token)
     }
 

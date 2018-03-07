@@ -26,6 +26,12 @@ struct EtherServiceRequest<Batch: JSONRPCKit.Batch>: APIKit.Request {
         return batch.requestObject
     }
 
+    func intercept(urlRequest: URLRequest) throws -> URLRequest {
+        var urlRequest = urlRequest
+        urlRequest.timeoutInterval = 5.0
+        return urlRequest
+    }
+
     func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
         return try batch.responses(from: object)
     }

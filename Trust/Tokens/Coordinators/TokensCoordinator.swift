@@ -6,7 +6,7 @@ import TrustKeystore
 
 protocol TokensCoordinatorDelegate: class {
     func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator)
-    func didPress(on token: NonFungibleToken, in coordinator: TokensCoordinator)
+    func didPress(on token: NonFungibleTokenObject, in coordinator: TokensCoordinator)
 }
 
 class TokensCoordinator: Coordinator {
@@ -27,6 +27,7 @@ class TokensCoordinator: Coordinator {
     lazy var nonFungibleTokensViewController: NonFungibleTokensViewController = {
         let nonFungibleTokenViewModel = NonFungibleTokenViewModel(address: session.account.address, storage: store, tokensNetwork: network)
         let controller = NonFungibleTokensViewController(viewModel: nonFungibleTokenViewModel)
+        controller.delegate = self
         return controller
     }()
     lazy var masterViewController: MasterViewController = {
@@ -152,5 +153,11 @@ extension TokensCoordinator: NewTokenViewControllerDelegate {
         store.addCustom(token: token)
         tokensViewController.fetch()
         dismiss()
+    }
+}
+
+extension TokensCoordinator: NonFungibleTokensViewControllerDelegate {
+    func didSelectToken(_ token: NonFungibleTokenObject) {
+        delegate?.didPress(on: token, in: self)
     }
 }

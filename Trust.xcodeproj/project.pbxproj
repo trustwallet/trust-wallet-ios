@@ -319,6 +319,7 @@
 		73CBC761202139FB00374666 /* FakeGetBalanceCoordinator(.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73CBC760202139FB00374666 /* FakeGetBalanceCoordinator(.swift */; };
 		73D26837202E827E009777A1 /* DecimalFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D26836202E827E009777A1 /* DecimalFormatter.swift */; };
 		73D2683B202E8411009777A1 /* DecimalNumberFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D2683A202E8411009777A1 /* DecimalNumberFormatterTest.swift */; };
+		73D30FF2204F274B00433377 /* NetworkStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D30FF1204F274B00433377 /* NetworkStateView.swift */; };
 		73ED85A520349BE400593BF3 /* StringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED85A420349BE400593BF3 /* StringFormatter.swift */; };
 		73ED85A72034BFEF00593BF3 /* UITextFieldAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */; };
 		73ED85A92034C42D00593BF3 /* StringFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED85A82034C42D00593BF3 /* StringFormatterTest.swift */; };
@@ -344,9 +345,6 @@
 		775C00B520195BFB001B5EBC /* BrowserAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C00B420195BFB001B5EBC /* BrowserAction.swift */; };
 		775DF42B203693CD009CD082 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF42A203693CD009CD082 /* Preferences.swift */; };
 		775DF42D2037D338009CD082 /* BranchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF42C2037D338009CD082 /* BranchCoordinator.swift */; };
-		775DF436203DFF2D009CD082 /* OpenseaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF435203DFF2D009CD082 /* OpenseaClient.swift */; };
-		775DF439203DFF62009CD082 /* OpenseaToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF438203DFF62009CD082 /* OpenseaToken.swift */; };
-		775DF43B203E0018009CD082 /* OpenseaArrayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF43A203E0018009CD082 /* OpenseaArrayResponse.swift */; };
 		775DF43E203E38D2009CD082 /* NonFungibleTokenViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF43C203E38D2009CD082 /* NonFungibleTokenViewCell.swift */; };
 		775DF43F203E38D3009CD082 /* NonFungibleTokenViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 775DF43D203E38D2009CD082 /* NonFungibleTokenViewCell.xib */; };
 		775DF443203E5685009CD082 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF442203E5685009CD082 /* Tabs.swift */; };
@@ -725,6 +723,7 @@
 		73CBC760202139FB00374666 /* FakeGetBalanceCoordinator(.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FakeGetBalanceCoordinator(.swift"; sourceTree = "<group>"; };
 		73D26836202E827E009777A1 /* DecimalFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalFormatter.swift; sourceTree = "<group>"; };
 		73D2683A202E8411009777A1 /* DecimalNumberFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalNumberFormatterTest.swift; sourceTree = "<group>"; };
+		73D30FF1204F274B00433377 /* NetworkStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStateView.swift; sourceTree = "<group>"; };
 		73ED85A420349BE400593BF3 /* StringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFormatter.swift; sourceTree = "<group>"; };
 		73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldAdditions.swift; sourceTree = "<group>"; };
 		73ED85A82034C42D00593BF3 /* StringFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFormatterTest.swift; sourceTree = "<group>"; };
@@ -753,9 +752,6 @@
 		775C00B420195BFB001B5EBC /* BrowserAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserAction.swift; sourceTree = "<group>"; };
 		775DF42A203693CD009CD082 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		775DF42C2037D338009CD082 /* BranchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchCoordinator.swift; sourceTree = "<group>"; };
-		775DF435203DFF2D009CD082 /* OpenseaClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenseaClient.swift; path = Trust/Vendors/Opensea/OpenseaClient.swift; sourceTree = SOURCE_ROOT; };
-		775DF438203DFF62009CD082 /* OpenseaToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenseaToken.swift; sourceTree = "<group>"; };
-		775DF43A203E0018009CD082 /* OpenseaArrayResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenseaArrayResponse.swift; sourceTree = "<group>"; };
 		775DF43C203E38D2009CD082 /* NonFungibleTokenViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenViewCell.swift; sourceTree = "<group>"; };
 		775DF43D203E38D2009CD082 /* NonFungibleTokenViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NonFungibleTokenViewCell.xib; sourceTree = "<group>"; };
 		775DF442203E5685009CD082 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
@@ -1046,6 +1042,7 @@
 				29DBF2A61F9F145900327C60 /* StateViewModel.swift */,
 				298542E21FBA722F00CB5081 /* ContainerView.swift */,
 				29DF40091FD3E80A000077CA /* TabBarController.swift */,
+				73D30FF1204F274B00433377 /* NetworkStateView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1102,7 +1099,6 @@
 		291F52AA1F6B805400B369AB /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
-				775DF434203DFF0A009CD082 /* Opensea */,
 				2981C29A1FC18F6000537E43 /* Changelly */,
 				298542E61FBA9BA900CB5081 /* ShapeShift */,
 				295996041FAAFC9400DB66A8 /* Coinbase */,
@@ -2121,25 +2117,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		775DF434203DFF0A009CD082 /* Opensea */ = {
-			isa = PBXGroup;
-			children = (
-				775DF437203DFF54009CD082 /* Model */,
-				775DF435203DFF2D009CD082 /* OpenseaClient.swift */,
-			);
-			name = Opensea;
-			path = "New Group1";
-			sourceTree = "<group>";
-		};
-		775DF437203DFF54009CD082 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				775DF438203DFF62009CD082 /* OpenseaToken.swift */,
-				775DF43A203E0018009CD082 /* OpenseaArrayResponse.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		77872D2A202514930032D687 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
@@ -2760,12 +2737,12 @@
 				2996F14D1F6CA743005C33AE /* UIViewController.swift in Sources */,
 				2959961F1FAE759700DB66A8 /* RawTransaction.swift in Sources */,
 				73ACEEFF20163E08003DD71D /* PasscodeCharacterView.swift in Sources */,
-				775DF43B203E0018009CD082 /* OpenseaArrayResponse.swift in Sources */,
 				295B61D41FE7D5B500642E60 /* CurrencyFormatter.swift in Sources */,
 				775DF42B203693CD009CD082 /* Preferences.swift in Sources */,
 				296421991F70C1F900EB363B /* EmptyView.swift in Sources */,
 				298542E51FBA9B0700CB5081 /* ShapeShift.swift in Sources */,
 				29C70C7C201990540072E454 /* SendTransaction.swift in Sources */,
+				73D30FF2204F274B00433377 /* NetworkStateView.swift in Sources */,
 				771AA962200D5EC700D25403 /* PassphraseViewModel.swift in Sources */,
 				73C41C71201B46AD00243C6C /* LockEnterPasscodeViewModel.swift in Sources */,
 				2959960C1FAB03EC00DB66A8 /* CoinbaseBuyWidget.swift in Sources */,
@@ -2820,7 +2797,6 @@
 				775DF43E203E38D2009CD082 /* NonFungibleTokenViewCell.swift in Sources */,
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
 				291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */,
-				775DF439203DFF62009CD082 /* OpenseaToken.swift in Sources */,
 				29F1C85A20036968003780D8 /* HelpUsCoordinator.swift in Sources */,
 				29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */,
 				290B2B671F9266630053C83E /* SettingsAction.swift in Sources */,
@@ -2940,7 +2916,6 @@
 				2959960E1FAB05C200DB66A8 /* TransactionsEmptyView.swift in Sources */,
 				29BB94931F6FC380009B09CC /* BalanceViewModel.swift in Sources */,
 				BB03A86D20416AF600649DA0 /* BalanceStatus.swift in Sources */,
-				775DF436203DFF2D009CD082 /* OpenseaClient.swift in Sources */,
 				29D03F1D1F712183006E548C /* Button.swift in Sources */,
 				291794FF1F95F5CE00539A30 /* Web3Request.swift in Sources */,
 				CCCD74FD1FD2D38D004A087D /* CheckDeviceCoordinator.swift in Sources */,
@@ -3196,7 +3171,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 166;
+				CURRENT_PROJECT_VERSION = 168;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Trust/Info.plist;
@@ -3219,7 +3194,7 @@
 				CODE_SIGN_ENTITLEMENTS = Trust/Trust.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 166;
+				CURRENT_PROJECT_VERSION = 168;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Trust/Info.plist;
