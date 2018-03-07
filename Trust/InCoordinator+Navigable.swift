@@ -5,7 +5,7 @@ import URLNavigator
 
 extension InCoordinator: URLNavigable {
     func register(with navigator: Navigator) {
-        navigator.handle("trust://browser") { url, _, _ in
+        navigator.handle(URLSchemes.browser) { url, _, _ in
             guard let target = url.queryParameters["target"],
                 let targetUrl = URL(string: target) else {
                     return false

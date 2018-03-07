@@ -84,7 +84,7 @@ class OpenInTrustController: UIViewController {
     }
 
     private func showError(_ error: OpenInTrustError) {
-        let alert = UIAlertController(title: viewModel.errorAlertTitle, message: error.message, preferredStyle: .alert)
+        let alert = UIAlertController(title: viewModel.errorAlertTitle, message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: viewModel.alertOK, style: .default, handler: { [unowned self] _ in
             self.cancel(error)
         }))

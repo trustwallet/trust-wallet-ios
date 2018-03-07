@@ -4,11 +4,7 @@ import Foundation
 
 extension OpenInTrustError {
 
-    public var errorDescription: String {
-        return message
-    }
-
-    var message: String {
+    public var errorDescription: String? {
         switch self {
         case .invalidContext:
             return NSLocalizedString("openintrust.error.context", value: "Extension context is invalid", comment: "")
