@@ -20,7 +20,12 @@ class BrowserViewController: UIViewController {
         static let estimatedProgress = "estimatedProgress"
         static let developerExtrasEnabled = "developerExtrasEnabled"
         static let URL = "URL"
+        static let ClientName = "Trust"
     }
+
+    private lazy var userClient: String = {
+        return Keys.ClientName + "/" + (Bundle.main.versionNumber ?? "")
+    }()
 
     lazy var webView: WKWebView = {
         let webView = WKWebView(
@@ -59,6 +64,7 @@ class BrowserViewController: UIViewController {
 
         webView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(webView)
+        injectUserAgent()
 
         progressView.translatesAutoresizingMaskIntoConstraints = false
         progressView.tintColor = Colors.darkBlue
@@ -91,6 +97,13 @@ class BrowserViewController: UIViewController {
 
         browserNavBar?.browserDelegate = self
         reloadButtons()
+    }
+
+    private func injectUserAgent() {
+        webView.evaluateJavaScript("navigator.userAgent") { [weak self] result, _ in
+            guard let `self` = self, let currentUserAgent = result as? String else { return }
+            self.webView.customUserAgent = currentUserAgent + " " + self.userClient
+        }
     }
 
     func goTo(url: URL) {
