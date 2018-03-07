@@ -3,30 +3,14 @@
 import Foundation
 import TrustKeystore
 
-enum WalletType {
-    case privateKey(Account)
-    case hd(Account)
-    case address(Address)
-}
-
-extension WalletType: Equatable {
-    static func == (lhs: WalletType, rhs: WalletType) -> Bool {
-        switch (lhs, rhs) {
-        case (let .privateKey(lhs), let .privateKey(rhs)):
-            return lhs == rhs
-        case (let .hd(lhs), let .hd(rhs)):
-            return lhs == rhs
-        case (let .address(lhs), let .address(rhs)):
-            return lhs == rhs
-        case (.privateKey, _),
-             (.hd, _),
-             (.address, _):
-            return false
-        }
-    }
-}
-
 struct Wallet {
+
+    struct Keys {
+        static let walletPrivateKey = "wallet-private-key-"
+        static let walletHD = "wallet-hd-wallet-"
+        static let address = "wallet-address-"
+    }
+
     let type: WalletType
 
     var address: Address {
@@ -39,10 +23,21 @@ struct Wallet {
             return address
         }
     }
+
+    var description: String {
+        switch self.type {
+        case .privateKey(let account):
+            return Keys.walletPrivateKey + account.address.description
+        case .hd(let account):
+            return Keys.walletHD + account.address.description
+        case .address(let address):
+            return Keys.address + address.description
+        }
+    }
 }
 
 extension Wallet: Equatable {
     static func == (lhs: Wallet, rhs: Wallet) -> Bool {
-        return lhs.type == rhs.type
+        return lhs.description == rhs.description
     }
 }

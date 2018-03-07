@@ -14,6 +14,7 @@ enum EtherKeystoreError: LocalizedError {
 open class EtherKeystore: Keystore {
     struct Keys {
         static let recentlyUsedAddress: String = "recentlyUsedAddress"
+        static let recentlyUsedWallet: String = "recentlyUsedWallet"
         static let watchAddresses = "watchAddresses"
     }
 
@@ -59,13 +60,19 @@ open class EtherKeystore: Keystore {
 
     var recentlyUsedWallet: Wallet? {
         set {
-            keychain.set(newValue?.address.description ?? "", forKey: Keys.recentlyUsedAddress, withAccess: defaultKeychainAccess)
+            keychain.set(newValue?.description ?? "", forKey: Keys.recentlyUsedWallet, withAccess: defaultKeychainAccess)
         }
         get {
-            let address = keychain.get(Keys.recentlyUsedAddress)
-            return wallets.filter {
-                $0.address.description == address || $0.address.description.lowercased() == address?.lowercased()
-            }.first
+            let walletKey = keychain.get(Keys.recentlyUsedWallet)
+            let foundWallet = wallets.filter { $0.description == walletKey }.first
+            guard let wallet = foundWallet else {
+                // Old way to match recently selected address
+                let address = keychain.get(Keys.recentlyUsedAddress)
+                return wallets.filter {
+                    $0.address.description == address || $0.address.description.lowercased() == address?.lowercased()
+                }.first
+            }
+            return wallet
         }
     }
 
