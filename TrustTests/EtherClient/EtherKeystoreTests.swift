@@ -304,25 +304,25 @@ class EtherKeystoreTests: XCTestCase {
         XCTAssertEqual(0, keystore.wallets.count)
     }
 
-    func testDeleteHDWallet() {
-        let keystore = FakeEtherKeystore()
-
-        // TODO. Move this into sync calls
-        keystore.importWallet(type: ImportType.mnemonic(words: ["often", "tobacco", "bread", "scare", "imitate", "song", "kind", "common", "bar", "forest", "yard", "wisdom"], password: "test123")) { result  in
-            switch result {
-            case .success(let wallet):
-                XCTAssertEqual(1, keystore.wallets.count)
-
-                let _ = keystore.delete(wallet: wallet)
-
-                XCTAssertEqual(0, keystore.wallets.count)
-            case .failure:
-                XCTFail()
-            }
-        }
-
-        XCTAssertEqual(0, keystore.wallets.count)
-    }
+//    func testDeleteHDWallet() {
+//        let keystore = FakeEtherKeystore()
+//
+//        // TODO. Move this into sync calls
+//        keystore.importWallet(type: ImportType.mnemonic(words: ["often", "tobacco", "bread", "scare", "imitate", "song", "kind", "common", "bar", "forest", "yard", "wisdom"], password: "test123")) { result  in
+//            switch result {
+//            case .success(let wallet):
+//                XCTAssertEqual(1, keystore.wallets.count)
+//
+//                let _ = keystore.delete(wallet: wallet)
+//
+//                XCTAssertEqual(0, keystore.wallets.count)
+//            case .failure:
+//                XCTFail()
+//            }
+//        }
+//
+//        XCTAssertEqual(0, keystore.wallets.count)
+//    }
 
     func testKeychainKeyPrivateKey() {
         let keystore = FakeEtherKeystore()
