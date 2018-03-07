@@ -5,7 +5,7 @@ import Foundation
 
 extension Wallet {
     static func make(
-        type: WalletType = .real(.make())
+        type: WalletType = .privateKey(.make())
     ) -> Wallet {
         return Wallet(
             type: type

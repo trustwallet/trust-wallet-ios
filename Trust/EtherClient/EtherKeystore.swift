@@ -99,7 +99,7 @@ open class EtherKeystore: Keystore {
             ) { result in
                 switch result {
                 case .success(let account):
-                    completion(.success(Wallet(type: .real(account))))
+                    completion(.success(Wallet(type: .privateKey(account))))
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -115,7 +115,7 @@ open class EtherKeystore: Keystore {
                     ) { result in
                         switch result {
                         case .success(let account):
-                            completion(.success(Wallet(type: .real(account))))
+                            completion(.success(Wallet(type: .privateKey(account))))
                         case .failure(let error):
                             completion(.failure(error))
                         }
@@ -124,27 +124,14 @@ open class EtherKeystore: Keystore {
                     completion(.failure(error))
                 }
             }
-        case .mnemonic:
-            let key = ""
-            // TODO: Implement it
-            keystore(for: key, password: newPassword) { result in
-                switch result {
-                case .success(let value):
-                    self.importKeystore(
-                        value: value,
-                        password: newPassword,
-                        newPassword: newPassword
-                    ) { result in
-                        switch result {
-                        case .success(let account):
-                            completion(.success(Wallet(type: .real(account))))
-                        case .failure(let error):
-                            completion(.failure(error))
-                        }
-                    }
-                case .failure(let error):
-                    completion(.failure(error))
-                }
+        case .mnemonic(let words, let password):
+            let string = words.map { String($0) }.joined(separator: " ")
+            do {
+                let account = try keyStore.import(mnemonic: string, password: password)
+                setPassword(PasswordGenerator.generateRandom(), for: account)
+                completion(.success(Wallet(type: .hd(account))))
+            } catch {
+                return completion(.failure(KeystoreError.accountNotFound))
             }
         case .watch(let address):
             let addressString = address.description
@@ -152,7 +139,7 @@ open class EtherKeystore: Keystore {
                 return completion(.failure(.duplicateAccount))
             }
             self.watchAddresses = [watchAddresses, [addressString]].flatMap { $0 }
-            completion(.success(Wallet(type: .watch(address))))
+            completion(.success(Wallet(type: .address(address))))
         }
     }
 
@@ -213,8 +200,13 @@ open class EtherKeystore: Keystore {
     var wallets: [Wallet] {
         let addresses = watchAddresses.flatMap { Address(string: $0) }
         return [
-            keyStore.accounts.map { Wallet(type: .real($0)) },
-            addresses.map { Wallet(type: .watch($0)) },
+            keyStore.accounts.map {
+                switch $0.type {
+                case .encryptedKey: return Wallet(type: .privateKey($0))
+                case .hierarchicalDeterministicWallet: return Wallet(type: .hd($0))
+                }
+            },
+            addresses.map { Wallet(type: .address($0)) },
         ].flatMap { $0 }
     }
 
@@ -266,11 +258,7 @@ open class EtherKeystore: Keystore {
 
     func delete(wallet: Wallet) -> Result<Void, KeystoreError> {
         switch wallet.type {
-        case .real(let account):
-            guard let account = getAccount(for: account.address) else {
-                return .failure(.accountNotFound)
-            }
-
+        case .privateKey(let account), .hd(let account):
             guard let password = getPassword(for: account) else {
                 return .failure(.failedToDeleteAccount)
             }
@@ -281,7 +269,7 @@ open class EtherKeystore: Keystore {
             } catch {
                 return .failure(.failedToDeleteAccount)
             }
-        case .watch(let address):
+        case .address(let address):
             watchAddresses = watchAddresses.filter { $0 != address.description }
             return .success(())
         }
@@ -335,13 +323,10 @@ open class EtherKeystore: Keystore {
     }
 
     func signTransaction(_ transaction: SignTransaction) -> Result<Data, KeystoreError> {
-        guard let account = keyStore.account(for: transaction.account.address) else {
-            return .failure(.failedToSignTransaction)
-        }
+        let account = transaction.account
         guard let password = getPassword(for: account) else {
             return .failure(.failedToSignTransaction)
         }
-
         let signer: Signer
         if transaction.chainID == 0 {
             signer = HomesteadSigner()
@@ -369,12 +354,21 @@ open class EtherKeystore: Keystore {
     }
 
     func getPassword(for account: Account) -> String? {
-        return keychain.get(account.address.description.lowercased())
+        return keychain.get(keychainKey(for: account))
     }
 
     @discardableResult
     func setPassword(_ password: String, for account: Account) -> Bool {
-        return keychain.set(password, forKey: account.address.description.lowercased(), withAccess: defaultKeychainAccess)
+        return keychain.set(password, forKey: keychainKey(for: account), withAccess: defaultKeychainAccess)
+    }
+
+    internal func keychainKey(for account: Account) -> String {
+        switch account.type {
+        case .encryptedKey:
+            return account.address.description.lowercased()
+        case .hierarchicalDeterministicWallet:
+            return "hd-wallet-" + account.address.description
+        }
     }
 
     func getAccount(for address: Address) -> Account? {

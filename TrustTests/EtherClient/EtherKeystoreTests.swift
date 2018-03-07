@@ -155,7 +155,7 @@ class EtherKeystoreTests: XCTestCase {
 
         XCTAssertNil(keystore.recentlyUsedWallet)
 
-        let account = Wallet(type: .real(keystore.createAccout(password: password)))
+        let account = Wallet(type: .privateKey(keystore.createAccout(password: password)))
 
         keystore.recentlyUsedWallet = account
 
@@ -169,7 +169,7 @@ class EtherKeystoreTests: XCTestCase {
     func testDeleteAccount() {
         let keystore = FakeEtherKeystore()
         let password = "test"
-        let wallet = Wallet(type: .real(keystore.createAccout(password: password)))
+        let wallet = Wallet(type: .privateKey(keystore.createAccout(password: password)))
 
         XCTAssertEqual(1, keystore.wallets.count)
 
@@ -303,4 +303,42 @@ class EtherKeystoreTests: XCTestCase {
 
         XCTAssertEqual(0, keystore.wallets.count)
     }
+
+    func testDeleteHDWallet() {
+        let keystore = FakeEtherKeystore()
+
+        // TODO. Move this into sync calls
+        keystore.importWallet(type: ImportType.mnemonic(words: ["often", "tobacco", "bread", "scare", "imitate", "song", "kind", "common", "bar", "forest", "yard", "wisdom"], password: "test123")) { result  in
+            switch result {
+            case .success(let wallet):
+                XCTAssertEqual(1, keystore.wallets.count)
+
+                let _ = keystore.delete(wallet: wallet)
+
+                XCTAssertEqual(0, keystore.wallets.count)
+            case .failure:
+                XCTFail()
+            }
+        }
+
+        XCTAssertEqual(0, keystore.wallets.count)
+    }
+
+    func testKeychainKeyPrivateKey() {
+        let keystore = FakeEtherKeystore()
+        let address = Address(string: "0x5e9c27156a612a2d516c74c7a80af107856f8539")!
+        let key = keystore.keychainKey(for: .make(address: address, type: .encryptedKey))
+
+        XCTAssertEqual(key, address.description.lowercased())
+    }
+
+    func testKeychainKeyHDWallet() {
+        let keystore = FakeEtherKeystore()
+        let address = Address(string: "0x5e9c27156a612a2d516c74c7a80af107856f8539")!
+        let key = keystore.keychainKey(for: .make(address: address, type: .hierarchicalDeterministicWallet))
+
+        XCTAssertEqual(key, "hd-wallet-" + address.description)
+    }
+
+
 }

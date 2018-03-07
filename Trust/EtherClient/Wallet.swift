@@ -4,19 +4,23 @@ import Foundation
 import TrustKeystore
 
 enum WalletType {
-    case real(Account)
-    case watch(Address)
+    case privateKey(Account)
+    case hd(Account)
+    case address(Address)
 }
 
 extension WalletType: Equatable {
     static func == (lhs: WalletType, rhs: WalletType) -> Bool {
         switch (lhs, rhs) {
-        case (let .real(lhs), let .real(rhs)):
+        case (let .privateKey(lhs), let .privateKey(rhs)):
             return lhs == rhs
-        case (let .watch(lhs), let .watch(rhs)):
+        case (let .hd(lhs), let .hd(rhs)):
             return lhs == rhs
-        case (.real, .watch),
-             (.watch, .real):
+        case (let .address(lhs), let .address(rhs)):
+            return lhs == rhs
+        case (.privateKey, _),
+             (.hd, _),
+             (.address, _):
             return false
         }
     }
@@ -27,9 +31,11 @@ struct Wallet {
 
     var address: Address {
         switch type {
-        case .real(let account):
+        case .privateKey(let account):
             return account.address
-        case .watch(let address):
+        case .hd(let account):
+            return account.address
+        case .address(let address):
             return address
         }
     }

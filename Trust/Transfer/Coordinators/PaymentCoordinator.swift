@@ -46,7 +46,8 @@ class PaymentCoordinator: Coordinator {
 
     func start() {
         switch (flow, session.account.type) {
-        case (.send(let type), .real(let account)):
+        case (.send(let type), .privateKey(let account)),
+             (.send(let type), .hd(let account)):
             let coordinator = SendCoordinator(
                 transferType: type,
                 navigationController: navigationController,
@@ -66,7 +67,7 @@ class PaymentCoordinator: Coordinator {
             coordinator.delegate = self
             coordinator.start()
             addCoordinator(coordinator)
-        case (.send, .watch):
+        case (.send, .address):
             // This case should be returning an error inCoordinator. Improve this logic into single piece.
             break
         }

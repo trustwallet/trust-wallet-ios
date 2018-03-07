@@ -69,7 +69,7 @@ class AccountsCoordinator: Coordinator {
         controller.popoverPresentationController?.sourceRect = sender.centerRect
 
         switch account.type {
-        case .real(let account):
+        case .privateKey(let account):
             let actionTitle = NSLocalizedString("wallets.backup.alertSheet.title", value: "Backup Keystore", comment: "The title of the backup button in the wallet's action sheet")
             let backupKeystoreAction = UIAlertAction(title: actionTitle, style: .default) { [unowned self] _ in
                 let coordinator = BackupCoordinator(
@@ -95,7 +95,7 @@ class AccountsCoordinator: Coordinator {
             }
             controller.addAction(backupKeystoreAction)
             controller.addAction(exportPrivateKeyAction)
-        case .watch:
+        case .hd, .address:
             break
         }
 
@@ -151,7 +151,7 @@ extension AccountsCoordinator: BackupCoordinatorDelegate {
         removeCoordinator(coordinator)
     }
 
-    func didFinish(account: Account, in coordinator: BackupCoordinator) {
+    func didFinish(wallet: Wallet, in coordinator: BackupCoordinator) {
         removeCoordinator(coordinator)
     }
 }

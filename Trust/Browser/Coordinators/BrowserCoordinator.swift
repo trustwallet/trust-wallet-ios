@@ -116,7 +116,7 @@ class BrowserCoordinator: Coordinator {
 extension BrowserCoordinator: BrowserViewControllerDelegate {
     func didCall(action: DappAction, callbackID: Int) {
         switch session.account.type {
-        case .real(let account):
+        case .privateKey(let account), .hd(let account) :
             switch action {
             case .signTransaction(let unconfirmedTransaction):
                 executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .sign)
@@ -129,7 +129,9 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
             case .unknown:
                 break
             }
-        case .watch: break
+        case .address:
+            self.rootViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
+            self.navigationController.displayError(error: InCoordinatorError.onlyWatchAccount)
         }
     }
 }
