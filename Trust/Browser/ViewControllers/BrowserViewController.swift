@@ -20,11 +20,11 @@ class BrowserViewController: UIViewController {
         static let estimatedProgress = "estimatedProgress"
         static let developerExtrasEnabled = "developerExtrasEnabled"
         static let URL = "URL"
-        static let UserAgent = "Trust"
+        static let ClientName = "Trust"
     }
 
     private lazy var userClient: String = {
-        return Keys.UserAgent + "/" + (Bundle.main.versionNumber ?? "")
+        return Keys.ClientName + "/" + (Bundle.main.versionNumber ?? "")
     }()
 
     lazy var webView: WKWebView = {
