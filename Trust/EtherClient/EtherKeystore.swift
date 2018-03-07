@@ -259,10 +259,6 @@ open class EtherKeystore: Keystore {
     func delete(wallet: Wallet) -> Result<Void, KeystoreError> {
         switch wallet.type {
         case .privateKey(let account), .hd(let account):
-            guard let account = getAccount(for: account.address) else {
-                return .failure(.accountNotFound)
-            }
-
             guard let password = getPassword(for: account) else {
                 return .failure(.failedToDeleteAccount)
             }
