@@ -4,6 +4,7 @@ import Foundation
 import UIKit
 import BigInt
 import TrustKeystore
+import RealmSwift
 
 protocol BrowserCoordinatorDelegate: class {
     func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator)
@@ -23,6 +24,8 @@ class BrowserCoordinator: Coordinator {
 
     weak var delegate: BrowserCoordinatorDelegate?
 
+    private let bookmarksStore: BookmarksStore
+
     init(
         session: WalletSession,
         keystore: Keystore
@@ -30,6 +33,7 @@ class BrowserCoordinator: Coordinator {
         self.navigationController = UINavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
         self.session = session
         self.keystore = keystore
+        self.bookmarksStore = BookmarksStore(realm: try! Realm())
     }
 
     func start() {
@@ -84,6 +88,22 @@ class BrowserCoordinator: Coordinator {
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
+    func showBookmarks() {
+        let coordinator = BookmarkCoordinator(
+            navigationController: NavigationController(),
+            store: bookmarksStore
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+    }
+
+    func openBookmark(bookmark: Bookmark) {
+        guard let url = URL(string: bookmark.url) else { return }
+        rootViewController.goTo(url: url)
+    }
+
     func signMessage(with type: SignMesageType, account: Account, callbackID: Int) {
         let coordinator = SignMessageCoordinator(
             navigationController: navigationController,
@@ -113,6 +133,19 @@ class BrowserCoordinator: Coordinator {
     }
 }
 
+extension BrowserCoordinator: BookmarksCoordinatorDelegate {
+    func didCancel(in coordinator: BookmarkCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+    }
+
+    func didSelectBookmark(_ bookmark: Bookmark, in coordinator: BookmarkCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+        openBookmark(bookmark: bookmark)
+    }
+}
+
 extension BrowserCoordinator: BrowserViewControllerDelegate {
     func didCall(action: DappAction, callbackID: Int) {
         switch session.account.type {
@@ -133,6 +166,12 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
             self.rootViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
             self.navigationController.displayError(error: InCoordinatorError.onlyWatchAccount)
         }
+    }
+    func didAddBookmark(bookmark: Bookmark) {
+        bookmarksStore.add(bookmarks: [bookmark])
+    }
+    func didOpenBookmarkList() {
+        showBookmarks()
     }
 }
 
