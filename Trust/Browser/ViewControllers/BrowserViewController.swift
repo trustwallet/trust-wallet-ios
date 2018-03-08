@@ -35,6 +35,7 @@ class BrowserViewController: UIViewController {
             configuration: self.config
         )
         webView.allowsBackForwardNavigationGestures = true
+        webView.translatesAutoresizingMaskIntoConstraints = false
         webView.navigationDelegate = self
         webView.uiDelegate = self
         if isDebug {
@@ -42,13 +43,27 @@ class BrowserViewController: UIViewController {
         }
         return webView
     }()
+
+    lazy var errorView: BrowserErrorView = {
+        let errorView = BrowserErrorView()
+        errorView.isHidden = false
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        return errorView
+    }()
+
     weak var delegate: BrowserViewControllerDelegate?
     private let urlParser = BrowserURLParser()
 
     var browserNavBar: BrowserNavigationBar? {
         return navigationController?.navigationBar as? BrowserNavigationBar
     }
-    let progressView = UIProgressView(progressViewStyle: .default)
+
+    lazy var progressView: UIProgressView = {
+        let progressView = UIProgressView(progressViewStyle: .default)
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.tintColor = Colors.darkBlue
+        return progressView
+    }()
 
     lazy var config: WKWebViewConfiguration = {
         return WKWebViewConfiguration.make(for: account, with: sessionConfig, in: self)
@@ -63,14 +78,12 @@ class BrowserViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        webView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(webView)
         injectUserAgent()
 
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.tintColor = Colors.darkBlue
         webView.addSubview(progressView)
         webView.bringSubview(toFront: progressView)
+        view.addSubview(errorView)
 
         NSLayoutConstraint.activate([
             webView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
@@ -82,6 +95,11 @@ class BrowserViewController: UIViewController {
             progressView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
             progressView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
             progressView.heightAnchor.constraint(equalToConstant: 3),
+
+            errorView.topAnchor.constraint(equalTo: webView.topAnchor),
+            errorView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
+            errorView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+            errorView.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
         ])
         view.backgroundColor = .white
         webView.addObserver(self, forKeyPath: Keys.estimatedProgress, options: .new, context: &myContext)
@@ -145,6 +163,10 @@ class BrowserViewController: UIViewController {
     private func reloadButtons() {
         browserNavBar?.goBack.isEnabled = webView.canGoBack
         browserNavBar?.goForward.isEnabled = webView.canGoForward
+    }
+
+    private func hideErrorView() {
+        errorView.isHidden = true
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
@@ -236,7 +258,7 @@ class BrowserViewController: UIViewController {
         if error.code == NSURLErrorCancelled {
             return
         } else {
-            displayError(error: error)
+            errorView.show(error: error)
         }
     }
 }
@@ -264,10 +286,12 @@ extension BrowserViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         refreshURL()
         reloadButtons()
+        hideErrorView()
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         reloadButtons()
+        hideErrorView()
     }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
