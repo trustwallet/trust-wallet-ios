@@ -23,23 +23,20 @@ open class EtherKeystore: Keystore {
     let keyStore: KeyStore
     private let defaultKeychainAccess: KeychainSwiftAccessOptions = .accessibleWhenUnlockedThisDeviceOnly
     let keysDirectory: URL
-    let walletsDirectory: URL
     let userDefaults: UserDefaults
 
     public init(
         keychain: KeychainSwift = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix),
         keysSubfolder: String = "/keystore",
-        walletsSubfolder: String = "/wallets",
         userDefaults: UserDefaults = UserDefaults.standard
     ) throws {
         if !UIApplication.shared.isProtectedDataAvailable {
             throw EtherKeystoreError.protectionDisabled
         }
         self.keysDirectory = URL(fileURLWithPath: datadir + keysSubfolder)
-        self.walletsDirectory = URL(fileURLWithPath: datadir + walletsSubfolder)
         self.keychain = keychain
         self.keychain.synchronizable = false
-        self.keyStore = try KeyStore(keyDirectory: keysDirectory, walletDirectory: walletsDirectory)
+        self.keyStore = try KeyStore(keyDirectory: keysDirectory)
         self.userDefaults = userDefaults
     }
 
@@ -131,11 +128,11 @@ open class EtherKeystore: Keystore {
                     completion(.failure(error))
                 }
             }
-        case .mnemonic(let words, let password):
+        case .mnemonic(let words, let passphrase):
             let string = words.map { String($0) }.joined(separator: " ")
             do {
-                let account = try keyStore.import(mnemonic: string, password: password)
-                setPassword(PasswordGenerator.generateRandom(), for: account)
+                let account = try keyStore.import(mnemonic: string, passphrase: passphrase, encryptPassword: newPassword)
+                setPassword(newPassword, for: account)
                 completion(.success(Wallet(type: .hd(account))))
             } catch {
                 return completion(.failure(KeystoreError.accountNotFound))

@@ -102,7 +102,7 @@ class ImportWalletViewController: FormViewController {
                 $0.options = [
                     ImportSelectionType.keystore.title,
                     ImportSelectionType.privateKey.title,
-                    //ImportSelectionType.mnemonic.title,
+                    ImportSelectionType.mnemonic.title,
                     ImportSelectionType.watch.title,
                 ]
                 $0.value = ImportSelectionType.keystore.title
