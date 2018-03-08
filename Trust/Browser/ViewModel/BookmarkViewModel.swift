@@ -10,10 +10,10 @@ struct BookmarkViewModel {
         self.bookmark = bookmark
     }
     var url: String {
-        return self.bookmark.url
+        return bookmark.url
     }
     var title: String {
-        return self.bookmark.title
+        return bookmark.title
     }
     var imageURL: URL? {
         return URL(string: "\(bookmark.url)favicon.ico")
