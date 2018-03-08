@@ -11,8 +11,8 @@ protocol BookmarkViewControllerDelegate: class {
 class BookmarkViewController: UITableViewController {
     weak var delegate: BookmarkViewControllerDelegate?
 
-    var viewModel: BookmarkViewModel {
-        return BookmarkViewModel(
+    var viewModel: BookmarksViewModel {
+        return BookmarksViewModel(
             bookmarks: bookmarks
         )
     }
@@ -37,6 +37,7 @@ class BookmarkViewController: UITableViewController {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 55
+        tableView.register(R.nib.bookmarkViewCell(), forCellReuseIdentifier: R.nib.bookmarkViewCell.name)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -48,7 +49,7 @@ class BookmarkViewController: UITableViewController {
         bookmarks = Array(store.bookmarks)
     }
 
-    func configure(viewModel: BookmarkViewModel) {
+    func configure(viewModel: BookmarksViewModel) {
         title = viewModel.title
     }
 
@@ -60,15 +61,13 @@ class BookmarkViewController: UITableViewController {
         return viewModel.bookmarks.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "newCell")
-        cell.textLabel?.text = viewModel.bookmarks[indexPath.row].title
-        cell.detailTextLabel?.text = viewModel.bookmarks[indexPath.row].url
-        cell.imageView?.kf.setImage(
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> BookmarkViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: R.nib.bookmarkViewCell.name, for: indexPath) as! BookmarkViewCell
+        cell.viewModel = BookmarkViewModel(bookmark: viewModel.bookmarks[indexPath.row])
+        cell.FaviconImage?.kf.setImage(
             with: URL(string: "\(viewModel.bookmarks[indexPath.row].url)favicon.ico"),
-            placeholder: R.image.launch_screen_logo())
-        cell.imageView?.layer.cornerRadius = 15
-        cell.imageView?.layer.masksToBounds = true
+            placeholder: R.image.launch_screen_logo()
+        )
         return cell
     }
 

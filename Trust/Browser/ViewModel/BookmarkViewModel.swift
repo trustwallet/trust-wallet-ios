@@ -3,16 +3,16 @@
 import Foundation
 
 struct BookmarkViewModel {
-    let bookmarks: [Bookmark]
-    init(bookmarks: [Bookmark]) {
-        self.bookmarks = bookmarks
+    let bookmark: Bookmark
+    init(
+        bookmark: Bookmark
+    ) {
+        self.bookmark = bookmark
     }
-
-    var hasBookmarks: Bool {
-        return !bookmarks.isEmpty
+    var url: String {
+        return self.bookmark.url
     }
-
     var title: String {
-        return NSLocalizedString("browser.bookmarks.title", value: "Bookmarks", comment: "")
+        return self.bookmark.title
     }
 }
