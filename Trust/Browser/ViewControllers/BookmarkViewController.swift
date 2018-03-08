@@ -65,7 +65,7 @@ class BookmarkViewController: UITableViewController {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: R.nib.bookmarkViewCell.name, for: indexPath) as! BookmarkViewCell
         cell.viewModel = BookmarkViewModel(bookmark: viewModel.bookmarks[indexPath.row])
         cell.faviconImage?.kf.setImage(
-            with: URL(string: "\(viewModel.bookmarks[indexPath.row].url)favicon.ico"),
+            with: cell.viewModel?.imageURL,
             placeholder: R.image.launch_screen_logo()
         )
         return cell

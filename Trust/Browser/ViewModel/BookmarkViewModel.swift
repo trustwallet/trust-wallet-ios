@@ -15,4 +15,7 @@ struct BookmarkViewModel {
     var title: String {
         return self.bookmark.title
     }
+    var imageURL: URL? {
+        return URL(string: "\(bookmark.url)favicon.ico")
+    }
 }
