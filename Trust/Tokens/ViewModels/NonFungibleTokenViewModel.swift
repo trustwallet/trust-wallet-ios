@@ -4,18 +4,18 @@ import RealmSwift
 import TrustKeystore
 
 struct NonFungibleTokenViewModel {
-    
+
     let config: Config
     let storage: TokensDataStore
     var tokensNetwork: TokensNetworkProtocol
     let tokens: Results<NonFungibleTokenCategory>
     var tokensObserver: NotificationToken?
     let address: Address
-    
+
     var headerBackgroundColor: UIColor {
         return UIColor(hex: "fafafa")
     }
-    
+
     var headerTitleTextColor: UIColor {
         return UIColor(hex: "555357")
     }
@@ -45,9 +45,10 @@ struct NonFungibleTokenViewModel {
         self.tokens = storage.nonFungibleTokens
     }
 
-    func fetchAssets() {
+    func fetchAssets( completion: @escaping (_ result: Bool) -> Void) {
         self.tokensNetwork.assets { assets in
             guard let tokens = assets else { return }
+            completion(tokens.isEmpty)
             self.storage.add(tokens: tokens)
         }
     }
