@@ -36,13 +36,13 @@ PODS:
     - Realm (= 3.0.2)
   - Result (3.2.4)
   - SAMKeychain (1.5.3)
-  - secp256k1_ios (0.1.1)
+  - secp256k1_ios (0.1.2)
   - SeedStackViewController (0.4.0)
   - SipHash (1.2.0)
   - StatefulViewController (3.0)
   - SwiftLint (0.24.1)
   - TrezorCrypto (0.0.4)
-  - TrustKeystore (0.2.1):
+  - TrustKeystore (0.3.1):
     - BigInt
     - CryptoSwift
     - secp256k1_ios (~> 0.1.0)
@@ -71,7 +71,7 @@ DEPENDENCIES:
   - SeedStackViewController
   - StatefulViewController
   - SwiftLint
-  - TrustKeystore (~> 0.2.1)
+  - TrustKeystore (~> 0.3.1)
   - TrustWeb3Provider (from `https://github.com/TrustWallet/trust-web3-provider`, branch `master`)
 
 EXTERNAL SOURCES:
@@ -124,15 +124,15 @@ SPEC CHECKSUMS:
   RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
-  secp256k1_ios: 3c94e6cce14ff03924cb6dc10c5017f17011b79d
+  secp256k1_ios: 168c6c49ed9771db51875f5255c8f9847e4cf554
   SeedStackViewController: 45e88ca1493a610e74d661d3feced7098f72dbd3
   SipHash: c6e9e43e9c531b5bc6602545130c26194a6d31ce
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: 2e4b89feed5909c42c3735bbd6745f4345c4b772
   TrezorCrypto: 7f87a2296cf13872b21565c29fd9f7882dd00803
-  TrustKeystore: b9fc8e0d72de3e8f9c97f46802172d6f14a004aa
+  TrustKeystore: a045fb57cb0a292ed5295134833d17cbcd6b922b
   TrustWeb3Provider: ac0bdf19b4c6c4d6ec0f03ddb85b83e32bda3a9a
 
-PODFILE CHECKSUM: f6ba1746f62eeaaabee0dc8db12e09eb1e17a0e8
+PODFILE CHECKSUM: cd1a443fa86d2410d5f2f02ece1f03670e3c9ad7
 
 COCOAPODS: 1.4.0
