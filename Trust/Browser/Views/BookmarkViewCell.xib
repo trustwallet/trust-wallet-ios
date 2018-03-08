@@ -58,9 +58,9 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="FaviconImage" destination="mbU-gV-kxo" id="wl3-79-sLc"/>
-                <outlet property="TitleLabel" destination="scJ-RY-qk3" id="tvj-El-Mov"/>
-                <outlet property="URLLabel" destination="ZWW-wY-XEU" id="uaj-Ns-qde"/>
+                <outlet property="bookmarkTitleLabel" destination="scJ-RY-qk3" id="tvj-El-Mov"/>
+                <outlet property="faviconImage" destination="mbU-gV-kxo" id="wl3-79-sLc"/>
+                <outlet property="urlLabel" destination="ZWW-wY-XEU" id="uaj-Ns-qde"/>
             </connections>
             <point key="canvasLocation" x="-151" y="-72"/>
         </tableViewCell>

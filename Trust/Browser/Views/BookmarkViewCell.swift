@@ -4,16 +4,16 @@ import Foundation
 import UIKit
 
 class BookmarkViewCell: UITableViewCell {
-    @IBOutlet weak var TitleLabel: UILabel!
-    @IBOutlet weak var URLLabel: UILabel!
-    @IBOutlet weak var FaviconImage: UIImageView!
+    @IBOutlet weak var bookmarkTitleLabel: UILabel!
+    @IBOutlet weak var urlLabel: UILabel!
+    @IBOutlet weak var faviconImage: UIImageView!
     var viewModel: BookmarkViewModel? {
         didSet {
             guard let model = viewModel else {
                 return
             }
-            TitleLabel.text = model.title
-            URLLabel.text = model.url
+            bookmarkTitleLabel.text = model.title
+            urlLabel.text = model.url
         }
     }
 }
