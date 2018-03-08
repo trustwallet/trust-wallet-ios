@@ -6,6 +6,7 @@ import TrustKeystore
 struct AccountsViewModel {
 
     private var walletsTypes = [[Wallet]]()
+    private var shouldShowHdWalletsTitle = false
 
     init(wallets: [Wallet]) {
         let hdWallets = wallets.filter { wallet in
@@ -16,6 +17,7 @@ struct AccountsViewModel {
         }
 
         if !hdWallets.isEmpty {
+            shouldShowHdWalletsTitle = true
             walletsTypes.append(hdWallets)
         }
 
@@ -53,7 +55,7 @@ struct AccountsViewModel {
     }
 
     func titleForHeader(in section: Int) -> String? {
-        guard walletsTypes.count == 2 && section == 0 else {
+        guard shouldShowHdWalletsTitle && section == 0 else {
             return nil
         }
         return NSLocalizedString("wallet.section.hdWallet.title", value: "HD Wallet", comment: "")
