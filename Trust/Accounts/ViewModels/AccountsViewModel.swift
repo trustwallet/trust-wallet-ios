@@ -5,27 +5,30 @@ import TrustKeystore
 
 struct AccountsViewModel {
 
-    private struct Sections {
-        static let hdWallets = 0
-        static let regularWallets = 1
-    }
-
-    private let regularWallets: [Wallet]
-    private let hdWallets: [Wallet]
+    private var walletsTypes = [[Wallet]]()
 
     init(wallets: [Wallet]) {
-        self.hdWallets = wallets.filter { wallet in
+        let hdWallets = wallets.filter { wallet in
             switch wallet.type {
             case .hd: return true
             case .privateKey, .address: return false
             }
         }
-        self.regularWallets = wallets.filter { wallet in
+
+        if !hdWallets.isEmpty {
+            walletsTypes.append(hdWallets)
+        }
+
+        let regularWallets = wallets.filter { wallet in
             switch wallet.type {
             case .privateKey, .address:
                 return true
             case .hd: return false
             }
+        }
+
+        if !regularWallets.isEmpty {
+            walletsTypes.append(regularWallets)
         }
     }
 
@@ -34,41 +37,26 @@ struct AccountsViewModel {
     }
 
     var numberOfSections: Int {
-        return 2
+        return walletsTypes.count
     }
 
     func wallet(for indexPath: IndexPath) -> Wallet? {
-        switch indexPath.section {
-        case Sections.hdWallets:
-            return hdWallets[indexPath.row]
-        case Sections.regularWallets:
-            return regularWallets[indexPath.row]
-        default: return .none
-        }
+        return walletsTypes[indexPath.section][indexPath.row]
     }
 
     func numberOfRows(in section: Int) -> Int {
-        switch section {
-        case Sections.hdWallets:
-            return hdWallets.count
-        case Sections.regularWallets:
-            return regularWallets.count
-        default: return 0
-        }
+        return walletsTypes[section].count
     }
 
     var isLastWallet: Bool {
-        return (hdWallets.count + regularWallets.count) <= 1
+        return walletsTypes.flatMap { $0 }.count <= 1
     }
 
     func titleForHeader(in section: Int) -> String? {
-        switch section {
-        case Sections.hdWallets:
-            return hdWallets.isEmpty ? .none : NSLocalizedString("wallet.section.hdWallet.title", value: "HD Wallet", comment: "")
-        case Sections.regularWallets:
-            return .none
-        default: return .none
+        guard walletsTypes.count == 2 && section == 0 else {
+            return nil
         }
+        return NSLocalizedString("wallet.section.hdWallet.title", value: "HD Wallet", comment: "")
     }
 
     func headerHeight(in section: Int) -> CGFloat {
