@@ -20,7 +20,12 @@ class BrowserViewController: UIViewController {
         static let estimatedProgress = "estimatedProgress"
         static let developerExtrasEnabled = "developerExtrasEnabled"
         static let URL = "URL"
+        static let ClientName = "Trust"
     }
+
+    private lazy var userClient: String = {
+        return Keys.ClientName + "/" + (Bundle.main.versionNumber ?? "")
+    }()
 
     lazy var webView: WKWebView = {
         let webView = WKWebView(
@@ -36,7 +41,6 @@ class BrowserViewController: UIViewController {
         return webView
     }()
     weak var delegate: BrowserViewControllerDelegate?
-    let decoder = JSONDecoder()
     private let urlParser = BrowserURLParser()
 
     var browserNavBar: BrowserNavigationBar? {
@@ -59,6 +63,7 @@ class BrowserViewController: UIViewController {
 
         webView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(webView)
+        injectUserAgent()
 
         progressView.translatesAutoresizingMaskIntoConstraints = false
         progressView.tintColor = Colors.darkBlue
@@ -91,6 +96,13 @@ class BrowserViewController: UIViewController {
 
         browserNavBar?.browserDelegate = self
         reloadButtons()
+    }
+
+    private func injectUserAgent() {
+        webView.evaluateJavaScript("navigator.userAgent") { [weak self] result, _ in
+            guard let `self` = self, let currentUserAgent = result as? String else { return }
+            self.webView.customUserAgent = currentUserAgent + " " + self.userClient
+        }
     }
 
     func goTo(url: URL) {
@@ -258,12 +270,7 @@ extension BrowserViewController: WKUIDelegate {
 
 extension BrowserViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-
-        guard let body = message.body as? [String: AnyObject],
-            let jsonString = body.jsonString,
-            let command = try? decoder.decode(DappCommand.self, from: jsonString.data(using: .utf8)!) else {
-                return
-        }
+        guard let command = DappAction.fromMessage(message) else { return }
         let action = DappAction.fromCommand(command)
 
         delegate?.didCall(action: action, callbackID: command.id)

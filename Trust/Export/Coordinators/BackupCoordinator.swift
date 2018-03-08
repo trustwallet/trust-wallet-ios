@@ -7,7 +7,7 @@ import TrustKeystore
 
 protocol BackupCoordinatorDelegate: class {
     func didCancel(coordinator: BackupCoordinator)
-    func didFinish(account: Account, in coordinator: BackupCoordinator)
+    func didFinish(wallet: Wallet, in coordinator: BackupCoordinator)
 }
 
 class BackupCoordinator: Coordinator {
@@ -36,7 +36,7 @@ class BackupCoordinator: Coordinator {
     func finish(result: Result<Bool, AnyError>) {
         switch result {
         case .success:
-            delegate?.didFinish(account: account, in: self)
+            delegate?.didFinish(wallet: Wallet(type: .privateKey(account)), in: self)
         case .failure:
             delegate?.didCancel(coordinator: self)
         }

@@ -22,7 +22,7 @@ class ImportWalletViewController: FormViewController {
         static let watch = "watch"
         static let mnemonic = "mnemonic"
     }
-    
+
     lazy var pargraphStyle: NSMutableParagraphStyle = {
         let style = NSMutableParagraphStyle()
         style.lineHeightMultiple = 1.25
@@ -100,9 +100,9 @@ class ImportWalletViewController: FormViewController {
 
             <<< SegmentedRow<String>(Values.segment) {
                 $0.options = [
-                    //ImportSelectionType.mnemonic.title,
                     ImportSelectionType.keystore.title,
                     ImportSelectionType.privateKey.title,
+                    //ImportSelectionType.mnemonic.title,
                     ImportSelectionType.watch.title,
                 ]
                 $0.value = ImportSelectionType.keystore.title
@@ -215,7 +215,7 @@ class ImportWalletViewController: FormViewController {
 
     @objc func demo() {
         //Used for taking screenshots to the App Store by snapshot
-        let demoWallet = Wallet(type: .watch(Address(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")!))
+        let demoWallet = Wallet(type: .address(Address(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")!))
         delegate?.didImportAccount(account: demoWallet, in: self)
     }
 

@@ -201,7 +201,7 @@ class InCoordinator: Coordinator {
         let tokenStorage = transactionCoordinator.tokensStorage
 
         switch (type, session.account.type) {
-        case (.send, .real), (.request, _):
+        case (.send, .privateKey), (.send, .hd), (.request, _):
             let coordinator = PaymentCoordinator(
                 flow: type,
                 session: session,
