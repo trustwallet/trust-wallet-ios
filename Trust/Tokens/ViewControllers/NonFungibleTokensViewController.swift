@@ -42,7 +42,7 @@ class NonFungibleTokensViewController: UIViewController {
         })
         loadingView = LoadingView()
         emptyView = EmptyView(
-            title: NSLocalizedString("emptyView.noNonTokens.label.title", value: "You haven't received any non fungible tokens yet!", comment: ""),
+            title: NSLocalizedString("emptyView.noNonTokens.label.title", value: "No Collectibles Found", comment: ""),
             onRetry: { [weak self] in
                 self?.fetch()
         })
