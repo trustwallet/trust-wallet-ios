@@ -85,4 +85,21 @@ struct TransactionsViewModel {
         case .main, .kovan, .classic, .callisto, .ropsten, .rinkeby, .poa, .sokol, .custom: return false
         }
     }
+
+    func hederView(for section: Int) -> UIView {
+        let conteiner = UIView()
+        conteiner.backgroundColor = self.headerBackgroundColor
+        let title = UILabel()
+        title.text = self.titleForHeader(in: section)
+        title.sizeToFit()
+        title.textColor = self.headerTitleTextColor
+        title.font = self.headerTitleFont
+        conteiner.addSubview(title)
+        title.translatesAutoresizingMaskIntoConstraints = false
+        let horConstraint = NSLayoutConstraint(item: title, attribute: .centerX, relatedBy: .equal, toItem: conteiner, attribute: .centerX, multiplier: 1.0, constant: 0.0)
+        let verConstraint = NSLayoutConstraint(item: title, attribute: .centerY, relatedBy: .equal, toItem: conteiner, attribute: .centerY, multiplier: 1.0, constant: 0.0)
+        let leftConstraint = NSLayoutConstraint(item: title, attribute: .left, relatedBy: .equal, toItem: conteiner, attribute: .left, multiplier: 1.0, constant: 20.0)
+        conteiner.addConstraints([horConstraint, verConstraint, leftConstraint])
+        return conteiner
+    }
 }

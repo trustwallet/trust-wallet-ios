@@ -139,22 +139,6 @@ class TransactionsViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    fileprivate func hederView(for section: Int) -> UIView {
-        let conteiner = UIView()
-        conteiner.backgroundColor = viewModel.headerBackgroundColor
-        let title = UILabel()
-        title.text = viewModel.titleForHeader(in: section)
-        title.sizeToFit()
-        title.textColor = viewModel.headerTitleTextColor
-        title.font = viewModel.headerTitleFont
-        conteiner.addSubview(title)
-        title.translatesAutoresizingMaskIntoConstraints = false
-        let horConstraint = NSLayoutConstraint(item: title, attribute: .centerX, relatedBy: .equal, toItem: conteiner, attribute: .centerX, multiplier: 1.0, constant: 0.0)
-        let verConstraint = NSLayoutConstraint(item: title, attribute: .centerY, relatedBy: .equal, toItem: conteiner, attribute: .centerY, multiplier: 1.0, constant: 0.0)
-        let leftConstraint = NSLayoutConstraint(item: title, attribute: .left, relatedBy: .equal, toItem: conteiner, attribute: .left, multiplier: 1.0, constant: 20.0)
-        conteiner.addConstraints([horConstraint, verConstraint, leftConstraint])
-        return conteiner
-    }
 }
 
 extension TransactionsViewController: StatefulViewController {
@@ -211,7 +195,7 @@ extension TransactionsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return hederView(for: section)
+        return viewModel.hederView(for: section)
     }
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -219,7 +203,6 @@ extension TransactionsViewController: UITableViewDataSource {
         view.layer.addBorder(edge: .bottom, color: viewModel.headerBorderColor, thickness: 0.5)
     }
 
-    //Method heightForHeaderInSection is required for iOS 10.
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return StyleLayout.TableView.heightForHeaderInSection
     }
