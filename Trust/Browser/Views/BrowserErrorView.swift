@@ -12,7 +12,6 @@ class BrowserErrorView: UIView {
         label.numberOfLines = 0
         label.textColor = Colors.gray
         label.font = UIFont.systemFont(ofSize: 18)
-        
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

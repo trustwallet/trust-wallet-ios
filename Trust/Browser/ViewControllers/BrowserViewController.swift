@@ -46,7 +46,6 @@ class BrowserViewController: UIViewController {
 
     lazy var errorView: BrowserErrorView = {
         let errorView = BrowserErrorView()
-        errorView.isHidden = false
         errorView.translatesAutoresizingMaskIntoConstraints = false
         return errorView
     }()
@@ -144,11 +143,13 @@ class BrowserViewController: UIViewController {
 
     private func goHome() {
         guard let url = URL(string: Constants.dappsBrowserURL) else { return }
+        hideErrorView()
         webView.load(URLRequest(url: url))
         browserNavBar?.textField.text = url.absoluteString
     }
 
     private func reload() {
+        hideErrorView()
         webView.reload()
     }
 

@@ -2198,11 +2198,8 @@
 			children = (
 				902CAB582051818A00F96FFE /* BookmarkViewCell.xib */,
 				77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */,
-<<<<<<< master
 				902CAB5A2051835E00F96FFE /* BookmarkViewCell.swift */,
-=======
 				BBB61E112050993A00428BBD /* BrowserErrorView.swift */,
->>>>>>> HEAD~0
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2828,11 +2825,8 @@
 				29DBF2A71F9F145900327C60 /* StateViewModel.swift in Sources */,
 				2923D9B31FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift in Sources */,
 				294DFBA01FE0CADE004CEB56 /* TransactionDetailsViewModel.swift in Sources */,
-<<<<<<< master
 				90DDF48520518AE50016E6D4 /* BookmarkViewModel.swift in Sources */,
-=======
 				BBB61E122050993A00428BBD /* BrowserErrorView.swift in Sources */,
->>>>>>> HEAD~0
 				29C80D4B1FB51C460037B1E0 /* Decimal.swift in Sources */,
 				297800521F71FDCF003185C1 /* FormAppearance.swift in Sources */,
 				77B3BF3C201908ED00EEC15A /* ConfirmCoordinator.swift in Sources */,
