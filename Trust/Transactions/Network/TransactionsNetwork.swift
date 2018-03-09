@@ -2,12 +2,20 @@
 
 import Moya
 import TrustKeystore
+import JSONRPCKit
+import APIKit
+import Result
 
 protocol TransactionsNetworkProtocol: TrustNetworkProtocol {
     func transactions(for address: Address, startBlock: Int, page: Int, completion: @escaping (_ transactions: [Transaction]?) -> Void)
+    func update(for transaction: Transaction, completion: @escaping (_ result:([Transaction], TransactionState)) -> Void)
 }
 
 class TransactionsNetwork: TransactionsNetworkProtocol {
+
+    static let deleteMissingInternalSeconds: Double = 60.0
+
+    static let deleyedTransactionInternalSeconds: Double = 60.0
 
     var provider: MoyaProvider<TrustService>
 
@@ -39,6 +47,32 @@ class TransactionsNetwork: TransactionsNetworkProtocol {
                 completion(nil)
             }
         }
+    }
 
+    func update(for transaction: Transaction, completion: @escaping (_ result:([Transaction], TransactionState)) -> Void) {
+        let request = GetTransactionRequest(hash: transaction.id)
+        Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { result in
+            switch result {
+            case .success(_):
+                if transaction.date > Date().addingTimeInterval(TransactionsNetwork.deleyedTransactionInternalSeconds) {
+                    completion(([transaction], .completed))
+                }
+            case .failure(let error):
+                switch error {
+                case .responseError(let error):
+                    guard let error = error as? JSONRPCError else { return }
+                    switch error {
+                    case .responseError(_,_,_):
+                        completion(([transaction], .deleted))
+                    case .resultObjectParseError:
+                        if transaction.date > Date().addingTimeInterval(TransactionsNetwork.deleteMissingInternalSeconds) {
+                            completion(([transaction], .failed))
+                        }
+                    default: break
+                    }
+                default: break
+                }
+            }
+        }
     }
 }
