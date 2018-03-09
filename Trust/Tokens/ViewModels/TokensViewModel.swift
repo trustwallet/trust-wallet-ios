@@ -15,7 +15,7 @@ struct TokensViewModel {
 
     var tokensNetwork: TokensNetworkProtocol
 
-    let tokens: Results<TokenObject>
+    var tokens: [TokenObject] = []
 
     var tokensObserver: NotificationToken?
 
@@ -67,14 +67,14 @@ struct TokensViewModel {
         self.config = config
         self.store = store
         self.tokensNetwork = tokensNetwork
-        self.tokens = store.tokens
+        self.tokens = sortTokensByFiatValue(tokens: store.tokens)
         updateEthBalance()
         updateTokensBalances()
         updateTickers()
     }
 
     mutating func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<TokenObject>>) -> Void) {
-        tokensObserver = tokens.observe(block)
+        //tokensObserver = tokens.observe(block)
     }
 
     private var amount: String? {
@@ -91,6 +91,10 @@ struct TokensViewModel {
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
         let price = Double(tickersSymbol.price) ?? 0
         return tokenValue * price
+    }
+
+    func sortTokensByFiatValue(tokens: Results<TokenObject>) -> [TokenObject] {
+        return tokens.sorted(by: { amount(for: $0) > amount(for: $1) })
     }
 
     func numberOfItems(for section: Int) -> Int {
