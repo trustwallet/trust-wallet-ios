@@ -11,31 +11,6 @@ struct TransactionsViewModel {
         return formatter
     }()
 
-    var items: [(date: String, transactions: [Transaction])] = []
-    let config: Config
-
-    init(
-        transactions: [Transaction] = [],
-        config: Config = Config()
-    ) {
-        self.config = config
-
-        var newItems: [String: [Transaction]] = [:]
-
-        for transaction in transactions {
-            let date = TransactionsViewModel.formatter.string(from: transaction.date)
-
-            var currentItems = newItems[date] ?? []
-            currentItems.append(transaction)
-            newItems[date] = currentItems
-        }
-        //TODO. IMPROVE perfomance
-        let tuple = newItems.map { (key, values) in return (date: key, transactions: values) }
-        items = tuple.sorted { (object1, object2) -> Bool in
-            return TransactionsViewModel.formatter.date(from: object1.date)! > TransactionsViewModel.formatter.date(from: object2.date)!
-        }
-    }
-
     var backgroundColor: UIColor {
         return .white
     }
@@ -56,20 +31,50 @@ struct TransactionsViewModel {
         return UIColor(hex: "e1e1e1")
     }
 
+    var isBuyActionAvailable: Bool {
+        switch config.server {
+        case .main, .kovan, .classic, .callisto, .ropsten, .rinkeby, .poa, .sokol, .custom: return false
+        }
+    }
+
+    private lazy var transactionsTracker: TransactionsTracker = {
+        return TransactionsTracker(sessionID: session.sessionID)
+    }()
+
     var numberOfSections: Int {
-        return items.count
+        return 0
+    }
+
+    let config: Config
+
+    let network: TransactionsNetwork
+    
+    let storage: TransactionsStorage
+
+    let session: WalletSession
+
+    init(
+        network: TransactionsNetwork,
+        storage: TransactionsStorage,
+        session: WalletSession,
+        config: Config = Config()
+    ) {
+        self.network = network
+        self.storage = storage
+        self.session = session
+        self.config = config
     }
 
     func numberOfItems(for section: Int) -> Int {
-        return items[section].transactions.count
+        return 0//items[section].transactions.count
     }
 
     func item(for row: Int, section: Int) -> Transaction {
-        return items[section].transactions[row]
+        return Transaction()//items[section].transactions[row]
     }
 
     func titleForHeader(in section: Int) -> String {
-        let value = items[section].date
+        let value = "1"//items[section].date
         let date = TransactionsViewModel.formatter.date(from: value)!
         if NSCalendar.current.isDateInToday(date) {
             return NSLocalizedString("Today", value: "Today", comment: "")
@@ -78,12 +83,6 @@ struct TransactionsViewModel {
             return NSLocalizedString("Yesterday", value: "Yesterday", comment: "")
         }
         return value
-    }
-
-    var isBuyActionAvailable: Bool {
-        switch config.server {
-        case .main, .kovan, .classic, .callisto, .ropsten, .rinkeby, .poa, .sokol, .custom: return false
-        }
     }
 
     func hederView(for section: Int) -> UIView {
@@ -101,5 +100,17 @@ struct TransactionsViewModel {
         let leftConstraint = NSLayoutConstraint(item: title, attribute: .left, relatedBy: .equal, toItem: conteiner, attribute: .left, multiplier: 1.0, constant: 20.0)
         conteiner.addConstraints([horConstraint, verConstraint, leftConstraint])
         return conteiner
+    }
+
+    func fetch() {
+
+    }
+
+    func fetchTransactions() {
+        
+    }
+
+    func fetchPending() {
+
     }
 }
