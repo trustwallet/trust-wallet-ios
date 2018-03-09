@@ -109,7 +109,7 @@ class ImportWalletViewController: FormViewController {
             }
 
             <<< AppFormAppearance.textArea(tag: Values.mnemonic) {
-                $0.placeholder = NSLocalizedString("Mnemonic", value: "Mnemonic", comment: "")
+                $0.placeholder = NSLocalizedString("import.wallet.mnemonic.placeholder", value: "Words separated by a space. (Usually contains 12 words)", comment: "")
                 $0.textAreaHeight = .fixed(cellHeight: 140)
                 $0.add(rule: RuleRequired())
 

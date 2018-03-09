@@ -30,6 +30,8 @@ class EmptyView: UIView {
         titleLabel.text = title
         titleLabel.font = viewModel.descriptionFont
         titleLabel.textColor = viewModel.descriptionTextColor
+        titleLabel.numberOfLines = 0
+        titleLabel.textAlignment = .center
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = image
