@@ -96,7 +96,11 @@ class NonFungibleTokensViewController: UIViewController {
 
     func fetch() {
         startLoading()
-        viewModel.fetchAssets()
+        viewModel.fetchAssets { state in
+            if state {
+                self.endLoading()
+            }
+        }
     }
 
     fileprivate func hederView(for section: Int) -> UIView {
