@@ -1,6 +1,5 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
-import UIKit
 import Moya
 import TrustKeystore
 
@@ -12,13 +11,13 @@ protocol TokensNetworkProtocol: TrustNetworkProtocol {
 }
 
 class TokensNetwork: TokensNetworkProtocol {
-    
+
     let provider: MoyaProvider<TrustService>
-    
+
     let config: Config
-    
+
     let balanceService: TokensBalanceService
-    
+
     let account: Wallet
 
     required init(provider: MoyaProvider<TrustService>, balanceService: TokensBalanceService, account: Wallet, config: Config) {
@@ -27,7 +26,7 @@ class TokensNetwork: TokensNetworkProtocol {
         self.account = account
         self.config = config
     }
-    
+
     func tickers(for tokens: [TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void) {
         let tokensPriceToFetch = TokensPrice(
             currency: config.currency.rawValue,
