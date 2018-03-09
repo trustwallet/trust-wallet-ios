@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,8 +23,14 @@
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JUd-EF-Sra">
                         <rect key="frame" x="36" y="0.0" width="298" height="59.5"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BUP-CU-bxN">
+                                <rect key="frame" x="0.0" y="3.5" width="52.5" height="52.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="BUP-CU-bxN" secondAttribute="height" id="P1u-HX-TEd"/>
+                                </constraints>
+                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2t2-qW-Lcu">
-                                <rect key="frame" x="0.0" y="11.5" width="239" height="36.5"/>
+                                <rect key="frame" x="62.5" y="11.5" width="176.5" height="36.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-- ETH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scJ-RY-qk3">
                                         <rect key="frame" x="0.0" y="0.0" width="47" height="18"/>
@@ -32,7 +39,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0xdDFFF2b78463AB1cA781e853BB888FDfd06083d3" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWW-wY-XEU">
-                                        <rect key="frame" x="0.0" y="23" width="239" height="13.5"/>
+                                        <rect key="frame" x="0.0" y="23" width="176.5" height="13.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -65,7 +72,9 @@
                             </stackView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="BUP-CU-bxN" firstAttribute="top" secondItem="JUd-EF-Sra" secondAttribute="top" constant="4" id="1U2-Wn-be5"/>
                             <constraint firstAttribute="height" priority="999" constant="55" id="1ZN-y6-RDM"/>
+                            <constraint firstAttribute="bottom" secondItem="BUP-CU-bxN" secondAttribute="bottom" constant="4" id="y12-Cd-Pet"/>
                         </constraints>
                     </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sdn-a4-wyz">
@@ -101,6 +110,7 @@
                 <outlet property="addressLable" destination="ZWW-wY-XEU" id="9Ad-PM-eKg"/>
                 <outlet property="balanceLable" destination="scJ-RY-qk3" id="TD3-qL-Mpo"/>
                 <outlet property="glassesImageView" destination="mbU-gV-kxo" id="Ry7-WR-mb2"/>
+                <outlet property="identiconImageView" destination="BUP-CU-bxN" id="j77-1f-TUd"/>
                 <outlet property="infoButton" destination="0Io-0E-DkX" id="FjW-Cs-BT6"/>
                 <outlet property="walletTypeImageView" destination="mbU-gV-kxo" id="B3W-b6-OAX"/>
             </connections>
