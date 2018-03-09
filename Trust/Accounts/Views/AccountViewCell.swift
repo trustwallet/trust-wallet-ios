@@ -14,6 +14,7 @@ class AccountViewCell: UITableViewCell {
     @IBOutlet weak var walletTypeImageView: UIImageView!
     @IBOutlet weak var addressLable: UILabel!
     @IBOutlet weak var balanceLable: UILabel!
+    @IBOutlet weak var identiconImageView: UIImageView!
     weak var delegate: AccountViewCellDelegate?
     var viewModel: AccountViewModel? {
         didSet {
@@ -25,6 +26,7 @@ class AccountViewCell: UITableViewCell {
             activeView.isHidden = !model.isActive
             addressLable.text = model.title
             infoButton.tintColor = Colors.lightBlue
+            identiconImageView.image = model.identicon
         }
     }
     override func prepareForReuse() {
