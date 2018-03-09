@@ -104,7 +104,7 @@ struct TransactionDetailsViewModel {
         let gasFee: BigInt = {
             switch transaction.state {
             case .completed, .error: return gasPrice * gasUsed
-            case .pending, .unknown, .failed: return gasPrice * gasLimit
+            case .pending, .unknown, .failed, .deleted: return gasPrice * gasLimit
             }
         }()
 

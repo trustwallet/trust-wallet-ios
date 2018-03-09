@@ -28,7 +28,11 @@ class TransactionsViewController: UIViewController {
     }()
 
     weak var delegate: TransactionsViewControllerDelegate?
-    let dataCoordinator: TransactionDataCoordinator
+
+    var timer: Timer?
+    
+    var updateTransactionsTimer: Timer?
+
     let session: WalletSession
 
     lazy var footerView: TransactionsFooterView = {
@@ -43,12 +47,10 @@ class TransactionsViewController: UIViewController {
 
     init(
         account: Wallet,
-        dataCoordinator: TransactionDataCoordinator,
         session: WalletSession,
-        viewModel: TransactionsViewModel = TransactionsViewModel(transactions: [])
+        viewModel: TransactionsViewModel
     ) {
         self.account = account
-        self.dataCoordinator = dataCoordinator
         self.session = session
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -74,15 +76,14 @@ class TransactionsViewController: UIViewController {
             footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
 
-        dataCoordinator.delegate = self
-        dataCoordinator.start()
+        viewModel.fetch()
 
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
 
         errorView = ErrorView(insets: insets, onRetry: { [weak self] in
             self?.startLoading()
-            self?.dataCoordinator.fetch()
+            self?.viewModel.fetch()
         })
         loadingView = LoadingView(insets: insets)
         emptyView = {
@@ -98,6 +99,9 @@ class TransactionsViewController: UIViewController {
 
         navigationItem.titleView = titleView
         titleView.viewModel = BalanceViewModel()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.stopTimers), name: .UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -116,7 +120,7 @@ class TransactionsViewController: UIViewController {
 
     func fetch() {
         startLoading()
-        dataCoordinator.fetch()
+        viewModel.fetch()
     }
 
     @objc func send() {
@@ -130,13 +134,36 @@ class TransactionsViewController: UIViewController {
     func showDeposit(_ sender: UIButton) {
         delegate?.didPressDeposit(for: account, sender: sender, in: self)
     }
-
-    func configure(viewModel: TransactionsViewModel) {
-        self.viewModel = viewModel
-    }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc func stopTimers() {
+        timer?.invalidate()
+        timer = nil
+        updateTransactionsTimer?.invalidate()
+        updateTransactionsTimer = nil
+    }
+    
+    @objc func restartTimers() {
+        runScheduledTimers()
+    }
+
+    private func runScheduledTimers() {
+        guard timer == nil, updateTransactionsTimer == nil else {
+            return
+        }
+        timer = Timer.scheduledTimer(timeInterval: 5, target: BlockOperation { [weak self] in
+            self?.viewModel.fetchPending()
+        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
+        updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 15, target: BlockOperation { [weak self] in
+            self?.viewModel.fetchTransactions()
+        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -150,24 +177,6 @@ extension TransactionsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true )
         delegate?.didPressTransaction(transaction: viewModel.item(for: indexPath.row, section: indexPath.section), in: self)
-    }
-}
-
-extension TransactionsViewController: TransactionDataCoordinatorDelegate {
-    func didUpdate(result: Result<[Transaction], TransactionError>) {
-        switch result {
-        case .success(let items):
-        let viewModel = TransactionsViewModel(transactions: items)
-            configure(viewModel: viewModel)
-            endLoading()
-        case .failure(let error):
-            endLoading(error: error)
-        }
-        tableView.reloadData()
-
-        if refreshControl.isRefreshing {
-            refreshControl.endRefreshing()
-        }
     }
 }
 
