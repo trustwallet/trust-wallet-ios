@@ -30,6 +30,8 @@ class TransactionsViewController: UIViewController {
 
     weak var delegate: TransactionsViewControllerDelegate?
 
+    let searchController = UISearchController(searchResultsController: nil)
+
     var timer: Timer?
 
     var updateTransactionsTimer: Timer?
@@ -56,6 +58,10 @@ class TransactionsViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
 
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+
         view.backgroundColor = viewModel.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -66,6 +72,7 @@ class TransactionsViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(footerView)
 
+        tableView.tableHeaderView = searchController.searchBar
         tableView.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
 
         NSLayoutConstraint.activate([
@@ -233,5 +240,17 @@ extension TransactionsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return StyleLayout.TableView.heightForHeaderInSection
+    }
+}
+
+extension TransactionsViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+
+    }
+}
+
+extension TransactionsViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+
     }
 }
