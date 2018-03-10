@@ -34,7 +34,7 @@ class NonFungibleTokenCategory: Object, Decodable {
         itemsList.append(objectsIn: itemsArray)
         self.init(name: name, items: itemsList)
     }
-    
+
     required init() {
         super.init()
     }

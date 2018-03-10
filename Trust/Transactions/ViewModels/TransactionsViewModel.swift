@@ -38,13 +38,11 @@ struct TransactionsViewModel {
         }
     }
 
-    private lazy var transactionsTracker: TransactionsTracker = {
-        return TransactionsTracker(sessionID: session.sessionID)
-    }()
-
     var numberOfSections: Int {
         return transactions.count
     }
+
+    private let queue = DispatchQueue(label: "com.trust.transactions")
 
     let transactions: Results<TransactionCategory>
 
@@ -121,19 +119,49 @@ struct TransactionsViewModel {
         return transaction.blockNumber - 2000
     }
 
-    func fetch() {
+    mutating func fetch() {
+        if TransactionsTracker(sessionID: session.sessionID).fetchingState != .done {
+           // transaction(for: 0)
+        }
         fetchTransactions()
         fetchPending()
     }
 
     func fetchTransactions() {
         self.network.transactions(for: session.account.address, startBlock: statBlock(), page: 0) { result in
-            guard let transactions = result else { return }
+            guard let transactions = result.0 else { return }
             self.storage.add(transactions)
         }
     }
 
     func fetchPending() {
+        self.storage.transactions.forEach {
+            self.network.update(for: $0, completion: { result in
+                switch result.1 {
+                case .deleted:
+                    self.storage.delete([result.0])
+                default:
+                    self.storage.update(state: result.1, for: result.0)
+                }
+            })
+        }
+    }
 
+    private func transaction(for page: Int) {
+        queue.async {
+            self.network.transactions(for: self.session.account.address, startBlock: 1, page: page) { result in
+                guard let transactions = result.0, result.1 else {
+                    TransactionsTracker(sessionID: self.session.sessionID).fetchingState = .failed
+                    return
+                }
+                self.storage.add(transactions)
+                if !transactions.isEmpty && page <= 50 {
+                    let nextPage = page + 1
+                    self.transaction(for: nextPage)
+                } else {
+                    TransactionsTracker(sessionID: self.session.sessionID).fetchingState = .done
+                }
+            }
+        }
     }
 }

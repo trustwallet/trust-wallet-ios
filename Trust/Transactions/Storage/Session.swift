@@ -38,7 +38,7 @@ class WalletSession {
         self.balanceCoordinator.delegate = self
         self.chainState.start()
     }
-    
+
     func refresh() {
         balanceCoordinator.refresh()
     }

@@ -44,8 +44,7 @@ class TransactionsStorage {
         return realm.object(ofType: Transaction.self, forPrimaryKey: forPrimaryKey)
     }
 
-    @discardableResult
-    func add(_ items: [Transaction]) -> [Transaction] {
+    func add(_ items: [Transaction]){
         let trnasactions = transactionCategory(for: items)
         realm.beginWrite()
         realm.add(trnasactions, update: true)
@@ -56,7 +55,6 @@ class TransactionsStorage {
         if !tokens.isEmpty {
             TokensDataStore.update(in: realm, tokens: tokens)
         }
-        return items
     }
 
     private func tokens(from transactions: [Transaction]) -> [Token] {
@@ -77,7 +75,7 @@ class TransactionsStorage {
         return tokens
     }
 
-    private func transactionCategory(for transactions: [Transaction]) -> [TransactionCategory]{
+    private func transactionCategory(for transactions: [Transaction]) -> [TransactionCategory] {
         var category = [TransactionCategory]()
         let headerDates = NSOrderedSet(array: transactions.map { TransactionsViewModel.formatter.string(from: $0.date ) })
         headerDates.forEach {
@@ -99,12 +97,10 @@ class TransactionsStorage {
         }
     }
 
-    @discardableResult
-    func update(state: TransactionState, for transaction: Transaction) -> Transaction {
+    func update(state: TransactionState, for transaction: Transaction) {
         realm.beginWrite()
         transaction.internalState = state.rawValue
         try! realm.commitWrite()
-        return transaction
     }
 
     func removeTransactions(for states: [TransactionState]) {

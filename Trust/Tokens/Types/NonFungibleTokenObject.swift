@@ -43,7 +43,7 @@ class NonFungibleTokenObject: Object, Decodable {
         case imagePath = "image_url"
         case externalPath = "external_link"
     }
-    
+
     convenience required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: NonFungibleTokenCodingKeys.self)
         let id = try container.decodeIfPresent(String.self, forKey: .id)  ?? ""
@@ -54,15 +54,15 @@ class NonFungibleTokenObject: Object, Decodable {
         let externalPath = try container.decodeIfPresent(String.self, forKey: .externalPath) ?? ""
         self.init(id: id, contract: contract, name: name, annotation: annotation, imagePath: imagePath, externalPath: externalPath)
     }
-    
+
     required init() {
         super.init()
     }
-    
+
     required init(value: Any, schema: RLMSchema) {
         super.init(value: value, schema: schema)
     }
-    
+
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
         super.init(realm: realm, schema: schema)
     }
