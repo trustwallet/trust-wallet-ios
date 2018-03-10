@@ -20,7 +20,7 @@ class BookmarkCoordinator: Coordinator {
     }()
     weak var delegate: BookmarksCoordinatorDelegate?
     init(
-        navigationController: UINavigationController,
+        navigationController: UINavigationController = NavigationController(),
         store: BookmarksStore
     ) {
         self.navigationController = navigationController
