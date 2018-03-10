@@ -5,7 +5,7 @@ import Foundation
 import RealmSwift
 
 extension Realm {
-    static func fake() -> Realm {
+    static func make() -> Realm {
         return try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MyInMemoryRealm"))
     }
 }

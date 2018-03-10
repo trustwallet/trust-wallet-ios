@@ -7,7 +7,7 @@ class BookmarkCoordinatorTests: XCTestCase {
     
     func testStart() {
         let coordinator = BookmarkCoordinator(
-            store: BookmarksStore(realm: .fake())
+            store: BookmarksStore(realm: .make())
         )
 
         coordinator.start()
