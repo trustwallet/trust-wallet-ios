@@ -32,6 +32,6 @@ class TokensViewModelTest: XCTestCase {
         model.updateEthBalance()
         let token = model.tokens[firstItem.row]
         XCTAssertNotNil(token)
-        XCTAssertEqual(BigInt(100), token.valueBigInt)
+        XCTAssertEqual(BigInt(400), token.valueBigInt)
     }
 }

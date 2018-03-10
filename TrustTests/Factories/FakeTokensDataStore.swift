@@ -6,7 +6,7 @@ import RealmSwift
 
 class FakeTokensDataStore: TokensDataStore {
     convenience init() {
-        let realm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MyInMemoryRealmTest"))
+        let realm = Realm.make()
         let config: Config = .make()
         self.init(realm: realm, config: config)
         self.makeFakeTicker()

@@ -141,6 +141,8 @@
 		298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FA1FBEA03300CB5081 /* SendInputErrors.swift */; };
 		298542FE1FBEADEF00CB5081 /* TransactionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FD1FBEADEF00CB5081 /* TransactionViewModelTests.swift */; };
 		298543001FBEAE2F00CB5081 /* ChainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FF1FBEAE2F00CB5081 /* ChainState.swift */; };
+		298994FE2053D47C00576B8B /* BookmarkCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298994FD2053D47C00576B8B /* BookmarkCoordinatorTests.swift */; };
+		298995002053D52700576B8B /* FakeRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298994FF2053D52700576B8B /* FakeRealm.swift */; };
 		2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2995739E1FA1F294006F17FD /* QRURLParser.swift */; };
 		299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A11FA1F369006F17FD /* QRURLParserTests.swift */; };
 		299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A31FA27A15006F17FD /* TestKeyStore.swift */; };
@@ -548,6 +550,8 @@
 		298542FA1FBEA03300CB5081 /* SendInputErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInputErrors.swift; sourceTree = "<group>"; };
 		298542FD1FBEADEF00CB5081 /* TransactionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModelTests.swift; sourceTree = "<group>"; };
 		298542FF1FBEAE2F00CB5081 /* ChainState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainState.swift; sourceTree = "<group>"; };
+		298994FD2053D47C00576B8B /* BookmarkCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCoordinatorTests.swift; sourceTree = "<group>"; };
+		298994FF2053D52700576B8B /* FakeRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeRealm.swift; sourceTree = "<group>"; };
 		2995739E1FA1F294006F17FD /* QRURLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParser.swift; sourceTree = "<group>"; };
 		299573A11FA1F369006F17FD /* QRURLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParserTests.swift; sourceTree = "<group>"; };
 		299573A31FA27A15006F17FD /* TestKeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestKeyStore.swift; sourceTree = "<group>"; };
@@ -1476,6 +1480,14 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
+		298994FC2053D46800576B8B /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				298994FD2053D47C00576B8B /* BookmarkCoordinatorTests.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
 		299573A01FA1F35B006F17FD /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1928,6 +1940,7 @@
 				73CBC760202139FB00374666 /* FakeGetBalanceCoordinator(.swift */,
 				771A84812032423800528D28 /* PreferencesController.swift */,
 				73200B6B20477FF900118A82 /* FakeTokensNetwork.swift */,
+				298994FF2053D52700576B8B /* FakeRealm.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -2015,6 +2028,7 @@
 		7391DC8F2038C070002C5ADE /* Browser */ = {
 			isa = PBXGroup;
 			children = (
+				298994FC2053D46800576B8B /* Coordinators */,
 				7391DC902038C070002C5ADE /* Types */,
 			);
 			path = Browser;
@@ -3012,6 +3026,7 @@
 				290B2B6A1F92C0440053C83E /* ConfigTests.swift in Sources */,
 				29BDF1941FEE43AA0023A45F /* TransactionConfiguratorTests.swift in Sources */,
 				29FF13081F75F0AE00AFD326 /* AppCoordinatorTests.swift in Sources */,
+				298995002053D52700576B8B /* FakeRealm.swift in Sources */,
 				2923D9B71FDA5E51000CF3F8 /* PasswordGeneratorTests.swift in Sources */,
 				29F1C865200384FE003780D8 /* Wallet.swift in Sources */,
 				73D2683B202E8411009777A1 /* DecimalNumberFormatterTest.swift in Sources */,
@@ -3021,6 +3036,7 @@
 				299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */,
 				CCA4FE3A1FD42B4100749AE4 /* FakeJailbreakChecker.swift in Sources */,
 				29F114F81FA8165200114A29 /* SendCoordinatorTests.swift in Sources */,
+				298994FE2053D47C00576B8B /* BookmarkCoordinatorTests.swift in Sources */,
 				299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */,
 				61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */,
 				29E14FD91F7F4D4E00185568 /* FakeTransactionsStorage.swift in Sources */,
