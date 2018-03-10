@@ -94,6 +94,7 @@ class BookmarkViewController: UIViewController {
     func delete(bookmark: Bookmark, index: IndexPath) {
         store.delete(bookmarks: [bookmark])
         fetch()
+        transitionViewStates()
     }
 
     required init?(coder aDecoder: NSCoder) {
