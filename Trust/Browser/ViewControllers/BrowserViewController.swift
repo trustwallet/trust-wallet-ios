@@ -47,6 +47,7 @@ class BrowserViewController: UIViewController {
     lazy var errorView: BrowserErrorView = {
         let errorView = BrowserErrorView()
         errorView.translatesAutoresizingMaskIntoConstraints = false
+        errorView.delegate = self
         return errorView
     }()
 
@@ -319,5 +320,11 @@ extension BrowserViewController: WKScriptMessageHandler {
         let action = DappAction.fromCommand(command)
 
         delegate?.didCall(action: action, callbackID: command.id)
+    }
+}
+
+extension BrowserViewController: BrowserErrorViewDelegate {
+    func didTapReload(_ sender: Button) {
+        reload()
     }
 }
