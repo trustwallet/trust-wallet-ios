@@ -16,6 +16,7 @@ struct BookmarkViewModel {
         return bookmark.title
     }
     var imageURL: URL? {
-        return URL(string: "\(bookmark.url)favicon.ico")
+        let host = URL(string: bookmark.url)?.host
+        return URL(string: "https://api.statvoo.com/favicon/?url=\(host ?? "www.trustwalletapp.com")")
     }
 }
