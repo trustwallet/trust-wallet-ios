@@ -9,7 +9,10 @@ enum DeteilsViewType: Int {
 
 class MasterViewController: UIViewController {
     fileprivate lazy var segmentController: UISegmentedControl = {
-        let items = [NSLocalizedString("Tokens", value: "Tokens", comment: ""), NSLocalizedString("Collectable", value: "Collectable", comment: "")]
+        let items = [
+            NSLocalizedString("Tokens", value: "Tokens", comment: ""),
+            NSLocalizedString("Collectibles", value: "Collectibles", comment: "")
+        ]
         let segmentedControl = UISegmentedControl(items: items)
         segmentedControl.selectedSegmentIndex = DeteilsViewType.tokens.rawValue
         segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
@@ -31,7 +34,7 @@ class MasterViewController: UIViewController {
     init(
         tokensViewController: TokensViewController,
         nonFungibleTokensViewController: NonFungibleTokensViewController
-        ) {
+    ) {
         self.tokensViewController = tokensViewController
         self.nonFungibleTokensViewController = nonFungibleTokensViewController
         super.init(nibName: nil, bundle: nil)
@@ -41,10 +44,6 @@ class MasterViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.titleView = segmentController
         setupView()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     private func setupView() {
@@ -93,5 +92,9 @@ class MasterViewController: UIViewController {
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.clear
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         self.navigationItem.leftBarButtonItem?.isEnabled = false
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

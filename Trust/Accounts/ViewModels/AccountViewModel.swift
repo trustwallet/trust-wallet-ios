@@ -1,10 +1,12 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import JdenticonSwift
 import TrustKeystore
 import UIKit
 
 struct AccountViewModel {
+    let identiconSize = 60 as CGFloat
     let wallet: Wallet
     let current: Wallet?
     let walletBalance: Balance?
@@ -37,5 +39,12 @@ struct AccountViewModel {
 
     var isActive: Bool {
         return wallet == current
+    }
+
+    var identicon: UIImage? {
+        guard let cgImage = IconGenerator(size: identiconSize, hash: wallet.address.data).render() else {
+            return nil
+        }
+        return UIImage(cgImage: cgImage)
     }
 }
