@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 struct TransactionsViewModel {
 
@@ -42,13 +43,17 @@ struct TransactionsViewModel {
     }()
 
     var numberOfSections: Int {
-        return 0
+        return transactions.count
     }
+
+    let transactions: Results<TransactionCategory>
+
+    var tokensObserver: NotificationToken?
 
     let config: Config
 
     let network: TransactionsNetwork
-    
+
     let storage: TransactionsStorage
 
     let session: WalletSession
@@ -63,18 +68,23 @@ struct TransactionsViewModel {
         self.storage = storage
         self.session = session
         self.config = config
+        self.transactions = storage.transactionsCategory
+    }
+
+    mutating func setTransactionsObservation(with block: @escaping (RealmCollectionChange<Results<TransactionCategory>>) -> Void) {
+        tokensObserver = transactions.observe(block)
     }
 
     func numberOfItems(for section: Int) -> Int {
-        return 0//items[section].transactions.count
+        return transactions[section].transactions.count
     }
 
     func item(for row: Int, section: Int) -> Transaction {
-        return Transaction()//items[section].transactions[row]
+        return transactions[section].transactions[row]
     }
 
     func titleForHeader(in section: Int) -> String {
-        let value = "1"//items[section].date
+        let value = transactions[section].title
         let date = TransactionsViewModel.formatter.date(from: value)!
         if NSCalendar.current.isDateInToday(date) {
             return NSLocalizedString("Today", value: "Today", comment: "")
@@ -102,12 +112,25 @@ struct TransactionsViewModel {
         return conteiner
     }
 
-    func fetch() {
+    func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
+        return TransactionCellViewModel(transaction: transactions[indexPath.section].transactions[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account)
+    }
 
+    func statBlock() -> Int {
+        guard let transaction = storage.completedObjects.first else { return 1 }
+        return transaction.blockNumber - 2000
+    }
+
+    func fetch() {
+        fetchTransactions()
+        fetchPending()
     }
 
     func fetchTransactions() {
-        
+        self.network.transactions(for: session.account.address, startBlock: statBlock(), page: 0) { result in
+            guard let transactions = result else { return }
+            self.storage.add(transactions)
+        }
     }
 
     func fetchPending() {

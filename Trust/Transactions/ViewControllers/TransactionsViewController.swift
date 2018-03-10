@@ -6,6 +6,7 @@ import JSONRPCKit
 import StatefulViewController
 import Result
 import TrustKeystore
+import RealmSwift
 
 protocol TransactionsViewControllerDelegate: class {
     func didPressSend(in viewController: TransactionsViewController)
@@ -16,7 +17,7 @@ protocol TransactionsViewControllerDelegate: class {
 
 class TransactionsViewController: UIViewController {
 
-    var viewModel: TransactionsViewModel
+    fileprivate var viewModel: TransactionsViewModel
 
     let account: Wallet
 
@@ -30,7 +31,7 @@ class TransactionsViewController: UIViewController {
     weak var delegate: TransactionsViewControllerDelegate?
 
     var timer: Timer?
-    
+
     var updateTransactionsTimer: Timer?
 
     let session: WalletSession
@@ -65,6 +66,8 @@ class TransactionsViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(footerView)
 
+        tableView.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
+
         NSLayoutConstraint.activate([
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -75,8 +78,6 @@ class TransactionsViewController: UIViewController {
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
-
-        viewModel.fetch()
 
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
@@ -99,7 +100,7 @@ class TransactionsViewController: UIViewController {
 
         navigationItem.titleView = titleView
         titleView.viewModel = BalanceViewModel()
-
+        tokensObservation()
         NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.stopTimers), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
     }
@@ -109,8 +110,34 @@ class TransactionsViewController: UIViewController {
         fetch()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    private func tokensObservation() {
+        viewModel.setTransactionsObservation { [weak self] (changes: RealmCollectionChange) in
+            guard let strongSelf = self else { return }
+            let tableView = strongSelf.tableView
+            switch changes {
+            case .initial:
+                tableView.reloadData()
+                self?.endLoading()
+            case .update(_, let deletions, let insertions, let modifications):
+                tableView.beginUpdates()
+                var insertIndexSet = IndexSet()
+                insertions.forEach { insertIndexSet.insert($0) }
+                tableView.insertSections(insertIndexSet, with: insertions.count == 1 ? .top : .none)
+                var deleteIndexSet = IndexSet()
+                deletions.forEach { deleteIndexSet.insert($0) }
+                tableView.deleteSections(deleteIndexSet, with: .none)
+                var updateIndexSet = IndexSet()
+                modifications.forEach { updateIndexSet.insert($0) }
+                tableView.reloadSections(updateIndexSet, with: .none)
+                tableView.endUpdates()
+                self?.endLoading()
+            case .error(let error):
+                self?.endLoading(animated: true, error: error, completion: nil)
+            }
+            if strongSelf.refreshControl.isRefreshing {
+                strongSelf.refreshControl.endRefreshing()
+            }
+        }
     }
 
     @objc func pullToRefresh() {
@@ -134,7 +161,7 @@ class TransactionsViewController: UIViewController {
     func showDeposit(_ sender: UIButton) {
         delegate?.didPressDeposit(for: account, sender: sender, in: self)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -145,7 +172,7 @@ class TransactionsViewController: UIViewController {
         updateTransactionsTimer?.invalidate()
         updateTransactionsTimer = nil
     }
-    
+
     @objc func restartTimers() {
         runScheduledTimers()
     }
@@ -169,7 +196,7 @@ class TransactionsViewController: UIViewController {
 
 extension TransactionsViewController: StatefulViewController {
     func hasContent() -> Bool {
-        return viewModel.numberOfSections > 0
+        return !viewModel.transactions.isEmpty
     }
 }
 
@@ -186,15 +213,8 @@ extension TransactionsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let transaction = viewModel.item(for: indexPath.row, section: indexPath.section)
-        let cell = TransactionViewCell(style: .default, reuseIdentifier: TransactionViewCell.identifier)
-        cell.configure(viewModel: .init(
-                transaction: transaction,
-                config: session.config,
-                chainState: session.chainState,
-                currentWallet: session.account
-            )
-        )
+        let cell = tableView.dequeueReusableCell(withIdentifier: TransactionViewCell.identifier, for: indexPath) as! TransactionViewCell
+        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
         return cell
     }
 
