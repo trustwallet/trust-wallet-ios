@@ -1,11 +1,17 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import RealmSwift
 
 struct BookmarksViewModel {
+    
+    var store: BookmarksStore
+    
     let bookmarks: [Bookmark]
-    init(bookmarks: [Bookmark]) {
-        self.bookmarks = bookmarks
+
+    init() {
+        self.store = BookmarksStore(realm: try! Realm())
+        self.bookmarks = Array(store.bookmarks)
     }
 
     var hasBookmarks: Bool {
@@ -14,5 +20,9 @@ struct BookmarksViewModel {
 
     var title: String {
         return NSLocalizedString("browser.bookmarks.title", value: "Bookmarks", comment: "")
+    }
+
+    func bookmark(for indexPath: IndexPath) -> Bookmark {
+        return bookmarks[indexPath.row]
     }
 }

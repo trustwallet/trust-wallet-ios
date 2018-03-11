@@ -15,25 +15,9 @@ class BookmarkViewController: UIViewController {
 
     weak var delegate: BookmarkViewControllerDelegate?
 
-    var viewModel: BookmarksViewModel {
-        return BookmarksViewModel(
-            bookmarks: bookmarks
-        )
-    }
+    var viewModel = BookmarksViewModel()
 
-    var bookmarks: [Bookmark] = [] {
-        didSet {
-            tableView.reloadData()
-            configure(viewModel: viewModel)
-        }
-    }
-
-    private var store: BookmarksStore
-
-    init(
-        store: BookmarksStore
-    ) {
-        self.store = store
+    init() {
         super.init(nibName: nil, bundle: nil)
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -62,20 +46,11 @@ class BookmarkViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetch()
         setupInitialViewState()
-    }
-
-    func fetch() {
-        bookmarks = Array(store.bookmarks)
     }
 
     func configure(viewModel: BookmarksViewModel) {
         title = viewModel.title
-    }
-
-    func bookmark(for indexPath: IndexPath) -> Bookmark {
-        return bookmarks[indexPath.row]
     }
 
     func confirmDelete(bookmark: Bookmark, index: IndexPath) {
@@ -91,8 +66,7 @@ class BookmarkViewController: UIViewController {
     }
 
     func delete(bookmark: Bookmark, index: IndexPath) {
-        store.delete(bookmarks: [bookmark])
-        fetch()
+        viewModel.store.delete(bookmarks: [bookmark])
         transitionViewStates()
     }
 
@@ -133,14 +107,14 @@ extension BookmarkViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let bookmark = self.bookmark(for: indexPath)
+            let bookmark = viewModel.bookmark(for: indexPath)
             confirmDelete(bookmark: bookmark, index: indexPath)
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let bookmark = self.bookmark(for: indexPath)
+        let bookmark = viewModel.bookmark(for: indexPath)
         delegate?.didSelectBookmark(bookmark, in: self)
     }
 }

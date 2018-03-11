@@ -24,8 +24,6 @@ class BrowserCoordinator: Coordinator {
 
     weak var delegate: BrowserCoordinatorDelegate?
 
-    private let bookmarksStore: BookmarksStore
-
     init(
         session: WalletSession,
         keystore: Keystore
@@ -33,7 +31,6 @@ class BrowserCoordinator: Coordinator {
         self.navigationController = UINavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
         self.session = session
         self.keystore = keystore
-        self.bookmarksStore = BookmarksStore(realm: try! Realm())
     }
 
     func start() {
@@ -90,8 +87,7 @@ class BrowserCoordinator: Coordinator {
 
     func showBookmarks() {
         let coordinator = BookmarkCoordinator(
-            navigationController: NavigationController(),
-            store: bookmarksStore
+            navigationController: NavigationController()
         )
         coordinator.delegate = self
         coordinator.start()
