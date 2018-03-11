@@ -134,6 +134,11 @@ struct TransactionsViewModel {
         }
     }
 
+    func addSentTransaction(_ transaction: SentTransaction) {
+        let transaction = SentTransaction.from(from: session.account.address, transaction: transaction)
+        storage.add([transaction])
+    }
+
     func fetchPending() {
         self.storage.transactions.forEach {
             self.network.update(for: $0, completion: { result in

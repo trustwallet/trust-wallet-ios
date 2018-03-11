@@ -220,7 +220,7 @@ class InCoordinator: Coordinator {
     }
 
     private func handlePendingTransaction(transaction: SentTransaction) {
-        //transactionCoordinator?.dataCoordinator.addSentTransaction(transaction)
+        transactionCoordinator?.viewModel.addSentTransaction(transaction)
     }
 
     private func realm(for config: Realm.Configuration) -> Realm {

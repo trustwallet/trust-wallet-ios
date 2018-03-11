@@ -17,7 +17,7 @@ protocol TransactionsViewControllerDelegate: class {
 
 class TransactionsViewController: UIViewController {
 
-    fileprivate var viewModel: TransactionsViewModel
+    var viewModel: TransactionsViewModel
 
     let account: Wallet
 

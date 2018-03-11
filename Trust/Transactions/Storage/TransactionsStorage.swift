@@ -97,6 +97,7 @@ class TransactionsStorage {
         }
     }
 
+
     func update(state: TransactionState, for transaction: Transaction) {
         realm.beginWrite()
         transaction.internalState = state.rawValue
