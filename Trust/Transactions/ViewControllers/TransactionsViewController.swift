@@ -30,7 +30,15 @@ class TransactionsViewController: UIViewController {
 
     weak var delegate: TransactionsViewControllerDelegate?
 
-    let searchController = UISearchController(searchResultsController: nil)
+    lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchBar.sizeToFit()
+        return searchController
+    }()
 
     var timer: Timer?
 
@@ -58,10 +66,6 @@ class TransactionsViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
 
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchResultsUpdater = self
-
         view.backgroundColor = viewModel.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -86,6 +90,7 @@ class TransactionsViewController: UIViewController {
             footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
 
+        refreshControl.backgroundColor = viewModel.backgroundColor
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
 
@@ -129,7 +134,7 @@ class TransactionsViewController: UIViewController {
                 tableView.beginUpdates()
                 var insertIndexSet = IndexSet()
                 insertions.forEach { insertIndexSet.insert($0) }
-                tableView.insertSections(insertIndexSet, with: insertions.count == 1 ? .top : .none)
+                tableView.insertSections(insertIndexSet, with: .none)
                 var deleteIndexSet = IndexSet()
                 deletions.forEach { deleteIndexSet.insert($0) }
                 tableView.deleteSections(deleteIndexSet, with: .none)
@@ -210,6 +215,7 @@ extension TransactionsViewController: StatefulViewController {
 extension TransactionsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true )
+        searchController.isActive = false
         delegate?.didPressTransaction(transaction: viewModel.item(for: indexPath.row, section: indexPath.section), in: self)
     }
 }
