@@ -1,4 +1,4 @@
-# Trust - Ethereum Wallet for iOS
+# Trust - Ethereum Wallet and Web3 DApp Browser for iOS
 
 [![Build Status](https://travis-ci.org/TrustWallet/trust-wallet-ios.svg?branch=master)](https://travis-ci.org/TrustWallet/trust-wallet-ios)
 [![Black Duck Security Risk](https://copilot.blackducksoftware.com/github/repos/TrustWallet/trust-wallet-ios/branches/master/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/TrustWallet/trust-wallet-ios/branches/master)
