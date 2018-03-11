@@ -39,7 +39,6 @@ class BookmarkViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .white
         tableView.separatorStyle = .singleLine
         tableView.rowHeight = 55
         view.addSubview(tableView)
@@ -51,7 +50,7 @@ class BookmarkViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
 
-        emptyView = BookmarksEmptyView()
+        emptyView = EmptyView(title: NSLocalizedString("bookmarks.noBookmarks.label.title", value: "No bookmarks!", comment: ""))
     }
 
     override func viewDidLoad() {
