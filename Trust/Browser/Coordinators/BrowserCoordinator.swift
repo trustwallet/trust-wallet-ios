@@ -22,9 +22,11 @@ class BrowserCoordinator: Coordinator {
         return controller
     }()
 
-    weak var delegate: BrowserCoordinatorDelegate?
+    private lazy var bookmarksStore: BookmarksStore = {
+        return BookmarksStore(realm: try! Realm())
+    }()
 
-    private let bookmarksStore: BookmarksStore
+    weak var delegate: BrowserCoordinatorDelegate?
 
     init(
         session: WalletSession,
@@ -33,7 +35,6 @@ class BrowserCoordinator: Coordinator {
         self.navigationController = UINavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
         self.session = session
         self.keystore = keystore
-        self.bookmarksStore = BookmarksStore(realm: try! Realm())
     }
 
     func start() {
@@ -91,7 +92,7 @@ class BrowserCoordinator: Coordinator {
     func showBookmarks() {
         let coordinator = BookmarkCoordinator(
             navigationController: NavigationController(),
-            store: bookmarksStore
+            bookmarksStore: bookmarksStore
         )
         coordinator.delegate = self
         coordinator.start()
@@ -167,9 +168,11 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
             self.navigationController.displayError(error: InCoordinatorError.onlyWatchAccount)
         }
     }
+
     func didAddBookmark(bookmark: Bookmark) {
         bookmarksStore.add(bookmarks: [bookmark])
     }
+
     func didOpenBookmarkList() {
         showBookmarks()
     }

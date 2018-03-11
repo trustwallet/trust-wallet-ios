@@ -10,25 +10,28 @@ protocol BookmarksCoordinatorDelegate: class {
 
 class BookmarkCoordinator: Coordinator {
     let navigationController: UINavigationController
-    let store: BookmarksStore
     var coordinators: [Coordinator] = []
     lazy var bookmarksViewController: BookmarkViewController = {
-        let controller = BookmarkViewController(store: store)
+        let controller = BookmarkViewController(bookmarksStore: bookmarksStore)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         controller.delegate = self
         return controller
     }()
+    let bookmarksStore: BookmarksStore
     weak var delegate: BookmarksCoordinatorDelegate?
+
     init(
         navigationController: UINavigationController = NavigationController(),
-        store: BookmarksStore
+        bookmarksStore: BookmarksStore
     ) {
         self.navigationController = navigationController
-        self.store = store
+        self.bookmarksStore = bookmarksStore
     }
+
     func start() {
         navigationController.pushViewController(bookmarksViewController, animated: false)
     }
+
     @objc func dismiss() {
         delegate?.didCancel(in: self)
     }
