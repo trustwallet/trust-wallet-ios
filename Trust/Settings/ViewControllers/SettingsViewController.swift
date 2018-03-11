@@ -240,8 +240,8 @@ class SettingsViewController: FormViewController {
     }
 
     private func chaineStateObservation() {
-        self.session.chainState.chainStateCompletion = { [weak self] state in
-            self?.networkStateView.currentState = state == true ? .good : .bad
+        self.session.chainState.chainStateCompletion = { [weak self] (state, block) in
+            self?.networkStateView.currentState = state == true ? .good(block) : .bad
         }
     }
 
