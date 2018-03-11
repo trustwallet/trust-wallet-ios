@@ -44,7 +44,7 @@ class TransactionsStorage {
         return realm.object(ofType: Transaction.self, forPrimaryKey: forPrimaryKey)
     }
 
-    func add(_ items: [Transaction]){
+    func add(_ items: [Transaction]) {
         let trnasactions = transactionCategory(for: items)
         realm.beginWrite()
         realm.add(trnasactions, update: true)

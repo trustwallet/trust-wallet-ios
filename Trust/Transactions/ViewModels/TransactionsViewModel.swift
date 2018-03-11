@@ -44,7 +44,7 @@ struct TransactionsViewModel {
 
     private let queue = DispatchQueue(label: "com.trust.transactions")
 
-    let transactions: Results<TransactionCategory>
+    var transactions: Results<TransactionCategory>
 
     var tokensObserver: NotificationToken?
 
@@ -145,6 +145,21 @@ struct TransactionsViewModel {
                 }
             })
         }
+    }
+
+    mutating func filterTransactions(by occurrence: String?) {
+        guard let text = occurrence, !text.isEmpty else {
+            self.transactions = storage.transactionsCategory
+            return
+        }
+        let subpredicates = ["title","transactions.id","transactions.from","transactions.to","transactions.value","transactions.localizedOperations.name","transactions.localizedOperations.symbol","transactions.localizedOperations.contract"].map { property -> NSPredicate in
+            if property.contains("transactions") {
+                return NSPredicate(format: "ANY %K CONTAINS[cd] %@", property, text)
+            }
+            return NSPredicate(format: "%K CONTAINS[cd] %@", property, text)
+        }
+        let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
+        self.transactions = storage.transactionsCategory.filter(predicate)
     }
 
     private func transaction(for page: Int) {

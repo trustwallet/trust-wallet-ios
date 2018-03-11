@@ -58,9 +58,9 @@ class TransactionsViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
 
-        searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
 
         view.backgroundColor = viewModel.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -243,14 +243,11 @@ extension TransactionsViewController: UITableViewDataSource {
     }
 }
 
-extension TransactionsViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-
-    }
-}
-
 extension TransactionsViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-
+        let searchBar = searchController.searchBar
+        viewModel.filterTransactions(by: searchBar.text)
+        tokensObservation()
+        self.tableView.reloadData()
     }
 }
