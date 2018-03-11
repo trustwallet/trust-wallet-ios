@@ -18,6 +18,10 @@ class Bookmark: Object {
         self.id = incrementID()
     }
 
+    var linkURL: URL? {
+        return URL(string: url)
+    }
+
     override class func primaryKey() -> String? {
         return "id"
     }

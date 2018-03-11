@@ -100,7 +100,7 @@ class BrowserCoordinator: Coordinator {
     }
 
     func openBookmark(bookmark: Bookmark) {
-        guard let url = URL(string: bookmark.url) else { return }
+        guard let url = bookmark.linkURL else { return }
         rootViewController.goTo(url: url)
     }
 
