@@ -7,7 +7,7 @@ import APIKit
 import Result
 
 protocol TransactionsNetworkProtocol: TrustNetworkProtocol {
-    func transactions(for address: Address, startBlock: Int, page: Int, completion: @escaping (_ result: ([Transaction]?,Bool)) -> Void)
+    func transactions(for address: Address, startBlock: Int, page: Int, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
     func update(for transaction: Transaction, completion: @escaping (_ result: (Transaction, TransactionState)) -> Void)
 }
 

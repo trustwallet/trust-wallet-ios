@@ -42,7 +42,12 @@ struct TransactionsViewModel {
         return transactions.count
     }
 
-    private let queue = DispatchQueue(label: "com.trust.transactions")
+    private var operationQueue: OperationQueue = {
+        let queue = OperationQueue()
+        queue.qualityOfService = .background
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
 
     var transactions: Results<TransactionCategory>
 
@@ -120,11 +125,21 @@ struct TransactionsViewModel {
     }
 
     mutating func fetch() {
-        if TransactionsTracker(sessionID: session.sessionID).fetchingState != .done {
-           // transaction(for: 0)
-        }
+        initialFetch()
         fetchTransactions()
         fetchPending()
+    }
+
+    private func initialFetch() {
+        if TransactionsTracker(sessionID: session.sessionID).fetchingState != .done {
+            let operation = TransactionOperation(network: network, session: session)
+            operationQueue.addOperation(operation)
+            operation.completionBlock = {
+                DispatchQueue.main.async {
+                    self.storage.add(operation.transactionsHistory)
+                }
+            }
+        }
     }
 
     func fetchTransactions() {
@@ -165,23 +180,5 @@ struct TransactionsViewModel {
         }
         let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
         self.transactions = storage.transactionsCategory.filter(predicate)
-    }
-
-    private func transaction(for page: Int) {
-        queue.async {
-            self.network.transactions(for: self.session.account.address, startBlock: 1, page: page) { result in
-                guard let transactions = result.0, result.1 else {
-                    TransactionsTracker(sessionID: self.session.sessionID).fetchingState = .failed
-                    return
-                }
-                self.storage.add(transactions)
-                if !transactions.isEmpty && page <= 50 {
-                    let nextPage = page + 1
-                    self.transaction(for: nextPage)
-                } else {
-                    TransactionsTracker(sessionID: self.session.sessionID).fetchingState = .done
-                }
-            }
-        }
     }
 }
