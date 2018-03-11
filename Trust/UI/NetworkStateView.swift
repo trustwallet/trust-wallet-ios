@@ -41,26 +41,23 @@ class NetworkStateView: UIView {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 5
-        stackView.alignment = .center
-        stackView.distribution = .equalSpacing
-        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.axis = .vertical
         return stackView
     }()
 
-    private lazy var containerForLeftSide: UIStackView = {
+    private lazy var containerForTop: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.alignment = .center
-        stackView.axis = .vertical
+        stackView.axis = .horizontal
         stackView.spacing = 5
         return stackView
     }()
 
-    private lazy var containerForRaightSide: UIStackView = {
+    private lazy var containerForBottom: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.alignment = .leading
-        stackView.axis = .vertical
+        stackView.axis = .horizontal
         stackView.spacing = 5
         return stackView
     }()
@@ -117,14 +114,14 @@ class NetworkStateView: UIView {
 
     private func setupLayout() {
 
-        containerForLeftSide.addArrangedSubview(stateRoundView)
-        containerForLeftSide.addArrangedSubview(blockImageView)
+        containerForTop.addArrangedSubview(stateRoundView)
+        containerForTop.addArrangedSubview(stateViewLabel)
 
-        containerForRaightSide.addArrangedSubview(stateViewLabel)
-        containerForRaightSide.addArrangedSubview(blockViewLabel)
+        containerForBottom.addArrangedSubview(blockImageView)
+        containerForBottom.addArrangedSubview(blockViewLabel)
 
-        container.addArrangedSubview(containerForLeftSide)
-        container.addArrangedSubview(containerForRaightSide)
+        container.addArrangedSubview(containerForTop)
+        container.addArrangedSubview(containerForBottom)
 
         self.addSubview(container)
 
