@@ -131,7 +131,7 @@ struct TransactionsViewModel {
     }
 
     private func initialFetch() {
-        if TransactionsTracker(sessionID: session.sessionID).fetchingState != .done {
+        if TransactionsTracker(sessionID: session.sessionID).fetchingState != .done && operationQueue.operationCount == 0 {
             let operation = TransactionOperation(network: network, session: session)
             operationQueue.addOperation(operation)
             operation.completionBlock = {
