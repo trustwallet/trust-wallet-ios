@@ -14,10 +14,17 @@ class BookmarkViewController: UIViewController {
     let tableView = UITableView(frame: .zero, style: .plain)
 
     weak var delegate: BookmarkViewControllerDelegate?
+    private let bookmarksStore: BookmarksStore
 
-    var viewModel = BookmarksViewModel()
+    lazy var viewModel: BookmarksViewModel = {
+        return BookmarksViewModel(bookmarksStore: bookmarksStore)
+    }()
 
-    init() {
+    init(
+        bookmarksStore: BookmarksStore
+    ) {
+        self.bookmarksStore = bookmarksStore
+
         super.init(nibName: nil, bundle: nil)
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -34,14 +41,12 @@ class BookmarkViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
 
-        emptyView = EmptyView(title: NSLocalizedString("bookmarks.noBookmarks.label.title", value: "No bookmarks!", comment: ""))
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 55
         tableView.register(R.nib.bookmarkViewCell(), forCellReuseIdentifier: R.nib.bookmarkViewCell.name)
+        emptyView = EmptyView(title: NSLocalizedString("bookmarks.noBookmarks.label.title", value: "No bookmarks yet!", comment: ""))
+
+        configure(viewModel: viewModel)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +71,7 @@ class BookmarkViewController: UIViewController {
     }
 
     func delete(bookmark: Bookmark, index: IndexPath) {
-        viewModel.store.delete(bookmarks: [bookmark])
+        viewModel.delete(bookmark: bookmark)
         transitionViewStates()
     }
 
@@ -85,17 +90,15 @@ extension BookmarkViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.bookmarks.count
     }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: R.nib.bookmarkViewCell.name, for: indexPath) as! BookmarkViewCell
         cell.viewModel = BookmarkViewModel(bookmark: viewModel.bookmarks[indexPath.row])
         cell.faviconImage?.kf.setImage(
             with: cell.viewModel?.imageURL,
-            placeholder: R.image.launch_screen_logo()
+            placeholder: cell.viewModel?.placeholderImage
         )
         return cell
-    }
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return StyleLayout.TableView.heightForHeaderInSection
     }
 }
 

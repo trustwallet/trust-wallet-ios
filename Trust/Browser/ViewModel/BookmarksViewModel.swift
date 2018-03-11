@@ -4,14 +4,15 @@ import Foundation
 import RealmSwift
 
 struct BookmarksViewModel {
-    
-    var store: BookmarksStore
-    
+
+    let bookmarksStore: BookmarksStore
     let bookmarks: [Bookmark]
 
-    init() {
-        self.store = BookmarksStore(realm: try! Realm())
-        self.bookmarks = Array(store.bookmarks)
+    init(
+        bookmarksStore: BookmarksStore
+    ) {
+        self.bookmarksStore = bookmarksStore
+        self.bookmarks = Array(bookmarksStore.bookmarks)
     }
 
     var hasBookmarks: Bool {
@@ -24,5 +25,9 @@ struct BookmarksViewModel {
 
     func bookmark(for indexPath: IndexPath) -> Bookmark {
         return bookmarks[indexPath.row]
+    }
+
+    func delete(bookmark: Bookmark) {
+        bookmarksStore.delete(bookmarks: [bookmark])
     }
 }

@@ -12,20 +12,26 @@ class BookmarkCoordinator: Coordinator {
     let navigationController: UINavigationController
     var coordinators: [Coordinator] = []
     lazy var bookmarksViewController: BookmarkViewController = {
-        let controller = BookmarkViewController()
+        let controller = BookmarkViewController(bookmarksStore: bookmarksStore)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         controller.delegate = self
         return controller
     }()
+    let bookmarksStore: BookmarksStore
     weak var delegate: BookmarksCoordinatorDelegate?
+
     init(
         navigationController: UINavigationController = NavigationController(),
+        bookmarksStore: BookmarksStore
     ) {
         self.navigationController = navigationController
+        self.bookmarksStore = bookmarksStore
     }
+
     func start() {
         navigationController.pushViewController(bookmarksViewController, animated: false)
     }
+
     @objc func dismiss() {
         delegate?.didCancel(in: self)
     }
