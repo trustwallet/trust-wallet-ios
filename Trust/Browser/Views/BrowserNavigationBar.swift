@@ -32,6 +32,7 @@ class BrowserNavigationBar: UINavigationBar {
         textField.delegate = self
         textField.autocorrectionType = .no
         textField.returnKeyType = .go
+        textField.keyboardType = .URL
         textField.clearButtonMode = .whileEditing
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 6, height: 30))
         textField.leftViewMode = .always

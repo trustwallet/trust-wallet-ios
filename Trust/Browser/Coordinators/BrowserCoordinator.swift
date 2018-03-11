@@ -121,6 +121,8 @@ class BrowserCoordinator: Coordinator {
                     callback = DappCallback(id: callbackID, value: .signMessage(data))
                 case .personalMessage:
                     callback = DappCallback(id: callbackID, value: .signPersonalMessage(data))
+                case .typedMessage:
+                    callback = DappCallback(id: callbackID, value: .signTypedMessage(data))
                 }
                 self.rootViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
             case .failure:
@@ -160,6 +162,8 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
                 signMessage(with: .message(Data(hex: hexMessage)), account: account, callbackID: callbackID)
             case .signPersonalMessage(let hexMessage):
                 signMessage(with: .personalMessage(Data(hex: hexMessage)), account: account, callbackID: callbackID)
+            case .signTypedMessage(let typedData):
+                signMessage(with: .typedMessage(typedData), account: account, callbackID: callbackID)
             case .unknown:
                 break
             }
