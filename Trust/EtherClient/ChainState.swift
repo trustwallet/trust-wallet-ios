@@ -16,7 +16,7 @@ class ChainState {
         return "\(config.chainID)-" + Keys.latestBlock
     }
 
-    var chainStateCompletion: ((Bool) -> Void)?
+    var chainStateCompletion: ((Bool, Int) -> Void)?
 
     var latestBlock: Int {
         get {
@@ -67,9 +67,9 @@ class ChainState {
             switch result {
             case .success(let number):
                 self.latestBlock = number
-                self.chainStateCompletion?(true)
+                self.chainStateCompletion?(true, number)
             case .failure:
-                self.chainStateCompletion?(false)
+                self.chainStateCompletion?(false, 0)
             }
         }
     }

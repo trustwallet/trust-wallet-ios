@@ -23,7 +23,7 @@ struct ConfigureTransactionViewModel {
         return String(
             format: NSLocalizedString(
                 "configureTransaction.gasPrice.label.description",
-                value: "The higher the gas price, the more expensive your transaction fee will be, but the quicker your tranasction will be processed by the %@ network.",
+                value: "With a higher gas price, your transaction fee will be more expensive, but the %@ network will process your transaction faster.",
                 comment: ""
             ),
             config.server.name

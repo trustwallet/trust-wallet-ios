@@ -112,6 +112,7 @@ class ImportWalletViewController: FormViewController {
                 $0.placeholder = NSLocalizedString("import.wallet.mnemonic.placeholder", value: "Words separated by a space. (Usually contains 12 words)", comment: "")
                 $0.textAreaHeight = .fixed(cellHeight: 140)
                 $0.add(rule: RuleRequired())
+                $0.cell.textView?.autocapitalizationType = .none
 
                 $0.hidden = Eureka.Condition.function([Values.segment], { _ in
                     return self.segmentRow?.value != ImportSelectionType.mnemonic.title
@@ -183,7 +184,7 @@ class ImportWalletViewController: FormViewController {
         let password = passwordRow?.value ?? ""
         let watchInput = watchRow?.value?.trimmed ?? ""
         let mnemonicInput = mnemonicRow?.value?.trimmed ?? ""
-        let words = mnemonicInput.components(separatedBy: " ").map { $0.trimmed }
+        let words = mnemonicInput.components(separatedBy: " ").map { $0.trimmed.lowercased() }
 
         displayLoading(text: NSLocalizedString("importWallet.importingIndicator.label.title", value: "Importing wallet...", comment: ""), animated: false)
 

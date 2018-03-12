@@ -19,7 +19,7 @@ class TokensCoordinator: Coordinator {
     let network: TokensNetworkProtocol
 
     lazy var tokensViewController: TokensViewController = {
-        let tokensViewModel = TokensViewModel(store: store, tokensNetwork: network)
+        let tokensViewModel = TokensViewModel(address: session.account.address, store: store, tokensNetwork: network)
         let controller = TokensViewController(viewModel: tokensViewModel)
         controller.delegate = self
         return controller

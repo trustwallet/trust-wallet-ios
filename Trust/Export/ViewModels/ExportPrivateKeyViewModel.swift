@@ -34,7 +34,7 @@ struct ExportPrivateKeyViewModel {
     }
 
     var warningText: String {
-        return NSLocalizedString("export.warningTwo.private.key", value: "Anyone with your Private Key can have FULL access to your wallet", comment: "")
+        return NSLocalizedString("export.warningTwo.private.key", value: "Anyone with your Private Key will have FULL access to your wallet!", comment: "")
     }
 
     var backgroundColor: UIColor {
