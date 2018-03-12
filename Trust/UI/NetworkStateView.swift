@@ -5,16 +5,11 @@ import UIKit
 class NetworkStateView: UIView {
 
     enum NetworkCondition {
-        case good
+        case good(Int)
         case bad
 
         func localizedTitle() -> String {
-            switch self {
-            case .good:
-                return NSLocalizedString("network.state.good", value: "Good", comment: "Good")
-            case .bad:
-                return NSLocalizedString("network.state.bad", value: "Bad", comment: "Bad")
-            }
+            return Config().server.name
         }
 
         func color() -> UIColor {
@@ -23,6 +18,15 @@ class NetworkStateView: UIView {
                 return Colors.green
             case .bad:
                 return Colors.red
+            }
+        }
+
+        func block() -> Int {
+            switch self {
+            case .good(let block):
+                return block
+            case .bad:
+                return 0
             }
         }
     }
@@ -36,15 +40,38 @@ class NetworkStateView: UIView {
     private lazy var container: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.alignment = .center
+        stackView.spacing = 5
+        stackView.distribution = .fill
+        stackView.axis = .vertical
+        return stackView
+    }()
+
+    private lazy var containerForTop: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
         stackView.spacing = 5
         return stackView
     }()
 
-    private lazy var stateViewRoundView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+    private lazy var containerForBottom: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        return stackView
+    }()
+
+    private lazy var stateRoundView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 12))
         view.clipsToBounds = true
         view.layer.cornerRadius = view.frame.width/2
+        return view
+    }()
+
+    private lazy var blockImageView: UIImageView = {
+        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 12, height: 12))
+        view.image = UIImage(named: "cube")
         return view
     }()
 
@@ -58,6 +85,18 @@ class NetworkStateView: UIView {
         return label
     }()
 
+    private lazy var blockViewLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .left
+        label.textColor = UIColor.white
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
+
+    private let formmater = StringFormatter()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -68,14 +107,21 @@ class NetworkStateView: UIView {
             return
         }
 
-        stateViewRoundView.backgroundColor = state.color()
+        stateRoundView.backgroundColor = state.color()
         stateViewLabel.text = state.localizedTitle()
+        blockViewLabel.text = formmater.formatter(for: state.block())
     }
 
     private func setupLayout() {
 
-        container.addArrangedSubview(stateViewRoundView)
-        container.addArrangedSubview(stateViewLabel)
+        containerForTop.addArrangedSubview(stateRoundView)
+        containerForTop.addArrangedSubview(stateViewLabel)
+
+        containerForBottom.addArrangedSubview(blockImageView)
+        containerForBottom.addArrangedSubview(blockViewLabel)
+
+        container.addArrangedSubview(containerForTop)
+        container.addArrangedSubview(containerForBottom)
 
         self.addSubview(container)
 
@@ -84,8 +130,10 @@ class NetworkStateView: UIView {
             container.leadingAnchor.constraint(equalTo: leadingAnchor),
             container.trailingAnchor.constraint(equalTo: trailingAnchor),
             container.bottomAnchor.constraint(equalTo: bottomAnchor),
-            stateViewRoundView.widthAnchor.constraint(equalToConstant: 10),
-            stateViewRoundView.heightAnchor.constraint(equalToConstant: 10),
+            stateRoundView.widthAnchor.constraint(equalToConstant: 12),
+            stateRoundView.heightAnchor.constraint(equalToConstant: 12),
+            blockImageView.widthAnchor.constraint(equalToConstant: 12),
+            blockImageView.heightAnchor.constraint(equalToConstant: 12),
         ])
     }
 

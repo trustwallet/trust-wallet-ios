@@ -38,7 +38,7 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
         } else {
             let numberOfAttempts = self.lock.numberOfAttempts()
             let passcodeAttemptLimit = model.passcodeAttemptLimit()
-            let text = String(format: NSLocalizedString("lock.enter.passcode.view.model.incorrect.passcode", value: "Incorrect passcode. You have %d attempts.", comment: ""), passcodeAttemptLimit - numberOfAttempts)
+            let text = String(format: NSLocalizedString("lock.enter.passcode.view.model.incorrect.passcode", value: "Incorrect passcode. You have %d attempts left.", comment: ""), passcodeAttemptLimit - numberOfAttempts)
             lockView.lockTitle.text = text
             lockView.shake()
             if numberOfAttempts >= passcodeAttemptLimit {

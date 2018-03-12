@@ -21,6 +21,13 @@ final class StringFormatter {
         formatter.isLenient = true
         return formatter
     }()
+    /// tenthFormatter of a `StringFormatter` to represent Int numbers with grouping.
+    private lazy var tenthFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.groupingSeparator = ","
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
     /// Converts a Decimal to a `currency String`.
     ///
     /// - Parameters:
@@ -70,5 +77,14 @@ final class StringFormatter {
     /// - Returns: `String` represenation.
     func formatter(for double: Double) -> String {
         return String(format: "%f", double)
+    }
+    /// Converts a Int to a `String` that respect tenth.
+    ///
+    /// - Parameters:
+    ///   - int: int to convert.
+    /// - Returns: `String` represenation.
+    func formatter(for int: Int) -> String? {
+        let formatter = tenthFormatter
+        return formatter.string(from: NSNumber(value: int))
     }
 }

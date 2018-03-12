@@ -32,7 +32,7 @@ class BackupViewController: UIViewController {
 
         let controlMoneyLabel = UILabel()
         controlMoneyLabel.translatesAutoresizingMaskIntoConstraints = false
-        controlMoneyLabel.text = NSLocalizedString("export.controlYourMoney.label.title", value: "Since only you control your money, you'll need to save your backup keystore in case this app is deleted.", comment: "")
+        controlMoneyLabel.text = NSLocalizedString("export.controlYourMoney.label.title", value: "Since only you control your money, you must backup your wallet in case this app is deleted, or your device is lost.", comment: "")
         controlMoneyLabel.numberOfLines = 0
         controlMoneyLabel.textAlignment = .center
         controlMoneyLabel.textColor = Colors.darkGray

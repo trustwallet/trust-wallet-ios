@@ -4,6 +4,7 @@ import Foundation
 import Moya
 @testable import Trust
 import BigInt
+import TrustKeystore
 
 class FakeTokensNetwork: TokensNetworkProtocol {
 
@@ -11,11 +12,11 @@ class FakeTokensNetwork: TokensNetworkProtocol {
     
     var balanceService: TokensBalanceService
     
-    var account: Wallet
+    var account: Trust.Wallet
     
     var config: Config
     
-    required init(provider: MoyaProvider<TrustService>, balanceService: TokensBalanceService, account: Wallet, config: Config) {
+    required init(provider: MoyaProvider<TrustService>, balanceService: TokensBalanceService, account: Trust.Wallet, config: Config) {
         self.provider = provider
         self.balanceService = balanceService
         self.account = account
@@ -39,5 +40,9 @@ class FakeTokensNetwork: TokensNetworkProtocol {
 
     func assets(completion: @escaping (([NonFungibleTokenCategory]?)) -> Void) {
         
+    }
+
+    func tokensList(for address: TrustKeystore.Address, completion: @escaping (([TokenListItem]?)) -> Void) {
+
     }
 }

@@ -177,3 +177,9 @@
 "transaction.id.label.title" = "交易 ID";
 "transaction.time.label.title" = "交易时间";
 "transaction.to.label.title" = "To";
+"settings.allowPushNotifications.button.title" = "允许推送通知";
+"settings.pushNotifications.airdrop.button.title" = "合作方的空投";
+"settings.pushNotifications.airdrop.footer" = "偶尔你会收到来自我们官方合作方空投的邀请。";
+"settings.pushNotifications.allowPushNotifications.footer" = "你将收到已发送和已接收交易的通知。";
+"settings.pushNotifications.payment.button.title" = "发送和接收";
+"settings.pushNotifications.title" = "推送通知";

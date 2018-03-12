@@ -37,6 +37,7 @@ class TokensDataStore {
     var nonFungibleObjects: [NonFungibleTokenObject] {
         return realm.objects(NonFungibleTokenObject.self).map { $0 }
     }
+
     init(
         realm: Realm,
         config: Config
@@ -45,15 +46,18 @@ class TokensDataStore {
         self.realm = realm
         self.addEthToken()
     }
+
     private func addEthToken() {
         let etherToken = TokensDataStore.etherToken(for: config)
         if objects.first(where: { $0 == etherToken }) == nil {
             add(tokens: [etherToken])
         }
     }
+
     func coinTicker(for token: TokenObject) -> CoinTicker? {
         return tickers.first(where: { $0.contract == token.contract })
     }
+
     func addCustom(token: ERC20Token) {
         let newToken = TokenObject(
             contract: token.contract.description,
@@ -65,22 +69,26 @@ class TokensDataStore {
         )
         add(tokens: [newToken])
     }
+
     func add(tokens: [Object]) {
         realm.beginWrite()
         realm.add(tokens, update: true)
         try! realm.commitWrite()
     }
+
     func delete(tokens: [Object]) {
         realm.beginWrite()
         realm.delete(tokens)
         try! realm.commitWrite()
     }
+
     func deleteAll() {
         try! realm.write {
             realm.delete(realm.objects(TokenObject.self))
             realm.delete(realm.objects(NonFungibleTokenObject.self))
         }
     }
+
     func update(token: TokenObject, action: TokenAction) {
         try! realm.write {
             switch action {
@@ -91,6 +99,7 @@ class TokensDataStore {
             }
         }
     }
+
     static func update(in realm: Realm, tokens: [Token]) {
         realm.beginWrite()
         for token in tokens {
@@ -104,6 +113,7 @@ class TokensDataStore {
         }
         try! realm.commitWrite()
     }
+
     static func etherToken(for config: Config) -> TokenObject {
         return TokenObject(
             contract: "0x0000000000000000000000000000000000000000",
