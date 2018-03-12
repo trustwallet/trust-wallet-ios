@@ -89,12 +89,12 @@ extension BookmarkViewController: StatefulViewController {
 
 extension BookmarkViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.bookmarks.count
+        return viewModel.bookmarkCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: R.nib.bookmarkViewCell.name, for: indexPath) as! BookmarkViewCell
-        cell.viewModel = BookmarkViewModel(bookmark: viewModel.bookmarks[indexPath.row])
+        cell.viewModel = BookmarkViewModel(bookmark: viewModel.bookmark(for: indexPath))
         cell.faviconImage?.kf.setImage(
             with: cell.viewModel?.imageURL,
             placeholder: cell.viewModel?.placeholderImage
