@@ -130,12 +130,15 @@ open class EtherKeystore: Keystore {
             }
         case .mnemonic(let words, let passphrase):
             let string = words.map { String($0) }.joined(separator: " ")
+            if !Mnemonic.isValid(string) {
+                return completion(.failure(KeystoreError.invalidMnemonicPhrase))
+            }
             do {
                 let account = try keyStore.import(mnemonic: string, passphrase: passphrase, encryptPassword: newPassword)
                 setPassword(newPassword, for: account)
                 completion(.success(Wallet(type: .hd(account))))
             } catch {
-                return completion(.failure(KeystoreError.accountNotFound))
+                return completion(.failure(KeystoreError.duplicateAccount))
             }
         case .watch(let address):
             let addressString = address.description
