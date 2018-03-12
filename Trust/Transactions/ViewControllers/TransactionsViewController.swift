@@ -37,6 +37,7 @@ class TransactionsViewController: UIViewController {
         searchController.searchResultsUpdater = self
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.sizeToFit()
+        searchController.searchBar.backgroundColor = UIColor.white
         return searchController
     }()
 
