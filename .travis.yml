@@ -16,6 +16,9 @@ before_install:
   - brew update
   - brew install swiftlint || true
 
+before_script:
+  - bundle exec danger
+
 script:
   - set -o pipefail
   - fastlane tests
