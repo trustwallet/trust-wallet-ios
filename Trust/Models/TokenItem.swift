@@ -10,7 +10,6 @@ struct ERC20TokenItem: Codable {
 }
 
 struct TokenListItem: Codable {
-    let balance: String
     let contract: ERC20TokenItem
 }
 

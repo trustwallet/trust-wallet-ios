@@ -71,7 +71,7 @@ class TokensNetwork: TokensNetworkProtocol {
     }
 
     func tokensList(for address: Address, completion: @escaping (([TokenListItem]?)) -> Void) {
-        provider.request(.getTokens(address: address.description)) { result in
+        provider.request(.getTokens(address: address.description, showBalance: false)) { result in
             switch result {
             case .success(let response):
                 do {
