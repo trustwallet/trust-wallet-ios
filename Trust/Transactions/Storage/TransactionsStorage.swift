@@ -77,12 +77,12 @@ class TransactionsStorage {
 
     private func transactionCategory(for transactions: [Transaction]) -> [TransactionCategory] {
         var category = [TransactionCategory]()
-        let headerDates = NSOrderedSet(array: transactions.map { TransactionsViewModel.formatter.string(from: $0.date ) })
+        let headerDates = NSOrderedSet(array: transactions.map { TransactionsViewModel.realmBaseFormmater.string(from: $0.date ) })
         headerDates.forEach {
             guard let date = $0 as? String else {
                 return
             }
-            let filteredTransactionByDate = transactions.filter { TransactionsViewModel.formatter.string(from: $0.date ) == date }
+            let filteredTransactionByDate = transactions.filter { TransactionsViewModel.realmBaseFormmater.string(from: $0.date ) == date }
             let item = TransactionCategory()
             item.title = date
             item.transactions.append(objectsIn: filteredTransactionByDate)
@@ -96,7 +96,6 @@ class TransactionsStorage {
             realm.delete(items)
         }
     }
-
 
     func update(state: TransactionState, for transaction: Transaction) {
         realm.beginWrite()

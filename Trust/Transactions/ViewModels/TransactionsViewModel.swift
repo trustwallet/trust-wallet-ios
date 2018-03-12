@@ -6,9 +6,17 @@ import RealmSwift
 
 struct TransactionsViewModel {
 
+    static let realmDateFormat = "MMddyyyy"
+
     static let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
+        return formatter
+    }()
+
+    static let realmBaseFormmater: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = realmDateFormat
         return formatter
     }()
 
@@ -87,8 +95,9 @@ struct TransactionsViewModel {
     }
 
     func titleForHeader(in section: Int) -> String {
-        let value = transactions[section].title
-        let date = TransactionsViewModel.formatter.date(from: value)!
+        let stringDate = transactions[section].title
+        let date = TransactionsViewModel.convert(stringDate)!
+        let value = TransactionsViewModel.title(from: date)
         if NSCalendar.current.isDateInToday(date) {
             return NSLocalizedString("Today", value: "Today", comment: "")
         }
@@ -108,10 +117,11 @@ struct TransactionsViewModel {
         title.font = self.headerTitleFont
         conteiner.addSubview(title)
         title.translatesAutoresizingMaskIntoConstraints = false
-        let horConstraint = NSLayoutConstraint(item: title, attribute: .centerX, relatedBy: .equal, toItem: conteiner, attribute: .centerX, multiplier: 1.0, constant: 0.0)
-        let verConstraint = NSLayoutConstraint(item: title, attribute: .centerY, relatedBy: .equal, toItem: conteiner, attribute: .centerY, multiplier: 1.0, constant: 0.0)
-        let leftConstraint = NSLayoutConstraint(item: title, attribute: .left, relatedBy: .equal, toItem: conteiner, attribute: .left, multiplier: 1.0, constant: 20.0)
-        conteiner.addConstraints([horConstraint, verConstraint, leftConstraint])
+        NSLayoutConstraint.activate([
+            title.centerXAnchor.constraint(equalTo: conteiner.centerXAnchor, constant: 0.0),
+            title.centerYAnchor.constraint(equalTo: conteiner.centerYAnchor, constant: 0.0),
+            title.leftAnchor.constraint(equalTo: conteiner.leftAnchor, constant: 20.0),
+        ])
         return conteiner
     }
 
@@ -143,6 +153,10 @@ struct TransactionsViewModel {
                 }
             }
         }
+    }
+
+    func hasContent() -> Bool {
+        return !transactions.isEmpty
     }
 
     func fetchTransactions() {
@@ -183,5 +197,18 @@ struct TransactionsViewModel {
         }
         let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
         self.transactions = storage.transactionsCategory.filter(predicate)
+    }
+
+    static func convert(_ date: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = realmDateFormat
+        let date = dateFormatter.date(from: date)
+        return date
+    }
+
+    static func title(from date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d yyyy"
+        return dateFormatter.string(from: date)
     }
 }
