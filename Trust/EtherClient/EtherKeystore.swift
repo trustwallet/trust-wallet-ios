@@ -314,17 +314,11 @@ open class EtherKeystore: Keystore {
         return signHash(message.sha3(.keccak256), for: account)
     }
 
-    func signTypedMessage(_ datas: [Data], for account: Account) -> Result<Data, KeystoreError> {
-        guard let password = getPassword(for: account) else {
-            return .failure(KeystoreError.failedToSignMessage)
-        }
-        do {
-            let datas = try keyStore.signHashes(datas, account: account, password: password)
-            let data = Data()
-            return signHash(datas.reduce(data, { $0 + $1 }), for: account)
-        } catch {
-            return .failure(KeystoreError.failedToSignMessage)
-        }
+    func signTypedMessage(_ datas: [EthTypedData], for account: Account) -> Result<Data, KeystoreError> {
+        let schemas = datas.map { $0.schemaData }.reduce(Data(), { $0 + $1 }).sha3(.keccak256)
+        let values = datas.map { $0.typedData }.reduce(Data(), { $0 + $1 }).sha3(.keccak256)
+        let combined = (schemas + values).sha3(.keccak256)
+        return signHash(combined, for: account)
     }
 
     func signHash(_ hash: Data, for account: Account) -> Result<Data, KeystoreError> {
