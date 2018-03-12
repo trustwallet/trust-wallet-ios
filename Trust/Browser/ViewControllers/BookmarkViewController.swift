@@ -72,6 +72,7 @@ class BookmarkViewController: UIViewController {
 
     func delete(bookmark: Bookmark, index: IndexPath) {
         viewModel.delete(bookmark: bookmark)
+        tableView.reloadData()
         transitionViewStates()
     }
 

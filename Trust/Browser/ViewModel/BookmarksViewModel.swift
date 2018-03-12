@@ -6,7 +6,7 @@ import RealmSwift
 struct BookmarksViewModel {
 
     let bookmarksStore: BookmarksStore
-    let bookmarks: [Bookmark]
+    var bookmarks: [Bookmark]
 
     init(
         bookmarksStore: BookmarksStore
@@ -27,7 +27,10 @@ struct BookmarksViewModel {
         return bookmarks[indexPath.row]
     }
 
-    func delete(bookmark: Bookmark) {
+    mutating func delete(bookmark: Bookmark) {
         bookmarksStore.delete(bookmarks: [bookmark])
+        if let idx = bookmarks.index(of: bookmark) {
+            bookmarks.remove(at: idx)
+        }
     }
 }
