@@ -9,16 +9,13 @@ protocol TokensNetworkProtocol: TrustNetworkProtocol {
     func ethBalance(completion: @escaping (_ balance: Balance?) -> Void)
     func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void)
     func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void)
+    func tokensList(for address: Address, completion: @escaping (_ result: ([TokenListItem]?)) -> Void)
 }
 
 class TokensNetwork: TokensNetworkProtocol {
-    
     let provider: MoyaProvider<TrustService>
-    
     let config: Config
-    
     let balanceService: TokensBalanceService
-    
     let account: Wallet
 
     required init(provider: MoyaProvider<TrustService>, balanceService: TokensBalanceService, account: Wallet, config: Config) {
@@ -27,7 +24,7 @@ class TokensNetwork: TokensNetworkProtocol {
         self.account = account
         self.config = config
     }
-    
+
     func tickers(for tokens: [TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void) {
         let tokensPriceToFetch = TokensPrice(
             currency: config.currency.rawValue,
@@ -69,6 +66,22 @@ class TokensNetwork: TokensNetworkProtocol {
                 completion((token, Balance(value: balance)))
             case .failure:
                 completion((token, nil))
+            }
+        }
+    }
+
+    func tokensList(for address: Address, completion: @escaping (([TokenListItem]?)) -> Void) {
+        provider.request(.getTokens(address: address.description)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    let items = try response.map(ArrayResponse<TokenListItem>.self).docs
+                    completion(items)
+                } catch {
+                    completion(nil)
+                }
+            case .failure:
+                completion(nil)
             }
         }
     }

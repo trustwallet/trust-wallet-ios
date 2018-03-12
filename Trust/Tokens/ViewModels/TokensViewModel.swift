@@ -3,6 +3,7 @@
 import Foundation
 import UIKit
 import RealmSwift
+import TrustKeystore
 
 enum TokenItem {
     case token(TokenObject)
@@ -12,12 +13,10 @@ struct TokensViewModel {
     let config: Config
 
     let store: TokensDataStore
-
     var tokensNetwork: TokensNetworkProtocol
-
     let tokens: Results<TokenObject>
-
     var tokensObserver: NotificationToken?
+    let address: Address
 
     var headerBalance: String? {
         return amount
@@ -61,10 +60,12 @@ struct TokensViewModel {
 
     init(
         config: Config = Config(),
+        address: Address,
         store: TokensDataStore,
         tokensNetwork: TokensNetworkProtocol
     ) {
         self.config = config
+        self.address = address
         self.store = store
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
@@ -137,9 +138,18 @@ struct TokensViewModel {
         }
     }
 
+    func fetchTokensList() {
+        tokensNetwork.tokensList(for: address) { result in
+            guard let tokensList = result else { return }
+            let tokens: [Token] = tokensList.flatMap { .from(token: $0.contract) }
+            TokensDataStore.update(in: self.store.realm, tokens: tokens)
+        }
+    }
+
     func fetch() {
         updateTickers()
         updateEthBalance()
         updateTokensBalances()
+        fetchTokensList()
     }
 }
