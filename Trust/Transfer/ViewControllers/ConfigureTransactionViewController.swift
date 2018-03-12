@@ -103,8 +103,8 @@ class ConfigureTransactionViewController: FormViewController {
             $0.displayValueFor = { (rowValue: Float?) in
                 return "\(Int(rowValue ?? 1))"
             }
-            $0.onChange { [unowned self] _ in
-                self.recalculateTotalFee()
+            $0.onChange { [weak self] _ in
+                self?.recalculateTotalFee()
             }
         }
 
