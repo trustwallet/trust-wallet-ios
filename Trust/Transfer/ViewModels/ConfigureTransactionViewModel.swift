@@ -22,7 +22,7 @@ struct ConfigureTransactionViewModel {
     var gasPriceFooterText: String {
         return String(
             format: NSLocalizedString(
-                "configureTransaction.gasPrice.label.descriptiontext",
+                "configureTransaction.gasPrice.label.description",
                 value: "With a higher gas price, your transaction fee will be more expensive, but the %@ network will process your transaction faster.",
                 comment: ""
             ),
