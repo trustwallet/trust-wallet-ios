@@ -21,11 +21,12 @@ enum ConfigureTransactionError: LocalizedError {
         case .gasFeeTooHigh:
             return String(
                 format: NSLocalizedString(
-                    "configureTransaction.error.gasFeeTooHigh",
-                    value: "Gas Fee too high. Max available: %@",
+                    "configureTransaction.error.gasFeeHigh",
+                    value: "Gas Fee is too high. Max available: %@ %@",
                     comment: ""
                 ),
-                String(ConfigureTransaction.gasFeeMax)
+                EtherNumberFormatter.full.string(from: ConfigureTransaction.gasFeeMax),
+                Config().server.symbol
             )
         }
     }
