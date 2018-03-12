@@ -17,7 +17,7 @@ struct BookmarksViewModel {
         return !bookmarksStore.bookmarks.isEmpty
     }
     
-    var bookmarkCount: Int {
+    var numberOfRows: Int {
         return bookmarksStore.bookmarks.count
     }
 
