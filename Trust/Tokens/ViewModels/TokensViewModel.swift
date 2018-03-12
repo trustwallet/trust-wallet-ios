@@ -47,7 +47,7 @@ struct TokensViewModel {
     }
 
     var footerTitle: String {
-        return NSLocalizedString("tokens.footer.label.title", value: "Tokens will appear automagically. + to add manually.", comment: "")
+        return NSLocalizedString("tokens.footer.label.title", value: "Tokens will appear automagically. Tap + to add manually.", comment: "")
     }
 
     var footerTextColor: UIColor {

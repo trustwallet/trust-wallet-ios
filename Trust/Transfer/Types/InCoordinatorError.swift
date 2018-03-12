@@ -8,7 +8,7 @@ enum InCoordinatorError: LocalizedError {
     var errorDescription: String? {
         return NSLocalizedString(
             "InCoordinatorError.onlyWatchAccount",
-            value: "This wallet could be only used for watching. Import Private Key/Keystore to sign transactions/messages",
+            value: "This wallet can be only used for watching. Import Private Key/Keystore to sign transactions/messages",
             comment: ""
         )
     }
