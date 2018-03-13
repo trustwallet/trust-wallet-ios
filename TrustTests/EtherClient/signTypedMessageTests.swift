@@ -97,12 +97,12 @@ class signTypedMessageTests: XCTestCase {
     }
 
     func testType_bytes_Value_string() {
-        let typedData = EthTypedData(type: "bytes", name: "your address", value: .string(value: "2c7536e3605d9c16a7a3d7b1898e529396a65c23"))
+        let typedData = EthTypedData(type: "bytes", name: "your address", value: .string(value: "0x2c7536e3605d9c16a7a3d7b1898e529396a65c23"))
         let signResult = keystore.signTypedMessage([typedData], for: account)
         guard case let .success(data) = signResult else {
             return XCTFail()
         }
-        //FIXME
-//        XCTAssertEqual(data.hexEncoded, "0xa884b1099cbb328eb8298640050ecb7c7c00e2206e01bd8819a86449c66baf2f25c6b16550f7e9df28fa4eb10a0586ff85337db60c6193459b89aeca6cae997b1b")
+
+        XCTAssertEqual(data.hexEncoded, "0x5da07ffb693a23caced43cb9056667a32078d64b24aa2591d2b9c56527b6556e29fbe0807dee0d55c16e85d83edc7bbe972234fa5580a4f4f23f0280c875c8461c")
     }
 }
