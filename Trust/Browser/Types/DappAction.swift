@@ -8,7 +8,7 @@ import WebKit
 enum DappAction {
     case signMessage(String)
     case signPersonalMessage(String)
-    case signTypedMessage([DappTypedData])
+    case signTypedMessage([EthTypedData])
     case signTransaction(UnconfirmedTransaction)
     case sendTransaction(UnconfirmedTransaction)
     case unknown

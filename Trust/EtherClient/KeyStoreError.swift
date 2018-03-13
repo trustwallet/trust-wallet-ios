@@ -14,6 +14,7 @@ enum KeystoreError: LocalizedError {
     case failedToParseJSON
     case accountNotFound
     case failedToSignMessage
+    case failedToSignTypedMessage
     case failedToExportPrivateKey
     case invalidMnemonicPhrase
 
@@ -41,6 +42,8 @@ enum KeystoreError: LocalizedError {
             return "Account not found"
         case .failedToSignMessage:
             return "Failed to sign message"
+        case .failedToSignTypedMessage:
+            return "Failed to sign typed message"
         case .failedToExportPrivateKey:
             return "Failed to export private key"
         case .invalidMnemonicPhrase:

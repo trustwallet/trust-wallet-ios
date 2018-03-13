@@ -36,17 +36,9 @@ enum DappCallbackValue {
     }
 }
 
-//for signTypedMessage
-struct DappTypedData: Codable {
-    let type: String
-    let name: String
-    let value: String //FIXME string|number|boolean
-}
-
 struct DappCommandObjectValue: Decodable {
     public var value: String = ""
-
-    public var array: [DappTypedData] = []
+    public var array: [EthTypedData] = []
     public init(from coder: Decoder) throws {
         let container = try coder.singleValueContainer()
         if let intValue = try? container.decode(Int.self) {
@@ -56,7 +48,7 @@ struct DappCommandObjectValue: Decodable {
         } else {
             var arrayContainer = try coder.unkeyedContainer()
             while !arrayContainer.isAtEnd {
-                self.array.append(try arrayContainer.decode(DappTypedData.self))
+                self.array.append(try arrayContainer.decode(EthTypedData.self))
             }
         }
     }

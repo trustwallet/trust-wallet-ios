@@ -9,7 +9,7 @@ import Result
 enum SignMesageType {
     case message(Data)
     case personalMessage(Data)
-    case typedMessage([DappTypedData])
+    case typedMessage([EthTypedData])
 }
 
 protocol SignMessageCoordinatorDelegate: class {
@@ -75,14 +75,14 @@ class SignMessageCoordinator: Coordinator {
                 return message
         case .typedMessage(let (typedData)):
                 let string = typedData.map {
-                    return "\($0.name) : \($0.value)"
-                    }.joined(separator: "\n")
+                    return "\($0.name) : \($0.value.string)"
+                }.joined(separator: "\n")
                 return string
         }
     }
 
     func isMessage(data: Data) -> Bool {
-        guard let _ = String(data: data, encoding: .utf8) else { return false}
+        guard let _ = String(data: data, encoding: .utf8) else { return false }
         return true
     }
 
@@ -99,17 +99,10 @@ class SignMessageCoordinator: Coordinator {
         case .personalMessage(let data):
             result = keystore.signPersonalMessage(data, for: account)
         case .typedMessage(let typedData):
-            var datas: [Data] = []
-            for data in typedData {
-                guard let d = (data.name + data.value).data(using: .utf8) else {
-                    continue
-                }
-                datas.append(d)
-            }
-            if datas.isEmpty {
+            if typedData.isEmpty {
                 result = .failure(KeystoreError.failedToSignMessage)
             } else {
-                result = keystore.signTypedMessage(datas, for: account)
+                result = keystore.signTypedMessage(typedData, for: account)
             }
         }
         switch result {

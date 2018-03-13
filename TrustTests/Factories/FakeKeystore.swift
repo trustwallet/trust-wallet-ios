@@ -68,7 +68,7 @@ struct FakeKeystore: Keystore {
         return .failure(KeystoreError.failedToSignTransaction)
     }
 
-    func delete(wallet wallet: Trust.Wallet) -> Result<Void, KeystoreError> {
+    func delete(wallet: Trust.Wallet) -> Result<Void, KeystoreError> {
         //TODO: Implement
         return .failure(KeystoreError.failedToSignTransaction)
     }
@@ -88,6 +88,10 @@ struct FakeKeystore: Keystore {
 
     func signMessage(_ data: Data, for account: Account) -> Result<Data, KeystoreError> {
         return .failure(KeystoreError.failedToSignMessage)
+    }
+
+    func signTypedMessage(_ datas: [EthTypedData], for account: Account) -> Result<Data, KeystoreError> {
+        return .failure(KeystoreError.failedToSignTypedMessage)
     }
 
     func signHash(_ hash: Data, for account: Account) -> Result<Data, KeystoreError> {
