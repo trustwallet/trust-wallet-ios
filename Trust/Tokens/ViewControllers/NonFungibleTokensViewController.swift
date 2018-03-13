@@ -104,21 +104,21 @@ class NonFungibleTokensViewController: UIViewController {
     }
 
     fileprivate func hederView(for section: Int) -> UIView {
-        let conteiner = UIView()
-        conteiner.backgroundColor = viewModel.headerBackgroundColor
+        let container = UIView()
+        container.backgroundColor = viewModel.headerBackgroundColor
         let title = UILabel()
         title.text = viewModel.title(for: section)
         title.sizeToFit()
         title.textColor = viewModel.headerTitleTextColor
         title.font = viewModel.headerTitleFont
-        conteiner.addSubview(title)
+        container.addSubview(title)
         title.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            title.centerXAnchor.constraint(equalTo: conteiner.centerXAnchor, constant: 0.0),
-            title.centerYAnchor.constraint(equalTo: conteiner.centerYAnchor, constant: 0.0),
-            title.leftAnchor.constraint(equalTo: conteiner.leftAnchor, constant: 20.0),
+            title.centerXAnchor.constraint(equalTo: container.centerXAnchor, constant: 0.0),
+            title.centerYAnchor.constraint(equalTo: container.centerYAnchor, constant: 0.0),
+            title.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 20.0),
         ])
-        return conteiner
+        return container
     }
 }
 
