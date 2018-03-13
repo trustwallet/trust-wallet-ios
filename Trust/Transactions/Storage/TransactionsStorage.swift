@@ -49,12 +49,6 @@ class TransactionsStorage {
         realm.beginWrite()
         realm.add(trnasactions, update: true)
         try! realm.commitWrite()
-
-        // store contract addresses associated with transactions
-        let tokens = self.tokens(from: items)
-        if !tokens.isEmpty {
-            TokensDataStore.update(in: realm, tokens: tokens)
-        }
     }
 
     private func tokens(from transactions: [Transaction]) -> [Token] {
