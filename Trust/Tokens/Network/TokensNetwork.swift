@@ -58,11 +58,7 @@ class TokensNetwork: TokensNetworkProtocol {
     }
 
     func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void) {
-        guard let contract = Address(string: token.contract) else {
-            completion((token, nil))
-            return
-        }
-        balanceService.getBalance(for: account.address, contract: contract) { result in
+        balanceService.getBalance(for: account.address, contract: token.address) { result in
             switch result {
             case .success(let balance):
                 completion((token, Balance(value: balance)))
