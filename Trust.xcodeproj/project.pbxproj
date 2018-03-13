@@ -184,7 +184,6 @@
 		29BDF19F1FEE51650023A45F /* GasLimitConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDF19E1FEE51650023A45F /* GasLimitConfigurationTests.swift */; };
 		29BDF1A11FEE51A80023A45F /* GasLimitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDF1A01FEE51A80023A45F /* GasLimitConfiguration.swift */; };
 		29BE3FD01F7071A200F6BFC2 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE3FCF1F7071A200F6BFC2 /* UIColor.swift */; };
-		29BE3FD21F707DC300F6BFC2 /* TransactionDataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE3FD11F707DC300F6BFC2 /* TransactionDataCoordinator.swift */; };
 		29C0FCE1200DA94A004A13CB /* SignMessageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0FCE0200DA94A004A13CB /* SignMessageCoordinator.swift */; };
 		29C0FCE5200EBAF6004A13CB /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C0FCE4200EBAF6004A13CB /* TokenType.swift */; };
 		29C70C712016C7780072E454 /* SentTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C70C702016C7780072E454 /* SentTransaction.swift */; };
@@ -307,6 +306,7 @@
 		73ACEEFF20163E08003DD71D /* PasscodeCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ACEEFE20163E08003DD71D /* PasscodeCharacterView.swift */; };
 		73ACEF0120163ED4003DD71D /* LockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ACEF0020163ED4003DD71D /* LockViewModel.swift */; };
 		73ACEF0520163F46003DD71D /* LockEnterPasscodeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ACEF0420163F46003DD71D /* LockEnterPasscodeCoordinator.swift */; };
+		73B152C020531875008CB35D /* TransactionsNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B152BF20531875008CB35D /* TransactionsNetwork.swift */; };
 		73B1A6B6204B4789001F546C /* NonFungibleTokensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6B5204B4789001F546C /* NonFungibleTokensViewController.swift */; };
 		73B1A6B8204B4893001F546C /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6B7204B4893001F546C /* MasterViewController.swift */; };
 		73B1A6BC204B4FB6001F546C /* NonFungibleTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B1A6BB204B4FB6001F546C /* NonFungibleTokenViewModel.swift */; };
@@ -325,6 +325,9 @@
 		73ED85A520349BE400593BF3 /* StringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED85A420349BE400593BF3 /* StringFormatter.swift */; };
 		73ED85A72034BFEF00593BF3 /* UITextFieldAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */; };
 		73ED85A92034C42D00593BF3 /* StringFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED85A82034C42D00593BF3 /* StringFormatterTest.swift */; };
+		73F2FF3A205477100021976E /* TransactionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F2FF39205477100021976E /* TransactionCategory.swift */; };
+		73F2FF3C20557C020021976E /* TrustOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F2FF3B20557C020021976E /* TrustOperation.swift */; };
+		73F2FF3E20557C440021976E /* TransactionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F2FF3D20557C440021976E /* TransactionOperation.swift */; };
 		771A8471202F067D00528D28 /* NetworksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A8470202F067D00528D28 /* NetworksViewController.swift */; };
 		771A847320322F2500528D28 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A847220322F2500528D28 /* PreferencesViewController.swift */; };
 		771A847520322FD700528D28 /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A847420322FD700528D28 /* PreferencesViewModel.swift */; };
@@ -596,7 +599,6 @@
 		29BDF19E1FEE51650023A45F /* GasLimitConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasLimitConfigurationTests.swift; sourceTree = "<group>"; };
 		29BDF1A01FEE51A80023A45F /* GasLimitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasLimitConfiguration.swift; sourceTree = "<group>"; };
 		29BE3FCF1F7071A200F6BFC2 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
-		29BE3FD11F707DC300F6BFC2 /* TransactionDataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDataCoordinator.swift; sourceTree = "<group>"; };
 		29C0FCE0200DA94A004A13CB /* SignMessageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignMessageCoordinator.swift; sourceTree = "<group>"; };
 		29C0FCE4200EBAF6004A13CB /* TokenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenType.swift; sourceTree = "<group>"; };
 		29C70C702016C7780072E454 /* SentTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentTransaction.swift; sourceTree = "<group>"; };
@@ -725,6 +727,7 @@
 		73ACEEFE20163E08003DD71D /* PasscodeCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeCharacterView.swift; sourceTree = "<group>"; };
 		73ACEF0020163ED4003DD71D /* LockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockViewModel.swift; sourceTree = "<group>"; };
 		73ACEF0420163F46003DD71D /* LockEnterPasscodeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeCoordinator.swift; sourceTree = "<group>"; };
+		73B152BF20531875008CB35D /* TransactionsNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsNetwork.swift; sourceTree = "<group>"; };
 		73B1A6B5204B4789001F546C /* NonFungibleTokensViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokensViewController.swift; sourceTree = "<group>"; };
 		73B1A6B7204B4893001F546C /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		73B1A6BB204B4FB6001F546C /* NonFungibleTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenViewModel.swift; sourceTree = "<group>"; };
@@ -743,6 +746,9 @@
 		73ED85A420349BE400593BF3 /* StringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFormatter.swift; sourceTree = "<group>"; };
 		73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldAdditions.swift; sourceTree = "<group>"; };
 		73ED85A82034C42D00593BF3 /* StringFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFormatterTest.swift; sourceTree = "<group>"; };
+		73F2FF39205477100021976E /* TransactionCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCategory.swift; sourceTree = "<group>"; };
+		73F2FF3B20557C020021976E /* TrustOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustOperation.swift; sourceTree = "<group>"; };
+		73F2FF3D20557C440021976E /* TransactionOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionOperation.swift; sourceTree = "<group>"; };
 		771A8470202F067D00528D28 /* NetworksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksViewController.swift; sourceTree = "<group>"; };
 		771A847220322F2500528D28 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		771A847420322FD700528D28 /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
@@ -974,6 +980,7 @@
 		2912CD291F6A831D00C6CBE3 /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
+				73B152BE2053184E008CB35D /* Network */,
 				2977CAE31F7E0B3F009682A0 /* Coordinators */,
 				29E14FCF1F7F456A00185568 /* Storage */,
 				2977CAED1F7E0BEC009682A0 /* Views */,
@@ -1272,7 +1279,6 @@
 		2977CAE31F7E0B3F009682A0 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				29BE3FD11F707DC300F6BFC2 /* TransactionDataCoordinator.swift */,
 				29FC0CB51F8298820036089F /* TransactionCoordinator.swift */,
 				2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */,
 				613D048A1FDE162B008DE72E /* TrustProvider.swift */,
@@ -1632,6 +1638,7 @@
 				61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */,
 				73ED85A420349BE400593BF3 /* StringFormatter.swift */,
 				73200B6F20488C9300118A82 /* TrustNetworkProtocol.swift */,
+				73F2FF3B20557C020021976E /* TrustOperation.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -1688,6 +1695,7 @@
 				2963A2891FC402940095447D /* LocalizedOperationObject.swift */,
 				294DFBA21FE0E2EA004CEB56 /* TransactionValue.swift */,
 				77872D222023F43B0032D687 /* TransactionsTracker.swift */,
+				73F2FF3D20557C440021976E /* TransactionOperation.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1746,6 +1754,7 @@
 				29E14FD01F7F457D00185568 /* TransactionsStorage.swift */,
 				29E14FDA1F7F4F3D00185568 /* Transaction.swift */,
 				29AD8A081F93F8B2008E10E7 /* Session.swift */,
+				73F2FF39205477100021976E /* TransactionCategory.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -2110,6 +2119,14 @@
 				73ACEEFE20163E08003DD71D /* PasscodeCharacterView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		73B152BE2053184E008CB35D /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				73B152BF20531875008CB35D /* TransactionsNetwork.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		771A84782032343600528D28 /* Controllers */ = {
@@ -2781,7 +2798,6 @@
 				29F1C85820036926003780D8 /* AppTracker.swift in Sources */,
 				293E62711FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift in Sources */,
 				291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */,
-				29BE3FD21F707DC300F6BFC2 /* TransactionDataCoordinator.swift in Sources */,
 				903682EF204A6C3700013479 /* BookmarkCoordinator.swift in Sources */,
 				29F1C85120032688003780D8 /* Address.swift in Sources */,
 				295B61D11FE7B20400642E60 /* TokensHeaderView.swift in Sources */,
@@ -2906,6 +2922,7 @@
 				29AD8A061F93DC8C008E10E7 /* PushDevice.swift in Sources */,
 				294DFBA91FE6EBFB004CEB56 /* NewTokenViewController.swift in Sources */,
 				29B933F51F860074009FCABB /* SendTransactionCoordinator.swift in Sources */,
+				73F2FF3E20557C440021976E /* TransactionOperation.swift in Sources */,
 				2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */,
 				291F52A51F6B762300B369AB /* EtherServiceRequest.swift in Sources */,
 				CCA4FE361FD4282400749AE4 /* DeviceChecker.swift in Sources */,
@@ -2947,11 +2964,13 @@
 				A2B7ECAE2039001300828E7D /* ExportPrivateKeyViewController.swift in Sources */,
 				7721A6D0202EFD07004DB16C /* AddCustomNetworkCoordinator.swift in Sources */,
 				2996F1461F6C98B3005C33AE /* SettingsViewController.swift in Sources */,
+				73F2FF3C20557C020021976E /* TrustOperation.swift in Sources */,
 				2963B6AD1F981A96003063C1 /* TransactionAppearance.swift in Sources */,
 				29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */,
 				73B1A6BC204B4FB6001F546C /* NonFungibleTokenViewModel.swift in Sources */,
 				296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */,
 				294DFB9E1FE0CA59004CEB56 /* TransactionsViewModel.swift in Sources */,
+				73F2FF3A205477100021976E /* TransactionCategory.swift in Sources */,
 				73ED85A72034BFEF00593BF3 /* UITextFieldAdditions.swift in Sources */,
 				2923D9B51FDA4E07000CF3F8 /* PasswordGenerator.swift in Sources */,
 				298542F51FBD8E6A00CB5081 /* ConfigExplorer.swift in Sources */,
@@ -2974,6 +2993,7 @@
 				29BB94951F6FC54C009B09CC /* EthereumUnit.swift in Sources */,
 				29C70C712016C7780072E454 /* SentTransaction.swift in Sources */,
 				29E9CFD21FE737FE00017744 /* TrustRealmConfiguration.swift in Sources */,
+				73B152C020531875008CB35D /* TransactionsNetwork.swift in Sources */,
 				2959961C1FAE3EDF00DB66A8 /* TrustClient.swift in Sources */,
 				29AD8A0C1F93FBBF008E10E7 /* Subscribable.swift in Sources */,
 				295247DF1F8326EF007FDC31 /* AccountViewCell.swift in Sources */,

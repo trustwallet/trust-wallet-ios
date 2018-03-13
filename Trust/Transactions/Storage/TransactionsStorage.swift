@@ -8,6 +8,14 @@ class TransactionsStorage {
 
     let realm: Realm
 
+    var transactions: Results<Transaction> {
+        return realm.objects(Transaction.self).sorted(byKeyPath: "date", ascending: false)
+    }
+
+    var transactionsCategory: Results<TransactionCategory> {
+        return realm.objects(TransactionCategory.self)
+    }
+
     init(
         realm: Realm
     ) {
@@ -36,10 +44,10 @@ class TransactionsStorage {
         return realm.object(ofType: Transaction.self, forPrimaryKey: forPrimaryKey)
     }
 
-    @discardableResult
-    func add(_ items: [Transaction]) -> [Transaction] {
+    func add(_ items: [Transaction]) {
+        let trnasactions = transactionCategory(for: items)
         realm.beginWrite()
-        realm.add(items, update: true)
+        realm.add(trnasactions, update: true)
         try! realm.commitWrite()
 
         // store contract addresses associated with transactions
@@ -47,7 +55,6 @@ class TransactionsStorage {
         if !tokens.isEmpty {
             TokensDataStore.update(in: realm, tokens: tokens)
         }
-        return items
     }
 
     private func tokens(from transactions: [Transaction]) -> [Token] {
@@ -68,18 +75,32 @@ class TransactionsStorage {
         return tokens
     }
 
+    private func transactionCategory(for transactions: [Transaction]) -> [TransactionCategory] {
+        var category = [TransactionCategory]()
+        let headerDates = NSOrderedSet(array: transactions.map { TransactionsViewModel.realmBaseFormmater.string(from: $0.date ) })
+        headerDates.forEach {
+            guard let date = $0 as? String else {
+                return
+            }
+            let filteredTransactionByDate = transactions.filter { TransactionsViewModel.realmBaseFormmater.string(from: $0.date ) == date }
+            let item = TransactionCategory()
+            item.title = date
+            item.transactions.append(objectsIn: filteredTransactionByDate)
+            category.append(item)
+        }
+        return category
+    }
+
     func delete(_ items: [Transaction]) {
         try! realm.write {
             realm.delete(items)
         }
     }
 
-    @discardableResult
-    func update(state: TransactionState, for transaction: Transaction) -> Transaction {
+    func update(state: TransactionState, for transaction: Transaction) {
         realm.beginWrite()
         transaction.internalState = state.rawValue
         try! realm.commitWrite()
-        return transaction
     }
 
     func removeTransactions(for states: [TransactionState]) {

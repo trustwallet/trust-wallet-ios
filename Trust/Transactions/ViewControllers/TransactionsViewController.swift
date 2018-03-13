@@ -6,6 +6,7 @@ import JSONRPCKit
 import StatefulViewController
 import Result
 import TrustKeystore
+import RealmSwift
 
 protocol TransactionsViewControllerDelegate: class {
     func didPressSend(in viewController: TransactionsViewController)
@@ -28,7 +29,22 @@ class TransactionsViewController: UIViewController {
     }()
 
     weak var delegate: TransactionsViewControllerDelegate?
-    let dataCoordinator: TransactionDataCoordinator
+
+    lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.backgroundColor = UIColor.white
+        return searchController
+    }()
+
+    var timer: Timer?
+
+    var updateTransactionsTimer: Timer?
+
     let session: WalletSession
 
     lazy var footerView: TransactionsFooterView = {
@@ -43,12 +59,10 @@ class TransactionsViewController: UIViewController {
 
     init(
         account: Wallet,
-        dataCoordinator: TransactionDataCoordinator,
         session: WalletSession,
-        viewModel: TransactionsViewModel = TransactionsViewModel(transactions: [])
+        viewModel: TransactionsViewModel
     ) {
         self.account = account
-        self.dataCoordinator = dataCoordinator
         self.session = session
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -63,6 +77,9 @@ class TransactionsViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(footerView)
 
+        tableView.tableHeaderView = searchController.searchBar
+        tableView.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
+
         NSLayoutConstraint.activate([
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -74,15 +91,13 @@ class TransactionsViewController: UIViewController {
             footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
 
-        dataCoordinator.delegate = self
-        dataCoordinator.start()
-
+        refreshControl.backgroundColor = viewModel.backgroundColor
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
 
         errorView = ErrorView(insets: insets, onRetry: { [weak self] in
             self?.startLoading()
-            self?.dataCoordinator.fetch()
+            self?.viewModel.fetch()
         })
         loadingView = LoadingView(insets: insets)
         emptyView = {
@@ -98,16 +113,44 @@ class TransactionsViewController: UIViewController {
 
         navigationItem.titleView = titleView
         titleView.viewModel = BalanceViewModel()
+        tokensObservation()
+        NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.stopTimers), name: .UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         fetch()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    private func tokensObservation() {
+        viewModel.setTransactionsObservation { [weak self] (changes: RealmCollectionChange) in
+            guard let strongSelf = self else { return }
+            let tableView = strongSelf.tableView
+            switch changes {
+            case .initial:
+                tableView.reloadData()
+                self?.endLoading()
+            case .update(_, let deletions, let insertions, let modifications):
+                tableView.beginUpdates()
+                var insertIndexSet = IndexSet()
+                insertions.forEach { insertIndexSet.insert($0) }
+                tableView.insertSections(insertIndexSet, with: .none)
+                var deleteIndexSet = IndexSet()
+                deletions.forEach { deleteIndexSet.insert($0) }
+                tableView.deleteSections(deleteIndexSet, with: .none)
+                var updateIndexSet = IndexSet()
+                modifications.forEach { updateIndexSet.insert($0) }
+                tableView.reloadSections(updateIndexSet, with: .none)
+                tableView.endUpdates()
+                self?.endLoading()
+            case .error(let error):
+                self?.endLoading(animated: true, error: error, completion: nil)
+            }
+            if strongSelf.refreshControl.isRefreshing {
+                strongSelf.refreshControl.endRefreshing()
+            }
+        }
     }
 
     @objc func pullToRefresh() {
@@ -117,7 +160,7 @@ class TransactionsViewController: UIViewController {
 
     func fetch() {
         startLoading()
-        dataCoordinator.fetch()
+        viewModel.fetch()
     }
 
     @objc func send() {
@@ -132,59 +175,49 @@ class TransactionsViewController: UIViewController {
         delegate?.didPressDeposit(for: account, sender: sender, in: self)
     }
 
-    func configure(viewModel: TransactionsViewModel) {
-        self.viewModel = viewModel
-    }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    fileprivate func hederView(for section: Int) -> UIView {
-        let conteiner = UIView()
-        conteiner.backgroundColor = viewModel.headerBackgroundColor
-        let title = UILabel()
-        title.text = viewModel.titleForHeader(in: section)
-        title.sizeToFit()
-        title.textColor = viewModel.headerTitleTextColor
-        title.font = viewModel.headerTitleFont
-        conteiner.addSubview(title)
-        title.translatesAutoresizingMaskIntoConstraints = false
-        let horConstraint = NSLayoutConstraint(item: title, attribute: .centerX, relatedBy: .equal, toItem: conteiner, attribute: .centerX, multiplier: 1.0, constant: 0.0)
-        let verConstraint = NSLayoutConstraint(item: title, attribute: .centerY, relatedBy: .equal, toItem: conteiner, attribute: .centerY, multiplier: 1.0, constant: 0.0)
-        let leftConstraint = NSLayoutConstraint(item: title, attribute: .left, relatedBy: .equal, toItem: conteiner, attribute: .left, multiplier: 1.0, constant: 20.0)
-        conteiner.addConstraints([horConstraint, verConstraint, leftConstraint])
-        return conteiner
+
+    @objc func stopTimers() {
+        timer?.invalidate()
+        timer = nil
+        updateTransactionsTimer?.invalidate()
+        updateTransactionsTimer = nil
+    }
+
+    @objc func restartTimers() {
+        runScheduledTimers()
+    }
+
+    private func runScheduledTimers() {
+        guard timer == nil, updateTransactionsTimer == nil else {
+            return
+        }
+        timer = Timer.scheduledTimer(timeInterval: 5, target: BlockOperation { [weak self] in
+            self?.viewModel.fetchPending()
+        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
+        updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 15, target: BlockOperation { [weak self] in
+            self?.viewModel.fetchTransactions()
+        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
 extension TransactionsViewController: StatefulViewController {
     func hasContent() -> Bool {
-        return viewModel.numberOfSections > 0
+        return viewModel.hasContent() 
     }
 }
 
 extension TransactionsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true )
+        searchController.isActive = false
         delegate?.didPressTransaction(transaction: viewModel.item(for: indexPath.row, section: indexPath.section), in: self)
-    }
-}
-
-extension TransactionsViewController: TransactionDataCoordinatorDelegate {
-    func didUpdate(result: Result<[Transaction], TransactionError>) {
-        switch result {
-        case .success(let items):
-        let viewModel = TransactionsViewModel(transactions: items)
-            configure(viewModel: viewModel)
-            endLoading()
-        case .failure(let error):
-            endLoading(error: error)
-        }
-        tableView.reloadData()
-
-        if refreshControl.isRefreshing {
-            refreshControl.endRefreshing()
-        }
     }
 }
 
@@ -194,15 +227,8 @@ extension TransactionsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let transaction = viewModel.item(for: indexPath.row, section: indexPath.section)
-        let cell = TransactionViewCell(style: .default, reuseIdentifier: TransactionViewCell.identifier)
-        cell.configure(viewModel: .init(
-                transaction: transaction,
-                config: session.config,
-                chainState: session.chainState,
-                currentWallet: session.account
-            )
-        )
+        let cell = tableView.dequeueReusableCell(withIdentifier: TransactionViewCell.identifier, for: indexPath) as! TransactionViewCell
+        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
         return cell
     }
 
@@ -211,7 +237,7 @@ extension TransactionsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return hederView(for: section)
+        return viewModel.hederView(for: section)
     }
 
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -219,8 +245,16 @@ extension TransactionsViewController: UITableViewDataSource {
         view.layer.addBorder(edge: .bottom, color: viewModel.headerBorderColor, thickness: 0.5)
     }
 
-    //Method heightForHeaderInSection is required for iOS 10.
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return StyleLayout.TableView.heightForHeaderInSection
+    }
+}
+
+extension TransactionsViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        viewModel.filterTransactions(by: searchBar.text)
+        tokensObservation()
+        self.tableView.reloadData()
     }
 }

@@ -71,6 +71,8 @@ struct TransactionCellViewModel {
             return NSLocalizedString("transaction.cell.unknown.title", value: "Unknown", comment: "")
         case .pending:
             return NSLocalizedString("transaction.cell.pending.title", value: "Pending", comment: "")
+        case .deleted:
+            return ""
         }
     }
 
@@ -91,7 +93,7 @@ struct TransactionCellViewModel {
 
     var backgroundColor: UIColor {
         switch transaction.state {
-        case .completed, .error, .unknown, .failed:
+        case .completed, .error, .unknown, .failed, .deleted:
             return .white
         case .pending:
             return Colors.veryLightOrange
@@ -112,7 +114,7 @@ struct TransactionCellViewModel {
 
     var statusImage: UIImage? {
         switch transaction.state {
-        case .error, .unknown, .failed: return R.image.transaction_error()
+        case .error, .unknown, .failed, .deleted: return R.image.transaction_error()
         case .completed:
             switch transactionViewModel.direction {
             case .incoming: return R.image.transaction_received()

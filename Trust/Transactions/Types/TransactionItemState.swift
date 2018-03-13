@@ -8,6 +8,7 @@ enum TransactionState: Int {
     case error
     case failed
     case unknown
+    case deleted
 
     init(int: Int) {
         self = TransactionState(rawValue: int) ?? .unknown

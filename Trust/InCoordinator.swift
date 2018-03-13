@@ -66,6 +66,7 @@ class InCoordinator: Coordinator {
         let tokensStorage = TokensDataStore(realm: realm, config: config)
         let balanceCoordinator =  TokensBalanceService(web3: web3)
         let tokensNetwork = TokensNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
+        let transactionsNetwork = TransactionsNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
         let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
         let session = WalletSession(
             account: account,
@@ -82,8 +83,9 @@ class InCoordinator: Coordinator {
         let transactionCoordinator = TransactionCoordinator(
             session: session,
             storage: transactionsStorage,
-            keystore: keystore,
-            tokensStorage: tokensStorage
+            tokensStorage: tokensStorage,
+            network: transactionsNetwork,
+            keystore: keystore
         )
         transactionCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("transactions.tabbar.item.title", value: "Transactions", comment: ""), image: R.image.feed(), selectedImage: nil)
         transactionCoordinator.delegate = self
@@ -218,7 +220,7 @@ class InCoordinator: Coordinator {
     }
 
     private func handlePendingTransaction(transaction: SentTransaction) {
-        transactionCoordinator?.dataCoordinator.addSentTransaction(transaction)
+        transactionCoordinator?.viewModel.addSentTransaction(transaction)
     }
 
     private func realm(for config: Realm.Configuration) -> Realm {

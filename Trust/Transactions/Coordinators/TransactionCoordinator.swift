@@ -13,40 +13,43 @@ protocol TransactionCoordinatorDelegate: class {
 class TransactionCoordinator: Coordinator {
 
     private let keystore: Keystore
+
     let storage: TransactionsStorage
+
+    let tokensStorage: TokensDataStore
+
     lazy var rootViewController: TransactionsViewController = {
         return self.makeTransactionsController(with: self.session.account)
     }()
 
-    lazy var dataCoordinator: TransactionDataCoordinator = {
-        let coordinator = TransactionDataCoordinator(
-            session: self.session,
-            storage: self.storage
-        )
-        return coordinator
+    lazy var viewModel: TransactionsViewModel = {
+        return TransactionsViewModel(network: network, storage: storage, session: session)
     }()
 
     weak var delegate: TransactionCoordinatorDelegate?
 
     let session: WalletSession
-    let tokensStorage: TokensDataStore
+
+    let network: TransactionsNetwork
+
     let navigationController: UINavigationController
+
     var coordinators: [Coordinator] = []
 
     init(
         session: WalletSession,
         navigationController: UINavigationController = NavigationController(),
         storage: TransactionsStorage,
-        keystore: Keystore,
-        tokensStorage: TokensDataStore
+        tokensStorage: TokensDataStore,
+        network: TransactionsNetwork,
+        keystore: Keystore
     ) {
         self.session = session
         self.keystore = keystore
         self.navigationController = navigationController
         self.storage = storage
         self.tokensStorage = tokensStorage
-
-        NotificationCenter.default.addObserver(self, selector: #selector(didEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
+        self.network = network
     }
 
     func start() {
@@ -54,10 +57,9 @@ class TransactionCoordinator: Coordinator {
     }
 
     private func makeTransactionsController(with account: Wallet) -> TransactionsViewController {
-        let viewModel = TransactionsViewModel()
+
         let controller = TransactionsViewController(
             account: account,
-            dataCoordinator: dataCoordinator,
             session: session,
             viewModel: viewModel
         )
@@ -91,21 +93,12 @@ class TransactionCoordinator: Coordinator {
         }
     }
 
-    @objc func didEnterForeground() {
-        rootViewController.fetch()
-    }
-
     @objc func dismiss() {
         navigationController.dismiss(animated: true, completion: nil)
     }
 
     func stop() {
-        dataCoordinator.stop()
         session.stop()
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
 
     @objc func deposit(sender: UIBarButtonItem) {

@@ -2,39 +2,18 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 struct TransactionsViewModel {
 
-    static let formatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter
+    static let realmDateFormat = "MMddyyyy"
+
+    static let dateFormatter = DateFormatter()
+
+    static let realmBaseFormmater: DateFormatter = {
+        dateFormatter.dateFormat = realmDateFormat
+        return dateFormatter
     }()
-
-    var items: [(date: String, transactions: [Transaction])] = []
-    let config: Config
-
-    init(
-        transactions: [Transaction] = [],
-        config: Config = Config()
-    ) {
-        self.config = config
-
-        var newItems: [String: [Transaction]] = [:]
-
-        for transaction in transactions {
-            let date = TransactionsViewModel.formatter.string(from: transaction.date)
-
-            var currentItems = newItems[date] ?? []
-            currentItems.append(transaction)
-            newItems[date] = currentItems
-        }
-        //TODO. IMPROVE perfomance
-        let tuple = newItems.map { (key, values) in return (date: key, transactions: values) }
-        items = tuple.sorted { (object1, object2) -> Bool in
-            return TransactionsViewModel.formatter.date(from: object1.date)! > TransactionsViewModel.formatter.date(from: object2.date)!
-        }
-    }
 
     var backgroundColor: UIColor {
         return .white
@@ -56,21 +35,66 @@ struct TransactionsViewModel {
         return UIColor(hex: "e1e1e1")
     }
 
+    var isBuyActionAvailable: Bool {
+        switch config.server {
+        case .main, .kovan, .classic, .callisto, .ropsten, .rinkeby, .poa, .sokol, .custom: return false
+        }
+    }
+
     var numberOfSections: Int {
-        return items.count
+        return transactions.count
+    }
+
+    private var operationQueue: OperationQueue = {
+        let queue = OperationQueue()
+        queue.qualityOfService = .background
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
+
+    var transactions: Results<TransactionCategory>
+
+    var tokensObserver: NotificationToken?
+
+    let config: Config
+
+    let network: TransactionsNetwork
+
+    let storage: TransactionsStorage
+
+    let session: WalletSession
+
+    init(
+        network: TransactionsNetwork,
+        storage: TransactionsStorage,
+        session: WalletSession,
+        config: Config = Config()
+    ) {
+        self.network = network
+        self.storage = storage
+        self.session = session
+        self.config = config
+        self.transactions = storage.transactionsCategory
+    }
+
+    mutating func setTransactionsObservation(with block: @escaping (RealmCollectionChange<Results<TransactionCategory>>) -> Void) {
+        tokensObserver = transactions.observe(block)
     }
 
     func numberOfItems(for section: Int) -> Int {
-        return items[section].transactions.count
+        return transactions[section].transactions.count
     }
 
     func item(for row: Int, section: Int) -> Transaction {
-        return items[section].transactions[row]
+        return transactions[section].transactions[row]
     }
 
     func titleForHeader(in section: Int) -> String {
-        let value = items[section].date
-        let date = TransactionsViewModel.formatter.date(from: value)!
+        let stringDate = transactions[section].title
+        guard let date = TransactionsViewModel.convert(stringDate) else {
+            return stringDate
+        }
+        let value = TransactionsViewModel.title(from: date)
         if NSCalendar.current.isDateInToday(date) {
             return NSLocalizedString("Today", value: "Today", comment: "")
         }
@@ -80,9 +104,106 @@ struct TransactionsViewModel {
         return value
     }
 
-    var isBuyActionAvailable: Bool {
-        switch config.server {
-        case .main, .kovan, .classic, .callisto, .ropsten, .rinkeby, .poa, .sokol, .custom: return false
+    func hederView(for section: Int) -> UIView {
+        let container = UIView()
+        container.backgroundColor = self.headerBackgroundColor
+        let title = UILabel()
+        title.text = self.titleForHeader(in: section)
+        title.sizeToFit()
+        title.textColor = self.headerTitleTextColor
+        title.font = self.headerTitleFont
+        container.addSubview(title)
+        title.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            title.centerXAnchor.constraint(equalTo: container.centerXAnchor, constant: 0.0),
+            title.centerYAnchor.constraint(equalTo: container.centerYAnchor, constant: 0.0),
+            title.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 20.0),
+        ])
+        return container
+    }
+
+    func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
+        return TransactionCellViewModel(transaction: transactions[indexPath.section].transactions[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account)
+    }
+
+    func statBlock() -> Int {
+        guard let transaction = storage.completedObjects.first else { return 1 }
+        return transaction.blockNumber - 2000
+    }
+
+    mutating func fetch() {
+        if TransactionsTracker(sessionID: session.sessionID).fetchingState != .done {
+            initialFetch()
+        } else {
+            fetchTransactions()
+            fetchPending()
         }
+    }
+
+    private func initialFetch() {
+        if operationQueue.operationCount == 0 {
+            let operation = TransactionOperation(network: network, session: session)
+            operationQueue.addOperation(operation)
+            operation.completionBlock = {
+                DispatchQueue.main.async {
+                    self.storage.add(operation.transactionsHistory)
+                }
+            }
+        }
+    }
+
+    func hasContent() -> Bool {
+        return !transactions.isEmpty
+    }
+
+    func fetchTransactions() {
+        self.network.transactions(for: session.account.address, startBlock: statBlock(), page: 0) { result in
+            guard let transactions = result.0 else { return }
+            self.storage.add(transactions)
+        }
+    }
+
+    func addSentTransaction(_ transaction: SentTransaction) {
+        let transaction = SentTransaction.from(from: session.account.address, transaction: transaction)
+        storage.add([transaction])
+    }
+
+    func fetchPending() {
+        self.storage.transactions.forEach {
+            self.network.update(for: $0, completion: { result in
+                switch result.1 {
+                case .deleted:
+                    self.storage.delete([result.0])
+                default:
+                    self.storage.update(state: result.1, for: result.0)
+                }
+            })
+        }
+    }
+
+    mutating func filterTransactions(by occurrence: String?) {
+        guard let text = occurrence, !text.isEmpty else {
+            self.transactions = storage.transactionsCategory
+            return
+        }
+        let subpredicates = ["title","transactions.id","transactions.from","transactions.to","transactions.value","transactions.localizedOperations.name","transactions.localizedOperations.symbol","transactions.localizedOperations.contract"].map { property -> NSPredicate in
+            if property.contains("transactions") {
+                return NSPredicate(format: "ANY %K CONTAINS[cd] %@", property, text)
+            }
+            return NSPredicate(format: "%K CONTAINS[cd] %@", property, text)
+        }
+        let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
+        self.transactions = storage.transactionsCategory.filter(predicate)
+    }
+
+    static func convert(_ date: String) -> Date? {
+        dateFormatter.dateFormat = realmDateFormat
+        let date = dateFormatter.date(from: date)
+        return date
+    }
+
+    static func title(from date: Date) -> String {
+        dateFormatter.dateFormat = "MMM d yyyy"
+        return dateFormatter.string(from: date)
     }
 }
