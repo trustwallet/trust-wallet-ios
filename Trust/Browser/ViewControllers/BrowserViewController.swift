@@ -265,7 +265,6 @@ class BrowserViewController: UIViewController {
     }
 }
 
-// MARK: - BrowserNavigationBarDelegate
 extension BrowserViewController: BrowserNavigationBarDelegate {
     func did(action: BrowserAction) {
         switch action {
@@ -285,7 +284,6 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
     }
 }
 
-// MARK: - WKNavigationDelegate
 extension BrowserViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         refreshURL()
@@ -307,7 +305,6 @@ extension BrowserViewController: WKNavigationDelegate {
     }
 }
 
-// MARK: - WKUIDelegate
 extension BrowserViewController: WKUIDelegate {
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         if navigationAction.targetFrame == nil {
@@ -317,7 +314,6 @@ extension BrowserViewController: WKUIDelegate {
     }
 }
 
-// MARK: - WKScriptMessageHandler
 extension BrowserViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard let command = DappAction.fromMessage(message) else { return }
@@ -327,7 +323,6 @@ extension BrowserViewController: WKScriptMessageHandler {
     }
 }
 
-// MARK: - BrowserErrorViewDelegate
 extension BrowserViewController: BrowserErrorViewDelegate {
     func didTapReload(_ sender: Button) {
         reload()
