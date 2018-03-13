@@ -2,4 +2,5 @@
 warn("PR is classed as Work in Progress") if github.pr_title.include? "[WIP]"
 
 # swiftlint
+swiftlint.binary_path = './Pods/SwiftLint/swiftlint'
 swiftlint.lint_files
