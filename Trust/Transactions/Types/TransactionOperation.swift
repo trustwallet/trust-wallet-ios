@@ -57,7 +57,7 @@ class TransactionOperation: TrustOperation {
                 completion(nil, .failed)
                 return
             }
-            if !transactions.isEmpty && page <= 50 {
+            if !transactions.isEmpty && page <= 5 {
                 completion(transactions, .initial)
             } else {
                 completion(nil, .done)
@@ -65,4 +65,3 @@ class TransactionOperation: TrustOperation {
         }
     }
 }
-
