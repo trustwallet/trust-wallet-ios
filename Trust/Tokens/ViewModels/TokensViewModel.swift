@@ -120,13 +120,6 @@ class TokensViewModel {
         return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token))
     }
 
-    func updateTickers() {
-        tokensNetwork.tickers(for: store.enabledObject) { result in
-            guard let tickers = result else { return }
-            self.store.tickers = tickers
-        }
-    }
-
     func updateEthBalance() {
         tokensNetwork.ethBalance { result in
             guard let balance = result, let token = self.store.objects.first (where: { $0.name == self.config.server.name })  else { return }
@@ -136,7 +129,7 @@ class TokensViewModel {
 
     private func runOperations() {
 
-        guard operationQueue.operationCount == 0 else {
+        guard operationQueue.operationCount == 0, let chaineToken = self.store.objects.first (where: { $0.name == self.config.server.name }) else {
             return
         }
 
@@ -145,6 +138,11 @@ class TokensViewModel {
         let tokensBalanceOperation = TokensBalanceOperation(network: tokensNetwork, address: address)
 
         let tokensTickerOperation = TokensTickerOperation(network: tokensNetwork, address: address)
+
+        let tempChaine = TokensDataStore.etherToken(for: config)
+        tempChaine.value = chaineToken.value
+
+        tokensOperation.tokens.append(tempChaine)
 
         operationQueue.addOperation(tokensOperation)
 
