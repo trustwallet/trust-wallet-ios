@@ -6,6 +6,10 @@ import BigInt
 import TrustKeystore
 import Realm
 
+struct TokenObjectList: Decodable {
+    let contract: TokenObject
+}
+
 class TokenObject: Object, Decodable {
     @objc dynamic var contract: String = ""
     @objc dynamic var name: String = ""

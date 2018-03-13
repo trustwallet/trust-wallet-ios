@@ -8,11 +8,10 @@ protocol TokensNetworkProtocol: TrustNetworkProtocol {
     func ethBalance(completion: @escaping (_ balance: Balance?) -> Void)
     func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void)
     func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void)
-    func tokensList(for address: Address, completion: @escaping (_ result: ([TokenListItem]?)) -> Void)
+    func tokensList(for address: Address, completion: @escaping (_ result: ([TokenObject]?)) -> Void)
 }
 
 class TokensNetwork: TokensNetworkProtocol {
-  
     let provider: MoyaProvider<TrustService>
 
     let config: Config
@@ -73,13 +72,14 @@ class TokensNetwork: TokensNetworkProtocol {
         }
     }
 
-    func tokensList(for address: Address, completion: @escaping (([TokenListItem]?)) -> Void) {
+    func tokensList(for address: Address, completion: @escaping (([TokenObject]?)) -> Void) {
         provider.request(.getTokens(address: address.description, showBalance: false)) { result in
             switch result {
             case .success(let response):
                 do {
-                    let items = try response.map(ArrayResponse<TokenListItem>.self).docs
-                    completion(items)
+                    let items = try response.map(ArrayResponse<TokenObjectList>.self).docs
+                    let tokens = items.map { $0.contract }
+                    completion(tokens)
                 } catch {
                     completion(nil)
                 }
