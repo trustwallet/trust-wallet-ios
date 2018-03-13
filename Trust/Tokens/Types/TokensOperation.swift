@@ -34,7 +34,7 @@ class TokensOperation: TrustOperation {
                 self.finish(true)
                 return
             }
-            self.tokens = tokensList
+            self.tokens.append(contentsOf: tokensList)
             self.executing(false)
             self.finish(true)
         }

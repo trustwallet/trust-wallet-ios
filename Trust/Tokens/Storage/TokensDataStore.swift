@@ -71,15 +71,15 @@ class TokensDataStore {
     }
 
     func add(tokens: [Object]) {
-        realm.beginWrite()
-        realm.add(tokens, update: true)
-        try! realm.commitWrite()
+        try! realm.write {
+            realm.add(tokens, update: true)
+        }
     }
 
     func delete(tokens: [Object]) {
-        realm.beginWrite()
-        realm.delete(tokens)
-        try! realm.commitWrite()
+        try! realm.write {
+            realm.delete(tokens)
+        }
     }
 
     func deleteAll() {
