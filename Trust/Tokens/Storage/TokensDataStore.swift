@@ -100,20 +100,6 @@ class TokensDataStore {
         }
     }
 
-    static func update(in realm: Realm, tokens: [Token]) {
-        realm.beginWrite()
-        for token in tokens {
-            let update: [String: Any] = [
-                "contract": token.address.description,
-                "name": token.name,
-                "symbol": token.symbol,
-                "decimals": token.decimals,
-                ]
-            realm.create(TokenObject.self, value: update, update: true)
-        }
-        try! realm.commitWrite()
-    }
-
     static func etherToken(for config: Config) -> TokenObject {
         return TokenObject(
             contract: "0x0000000000000000000000000000000000000000",
