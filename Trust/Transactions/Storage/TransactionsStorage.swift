@@ -92,9 +92,11 @@ class TransactionsStorage {
     }
 
     func update(state: TransactionState, for transaction: Transaction) {
-        realm.beginWrite()
-        transaction.internalState = state.rawValue
-        try! realm.commitWrite()
+        try! realm.write {
+            let tempObject = transaction
+            tempObject.internalState = state.rawValue
+            realm.add(tempObject, update: true)
+        }
     }
 
     func removeTransactions(for states: [TransactionState]) {
