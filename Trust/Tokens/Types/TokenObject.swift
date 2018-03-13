@@ -47,7 +47,7 @@ class TokenObject: Object, Decodable {
 
     convenience required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: TokenObjectCodingKeys.self)
-        let contract = try container.decode(String.self, forKey: .address)
+        let contract = try container.decode(String.self, forKey: .address).lowercased()
         let name = try container.decode(String.self, forKey: .name)
         let symbol = try container.decode(String.self, forKey: .symbol)
         let decimals = try container.decode(Int.self, forKey: .decimals)
