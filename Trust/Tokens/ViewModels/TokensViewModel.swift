@@ -121,10 +121,7 @@ class TokensViewModel {
     }
 
     func updateEthBalance() {
-        tokensNetwork.ethBalance { result in
-            guard let balance = result, let token = self.store.objects.first (where: { $0.name == self.config.server.name })  else { return }
-            self.store.update(token: token, action: .updateValue(balance.value))
-        }
+        
     }
 
     private func runOperations() {
@@ -132,6 +129,8 @@ class TokensViewModel {
         guard operationQueue.operationCount == 0, let chaineToken = self.store.objects.first (where: { $0.name == self.config.server.name }) else {
             return
         }
+
+        let ethBalanceOperation = EthBalanceOperation(network: tokensNetwork)
 
         let tokensOperation = TokensOperation(network: tokensNetwork, address: address)
 
@@ -142,9 +141,14 @@ class TokensViewModel {
         let tempChaine = TokensDataStore.etherToken(for: config)
         tempChaine.value = chaineToken.value
 
-        tokensOperation.tokens.append(tempChaine)
+        operationQueue.addOperation(ethBalanceOperation)
 
-        operationQueue.addOperation(tokensOperation)
+        ethBalanceOperation.completionBlock = { [weak self] in
+            guard let strongSelf = self else { return }
+            tempChaine.value = ethBalanceOperation.balance.value.description
+            tokensOperation.tokens.append(tempChaine)
+            strongSelf.operationQueue.addOperation(tokensOperation)
+        }
 
         tokensOperation.completionBlock = { [weak self] in
             guard let strongSelf = self else { return }

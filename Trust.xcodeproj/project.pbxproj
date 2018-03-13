@@ -286,6 +286,7 @@
 		73065AEE205809CA00D69722 /* TokensOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73065AED205809CA00D69722 /* TokensOperation.swift */; };
 		73065AF0205809D900D69722 /* TokensBalanceOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73065AEF205809D900D69722 /* TokensBalanceOperation.swift */; };
 		73065AF220580A1200D69722 /* TokensTickerOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73065AF120580A1200D69722 /* TokensTickerOperation.swift */; };
+		73065AF42058807B00D69722 /* EthBalanceOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73065AF32058807B00D69722 /* EthBalanceOperation.swift */; };
 		73200B642040B9D700118A82 /* CryptoAddressValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B632040B9D700118A82 /* CryptoAddressValidatorTest.swift */; };
 		73200B672044B22600118A82 /* TokensDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B662044B22600118A82 /* TokensDataStore.swift */; };
 		73200B6A2045B8AC00118A82 /* TokensNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B692045B8AC00118A82 /* TokensNetwork.swift */; };
@@ -709,6 +710,7 @@
 		73065AED205809CA00D69722 /* TokensOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensOperation.swift; sourceTree = "<group>"; };
 		73065AEF205809D900D69722 /* TokensBalanceOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensBalanceOperation.swift; sourceTree = "<group>"; };
 		73065AF120580A1200D69722 /* TokensTickerOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensTickerOperation.swift; sourceTree = "<group>"; };
+		73065AF32058807B00D69722 /* EthBalanceOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthBalanceOperation.swift; sourceTree = "<group>"; };
 		73200B632040B9D700118A82 /* CryptoAddressValidatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoAddressValidatorTest.swift; sourceTree = "<group>"; };
 		73200B662044B22600118A82 /* TokensDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensDataStore.swift; sourceTree = "<group>"; };
 		73200B692045B8AC00118A82 /* TokensNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensNetwork.swift; sourceTree = "<group>"; };
@@ -1453,6 +1455,7 @@
 				73065AED205809CA00D69722 /* TokensOperation.swift */,
 				73065AEF205809D900D69722 /* TokensBalanceOperation.swift */,
 				73065AF120580A1200D69722 /* TokensTickerOperation.swift */,
+				73065AF32058807B00D69722 /* EthBalanceOperation.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2762,6 +2765,7 @@
 				294EC1DA1FD8E4E60065EB20 /* GasPriceRequest.swift in Sources */,
 				295A59381F71C1B90092F0FC /* AccountsCoordinator.swift in Sources */,
 				903682F8204AC52F00013479 /* BookmarksViewModel.swift in Sources */,
+				73065AF42058807B00D69722 /* EthBalanceOperation.swift in Sources */,
 				299B5E2D1FCBC0660051361C /* BalanceProtocol.swift in Sources */,
 				296421971F70C1F200EB363B /* ErrorView.swift in Sources */,
 				903682F1204A6DB800013479 /* BookmarkViewController.swift in Sources */,
