@@ -8,16 +8,11 @@ struct TransactionsViewModel {
 
     static let realmDateFormat = "MMddyyyy"
 
-    static let formatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter
-    }()
+    static let dateFormatter = DateFormatter()
 
     static let realmBaseFormmater: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = realmDateFormat
-        return formatter
+        dateFormatter.dateFormat = realmDateFormat
+        return dateFormatter
     }()
 
     var backgroundColor: UIColor {
@@ -200,14 +195,12 @@ struct TransactionsViewModel {
     }
 
     static func convert(_ date: String) -> Date? {
-        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = realmDateFormat
         let date = dateFormatter.date(from: date)
         return date
     }
 
     static func title(from date: Date) -> String {
-        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d yyyy"
         return dateFormatter.string(from: date)
     }
