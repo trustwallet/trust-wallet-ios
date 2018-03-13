@@ -57,4 +57,8 @@ class TokenObject: Object {
     var title: String {
         return name.isEmpty ? symbol : (name + " (" + symbol + ")")
     }
+
+    var imagePath: String {
+        return "https://trustwalletapp.com/images/tokens/\(contract).png"
+    }
 }
