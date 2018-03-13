@@ -41,7 +41,7 @@ class InCoordinator: Coordinator {
         keystore: Keystore,
         config: Config = Config(),
         appTracker: AppTracker = AppTracker(),
-        navigator: Navigator
+        navigator: Navigator = Navigator()
     ) {
         self.navigationController = navigationController
         self.initialWallet = wallet

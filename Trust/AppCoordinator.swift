@@ -22,7 +22,7 @@ class AppCoordinator: NSObject, Coordinator {
     init(
         window: UIWindow,
         keystore: Keystore,
-        navigator: Navigator,
+        navigator: Navigator = Navigator(),
         navigationController: UINavigationController = NavigationController()
     ) {
         self.navigationController = navigationController
