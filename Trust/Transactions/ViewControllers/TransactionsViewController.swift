@@ -113,7 +113,7 @@ class TransactionsViewController: UIViewController {
 
         navigationItem.titleView = titleView
         titleView.viewModel = BalanceViewModel()
-        tokensObservation()
+        transactionsObservation()
         NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.stopTimers), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
     }
@@ -123,7 +123,7 @@ class TransactionsViewController: UIViewController {
         fetch()
     }
 
-    private func tokensObservation() {
+    private func transactionsObservation() {
         viewModel.setTransactionsObservation { [weak self] (changes: RealmCollectionChange) in
             guard let strongSelf = self else { return }
             let tableView = strongSelf.tableView
@@ -254,7 +254,7 @@ extension TransactionsViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         viewModel.filterTransactions(by: searchBar.text)
-        tokensObservation()
+        transactionsObservation()
         self.tableView.reloadData()
     }
 }

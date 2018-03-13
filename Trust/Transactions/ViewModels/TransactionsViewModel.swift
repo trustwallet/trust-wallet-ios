@@ -132,12 +132,13 @@ struct TransactionsViewModel {
     }
 
     mutating func fetch() {
+        fetchTransactions()
+        fetchPending()
+        /*
         if TransactionsTracker(sessionID: session.sessionID).fetchingState != .done {
             initialFetch()
-        } else {
-            fetchTransactions()
-            fetchPending()
         }
+        */
     }
 
     private func initialFetch() {
