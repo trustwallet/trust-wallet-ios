@@ -45,13 +45,8 @@ class BalanceCoordinator {
         updateBalance(for: token, with: nil)
         ethTokenObservation = token.observe {[weak self] change in
             switch change {
-            case .change(let properties):
-                for property in properties {
-                    guard property.name == "value", let property = property.newValue as? String else {
-                        return
-                    }
-                    self?.updateBalance(for: token, with: BigInt(property))
-                }
+            case .change:
+                self?.updateBalance(for: token, with: BigInt(token.value))
             case .error, .deleted:
                 break
             }
