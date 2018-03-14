@@ -181,7 +181,7 @@ struct TransactionsViewModel {
             "transactions.value",
             "transactions.localizedOperations.name",
             "transactions.localizedOperations.symbol",
-            "transactions.localizedOperations.contract"
+            "transactions.localizedOperations.contract",
         ].map { property -> NSPredicate in
             if property.contains("transactions") {
                 return NSPredicate(format: "ANY %K CONTAINS[cd] %@", property, text)
