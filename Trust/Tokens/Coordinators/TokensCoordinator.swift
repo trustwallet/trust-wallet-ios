@@ -7,6 +7,7 @@ import TrustKeystore
 protocol TokensCoordinatorDelegate: class {
     func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator)
     func didPress(on token: NonFungibleTokenObject, in coordinator: TokensCoordinator)
+    func didPressDiscover(in coordinator: TokensCoordinator)
 }
 
 class TokensCoordinator: Coordinator {
@@ -159,5 +160,9 @@ extension TokensCoordinator: NewTokenViewControllerDelegate {
 extension TokensCoordinator: NonFungibleTokensViewControllerDelegate {
     func didSelectToken(_ token: NonFungibleTokenObject) {
         delegate?.didPress(on: token, in: self)
+    }
+
+    func didPressDiscover() {
+        delegate?.didPressDiscover(in: self)
     }
 }

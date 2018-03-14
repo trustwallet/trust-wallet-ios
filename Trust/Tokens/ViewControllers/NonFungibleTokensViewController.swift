@@ -6,6 +6,7 @@ import RealmSwift
 
 protocol NonFungibleTokensViewControllerDelegate: class {
     func didSelectToken(_ token: NonFungibleTokenObject)
+    func didPressDiscover()
 }
 
 class NonFungibleTokensViewController: UIViewController {
@@ -43,11 +44,11 @@ class NonFungibleTokensViewController: UIViewController {
         loadingView = LoadingView()
         emptyView = EmptyView(
             title: NSLocalizedString("emptyView.noNonTokens.label.title", value: "No Collectibles Found", comment: ""),
+            actionTitle: NSLocalizedString("collectibles.discover.label.title", value: "Discover", comment: ""),
             onRetry: { [weak self] in
-                self?.fetch()
+                self?.delegate?.didPressDiscover()
         })
         tokensObservation()
-        fetch()
     }
 
     private func tokensObservation() {
@@ -87,6 +88,8 @@ class NonFungibleTokensViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.applyTintAdjustment()
+
+        fetch()
     }
 
     @objc func pullToRefresh() {

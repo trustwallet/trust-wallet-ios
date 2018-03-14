@@ -287,6 +287,11 @@ extension InCoordinator: TokensCoordinatorDelegate {
     func didPress(on token: NonFungibleTokenObject, in coordinator: TokensCoordinator) {
         showTab(.browser(openURL: token.extentalURL))
     }
+
+    func didPressDiscover(in coordinator: TokensCoordinator) {
+        guard let url = URL(string: Constants.dappsBrowserExploreURL) else { return }
+        showTab(.browser(openURL: url))
+    }
 }
 
 extension InCoordinator: PaymentCoordinatorDelegate {
