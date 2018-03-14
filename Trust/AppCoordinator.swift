@@ -3,6 +3,7 @@
 import Foundation
 import TrustKeystore
 import UIKit
+import URLNavigator
 
 class AppCoordinator: NSObject, Coordinator {
     let navigationController: UINavigationController
@@ -15,14 +16,18 @@ class AppCoordinator: NSObject, Coordinator {
     private let lock = Lock()
     private var keystore: Keystore
     private var appTracker = AppTracker()
+    private var navigator: Navigator
+
     var coordinators: [Coordinator] = []
     init(
         window: UIWindow,
         keystore: Keystore,
+        navigator: Navigator = Navigator(),
         navigationController: UINavigationController = NavigationController()
     ) {
         self.navigationController = navigationController
         self.keystore = keystore
+        self.navigator = navigator
         super.init()
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
@@ -48,7 +53,8 @@ class AppCoordinator: NSObject, Coordinator {
             navigationController: navigationController,
             wallet: wallet,
             keystore: keystore,
-            appTracker: appTracker
+            appTracker: appTracker,
+            navigator: navigator
         )
         coordinator.delegate = self
         coordinator.start()

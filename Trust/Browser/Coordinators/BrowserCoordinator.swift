@@ -5,6 +5,7 @@ import UIKit
 import BigInt
 import TrustKeystore
 import RealmSwift
+import URLNavigator
 
 protocol BrowserCoordinatorDelegate: class {
     func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator)
@@ -30,7 +31,8 @@ class BrowserCoordinator: Coordinator {
 
     init(
         session: WalletSession,
-        keystore: Keystore
+        keystore: Keystore,
+        navigator: Navigator
     ) {
         self.navigationController = UINavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
         self.session = session

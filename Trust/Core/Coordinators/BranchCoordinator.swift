@@ -24,4 +24,8 @@ class BranchCoordinator {
             }
         })
     }
+
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return Branch.getInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
 }

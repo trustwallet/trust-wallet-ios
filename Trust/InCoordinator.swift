@@ -4,6 +4,7 @@ import Foundation
 import TrustKeystore
 import UIKit
 import RealmSwift
+import URLNavigator
 
 protocol InCoordinatorDelegate: class {
     func didCancel(in coordinator: InCoordinator)
@@ -18,6 +19,7 @@ class InCoordinator: Coordinator {
     var keystore: Keystore
     var config: Config
     let appTracker: AppTracker
+    let navigator: Navigator
     weak var delegate: InCoordinatorDelegate?
     var transactionCoordinator: TransactionCoordinator? {
         return self.coordinators.flatMap { $0 as? TransactionCoordinator }.first
@@ -38,13 +40,16 @@ class InCoordinator: Coordinator {
         wallet: Wallet,
         keystore: Keystore,
         config: Config = Config(),
-        appTracker: AppTracker = AppTracker()
+        appTracker: AppTracker = AppTracker(),
+        navigator: Navigator = Navigator()
     ) {
         self.navigationController = navigationController
         self.initialWallet = wallet
         self.keystore = keystore
         self.config = config
         self.appTracker = appTracker
+        self.navigator = navigator
+        self.register(with: navigator)
     }
 
     func start() {
@@ -103,7 +108,7 @@ class InCoordinator: Coordinator {
             }
         }
 
-        let coordinator = BrowserCoordinator(session: session, keystore: keystore)
+        let coordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator)
         coordinator.delegate = self
         coordinator.start()
         coordinator.rootViewController.tabBarItem = UITabBarItem(
