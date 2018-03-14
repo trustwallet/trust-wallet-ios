@@ -78,8 +78,8 @@ struct TokenViewCellViewModel {
         return .white
     }
 
-    var placeHolder: UIImage? {
-        return R.image.ethereum_logo_256()
+    var placeholderImage: UIImage? {
+        return R.image.ethereum_token_logo()
     }
 
     var imageUrl: URL? {
