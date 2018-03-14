@@ -4,8 +4,13 @@ import Foundation
 import RealmSwift
 import BigInt
 import TrustKeystore
+import Realm
 
-class TokenObject: Object {
+struct TokenObjectList: Decodable {
+    let contract: TokenObject
+}
+
+class TokenObject: Object, Decodable {
     @objc dynamic var contract: String = ""
     @objc dynamic var name: String = ""
     @objc dynamic var symbol: String = ""
@@ -33,6 +38,37 @@ class TokenObject: Object {
         self.isDisabled = isDisabled
     }
 
+    private enum TokenObjectCodingKeys: String, CodingKey {
+        case address
+        case name
+        case symbol
+        case decimals
+    }
+
+    convenience required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: TokenObjectCodingKeys.self)
+        var contract = try container.decode(String.self, forKey: .address)
+        let name = try container.decode(String.self, forKey: .name)
+        let symbol = try container.decode(String.self, forKey: .symbol)
+        let decimals = try container.decode(Int.self, forKey: .decimals)
+        if let convertedAddress = Address(string: contract)?.description {
+            contract = convertedAddress
+        }
+        self.init(contract: contract, name: name, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
+    }
+
+    required init() {
+        super.init()
+    }
+
+    required init(value: Any, schema: RLMSchema) {
+        super.init(value: value, schema: schema)
+    }
+
+    required init(realm: RLMRealm, schema: RLMObjectSchema) {
+        super.init(realm: realm, schema: schema)
+    }
+
     var address: Address {
         return Address(string: contract)!
     }
@@ -56,5 +92,9 @@ class TokenObject: Object {
 
     var title: String {
         return name.isEmpty ? symbol : (name + " (" + symbol + ")")
+    }
+
+    var imagePath: String {
+        return "https://trustwalletapp.com/images/tokens/\(contract.lowercased()).png"
     }
 }

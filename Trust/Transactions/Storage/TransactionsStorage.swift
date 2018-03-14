@@ -49,12 +49,6 @@ class TransactionsStorage {
         realm.beginWrite()
         realm.add(trnasactions, update: true)
         try! realm.commitWrite()
-
-        // store contract addresses associated with transactions
-        let tokens = self.tokens(from: items)
-        if !tokens.isEmpty {
-            TokensDataStore.update(in: realm, tokens: tokens)
-        }
     }
 
     private func tokens(from transactions: [Transaction]) -> [Token] {
@@ -98,9 +92,11 @@ class TransactionsStorage {
     }
 
     func update(state: TransactionState, for transaction: Transaction) {
-        realm.beginWrite()
-        transaction.internalState = state.rawValue
-        try! realm.commitWrite()
+        try! realm.write {
+            let tempObject = transaction
+            tempObject.internalState = state.rawValue
+            realm.add(tempObject, update: true)
+        }
     }
 
     func removeTransactions(for states: [TransactionState]) {

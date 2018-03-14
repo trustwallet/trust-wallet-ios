@@ -83,6 +83,6 @@ struct TokenViewCellViewModel {
     }
 
     var imageUrl: URL? {
-        return ticker?.imageURL
+        return URL(string: token.imagePath)
     }
 }

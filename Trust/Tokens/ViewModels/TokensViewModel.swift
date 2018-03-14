@@ -9,7 +9,7 @@ enum TokenItem {
     case token(TokenObject)
 }
 
-struct TokensViewModel {
+class TokensViewModel {
     let config: Config
 
     let store: TokensDataStore
@@ -58,6 +58,13 @@ struct TokensViewModel {
         return UIFont.systemFont(ofSize: 13, weight: .light)
     }
 
+    private var operationQueue: OperationQueue = {
+        let queue = OperationQueue()
+        queue.qualityOfService = .background
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
+
     init(
         config: Config = Config(),
         address: Address,
@@ -69,12 +76,10 @@ struct TokensViewModel {
         self.store = store
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
-        updateEthBalance()
-        updateTokensBalances()
-        updateTickers()
+        runOperations()
     }
 
-    mutating func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<TokenObject>>) -> Void) {
+    func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<TokenObject>>) -> Void) {
         tokensObserver = tokens.observe(block)
     }
 
@@ -115,41 +120,61 @@ struct TokensViewModel {
         return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token))
     }
 
-    func updateTickers() {
-        tokensNetwork.tickers(for: store.enabledObject) { result in
-            guard let tickers = result else { return }
-            self.store.tickers = tickers
-        }
-    }
-
     func updateEthBalance() {
         tokensNetwork.ethBalance { result in
-            guard let balance = result, let token = self.store.objects.first (where: { $0.name == self.config.server.name })  else { return }
+            guard let balance = result, let token = self.store.objects.first (where: { $0.name == self.config.server.name }), self.operationQueue.operationCount == 0  else { return }
             self.store.update(token: token, action: .updateValue(balance.value))
         }
     }
 
-    func updateTokensBalances() {
-        store.enabledObject.filter { $0.name != self.config.server.name }.forEach { token in
-            tokensNetwork.tokenBalance(for: token) { result in
-                guard let balance = result.1 else { return }
-                self.store.update(token: result.0, action: TokenAction.updateValue(balance.value))
+    private func runOperations() {
+
+        guard operationQueue.operationCount == 0, let chaineToken = self.store.objects.first (where: { $0.name == self.config.server.name }) else {
+            return
+        }
+
+        let ethBalanceOperation = EthBalanceOperation(network: tokensNetwork)
+
+        let tokensOperation = TokensOperation(network: tokensNetwork, address: address)
+
+        let tokensBalanceOperation = TokensBalanceOperation(network: tokensNetwork, address: address)
+
+        let tokensTickerOperation = TokensTickerOperation(network: tokensNetwork, address: address)
+
+        let tempChaine = TokensDataStore.etherToken(for: config)
+        tempChaine.value = chaineToken.value
+
+        operationQueue.addOperation(ethBalanceOperation)
+
+        ethBalanceOperation.completionBlock = { [weak self] in
+            guard let strongSelf = self else { return }
+            tempChaine.value = ethBalanceOperation.balance.value.description
+            tokensOperation.tokens.append(tempChaine)
+            strongSelf.operationQueue.addOperation(tokensOperation)
+        }
+
+        tokensOperation.completionBlock = { [weak self] in
+            guard let strongSelf = self else { return }
+            tokensBalanceOperation.tokens = tokensOperation.tokens
+            strongSelf.operationQueue.addOperation(tokensBalanceOperation)
+        }
+
+        tokensBalanceOperation.completionBlock = { [weak self] in
+            guard let strongSelf = self else { return }
+            tokensTickerOperation.tokens = tokensBalanceOperation.tokens
+            strongSelf.operationQueue.addOperation(tokensTickerOperation)
+        }
+
+        tokensTickerOperation.completionBlock = { [weak self] in
+            guard let strongSelf = self else { return }
+            DispatchQueue.main.async {
+                strongSelf.store.tickers = tokensTickerOperation.tickers
+                strongSelf.store.add(tokens: tokensTickerOperation.tokens)
             }
         }
     }
 
-    func fetchTokensList() {
-        tokensNetwork.tokensList(for: address) { result in
-            guard let tokensList = result else { return }
-            let tokens: [Token] = tokensList.flatMap { .from(token: $0.contract) }
-            TokensDataStore.update(in: self.store.realm, tokens: tokens)
-        }
-    }
-
     func fetch() {
-        updateTickers()
-        updateEthBalance()
-        updateTokensBalances()
-        fetchTokensList()
+       runOperations()
     }
 }

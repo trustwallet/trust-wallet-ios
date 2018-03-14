@@ -71,15 +71,15 @@ class TokensDataStore {
     }
 
     func add(tokens: [Object]) {
-        realm.beginWrite()
-        realm.add(tokens, update: true)
-        try! realm.commitWrite()
+        try! realm.write {
+            realm.add(tokens, update: true)
+        }
     }
 
     func delete(tokens: [Object]) {
-        realm.beginWrite()
-        realm.delete(tokens)
-        try! realm.commitWrite()
+        try! realm.write {
+            realm.delete(tokens)
+        }
     }
 
     func deleteAll() {
@@ -98,20 +98,6 @@ class TokensDataStore {
                 token.isDisabled = value
             }
         }
-    }
-
-    static func update(in realm: Realm, tokens: [Token]) {
-        realm.beginWrite()
-        for token in tokens {
-            let update: [String: Any] = [
-                "contract": token.address.description,
-                "name": token.name,
-                "symbol": token.symbol,
-                "decimals": token.decimals,
-                ]
-            realm.create(TokenObject.self, value: update, update: true)
-        }
-        try! realm.commitWrite()
     }
 
     static func etherToken(for config: Config) -> TokenObject {

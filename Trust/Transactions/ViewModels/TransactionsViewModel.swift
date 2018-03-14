@@ -132,12 +132,13 @@ struct TransactionsViewModel {
     }
 
     mutating func fetch() {
+        fetchTransactions()
+        fetchPending()
+        /*
         if TransactionsTracker(sessionID: session.sessionID).fetchingState != .done {
             initialFetch()
-        } else {
-            fetchTransactions()
-            fetchPending()
         }
+        */
     }
 
     private func initialFetch() {
@@ -157,7 +158,7 @@ struct TransactionsViewModel {
     }
 
     func fetchTransactions() {
-        self.network.transactions(for: session.account.address, startBlock: statBlock(), page: 0) { result in
+        self.network.transactions(for: session.account.address, startBlock: 1, page: 0) { result in
             guard let transactions = result.0 else { return }
             self.storage.add(transactions)
         }
