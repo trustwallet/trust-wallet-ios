@@ -76,7 +76,9 @@ class TokensViewModel {
         self.store = store
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
-        runOperations()
+        updateEthBalance { [weak self] _ in
+            self?.runOperations()
+        }
     }
 
     func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<TokenObject>>) -> Void) {
@@ -120,10 +122,14 @@ class TokensViewModel {
         return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token))
     }
 
-    func updateEthBalance() {
+    func updateEthBalance(completion: ((_ completed: Bool) -> Void)? = nil) {
         tokensNetwork.ethBalance { result in
-            guard let balance = result, let token = self.store.objects.first (where: { $0.name == self.config.server.name }), self.operationQueue.operationCount == 0  else { return }
+            guard let balance = result, let token = self.store.objects.first (where: { $0.name == self.config.server.name }), self.operationQueue.operationCount == 0  else {
+                completion?(true)
+                return
+            }
             self.store.update(token: token, action: .updateValue(balance.value))
+            completion?(true)
         }
     }
 
