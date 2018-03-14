@@ -8,10 +8,6 @@ class TransactionsStorage {
 
     let realm: Realm
 
-    var transactions: Results<Transaction> {
-        return realm.objects(Transaction.self).sorted(byKeyPath: "date", ascending: false)
-    }
-
     var transactionsCategory: Results<TransactionCategory> {
         return realm.objects(TransactionCategory.self)
     }
@@ -20,10 +16,6 @@ class TransactionsStorage {
         realm: Realm
     ) {
         self.realm = realm
-    }
-
-    var count: Int {
-        return objects.count
     }
 
     var objects: [Transaction] {

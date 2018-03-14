@@ -8,11 +8,10 @@ struct TransactionsViewModel {
 
     static let realmDateFormat = "MMddyyyy"
 
-    static let dateFormatter = DateFormatter()
-
     static let realmBaseFormmater: DateFormatter = {
-        dateFormatter.dateFormat = realmDateFormat
-        return dateFormatter
+        let formatter = DateFormatter()
+        formatter.dateFormat = realmDateFormat
+        return formatter
     }()
 
     var backgroundColor: UIColor {
@@ -54,7 +53,7 @@ struct TransactionsViewModel {
 
     var transactions: Results<TransactionCategory>
 
-    var tokensObserver: NotificationToken?
+    var transactionsObserver: NotificationToken?
 
     let config: Config
 
@@ -78,7 +77,7 @@ struct TransactionsViewModel {
     }
 
     mutating func setTransactionsObservation(with block: @escaping (RealmCollectionChange<Results<TransactionCategory>>) -> Void) {
-        tokensObserver = transactions.observe(block)
+        transactionsObserver = transactions.observe(block)
     }
 
     func numberOfItems(for section: Int) -> Int {
@@ -156,15 +155,17 @@ struct TransactionsViewModel {
     }
 
     func fetchPending() {
-        self.storage.transactions.forEach {
-            self.network.update(for: $0, completion: { result in
-                switch result.1 {
-                case .deleted:
-                    self.storage.delete([result.0])
-                default:
-                    self.storage.update(state: result.1, for: result.0)
-                }
-            })
+        self.storage.transactionsCategory.forEach { transactions in
+            for transaction in transactions.transactions {
+                self.network.update(for: transaction, completion: { result in
+                    switch result.1 {
+                    case .deleted:
+                        self.storage.delete([result.0])
+                    default:
+                        self.storage.update(state: result.1, for: result.0)
+                    }
+                })
+            }
         }
     }
 
@@ -193,12 +194,14 @@ struct TransactionsViewModel {
     }
 
     static func convert(_ date: String) -> Date? {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = realmDateFormat
         let date = dateFormatter.date(from: date)
         return date
     }
 
     static func title(from date: Date) -> String {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d yyyy"
         return dateFormatter.string(from: date)
     }
