@@ -348,6 +348,7 @@
 		771D53632050AFC700C79485 /* WalletType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D53622050AFC700C79485 /* WalletType.swift */; };
 		771D536E2058BB0D00C79485 /* BookmarkCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D536C2058BB0D00C79485 /* BookmarkCoordinator.swift */; };
 		771D536F2058BB0D00C79485 /* BrowserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D536D2058BB0D00C79485 /* BrowserCoordinator.swift */; };
+		771D5371205923F500C79485 /* NetworkConditionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D5370205923F500C79485 /* NetworkConditionViewModel.swift */; };
 		7721A6BE202A5677004DB16C /* DecryptError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6BD202A5677004DB16C /* DecryptError.swift */; };
 		7721A6C8202EF81B004DB16C /* CustomRPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6C7202EF81B004DB16C /* CustomRPC.swift */; };
 		7721A6CC202EFBC5004DB16C /* AddCustomNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6CB202EFBC5004DB16C /* AddCustomNetworkViewController.swift */; };
@@ -811,6 +812,7 @@
 		771D53622050AFC700C79485 /* WalletType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletType.swift; sourceTree = "<group>"; };
 		771D536C2058BB0D00C79485 /* BookmarkCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkCoordinator.swift; sourceTree = "<group>"; };
 		771D536D2058BB0D00C79485 /* BrowserCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserCoordinator.swift; sourceTree = "<group>"; };
+		771D5370205923F500C79485 /* NetworkConditionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConditionViewModel.swift; sourceTree = "<group>"; };
 		7721A6BD202A5677004DB16C /* DecryptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecryptError.swift; sourceTree = "<group>"; };
 		7721A6BF202B1D3E004DB16C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7721A6C0202B1D43004DB16C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -1172,6 +1174,7 @@
 				298542E21FBA722F00CB5081 /* ContainerView.swift */,
 				29DF40091FD3E80A000077CA /* TabBarController.swift */,
 				73D30FF1204F274B00433377 /* NetworkStateView.swift */,
+				771D5370205923F500C79485 /* NetworkConditionViewModel.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -3239,6 +3242,7 @@
 				290B2B611F9179880053C83E /* AccountViewModel.swift in Sources */,
 				2963B6C11F9AE0E4003063C1 /* Data.swift in Sources */,
 				2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */,
+				771D5371205923F500C79485 /* NetworkConditionViewModel.swift in Sources */,
 				2912CD321F6A83EE00C6CBE3 /* WelcomeViewController.swift in Sources */,
 				29F114F61FA8147300114A29 /* RequestCoordinator.swift in Sources */,
 				29525B9E203C34CF00900DE9 /* SupportViewModel.swift in Sources */,

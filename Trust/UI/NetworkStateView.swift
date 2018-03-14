@@ -2,38 +2,20 @@
 
 import UIKit
 
-class NetworkStateView: UIView {
+enum NetworkCondition {
+    case good(Int)
+    case bad
 
-    enum NetworkCondition {
-        case good(Int)
-        case bad
-
-        func localizedTitle() -> String {
-            return Config().server.name
-        }
-
-        func color() -> UIColor {
-            switch self {
-            case .good:
-                return Colors.green
-            case .bad:
-                return Colors.red
-            }
-        }
-
-        func block() -> Int {
-            switch self {
-            case .good(let block):
-                return block
-            case .bad:
-                return 0
-            }
-        }
+    static func from(_ state: Bool, _ block: Int) -> NetworkCondition {
+        return state == true ? .good(block) : .bad
     }
+}
 
-    var currentState: NetworkCondition? = nil {
+class NetworkStateView: UIView {
+    var viewModel: NetworkConditionViewModel? = nil {
         didSet {
-            updateLayout()
+            guard let viewModel = viewModel else { return }
+            updateLayout(with: viewModel)
         }
     }
 
@@ -95,21 +77,15 @@ class NetworkStateView: UIView {
         return label
     }()
 
-    private let formmater = StringFormatter()
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
     }
 
-    private func updateLayout() {
-        guard let state = currentState else {
-            return
-        }
-
-        stateRoundView.backgroundColor = state.color()
-        stateViewLabel.text = state.localizedTitle()
-        blockViewLabel.text = formmater.formatter(for: state.block())
+    private func updateLayout(with viewModel: NetworkConditionViewModel) {
+        stateRoundView.backgroundColor = viewModel.color
+        stateViewLabel.text = viewModel.localizedTitle
+        blockViewLabel.text = viewModel.block
     }
 
     private func setupLayout() {
