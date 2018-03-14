@@ -42,7 +42,7 @@ class FakeTokensNetwork: TokensNetworkProtocol {
         
     }
 
-    func tokensList(for address: TrustKeystore.Address, completion: @escaping (([TokenListItem]?)) -> Void) {
+    func tokensList(for address: TrustKeystore.Address, completion: @escaping (([TokenObject]?)) -> Void) {
 
     }
 }
