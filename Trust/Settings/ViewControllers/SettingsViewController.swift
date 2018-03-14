@@ -31,8 +31,20 @@ class SettingsViewController: FormViewController {
     }()
 
     let session: WalletSession
-    init(session: WalletSession) {
+    let keystore: Keystore
+    let balanceCoordinator: TokensBalanceService
+    let accountsCoordinator: AccountsCoordinator
+
+    init(
+        session: WalletSession,
+        keystore: Keystore,
+        balanceCoordinator: TokensBalanceService,
+        accountsCoordinator: AccountsCoordinator
+    ) {
         self.session = session
+        self.keystore = keystore
+        self.balanceCoordinator = balanceCoordinator
+        self.accountsCoordinator = accountsCoordinator
         super.init(nibName: nil, bundle: nil)
         self.chaineStateObservation()
     }
@@ -73,10 +85,13 @@ class SettingsViewController: FormViewController {
                 cell.imageView?.image = R.image.settings_server()
             }
 
-            <<< AppFormAppearance.button { button in
-                button.cellStyle = .value1
-            }.onCellSelection { [unowned self] _, _ in
-                self.run(action: .wallets)
+            <<< AppFormAppearance.button { [weak self] row in
+                guard let `self` = self else { return }
+                row.cellStyle = .value1
+                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+                    return self.accountsCoordinator.accountsViewController
+                }, onDismiss: { _ in
+            })
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_wallet()

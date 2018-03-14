@@ -11,7 +11,6 @@ protocol AccountsViewControllerDelegate: class {
 
 class AccountsViewController: UITableViewController {
     weak var delegate: AccountsViewControllerDelegate?
-    var allowsAccountDeletion: Bool = false
     var headerTitle: String?
     var viewModel: AccountsViewModel {
         return AccountsViewModel(
@@ -83,7 +82,7 @@ class AccountsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return allowsAccountDeletion && (EtherKeystore.current != viewModel.wallet(for: indexPath) || viewModel.isLastWallet)
+        return (EtherKeystore.current != viewModel.wallet(for: indexPath) || viewModel.isLastWallet)
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

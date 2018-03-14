@@ -21,8 +21,24 @@ class SettingsCoordinator: Coordinator {
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
     var coordinators: [Coordinator] = []
 
+    lazy var accountsCoordinator: AccountsCoordinator = {
+        let coordinator = AccountsCoordinator(
+            navigationController: navigationController,
+            keystore: keystore,
+            session: session,
+            balanceCoordinator: balanceCoordinator
+        )
+        coordinator.delegate = self
+        return coordinator
+    }()
+
     lazy var rootViewController: SettingsViewController = {
-        let controller = SettingsViewController(session: session)
+        let controller = SettingsViewController(
+            session: session,
+            keystore: keystore,
+            balanceCoordinator: balanceCoordinator,
+            accountsCoordinator: accountsCoordinator
+        )
         controller.delegate = self
         controller.modalPresentationStyle = .pageSheet
         return controller
@@ -41,23 +57,12 @@ class SettingsCoordinator: Coordinator {
         self.session = session
         self.storage = storage
         self.balanceCoordinator = balanceCoordinator
+
+        addCoordinator(accountsCoordinator)
     }
 
     func start() {
         navigationController.viewControllers = [rootViewController]
-    }
-
-    @objc func showAccounts() {
-        let coordinator = AccountsCoordinator(
-            navigationController: NavigationController(),
-            keystore: keystore,
-            session: session,
-            balanceCoordinator: balanceCoordinator
-        )
-        coordinator.delegate = self
-        coordinator.start()
-        addCoordinator(coordinator)
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
     func restart(for wallet: Wallet) {
@@ -68,9 +73,7 @@ class SettingsCoordinator: Coordinator {
 extension SettingsCoordinator: SettingsViewControllerDelegate {
     func didAction(action: SettingsAction, in viewController: SettingsViewController) {
         switch action {
-        case .wallets:
-            showAccounts()
-        case .RPCServer, .currency, .DAppsBrowser:
+        case .RPCServer, .currency:
             restart(for: session.account)
         case .pushNotifications(let change):
             switch change {

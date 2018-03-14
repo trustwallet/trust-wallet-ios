@@ -20,14 +20,12 @@ struct NetworkConditionViewModel {
 
     var color: UIColor {
         switch condition {
-        case .good:
-            return Colors.green
-        case .bad:
-            return Colors.red
+        case .good: return Colors.green
+        case .bad: return Colors.red
         }
     }
 
-    var block: String {
+    var block: String? {
         switch condition {
         case .good(let block): return formmater.formatter(for: block)
         case .bad: return "--"

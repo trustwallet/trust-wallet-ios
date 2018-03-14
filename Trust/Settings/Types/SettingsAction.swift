@@ -3,9 +3,7 @@
 import Foundation
 
 enum SettingsAction {
-    case wallets
     case RPCServer
     case currency
-    case DAppsBrowser
     case pushNotifications(NotificationChanged)
 }

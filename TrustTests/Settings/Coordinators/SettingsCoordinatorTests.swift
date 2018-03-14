@@ -4,22 +4,7 @@ import XCTest
 @testable import Trust
 
 class SettingsCoordinatorTests: XCTestCase {
-    
-    func testShowAccounts() {
-        let coordinator = SettingsCoordinator(
-            navigationController: FakeNavigationController(),
-            keystore: FakeEtherKeystore(),
-            session: .make(),
-            storage: FakeTransactionsStorage(),
-            balanceCoordinator: FakeGetBalanceCoordinator()
-        )
-        
-        coordinator.showAccounts()
-        
-        XCTAssertTrue(coordinator.coordinators.first is AccountsCoordinator)
-        XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is AccountsViewController)
-    }
-    
+
     func testOnDeleteCleanStorage() {
         let storage = FakeTransactionsStorage()
         let coordinator = SettingsCoordinator(

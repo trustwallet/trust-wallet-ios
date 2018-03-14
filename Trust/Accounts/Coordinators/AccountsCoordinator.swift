@@ -21,9 +21,7 @@ class AccountsCoordinator: Coordinator {
 
     lazy var accountsViewController: AccountsViewController = {
         let controller = AccountsViewController(keystore: keystore, balanceCoordinator: balanceCoordinator)
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add))
-        controller.allowsAccountDeletion = true
         controller.delegate = self
         return controller
     }()
