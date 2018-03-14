@@ -215,7 +215,6 @@
 		29E2E33A1F7A008C000CF94A /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E3391F7A008C000CF94A /* UIView.swift */; };
 		29E2E33E1F7A2423000CF94A /* TransactionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */; };
 		29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */; };
-		29E6E06C1FE897D90079265A /* BrowserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6E06B1FE897D90079265A /* BrowserCoordinator.swift */; };
 		29E6E06E1FE897EE0079265A /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6E06D1FE897EE0079265A /* BrowserViewController.swift */; };
 		29E6E0701FEA12910079265A /* TransactionConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6E06F1FEA12910079265A /* TransactionConfigurator.swift */; };
 		29E6E0721FEA200D0079265A /* ConfirmPaymentDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6E0711FEA200D0079265A /* ConfirmPaymentDetailsViewModel.swift */; };
@@ -347,6 +346,8 @@
 		771AA964200D5EDB00D25403 /* WordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA963200D5EDB00D25403 /* WordCollectionViewCell.swift */; };
 		771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */; };
 		771D53632050AFC700C79485 /* WalletType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D53622050AFC700C79485 /* WalletType.swift */; };
+		771D536E2058BB0D00C79485 /* BookmarkCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D536C2058BB0D00C79485 /* BookmarkCoordinator.swift */; };
+		771D536F2058BB0D00C79485 /* BrowserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D536D2058BB0D00C79485 /* BrowserCoordinator.swift */; };
 		7721A6BE202A5677004DB16C /* DecryptError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6BD202A5677004DB16C /* DecryptError.swift */; };
 		7721A6C8202EF81B004DB16C /* CustomRPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6C7202EF81B004DB16C /* CustomRPC.swift */; };
 		7721A6CC202EFBC5004DB16C /* AddCustomNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6CB202EFBC5004DB16C /* AddCustomNetworkViewController.swift */; };
@@ -375,7 +376,6 @@
 		77E81D962036883B00534C99 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E81D952036883B00534C99 /* NotificationsViewModel.swift */; };
 		902CAB592051818B00F96FFE /* BookmarkViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 902CAB582051818A00F96FFE /* BookmarkViewCell.xib */; };
 		902CAB5B2051835E00F96FFE /* BookmarkViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902CAB5A2051835E00F96FFE /* BookmarkViewCell.swift */; };
-		903682EF204A6C3700013479 /* BookmarkCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682EE204A6C3700013479 /* BookmarkCoordinator.swift */; };
 		903682F1204A6DB800013479 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682F0204A6DB800013479 /* BookmarkViewController.swift */; };
 		903682F4204A714C00013479 /* BookmarksStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682F3204A714C00013479 /* BookmarksStore.swift */; };
 		903682F6204A71B000013479 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682F5204A71B000013479 /* Bookmark.swift */; };
@@ -671,7 +671,6 @@
 		29E2E3391F7A008C000CF94A /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHeaderView.swift; sourceTree = "<group>"; };
 		29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonRow.swift; sourceTree = "<group>"; };
-		29E6E06B1FE897D90079265A /* BrowserCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserCoordinator.swift; sourceTree = "<group>"; };
 		29E6E06D1FE897EE0079265A /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		29E6E06F1FEA12910079265A /* TransactionConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionConfigurator.swift; sourceTree = "<group>"; };
 		29E6E0711FEA200D0079265A /* ConfirmPaymentDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPaymentDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -810,6 +809,8 @@
 		771AA963200D5EDB00D25403 /* WordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCollectionViewCell.swift; sourceTree = "<group>"; };
 		771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WordCollectionViewCell.xib; sourceTree = "<group>"; };
 		771D53622050AFC700C79485 /* WalletType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletType.swift; sourceTree = "<group>"; };
+		771D536C2058BB0D00C79485 /* BookmarkCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkCoordinator.swift; sourceTree = "<group>"; };
+		771D536D2058BB0D00C79485 /* BrowserCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserCoordinator.swift; sourceTree = "<group>"; };
 		7721A6BD202A5677004DB16C /* DecryptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecryptError.swift; sourceTree = "<group>"; };
 		7721A6BF202B1D3E004DB16C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7721A6C0202B1D43004DB16C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -842,7 +843,6 @@
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
 		902CAB582051818A00F96FFE /* BookmarkViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkViewCell.xib; sourceTree = "<group>"; };
 		902CAB5A2051835E00F96FFE /* BookmarkViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewCell.swift; sourceTree = "<group>"; };
-		903682EE204A6C3700013479 /* BookmarkCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCoordinator.swift; sourceTree = "<group>"; };
 		903682F0204A6DB800013479 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
 		903682F3204A714C00013479 /* BookmarksStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksStore.swift; sourceTree = "<group>"; };
 		903682F5204A71B000013479 /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
@@ -1875,25 +1875,15 @@
 		29E6E0681FE897BB0079265A /* Browser */ = {
 			isa = PBXGroup;
 			children = (
+				771D536B2058BB0D00C79485 /* Coordinators */,
 				903682F2204A712E00013479 /* Storage */,
 				29C70C7D20199ADE0072E454 /* Factory */,
 				77B3BF332017D0C400EEC15A /* ViewModel */,
 				77B3BF2C2017CD1A00EEC15A /* Views */,
 				771AA94C1FF971BB00D25403 /* Types */,
 				29E6E06A1FE897CD0079265A /* ViewControllers */,
-				29E6E0691FE897C70079265A /* Coordinators */,
 			);
 			path = Browser;
-			sourceTree = "<group>";
-		};
-		29E6E0691FE897C70079265A /* Coordinators */ = {
-			isa = PBXGroup;
-			children = (
-				29E6E06B1FE897D90079265A /* BrowserCoordinator.swift */,
-				903682EE204A6C3700013479 /* BookmarkCoordinator.swift */,
-				BB3B86C2204CFADC0061FCBA /* BrowserCoordinator+Navigable.swift */,
-			);
-			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		29E6E06A1FE897CD0079265A /* ViewControllers */ = {
@@ -2284,6 +2274,15 @@
 				BBD4E415205654E4005545E9 /* EthTypedData.swift */,
 			);
 			path = Types;
+			sourceTree = "<group>";
+		};
+		771D536B2058BB0D00C79485 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				771D536C2058BB0D00C79485 /* BookmarkCoordinator.swift */,
+				771D536D2058BB0D00C79485 /* BrowserCoordinator.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		77872D2A202514930032D687 /* Wallet */ = {
@@ -3025,7 +3024,6 @@
 				29F1C85820036926003780D8 /* AppTracker.swift in Sources */,
 				293E62711FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift in Sources */,
 				291D73C61F7F500D00A8AB56 /* TransactionItemState.swift in Sources */,
-				903682EF204A6C3700013479 /* BookmarkCoordinator.swift in Sources */,
 				29F1C85120032688003780D8 /* Address.swift in Sources */,
 				295B61D11FE7B20400642E60 /* TokensHeaderView.swift in Sources */,
 				29FA00D4201EC662002F7DC5 /* NSObject.swift in Sources */,
@@ -3056,6 +3054,7 @@
 				293248861F88CCE6008A9818 /* SplashError.swift in Sources */,
 				296421951F70C1EC00EB363B /* LoadingView.swift in Sources */,
 				2961BD071FB146EB00C4B840 /* ChainState.swift in Sources */,
+				771D536E2058BB0D00C79485 /* BookmarkCoordinator.swift in Sources */,
 				A2B7ECAC2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift in Sources */,
 				73D26837202E827E009777A1 /* DecimalFormatter.swift in Sources */,
 				29285B421F6FB3E60044CF29 /* SendViewController.swift in Sources */,
@@ -3118,6 +3117,7 @@
 				2963A28A1FC402940095447D /* LocalizedOperationObject.swift in Sources */,
 				73B1A6BE204B55FA001F546C /* NonFungibleTokenCellViewModel.swift in Sources */,
 				73200B7020488C9300118A82 /* TrustNetworkProtocol.swift in Sources */,
+				771D536F2058BB0D00C79485 /* BrowserCoordinator.swift in Sources */,
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
 				294EC1D81FD7FBAB0065EB20 /* BiometryAuthenticationType.swift in Sources */,
 				771D53632050AFC700C79485 /* WalletType.swift in Sources */,
@@ -3158,7 +3158,6 @@
 				291F52A51F6B762300B369AB /* EtherServiceRequest.swift in Sources */,
 				CCA4FE361FD4282400749AE4 /* DeviceChecker.swift in Sources */,
 				732086B9201508690047F605 /* SplashCoordinator.swift in Sources */,
-				29E6E06C1FE897D90079265A /* BrowserCoordinator.swift in Sources */,
 				77872D292025116E0032D687 /* EnterPasswordCoordinator.swift in Sources */,
 				775DF42D2037D338009CD082 /* BranchCoordinator.swift in Sources */,
 				298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */,
