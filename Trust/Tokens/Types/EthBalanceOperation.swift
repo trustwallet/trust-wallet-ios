@@ -4,9 +4,7 @@ import UIKit
 import BigInt
 
 class EthBalanceOperation: TrustOperation {
-
     private var network: TokensNetworkProtocol
-
     var balance: Balance = Balance(value: BigInt(0))
 
     init(network: TokensNetworkProtocol) {

@@ -3,11 +3,8 @@
 import TrustKeystore
 
 class TokensOperation: TrustOperation {
-
     private var network: TokensNetworkProtocol
-
     private let address: Address
-
     var tokens: [TokenObject] = [TokenObject]()
 
     init(

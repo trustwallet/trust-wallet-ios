@@ -4,13 +4,9 @@ import UIKit
 import TrustKeystore
 
 class TokensTickerOperation: TrustOperation {
-
     private var network: TokensNetworkProtocol
-
     private let address: Address
-
     var tokens: [TokenObject] = [TokenObject]()
-
     var tickers: [CoinTicker] = [CoinTicker]()
 
     init(

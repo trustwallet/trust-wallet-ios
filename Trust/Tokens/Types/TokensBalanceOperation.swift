@@ -4,13 +4,9 @@ import UIKit
 import TrustKeystore
 
 class TokensBalanceOperation: TrustOperation {
-
     private var network: TokensNetworkProtocol
-
     private let address: Address
-
     var tokens: [TokenObject] = [TokenObject]()
-
     private var pos = 0
 
     init(
