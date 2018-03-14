@@ -257,6 +257,10 @@ class SettingsViewController: FormViewController, Coordinator {
             }
         }.cellSetup { cell, _ in
             cell.imageView?.image = type.image
+        }.cellUpdate { cell, _ in
+            cell.accessoryType = .disclosureIndicator
+            cell.textLabel?.textAlignment = .left
+            cell.textLabel?.textColor = .black
         }
     }
 
