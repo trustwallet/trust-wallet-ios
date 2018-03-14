@@ -8,7 +8,8 @@ protocol SettingsViewControllerDelegate: class {
     func didAction(action: SettingsAction, in viewController: SettingsViewController)
 }
 
-class SettingsViewController: FormViewController {
+class SettingsViewController: FormViewController, Coordinator {
+    var coordinators: [Coordinator] = []
     struct Values {
         static let currencyPopularKey = "0"
         static let currencyAllKey = "1"
@@ -230,12 +231,17 @@ class SettingsViewController: FormViewController {
     }
 
     func setPasscode(completion: ((Bool) -> Void)? = .none) {
-        let lock = LockCreatePasscodeCoordinator(navigationController: self.navigationController!, model: LockCreatePasscodeViewModel())
-        lock.start()
-        lock.lockViewController.willFinishWithResult = { result in
+        let coordinator = LockCreatePasscodeCoordinator(
+            model: LockCreatePasscodeViewModel()
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        coordinator.lockViewController.willFinishWithResult = { [weak self] result in
             completion?(result)
-            lock.stop()
+            self?.navigationController?.dismiss(animated: true, completion: nil)
         }
+        addCoordinator(coordinator)
+        navigationController?.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
     private func linkProvider(
@@ -251,7 +257,6 @@ class SettingsViewController: FormViewController {
             }
         }.cellSetup { cell, _ in
             cell.imageView?.image = type.image
-            cell.accessoryType = .disclosureIndicator
         }
     }
 
@@ -268,5 +273,13 @@ class SettingsViewController: FormViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension SettingsViewController: LockCreatePasscodeCoordinatorDelegate {
+    func didCancel(in coordinator: LockCreatePasscodeCoordinator) {
+        coordinator.lockViewController.willFinishWithResult?(false)
+        navigationController?.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 }
