@@ -63,7 +63,7 @@ class NonFungibleTokensViewController: UIViewController {
                 tableView.beginUpdates()
                 var insertIndexSet = IndexSet()
                 insertions.forEach { insertIndexSet.insert($0) }
-                tableView.insertSections(insertIndexSet, with: insertions.count == 1 ? .top : .none)
+                tableView.insertSections(insertIndexSet, with: .none)
                 var deleteIndexSet = IndexSet()
                 deletions.forEach { deleteIndexSet.insert($0) }
                 tableView.deleteSections(deleteIndexSet, with: .none)
@@ -107,21 +107,7 @@ class NonFungibleTokensViewController: UIViewController {
     }
 
     fileprivate func hederView(for section: Int) -> UIView {
-        let container = UIView()
-        container.backgroundColor = viewModel.headerBackgroundColor
-        let title = UILabel()
-        title.text = viewModel.title(for: section)
-        title.sizeToFit()
-        title.textColor = viewModel.headerTitleTextColor
-        title.font = viewModel.headerTitleFont
-        container.addSubview(title)
-        title.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            title.centerXAnchor.constraint(equalTo: container.centerXAnchor, constant: 0.0),
-            title.centerYAnchor.constraint(equalTo: container.centerYAnchor, constant: 0.0),
-            title.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 20.0),
-        ])
-        return container
+        return SectionHeader(fillColor: viewModel.headerBackgroundColor, borderColor: viewModel.headerBorderColor, title: viewModel.title(for: section), textColor: viewModel.headerTitleTextColor, textFont: viewModel.headerTitleFont)
     }
 }
 
