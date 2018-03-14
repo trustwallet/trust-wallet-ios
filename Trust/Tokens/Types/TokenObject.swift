@@ -95,6 +95,6 @@ class TokenObject: Object, Decodable {
     }
 
     var imagePath: String {
-        return "https://trustwalletapp.com/images/tokens/\(contract).png"
+        return "https://trustwalletapp.com/images/tokens/\(contract.lowercased()).png"
     }
 }
