@@ -7,7 +7,7 @@ struct NetworkConditionViewModel {
 
     let condition: NetworkCondition
     private let formmater = StringFormatter()
-    
+
     init(
         condition: NetworkCondition
     ) {
@@ -27,10 +27,10 @@ struct NetworkConditionViewModel {
         }
     }
 
-    var block: String? {
+    var block: String {
         switch condition {
         case .good(let block): return formmater.formatter(for: block)
-        case .bad: return .none
+        case .bad: return "--"
         }
-    }    
+    }
 }
