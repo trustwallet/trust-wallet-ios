@@ -14,6 +14,11 @@ class TokenViewCell: UITableViewCell {
     let symbolImageView = UIImageView()
     let percentChange = UILabel()
 
+    private struct Layout {
+        static let imageSize: CGFloat = 58
+        static let stackVericalOffset: CGFloat = 10
+    }
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -64,11 +69,11 @@ class TokenViewCell: UITableViewCell {
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            symbolImageView.widthAnchor.constraint(equalToConstant: 42),
-            symbolImageView.heightAnchor.constraint(equalToConstant: 42),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
+            symbolImageView.widthAnchor.constraint(equalToConstant: Layout.imageSize),
+            symbolImageView.heightAnchor.constraint(equalToConstant: Layout.imageSize),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: Layout.stackVericalOffset),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -StyleLayout.sideMargin),
+            stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -Layout.stackVericalOffset),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: StyleLayout.sideMargin),
         ])
     }
@@ -99,6 +104,10 @@ class TokenViewCell: UITableViewCell {
             with: viewModel.imageUrl,
             placeholder: viewModel.placeHolder
         )
+        symbolImageView.layer.cornerRadius = Layout.imageSize/2
+        symbolImageView.layer.borderColor = UIColor(hex: "dddddd").cgColor
+        symbolImageView.layer.borderWidth = 0.5
+        symbolImageView.clipsToBounds = true
 
         backgroundColor = viewModel.backgroundColor
     }
