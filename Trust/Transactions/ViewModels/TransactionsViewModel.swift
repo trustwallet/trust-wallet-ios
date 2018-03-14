@@ -187,7 +187,16 @@ struct TransactionsViewModel {
             self.transactions = storage.transactionsCategory
             return
         }
-        let subpredicates = ["title","transactions.id","transactions.from","transactions.to","transactions.value","transactions.localizedOperations.name","transactions.localizedOperations.symbol","transactions.localizedOperations.contract"].map { property -> NSPredicate in
+        let subpredicates = [
+            "title",
+            "transactions.id",
+            "transactions.from",
+            "transactions.to",
+            "transactions.value",
+            "transactions.localizedOperations.name",
+            "transactions.localizedOperations.symbol",
+            "transactions.localizedOperations.contract"
+        ].map { property -> NSPredicate in
             if property.contains("transactions") {
                 return NSPredicate(format: "ANY %K CONTAINS[cd] %@", property, text)
             }

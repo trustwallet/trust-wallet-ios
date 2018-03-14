@@ -209,7 +209,7 @@ class TransactionsViewController: UIViewController {
 
 extension TransactionsViewController: StatefulViewController {
     func hasContent() -> Bool {
-        return viewModel.hasContent() 
+        return viewModel.hasContent()
     }
 }
 

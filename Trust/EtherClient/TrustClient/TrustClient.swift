@@ -73,7 +73,7 @@ extension TrustService: TargetType {
         case .getTokens(let address, let showBalance):
             return .requestParameters(parameters: [
                 "address": address,
-                "showBalance": showBalance
+                "showBalance": showBalance,
             ], encoding: URLEncoding())
         case .getTransaction:
             return .requestPlain

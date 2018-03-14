@@ -34,7 +34,7 @@ class NonFungibleTokenObject: Object, Decodable {
     override static func primaryKey() -> String? {
         return "uniqueID"
     }
-    
+
     private enum NonFungibleTokenCodingKeys: String, CodingKey {
         case id = "token_id"
         case contract = "contract_address"

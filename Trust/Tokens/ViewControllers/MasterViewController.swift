@@ -11,7 +11,7 @@ class MasterViewController: UIViewController {
     fileprivate lazy var segmentController: UISegmentedControl = {
         let items = [
             NSLocalizedString("Tokens", value: "Tokens", comment: ""),
-            NSLocalizedString("Collectibles", value: "Collectibles", comment: "")
+            NSLocalizedString("Collectibles", value: "Collectibles", comment: ""),
         ]
         let segmentedControl = UISegmentedControl(items: items)
         segmentedControl.selectedSegmentIndex = DeteilsViewType.tokens.rawValue
