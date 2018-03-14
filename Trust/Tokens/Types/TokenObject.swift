@@ -47,10 +47,13 @@ class TokenObject: Object, Decodable {
 
     convenience required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: TokenObjectCodingKeys.self)
-        let contract = try container.decode(String.self, forKey: .address).lowercased()
+        var contract = try container.decode(String.self, forKey: .address)
         let name = try container.decode(String.self, forKey: .name)
         let symbol = try container.decode(String.self, forKey: .symbol)
         let decimals = try container.decode(Int.self, forKey: .decimals)
+        if let convertedAddress = Address(string: contract)?.description {
+            contract = convertedAddress
+        }
         self.init(contract: contract, name: name, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
     }
 
