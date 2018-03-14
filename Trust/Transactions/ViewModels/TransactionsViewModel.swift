@@ -105,21 +105,7 @@ struct TransactionsViewModel {
     }
 
     func hederView(for section: Int) -> UIView {
-        let container = UIView()
-        container.backgroundColor = self.headerBackgroundColor
-        let title = UILabel()
-        title.text = self.titleForHeader(in: section)
-        title.sizeToFit()
-        title.textColor = self.headerTitleTextColor
-        title.font = self.headerTitleFont
-        container.addSubview(title)
-        title.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            title.centerXAnchor.constraint(equalTo: container.centerXAnchor, constant: 0.0),
-            title.centerYAnchor.constraint(equalTo: container.centerYAnchor, constant: 0.0),
-            title.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 20.0),
-        ])
-        return container
+        return SectionHeader(fillColor: headerBackgroundColor, borderColor: headerBorderColor, title: titleForHeader(in: section), textColor: headerTitleTextColor, textFont: headerTitleFont)
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {

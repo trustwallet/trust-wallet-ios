@@ -297,6 +297,7 @@
 		732E0F502022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */; };
 		732E0F522022754600B39C1F /* FakeLockProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F512022754600B39C1F /* FakeLockProtocol.swift */; };
 		732E0F542022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */; };
+		7374ED2E2059A6A3004A8BC2 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374ED2D2059A6A3004A8BC2 /* SectionHeader.swift */; };
 		737D1675202BDCB400B42DDE /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737D1674202BDCB400B42DDE /* UINavigationController.swift */; };
 		737EEDDA201BE3A8009D9D5D /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737EEDD9201BE3A8009D9D5D /* Lock.swift */; };
 		7391DC8C203715DF002C5ADE /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7391DC8B203715DF002C5ADE /* Pair.swift */; };
@@ -762,6 +763,7 @@
 		732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
 		732E0F512022754600B39C1F /* FakeLockProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeLockProtocol.swift; sourceTree = "<group>"; };
 		732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockCreatePasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
+		7374ED2D2059A6A3004A8BC2 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		737D1674202BDCB400B42DDE /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		737EEDD9201BE3A8009D9D5D /* Lock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		7391DC8B203715DF002C5ADE /* Pair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
@@ -1178,6 +1180,7 @@
 				73D30FF1204F274B00433377 /* NetworkStateView.swift */,
 				771D5370205923F500C79485 /* NetworkConditionViewModel.swift */,
 				771D53722059337100C79485 /* TokenImageView.swift */,
+				7374ED2D2059A6A3004A8BC2 /* SectionHeader.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -3166,6 +3169,7 @@
 				CCA4FE361FD4282400749AE4 /* DeviceChecker.swift in Sources */,
 				732086B9201508690047F605 /* SplashCoordinator.swift in Sources */,
 				77872D292025116E0032D687 /* EnterPasswordCoordinator.swift in Sources */,
+				7374ED2E2059A6A3004A8BC2 /* SectionHeader.swift in Sources */,
 				775DF42D2037D338009CD082 /* BranchCoordinator.swift in Sources */,
 				298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */,
 				29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */,

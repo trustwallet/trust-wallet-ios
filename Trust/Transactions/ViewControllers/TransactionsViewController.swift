@@ -240,11 +240,6 @@ extension TransactionsViewController: UITableViewDataSource {
         return viewModel.hederView(for: section)
     }
 
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.layer.addBorder(edge: .top, color: viewModel.headerBorderColor, thickness: 0.5)
-        view.layer.addBorder(edge: .bottom, color: viewModel.headerBorderColor, thickness: 0.5)
-    }
-
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return StyleLayout.TableView.heightForHeaderInSection
     }
