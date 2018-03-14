@@ -251,6 +251,7 @@ class SettingsViewController: FormViewController {
             }
         }.cellSetup { cell, _ in
             cell.imageView?.image = type.image
+            cell.accessoryType = .disclosureIndicator
         }
     }
 

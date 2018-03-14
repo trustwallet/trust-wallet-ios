@@ -11,7 +11,7 @@ class TokenViewCell: UITableViewCell {
     let titleLabel = UILabel()
     let amountLabel = UILabel()
     let currencyAmountLabel = UILabel()
-    let symbolImageView = UIImageView()
+    let symbolImageView = TokenImageView()
     let percentChange = UILabel()
 
     private struct Layout {
@@ -104,10 +104,6 @@ class TokenViewCell: UITableViewCell {
             with: viewModel.imageUrl,
             placeholder: viewModel.placeHolder
         )
-        symbolImageView.layer.cornerRadius = Layout.imageSize/2
-        symbolImageView.layer.borderColor = UIColor(hex: "dddddd").cgColor
-        symbolImageView.layer.borderWidth = 0.5
-        symbolImageView.clipsToBounds = true
 
         backgroundColor = viewModel.backgroundColor
     }

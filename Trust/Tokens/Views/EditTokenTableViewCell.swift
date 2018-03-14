@@ -9,7 +9,7 @@ protocol EditTokenTableViewCellDelegate: class {
 
 class EditTokenTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var tokenImageView: UIImageView!
+    @IBOutlet weak var tokenImageView: TokenImageView!
     @IBOutlet weak var tokenLabel: UILabel!
     @IBOutlet weak var tokenEnableSwitch: UISwitch!
     @IBOutlet weak var tokenContractLabel: UILabel!

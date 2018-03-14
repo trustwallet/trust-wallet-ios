@@ -349,6 +349,7 @@
 		771D536E2058BB0D00C79485 /* BookmarkCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D536C2058BB0D00C79485 /* BookmarkCoordinator.swift */; };
 		771D536F2058BB0D00C79485 /* BrowserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D536D2058BB0D00C79485 /* BrowserCoordinator.swift */; };
 		771D5371205923F500C79485 /* NetworkConditionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D5370205923F500C79485 /* NetworkConditionViewModel.swift */; };
+		771D53732059337100C79485 /* TokenImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D53722059337100C79485 /* TokenImageView.swift */; };
 		7721A6BE202A5677004DB16C /* DecryptError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6BD202A5677004DB16C /* DecryptError.swift */; };
 		7721A6C8202EF81B004DB16C /* CustomRPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6C7202EF81B004DB16C /* CustomRPC.swift */; };
 		7721A6CC202EFBC5004DB16C /* AddCustomNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6CB202EFBC5004DB16C /* AddCustomNetworkViewController.swift */; };
@@ -813,6 +814,7 @@
 		771D536C2058BB0D00C79485 /* BookmarkCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkCoordinator.swift; sourceTree = "<group>"; };
 		771D536D2058BB0D00C79485 /* BrowserCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserCoordinator.swift; sourceTree = "<group>"; };
 		771D5370205923F500C79485 /* NetworkConditionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConditionViewModel.swift; sourceTree = "<group>"; };
+		771D53722059337100C79485 /* TokenImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenImageView.swift; sourceTree = "<group>"; };
 		7721A6BD202A5677004DB16C /* DecryptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecryptError.swift; sourceTree = "<group>"; };
 		7721A6BF202B1D3E004DB16C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7721A6C0202B1D43004DB16C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -1175,6 +1177,7 @@
 				29DF40091FD3E80A000077CA /* TabBarController.swift */,
 				73D30FF1204F274B00433377 /* NetworkStateView.swift */,
 				771D5370205923F500C79485 /* NetworkConditionViewModel.swift */,
+				771D53722059337100C79485 /* TokenImageView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -3119,6 +3122,7 @@
 				29FA00CC201CA63C002F7DC5 /* Method.swift in Sources */,
 				2963A28A1FC402940095447D /* LocalizedOperationObject.swift in Sources */,
 				73B1A6BE204B55FA001F546C /* NonFungibleTokenCellViewModel.swift in Sources */,
+				771D53732059337100C79485 /* TokenImageView.swift in Sources */,
 				73200B7020488C9300118A82 /* TrustNetworkProtocol.swift in Sources */,
 				771D536F2058BB0D00C79485 /* BrowserCoordinator.swift in Sources */,
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
