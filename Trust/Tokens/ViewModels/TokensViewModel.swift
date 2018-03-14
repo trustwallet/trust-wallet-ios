@@ -121,7 +121,10 @@ class TokensViewModel {
     }
 
     func updateEthBalance() {
-        
+        tokensNetwork.ethBalance { result in
+            guard let balance = result, let token = self.store.objects.first (where: { $0.name == self.config.server.name }), self.operationQueue.operationCount == 0  else { return }
+            self.store.update(token: token, action: .updateValue(balance.value))
+        }
     }
 
     private func runOperations() {
