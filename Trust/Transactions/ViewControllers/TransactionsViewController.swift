@@ -130,8 +130,19 @@ class TransactionsViewController: UIViewController {
             switch changes {
             case .initial:
                 tableView.reloadData()
+                UIView.setAnimationsEnabled(false)
+                CATransaction.begin()
+                CATransaction.setCompletionBlock { () -> Void in
+                    UIView.setAnimationsEnabled(true)
+                }
                 self?.endLoading()
+                CATransaction.commit()
             case .update(_, let deletions, let insertions, let modifications):
+                UIView.setAnimationsEnabled(false)
+                CATransaction.begin()
+                CATransaction.setCompletionBlock { () -> Void in
+                    UIView.setAnimationsEnabled(true)
+                }
                 tableView.beginUpdates()
                 var insertIndexSet = IndexSet()
                 insertions.forEach { insertIndexSet.insert($0) }
@@ -144,6 +155,7 @@ class TransactionsViewController: UIViewController {
                 tableView.reloadSections(updateIndexSet, with: .none)
                 tableView.endUpdates()
                 self?.endLoading()
+                CATransaction.commit()
             case .error(let error):
                 self?.endLoading(animated: true, error: error, completion: nil)
             }
@@ -209,7 +221,7 @@ class TransactionsViewController: UIViewController {
 
 extension TransactionsViewController: StatefulViewController {
     func hasContent() -> Bool {
-        return viewModel.hasContent() 
+        return viewModel.hasContent()
     }
 }
 
