@@ -15,7 +15,6 @@ class LockCreatePasscodeCoordinatorTest: XCTestCase {
         let coordinator = LockCreatePasscodeCoordinator(navigationController: navigationController, model: LockCreatePasscodeViewModel())
         coordinator.start()
         XCTAssertTrue(navigationController.viewControllers.first is LockCreatePasscodeViewController)
-        coordinator.stop()
         XCTAssertNil(navigationController.presentedViewController)
     }
 }
