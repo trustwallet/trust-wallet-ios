@@ -56,6 +56,7 @@ class TokensViewController: UIViewController {
         self.viewModel = viewModel
         tableView = UITableView(frame: .zero, style: .plain)
         super.init(nibName: nil, bundle: nil)
+        self.viewModel.delegate = self
         self.tokensObservation()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -211,5 +212,11 @@ extension TokensViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.tokens.count
+    }
+}
+extension TokensViewController: TokensViewModelDelegate {
+    func refresh() {
+        self.tableView.reloadData()
+        self.refreshHeaderAndFooterView()
     }
 }
