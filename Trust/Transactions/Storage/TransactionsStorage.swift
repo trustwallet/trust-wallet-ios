@@ -8,22 +8,14 @@ class TransactionsStorage {
 
     let realm: Realm
 
-    var transactions: Results<Transaction> {
-        return realm.objects(Transaction.self).sorted(byKeyPath: "date", ascending: false)
-    }
-
     var transactionsCategory: Results<TransactionCategory> {
-        return realm.objects(TransactionCategory.self)
+        return realm.objects(TransactionCategory.self).sorted(byKeyPath: "date", ascending: false)
     }
 
     init(
         realm: Realm
     ) {
         self.realm = realm
-    }
-
-    var count: Int {
-        return objects.count
     }
 
     var objects: [Transaction] {
@@ -46,9 +38,9 @@ class TransactionsStorage {
 
     func add(_ items: [Transaction]) {
         let trnasactions = transactionCategory(for: items)
-        realm.beginWrite()
-        realm.add(trnasactions, update: true)
-        try! realm.commitWrite()
+        try! realm.write {
+            realm.add(trnasactions, update: true)
+        }
     }
 
     private func tokens(from transactions: [Transaction]) -> [Token] {
@@ -73,12 +65,13 @@ class TransactionsStorage {
         var category = [TransactionCategory]()
         let headerDates = NSOrderedSet(array: transactions.map { TransactionsViewModel.realmBaseFormmater.string(from: $0.date ) })
         headerDates.forEach {
-            guard let date = $0 as? String else {
+            guard let stringDate = $0 as? String, let date = TransactionsViewModel.convert(stringDate) else {
                 return
             }
-            let filteredTransactionByDate = transactions.filter { TransactionsViewModel.realmBaseFormmater.string(from: $0.date ) == date }
+            let filteredTransactionByDate = transactions.filter { TransactionsViewModel.realmBaseFormmater.string(from: $0.date ) == stringDate }
             let item = TransactionCategory()
-            item.title = date
+            item.title = stringDate
+            item.date = date
             item.transactions.append(objectsIn: filteredTransactionByDate)
             category.append(item)
         }
