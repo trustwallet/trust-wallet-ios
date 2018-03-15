@@ -35,7 +35,6 @@ class ExportPrivateKeyCoordinator: Coordinator {
     }
 
     func start() {
-        //navigationController.viewControllers = [exportViewController]
         navigationController.pushViewController(exportViewController, animated: false)
     }
 
