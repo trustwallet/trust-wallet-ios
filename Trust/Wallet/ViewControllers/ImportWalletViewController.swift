@@ -253,6 +253,7 @@ class ImportWalletViewController: FormViewController {
 
     func setValueForCurrentField(string: String) {
         let type = ImportSelectionType(title: segmentRow?.value)
+        guard let result = QRURLParser.from(string: string) else { return }
         switch type {
         case .keystore:
             keystoreRow?.value = string
@@ -261,7 +262,7 @@ class ImportWalletViewController: FormViewController {
             privateKeyRow?.value = string
             privateKeyRow?.reload()
         case .watch:
-            watchRow?.value = string
+            watchRow?.value = result.address
             watchRow?.reload()
         case .mnemonic:
             mnemonicRow?.value = string
@@ -297,9 +298,7 @@ extension ImportWalletViewController: QRCodeReaderDelegate {
     }
     func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
         reader.stopScanning()
+        setValueForCurrentField(string: result)
         reader.dismiss(animated: true)
-
-        guard let result = QRURLParser.from(string: result) else { return }
-        setValueForCurrentField(string: result.address)
     }
 }
