@@ -387,13 +387,11 @@
 		A2B7ECAA2038122200828E7D /* ExportPrivateKeyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECA92038122200828E7D /* ExportPrivateKeyCoordinator.swift */; };
 		A2B7ECAC2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAB2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift */; };
 		A2B7ECAE2039001300828E7D /* ExportPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */; };
-		AEF49BA38D544DEB40BE8C5C /* Pods_OpenInTrust.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486727FADFF5D4F43B985920 /* Pods_OpenInTrust.framework */; };
 		BB03A86D20416AF600649DA0 /* BalanceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A86C20416AF600649DA0 /* BalanceStatus.swift */; };
 		BB03A8712042B01300649DA0 /* BalanceStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A8702042B01300649DA0 /* BalanceStatusTests.swift */; };
 		BB1CC266203BA4440042E56C /* SendMaxAmountTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1CC265203BA4440042E56C /* SendMaxAmountTest.swift */; };
 		BB1CC27A203D061B0042E56C /* TrustDocumentPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1CC279203D061B0042E56C /* TrustDocumentPickerViewController.swift */; };
 		BB3B8691204BB1C60061FCBA /* OpenInTrustController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B8690204BB1C60061FCBA /* OpenInTrustController.swift */; };
-		BB3B8698204BB1C60061FCBA /* OpenInTrust.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BB3B868E204BB1C60061FCBA /* OpenInTrust.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BB3B869E204BB2190061FCBA /* OpenInTrustViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B869D204BB2190061FCBA /* OpenInTrustViewModel.swift */; };
 		BB3B86A2204BB2C80061FCBA /* OpenInTrustError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86A1204BB2C80061FCBA /* OpenInTrustError.swift */; };
 		BB3B86A7204BBC9F0061FCBA /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB3B86A6204BBC9F0061FCBA /* Media.xcassets */; };
@@ -433,13 +431,6 @@
 			remoteGlobalIDString = 2912CCF41F6A830700C6CBE3;
 			remoteInfo = etherwallet;
 		};
-		BB3B8696204BB1C60061FCBA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2912CCED1F6A830700C6CBE3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BB3B868D204BB1C60061FCBA;
-			remoteInfo = OpenInTrust;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -449,7 +440,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				BB3B8698204BB1C60061FCBA /* OpenInTrust.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,7 +447,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0249A950D0A85BC02315CF14 /* Pods-OpenInTrust.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenInTrust.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenInTrust/Pods-OpenInTrust.release.xcconfig"; sourceTree = "<group>"; };
 		0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		290B2B551F8F50030053C83E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		290B2B5A1F8F551E0053C83E /* LokaliseInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LokaliseInitializer.swift; sourceTree = "<group>"; };
@@ -908,7 +897,6 @@
 		CCA4FE391FD42B4100749AE4 /* FakeJailbreakChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeJailbreakChecker.swift; sourceTree = "<group>"; };
 		CCCD74FC1FD2D38D004A087D /* CheckDeviceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDeviceCoordinator.swift; sourceTree = "<group>"; };
 		DDF643F2D99BCE8E6139C057 /* Pods-TrustTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.release.xcconfig"; sourceTree = "<group>"; };
-		EDDE40D2792D1D5C7E404CAA /* Pods-OpenInTrust.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenInTrust.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OpenInTrust/Pods-OpenInTrust.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -940,7 +928,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEF49BA38D544DEB40BE8C5C /* Pods_OpenInTrust.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,7 +981,6 @@
 			isa = PBXGroup;
 			children = (
 				73ACEEF620163B4E003DD71D /* Lock */,
-				732086B2201506AA0047F605 /* Protection */,
 				29E6E0681FE897BB0079265A /* Browser */,
 				2959960F1FAB065700DB66A8 /* Deposit */,
 				29AD8A0A1F93FBB7008E10E7 /* Foundation */,
@@ -2171,6 +2157,7 @@
 		73ACEEF620163B4E003DD71D /* Lock */ = {
 			isa = PBXGroup;
 			children = (
+				732086B2201506AA0047F605 /* Protection */,
 				73ACEEFD20163DA3003DD71D /* Views */,
 				73ACEEFC20163D31003DD71D /* ViewModels */,
 				73ACEEF720163B4E003DD71D /* Coordinators */,
@@ -2372,8 +2359,6 @@
 				DDF643F2D99BCE8E6139C057 /* Pods-TrustTests.release.xcconfig */,
 				477899BEAA4489DA423E8857 /* Pods-TrustUITests.debug.xcconfig */,
 				A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */,
-				EDDE40D2792D1D5C7E404CAA /* Pods-OpenInTrust.debug.xcconfig */,
-				0249A950D0A85BC02315CF14 /* Pods-OpenInTrust.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -2489,7 +2474,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				BB3B8697204BB1C60061FCBA /* PBXTargetDependency */,
 			);
 			name = Trust;
 			productName = etherwallet;
@@ -2542,11 +2526,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BB3B869B204BB1C60061FCBA /* Build configuration list for PBXNativeTarget "OpenInTrust" */;
 			buildPhases = (
-				C7376552DD6084CE802A6C66 /* [CP] Check Pods Manifest.lock */,
 				BB3B868A204BB1C60061FCBA /* Sources */,
 				BB3B868B204BB1C60061FCBA /* Frameworks */,
 				BB3B868C204BB1C60061FCBA /* Resources */,
-				B67B5166CBE5393D2C872474 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2806,39 +2788,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B67B5166CBE5393D2C872474 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenInTrust/Pods-OpenInTrust-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C7376552DD6084CE802A6C66 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-OpenInTrust-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EB2D49CBEF37022D8861D8E0 /* [CP] Check Pods Manifest.lock */ = {
@@ -3393,11 +3342,6 @@
 			target = 2912CCF41F6A830700C6CBE3 /* Trust */;
 			targetProxy = 2912CD171F6A830700C6CBE3 /* PBXContainerItemProxy */;
 		};
-		BB3B8697204BB1C60061FCBA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BB3B868D204BB1C60061FCBA /* OpenInTrust */;
-			targetProxy = BB3B8696204BB1C60061FCBA /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -3577,7 +3521,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 174;
+				CURRENT_PROJECT_VERSION = 177;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Trust/Info.plist;
@@ -3601,7 +3545,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 174;
+				CURRENT_PROJECT_VERSION = 177;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Trust/Info.plist;
@@ -3686,7 +3630,6 @@
 		};
 		BB3B8699204BB1C60061FCBA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EDDE40D2792D1D5C7E404CAA /* Pods-OpenInTrust.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ExtensionIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -3707,7 +3650,6 @@
 		};
 		BB3B869A204BB1C60061FCBA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0249A950D0A85BC02315CF14 /* Pods-OpenInTrust.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = ExtensionIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

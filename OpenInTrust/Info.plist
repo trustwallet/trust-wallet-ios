@@ -17,9 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.2.4</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>177</string>
+	<key>LSHasLocalizedDisplayName</key>
+	<true/>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
@@ -34,12 +36,10 @@
 				<string>1</string>
 			</dict>
 		</dict>
-		<key>NSExtensionPrincipalClass</key>
-		<string>$(PRODUCT_MODULE_NAME).OpenInTrustController</string>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.ui-services</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>$(PRODUCT_MODULE_NAME).OpenInTrustController</string>
 	</dict>
-	<key>LSHasLocalizedDisplayName</key>
-	<true/>
 </dict>
 </plist>
