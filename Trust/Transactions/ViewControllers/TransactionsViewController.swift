@@ -132,7 +132,17 @@ class TransactionsViewController: UIViewController {
                 tableView.reloadData()
                 self?.endLoading()
             case .update(_, let deletions, let insertions, let modifications):
-                tableView.reloadData()
+                tableView.beginUpdates()
+                var insertIndexSet = IndexSet()
+                insertions.forEach { insertIndexSet.insert($0) }
+                tableView.insertSections(insertIndexSet, with: .none)
+                var deleteIndexSet = IndexSet()
+                deletions.forEach { deleteIndexSet.insert($0) }
+                tableView.deleteSections(deleteIndexSet, with: .none)
+                var updateIndexSet = IndexSet()
+                modifications.forEach { updateIndexSet.insert($0) }
+                tableView.reloadSections(updateIndexSet, with: .none)
+                tableView.endUpdates()
                 self?.endLoading()
             case .error(let error):
                 self?.endLoading(animated: true, error: error, completion: nil)
