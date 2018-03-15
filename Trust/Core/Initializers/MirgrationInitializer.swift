@@ -20,7 +20,7 @@ class MigrationInitializer: Initializer {
     }
 
     func perform() {
-        config.schemaVersion = 39
+        config.schemaVersion = 40
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
             case 0...32:
