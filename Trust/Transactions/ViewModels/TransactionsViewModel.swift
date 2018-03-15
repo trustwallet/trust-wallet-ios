@@ -6,11 +6,15 @@ import RealmSwift
 
 struct TransactionsViewModel {
 
-    static let realmDateFormat = "MMddyyyy"
-
     static let realmBaseFormmater: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = realmDateFormat
+        formatter.dateFormat = "MMddyyyy"
+        return formatter
+    }()
+
+    static let titleFormmater: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d yyyy"
         return formatter
     }()
 
@@ -194,15 +198,10 @@ struct TransactionsViewModel {
     }
 
     static func convert(_ date: String) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = realmDateFormat
-        let date = dateFormatter.date(from: date)
-        return date
+        return realmBaseFormmater.date(from: date)
     }
 
     static func title(from date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d yyyy"
-        return dateFormatter.string(from: date)
+        return titleFormmater.string(from: date)
     }
 }

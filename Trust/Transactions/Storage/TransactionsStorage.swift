@@ -69,6 +69,7 @@ class TransactionsStorage {
                 return
             }
             let filteredTransactionByDate = transactions.filter { TransactionsViewModel.realmBaseFormmater.string(from: $0.date ) == stringDate }
+            
             let item = TransactionCategory()
             item.title = stringDate
             item.date = date
@@ -102,6 +103,7 @@ class TransactionsStorage {
     func deleteAll() {
         try! realm.write {
             realm.delete(realm.objects(Transaction.self))
+            realm.delete(realm.objects(TransactionCategory.self))
         }
     }
 }
