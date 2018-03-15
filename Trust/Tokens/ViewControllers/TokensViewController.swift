@@ -190,9 +190,6 @@ extension TokensViewController: UITableViewDelegate {
         return viewModel.canEdit(for: indexPath)
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        guard !viewModel.canEdit(for: indexPath) else {
-            return []
-        }
         let token = viewModel.item(for: indexPath)
         let delete = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Delete", value: "Delete", comment: "")) {[unowned self] (_, _) in
             self.delegate?.didDelete(token: token, in: self)

@@ -110,11 +110,7 @@ class TokensViewModel {
     }
 
     func canEdit(for path: IndexPath) -> Bool {
-        let token = item(for: path)
-        switch token {
-        case .token(let token):
-            return token.isCustom
-        }
+        return tokens[path.row].isCustom
     }
 
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
