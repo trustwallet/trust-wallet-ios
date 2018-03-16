@@ -159,7 +159,7 @@ extension AccountsCoordinator: BackupCoordinatorDelegate {
 
 extension AccountsCoordinator: ExportPrivateKeyCoordinatorDelegate {
     func didCancel(in coordinator: ExportPrivateKeyCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        coordinator.navigationController.popViewController(animated: true)
         removeCoordinator(coordinator)
     }
 }
