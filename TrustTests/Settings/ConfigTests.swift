@@ -28,5 +28,15 @@ class ConfigTests: XCTestCase {
 
         XCTAssertEqual(false, config.isCryptoPrimaryCurrency)
     }
+    
+    func testTestNetworkWarningDontShowAgain() {
+        var config: Config = .make()
+        
+        XCTAssertFalse(config.testNetworkWarningDontShowAgain)
+        
+        config.testNetworkWarningDontShowAgain = true
+        
+        XCTAssertTrue(config.testNetworkWarningDontShowAgain)
+    }
 }
 
