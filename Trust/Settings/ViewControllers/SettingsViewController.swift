@@ -8,7 +8,8 @@ protocol SettingsViewControllerDelegate: class {
     func didAction(action: SettingsAction, in viewController: SettingsViewController)
 }
 
-class SettingsViewController: FormViewController {
+class SettingsViewController: FormViewController, Coordinator {
+    var coordinators: [Coordinator] = []
     struct Values {
         static let currencyPopularKey = "0"
         static let currencyAllKey = "1"
@@ -31,8 +32,20 @@ class SettingsViewController: FormViewController {
     }()
 
     let session: WalletSession
-    init(session: WalletSession) {
+    let keystore: Keystore
+    let balanceCoordinator: TokensBalanceService
+    let accountsCoordinator: AccountsCoordinator
+
+    init(
+        session: WalletSession,
+        keystore: Keystore,
+        balanceCoordinator: TokensBalanceService,
+        accountsCoordinator: AccountsCoordinator
+    ) {
         self.session = session
+        self.keystore = keystore
+        self.balanceCoordinator = balanceCoordinator
+        self.accountsCoordinator = accountsCoordinator
         super.init(nibName: nil, bundle: nil)
         self.chaineStateObservation()
     }
@@ -74,8 +87,9 @@ class SettingsViewController: FormViewController {
                         self?.config.testNetworkWarningDontShowAgain = true
                         runSelectedNetwork()
                     }
-                    alertViewController.addAction(okAction)
+
                     alertViewController.addAction(dontShowAgainAction)
+                    alertViewController.addAction(okAction)
 
                     self?.present(alertViewController, animated: true, completion: nil)
                 }
@@ -100,10 +114,13 @@ class SettingsViewController: FormViewController {
                 cell.imageView?.image = R.image.settings_server()
             }
 
-            <<< AppFormAppearance.button { button in
-                button.cellStyle = .value1
-            }.onCellSelection { [unowned self] _, _ in
-                self.run(action: .wallets)
+            <<< AppFormAppearance.button { [weak self] row in
+                guard let `self` = self else { return }
+                row.cellStyle = .value1
+                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+                    return self.accountsCoordinator.accountsViewController
+                }, onDismiss: { _ in
+            })
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_wallet()
@@ -242,12 +259,17 @@ class SettingsViewController: FormViewController {
     }
 
     func setPasscode(completion: ((Bool) -> Void)? = .none) {
-        let lock = LockCreatePasscodeCoordinator(navigationController: self.navigationController!, model: LockCreatePasscodeViewModel())
-        lock.start()
-        lock.lockViewController.willFinishWithResult = { result in
+        let coordinator = LockCreatePasscodeCoordinator(
+            model: LockCreatePasscodeViewModel()
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        coordinator.lockViewController.willFinishWithResult = { [weak self] result in
             completion?(result)
-            lock.stop()
+            self?.navigationController?.dismiss(animated: true, completion: nil)
         }
+        addCoordinator(coordinator)
+        navigationController?.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
     private func linkProvider(
@@ -263,12 +285,17 @@ class SettingsViewController: FormViewController {
             }
         }.cellSetup { cell, _ in
             cell.imageView?.image = type.image
+        }.cellUpdate { cell, _ in
+            cell.accessoryType = .disclosureIndicator
+            cell.textLabel?.textAlignment = .left
+            cell.textLabel?.textColor = .black
         }
     }
 
     private func chaineStateObservation() {
         self.session.chainState.chainStateCompletion = { [weak self] (state, block) in
-            self?.networkStateView.currentState = state == true ? .good(block) : .bad
+            let condition = NetworkCondition.from(state, block)
+            self?.networkStateView.viewModel = NetworkConditionViewModel(condition: condition)
         }
     }
 
@@ -278,5 +305,13 @@ class SettingsViewController: FormViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension SettingsViewController: LockCreatePasscodeCoordinatorDelegate {
+    func didCancel(in coordinator: LockCreatePasscodeCoordinator) {
+        coordinator.lockViewController.willFinishWithResult?(false)
+        navigationController?.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 }
