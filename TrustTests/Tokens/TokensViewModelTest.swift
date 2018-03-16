@@ -29,7 +29,7 @@ class TokensViewModelTest: XCTestCase {
 
     func testUpdateTicker() {
         //model.updateTickers()
-        let ethTicker = model.store.tickers.first
+        let ethTicker = model.store.tickers().first
         XCTAssertNotNil(ethTicker)
         XCTAssertEqual("947.102", ethTicker?.price)
     }
