@@ -24,7 +24,7 @@ class ExportPrivateKeyCoordinator: Coordinator {
     }()
 
     init(
-        navigationController: UINavigationController,
+        navigationController: UINavigationController = NavigationController(),
         keystore: Keystore,
         account: Account
     ) {

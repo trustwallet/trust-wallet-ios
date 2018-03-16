@@ -81,15 +81,7 @@ class AccountsCoordinator: Coordinator {
             }
             let exportTitle = NSLocalizedString("wallets.export.alertSheet.title", value: "Export Private Key", comment: "The title of the export button in the wallet's action sheet")
             let exportPrivateKeyAction = UIAlertAction(title: exportTitle, style: .default) { [unowned self] _ in
-
-                let coordinator = ExportPrivateKeyCoordinator(
-                    navigationController: self.navigationController,
-                    keystore: self.keystore,
-                    account: account
-                )
-                coordinator.delegate = self
-                coordinator.start()
-                self.addCoordinator(coordinator)
+                self.exportPrivateKey(for: account)
             }
             controller.addAction(backupKeystoreAction)
             controller.addAction(exportPrivateKeyAction)
@@ -108,6 +100,17 @@ class AccountsCoordinator: Coordinator {
         controller.addAction(copyAction)
         controller.addAction(cancelAction)
         navigationController.present(controller, animated: true, completion: nil)
+    }
+
+    func exportPrivateKey(for account: Account) {
+        let coordinator = ExportPrivateKeyCoordinator(
+            keystore: keystore,
+            account: account
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 }
 
