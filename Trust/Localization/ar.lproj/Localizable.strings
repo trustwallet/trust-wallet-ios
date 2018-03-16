@@ -107,6 +107,9 @@
 "settings.currency.button.title" = "العملة";
 "settings.currency.popular.label.title" = "دارج";
 "settings.network.test.label.title" = "اختبار";
+"settings.network.test.warnning.title"="تحذير";
+"settings.network.test.warnning.message"="أنت تنتقل إلى شبكة اختبار حيث تكون المعاملات لغرض الاختبار فقط";
+"settings.network.test.warnning.dont.show.again"="لا تظهر مرة أخرى";
 "settings.wallets.button.title" = "المحافظ";
 "Symbol" = "الرمز";
 "Today" = "اليوم";
