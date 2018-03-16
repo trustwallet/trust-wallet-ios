@@ -98,7 +98,7 @@ struct Config {
         }()
         return URL(string: urlString)!
     }
-    
+
     var testNetworkWarningDontShowAgain: Bool {
         get { return defaults.bool(forKey: Keys.testNetworkWarningDontShowAgain) }
         set { defaults.set(newValue, forKey: Keys.testNetworkWarningDontShowAgain) }

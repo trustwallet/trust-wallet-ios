@@ -77,7 +77,7 @@ class SettingsViewController: FormViewController, Coordinator {
 
                 let popupWarningMessage = { [weak self] in
                     let alertViewController = UIAlertController(title: NSLocalizedString("settings.network.test.warnning.title", value: "Warning", comment: ""),
-                                                                message: NSLocalizedString("settings.network.test.warnning.message", value: "You are switching to a test network where transactions are for testing purpose only.", comment: ""),
+                                                                message: NSLocalizedString("settings.network.test.warnning.message", value: "You are switching to a test network where transactions are for testing purpose only", comment: ""),
                                                                 preferredStyle: .alert)
 
                     let okAction = UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default) { _ in
@@ -241,7 +241,7 @@ class SettingsViewController: FormViewController, Coordinator {
                 row.cellStyle = .value1
                 row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
                     return SupportViewController()
-            }, onDismiss: { _ in })
+                }, onDismiss: { _ in })
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_terms()
