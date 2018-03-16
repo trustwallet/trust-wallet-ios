@@ -56,6 +56,7 @@ class TokensViewController: UIViewController {
         self.viewModel = viewModel
         tableView = UITableView(frame: .zero, style: .plain)
         super.init(nibName: nil, bundle: nil)
+        self.viewModel.delegate = self
         self.tokensObservation()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -190,9 +191,6 @@ extension TokensViewController: UITableViewDelegate {
         return viewModel.canEdit(for: indexPath)
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        guard !viewModel.canEdit(for: indexPath) else {
-            return []
-        }
         let token = viewModel.item(for: indexPath)
         let delete = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Delete", value: "Delete", comment: "")) {[unowned self] (_, _) in
             self.delegate?.didDelete(token: token, in: self)
@@ -214,5 +212,11 @@ extension TokensViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.tokens.count
+    }
+}
+extension TokensViewController: TokensViewModelDelegate {
+    func refresh() {
+        self.tableView.reloadData()
+        self.refreshHeaderAndFooterView()
     }
 }

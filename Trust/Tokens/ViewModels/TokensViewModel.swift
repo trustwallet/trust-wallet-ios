@@ -9,7 +9,11 @@ enum TokenItem {
     case token(TokenObject)
 }
 
-class TokensViewModel {
+protocol TokensViewModelDelegate: class {
+    func refresh()
+}
+
+class TokensViewModel: NSObject {
     let config: Config
 
     let store: TokensDataStore
@@ -58,10 +62,18 @@ class TokensViewModel {
         return UIFont.systemFont(ofSize: 13, weight: .light)
     }
 
-    private var operationQueue: OperationQueue = {
+    weak var delegate: TokensViewModelDelegate?
+
+    private var serailOperationQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .background
         queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
+
+    private var parallelOperationQueue: OperationQueue = {
+        let queue = OperationQueue()
+        queue.qualityOfService = .background
         return queue
     }()
 
@@ -76,6 +88,7 @@ class TokensViewModel {
         self.store = store
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
+        super.init()
         updateEthBalance { [weak self] _ in
             self?.runOperations()
         }
@@ -110,11 +123,7 @@ class TokensViewModel {
     }
 
     func canEdit(for path: IndexPath) -> Bool {
-        let token = item(for: path)
-        switch token {
-        case .token(let token):
-            return token.isCustom
-        }
+        return tokens[path.row].isCustom
     }
 
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
@@ -124,7 +133,7 @@ class TokensViewModel {
 
     func updateEthBalance(completion: ((_ completed: Bool) -> Void)? = nil) {
         tokensNetwork.ethBalance { result in
-            guard let balance = result, let token = self.store.objects.first (where: { $0.name == self.config.server.name }), self.operationQueue.operationCount == 0  else {
+            guard let balance = result, let token = self.store.objects.first (where: { $0.name == self.config.server.name }), self.serailOperationQueue.operationCount == 0  else {
                 completion?(true)
                 return
             }
@@ -134,8 +143,7 @@ class TokensViewModel {
     }
 
     private func runOperations() {
-
-        guard operationQueue.operationCount == 0, let chaineToken = self.store.objects.first (where: { $0.name == self.config.server.name }) else {
+        guard serailOperationQueue.operationCount == 0, let chaineToken = self.store.objects.first (where: { $0.name == self.config.server.name }), parallelOperationQueue.operationCount == 0 else {
             return
         }
 
@@ -143,41 +151,46 @@ class TokensViewModel {
 
         let tokensOperation = TokensOperation(network: tokensNetwork, address: address)
 
-        let tokensBalanceOperation = TokensBalanceOperation(network: tokensNetwork, address: address)
-
-        let tokensTickerOperation = TokensTickerOperation(network: tokensNetwork, address: address)
-
         let tempChaine = TokensDataStore.etherToken(for: config)
         tempChaine.value = chaineToken.value
 
-        operationQueue.addOperation(ethBalanceOperation)
+        serailOperationQueue.addOperation(ethBalanceOperation)
 
         ethBalanceOperation.completionBlock = { [weak self] in
-            guard let strongSelf = self else { return }
             tempChaine.value = ethBalanceOperation.balance.value.description
             tokensOperation.tokens.append(tempChaine)
-            strongSelf.operationQueue.addOperation(tokensOperation)
+            self?.serailOperationQueue.addOperation(tokensOperation)
         }
 
         tokensOperation.completionBlock = { [weak self] in
-            guard let strongSelf = self else { return }
-            tokensBalanceOperation.tokens = tokensOperation.tokens
-            strongSelf.operationQueue.addOperation(tokensBalanceOperation)
-        }
-
-        tokensBalanceOperation.completionBlock = { [weak self] in
-            guard let strongSelf = self else { return }
-            tokensTickerOperation.tokens = tokensBalanceOperation.tokens
-            strongSelf.operationQueue.addOperation(tokensTickerOperation)
-        }
-
-        tokensTickerOperation.completionBlock = { [weak self] in
-            guard let strongSelf = self else { return }
+            self?.parallelOperations(for: tokensOperation.tokens)
             DispatchQueue.main.async {
-                strongSelf.store.tickers = tokensTickerOperation.tickers
-                strongSelf.store.add(tokens: tokensTickerOperation.tokens)
+                self?.store.add(tokens: tokensOperation.tokens)
             }
         }
+    }
+
+    private func parallelOperations(for tokens: [TokenObject]) {
+        let tokensBalanceOperation = TokensBalanceOperation(network: tokensNetwork, address: address)
+        tokensBalanceOperation.tokens = tokens
+
+        tokensBalanceOperation.completionBlock = { [weak self] in
+            DispatchQueue.main.async {
+                self?.store.add(tokens: tokensBalanceOperation.tokens)
+            }
+        }
+
+        let tokensTickerOperation = TokensTickerOperation(network: tokensNetwork, address: address)
+        tokensTickerOperation.tokens = tokens
+
+        tokensTickerOperation.completionBlock = { [weak self] in
+            self?.store.tickers = tokensTickerOperation.tickers
+            DispatchQueue.main.async {
+                self?.delegate?.refresh()
+            }
+        }
+
+        parallelOperationQueue.addOperations([tokensBalanceOperation, tokensTickerOperation], waitUntilFinished: true)
     }
 
     func fetch() {
