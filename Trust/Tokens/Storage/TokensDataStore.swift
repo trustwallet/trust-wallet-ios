@@ -23,7 +23,6 @@ class TokensDataStore {
     }
     let config: Config
     let realm: Realm
-    var tickers: [CoinTicker] = []
     var objects: [TokenObject] {
         return realm.objects(TokenObject.self)
             .sorted(byKeyPath: "contract", ascending: true)
@@ -55,7 +54,7 @@ class TokensDataStore {
     }
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
-        return tickers.first(where: { $0.contract == token.contract })
+        return tickers().first(where: { $0.contract == token.contract })
     }
 
     func addCustom(token: ERC20Token) {
@@ -83,6 +82,7 @@ class TokensDataStore {
     }
 
     func deleteAll() {
+        deleteTickers()
         try! realm.write {
             realm.delete(realm.objects(TokenObject.self))
             realm.delete(realm.objects(NonFungibleTokenObject.self))
@@ -98,6 +98,31 @@ class TokensDataStore {
                 token.isDisabled = value
             }
         }
+    }
+
+    func saveTickers(tickers: [CoinTicker]) {
+        do {
+            config.defaults.set(try PropertyListEncoder().encode(tickers), forKey: "tickers")
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    func tickers() -> [CoinTicker] {
+
+        guard let storedObject: Data = UserDefaults.standard.data(forKey: "tickers") else {
+            return [CoinTicker]()
+        }
+
+        do {
+            return try PropertyListDecoder().decode([CoinTicker].self, from: storedObject)
+        } catch {
+           return [CoinTicker]()
+        }
+    }
+
+    func deleteTickers() {
+        config.defaults.removeObject(forKey: "tickers")
     }
 
     static func etherToken(for config: Config) -> TokenObject {
