@@ -10,7 +10,7 @@ struct Config {
         static let isDebugEnabled = "isDebugEnabled"
         static let currencyID = "currencyID"
         static let dAppBrowser = "dAppBrowser"
-        static let testNetworkWarningDontShowAgain = "testNetworkWarningDontShowAgain"
+        static let testNetworkWarningOff = "testNetworkWarningOff"
     }
 
     let defaults: UserDefaults
@@ -99,8 +99,8 @@ struct Config {
         return URL(string: urlString)!
     }
 
-    var testNetworkWarningDontShowAgain: Bool {
-        get { return defaults.bool(forKey: Keys.testNetworkWarningDontShowAgain) }
-        set { defaults.set(newValue, forKey: Keys.testNetworkWarningDontShowAgain) }
+    var testNetworkWarningOff: Bool {
+        get { return defaults.bool(forKey: Keys.testNetworkWarningOff) }
+        set { defaults.set(newValue, forKey: Keys.testNetworkWarningOff) }
     }
 }

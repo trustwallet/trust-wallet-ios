@@ -58,6 +58,6 @@ struct SettingsViewModel {
     }
 
     var testNetworkWarningDontShowAgainLabel: String {
-        return NSLocalizedString("settings.network.test.warnning.dont.show.again", value: "Don't show again", comment: ""
+        return NSLocalizedString("settings.network.test.warnning.dont.show.again", value: "Don't show again", comment: "")
     }
 }

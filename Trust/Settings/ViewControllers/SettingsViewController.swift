@@ -76,13 +76,13 @@ class SettingsViewController: FormViewController, Coordinator {
                 }
 
                 let popupWarningMessage = { [weak self] in
-                    let alertViewController = UIAlertController(title: viewModel.testNetworkWarningTitle, message: viewModel.testNetworkWarningMessage, preferredStyle: .alert)
+                    let alertViewController = UIAlertController(title: self?.viewModel.testNetworkWarningTitle, message: self?.viewModel.testNetworkWarningMessage, preferredStyle: .alert)
 
                     let okAction = UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default) { _ in
                         runSelectedNetwork()
                     }
-                    let dontShowAgainAction = UIAlertAction(title: viewModel.testNetworkWarningDontShowAgainLabel), style: .default) { _ in
-                        self?.config.testNetworkWarningDontShowAgain = true
+                    let dontShowAgainAction = UIAlertAction(title: self?.viewModel.testNetworkWarningDontShowAgainLabel, style: .default) { _ in
+                        self?.config.testNetworkWarningOff = true
                         runSelectedNetwork()
                     }
 
@@ -93,7 +93,7 @@ class SettingsViewController: FormViewController, Coordinator {
                 }
 
                 let selectedRPCServer = row.value ?? RPCServer.main
-                if selectedRPCServer.isTestNetwork == true && self?.config.testNetworkWarningDontShowAgain == false {
+                if selectedRPCServer.isTestNetwork == true && self?.config.testNetworkWarningOff == false {
                     popupWarningMessage()
                 } else {
                     runSelectedNetwork()
