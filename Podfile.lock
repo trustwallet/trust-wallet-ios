@@ -70,7 +70,6 @@ DEPENDENCIES:
   - QRCodeReaderViewController (from `https://github.com/yannickl/QRCodeReaderViewController.git`, branch `master`)
   - R.swift
   - RealmSwift
-  - Result
   - SAMKeychain
   - SeedStackViewController
   - StatefulViewController
@@ -140,6 +139,6 @@ SPEC CHECKSUMS:
   TrustWeb3Provider: ac0bdf19b4c6c4d6ec0f03ddb85b83e32bda3a9a
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
-PODFILE CHECKSUM: 411865b3933555d3c255ce3a2eb97f5d56e22678
+PODFILE CHECKSUM: d70134c067fee2a555025b2d122b92c0027618b6
 
 COCOAPODS: 1.4.0
