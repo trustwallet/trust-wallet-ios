@@ -107,6 +107,9 @@
 "settings.currency.button.title" = "货币";
 "settings.currency.popular.label.title" = "热门";
 "settings.network.test.label.title" = "测试网络";
+"settings.network.test.warnning.title"="警告";
+"settings.network.test.warnning.message"="即将切换到测试网络，仅供测试使用";
+"settings.network.test.warnning.dont.show.again"="不再提示";
 "settings.wallets.button.title" = "钱包";
 "Symbol" = "符号";
 "Today" = "今天";

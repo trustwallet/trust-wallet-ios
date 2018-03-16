@@ -8,8 +8,7 @@ protocol SettingsViewControllerDelegate: class {
     func didAction(action: SettingsAction, in viewController: SettingsViewController)
 }
 
-class SettingsViewController: FormViewController, Coordinator {
-    var coordinators: [Coordinator] = []
+class SettingsViewController: FormViewController {
     struct Values {
         static let currencyPopularKey = "0"
         static let currencyAllKey = "1"
@@ -32,20 +31,8 @@ class SettingsViewController: FormViewController, Coordinator {
     }()
 
     let session: WalletSession
-    let keystore: Keystore
-    let balanceCoordinator: TokensBalanceService
-    let accountsCoordinator: AccountsCoordinator
-
-    init(
-        session: WalletSession,
-        keystore: Keystore,
-        balanceCoordinator: TokensBalanceService,
-        accountsCoordinator: AccountsCoordinator
-    ) {
+    init(session: WalletSession) {
         self.session = session
-        self.keystore = keystore
-        self.balanceCoordinator = balanceCoordinator
-        self.accountsCoordinator = accountsCoordinator
         super.init(nibName: nil, bundle: nil)
         self.chaineStateObservation()
     }
@@ -70,8 +57,35 @@ class SettingsViewController: FormViewController, Coordinator {
                     return value?.displayName
                 }
             }.onChange {[weak self] row in
-                self?.config.chainID = row.value?.chainID ?? RPCServer.main.chainID
-                self?.run(action: .RPCServer)
+                let runSelectedNetwork = { [weak self, unowned row] in
+                    self?.config.chainID = row.value?.chainID ?? RPCServer.main.chainID
+                    self?.run(action: .RPCServer)
+                }
+
+                let popupWarningMessage = { [weak self] in
+                    let alertViewController = UIAlertController(title: NSLocalizedString("settings.network.test.warnning.title", value: "Warning", comment: ""),
+                                                                message: NSLocalizedString("settings.network.test.warnning.message", value: "You are switching to a test network where transactions are for testing purpose only.", comment: ""),
+                                                                preferredStyle: .alert)
+
+                    let okAction = UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default) { _ in
+                        runSelectedNetwork()
+                    }
+                    let dontShowAgainAction = UIAlertAction(title: NSLocalizedString("settings.network.test.warnning.dont.show.again", value: "Don't show again", comment: ""), style: .default) { _ in
+                        self?.config.testNetworkWarningDontShowAgain = true
+                        runSelectedNetwork()
+                    }
+                    alertViewController.addAction(okAction)
+                    alertViewController.addAction(dontShowAgainAction)
+
+                    self?.present(alertViewController, animated: true, completion: nil)
+                }
+
+                let selectedRPCServer = row.value ?? RPCServer.main
+                if selectedRPCServer.isTestNetwork == true && self?.config.testNetworkWarningDontShowAgain == false {
+                    popupWarningMessage()
+                } else {
+                    runSelectedNetwork()
+                }
             }.onPresent { _, selectorController in
                 selectorController.enableDeselection = false
                 selectorController.sectionKeyForValue = { option in
@@ -86,13 +100,10 @@ class SettingsViewController: FormViewController, Coordinator {
                 cell.imageView?.image = R.image.settings_server()
             }
 
-            <<< AppFormAppearance.button { [weak self] row in
-                guard let `self` = self else { return }
-                row.cellStyle = .value1
-                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
-                    return self.accountsCoordinator.accountsViewController
-                }, onDismiss: { _ in
-            })
+            <<< AppFormAppearance.button { button in
+                button.cellStyle = .value1
+            }.onCellSelection { [unowned self] _, _ in
+                self.run(action: .wallets)
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_wallet()
@@ -231,17 +242,12 @@ class SettingsViewController: FormViewController, Coordinator {
     }
 
     func setPasscode(completion: ((Bool) -> Void)? = .none) {
-        let coordinator = LockCreatePasscodeCoordinator(
-            model: LockCreatePasscodeViewModel()
-        )
-        coordinator.delegate = self
-        coordinator.start()
-        coordinator.lockViewController.willFinishWithResult = { [weak self] result in
+        let lock = LockCreatePasscodeCoordinator(navigationController: self.navigationController!, model: LockCreatePasscodeViewModel())
+        lock.start()
+        lock.lockViewController.willFinishWithResult = { result in
             completion?(result)
-            self?.navigationController?.dismiss(animated: true, completion: nil)
+            lock.stop()
         }
-        addCoordinator(coordinator)
-        navigationController?.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
     private func linkProvider(
@@ -257,17 +263,12 @@ class SettingsViewController: FormViewController, Coordinator {
             }
         }.cellSetup { cell, _ in
             cell.imageView?.image = type.image
-        }.cellUpdate { cell, _ in
-            cell.accessoryType = .disclosureIndicator
-            cell.textLabel?.textAlignment = .left
-            cell.textLabel?.textColor = .black
         }
     }
 
     private func chaineStateObservation() {
         self.session.chainState.chainStateCompletion = { [weak self] (state, block) in
-            let condition = NetworkCondition.from(state, block)
-            self?.networkStateView.viewModel = NetworkConditionViewModel(condition: condition)
+            self?.networkStateView.currentState = state == true ? .good(block) : .bad
         }
     }
 
@@ -277,13 +278,5 @@ class SettingsViewController: FormViewController, Coordinator {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension SettingsViewController: LockCreatePasscodeCoordinatorDelegate {
-    func didCancel(in coordinator: LockCreatePasscodeCoordinator) {
-        coordinator.lockViewController.willFinishWithResult?(false)
-        navigationController?.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
     }
 }
