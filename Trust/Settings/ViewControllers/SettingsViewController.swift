@@ -76,14 +76,12 @@ class SettingsViewController: FormViewController, Coordinator {
                 }
 
                 let popupWarningMessage = { [weak self] in
-                    let alertViewController = UIAlertController(title: NSLocalizedString("settings.network.test.warnning.title", value: "Warning", comment: ""),
-                                                                message: NSLocalizedString("settings.network.test.warnning.message", value: "You are switching to a test network where transactions are for testing purpose only", comment: ""),
-                                                                preferredStyle: .alert)
+                    let alertViewController = UIAlertController(title: viewModel.testNetworkWarningTitle, message: viewModel.testNetworkWarningMessage, preferredStyle: .alert)
 
                     let okAction = UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default) { _ in
                         runSelectedNetwork()
                     }
-                    let dontShowAgainAction = UIAlertAction(title: NSLocalizedString("settings.network.test.warnning.dont.show.again", value: "Don't show again", comment: ""), style: .default) { _ in
+                    let dontShowAgainAction = UIAlertAction(title: viewModel.testNetworkWarningDontShowAgainLabel), style: .default) { _ in
                         self?.config.testNetworkWarningDontShowAgain = true
                         runSelectedNetwork()
                     }
@@ -119,8 +117,7 @@ class SettingsViewController: FormViewController, Coordinator {
                 row.cellStyle = .value1
                 row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
                     return self.accountsCoordinator.accountsViewController
-                }, onDismiss: { _ in
-            })
+                }, onDismiss: { _ in })
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_wallet()
