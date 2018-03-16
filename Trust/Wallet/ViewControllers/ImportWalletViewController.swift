@@ -253,7 +253,6 @@ class ImportWalletViewController: FormViewController {
 
     func setValueForCurrentField(string: String) {
         let type = ImportSelectionType(title: segmentRow?.value)
-        guard let result = QRURLParser.from(string: string) else { return }
         switch type {
         case .keystore:
             keystoreRow?.value = string
@@ -262,6 +261,7 @@ class ImportWalletViewController: FormViewController {
             privateKeyRow?.value = string
             privateKeyRow?.reload()
         case .watch:
+            guard let result = QRURLParser.from(string: string) else { return }
             watchRow?.value = result.address
             watchRow?.reload()
         case .mnemonic:
