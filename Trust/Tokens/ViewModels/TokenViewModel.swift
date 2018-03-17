@@ -2,21 +2,21 @@
 
 import Foundation
 import BigInt
+import RealmSwift
 
 struct TokenViewModel {
 
     private let shortFormatter = EtherNumberFormatter.short
 
-    let token: TokenObject
-    let config: Config
+    private let config: Config
 
-    init(
-        token: TokenObject,
-        config: Config = Config()
-    ) {
-        self.token = token
-        self.config = config
-    }
+    private let store: TokensDataStore
+
+    private var tokensNetwork: TokensNetworkProtocol
+
+    fileprivate var notificationToken: NotificationToken?
+
+    let token: TokenObject
 
     var title: String {
         return token.displayName
@@ -40,5 +40,39 @@ struct TokenViewModel {
 
     var amount: String {
         return shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
+    }
+
+    init(
+        token: TokenObject,
+        config: Config = Config(),
+        store: TokensDataStore,
+        tokensNetwork: TokensNetworkProtocol
+    ) {
+        self.token = token
+        self.config = config
+        self.store = store
+        self.tokensNetwork = tokensNetwork
+    }
+
+    mutating func fetch() {
+        getTokenBalance()
+    }
+
+    private func getTokenBalance() {
+        tokensNetwork.tokenBalance(for: token) { (result) in
+            guard let balance = result.1 else {
+                return
+            }
+            self.store.update(token: self.token, action: .updateValue(balance.value))
+        }
+    }
+
+    mutating func tokenObservation(with completion: @escaping (() -> Void)) {
+        notificationToken = token.observe { change in
+            switch change {
+            case .change, .deleted, .error:
+                completion()
+            }
+        }
     }
 }

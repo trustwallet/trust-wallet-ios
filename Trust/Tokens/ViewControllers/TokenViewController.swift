@@ -26,7 +26,7 @@ class TokenViewController: UIViewController {
         return view
     }()
 
-    private let viewModel: TokenViewModel
+    private var viewModel: TokenViewModel
 
     weak var delegate: TokenViewControllerDelegate?
 
@@ -74,7 +74,14 @@ class TokenViewController: UIViewController {
     }
 
     private func observToken() {
-        
+        viewModel.tokenObservation { [weak self] in
+            self?.refreshControl.endRefreshing()
+            self?.updateHeader()
+        }
+    }
+
+    private func updateHeader() {
+         header.amountLabel.text = viewModel.amount
     }
 
     @objc func pullToRefresh() {
