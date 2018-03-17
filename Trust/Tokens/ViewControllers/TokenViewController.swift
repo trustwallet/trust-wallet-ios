@@ -10,45 +10,53 @@ protocol TokenViewControllerDelegate: class {
 
 class TokenViewController: UIViewController {
 
-    let tableView = UITableView()
-    let headerView = TokenHeaderView()
+    var tableView = UITableView()
+    lazy var header: TokenHeaderView = {
+        let view = TokenHeaderView()
+        view.imageView.kf.setImage(
+            with: viewModel.imageURL,
+            placeholder: viewModel.imagePlaceholder
+        )
+        view.amountLabel.text = viewModel.amount
+        view.amountLabel.font = viewModel.amountFont
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     let viewModel: TokenViewModel
     weak var delegate: TokenViewControllerDelegate?
 
     init(viewModel: TokenViewModel) {
         self.viewModel = viewModel
+        tableView = UITableView(frame: .zero, style: .plain)
         super.init(nibName: nil, bundle: nil)
-        configure(with: viewModel)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.title = viewModel.title
         view.backgroundColor = .white
 
-        headerView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .white
+        tableView.tableHeaderView = header
 
-        view.addSubview(headerView)
+        view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 240),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            header.topAnchor.constraint(equalTo: tableView.topAnchor),
+            header.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
+            header.widthAnchor.constraint(equalTo: tableView.widthAnchor),
+            header.heightAnchor.constraint(equalToConstant: 240),
         ])
 
-        headerView.buttonsView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
-        headerView.buttonsView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
-    }
-
-    func configure(with viewModel: TokenViewModel) {
-        navigationItem.title = viewModel.title
-        headerView.imageView.kf.setImage(
-            with: viewModel.imageURL,
-            placeholder: viewModel.imagePlaceholder
-        )
-        headerView.amountLabel.text = viewModel.amountText
-        headerView.amountLabel.font = viewModel.amountFont
+        header.buttonsView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
+        header.buttonsView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
