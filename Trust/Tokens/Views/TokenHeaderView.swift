@@ -42,9 +42,9 @@ class TokenHeaderView: UIView {
         super.init(frame: frame)
 
         conteiner.addArrangedSubview(.spacer(height: StyleLayout.sideMargin * 2))
-        conteiner.addArrangedSubview(amountLabel)
-        conteiner.addArrangedSubview(.spacer(height: 10))
         conteiner.addArrangedSubview(imageView)
+        conteiner.addArrangedSubview(.spacer(height: 10))
+        conteiner.addArrangedSubview(amountLabel)
         conteiner.addArrangedSubview(.spacer(height: 10))
         conteiner.addArrangedSubview(buttonsView)
 

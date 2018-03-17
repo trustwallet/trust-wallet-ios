@@ -4,14 +4,17 @@ import UIKit
 import Kingfisher
 
 protocol TokenViewControllerDelegate: class {
-    func didPressRequest(for type: TokenObject, in controller: UIViewController)
-    func didPressSend(for type: TokenObject, in controller: UIViewController)
+    func didPressRequest(for token: TokenObject, in controller: UIViewController)
+    func didPressSend(for token: TokenObject, in controller: UIViewController)
 }
 
 class TokenViewController: UIViewController {
 
-    var tableView = UITableView()
-    lazy var header: TokenHeaderView = {
+    private let refreshControl = UIRefreshControl()
+
+    private var tableView = UITableView()
+
+    private lazy var header: TokenHeaderView = {
         let view = TokenHeaderView()
         view.imageView.kf.setImage(
             with: viewModel.imageURL,
@@ -22,7 +25,9 @@ class TokenViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    let viewModel: TokenViewModel
+
+    private let viewModel: TokenViewModel
+
     weak var delegate: TokenViewControllerDelegate?
 
     init(viewModel: TokenViewModel) {
@@ -42,6 +47,9 @@ class TokenViewController: UIViewController {
         tableView.backgroundColor = .white
         tableView.tableHeaderView = header
 
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+
         view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
@@ -57,10 +65,21 @@ class TokenViewController: UIViewController {
 
         header.buttonsView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
         header.buttonsView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
+
+        observToken()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func observToken() {
+        
+    }
+
+    @objc func pullToRefresh() {
+        refreshControl.beginRefreshing()
+        viewModel.fetch()
     }
 
     @objc func send() {

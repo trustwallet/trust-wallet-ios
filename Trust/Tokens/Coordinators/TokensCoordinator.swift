@@ -114,7 +114,7 @@ class TokensCoordinator: Coordinator {
 extension TokensCoordinator: TokensViewControllerDelegate {
     func didSelect(token: TokenObject, in viewController: UIViewController) {
         let controller = TokenViewController(
-            viewModel: TokenViewModel(token: token)
+            viewModel: TokenViewModel(token: token, store: store, tokensNetwork: network)
         )
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)
@@ -153,11 +153,15 @@ extension TokensCoordinator: NonFungibleTokensViewControllerDelegate {
 }
 
 extension TokensCoordinator: TokenViewControllerDelegate {
-    func didPressSend(for type: TokenObject, in controller: UIViewController) {
-        delegate?.didPress(for: .send(type: .token(type)), in: self)
+    func didPressSend(for token: TokenObject, in controller: UIViewController) {
+        if TokensDataStore.etherToken(for: session.config) == token {
+            delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
+        } else {
+            delegate?.didPress(for: .send(type: .token(token)), in: self)
+        }
     }
 
-    func didPressRequest(for type: TokenObject, in controller: UIViewController) {
+    func didPressRequest(for token: TokenObject, in controller: UIViewController) {
         delegate?.didPress(for: .request, in: self)
     }
 }
