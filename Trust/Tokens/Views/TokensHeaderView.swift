@@ -9,26 +9,35 @@ class TokensHeaderView: UIView {
         let label = UILabel(frame: .zero)
         label.textColor = Colors.black
         label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+
+    lazy var buttonsView: TransactionsFooterView = {
+        let footerView = TransactionsFooterView(frame: .zero)
+        footerView.translatesAutoresizingMaskIntoConstraints = false
+        footerView.setBottomBorder()
+        return footerView
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        amountLabel.translatesAutoresizingMaskIntoConstraints = false
-
         let stackView = UIStackView(arrangedSubviews: [
             amountLabel,
+            buttonsView,
         ])
+
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
+        stackView.spacing = 15
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin + 10),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin * 2),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -StyleLayout.sideMargin - 10),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 

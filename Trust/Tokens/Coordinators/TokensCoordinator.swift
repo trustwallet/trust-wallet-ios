@@ -115,6 +115,7 @@ class TokensCoordinator: Coordinator {
 }
 
 extension TokensCoordinator: TokensViewControllerDelegate {
+
     func didSelect(token: TokenItem, in viewController: UIViewController) {
 
         switch token {
@@ -146,6 +147,14 @@ extension TokensCoordinator: TokensViewControllerDelegate {
 
     func didPressAddToken(in viewController: UIViewController) {
         addToken()
+    }
+
+    func didPressSend(in viewController: UIViewController) {
+        delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
+    }
+
+    func didPressRequest(in viewController: UIViewController) {
+        delegate?.didPress(for: .request, in: self)
     }
 }
 

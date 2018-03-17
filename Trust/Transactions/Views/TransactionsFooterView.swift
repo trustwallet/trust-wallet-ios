@@ -42,7 +42,6 @@ class TransactionsFooterView: UIView {
         layer.masksToBounds = false
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.1
-        layer.shadowOffset = CGSize(width: 0, height: -1)
         layer.shadowRadius = 0.1
 
         NSLayoutConstraint.activate([
@@ -51,6 +50,14 @@ class TransactionsFooterView: UIView {
             stackView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
         ])
+    }
+
+    func setTopBorder() {
+        layer.shadowOffset = CGSize(width: 0, height: -1)
+    }
+
+    func setBottomBorder() {
+        layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
     }
 
     required init?(coder aDecoder: NSCoder) {

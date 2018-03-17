@@ -12,6 +12,8 @@ protocol TokensViewControllerDelegate: class {
     func didSelect(token: TokenItem, in viewController: UIViewController)
     func didDelete(token: TokenItem, in viewController: UIViewController)
     func didEdit(token: TokenItem, in viewController: UIViewController)
+    func didPressSend(in viewController: UIViewController)
+    func didPressRequest(in viewController: UIViewController)
 }
 
 class TokensViewController: UIViewController {
@@ -25,6 +27,8 @@ class TokensViewController: UIViewController {
         header.backgroundColor = viewModel.headerBackgroundColor
         header.amountLabel.font = viewModel.headerBalanceFont
         header.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
+        header.buttonsView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
+        header.buttonsView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
         return header
     }()
 
@@ -171,6 +175,14 @@ class TokensViewController: UIViewController {
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
 
+    @objc func send() {
+        delegate?.didPressSend(in: self)
+    }
+
+    @objc func request() {
+        delegate?.didPressRequest(in: self)
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
         stopTimer()
@@ -187,9 +199,11 @@ extension TokensViewController: UITableViewDelegate {
         let token = viewModel.item(for: indexPath)
         delegate?.didSelect(token: token, in: self)
     }
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return viewModel.canEdit(for: indexPath)
     }
+
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let token = viewModel.item(for: indexPath)
         let delete = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Delete", value: "Delete", comment: "")) {[unowned self] (_, _) in
@@ -200,6 +214,7 @@ extension TokensViewController: UITableViewDelegate {
         }
         return [delete, edit]
     }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
@@ -210,6 +225,7 @@ extension TokensViewController: UITableViewDataSource {
         cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
         return cell
     }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.tokens.count
     }
