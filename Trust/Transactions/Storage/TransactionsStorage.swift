@@ -68,12 +68,13 @@ class TransactionsStorage {
             guard let stringDate = $0 as? String, let date = TransactionsViewModel.convert(stringDate) else {
                 return
             }
+            var pendingTransactions = pendingObjects.filter { TransactionsViewModel.realmBaseFormmater.string(from: $0.date ) == stringDate }
             let filteredTransactionByDate = transactions.filter { TransactionsViewModel.realmBaseFormmater.string(from: $0.date ) == stringDate }
-            
+            pendingTransactions.append(contentsOf: filteredTransactionByDate)
             let item = TransactionCategory()
             item.title = stringDate
             item.date = date
-            item.transactions.append(objectsIn: filteredTransactionByDate)
+            item.transactions.append(objectsIn: pendingTransactions)
             category.append(item)
         }
         return category
