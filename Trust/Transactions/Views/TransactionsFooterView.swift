@@ -24,7 +24,10 @@ class TransactionsFooterView: UIView {
         return requestButton
     }()
 
-    override init(frame: CGRect) {
+    init(
+        frame: CGRect,
+        bottomOffset: CGFloat = 0
+    ) {
         super.init(frame: frame)
 
         let stackView = UIStackView(arrangedSubviews: [
@@ -42,15 +45,22 @@ class TransactionsFooterView: UIView {
         layer.masksToBounds = false
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.1
-        layer.shadowOffset = CGSize(width: 0, height: -1)
         layer.shadowRadius = 0.1
 
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+            stackView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor, constant: -bottomOffset),
         ])
+    }
+
+    func setTopBorder() {
+        layer.shadowOffset = CGSize(width: 0, height: -1)
+    }
+
+    func setBottomBorder() {
+        layer.shadowOffset = CGSize(width: 0.0, height: 1)
     }
 
     required init?(coder aDecoder: NSCoder) {

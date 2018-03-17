@@ -12,23 +12,19 @@ class TokenHeaderView: UIView {
         return label
     }()
 
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
     lazy var imageView: TokenImageView = {
         let imageView = TokenImageView()
-        imageView.image = R.image.ethereum_logo_256()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
     lazy var buttonsView: TransactionsFooterView = {
-        let footerView = TransactionsFooterView(frame: .zero)
+        let footerView = TransactionsFooterView(
+            frame: .zero,
+            bottomOffset: 5
+        )
         footerView.translatesAutoresizingMaskIntoConstraints = false
-        //footerView.setBottomBorder()
+        footerView.setBottomBorder()
         return footerView
     }()
 
@@ -36,19 +32,22 @@ class TokenHeaderView: UIView {
         super.init(frame: frame)
 
         let stackView = UIStackView(arrangedSubviews: [
+            .spacer(height: StyleLayout.sideMargin * 2),
             imageView,
+            .spacer(height: 10),
             amountLabel,
+            .spacer(height: 10),
             buttonsView,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 15
+        stackView.spacing = 0
         stackView.distribution = .equalSpacing
         stackView.alignment = .center
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin * 2),
+            stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -56,13 +55,12 @@ class TokenHeaderView: UIView {
             buttonsView.leadingAnchor.constraint(equalTo: leadingAnchor),
             buttonsView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            imageView.heightAnchor.constraint(equalToConstant: 64),
-            imageView.widthAnchor.constraint(equalToConstant: 64),
-            //imageView.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
+            imageView.heightAnchor.constraint(equalToConstant: 84),
+            imageView.widthAnchor.constraint(equalToConstant: 84),
         ])
 
-        backgroundColor = Colors.veryLightGray
-        buttonsView.backgroundColor = Colors.veryLightGray
+        backgroundColor = Colors.veryVeryLightGray
+        buttonsView.backgroundColor = Colors.veryVeryLightGray
     }
 
     required init?(coder aDecoder: NSCoder) {

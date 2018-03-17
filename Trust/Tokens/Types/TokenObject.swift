@@ -97,4 +97,12 @@ class TokenObject: Object, Decodable {
     var imagePath: String {
         return "https://trustwalletapp.com/images/tokens/\(contract.lowercased()).png"
     }
+
+    var imageURL: URL? {
+        return URL(string: imagePath)
+    }
+
+    var displayName: String {
+        return "\(self.name) (\(self.symbol))"
+    }
 }

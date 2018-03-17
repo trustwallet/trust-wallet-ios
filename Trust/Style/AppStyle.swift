@@ -35,6 +35,7 @@ struct Colors {
     static let green = UIColor(hex: "2fbb4f")
     static let lightGray = UIColor.lightGray
     static let veryLightGray = UIColor(hex: "F6F6F6")
+    static let veryVeryLightGray = UIColor(hex: "f8f8f8") // P.S. Creative naming
     static let gray = UIColor.gray
     static let darkGray = UIColor(hex: "606060")
     static let black = UIColor(hex: "313849")

@@ -126,17 +126,11 @@ extension TokensCoordinator: TokensViewControllerDelegate {
                 return .token(token)
             }()
 
-            let viewModel = TokenViewModel(type: type)
-
-            let controller = TokenViewController(viewModel: viewModel)
+            let controller = TokenViewController(
+                viewModel: TokenViewModel(type: type)
+            )
+            controller.delegate = self
             navigationController.pushViewController(controller, animated: true)
-
-//            switch type {
-//            case .ether:
-//                delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
-//            case .token:
-//                delegate?.didPress(for: .send(type: .token(token)), in: self)
-//            }
         }
     }
 
@@ -172,5 +166,20 @@ extension TokensCoordinator: NonFungibleTokensViewControllerDelegate {
 
     func didPressDiscover() {
         delegate?.didPressDiscover(in: self)
+    }
+}
+
+extension TokensCoordinator: TokenViewControllerDelegate {
+    func didPressSend(for type: TokenType, in controller: UIViewController) {
+        switch type {
+        case .ether:
+            delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
+        case .token(let token):
+            delegate?.didPress(for: .send(type: .token(token)), in: self)
+        }
+    }
+
+    func didPressRequest(for type: TokenType, in controller: UIViewController) {
+        delegate?.didPress(for: .request, in: self)
     }
 }
