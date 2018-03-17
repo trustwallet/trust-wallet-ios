@@ -5,10 +5,6 @@ import UIKit
 import RealmSwift
 import TrustKeystore
 
-enum TokenItem {
-    case token(TokenObject)
-}
-
 protocol TokensViewModelDelegate: class {
     func refresh()
 }
@@ -118,8 +114,8 @@ class TokensViewModel: NSObject {
         return tokens.count
     }
 
-    func item(for path: IndexPath) -> TokenItem {
-        return .token(tokens[path.row])
+    func item(for path: IndexPath) -> TokenObject {
+        return tokens[path.row]
     }
 
     func canEdit(for path: IndexPath) -> Bool {

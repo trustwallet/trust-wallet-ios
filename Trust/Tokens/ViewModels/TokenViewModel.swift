@@ -1,37 +1,29 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
-import UIKit
+import BigInt
 
 struct TokenViewModel {
 
-    let type: TokenType
+    private let shortFormatter = EtherNumberFormatter.short
+
+    let token: TokenObject
     let config: Config
 
     init(
-        type: TokenType,
+        token: TokenObject,
         config: Config = Config()
     ) {
-        self.type = type
+        self.token = token
         self.config = config
     }
 
     var title: String {
-        switch type {
-        case .ether:
-            return config.server.displayName
-        case .token(let token):
-            return token.displayName
-        }
+        return token.displayName
     }
 
     var imageURL: URL? {
-        switch type {
-        case .ether:
-            return .none
-        case .token(let token):
-            return token.imageURL
-        }
+        return token.imageURL
     }
 
     var imagePlaceholder: UIImage? {
@@ -39,17 +31,14 @@ struct TokenViewModel {
     }
 
     private var symbol: String {
-        switch type {
-        case .ether: return config.server.symbol
-        case .token(let token): return token.symbol
-        }
+        return token.symbol
     }
 
     var amountFont: UIFont {
         return UIFont.systemFont(ofSize: 18, weight: .medium)
     }
 
-    var amountText: String {
-        return String(format: "1.12 %@", symbol) //TODO: Implement
+    var amount: String {
+        return shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
     }
 }

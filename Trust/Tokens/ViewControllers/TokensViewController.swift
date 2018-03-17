@@ -9,9 +9,9 @@ import RealmSwift
 
 protocol TokensViewControllerDelegate: class {
     func didPressAddToken( in viewController: UIViewController)
-    func didSelect(token: TokenItem, in viewController: UIViewController)
-    func didDelete(token: TokenItem, in viewController: UIViewController)
-    func didEdit(token: TokenItem, in viewController: UIViewController)
+    func didSelect(token: TokenObject, in viewController: UIViewController)
+    func didDelete(token: TokenObject, in viewController: UIViewController)
+    func didEdit(token: TokenObject, in viewController: UIViewController)
 }
 
 class TokensViewController: UIViewController {

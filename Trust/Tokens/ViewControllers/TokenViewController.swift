@@ -4,8 +4,8 @@ import UIKit
 import Kingfisher
 
 protocol TokenViewControllerDelegate: class {
-    func didPressRequest(for type: TokenType, in controller: UIViewController)
-    func didPressSend(for type: TokenType, in controller: UIViewController)
+    func didPressRequest(for type: TokenObject, in controller: UIViewController)
+    func didPressSend(for type: TokenObject, in controller: UIViewController)
 }
 
 class TokenViewController: UIViewController {
@@ -56,10 +56,10 @@ class TokenViewController: UIViewController {
     }
 
     @objc func send() {
-        delegate?.didPressSend(for: viewModel.type, in: self)
+        delegate?.didPressSend(for: viewModel.token, in: self)
     }
 
     @objc func request() {
-        delegate?.didPressRequest(for: viewModel.type, in: self)
+        delegate?.didPressRequest(for: viewModel.token, in: self)
     }
 }
