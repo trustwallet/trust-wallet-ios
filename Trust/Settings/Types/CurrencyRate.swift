@@ -2,13 +2,13 @@
 
 import Foundation
 
-struct Rate {
+struct Rate: Codable {
     let code: String
     let price: Double
     let contract: String
 }
 
-struct CurrencyRate {
+struct CurrencyRate: Codable {
     let currency: String
     let rates: [Rate]
 }

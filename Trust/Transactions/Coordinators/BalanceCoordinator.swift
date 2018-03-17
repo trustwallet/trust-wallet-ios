@@ -56,9 +56,9 @@ class BalanceCoordinator {
         delegate?.didUpdate(viewModel: viewModel)
     }
     private func updateBalance(for token: TokenObject, with value: BigInt?) {
-        var ticker = self.storage.coinTicker(for: token)
+        let ticker = self.storage.coinTicker(for: token)
         self.balance = Balance(value: value ?? token.valueBigInt)
-        self.currencyRate = ticker?.rate
+        self.currencyRate = ticker?.rate()
         self.update()
     }
 }

@@ -108,7 +108,7 @@ class TokensViewModel: NSObject {
     }
 
     private func amount(for token: TokenObject) -> Double {
-        guard let tickersSymbol = store.tickers.first(where: { $0.contract == token.contract }) else { return 0 }
+        guard let tickersSymbol = store.tickers().first(where: { $0.contract == token.contract }) else { return 0 }
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
         let price = Double(tickersSymbol.price) ?? 0
         return tokenValue * price
@@ -184,7 +184,7 @@ class TokensViewModel: NSObject {
         tokensTickerOperation.tokens = tokens
 
         tokensTickerOperation.completionBlock = { [weak self] in
-            self?.store.tickers = tokensTickerOperation.tickers
+            self?.store.saveTickers(tickers: tokensTickerOperation.tickers)
             DispatchQueue.main.async {
                 self?.delegate?.refresh()
             }

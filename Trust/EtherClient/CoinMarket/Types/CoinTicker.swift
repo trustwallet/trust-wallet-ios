@@ -10,9 +10,15 @@ struct CoinTicker: Codable {
     let percent_change_24h: String
     let contract: String
     let image: String
+}
 
-    lazy var rate: CurrencyRate = {
-        CurrencyRate(
+extension CoinTicker {
+    var imageURL: URL? {
+        return URL(string: image)
+    }
+
+    func rate() -> CurrencyRate {
+        return CurrencyRate(
             currency: symbol,
             rates: [
                 Rate(
@@ -20,13 +26,7 @@ struct CoinTicker: Codable {
                     price: Double(price) ?? 0,
                     contract: contract
                 ),
-            ]
+                ]
         )
-    }()
-}
-
-extension CoinTicker {
-    var imageURL: URL? {
-        return URL(string: image)
     }
 }
