@@ -363,6 +363,9 @@
 		775DF43F203E38D3009CD082 /* NonFungibleTokenViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 775DF43D203E38D2009CD082 /* NonFungibleTokenViewCell.xib */; };
 		775DF443203E5685009CD082 /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF442203E5685009CD082 /* Tabs.swift */; };
 		776C1142205BAFA800449539 /* ExportPrivateKeyCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776C1141205BAFA800449539 /* ExportPrivateKeyCoordinatorTests.swift */; };
+		776C1144205CF67E00449539 /* TokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776C1143205CF67E00449539 /* TokenViewController.swift */; };
+		776C1147205CF6DF00449539 /* TokenHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776C1146205CF6DF00449539 /* TokenHeaderView.swift */; };
+		776C1149205D02E800449539 /* TokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776C1148205D02E800449539 /* TokenViewModel.swift */; };
 		77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D222023F43B0032D687 /* TransactionsTracker.swift */; };
 		77872D25202505B70032D687 /* EnterPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D24202505B70032D687 /* EnterPasswordViewController.swift */; };
 		77872D27202505C00032D687 /* EnterPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D26202505C00032D687 /* EnterPasswordViewModel.swift */; };
@@ -822,6 +825,9 @@
 		775DF43D203E38D2009CD082 /* NonFungibleTokenViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NonFungibleTokenViewCell.xib; sourceTree = "<group>"; };
 		775DF442203E5685009CD082 /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
 		776C1141205BAFA800449539 /* ExportPrivateKeyCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPrivateKeyCoordinatorTests.swift; sourceTree = "<group>"; };
+		776C1143205CF67E00449539 /* TokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenViewController.swift; sourceTree = "<group>"; };
+		776C1146205CF6DF00449539 /* TokenHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenHeaderView.swift; sourceTree = "<group>"; };
+		776C1148205D02E800449539 /* TokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenViewModel.swift; sourceTree = "<group>"; };
 		77872D222023F43B0032D687 /* TransactionsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTracker.swift; sourceTree = "<group>"; };
 		77872D24202505B70032D687 /* EnterPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewController.swift; sourceTree = "<group>"; };
 		77872D26202505C00032D687 /* EnterPasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewModel.swift; sourceTree = "<group>"; };
@@ -1498,6 +1504,7 @@
 				29F1C84B1FEC4F6F003780D8 /* TokensFooterView.swift */,
 				775DF43C203E38D2009CD082 /* NonFungibleTokenViewCell.swift */,
 				775DF43D203E38D2009CD082 /* NonFungibleTokenViewCell.xib */,
+				776C1146205CF6DF00449539 /* TokenHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1510,6 +1517,7 @@
 				29F1C83D1FEB5C91003780D8 /* EditTokensViewController.swift */,
 				73B1A6B5204B4789001F546C /* NonFungibleTokensViewController.swift */,
 				73B1A6B7204B4893001F546C /* MasterViewController.swift */,
+				776C1143205CF67E00449539 /* TokenViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1524,6 +1532,7 @@
 				29F1C8491FEB6D6B003780D8 /* EditTokenViewModel.swift */,
 				73B1A6BB204B4FB6001F546C /* NonFungibleTokenViewModel.swift */,
 				73B1A6BD204B55FA001F546C /* NonFungibleTokenCellViewModel.swift */,
+				776C1148205D02E800449539 /* TokenViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2948,6 +2957,7 @@
 				29358DA91F79FD1C00925D61 /* CALayer.swift in Sources */,
 				29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */,
 				77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */,
+				776C1147205CF6DF00449539 /* TokenHeaderView.swift in Sources */,
 				29FA00CE201CA64E002F7DC5 /* DappCommand.swift in Sources */,
 				29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */,
 				73065AF0205809D900D69722 /* TokensBalanceOperation.swift in Sources */,
@@ -3122,6 +3132,7 @@
 				732086B9201508690047F605 /* SplashCoordinator.swift in Sources */,
 				77872D292025116E0032D687 /* EnterPasswordCoordinator.swift in Sources */,
 				7374ED2E2059A6A3004A8BC2 /* SectionHeader.swift in Sources */,
+				776C1144205CF67E00449539 /* TokenViewController.swift in Sources */,
 				775DF42D2037D338009CD082 /* BranchCoordinator.swift in Sources */,
 				298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */,
 				29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */,
@@ -3227,6 +3238,7 @@
 				2963B6AF1F9823E6003063C1 /* UnconfirmedTransaction.swift in Sources */,
 				2996F1431F6C96FF005C33AE /* ImportWalletViewModel.swift in Sources */,
 				291ED08D1F6F5F0A00E7E93A /* KeyStoreError.swift in Sources */,
+				776C1149205D02E800449539 /* TokenViewModel.swift in Sources */,
 				29F1C83E1FEB5C91003780D8 /* EditTokensViewController.swift in Sources */,
 				296AF9A31F733AB30058AF78 /* WalletCoordinator.swift in Sources */,
 			);

@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum TokenType: Int {
+enum TokenType {
     case ether
-    case token
+    case token(TokenObject)
 }

@@ -120,15 +120,23 @@ extension TokensCoordinator: TokensViewControllerDelegate {
         switch token {
         case .token(let token):
             let type: TokenType = {
-                return TokensDataStore.etherToken(for: session.config) == token ? .ether : .token
+                if TokensDataStore.etherToken(for: session.config) == token {
+                    return .ether
+                }
+                return .token(token)
             }()
 
-            switch type {
-            case .ether:
-                delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
-            case .token:
-                delegate?.didPress(for: .send(type: .token(token)), in: self)
-            }
+            let viewModel = TokenViewModel(type: type)
+
+            let controller = TokenViewController(viewModel: viewModel)
+            navigationController.pushViewController(controller, animated: true)
+
+//            switch type {
+//            case .ether:
+//                delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
+//            case .token:
+//                delegate?.didPress(for: .send(type: .token(token)), in: self)
+//            }
         }
     }
 
