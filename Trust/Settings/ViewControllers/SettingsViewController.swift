@@ -25,7 +25,7 @@ class SettingsViewController: FormViewController, Coordinator {
         return SettingsViewModel(isDebug: isDebug)
     }()
 
-    lazy var networkStateView: NetworkStateView = {
+    lazy var networkStateView: NetworkStateView? = {
         let view = NetworkStateView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -52,7 +52,9 @@ class SettingsViewController: FormViewController, Coordinator {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: networkStateView)
+        if let stateView = networkStateView {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: stateView)
+        }
         title = NSLocalizedString("settings.navigation.title", value: "Settings", comment: "")
         let account = session.account
 
@@ -267,7 +269,7 @@ class SettingsViewController: FormViewController, Coordinator {
     private func chaineStateObservation() {
         self.session.chainState.chainStateCompletion = { [weak self] (state, block) in
             let condition = NetworkCondition.from(state, block)
-            self?.networkStateView.viewModel = NetworkConditionViewModel(condition: condition)
+            self?.networkStateView?.viewModel = NetworkConditionViewModel(condition: condition)
         }
     }
 
