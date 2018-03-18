@@ -7,13 +7,9 @@ import RealmSwift
 struct TokenViewModel {
 
     private let shortFormatter = EtherNumberFormatter.short
-
     private let config: Config
-
     private let store: TokensDataStore
-
     private var tokensNetwork: TokensNetworkProtocol
-
     fileprivate var notificationToken: NotificationToken?
 
     let token: TokenObject
@@ -39,7 +35,11 @@ struct TokenViewModel {
     }
 
     var amount: String {
-        return shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
+        return String(
+            format: "%@ %@",
+            shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals),
+            symbol
+        )
     }
 
     init(
