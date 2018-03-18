@@ -32,11 +32,11 @@ struct EditTokenTableCellViewModel {
     }
 
     var placeholderImage: UIImage? {
-        return R.image.ethereum_token_logo()
+        return R.image.ethereum_logo_256()
     }
 
     var imageUrl: URL? {
-        return coinTicker?.imageURL
+        return token.imageURL
     }
 
     var isEnabled: Bool {

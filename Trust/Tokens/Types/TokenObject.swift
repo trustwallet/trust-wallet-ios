@@ -95,7 +95,13 @@ class TokenObject: Object, Decodable {
     }
 
     var imagePath: String {
-        return "https://trustwalletapp.com/images/tokens/\(contract.lowercased()).png"
+        let config = Config.current
+        let formatter = ImageURLFormatter()
+        if TokensDataStore.etherToken(for: config) == self {
+            return formatter.image(chainID: config.chainID)
+        } else {
+            return formatter.image(for: contract)
+        }
     }
 
     var imageURL: URL? {

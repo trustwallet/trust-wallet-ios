@@ -9,7 +9,6 @@ import Result
 class SendTransactionCoordinator {
 
     private let keystore: Keystore
-    let config = Config()
     let session: WalletSession
     let formatter = EtherNumberFormatter.full
     let confirmType: ConfirmType

@@ -12,6 +12,8 @@ struct Config {
         static let dAppBrowser = "dAppBrowser"
     }
 
+    static let current: Config = Config()
+
     let defaults: UserDefaults
 
     init(
