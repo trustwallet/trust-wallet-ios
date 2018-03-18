@@ -72,17 +72,14 @@ class TokensCoordinator: Coordinator {
         return controller
     }
 
-    func editTokenViewController(token: TokenItem) -> NewTokenViewController {
-        switch token {
-        case .token(let token):
-            let token: ERC20Token? = {
-                guard let address = Address(string: token.contract) else {
-                    return .none
-                }
-                return ERC20Token(contract: address, name: token.name, symbol: token.symbol, decimals: token.decimals)
-            }()
-            return newTokenViewController(token: token)
-        }
+    func editTokenViewController(token: TokenObject) -> NewTokenViewController {
+        let token: ERC20Token? = {
+            guard let address = Address(string: token.contract) else {
+                return .none
+            }
+            return ERC20Token(contract: address, name: token.name, symbol: token.symbol, decimals: token.decimals)
+        }()
+        return newTokenViewController(token: token)
     }
 
     @objc func addToken() {
@@ -93,7 +90,7 @@ class TokensCoordinator: Coordinator {
         navigationController.present(nav, animated: true, completion: nil)
     }
 
-    func editToken(_ token: TokenItem) {
+    func editToken(_ token: TokenObject) {
         let controller = editTokenViewController(token: token)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         let nav = UINavigationController(rootViewController: controller)
@@ -115,34 +112,20 @@ class TokensCoordinator: Coordinator {
 }
 
 extension TokensCoordinator: TokensViewControllerDelegate {
-    func didSelect(token: TokenItem, in viewController: UIViewController) {
-
-        switch token {
-        case .token(let token):
-            let type: TokenType = {
-                if TokensDataStore.etherToken(for: session.config) == token {
-                    return .ether
-                }
-                return .token(token)
-            }()
-
-            let controller = TokenViewController(
-                viewModel: TokenViewModel(type: type)
-            )
-            controller.delegate = self
-            navigationController.pushViewController(controller, animated: true)
-        }
+    func didSelect(token: TokenObject, in viewController: UIViewController) {
+        let controller = TokenViewController(
+            viewModel: TokenViewModel(token: token, store: store, tokensNetwork: network)
+        )
+        controller.delegate = self
+        navigationController.pushViewController(controller, animated: true)
     }
 
-    func didDelete(token: TokenItem, in viewController: UIViewController) {
-        switch token {
-        case .token(let token):
-            store.delete(tokens: [token])
-            tokensViewController.fetch()
-        }
+    func didDelete(token: TokenObject, in viewController: UIViewController) {
+        store.delete(tokens: [token])
+        tokensViewController.fetch()
     }
 
-    func didEdit(token: TokenItem, in viewController: UIViewController) {
+    func didEdit(token: TokenObject, in viewController: UIViewController) {
         editToken(token)
     }
 
@@ -170,16 +153,15 @@ extension TokensCoordinator: NonFungibleTokensViewControllerDelegate {
 }
 
 extension TokensCoordinator: TokenViewControllerDelegate {
-    func didPressSend(for type: TokenType, in controller: UIViewController) {
-        switch type {
-        case .ether:
+    func didPressSend(for token: TokenObject, in controller: UIViewController) {
+        if TokensDataStore.etherToken(for: session.config) == token {
             delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
-        case .token(let token):
+        } else {
             delegate?.didPress(for: .send(type: .token(token)), in: self)
         }
     }
 
-    func didPressRequest(for type: TokenType, in controller: UIViewController) {
+    func didPressRequest(for token: TokenObject, in controller: UIViewController) {
         delegate?.didPress(for: .request, in: self)
     }
 }

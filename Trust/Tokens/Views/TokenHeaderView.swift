@@ -13,7 +13,7 @@ class TokenHeaderView: UIView {
     }()
 
     lazy var imageView: TokenImageView = {
-        let imageView = TokenImageView()
+        let imageView = TokenImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -28,29 +28,33 @@ class TokenHeaderView: UIView {
         return footerView
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        let stackView = UIStackView(arrangedSubviews: [
-            .spacer(height: StyleLayout.sideMargin * 2),
-            imageView,
-            .spacer(height: 10),
-            amountLabel,
-            .spacer(height: 10),
-            buttonsView,
-        ])
+    lazy var conteiner: UIStackView = {
+        let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 0
         stackView.distribution = .equalSpacing
         stackView.alignment = .center
-        addSubview(stackView)
+        return stackView
+    }()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        conteiner.addArrangedSubview(.spacer(height: StyleLayout.sideMargin * 2))
+        conteiner.addArrangedSubview(imageView)
+        conteiner.addArrangedSubview(.spacer(height: 10))
+        conteiner.addArrangedSubview(amountLabel)
+        conteiner.addArrangedSubview(.spacer(height: 10))
+        conteiner.addArrangedSubview(buttonsView)
+
+        addSubview(conteiner)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            conteiner.topAnchor.constraint(equalTo: topAnchor),
+            conteiner.leadingAnchor.constraint(equalTo: leadingAnchor),
+            conteiner.trailingAnchor.constraint(equalTo: trailingAnchor),
+            conteiner.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             buttonsView.leadingAnchor.constraint(equalTo: leadingAnchor),
             buttonsView.trailingAnchor.constraint(equalTo: trailingAnchor),

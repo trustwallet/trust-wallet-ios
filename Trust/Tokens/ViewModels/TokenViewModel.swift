@@ -1,37 +1,29 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
-import UIKit
+import BigInt
+import RealmSwift
 
 struct TokenViewModel {
 
-    let type: TokenType
-    let config: Config
+    private let shortFormatter = EtherNumberFormatter.short
 
-    init(
-        type: TokenType,
-        config: Config = Config()
-    ) {
-        self.type = type
-        self.config = config
-    }
+    private let config: Config
+
+    private let store: TokensDataStore
+
+    private var tokensNetwork: TokensNetworkProtocol
+
+    fileprivate var notificationToken: NotificationToken?
+
+    let token: TokenObject
 
     var title: String {
-        switch type {
-        case .ether:
-            return config.server.displayName
-        case .token(let token):
-            return token.displayName
-        }
+        return token.displayName
     }
 
     var imageURL: URL? {
-        switch type {
-        case .ether:
-            return .none
-        case .token(let token):
-            return token.imageURL
-        }
+        return token.imageURL
     }
 
     var imagePlaceholder: UIImage? {
@@ -39,17 +31,48 @@ struct TokenViewModel {
     }
 
     private var symbol: String {
-        switch type {
-        case .ether: return config.server.symbol
-        case .token(let token): return token.symbol
-        }
+        return token.symbol
     }
 
     var amountFont: UIFont {
         return UIFont.systemFont(ofSize: 18, weight: .medium)
     }
 
-    var amountText: String {
-        return String(format: "1.12 %@", symbol) //TODO: Implement
+    var amount: String {
+        return shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
+    }
+
+    init(
+        token: TokenObject,
+        config: Config = Config(),
+        store: TokensDataStore,
+        tokensNetwork: TokensNetworkProtocol
+    ) {
+        self.token = token
+        self.config = config
+        self.store = store
+        self.tokensNetwork = tokensNetwork
+    }
+
+    mutating func fetch() {
+        getTokenBalance()
+    }
+
+    private func getTokenBalance() {
+        tokensNetwork.tokenBalance(for: token) { (result) in
+            guard let balance = result.1 else {
+                return
+            }
+            self.store.update(token: self.token, action: .updateValue(balance.value))
+        }
+    }
+
+    mutating func tokenObservation(with completion: @escaping (() -> Void)) {
+        notificationToken = token.observe { change in
+            switch change {
+            case .change, .deleted, .error:
+                completion()
+            }
+        }
     }
 }
