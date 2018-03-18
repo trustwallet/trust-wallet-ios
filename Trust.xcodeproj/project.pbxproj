@@ -407,6 +407,7 @@
 		BB3B86C9204D35A20061FCBA /* DispatchMainSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86C8204D35A20061FCBA /* DispatchMainSafe.swift */; };
 		BB3B86CC204D36A90061FCBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB3B86CE204D36A90061FCBA /* Localizable.strings */; };
 		BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */; };
+		BB767E2E205E10FD00263658 /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB767E2D205E10FD00263658 /* Debounce.swift */; };
 		BBAA2A3B2058155100B0878C /* signTypedMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAA2A3A2058155100B0878C /* signTypedMessageTests.swift */; };
 		BBB61E122050993A00428BBD /* BrowserErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB61E112050993A00428BBD /* BrowserErrorView.swift */; };
 		BBD4E416205654E4005545E9 /* EthTypedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD4E415205654E4005545E9 /* EthTypedData.swift */; };
@@ -893,6 +894,7 @@
 		BB3B86E0204D3C090061FCBA /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BB3B86E1204D3C0A0061FCBA /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrencyRate+Fee.swift"; sourceTree = "<group>"; };
+		BB767E2D205E10FD00263658 /* Debounce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debounce.swift; sourceTree = "<group>"; };
 		BBAA2A3A2058155100B0878C /* signTypedMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signTypedMessageTests.swift; sourceTree = "<group>"; };
 		BBB61E112050993A00428BBD /* BrowserErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserErrorView.swift; sourceTree = "<group>"; };
 		BBD4E415205654E4005545E9 /* EthTypedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthTypedData.swift; sourceTree = "<group>"; };
@@ -1334,6 +1336,8 @@
 			isa = PBXGroup;
 			children = (
 				776C114A20605A9C00449539 /* Layout */,
+				BB767E2C205E102700263658 /* Utils */,
+				73200B682045B85D00118A82 /* Network */,
 				73200B652044B21100118A82 /* Storage */,
 				29F114EA1FA448DE00114A29 /* Coordinators */,
 				2977CAF31F7E0C5D009682A0 /* Types */,
@@ -2414,6 +2418,14 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
+		BB767E2C205E102700263658 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BB767E2D205E10FD00263658 /* Debounce.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		CCA4FE301FD3652100749AE4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -2953,6 +2965,7 @@
 				903682F1204A6DB800013479 /* BookmarkViewController.swift in Sources */,
 				29358DA91F79FD1C00925D61 /* CALayer.swift in Sources */,
 				29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */,
+				BB767E2E205E10FD00263658 /* Debounce.swift in Sources */,
 				77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */,
 				776C1147205CF6DF00449539 /* TokenHeaderView.swift in Sources */,
 				29FA00CE201CA64E002F7DC5 /* DappCommand.swift in Sources */,
