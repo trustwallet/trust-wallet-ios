@@ -2,8 +2,9 @@
 
 import Foundation
 import RealmSwift
+import TrustKeystore
 
-class Transaction: Object {
+class Transaction: Object, Decodable {
     @objc dynamic var id: String = ""
     @objc dynamic var blockNumber: Int = 0
     @objc dynamic var from = ""
@@ -51,6 +52,64 @@ class Transaction: Object {
         }
 
         self.localizedOperations = list
+    }
+
+    private enum TransactionCodingKeys: String, CodingKey {
+        case id = "_id"
+        case blockNumber
+        case from
+        case to
+        case value
+        case gas
+        case gasPrice
+        case gasUsed
+        case nonce // Here we need to convert (from Int)]
+        case timeStamp // Convert from timestamp
+        case operations // Operations needs custom decoding
+        case error // Only to throw
+    }
+
+    convenience required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: TransactionCodingKeys.self)
+        let id = try container.decode(String.self, forKey: .id)
+        let blockNumber = try container.decode(Int.self, forKey: .blockNumber)
+        let from = try container.decode(String.self, forKey: .from)
+        let to = try container.decode(String.self, forKey: .to)
+        let value = try container.decode(String.self, forKey: .value)
+        let gas = try container.decode(String.self, forKey: .gas)
+        let gasPrice = try container.decode(String.self, forKey: .gasPrice)
+        let gasUsed = try container.decode(String.self, forKey: .gasUsed)
+        let rawNonce = try container.decode(Int.self, forKey: .nonce)
+        let timeStamp = try container.decode(String.self, forKey: .timeStamp)
+        let error = try container.decodeIfPresent(String.self, forKey: .error)
+        let operations = try container.decode([LocalizedOperationObject].self, forKey: .operations)
+
+        guard
+            let fromAddress = Address(string: from) else {
+                let context = DecodingError.Context(codingPath: [TransactionCodingKeys.from],
+                                                    debugDescription: "Address can't be decoded as a TrustKeystore.Address")
+                throw DecodingError.dataCorrupted(context)
+        }
+
+        let state: TransactionState = {
+            if error?.isEmpty == false {
+                return .error
+            }
+            return .completed
+        }()
+
+        self.init(id: id,
+                  blockNumber: blockNumber,
+                  from: fromAddress.description,
+                  to: to,
+                  value: value,
+                  gas: gas,
+                  gasPrice: gasPrice,
+                  gasUsed: gasUsed,
+                  nonce: String(rawNonce),
+                  date: Date(timeIntervalSince1970: TimeInterval(timeStamp) ?? 0),
+                  localizedOperations: operations,
+                  state: state)
     }
 
     convenience init(

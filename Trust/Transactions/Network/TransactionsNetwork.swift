@@ -37,8 +37,7 @@ class TransactionsNetwork: TransactionsNetworkProtocol {
             switch result {
             case .success(let response):
                 do {
-                    let rawTransactions = try response.map(ArrayResponse<RawTransaction>.self).docs
-                    let transactions: [Transaction] = rawTransactions.flatMap { .from(transaction: $0) }
+                    let transactions: [Transaction] = try response.map(ArrayResponse<Transaction>.self).docs
                     completion((transactions, true))
                 } catch {
                     completion((nil, false))
