@@ -4,10 +4,10 @@ import UIKit
 import BigInt
 
 class EthBalanceOperation: TrustOperation {
-    private var network: TokensNetworkProtocol
+    private var network: NetworkProtocol
     var balance: Balance = Balance(value: BigInt(0))
 
-    init(network: TokensNetworkProtocol) {
+    init(network: NetworkProtocol) {
         self.network = network
     }
 

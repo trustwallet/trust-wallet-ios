@@ -4,7 +4,7 @@ import UIKit
 
 class TransactionOperation: TrustOperation {
 
-    private let network: TransactionsNetwork
+    private let network: TrustNetwork
 
     private let session: WalletSession
 
@@ -17,7 +17,7 @@ class TransactionOperation: TrustOperation {
     }()
 
     init(
-        network: TransactionsNetwork,
+        network: TrustNetwork,
         session: WalletSession
         ) {
         self.network = network
