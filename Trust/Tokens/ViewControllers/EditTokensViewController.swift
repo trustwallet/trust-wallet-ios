@@ -41,6 +41,7 @@ class EditTokensViewController: UITableViewController {
         tableView.backgroundColor = .white
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.tableFooterView = UIView()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
