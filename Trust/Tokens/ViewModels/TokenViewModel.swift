@@ -63,7 +63,7 @@ struct TokenViewModel {
             guard let balance = result.1 else {
                 return
             }
-            self.store.update(token: self.token, action: .updateValue(balance.value))
+            self.store.update(tokens: [self.token], action: .updateValue(balance.value))
         }
     }
 
