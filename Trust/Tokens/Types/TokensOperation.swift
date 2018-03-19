@@ -3,14 +3,17 @@
 import TrustKeystore
 
 class TokensOperation: TrustOperation {
+    private let store: TokensDataStore
     private var network: TokensNetworkProtocol
     private let address: Address
     var tokens: [TokenObject] = [TokenObject]()
 
     init(
+        store: TokensDataStore,
         network: TokensNetworkProtocol,
         address: Address
-        ) {
+    ) {
+        self.store = store
         self.network = network
         self.address = address
     }
@@ -31,7 +34,7 @@ class TokensOperation: TrustOperation {
                 self.finish(true)
                 return
             }
-            self.tokens.append(contentsOf: tokensList)
+            self.store.updateInfo(for: tokensList)
             self.executing(false)
             self.finish(true)
         }

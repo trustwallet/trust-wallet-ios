@@ -145,7 +145,7 @@ class TokensViewModel: NSObject {
 
         let ethBalanceOperation = EthBalanceOperation(network: tokensNetwork)
 
-        let tokensOperation = TokensOperation(network: tokensNetwork, address: address)
+        let tokensOperation = TokensOperation(store: store, network: tokensNetwork, address: address)
 
         let tempChaine = TokensDataStore.etherToken(for: config)
         tempChaine.value = chaineToken.value

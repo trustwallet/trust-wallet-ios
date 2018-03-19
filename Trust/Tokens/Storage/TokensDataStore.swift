@@ -125,6 +125,20 @@ class TokensDataStore {
         config.defaults.removeObject(forKey: "tickers")
     }
 
+    func updateInfo(for tokens: [TokenObject]) {
+        try? realm.write {
+            for token in tokens {
+                let update: [String: Any] = [
+                    "contract": token.address.description,
+                    "name": token.name,
+                    "symbol": token.symbol,
+                    "decimals": token.decimals,
+                ]
+                realm.create(TokenObject.self, value: update, update: true)
+            }
+        }
+    }
+
     static func etherToken(for config: Config) -> TokenObject {
         return TokenObject(
             contract: "0x0000000000000000000000000000000000000000",
