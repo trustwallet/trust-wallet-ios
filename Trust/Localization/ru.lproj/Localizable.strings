@@ -108,6 +108,9 @@
 "settings.currency.button.title" = "Валюта";
 "settings.currency.popular.label.title" = "Популярные";
 "settings.network.test.label.title" = "Тест";
+"settings.network.test.warnning.title"="Предупреждение";
+"settings.network.test.warnning.message"="Вы переключаетесь на тестовую сеть, где транзакции предназначены только для тестирования";
+"settings.network.test.warnning.dont.show.again"="Не показывать снова";
 "settings.wallets.button.title" = "Кошельки";
 "Symbol" = "Символ";
 "Today" = "Cегодня";

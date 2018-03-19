@@ -72,8 +72,34 @@ class SettingsViewController: FormViewController, Coordinator {
                     return value?.displayName
                 }
             }.onChange {[weak self] row in
-                self?.config.chainID = row.value?.chainID ?? RPCServer.main.chainID
-                self?.run(action: .RPCServer)
+                let runSelectedNetwork = { [weak self, unowned row] in
+                    self?.config.chainID = row.value?.chainID ?? RPCServer.main.chainID
+                    self?.run(action: .RPCServer)
+                }
+
+                let popupWarningMessage = { [weak self] in
+                    let alertViewController = UIAlertController(title: self?.viewModel.testNetworkWarningTitle, message: self?.viewModel.testNetworkWarningMessage, preferredStyle: .alert)
+
+                    let okAction = UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default) { _ in
+                        runSelectedNetwork()
+                    }
+                    let dontShowAgainAction = UIAlertAction(title: self?.viewModel.testNetworkWarningDontShowAgainLabel, style: .default) { _ in
+                        self?.config.testNetworkWarningOff = true
+                        runSelectedNetwork()
+                    }
+
+                    alertViewController.addAction(dontShowAgainAction)
+                    alertViewController.addAction(okAction)
+
+                    self?.present(alertViewController, animated: true, completion: nil)
+                }
+
+                let selectedRPCServer = row.value ?? RPCServer.main
+                if selectedRPCServer.isTestNetwork == true && self?.config.testNetworkWarningOff == false {
+                    popupWarningMessage()
+                } else {
+                    runSelectedNetwork()
+                }
             }.onPresent { _, selectorController in
                 selectorController.enableDeselection = false
                 selectorController.sectionKeyForValue = { option in
@@ -93,8 +119,7 @@ class SettingsViewController: FormViewController, Coordinator {
                 row.cellStyle = .value1
                 row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
                     return self.accountsCoordinator.accountsViewController
-                }, onDismiss: { _ in
-            })
+                }, onDismiss: { _ in })
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_wallet()
@@ -215,7 +240,7 @@ class SettingsViewController: FormViewController, Coordinator {
                 row.cellStyle = .value1
                 row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
                     return SupportViewController()
-            }, onDismiss: { _ in })
+                }, onDismiss: { _ in })
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_terms()

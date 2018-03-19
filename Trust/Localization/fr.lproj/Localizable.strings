@@ -107,6 +107,9 @@
 "settings.currency.button.title" = "Devise";
 "settings.currency.popular.label.title" = "Populaire";
 "settings.network.test.label.title" = "Tester";
+"settings.network.test.warnning.title"="Attention";
+"settings.network.test.warnning.message"="Vous passez à un réseau de test où les transactions sont uniquement à des fins de test";
+"settings.network.test.warnning.dont.show.again"="Ne plus afficher";
 "settings.wallets.button.title" = "Portefeuilles";
 "Symbol" = "symbole";
 "Today" = "Aujourd'hui";

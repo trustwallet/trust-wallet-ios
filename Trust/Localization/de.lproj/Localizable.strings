@@ -107,6 +107,9 @@
 "settings.currency.button.title" = "Währung";
 "settings.currency.popular.label.title" = "Beliebt";
 "settings.network.test.label.title" = "Test";
+"settings.network.test.warnning.title"="Warnung";
+"settings.network.test.warnning.message"="Sie wechseln zu einem Testnetzwerk, in dem Transaktionen nur zu Testzwecken dienen";
+"settings.network.test.warnning.dont.show.again"="Nicht mehr anzeigen";
 "settings.wallets.button.title" = "Wallets";
 "Symbol" = "Symbol";
 "Today" = "Heute";

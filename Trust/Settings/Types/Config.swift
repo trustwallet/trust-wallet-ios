@@ -10,6 +10,7 @@ struct Config {
         static let isDebugEnabled = "isDebugEnabled"
         static let currencyID = "currencyID"
         static let dAppBrowser = "dAppBrowser"
+        static let testNetworkWarningOff = "testNetworkWarningOff"
     }
 
     static let current: Config = Config()
@@ -98,5 +99,10 @@ struct Config {
             }
         }()
         return URL(string: urlString)!
+    }
+
+    var testNetworkWarningOff: Bool {
+        get { return defaults.bool(forKey: Keys.testNetworkWarningOff) }
+        set { defaults.set(newValue, forKey: Keys.testNetworkWarningOff) }
     }
 }
