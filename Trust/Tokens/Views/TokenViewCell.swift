@@ -58,6 +58,7 @@ class TokenViewCell: UITableViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 12
+        stackView.alignment = .center
 
         symbolImageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -73,7 +74,7 @@ class TokenViewCell: UITableViewCell {
             symbolImageView.heightAnchor.constraint(equalToConstant: Layout.imageSize),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: Layout.stackVericalOffset),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -Layout.stackVericalOffset),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Layout.stackVericalOffset),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: StyleLayout.sideMargin),
         ])
     }
