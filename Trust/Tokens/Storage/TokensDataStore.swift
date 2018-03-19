@@ -10,6 +10,7 @@ import TrustKeystore
 
 enum TokenAction {
     case updateValue(BigInt)
+    case updateBalance
     case disable(Bool)
     case updateInfo
 }
@@ -96,6 +97,9 @@ class TokensDataStore {
                 switch action {
                 case .updateValue(let value):
                     token.value = value.description
+                case .updateBalance:
+                    let currentValue = token.value
+                    token.value = currentValue
                 case .disable(let value):
                     token.isDisabled = value
                 case .updateInfo:

@@ -201,7 +201,7 @@ extension TokensViewController: UITableViewDelegate {
         return [delete, edit]
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 84
     }
 }
 extension TokensViewController: UITableViewDataSource {

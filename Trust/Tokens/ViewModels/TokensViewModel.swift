@@ -172,7 +172,7 @@ class TokensViewModel: NSObject {
 
         tokensBalanceOperation.completionBlock = { [weak self] in
             DispatchQueue.main.async {
-                self?.store.add(tokens: tokensBalanceOperation.tokens)
+                self?.store.update(tokens: tokensBalanceOperation.tokens, action: .updateBalance)
             }
         }
 
