@@ -90,7 +90,7 @@ extension EditTokensViewController: EditTokenTableViewCellDelegate {
         guard let indexPath = tableView.indexPath(for: cell) else {
             return
         }
-        storage.update(token: token(for: indexPath), action: .disable(!state))
+        storage.update(tokens: [token(for: indexPath)], action: .disable(!state))
     }
 }
 

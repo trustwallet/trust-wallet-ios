@@ -11,6 +11,7 @@ import TrustKeystore
 enum TokenAction {
     case updateValue(BigInt)
     case disable(Bool)
+    case updateInfo
 }
 
 class TokensDataStore {
@@ -89,13 +90,23 @@ class TokensDataStore {
         }
     }
 
-    func update(token: TokenObject, action: TokenAction) {
+    func update(tokens: [TokenObject], action: TokenAction) {
         try! realm.write {
-            switch action {
-            case .updateValue(let value):
-                token.value = value.description
-            case .disable(let value):
-                token.isDisabled = value
+            tokens.forEach { token in
+                switch action {
+                case .updateValue(let value):
+                    token.value = value.description
+                case .disable(let value):
+                    token.isDisabled = value
+                case .updateInfo:
+                    let update: [String: Any] = [
+                        "contract": token.address.description,
+                        "name": token.name,
+                        "symbol": token.symbol,
+                        "decimals": token.decimals,
+                    ]
+                    realm.create(TokenObject.self, value: update, update: true)
+                }
             }
         }
     }

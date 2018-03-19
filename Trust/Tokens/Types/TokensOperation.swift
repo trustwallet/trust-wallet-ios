@@ -10,7 +10,7 @@ class TokensOperation: TrustOperation {
     init(
         network: TokensNetworkProtocol,
         address: Address
-        ) {
+    ) {
         self.network = network
         self.address = address
     }

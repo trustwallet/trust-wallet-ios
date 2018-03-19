@@ -133,7 +133,7 @@ class TokensViewModel: NSObject {
                 completion?(true)
                 return
             }
-            self.store.update(token: token, action: .updateValue(balance.value))
+            self.store.update(tokens: [token], action: .updateValue(balance.value))
             completion?(true)
         }
     }
@@ -161,7 +161,7 @@ class TokensViewModel: NSObject {
         tokensOperation.completionBlock = { [weak self] in
             self?.parallelOperations(for: tokensOperation.tokens)
             DispatchQueue.main.async {
-                self?.store.add(tokens: tokensOperation.tokens)
+                self?.store.update(tokens: tokensOperation.tokens, action: .updateInfo)
             }
         }
     }
