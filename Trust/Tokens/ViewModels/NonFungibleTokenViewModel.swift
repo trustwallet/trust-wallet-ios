@@ -7,7 +7,7 @@ struct NonFungibleTokenViewModel {
 
     let config: Config
     let storage: TokensDataStore
-    var tokensNetwork: TokensNetworkProtocol
+    var tokensNetwork: NetworkProtocol
     let tokens: Results<NonFungibleTokenCategory>
     var tokensObserver: NotificationToken?
     let address: Address
@@ -36,7 +36,7 @@ struct NonFungibleTokenViewModel {
         address: Address,
         config: Config = Config(),
         storage: TokensDataStore,
-        tokensNetwork: TokensNetworkProtocol
+        tokensNetwork: NetworkProtocol
     ) {
         self.address = address
         self.config = config

@@ -57,7 +57,7 @@ class TransactionsViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
 
-        view.backgroundColor = viewModel.backgroundColor
+        view.backgroundColor = TransactionsViewModel.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -80,7 +80,7 @@ class TransactionsViewController: UIViewController {
             footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
 
-        refreshControl.backgroundColor = viewModel.backgroundColor
+        refreshControl.backgroundColor = TransactionsViewModel.backgroundColor
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
 
