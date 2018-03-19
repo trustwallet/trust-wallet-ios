@@ -6,12 +6,6 @@ import RealmSwift
 
 struct TransactionsViewModel {
 
-    static let realmBaseFormmater: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMddyyyy"
-        return formatter
-    }()
-
     static let titleFormmater: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d yyyy"
@@ -45,27 +39,18 @@ struct TransactionsViewModel {
     }
 
     var numberOfSections: Int {
-        return transactions.count
+        return storage.transactionSections.count
     }
 
-    private var operationQueue: OperationQueue = {
-        let queue = OperationQueue()
-        queue.qualityOfService = .background
-        queue.maxConcurrentOperationCount = 1
-        return queue
-    }()
+    private var transactions: Results<Transaction>
 
-    var transactions: Results<TransactionCategory>
+    private let config: Config
 
-    var transactionsObserver: NotificationToken?
+    private let network: TransactionsNetwork
 
-    let config: Config
+    private let storage: TransactionsStorage
 
-    let network: TransactionsNetwork
-
-    let storage: TransactionsStorage
-
-    let session: WalletSession
+    private let session: WalletSession
 
     init(
         network: TransactionsNetwork,
@@ -77,34 +62,34 @@ struct TransactionsViewModel {
         self.storage = storage
         self.session = session
         self.config = config
-        self.transactions = storage.transactionsCategory
+        self.transactions = storage.transactions
     }
 
-    mutating func setTransactionsObservation(with block: @escaping (RealmCollectionChange<Results<TransactionCategory>>) -> Void) {
-        transactionsObserver = transactions.observe(block)
+    func transactionsUpdateObservation(with block: @escaping () -> Void) {
+        self.storage.transactionsUpdateHandler = block
     }
 
     func numberOfItems(for section: Int) -> Int {
-        return transactions[section].transactions.count
+        return storage.transactionSections[section].items.count
     }
 
     func item(for row: Int, section: Int) -> Transaction {
-        return transactions[section].transactions[row]
+        return storage.transactionSections[section].items[row]
     }
 
     func titleForHeader(in section: Int) -> String {
-        let stringDate = transactions[section].title
-        guard let date = TransactionsViewModel.convert(stringDate) else {
+        let stringDate = storage.transactionSections[section].title
+        guard let date = TransactionsViewModel.convert(from: stringDate) else {
             return stringDate
         }
-        let value = TransactionsViewModel.title(from: date)
+
         if NSCalendar.current.isDateInToday(date) {
             return NSLocalizedString("Today", value: "Today", comment: "")
         }
         if NSCalendar.current.isDateInYesterday(date) {
             return NSLocalizedString("Yesterday", value: "Yesterday", comment: "")
         }
-        return value
+        return stringDate
     }
 
     func hederView(for section: Int) -> UIView {
@@ -112,7 +97,7 @@ struct TransactionsViewModel {
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
-        return TransactionCellViewModel(transaction: transactions[indexPath.section].transactions[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account)
+        return TransactionCellViewModel(transaction: storage.transactionSections[indexPath.section].items[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account)
     }
 
     func statBlock() -> Int {
@@ -123,23 +108,6 @@ struct TransactionsViewModel {
     mutating func fetch() {
         fetchTransactions()
         fetchPending()
-        /*
-        if TransactionsTracker(sessionID: session.sessionID).fetchingState != .done {
-            initialFetch()
-        }
-        */
-    }
-
-    private func initialFetch() {
-        if operationQueue.operationCount == 0 {
-            let operation = TransactionOperation(network: network, session: session)
-            operationQueue.addOperation(operation)
-            operation.completionBlock = {
-                DispatchQueue.main.async {
-                    self.storage.add(operation.transactionsHistory)
-                }
-            }
-        }
     }
 
     func hasContent() -> Bool {
@@ -159,49 +127,19 @@ struct TransactionsViewModel {
     }
 
     func fetchPending() {
-        self.storage.transactionsCategory.forEach { transactions in
-            for transaction in transactions.transactions {
-                self.network.update(for: transaction, completion: { result in
-                    switch result.1 {
-                    case .deleted:
-                        self.storage.delete([result.0])
-                    default:
-                        self.storage.update(state: result.1, for: result.0)
-                    }
-                })
-            }
+        self.storage.transactions.forEach { transaction in
+            self.network.update(for: transaction, completion: { result in
+                switch result.1 {
+                case .deleted:
+                    self.storage.delete([result.0])
+                default:
+                    self.storage.update(state: result.1, for: result.0)
+                }
+            })
         }
     }
 
-    mutating func filterTransactions(by occurrence: String?) {
-        guard let text = occurrence, !text.isEmpty else {
-            self.transactions = storage.transactionsCategory
-            return
-        }
-        let subpredicates = [
-            "title",
-            "transactions.id",
-            "transactions.from",
-            "transactions.to",
-            "transactions.value",
-            "transactions.localizedOperations.name",
-            "transactions.localizedOperations.symbol",
-            "transactions.localizedOperations.contract",
-        ].map { property -> NSPredicate in
-            if property.contains("transactions") {
-                return NSPredicate(format: "ANY %K CONTAINS[cd] %@", property, text)
-            }
-            return NSPredicate(format: "%K CONTAINS[cd] %@", property, text)
-        }
-        let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: subpredicates)
-        self.transactions = storage.transactionsCategory.filter(predicate)
-    }
-
-    static func convert(_ date: String) -> Date? {
-        return realmBaseFormmater.date(from: date)
-    }
-
-    static func title(from date: Date) -> String {
-        return titleFormmater.string(from: date)
+    static func convert(from title: String) -> Date? {
+        return titleFormmater.date(from: title)
     }
 }
