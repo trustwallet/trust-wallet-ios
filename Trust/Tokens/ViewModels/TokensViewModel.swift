@@ -145,7 +145,7 @@ class TokensViewModel: NSObject {
 
         let ethBalanceOperation = EthBalanceOperation(network: tokensNetwork)
 
-        let tokensOperation = TokensOperation(store: store, network: tokensNetwork, address: address)
+        let tokensOperation = TokensOperation(network: tokensNetwork, address: address)
 
         let tempChaine = TokensDataStore.etherToken(for: config)
         tempChaine.value = chaineToken.value
@@ -161,7 +161,7 @@ class TokensViewModel: NSObject {
         tokensOperation.completionBlock = { [weak self] in
             self?.parallelOperations(for: tokensOperation.tokens)
             DispatchQueue.main.async {
-                self?.store.add(tokens: tokensOperation.tokens)
+                self?.store.updateInfo(for: tokensOperation.tokens)
             }
         }
     }
