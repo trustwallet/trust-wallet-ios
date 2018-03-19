@@ -20,7 +20,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="319" height="79.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="d5W-Lo-p3o">
+                    <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="d5W-Lo-p3o">
                         <rect key="frame" x="16" y="11" width="288" height="58"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tfc-cq-2hm" customClass="TokenImageView" customModule="Trust" customModuleProvider="target">
@@ -62,7 +62,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="d5W-Lo-p3o" secondAttribute="trailing" constant="15" id="0eN-uy-pSI"/>
-                    <constraint firstItem="d5W-Lo-p3o" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="YfI-ez-BFb"/>
+                    <constraint firstItem="d5W-Lo-p3o" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Tdu-SU-ud4"/>
                     <constraint firstItem="d5W-Lo-p3o" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="vlf-YR-icm"/>
                 </constraints>
             </tableViewCellContentView>

@@ -35,8 +35,11 @@ class EditTokensViewController: UITableViewController {
         searchController.searchBar.delegate = self
         tableView.register(R.nib.editTokenTableViewCell(), forCellReuseIdentifier: R.nib.editTokenTableViewCell.name)
         tableView.tableHeaderView = searchController.searchBar
-        tableView.separatorStyle = .none
-        tableView.separatorInset = .zero
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = TokensLayout.tableView.separatorColor
+        tableView.separatorInset = TokensLayout.tableView.layoutInsets
+        tableView.backgroundColor = .white
+        tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.rowHeight = UITableViewAutomaticDimension
     }
 
@@ -60,6 +63,7 @@ class EditTokensViewController: UITableViewController {
             coinTicker: storage.coinTicker(for: token),
             config: session.config
         )
+        cell.separatorInset = TokensLayout.tableView.layoutInsets
         return cell
     }
 
@@ -77,7 +81,7 @@ class EditTokensViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 84
+        return TokensLayout.tableView.height
     }
 
     required init?(coder aDecoder: NSCoder) {
