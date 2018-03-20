@@ -14,7 +14,7 @@ force true
 submit_for_review true
 automatic_release false
 
-app_rating_config_path "./ratings_config.json"
+app_rating_config_path "./fastlane/ratings_config.json"
 
 submission_information({
   add_id_info_serves_ads: false,
