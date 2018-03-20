@@ -6,6 +6,10 @@ import RealmSwift
 
 struct TransactionsViewModel {
 
+    var title: String {
+        return NSLocalizedString("transactions.tabbar.item.title", value: "Transactions", comment: "")
+    }
+
     static let titleFormmater: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d yyyy"

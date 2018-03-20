@@ -129,7 +129,11 @@ class InCoordinator: Coordinator {
                 network: trustNetwork,
                 transactionsStore: transactionsStorage
             )
-            tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("tokens.tabbar.item.title", value: "Tokens", comment: ""), image: R.image.coins(), selectedImage: nil)
+            tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(
+                title: NSLocalizedString("wallet.navigation.title", value: "Wallet", comment: ""),
+                image: R.image.settingsWallet(),
+                selectedImage: nil
+            )
             tokenCoordinator.delegate = self
             tokenCoordinator.start()
             addCoordinator(tokenCoordinator)
@@ -159,8 +163,6 @@ class InCoordinator: Coordinator {
         addCoordinator(transactionCoordinator)
 
         keystore.recentlyUsedWallet = account
-
-        showTab(inCoordinatorViewModel.initialTab)
     }
 
     func showTab(_ selectTab: Tabs) {

@@ -18,33 +18,13 @@ protocol TransactionsViewControllerDelegate: class {
 class TransactionsViewController: UIViewController {
 
     var viewModel: TransactionsViewModel
-
     let account: Wallet
-
     let tableView = UITableView(frame: .zero, style: .plain)
     let refreshControl = UIRefreshControl()
-
-    lazy var titleView: BalanceTitleView = {
-        return BalanceTitleView.make(from: self.session, .ether(destination: .none))
-    }()
-
     weak var delegate: TransactionsViewControllerDelegate?
-
     var timer: Timer?
-
     var updateTransactionsTimer: Timer?
-
     let session: WalletSession
-
-    lazy var footerView: TransactionsFooterView = {
-        let footerView = TransactionsFooterView(frame: .zero)
-        footerView.translatesAutoresizingMaskIntoConstraints = false
-        footerView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
-        footerView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
-        footerView.setTopBorder()
-        return footerView
-    }()
-
     let insets = UIEdgeInsets(top: 130, left: 0, bottom: ButtonSize.extraLarge.height + 84, right: 0)
 
     init(
@@ -65,7 +45,6 @@ class TransactionsViewController: UIViewController {
         tableView.backgroundColor = .white
         tableView.rowHeight = 68
         view.addSubview(tableView)
-        view.addSubview(footerView)
 
         tableView.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
 
@@ -73,11 +52,7 @@ class TransactionsViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
-
-            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
 
         refreshControl.backgroundColor = TransactionsViewModel.backgroundColor
@@ -100,8 +75,7 @@ class TransactionsViewController: UIViewController {
             return view
         }()
 
-        navigationItem.titleView = titleView
-        titleView.viewModel = BalanceViewModel()
+        navigationItem.title = viewModel.title
         transactionsObservation()
         runScheduledTimers()
         NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.stopTimers), name: .UIApplicationWillResignActive, object: nil)

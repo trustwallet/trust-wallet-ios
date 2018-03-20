@@ -198,17 +198,17 @@ class SettingsViewController: FormViewController, Coordinator {
                 cell.imageView?.image = R.image.settingsCurrency()
             }
 
-            <<< AppFormAppearance.button { row in
-                row.cellStyle = .value1
-                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
-                    return PreferencesViewController()
-                }, onDismiss: { _ in })
-            }.cellUpdate { cell, _ in
-                cell.textLabel?.textColor = .black
-                cell.imageView?.image = R.image.settings_preferences()
-                cell.textLabel?.text = NSLocalizedString("settings.preferences.title", value: "Preferences", comment: "")
-                cell.accessoryType = .disclosureIndicator
-            }
+//            <<< AppFormAppearance.button { row in
+//                row.cellStyle = .value1
+//                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+//                    return PreferencesViewController()
+//                }, onDismiss: { _ in })
+//            }.cellUpdate { cell, _ in
+//                cell.textLabel?.textColor = .black
+//                cell.imageView?.image = R.image.settings_preferences()
+//                cell.textLabel?.text = NSLocalizedString("settings.preferences.title", value: "Preferences", comment: "")
+//                cell.accessoryType = .disclosureIndicator
+//            }
 
             +++ Section(NSLocalizedString("settings.joinCommunity.label.title", value: "Join Community", comment: ""))
 

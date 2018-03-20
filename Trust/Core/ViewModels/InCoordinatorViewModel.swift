@@ -25,11 +25,4 @@ struct InCoordinatorViewModel {
     var canActivateDebugMode: Bool {
         return config.server.isTestNetwork
     }
-
-    var initialTab: Tabs {
-        guard preferences.get(for: .showTokensOnLaunch) else {
-            return .transactions
-        }
-        return .tokens
-    }
 }
