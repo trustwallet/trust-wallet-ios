@@ -23,7 +23,6 @@ class EditTokensViewController: UITableViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = viewModel.searchPlaceholder
-        searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.sizeToFit()
         searchController.searchBar.backgroundColor = .white
         searchController.searchBar.delegate = self

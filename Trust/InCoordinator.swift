@@ -162,6 +162,8 @@ class InCoordinator: Coordinator {
         navigationController.setNavigationBarHidden(true, animated: false)
         addCoordinator(transactionCoordinator)
 
+        showTab(.tokens)
+
         keystore.recentlyUsedWallet = account
     }
 
