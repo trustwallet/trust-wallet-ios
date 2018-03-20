@@ -39,6 +39,10 @@ class TokensDataStore {
         return realm.objects(NonFungibleTokenObject.self).map { $0 }
     }
 
+    private lazy var tickersKey: String = {
+        return "tickers-" + String(config.chainID) + "-" + config.currency.rawValue
+    }()
+
     init(
         realm: Realm,
         config: Config
@@ -120,7 +124,7 @@ class TokensDataStore {
 
     func saveTickers(tickers: [CoinTicker]) {
         do {
-            config.defaults.set(try PropertyListEncoder().encode(tickers), forKey: "tickers")
+            config.defaults.set(try PropertyListEncoder().encode(tickers), forKey: tickersKey)
         } catch {
             print(error.localizedDescription)
         }
@@ -128,7 +132,7 @@ class TokensDataStore {
 
     func tickers() -> [CoinTicker] {
 
-        guard let storedObject: Data = UserDefaults.standard.data(forKey: "tickers") else {
+        guard let storedObject: Data = UserDefaults.standard.data(forKey: tickersKey) else {
             return [CoinTicker]()
         }
 
@@ -140,7 +144,7 @@ class TokensDataStore {
     }
 
     func deleteTickers() {
-        config.defaults.removeObject(forKey: "tickers")
+        config.defaults.removeObject(forKey: tickersKey)
     }
 
     static func etherToken(for config: Config) -> TokenObject {
