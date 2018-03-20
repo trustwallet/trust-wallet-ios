@@ -8,15 +8,18 @@ struct EditTokenTableCellViewModel {
     let token: TokenObject
     let coinTicker: CoinTicker?
     let config: Config
+    let isLocal: Bool
 
     init(
         token: TokenObject,
         coinTicker: CoinTicker?,
-        config: Config
+        config: Config,
+        isLocal: Bool = true
     ) {
         self.token = token
         self.coinTicker = coinTicker
         self.config = config
+        self.isLocal = isLocal
     }
 
     var title: String {
@@ -62,6 +65,6 @@ struct EditTokenTableCellViewModel {
     }
 
     var isSwitchHidden: Bool {
-        return isAvailableForChange
+        return isAvailableForChange || !isLocal
     }
 }

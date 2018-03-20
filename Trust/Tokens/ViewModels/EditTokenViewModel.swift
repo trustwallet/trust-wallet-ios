@@ -15,14 +15,12 @@ class EditTokenViewModel {
     let storage: TokensDataStore
     let config: Config
     let tableView: UITableView
+    let feedbackGenerator = UINotificationFeedbackGenerator()
 
-    var searchResults = [TokenObject]() {
-        didSet {
-             self.tableView.reloadData()
-        }
-    }
+    var searchResults = [TokenObject]()
     var filteredTokens = [TokenObject]()
     var isSearching = false
+    var localSet = Set<TokenObject>()
 
     init(network: TokensNetworkProtocol,
          storage: TokensDataStore,
@@ -32,6 +30,8 @@ class EditTokenViewModel {
         self.storage = storage
         self.config = config
         self.tableView = table
+
+        self.localSet = Set(storage.objects)
     }
 
     var title: String {
@@ -57,14 +57,22 @@ class EditTokenViewModel {
         }
     }
 
-    func token(for indexPath: IndexPath) -> TokenObject {
+    func token(for indexPath: IndexPath) -> (token: TokenObject, local: Bool) {
         if indexPath.section == EditTokenSection.search.rawValue {
-            return searchResults[indexPath.row]
+            return (searchResults[indexPath.row], false)
         } else {
             if isSearching {
-                return filteredTokens[indexPath.row]
+                return (filteredTokens[indexPath.row], true)
             }
-            return storage.objects[indexPath.row]
+            return (storage.objects[indexPath.row], true)
+        }
+    }
+
+    func didSelectRowAt(_ indexPath: IndexPath) {
+        let pair = token(for: indexPath)
+        if !pair.local {
+            storage.add(tokens: [pair.token])
+            feedbackGenerator.notificationOccurred(.success)
         }
     }
 
@@ -78,7 +86,11 @@ class EditTokenViewModel {
             filter(for: token)
             network.search(token: token) { [weak self] (tokens) in
                 guard let strongSelf = self else { return }
-                strongSelf.searchResults = tokens
+                tokens.forEach {
+                    $0.isCustom = true
+                    $0.isDisabled = false
+                }
+                strongSelf.searchResults = tokens.filter { !strongSelf.localSet.contains($0) }
                 strongSelf.tableView.reloadData()
             }
         }
@@ -91,6 +103,6 @@ class EditTokenViewModel {
 
     func updateToken(indexPath: IndexPath, action: TokenAction) {
         let token = self.token(for: indexPath)
-        self.storage.update(token: token, action: action)
+        self.storage.update(token: token.token, action: action)
     }
 }
