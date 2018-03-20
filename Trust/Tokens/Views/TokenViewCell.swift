@@ -15,7 +15,7 @@ class TokenViewCell: UITableViewCell {
     let percentChange = UILabel()
 
     private struct Layout {
-        static let imageSize: CGFloat = 58
+        static let imageSize: CGFloat = 54
         static let stackVericalOffset: CGFloat = 10
     }
 
