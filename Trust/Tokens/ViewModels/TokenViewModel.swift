@@ -4,13 +4,18 @@ import Foundation
 import BigInt
 import RealmSwift
 
-struct TokenViewModel {
+class TokenViewModel {
 
     private let shortFormatter = EtherNumberFormatter.short
     private let config: Config
     private let store: TokensDataStore
-    private var tokensNetwork: TokensNetworkProtocol
-    fileprivate var notificationToken: NotificationToken?
+    private let session: WalletSession
+    private var tokensNetwork: NetworkProtocol
+    private let transactionsStore: TransactionsStorage
+    private var tokenTransactions: Results<Transaction>?
+    private var tokenTransactionSections: [TransactionSection] = []
+    private var notificationToken: NotificationToken?
+    private var transactionToken: NotificationToken?
 
     let token: TokenObject
 
@@ -42,37 +47,116 @@ struct TokenViewModel {
         )
     }
 
+    var isBuyActionAvailable: Bool {
+        switch config.server {
+        case .main, .kovan, .classic, .callisto, .ropsten, .rinkeby, .poa, .sokol, .custom: return false
+        }
+    }
+
+    var numberOfSections: Int {
+        return tokenTransactionSections.count
+    }
+
     init(
         token: TokenObject,
         config: Config = Config(),
         store: TokensDataStore,
-        tokensNetwork: TokensNetworkProtocol
+        transactionsStore: TransactionsStorage,
+        tokensNetwork: NetworkProtocol,
+        session: WalletSession
     ) {
         self.token = token
+        self.transactionsStore =  transactionsStore
         self.config = config
         self.store = store
         self.tokensNetwork = tokensNetwork
+        self.session = session
+        prepareDataSource(for: token)
     }
 
-    mutating func fetch() {
+    func fetch() {
         getTokenBalance()
+        fetchTransactions()
     }
 
-    private func getTokenBalance() {
-        tokensNetwork.tokenBalance(for: token) { (result) in
-            guard let balance = result.1 else {
-                return
-            }
-            self.store.update(tokens: [self.token], action: .updateValue(balance.value))
-        }
-    }
-
-    mutating func tokenObservation(with completion: @escaping (() -> Void)) {
+    func tokenObservation(with completion: @escaping (() -> Void)) {
         notificationToken = token.observe { change in
             switch change {
             case .change, .deleted, .error:
                 completion()
             }
         }
+    }
+
+    func transactionObservation(with completion: @escaping (() -> Void)) {
+        transactionToken = tokenTransactions?.observe { [weak self] _ in
+            self?.updateSections()
+            completion()
+        }
+    }
+
+    func numberOfItems(for section: Int) -> Int {
+        return tokenTransactionSections[section].items.count
+    }
+
+    func item(for row: Int, section: Int) -> Transaction {
+        return tokenTransactionSections[section].items[row]
+    }
+
+    func titleForHeader(in section: Int) -> String {
+        let stringDate = tokenTransactionSections[section].title
+        guard let date = TransactionsViewModel.convert(from: stringDate) else {
+            return stringDate
+        }
+
+        if NSCalendar.current.isDateInToday(date) {
+            return NSLocalizedString("Today", value: "Today", comment: "")
+        }
+        if NSCalendar.current.isDateInYesterday(date) {
+            return NSLocalizedString("Yesterday", value: "Yesterday", comment: "")
+        }
+        return stringDate
+    }
+
+    func hederView(for section: Int) -> UIView {
+        return SectionHeader(fillColor: TransactionsViewModel.headerBackgroundColor, borderColor: TransactionsViewModel.headerBorderColor, title: titleForHeader(in: section), textColor: TransactionsViewModel.headerTitleTextColor, textFont: TransactionsViewModel.headerTitleFont)
+    }
+
+    func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
+        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account)
+    }
+
+    func hasContent() -> Bool {
+        return !tokenTransactionSections.isEmpty
+    }
+
+    private func getTokenBalance() {
+        tokensNetwork.tokenBalance(for: token) { [weak self] (result) in
+            guard let balance = result.1 else {
+                return
+            }
+            self?.store.update(tokens: [result.0], action: .updateValue(balance.value))
+        }
+    }
+
+    private func fetchTransactions() {
+        tokensNetwork.transactions(for: session.account.address, startBlock: 1, page: 0, contract: token.contract) { result in
+            guard let transactions = result.0 else { return }
+            self.transactionsStore.add(transactions)
+        }
+    }
+
+    private func prepareDataSource(for token: TokenObject) {
+        if TokensDataStore.etherToken(for: session.config) == token {
+            tokenTransactions = transactionsStore.realm.objects(Transaction.self).filter(NSPredicate(format: "localizedOperations.@count == 0")).sorted(byKeyPath: "date", ascending: false)
+        } else {
+            tokenTransactions = transactionsStore.realm.objects(Transaction.self).filter(NSPredicate(format: "%K ==[cd] %@", "to", token.contract)).sorted(byKeyPath: "date", ascending: false)
+        }
+        updateSections()
+    }
+
+    private func updateSections() {
+        guard let tokens = tokenTransactions else { return }
+        tokenTransactionSections = transactionsStore.mappedSections(for: Array(tokens))
     }
 }

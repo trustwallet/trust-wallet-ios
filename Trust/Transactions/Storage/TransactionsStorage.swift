@@ -94,10 +94,10 @@ class TransactionsStorage {
     }
 
     func updateTransactionSection() {
-        transactionSections = mappedTransactions()
+        transactionSections = mappedSections(for: Array(transactions))
     }
 
-    private func mappedTransactions() -> [TransactionSection] {
+    func mappedSections(for transactions:[Transaction]) -> [TransactionSection] {
         var items = [TransactionSection]()
         let headerDates = NSOrderedSet(array: transactions.map { TransactionsViewModel.titleFormmater.string(from: $0.date ) })
         headerDates.forEach {
