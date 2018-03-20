@@ -78,7 +78,17 @@ class SettingsViewController: FormViewController, Coordinator {
                 }
 
                 let popupWarningMessage = { [weak self] in
-                    let alertViewController = UIAlertController(title: self?.viewModel.testNetworkWarningTitle, message: self?.viewModel.testNetworkWarningMessage, preferredStyle: .alert)
+                    let alertViewController = UIAlertController.alertController(
+                        title: self?.viewModel.testNetworkWarningTitle,
+                        message: self?.viewModel.testNetworkWarningMessage,
+                        style: .alert,
+                        in: self!.navigationController!
+                    )
+
+                    if let navigationController = self?.navigationController {
+                        alertViewController.popoverPresentationController?.sourceView = navigationController.view
+                        alertViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
+                    }
 
                     let okAction = UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default) { _ in
                         runSelectedNetwork()

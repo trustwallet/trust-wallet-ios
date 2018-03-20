@@ -314,7 +314,12 @@ extension BrowserViewController: WKUIDelegate {
     }
 
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
-        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
+        let alertController = UIAlertController.alertController(
+            title: .none,
+            message: message,
+            style: .alert,
+            in: navigationController!
+        )
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
             completionHandler()
         }))
@@ -322,7 +327,12 @@ extension BrowserViewController: WKUIDelegate {
     }
 
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
-        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
+        let alertController = UIAlertController.alertController(
+            title: .none,
+            message: message,
+            style: .alert,
+            in: navigationController!
+        )
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
             completionHandler(true)
         }))
@@ -333,7 +343,12 @@ extension BrowserViewController: WKUIDelegate {
     }
 
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
-        let alertController = UIAlertController(title: nil, message: prompt, preferredStyle: .actionSheet)
+        let alertController = UIAlertController.alertController(
+            title: .none,
+            message: prompt,
+            style: .alert,
+            in: navigationController!
+        )
         alertController.addTextField { (textField) in
             textField.text = defaultText
         }
