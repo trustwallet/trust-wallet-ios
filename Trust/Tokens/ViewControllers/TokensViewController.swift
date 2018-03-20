@@ -20,7 +20,7 @@ class TokensViewController: UIViewController {
 
     lazy var header: TokensHeaderView = {
         let header = TokensHeaderView(frame: .zero)
-        header.amountLabel.text = viewModel.headerBalance ?? "-"
+        header.amountLabel.text = viewModel.headerBalance ?? "--"
         header.amountLabel.textColor = viewModel.headerBalanceTextColor
         header.backgroundColor = viewModel.headerBackgroundColor
         header.amountLabel.font = viewModel.headerBalanceFont
@@ -38,6 +38,16 @@ class TokensViewController: UIViewController {
             UITapGestureRecognizer(target: self, action: #selector(missingToken))
         )
         return footer
+    }()
+
+    lazy var footerView: TransactionsFooterView = {
+        let footerView = TransactionsFooterView(
+            frame: .zero,
+            bottomOffset: 5
+        )
+        footerView.translatesAutoresizingMaskIntoConstraints = false
+        footerView.setBottomBorder()
+        return footerView
     }()
 
     let tableView: UITableView
@@ -65,11 +75,16 @@ class TokensViewController: UIViewController {
         tableView.separatorColor = TokensLayout.tableView.separatorColor
         tableView.backgroundColor = .white
         view.addSubview(tableView)
+        view.addSubview(footerView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
+
+            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
         tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)

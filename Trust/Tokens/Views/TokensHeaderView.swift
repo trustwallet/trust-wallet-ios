@@ -17,18 +17,22 @@ class TokensHeaderView: UIView {
 
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
 
+        let spacing = StyleLayout.sideMargin + 10
         let stackView = UIStackView(arrangedSubviews: [
+            .spacer(height: spacing),
             amountLabel,
+            .spacer(height: spacing),
+            .spacer(height: 0.5, backgroundColor: Colors.lightGray, alpha: 0.5),
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin + 10),
+            stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -StyleLayout.sideMargin - 10),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 

@@ -28,7 +28,7 @@ class TokenHeaderView: UIView {
         return footerView
     }()
 
-    lazy var conteiner: UIStackView = {
+    lazy var container: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -41,20 +41,20 @@ class TokenHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        conteiner.addArrangedSubview(.spacer(height: StyleLayout.sideMargin * 2))
-        conteiner.addArrangedSubview(imageView)
-        conteiner.addArrangedSubview(.spacer(height: 10))
-        conteiner.addArrangedSubview(amountLabel)
-        conteiner.addArrangedSubview(.spacer(height: 10))
-        conteiner.addArrangedSubview(buttonsView)
+        container.addArrangedSubview(.spacer(height: StyleLayout.sideMargin * 2))
+        container.addArrangedSubview(imageView)
+        container.addArrangedSubview(.spacer(height: 10))
+        container.addArrangedSubview(amountLabel)
+        container.addArrangedSubview(.spacer(height: 10))
+        container.addArrangedSubview(buttonsView)
 
-        addSubview(conteiner)
+        addSubview(container)
 
         NSLayoutConstraint.activate([
-            conteiner.topAnchor.constraint(equalTo: topAnchor),
-            conteiner.leadingAnchor.constraint(equalTo: leadingAnchor),
-            conteiner.trailingAnchor.constraint(equalTo: trailingAnchor),
-            conteiner.bottomAnchor.constraint(equalTo: bottomAnchor),
+            container.topAnchor.constraint(equalTo: topAnchor),
+            container.leadingAnchor.constraint(equalTo: leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor),
+            container.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             buttonsView.leadingAnchor.constraint(equalTo: leadingAnchor),
             buttonsView.trailingAnchor.constraint(equalTo: trailingAnchor),

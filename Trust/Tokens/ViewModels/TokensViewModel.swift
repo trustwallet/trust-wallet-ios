@@ -27,11 +27,11 @@ class TokensViewModel: NSObject {
     }
 
     var headerBackgroundColor: UIColor {
-        return .white
+        return Colors.veryVeryLightGray
     }
 
     var headerBalanceFont: UIFont {
-        return UIFont.systemFont(ofSize: 26, weight: .medium)
+        return UIFont.systemFont(ofSize: 28, weight: .medium)
     }
 
     var title: String {
