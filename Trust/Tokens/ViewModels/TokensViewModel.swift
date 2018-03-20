@@ -167,12 +167,17 @@ class TokensViewModel: NSObject {
     }
 
     private func parallelOperations(for tokens: [TokenObject]) {
-        let tokensBalanceOperation = TokensBalanceOperation(network: tokensNetwork, address: address)
-        tokensBalanceOperation.tokens = tokens
+        let tokensBalanceOperation = TokensBalanceOperation(
+            network: tokensNetwork,
+            address: address,
+            fetchTokens: tokens
+        )
 
         tokensBalanceOperation.completionBlock = { [weak self] in
+            let tokens = tokensBalanceOperation.tokens.map { $0.key }
+            let balances = tokensBalanceOperation.tokens.map { $0.value }
             DispatchQueue.main.async {
-                self?.store.update(tokens: tokensBalanceOperation.tokens, action: .updateBalance)
+                self?.store.update(tokens: tokens, action: .updateBalances(balances))
             }
         }
 
