@@ -79,7 +79,7 @@ class InCoordinatorTests: XCTestCase {
         )
         coordinator.showTabBar(for: .make())
 
-        coordinator.showPaymentFlow(for: .request)
+        coordinator.showPaymentFlow(for: .request(token: .make()))
 
         let controller = (coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0]
 

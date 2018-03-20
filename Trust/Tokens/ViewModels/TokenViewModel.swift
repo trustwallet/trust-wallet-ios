@@ -119,7 +119,13 @@ class TokenViewModel {
     }
 
     func hederView(for section: Int) -> UIView {
-        return SectionHeader(fillColor: TransactionsViewModel.headerBackgroundColor, borderColor: TransactionsViewModel.headerBorderColor, title: titleForHeader(in: section), textColor: TransactionsViewModel.headerTitleTextColor, textFont: TransactionsViewModel.headerTitleFont)
+        return SectionHeader(
+            fillColor: TransactionsViewModel.headerBackgroundColor,
+            borderColor: TransactionsViewModel.headerBorderColor,
+            title: titleForHeader(in: section),
+            textColor: TransactionsViewModel.headerTitleTextColor,
+            textFont: TransactionsViewModel.headerTitleFont
+        )
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {

@@ -24,7 +24,7 @@ class PaymentCoordinatorTests: XCTestCase {
     func testRequestFlow() {
         let coordinator = PaymentCoordinator(
             navigationController: FakeNavigationController(),
-            flow: .request,
+            flow: .request(token: .make()),
             session: .make(),
             keystore: FakeKeystore(),
             storage: FakeTokensDataStore()

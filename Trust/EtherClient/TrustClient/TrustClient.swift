@@ -65,7 +65,7 @@ extension TrustService: TargetType {
     var task: Task {
         switch self {
         case .getTransactions(let address, let startBlock, let page, let contract):
-            var params: [String : Any] = ["address": address, "startBlock": startBlock, "page": page]
+            var params: [String: Any] = ["address": address, "startBlock": startBlock, "page": page]
             if let transactionContract = contract {
                 params["contract"] = transactionContract
             }
