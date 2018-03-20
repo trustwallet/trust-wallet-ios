@@ -2,23 +2,27 @@
 
 import UIKit
 import TrustKeystore
+import BigInt
 
 class TokensBalanceOperation: TrustOperation {
     private var network: TokensNetworkProtocol
     private let address: Address
-    var tokens: [TokenObject] = [TokenObject]()
+    private let fetchTokens: [TokenObject]
+    var tokens = [TokenObject: BigInt]()
     private var pos = 0
 
     init(
         network: TokensNetworkProtocol,
-        address: Address
-        ) {
+        address: Address,
+        fetchTokens: [TokenObject]
+    ) {
         self.network = network
         self.address = address
+        self.fetchTokens = fetchTokens
     }
 
     override func main() {
-        guard isCancelled == false, !tokens.isEmpty else {
+        guard isCancelled == false, !fetchTokens.isEmpty else {
             finish(true)
             return
         }
@@ -27,16 +31,17 @@ class TokensBalanceOperation: TrustOperation {
     }
 
     private func updateTokens() {
-        updateBalance(for: tokens[pos]) {[weak self] token in
+        updateBalance(for: fetchTokens[pos]) { [weak self] (token, balance) in
             guard let strongSelf = self else {
                 self?.executing(false)
                 self?.finish(true)
                 return
             }
-            let currentPos = strongSelf.pos
-            strongSelf.tokens[currentPos] = token
+            if balance != nil {
+                strongSelf.tokens[token] = balance
+            }
             strongSelf.pos += 1
-            if strongSelf.pos < strongSelf.tokens.count {
+            if strongSelf.pos < strongSelf.fetchTokens.count {
                 strongSelf.updateTokens()
             } else {
                 self?.executing(false)
@@ -45,15 +50,13 @@ class TokensBalanceOperation: TrustOperation {
         }
     }
 
-    private func updateBalance(for token: TokenObject, completion: @escaping ((TokenObject) -> Void)) {
+    private func updateBalance(for token: TokenObject, completion: @escaping ((TokenObject, BigInt?) -> Void)) {
         network.tokenBalance(for: token) { result in
             guard let balance = result.1 else {
-                completion(token)
+                completion(token, .none)
                 return
             }
-            let tempToken = token
-            tempToken.value = balance.value.description
-            completion(tempToken)
+            completion(token, balance.value)
         }
     }
 }
