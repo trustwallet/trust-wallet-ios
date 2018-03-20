@@ -11,7 +11,7 @@ class TransactionsStorageTests: XCTestCase {
         let storage = FakeTransactionsStorage()
 
         XCTAssertNotNil(storage)
-        XCTAssertEqual(0, storage.objects.count)
+        XCTAssertEqual(0, storage.transactions.count)
     }
 
     func testAddItem() {
@@ -20,7 +20,7 @@ class TransactionsStorageTests: XCTestCase {
 
         storage.add([item])
 
-        XCTAssertEqual(1, storage.objects.count)
+        XCTAssertEqual(1, storage.transactions.count)
     }
 
     func testAddItems() {
@@ -31,7 +31,7 @@ class TransactionsStorageTests: XCTestCase {
             .make(id: "0x2")
         ])
 
-        XCTAssertEqual(2, storage.objects.count)
+        XCTAssertEqual(2, storage.transactions.count)
     }
 
     func testAddItemsDuplicate() {
@@ -43,7 +43,7 @@ class TransactionsStorageTests: XCTestCase {
             .make(id: "0x2")
         ])
 
-        XCTAssertEqual(2, storage.objects.count)
+        XCTAssertEqual(2, storage.transactions.count)
     }
 
     func testDelete() {
@@ -56,13 +56,13 @@ class TransactionsStorageTests: XCTestCase {
             two,
         ])
 
-        XCTAssertEqual(2, storage.objects.count)
+        XCTAssertEqual(2, storage.transactions.count)
 
         storage.delete([one])
 
-        XCTAssertEqual(1, storage.objects.count)
+        XCTAssertEqual(1, storage.transactions.count)
 
-        XCTAssertEqual(two, storage.objects.first)
+        XCTAssertEqual(two, storage.transactions.first)
     }
 
     func testDeleteAll() {
@@ -73,10 +73,10 @@ class TransactionsStorageTests: XCTestCase {
             .make(id: "0x2")
         ])
 
-        XCTAssertEqual(2, storage.objects.count)
+        XCTAssertEqual(2, storage.transactions.count)
 
         storage.deleteAll()
 
-        XCTAssertEqual(0, storage.objects.count)
+        XCTAssertEqual(0, storage.transactions.count)
     }
 }

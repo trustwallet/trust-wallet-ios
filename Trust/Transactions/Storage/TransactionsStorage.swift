@@ -17,7 +17,7 @@ class TransactionsStorage {
 
     var transactions: Results<Transaction> {
         return realm.objects(Transaction.self).filter(NSPredicate(format: "id!=''")).sorted(byKeyPath: "date", ascending: false)
-    } 
+    }
 
     var transactionSections: [TransactionSection] = []
 
@@ -97,7 +97,7 @@ class TransactionsStorage {
         transactionSections = mappedSections(for: Array(transactions))
     }
 
-    func mappedSections(for transactions:[Transaction]) -> [TransactionSection] {
+    func mappedSections(for transactions: [Transaction]) -> [TransactionSection] {
         var items = [TransactionSection]()
         let headerDates = NSOrderedSet(array: transactions.map { TransactionsViewModel.titleFormmater.string(from: $0.date ) })
         headerDates.forEach {
