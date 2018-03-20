@@ -112,7 +112,6 @@ class TrustNetwork: NetworkProtocol {
         }
     }
 
-<<<<<<< master:Trust/Core/Network/TrustNetwork.swift
     func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (([Transaction]?, Bool)) -> Void) {
         provider.request(.getTransactions(address: address.description, startBlock: startBlock, page: page, contract: contract)) { result in
             switch result {
@@ -152,7 +151,6 @@ class TrustNetwork: NetworkProtocol {
                     }
                 default: break
                 }
-=======
     func search(token: String, completion: @escaping (([TokenObject]) -> Void)) {
         provider.request(.search(token: token)) { result in
             switch result {
@@ -164,7 +162,6 @@ class TrustNetwork: NetworkProtocol {
                     completion([])
                 }
             case .failure: completion([])
->>>>>>> HEAD~1:Trust/Tokens/Network/TokensNetwork.swift
             }
         }
     }
