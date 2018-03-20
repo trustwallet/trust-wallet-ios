@@ -34,8 +34,7 @@ class TokensCoordinator: Coordinator {
     }()
     lazy var masterViewController: MasterViewController = {
         let masterViewController = MasterViewController(tokensViewController: self.tokensViewController, nonFungibleTokensViewController: self.nonFungibleTokensViewController)
-        masterViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
-        masterViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
+        masterViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(edit))
         return masterViewController
     }()
     weak var delegate: TokensCoordinatorDelegate?
@@ -111,6 +110,7 @@ class TokensCoordinator: Coordinator {
             storage: store,
             network: network
         )
+        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
         navigationController.pushViewController(controller, animated: true)
     }
 }
