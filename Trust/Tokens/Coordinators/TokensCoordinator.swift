@@ -19,7 +19,6 @@ class TokensCoordinator: Coordinator {
     let store: TokensDataStore
     let network: NetworkProtocol
     let transactionsStore: TransactionsStorage
-    
 
     lazy var tokensViewController: TokensViewController = {
         let tokensViewModel = TokensViewModel(address: session.account.address, store: store, tokensNetwork: network)

@@ -25,7 +25,8 @@ class EditTokenViewModel {
     init(network: NetworkProtocol,
          storage: TokensDataStore,
          config: Config,
-         table: UITableView) {
+         table: UITableView
+    ) {
         self.network = network
         self.storage = storage
         self.config = config
@@ -68,12 +69,14 @@ class EditTokenViewModel {
         }
     }
 
-    func didSelectRowAt(_ indexPath: IndexPath) {
+    func didSelectRowAt(_ indexPath: IndexPath) -> Bool {
         let pair = token(for: indexPath)
         if !pair.local {
             storage.add(tokens: [pair.token])
             feedbackGenerator.notificationOccurred(.success)
+            return true
         }
+        return false
     }
 
     func search(token: String) {

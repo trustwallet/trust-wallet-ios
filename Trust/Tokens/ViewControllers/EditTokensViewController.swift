@@ -22,7 +22,6 @@ class EditTokensViewController: UITableViewController {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.placeholder = viewModel.searchPlaceholder
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.sizeToFit()
@@ -33,7 +32,7 @@ class EditTokensViewController: UITableViewController {
     }()
 
     lazy var searchClosure: (String) -> Void = {
-        return debounce(delay: .milliseconds(700), action: { (query) in
+        return debounce(delay: .milliseconds(250), action: { (query) in
             self.viewModel.search(token: query)
         })
     }()
@@ -92,7 +91,10 @@ class EditTokensViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.didSelectRowAt(indexPath)
+        if viewModel.didSelectRowAt(indexPath) {
+            searchController.isActive = false
+            searchBarCancelButtonClicked(searchController.searchBar)
+        }
     }
 
     func configureTableView() {
@@ -126,6 +128,10 @@ extension EditTokensViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         self.searchClosure(searchBar.text ?? "")
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.viewModel.search(token: "")
     }
 }
 
