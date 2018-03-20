@@ -166,7 +166,7 @@ extension TokensCoordinator: TokenViewControllerDelegate {
     }
 
     func didPressRequest(for token: TokenObject, in controller: UIViewController) {
-        delegate?.didPress(for: .request, in: self)
+        delegate?.didPress(for: .request(token: token), in: self)
     }
 
     func didPress(transaction: Transaction, in controller: UIViewController) {

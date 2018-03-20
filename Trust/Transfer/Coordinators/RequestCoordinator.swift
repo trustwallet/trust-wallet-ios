@@ -17,16 +17,19 @@ class RequestCoordinator: Coordinator {
         return self.makeRequestViewController()
     }()
     private lazy var viewModel: RequestViewModel = {
-        return .init(account: session.account, config: session.config)
+        return .init(account: session.account, config: session.config, token: token)
     }()
+    private let token: TokenObject
 
     init(
         navigationController: UINavigationController = UINavigationController(),
-        session: WalletSession
+        session: WalletSession,
+        token: TokenObject
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
+        self.token = token
     }
 
     func start() {
@@ -35,7 +38,6 @@ class RequestCoordinator: Coordinator {
 
     func makeRequestViewController() -> RequestViewController {
         let controller = RequestViewController(viewModel: viewModel)
-        controller.navigationItem.titleView = BalanceTitleView.make(from: self.session, .ether(destination: .none))
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
         return controller

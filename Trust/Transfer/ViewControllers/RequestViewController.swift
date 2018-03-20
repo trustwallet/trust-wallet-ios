@@ -54,6 +54,7 @@ class RequestViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         view.backgroundColor = viewModel.backgroundColor
+        navigationItem.title = viewModel.title
 
         displayStackViewController()
 

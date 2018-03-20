@@ -8,13 +8,20 @@ struct RequestViewModel {
 
     let account: Wallet
     let config: Config
+    let token: TokenObject
 
     init(
         account: Wallet,
-        config: Config
+        config: Config,
+        token: TokenObject
     ) {
         self.account = account
         self.config = config
+        self.token = token
+    }
+
+    var title: String {
+        return token.displayName
     }
 
     var myAddressText: String {

@@ -59,10 +59,11 @@ class PaymentCoordinator: Coordinator {
             coordinator.delegate = self
             coordinator.start()
             addCoordinator(coordinator)
-        case (.request, _):
+        case (.request(let token), _):
             let coordinator = RequestCoordinator(
                 navigationController: navigationController,
-                session: session
+                session: session,
+                token: token
             )
             coordinator.delegate = self
             coordinator.start()

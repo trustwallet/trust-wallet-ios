@@ -124,7 +124,7 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
     }
 
     func didPressRequest(in viewController: TransactionsViewController) {
-        delegate?.didPress(for: .request, in: self)
+        delegate?.didPress(for: .request(token: TokensDataStore.etherToken(for: session.config)), in: self)
     }
 
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
