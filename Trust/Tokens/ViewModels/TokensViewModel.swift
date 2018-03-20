@@ -13,7 +13,7 @@ class TokensViewModel: NSObject {
     let config: Config
 
     let store: TokensDataStore
-    var tokensNetwork: TokensNetworkProtocol
+    var tokensNetwork: NetworkProtocol
     let tokens: Results<TokenObject>
     var tokensObserver: NotificationToken?
     let address: Address
@@ -77,7 +77,7 @@ class TokensViewModel: NSObject {
         config: Config = Config(),
         address: Address,
         store: TokensDataStore,
-        tokensNetwork: TokensNetworkProtocol
+        tokensNetwork: NetworkProtocol
     ) {
         self.config = config
         self.address = address

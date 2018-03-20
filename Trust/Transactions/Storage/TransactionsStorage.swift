@@ -4,32 +4,38 @@ import Foundation
 import RealmSwift
 import TrustKeystore
 
+struct TransactionSection {
+    let title: String
+    let items: [Transaction]
+}
+
 class TransactionsStorage {
 
     let realm: Realm
 
-    var transactionsCategory: Results<TransactionCategory> {
-        return realm.objects(TransactionCategory.self).sorted(byKeyPath: "date", ascending: false)
+    var transactionsUpdateHandler: () -> Void = {}
+
+    var transactions: Results<Transaction> {
+        return realm.objects(Transaction.self).filter(NSPredicate(format: "id!=''")).sorted(byKeyPath: "date", ascending: false)
     }
+
+    var transactionSections: [TransactionSection] = []
+
+    private var transactionsObserver: NotificationToken?
 
     init(
         realm: Realm
     ) {
         self.realm = realm
-    }
-
-    var objects: [Transaction] {
-        return realm.objects(Transaction.self)
-            .sorted(byKeyPath: "date", ascending: false)
-            .filter { !$0.id.isEmpty }
+        transactionsObservation()
     }
 
     var completedObjects: [Transaction] {
-        return objects.filter { $0.state == .completed }
+        return transactions.filter { $0.state == .completed }
     }
 
     var pendingObjects: [Transaction] {
-        return objects.filter { $0.state == TransactionState.pending }
+        return transactions.filter { $0.state == TransactionState.pending }
     }
 
     func get(forPrimaryKey: String) -> Transaction? {
@@ -37,9 +43,8 @@ class TransactionsStorage {
     }
 
     func add(_ items: [Transaction]) {
-        let trnasactions = transactionCategory(for: items)
         try! realm.write {
-            realm.add(trnasactions, update: true)
+            realm.add(items, update: true)
         }
     }
 
@@ -59,25 +64,6 @@ class TransactionsStorage {
             )
         }
         return tokens
-    }
-
-    private func transactionCategory(for transactions: [Transaction]) -> [TransactionCategory] {
-        var category = [TransactionCategory]()
-        let headerDates = NSOrderedSet(array: transactions.map { TransactionsViewModel.realmBaseFormmater.string(from: $0.date ) })
-        headerDates.forEach {
-            guard let stringDate = $0 as? String, let date = TransactionsViewModel.convert(stringDate) else {
-                return
-            }
-            var pendingTransactions = pendingObjects.filter { TransactionsViewModel.realmBaseFormmater.string(from: $0.date ) == stringDate }
-            let filteredTransactionByDate = transactions.filter { TransactionsViewModel.realmBaseFormmater.string(from: $0.date ) == stringDate }
-            pendingTransactions.append(contentsOf: filteredTransactionByDate)
-            let item = TransactionCategory()
-            item.title = stringDate
-            item.date = date
-            item.transactions.append(objectsIn: pendingTransactions)
-            category.append(item)
-        }
-        return category
     }
 
     func delete(_ items: [Transaction]) {
@@ -104,7 +90,30 @@ class TransactionsStorage {
     func deleteAll() {
         try! realm.write {
             realm.delete(realm.objects(Transaction.self))
-            realm.delete(realm.objects(TransactionCategory.self))
+        }
+    }
+
+    func updateTransactionSection() {
+        transactionSections = mappedSections(for: Array(transactions))
+    }
+
+    func mappedSections(for transactions: [Transaction]) -> [TransactionSection] {
+        var items = [TransactionSection]()
+        let headerDates = NSOrderedSet(array: transactions.map { TransactionsViewModel.titleFormmater.string(from: $0.date ) })
+        headerDates.forEach {
+            guard let dateKey = $0 as? String else {
+                return
+            }
+            let filteredTransactionByDate = Array(transactions.filter { TransactionsViewModel.titleFormmater.string(from: $0.date ) == dateKey })
+            items.append(TransactionSection(title: dateKey, items: filteredTransactionByDate))
+        }
+        return items
+    }
+
+    private func transactionsObservation() {
+        transactionsObserver = transactions.observe { [weak self] _ in
+            self?.updateTransactionSection()
+            self?.transactionsUpdateHandler()
         }
     }
 }

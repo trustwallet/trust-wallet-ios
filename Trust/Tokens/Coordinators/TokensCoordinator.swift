@@ -17,7 +17,9 @@ class TokensCoordinator: Coordinator {
     let keystore: Keystore
     var coordinators: [Coordinator] = []
     let store: TokensDataStore
-    let network: TokensNetworkProtocol
+    let network: NetworkProtocol
+    let transactionsStore: TransactionsStorage
+    
 
     lazy var tokensViewController: TokensViewController = {
         let tokensViewModel = TokensViewModel(address: session.account.address, store: store, tokensNetwork: network)
@@ -48,7 +50,8 @@ class TokensCoordinator: Coordinator {
         session: WalletSession,
         keystore: Keystore,
         tokensStorage: TokensDataStore,
-        network: TokensNetworkProtocol
+        network: NetworkProtocol,
+        transactionsStore: TransactionsStorage
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
@@ -56,6 +59,7 @@ class TokensCoordinator: Coordinator {
         self.keystore = keystore
         self.store = tokensStorage
         self.network = network
+        self.transactionsStore = transactionsStore
     }
 
     func start() {
@@ -114,7 +118,7 @@ class TokensCoordinator: Coordinator {
 extension TokensCoordinator: TokensViewControllerDelegate {
     func didSelect(token: TokenObject, in viewController: UIViewController) {
         let controller = TokenViewController(
-            viewModel: TokenViewModel(token: token, store: store, tokensNetwork: network)
+            viewModel: TokenViewModel(token: token, store: store, transactionsStore: transactionsStore, tokensNetwork: network, session: session)
         )
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)

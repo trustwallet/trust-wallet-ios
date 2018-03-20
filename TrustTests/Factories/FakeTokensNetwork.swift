@@ -6,7 +6,7 @@ import Moya
 import BigInt
 import TrustKeystore
 
-class FakeTokensNetwork: TokensNetworkProtocol {
+class FakeTokensNetwork: NetworkProtocol {
 
     var provider: MoyaProvider<TrustService>
     
@@ -43,5 +43,13 @@ class FakeTokensNetwork: TokensNetworkProtocol {
 
     func tokensList(for address: TrustKeystore.Address, completion: @escaping (([TokenObject]?)) -> Void) {
 
+    }
+
+    func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (([Transaction]?, Bool)) -> Void) {
+        
+    }
+
+    func update(for transaction: Transaction, completion: @escaping ((Transaction, TransactionState)) -> Void) {
+        
     }
 }

@@ -15,14 +15,13 @@ class TokenViewController: UIViewController {
     private var tableView = UITableView()
 
     private lazy var header: TokenHeaderView = {
-        let view = TokenHeaderView()
+        let view = TokenHeaderView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 240))
         view.imageView.kf.setImage(
             with: viewModel.imageURL,
             placeholder: viewModel.imagePlaceholder
         )
         view.amountLabel.text = viewModel.amount
         view.amountLabel.font = viewModel.amountFont
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -32,24 +31,22 @@ class TokenViewController: UIViewController {
 
     init(viewModel: TokenViewModel) {
         self.viewModel = viewModel
-        tableView = UITableView(frame: .zero, style: .plain)
         super.init(nibName: nil, bundle: nil)
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
 
         navigationItem.title = viewModel.title
         view.backgroundColor = .white
 
+        tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
+        tableView.allowsSelection = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = 68
         tableView.tableHeaderView = header
 
-        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-        tableView.addSubview(refreshControl)
-
+        tableView.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
         view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
@@ -57,16 +54,21 @@ class TokenViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            header.topAnchor.constraint(equalTo: tableView.topAnchor),
-            header.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            header.widthAnchor.constraint(equalTo: tableView.widthAnchor),
-            header.heightAnchor.constraint(equalToConstant: 240),
         ])
+
+        refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        tableView.addSubview(refreshControl)
 
         header.buttonsView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
         header.buttonsView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
 
         observToken()
+        observTransactions()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.fetch()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -77,6 +79,13 @@ class TokenViewController: UIViewController {
         viewModel.tokenObservation { [weak self] in
             self?.refreshControl.endRefreshing()
             self?.updateHeader()
+        }
+    }
+
+    private func observTransactions() {
+        viewModel.transactionObservation { [weak self] in
+            self?.refreshControl.endRefreshing()
+            self?.tableView.reloadData()
         }
     }
 
@@ -95,5 +104,29 @@ class TokenViewController: UIViewController {
 
     @objc func request() {
         delegate?.didPressRequest(for: viewModel.token, in: self)
+    }
+}
+
+extension TokenViewController: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numberOfSections
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TransactionViewCell.identifier, for: indexPath) as! TransactionViewCell
+        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfItems(for: section)
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return viewModel.hederView(for: section)
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return StyleLayout.TableView.heightForHeaderInSection
     }
 }

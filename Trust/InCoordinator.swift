@@ -73,8 +73,7 @@ class InCoordinator: Coordinator {
         let realm = self.realm(for: migration.config)
         let tokensStorage = TokensDataStore(realm: realm, config: config)
         let balanceCoordinator =  TokensBalanceService(web3: web3)
-        let tokensNetwork = TokensNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
-        let transactionsNetwork = TransactionsNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
+        let trustNetwork = TrustNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
         let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
         let session = WalletSession(
             account: account,
@@ -92,7 +91,7 @@ class InCoordinator: Coordinator {
             session: session,
             storage: transactionsStorage,
             tokensStorage: tokensStorage,
-            network: transactionsNetwork,
+            network: trustNetwork,
             keystore: keystore
         )
         transactionCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("transactions.tabbar.item.title", value: "Transactions", comment: ""), image: R.image.feed(), selectedImage: nil)
@@ -127,7 +126,8 @@ class InCoordinator: Coordinator {
                 session: session,
                 keystore: keystore,
                 tokensStorage: tokensStorage,
-                network: tokensNetwork
+                network: trustNetwork,
+                transactionsStore: transactionsStorage
             )
             tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("tokens.tabbar.item.title", value: "Tokens", comment: ""), image: R.image.coins(), selectedImage: nil)
             tokenCoordinator.delegate = self

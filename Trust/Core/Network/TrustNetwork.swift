@@ -2,16 +2,26 @@
 
 import Moya
 import TrustKeystore
+import JSONRPCKit
+import APIKit
+import Result
 
-protocol TokensNetworkProtocol: TrustNetworkProtocol {
+protocol NetworkProtocol: TrustNetworkProtocol {
     func tickers(for tokens: [TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void)
     func ethBalance(completion: @escaping (_ balance: Balance?) -> Void)
     func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void)
     func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void)
     func tokensList(for address: Address, completion: @escaping (_ result: ([TokenObject]?)) -> Void)
+    func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
+    func update(for transaction: Transaction, completion: @escaping (_ result: (Transaction, TransactionState)) -> Void)
 }
 
-class TokensNetwork: TokensNetworkProtocol {
+class TrustNetwork: NetworkProtocol {
+
+    static let deleteMissingInternalSeconds: Double = 60.0
+
+    static let deleyedTransactionInternalSeconds: Double = 60.0
+
     let provider: MoyaProvider<TrustService>
 
     let config: Config
@@ -97,6 +107,49 @@ class TokensNetwork: TokensNetworkProtocol {
                 }
             case .failure:
                     completion(nil)
+            }
+        }
+    }
+
+    func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (([Transaction]?, Bool)) -> Void) {
+        provider.request(.getTransactions(address: address.description, startBlock: startBlock, page: page, contract: contract)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    let transactions: [Transaction] = try response.map(ArrayResponse<Transaction>.self).docs
+                    completion((transactions, true))
+                } catch {
+                    completion((nil, false))
+                }
+            case .failure:
+                completion((nil, false))
+            }
+        }
+    }
+
+    func update(for transaction: Transaction, completion: @escaping (_ result: (Transaction, TransactionState)) -> Void) {
+        let request = GetTransactionRequest(hash: transaction.id)
+        Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { result in
+            switch result {
+            case .success:
+                if transaction.date > Date().addingTimeInterval(TrustNetwork.deleyedTransactionInternalSeconds) {
+                    completion((transaction, .completed))
+                }
+            case .failure(let error):
+                switch error {
+                case .responseError(let error):
+                    guard let error = error as? JSONRPCError else { return }
+                    switch error {
+                    case .responseError:
+                        completion((transaction, .deleted))
+                    case .resultObjectParseError:
+                        if transaction.date > Date().addingTimeInterval(TrustNetwork.deleteMissingInternalSeconds) {
+                            completion((transaction, .failed))
+                        }
+                    default: break
+                    }
+                default: break
+                }
             }
         }
     }

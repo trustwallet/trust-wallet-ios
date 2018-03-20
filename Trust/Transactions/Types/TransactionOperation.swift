@@ -4,7 +4,7 @@ import UIKit
 
 class TransactionOperation: TrustOperation {
 
-    private let network: TransactionsNetwork
+    private let network: TrustNetwork
 
     private let session: WalletSession
 
@@ -17,7 +17,7 @@ class TransactionOperation: TrustOperation {
     }()
 
     init(
-        network: TransactionsNetwork,
+        network: TrustNetwork,
         session: WalletSession
         ) {
         self.network = network
@@ -52,7 +52,7 @@ class TransactionOperation: TrustOperation {
     }
 
     private func transactions(for page: Int, completion: @escaping (([Transaction]?, TransactionFetchingState) -> Void)) {
-        self.network.transactions(for: self.session.account.address, startBlock: 1, page: page) { result in
+        self.network.transactions(for: self.session.account.address, startBlock: 1, page: page, contract: nil) { result in
             guard let transactions = result.0, result.1 else {
                 completion(nil, .failed)
                 return

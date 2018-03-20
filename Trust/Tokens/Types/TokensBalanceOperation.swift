@@ -5,14 +5,14 @@ import TrustKeystore
 import BigInt
 
 class TokensBalanceOperation: TrustOperation {
-    private var network: TokensNetworkProtocol
+    private var network: NetworkProtocol
     private let address: Address
     private let fetchTokens: [TokenObject]
     var tokens = [TokenObject: BigInt]()
     private var pos = 0
 
     init(
-        network: TokensNetworkProtocol,
+        network: NetworkProtocol,
         address: Address,
         fetchTokens: [TokenObject]
     ) {

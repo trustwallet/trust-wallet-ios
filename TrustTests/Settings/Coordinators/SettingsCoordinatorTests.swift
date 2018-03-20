@@ -15,8 +15,9 @@ class SettingsCoordinatorTests: XCTestCase {
             balanceCoordinator: FakeGetBalanceCoordinator()
         )
         storage.add([.make()])
+        storage.updateTransactionSection()
         
-        XCTAssertEqual(1, storage.transactionsCategory.count)
+        XCTAssertEqual(1, storage.transactionSections.count)
         
         let accountCoordinator = AccountsCoordinator(
             navigationController: FakeNavigationController(),
@@ -26,7 +27,8 @@ class SettingsCoordinatorTests: XCTestCase {
         )
         
         coordinator.didDeleteAccount(account: .make(), in: accountCoordinator)
+        storage.updateTransactionSection()
         
-        XCTAssertEqual(0, storage.transactionsCategory.count)
+        XCTAssertEqual(0, storage.transactionSections.count)
     }
 }

@@ -30,7 +30,7 @@ class TransactionCoordinator: Coordinator {
 
     let session: WalletSession
 
-    let network: TransactionsNetwork
+    let network: TrustNetwork
 
     let navigationController: UINavigationController
 
@@ -41,7 +41,7 @@ class TransactionCoordinator: Coordinator {
         navigationController: UINavigationController = NavigationController(),
         storage: TransactionsStorage,
         tokensStorage: TokensDataStore,
-        network: TransactionsNetwork,
+        network: TrustNetwork,
         keystore: Keystore
     ) {
         self.session = session
