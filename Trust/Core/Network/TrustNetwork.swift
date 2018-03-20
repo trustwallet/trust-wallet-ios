@@ -151,6 +151,9 @@ class TrustNetwork: NetworkProtocol {
                     }
                 default: break
                 }
+            }
+        }
+    }
     func search(token: String, completion: @escaping (([TokenObject]) -> Void)) {
         provider.request(.search(token: token)) { result in
             switch result {

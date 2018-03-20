@@ -7,7 +7,7 @@ class EditTokensViewController: UITableViewController {
 
     let session: WalletSession
     let storage: TokensDataStore
-    let network: TokensNetworkProtocol
+    let network: NetworkProtocol
 
     lazy var viewModel: EditTokenViewModel = {
         return EditTokenViewModel(
@@ -41,7 +41,7 @@ class EditTokensViewController: UITableViewController {
     init(
         session: WalletSession,
         storage: TokensDataStore,
-        network: TokensNetworkProtocol
+        network: NetworkProtocol
     ) {
         self.session = session
         self.storage = storage
@@ -50,6 +50,11 @@ class EditTokensViewController: UITableViewController {
         super.init(nibName: nil, bundle: nil)
 
         navigationItem.title = viewModel.title
+        configureTableView()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -100,6 +105,7 @@ class EditTokensViewController: UITableViewController {
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .onDrag
     }
 }
 

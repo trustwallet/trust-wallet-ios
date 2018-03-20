@@ -11,7 +11,7 @@ enum EditTokenSection: Int {
 
 class EditTokenViewModel {
 
-    let network: TokensNetworkProtocol
+    let network: NetworkProtocol
     let storage: TokensDataStore
     let config: Config
     let tableView: UITableView
@@ -22,7 +22,7 @@ class EditTokenViewModel {
     var isSearching = false
     var localSet = Set<TokenObject>()
 
-    init(network: TokensNetworkProtocol,
+    init(network: NetworkProtocol,
          storage: TokensDataStore,
          config: Config,
          table: UITableView) {
@@ -103,6 +103,6 @@ class EditTokenViewModel {
 
     func updateToken(indexPath: IndexPath, action: TokenAction) {
         let token = self.token(for: indexPath)
-        self.storage.update(token: token.token, action: action)
+        self.storage.update(tokens: [token.token], action: action)
     }
 }
