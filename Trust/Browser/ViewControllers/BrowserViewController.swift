@@ -61,7 +61,7 @@ class BrowserViewController: UIViewController {
     lazy var progressView: UIProgressView = {
         let progressView = UIProgressView(progressViewStyle: .default)
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.tintColor = Colors.skyBlue
+        progressView.tintColor = Colors.darkBlue
         return progressView
     }()
 
@@ -115,8 +115,15 @@ class BrowserViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        UIApplication.shared.statusBarStyle = .default
         browserNavBar?.browserDelegate = self
         reloadButtons()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        UIApplication.shared.statusBarStyle = .lightContent
     }
 
     private func injectUserAgent() {
