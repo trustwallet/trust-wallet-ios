@@ -112,7 +112,7 @@ struct TransactionsViewModel {
     }
 
     func fetchTransactions() {
-        self.network.transactions(for: session.account.address, startBlock: 1, page: 0) { result in
+        self.network.transactions(for: session.account.address, startBlock: 1, page: 0, contract: nil) { result in
             guard let transactions = result.0 else { return }
             self.storage.add(transactions)
         }

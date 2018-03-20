@@ -4,7 +4,7 @@ import Foundation
 import RealmSwift
 import TrustKeystore
 
-class LocalizedOperationObject: Object {
+class LocalizedOperationObject: Object, Decodable {
     @objc dynamic var from: String = ""
     @objc dynamic var to: String = ""
     @objc dynamic var contract: String? = .none
@@ -35,30 +35,43 @@ class LocalizedOperationObject: Object {
         self.decimals = decimals
     }
 
+    enum LocalizedOperationObjectKeys: String, CodingKey {
+        case from
+        case to
+        case type
+        case value
+        case contract
+    }
+
+    convenience required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: LocalizedOperationObjectKeys.self)
+        let from = try container.decode(String.self, forKey: .from)
+        let to = try container.decode(String.self, forKey: .to)
+
+        guard
+            let fromAddress = Address(string: from),
+            let toAddress = Address(string: to) else {
+                let context = DecodingError.Context(codingPath: [LocalizedOperationObjectKeys.from,
+                                                                 LocalizedOperationObjectKeys.to, ],
+                                                    debugDescription: "Address can't be decoded as a TrustKeystore.Address")
+                throw DecodingError.dataCorrupted(context)
+        }
+        let type = try container.decode(OperationType.self, forKey: .type)
+        let value = try container.decode(String.self, forKey: .value)
+        let contract = try container.decode(ERC20Contract.self, forKey: .contract)
+
+        self.init(from: fromAddress.description,
+                  to: toAddress.description,
+                  contract: contract.address,
+                  type: type.rawValue,
+                  value: value,
+                  symbol: contract.symbol,
+                  name: contract.name,
+                  decimals: contract.decimals
+        )
+    }
+
     var operationType: OperationType {
         return OperationType(string: type)
-    }
-}
-
-extension LocalizedOperationObject {
-    static func from(operations: [LocalizedOperation]?) -> [LocalizedOperationObject] {
-        guard let operations = operations else { return [] }
-        return operations.flatMap { operation in
-            guard
-                let from = Address(string: operation.from),
-                let to = Address(string: operation.to) else {
-                    return .none
-            }
-            return LocalizedOperationObject(
-                from: from.description,
-                to: to.description,
-                contract: operation.contract.address,
-                type: operation.type.rawValue,
-                value: operation.value,
-                symbol: operation.contract.symbol,
-                name: operation.contract.name,
-                decimals: operation.contract.decimals
-            )
-        }
     }
 }

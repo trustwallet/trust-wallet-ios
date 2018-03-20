@@ -97,11 +97,12 @@ class TokensDataStore {
                 switch action {
                 case .updateValue(let value):
                     token.value = value.description
+                    realm.add(token, update: true)
                 case .updateBalance:
-                    let currentValue = token.value
-                    token.value = currentValue
+                    realm.add(token, update: true)
                 case .disable(let value):
                     token.isDisabled = value
+                    realm.add(token, update: true)
                 case .updateInfo:
                     let update: [String: Any] = [
                         "contract": token.address.description,

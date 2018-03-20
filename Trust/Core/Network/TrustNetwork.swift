@@ -111,13 +111,12 @@ class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func transactions(for address: Address, startBlock: Int, page: Int, contract: String? = nil, completion: @escaping (([Transaction]?, Bool)) -> Void) {
+    func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (([Transaction]?, Bool)) -> Void) {
         provider.request(.getTransactions(address: address.description, startBlock: startBlock, page: page, contract: contract)) { result in
             switch result {
             case .success(let response):
                 do {
-                    let rawTransactions = try response.map(ArrayResponse<RawTransaction>.self).docs
-                    let transactions: [Transaction] = rawTransactions.flatMap { .from(transaction: $0) }
+                    let transactions: [Transaction] = try response.map(ArrayResponse<Transaction>.self).docs
                     completion((transactions, true))
                 } catch {
                     completion((nil, false))

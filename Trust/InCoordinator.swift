@@ -24,6 +24,9 @@ class InCoordinator: Coordinator {
     var transactionCoordinator: TransactionCoordinator? {
         return self.coordinators.flatMap { $0 as? TransactionCoordinator }.first
     }
+    var settingsCoordinator: SettingsCoordinator? {
+        return self.coordinators.flatMap { $0 as? SettingsCoordinator }.first
+    }
     var tabBarController: UITabBarController? {
         return self.navigationController.viewControllers.first as? UITabBarController
     }
@@ -184,6 +187,8 @@ class InCoordinator: Coordinator {
     }
 
     func restart(for account: Wallet, in coordinator: TransactionCoordinator) {
+        settingsCoordinator?.rootViewController.navigationItem.leftBarButtonItem = nil
+        settingsCoordinator?.rootViewController.networkStateView = nil
         self.navigationController.dismiss(animated: false, completion: nil)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         coordinator.stop()

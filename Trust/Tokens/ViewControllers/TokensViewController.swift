@@ -62,7 +62,7 @@ class TokensViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .singleLine
-        tableView.separatorColor = UIColor(hex: "c6c6c6")
+        tableView.separatorColor = TokensLayout.tableView.separatorColor
         tableView.backgroundColor = .white
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
@@ -202,14 +202,14 @@ extension TokensViewController: UITableViewDelegate {
         return [delete, edit]
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 92
+        return TokensLayout.tableView.height
     }
 }
 extension TokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TokenViewCell.identifier, for: indexPath) as! TokenViewCell
         cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
-        cell.layoutMargins = UIEdgeInsets(top: 0, left: 86, bottom: 0, right: 0)
+        cell.separatorInset = TokensLayout.tableView.layoutInsets
         return cell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
