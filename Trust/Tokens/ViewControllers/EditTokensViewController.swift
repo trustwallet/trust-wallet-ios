@@ -20,11 +20,12 @@ class EditTokensViewController: UITableViewController {
 
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
+        searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = viewModel.searchPlaceholder
         searchController.searchBar.sizeToFit()
-        searchController.searchBar.backgroundColor = .white
+        searchController.searchBar.barTintColor = Colors.lightGray
         searchController.searchBar.delegate = self
         definesPresentationContext = true
         return searchController
@@ -131,6 +132,18 @@ extension EditTokensViewController: UISearchBarDelegate {
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.viewModel.search(token: "")
+    }
+}
+
+extension EditTokensViewController: UISearchControllerDelegate {
+    func willPresentSearchController(_ searchController: UISearchController) {
+        searchController.searchBar.barTintColor = Colors.blue
+        searchController.searchBar.tintColor = .white
+    }
+
+    func willDismissSearchController(_ searchController: UISearchController) {
+        searchController.searchBar.barTintColor = Colors.lightGray
+        searchController.searchBar.tintColor = Colors.blue
     }
 }
 
