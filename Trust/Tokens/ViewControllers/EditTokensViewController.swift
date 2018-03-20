@@ -7,41 +7,53 @@ class EditTokensViewController: UITableViewController {
 
     let session: WalletSession
     let storage: TokensDataStore
-    let viewModel = EditTokenViewModel()
-    let searchController = UISearchController(searchResultsController: nil)
-    var filteredTokens = [TokenObject]()
+    let network: NetworkProtocol
 
-    var isFiltering: Bool {
-        return searchController.isActive && !searchBarIsEmpty
-    }
-    var searchBarIsEmpty: Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
+    lazy var viewModel: EditTokenViewModel = {
+        return EditTokenViewModel(
+            network: network,
+            storage: storage,
+            config: session.config,
+            table: tableView
+        )
+    }()
+
+    lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = viewModel.searchPlaceholder
+        searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.backgroundColor = .white
+        searchController.searchBar.delegate = self
+        definesPresentationContext = true
+        return searchController
+    }()
+
+    lazy var searchClosure: (String) -> Void = {
+        return debounce(delay: .milliseconds(250), action: { (query) in
+            self.viewModel.search(token: query)
+        })
+    }()
 
     init(
         session: WalletSession,
-        storage: TokensDataStore
+        storage: TokensDataStore,
+        network: NetworkProtocol
     ) {
         self.session = session
         self.storage = storage
+        self.network = network
 
         super.init(nibName: nil, bundle: nil)
 
         navigationItem.title = viewModel.title
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = NSLocalizedString("editTokens.searchBar.placeholder.title", value: "Search tokens", comment: "")
-        definesPresentationContext = true
-        searchController.searchBar.delegate = self
-        tableView.register(R.nib.editTokenTableViewCell(), forCellReuseIdentifier: R.nib.editTokenTableViewCell.name)
-        tableView.tableHeaderView = searchController.searchBar
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = TokensLayout.tableView.separatorColor
-        tableView.separatorInset = TokensLayout.tableView.layoutInsets
-        tableView.backgroundColor = .white
-        tableView.cellLayoutMarginsFollowReadableWidth = false
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.tableFooterView = UIView()
+        configureTableView()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -51,48 +63,51 @@ class EditTokensViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return viewModel.numberOfSections
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering {
-            return filteredTokens.count
-        }
-        return storage.objects.count
+        return viewModel.numberOfRowsInSection(section)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.editTokenTableViewCell.name, for: indexPath) as! EditTokenTableViewCell
         cell.delegate = self
-        let token = self.token(for: indexPath)
+        let token = self.viewModel.token(for: indexPath)
         cell.viewModel = EditTokenTableCellViewModel(
-            token: token,
-            coinTicker: storage.coinTicker(for: token),
-            config: session.config
+            token: token.token,
+            coinTicker: storage.coinTicker(for: token.token),
+            config: session.config,
+            isLocal: token.local
         )
         cell.separatorInset = TokensLayout.tableView.layoutInsets
+        cell.selectionStyle = token.local ? .none : .default
         return cell
-    }
-
-    func token(for indexPath: IndexPath) -> TokenObject {
-        if isFiltering {
-            return filteredTokens[indexPath.row]
-        }
-        return storage.objects[indexPath.row]
-    }
-
-    func filter(for searchText: String?) {
-        let text = searchText?.lowercased() ?? ""
-        filteredTokens = storage.objects.filter { $0.name.lowercased().contains(text) || $0.symbol.lowercased().contains(text) }
-        tableView.reloadData()
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return TokensLayout.tableView.height
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if viewModel.didSelectRowAt(indexPath) {
+            searchController.isActive = false
+            searchBarCancelButtonClicked(searchController.searchBar)
+        }
+    }
+
+    func configureTableView() {
+        tableView.register(R.nib.editTokenTableViewCell(), forCellReuseIdentifier: R.nib.editTokenTableViewCell.name)
+        tableView.tableHeaderView = searchController.searchBar
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = TokensLayout.tableView.separatorColor
+        tableView.separatorInset = TokensLayout.tableView.layoutInsets
+        tableView.backgroundColor = .white
+        tableView.cellLayoutMarginsFollowReadableWidth = false
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .onDrag
     }
 }
 
@@ -101,18 +116,27 @@ extension EditTokensViewController: EditTokenTableViewCellDelegate {
         guard let indexPath = tableView.indexPath(for: cell) else {
             return
         }
-        storage.update(tokens: [token(for: indexPath)], action: .disable(!state))
+        self.viewModel.updateToken(indexPath: indexPath, action: .disable(!state))
     }
 }
 
 extension EditTokensViewController: UISearchBarDelegate {
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchClosure(searchBar.text ?? "")
+    }
+
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        filter(for: searchBar.text)
+        self.searchClosure(searchBar.text ?? "")
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.viewModel.search(token: "")
     }
 }
 
 extension EditTokensViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        filter(for: searchController.searchBar.text)
+        self.searchClosure(searchController.searchBar.text ?? "")
     }
 }

@@ -14,6 +14,7 @@ protocol NetworkProtocol: TrustNetworkProtocol {
     func tokensList(for address: Address, completion: @escaping (_ result: ([TokenObject]?)) -> Void)
     func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
     func update(for transaction: Transaction, completion: @escaping (_ result: (Transaction, TransactionState)) -> Void)
+    func search(token: String, completion: @escaping (([TokenObject]) -> Void))
 }
 
 class TrustNetwork: NetworkProtocol {
@@ -150,6 +151,20 @@ class TrustNetwork: NetworkProtocol {
                     }
                 default: break
                 }
+            }
+        }
+    }
+    func search(token: String, completion: @escaping (([TokenObject]) -> Void)) {
+        provider.request(.search(token: token)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    let tokens = try response.map([TokenObject].self)
+                    completion(tokens)
+                } catch {
+                    completion([])
+                }
+            case .failure: completion([])
             }
         }
     }

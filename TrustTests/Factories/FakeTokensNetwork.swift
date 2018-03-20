@@ -52,4 +52,8 @@ class FakeTokensNetwork: NetworkProtocol {
     func update(for transaction: Transaction, completion: @escaping ((Transaction, TransactionState)) -> Void) {
         
     }
+
+    func search(token: String, completion: @escaping (([TokenObject]) -> Void)) {
+        completion([])
+    }
 }
