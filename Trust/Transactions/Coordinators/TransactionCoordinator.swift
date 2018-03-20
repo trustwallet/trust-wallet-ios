@@ -78,7 +78,11 @@ class TransactionCoordinator: Coordinator {
         return controller
     }
 
-    func showTransaction(_ transaction: Transaction) {
+    static func openTransaction(
+        _ transaction: Transaction,
+        in navigationController: UINavigationController,
+        session: WalletSession
+    ) {
         let controller = TransactionViewController(
             session: session,
             transaction: transaction
@@ -124,7 +128,7 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
     }
 
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
-        showTransaction(transaction)
+        TransactionCoordinator.openTransaction(transaction, in: navigationController, session: session)
     }
 
     func didPressDeposit(for account: Wallet, sender: UIView, in viewController: TransactionsViewController) {

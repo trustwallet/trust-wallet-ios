@@ -6,6 +6,7 @@ import Kingfisher
 protocol TokenViewControllerDelegate: class {
     func didPressRequest(for token: TokenObject, in controller: UIViewController)
     func didPressSend(for token: TokenObject, in controller: UIViewController)
+    func didPress(transaction: Transaction, in controller: UIViewController)
 }
 
 class TokenViewController: UIViewController {
@@ -40,7 +41,6 @@ class TokenViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
-        tableView.allowsSelection = false
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 68
@@ -128,5 +128,10 @@ extension TokenViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return StyleLayout.TableView.heightForHeaderInSection
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.didPress(transaction: viewModel.item(for: indexPath.row, section: indexPath.section), in: self)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

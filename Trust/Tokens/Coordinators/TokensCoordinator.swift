@@ -168,4 +168,8 @@ extension TokensCoordinator: TokenViewControllerDelegate {
     func didPressRequest(for token: TokenObject, in controller: UIViewController) {
         delegate?.didPress(for: .request, in: self)
     }
+
+    func didPress(transaction: Transaction, in controller: UIViewController) {
+        TransactionCoordinator.openTransaction(transaction, in: navigationController, session: session)
+    }
 }
