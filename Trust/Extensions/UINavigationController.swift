@@ -10,13 +10,7 @@ extension UINavigationController {
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
-        var preferredStyle: UIStatusBarStyle
-        if navigationBar.isKind(of: BrowserNavigationBar.self) {
-            preferredStyle = .default
-        } else {
-            preferredStyle = .lightContent
-        }
-        return preferredStyle
+        return topViewController?.preferredStatusBarStyle ?? .lightContent
     }
 
     open override func viewWillAppear(_ animated: Bool) {

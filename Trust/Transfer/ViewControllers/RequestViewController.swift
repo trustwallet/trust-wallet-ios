@@ -6,7 +6,7 @@ import CoreImage
 import MBProgressHUD
 import StackViewController
 
-class RequestViewController: UIViewController {
+class RequestViewController: BaseViewController {
 
     let stackViewController = StackViewController()
 

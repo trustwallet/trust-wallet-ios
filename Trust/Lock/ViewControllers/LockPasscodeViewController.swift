@@ -2,7 +2,7 @@
 
 import UIKit
 
-class LockPasscodeViewController: UIViewController {
+class LockPasscodeViewController: BaseViewController {
     var willFinishWithResult: ((_ success: Bool) -> Void)?
     let model: LockViewModel
     var lockView: LockView!

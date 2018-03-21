@@ -7,7 +7,7 @@ enum DeteilsViewType: Int {
     case nonFungibleTokens
 }
 
-class MasterViewController: UIViewController {
+class MasterViewController: BaseViewController {
     fileprivate lazy var segmentController: UISegmentedControl = {
         let items = [
             NSLocalizedString("Tokens", value: "Tokens", comment: ""),

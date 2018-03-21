@@ -16,7 +16,7 @@ enum ConfirmResult {
     case sentTransaction(SentTransaction)
 }
 
-class ConfirmPaymentViewController: UIViewController {
+class ConfirmPaymentViewController: BaseViewController {
 
     private let keystore: Keystore
     //let transaction: UnconfirmedTransaction

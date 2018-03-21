@@ -5,7 +5,7 @@ import StackViewController
 import Result
 import SafariServices
 
-class TransactionViewController: UIViewController {
+class TransactionViewController: BaseViewController {
 
     private lazy var viewModel: TransactionDetailsViewModel = {
         return .init(

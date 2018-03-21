@@ -12,7 +12,11 @@ protocol BrowserViewControllerDelegate: class {
     func didOpenBookmarkList()
 }
 
-class BrowserViewController: UIViewController {
+class BrowserViewController: BaseViewController {
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
 
     private var myContext = 0
     let account: Wallet

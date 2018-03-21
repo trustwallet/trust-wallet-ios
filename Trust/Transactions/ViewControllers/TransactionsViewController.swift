@@ -15,7 +15,7 @@ protocol TransactionsViewControllerDelegate: class {
     func didPressDeposit(for account: Wallet, sender: UIView, in viewController: TransactionsViewController)
 }
 
-class TransactionsViewController: UIViewController {
+class TransactionsViewController: BaseViewController {
 
     var viewModel: TransactionsViewModel
 

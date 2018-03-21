@@ -5,7 +5,7 @@ import TrustKeystore
 import UIKit
 import MBProgressHUD
 
-class ExportPrivateKeyViewConroller: UIViewController {
+class ExportPrivateKeyViewConroller: BaseViewController {
 
     private struct Layout {
         static var widthAndHeight: CGFloat = 260

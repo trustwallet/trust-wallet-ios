@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class PassphraseViewController: UIViewController {
+class PassphraseViewController: BaseViewController {
 
     let passphraseView = PassphraseView(frame: .zero)
     let viewModel = PassphraseViewModel()

@@ -14,7 +14,7 @@ protocol TokensViewControllerDelegate: class {
     func didEdit(token: TokenObject, in viewController: UIViewController)
 }
 
-class TokensViewController: UIViewController {
+class TokensViewController: BaseViewController {
 
     fileprivate var viewModel: TokensViewModel
 

@@ -8,7 +8,7 @@ protocol TokenViewControllerDelegate: class {
     func didPressSend(for token: TokenObject, in controller: UIViewController)
 }
 
-class TokenViewController: UIViewController {
+class TokenViewController: BaseViewController {
 
     private let refreshControl = UIRefreshControl()
 
