@@ -60,7 +60,7 @@ class SettingsViewController: FormViewController, Coordinator {
 
         form = Section()
 
-            <<< PushRow<RPCServer> { [weak self] in
+            /*<<< PushRow<RPCServer> { [weak self] in
                 guard let strongSelf = self else {
                     return
                 }
@@ -84,8 +84,25 @@ class SettingsViewController: FormViewController, Coordinator {
                         return NSLocalizedString("settings.network.custom.label.title", value: "Custom", comment: "")
                     }
                 }
+                selectorController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addNetwork))
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_server()
+            }*/
+
+            <<< AppFormAppearance.button { [weak self] row in
+                guard let `self` = self else { return }
+                row.cellStyle = .value1
+                let networksViewController = NetworksViewController()
+                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+                    return networksViewController
+                }, onDismiss: { _ in })
+
+            }.cellUpdate { cell, _ in
+                cell.textLabel?.textColor = .black
+                cell.imageView?.image = R.image.settings_server()
+                cell.textLabel?.text = self.viewModel.networkTitle
+                cell.detailTextLabel?.text = "Ayy lmao"
+                cell.accessoryType = .disclosureIndicator
             }
 
             <<< AppFormAppearance.button { [weak self] row in
@@ -231,6 +248,10 @@ class SettingsViewController: FormViewController, Coordinator {
                 $0.value = Bundle.main.fullVersion
                 $0.disabled = true
             }
+    }
+    
+    @objc func addNetwork() {
+        
     }
 
     func setPasscode(completion: ((Bool) -> Void)? = .none) {

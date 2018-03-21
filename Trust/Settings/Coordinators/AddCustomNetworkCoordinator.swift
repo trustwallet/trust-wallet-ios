@@ -27,11 +27,15 @@ class AddCustomNetworkCoordinator: Coordinator {
         return controller
     }()
 
+    let rpcStore: RPCStore
+
     init(
-        navigationController: UINavigationController = NavigationController()
+        navigationController: UINavigationController = NavigationController(),
+        rpcStore: RPCStore
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
+        self.rpcStore = rpcStore
     }
 
     func start() {

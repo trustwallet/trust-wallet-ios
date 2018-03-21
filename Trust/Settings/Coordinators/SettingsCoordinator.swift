@@ -3,6 +3,7 @@
 import Foundation
 import TrustKeystore
 import UIKit
+import RealmSwift
 
 protocol SettingsCoordinatorDelegate: class {
     func didRestart(with account: Wallet, in coordinator: SettingsCoordinator)
@@ -42,6 +43,10 @@ class SettingsCoordinator: Coordinator {
         controller.delegate = self
         controller.modalPresentationStyle = .pageSheet
         return controller
+    }()
+    
+    private lazy var rpcStore: RPCStore = {
+        return RPCStore(realm: try! Realm())
     }()
 
     init(
