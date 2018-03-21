@@ -140,7 +140,7 @@
 "configureTransaction.gasPriceGwei.label.title" = "Gas Price (Gwei)";
 "enterPassword.confirmPassword.textField.placeholder" = "Confirm Password";
 "enterPassword.navigation.title" = "Backup Password";
-"enterPassword.password.header.placeholder" = "Password used to encrypt you backup file to keep it secure!";
+"enterPassword.password.header.placeholder" = "Password used to encrypt your backup file to keep it secure!";
 "enterPassword.password.textField.placeholder" = "Password";
 "lock.create.passcode.view.model.confirm" = "Please re-enter your passcode";
 "lock.create.passcode.view.model.initial" = "Enter a new passcode";
