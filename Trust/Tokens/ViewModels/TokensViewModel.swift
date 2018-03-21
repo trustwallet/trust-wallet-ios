@@ -60,7 +60,7 @@ class TokensViewModel: NSObject {
 
     weak var delegate: TokensViewModelDelegate?
 
-    private var serailOperationQueue: OperationQueue = {
+    private var serialOperationQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .background
         queue.maxConcurrentOperationCount = 1
@@ -129,7 +129,7 @@ class TokensViewModel: NSObject {
 
     func updateEthBalance(completion: ((_ completed: Bool) -> Void)? = nil) {
         tokensNetwork.ethBalance { result in
-            guard let balance = result, let token = self.store.objects.first (where: { $0.name == self.config.server.name }), self.serailOperationQueue.operationCount == 0  else {
+            guard let balance = result, let token = self.store.objects.first (where: { $0.name == self.config.server.name }), self.serialOperationQueue.operationCount == 0  else {
                 completion?(true)
                 return
             }
@@ -139,7 +139,7 @@ class TokensViewModel: NSObject {
     }
 
     private func runOperations() {
-        guard serailOperationQueue.operationCount == 0, let chaineToken = self.store.objects.first (where: { $0.name == self.config.server.name }), parallelOperationQueue.operationCount == 0 else {
+        guard serialOperationQueue.operationCount == 0, let chaineToken = self.store.objects.first (where: { $0.name == self.config.server.name }), parallelOperationQueue.operationCount == 0 else {
             return
         }
 
@@ -147,15 +147,15 @@ class TokensViewModel: NSObject {
 
         let tokensOperation = TokensOperation(network: tokensNetwork, address: address)
 
-        let tempChaine = TokensDataStore.etherToken(for: config)
-        tempChaine.value = chaineToken.value
+        let etherToken = TokensDataStore.etherToken(for: config)
+        etherToken.value = chaineToken.value
 
-        serailOperationQueue.addOperation(ethBalanceOperation)
+        serialOperationQueue.addOperation(ethBalanceOperation)
 
         ethBalanceOperation.completionBlock = { [weak self] in
-            tempChaine.value = ethBalanceOperation.balance.value.description
-            tokensOperation.tokens.append(tempChaine)
-            self?.serailOperationQueue.addOperation(tokensOperation)
+            etherToken.value = ethBalanceOperation.balance.value.description
+            tokensOperation.tokens.append(etherToken)
+            self?.serialOperationQueue.addOperation(tokensOperation)
         }
 
         tokensOperation.completionBlock = { [weak self] in
