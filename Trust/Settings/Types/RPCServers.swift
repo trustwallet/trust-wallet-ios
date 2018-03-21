@@ -2,6 +2,12 @@
 
 import Foundation
 
+enum NetworkType {
+    case main
+    case test
+    case custom
+}
+
 enum RPCServer {
     case main
     case kovan
