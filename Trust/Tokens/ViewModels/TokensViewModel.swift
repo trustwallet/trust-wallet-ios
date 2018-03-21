@@ -129,7 +129,7 @@ class TokensViewModel: NSObject {
                 completion?(true)
                 return
             }
-            self.store.update(tokens: [TokensDataStore.etherToken()], action: .updateBalances([balance.value]))
+            self.store.update(balances: [TokensDataStore.etherToken().address: balance.value])
             completion?(true)
         }
     }
