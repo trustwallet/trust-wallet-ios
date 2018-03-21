@@ -8,7 +8,6 @@ import Result
 
 protocol NetworkProtocol: TrustNetworkProtocol {
     func tickers(for tokens: [TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void)
-    func ethBalance(completion: @escaping (_ balance: Balance?) -> Void)
     func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void)
     func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void)
     func tokensList(for address: Address, completion: @escaping (_ result: ([TokenObject]?)) -> Void)
@@ -20,15 +19,10 @@ protocol NetworkProtocol: TrustNetworkProtocol {
 class TrustNetwork: NetworkProtocol {
 
     static let deleteMissingInternalSeconds: Double = 60.0
-
     static let deleyedTransactionInternalSeconds: Double = 60.0
-
     let provider: MoyaProvider<TrustService>
-
     let config: Config
-
     let balanceService: TokensBalanceService
-
     let account: Wallet
 
     required init(provider: MoyaProvider<TrustService>, balanceService: TokensBalanceService, account: Wallet, config: Config) {
@@ -57,24 +51,24 @@ class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func ethBalance(completion: @escaping (_ balance: Balance?) -> Void) {
-        balanceService.getEthBalance(for: account.address) { result in
-            switch result {
-            case .success(let balance):
-                completion(balance)
-            case .failure:
-                completion(nil)
-            }
-        }
-    }
-
     func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void) {
-        balanceService.getBalance(for: account.address, contract: token.address) { result in
-            switch result {
-            case .success(let balance):
-                completion((token, Balance(value: balance)))
-            case .failure:
-                completion((token, nil))
+        if token == TokensDataStore.etherToken(for: config) {
+            balanceService.getEthBalance(for: account.address) { result in
+                switch result {
+                case .success(let balance):
+                    completion((token, balance))
+                case .failure:
+                    completion((token, nil))
+                }
+            }
+        } else {
+            balanceService.getBalance(for: account.address, contract: token.address) { result in
+                switch result {
+                case .success(let balance):
+                    completion((token, Balance(value: balance)))
+                case .failure:
+                    completion((token, nil))
+                }
             }
         }
     }

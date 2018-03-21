@@ -186,7 +186,7 @@ class TokenViewModel {
             guard let balance = result.1 else {
                 return
             }
-            self?.store.update(tokens: [result.0], action: .updateValue(balance.value))
+            self?.store.update(tokens: [result.0], action: .updateBalances([balance.value]))
         }
     }
 

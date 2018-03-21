@@ -85,9 +85,6 @@ class TokensViewModel: NSObject {
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
         super.init()
-        updateEthBalance { [weak self] _ in
-            self?.runOperations()
-        }
     }
 
     func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<TokenObject>>) -> Void) {
@@ -128,33 +125,28 @@ class TokensViewModel: NSObject {
     }
 
     func updateEthBalance(completion: ((_ completed: Bool) -> Void)? = nil) {
-        tokensNetwork.ethBalance { result in
-            guard let balance = result, let token = self.store.objects.first (where: { $0.name == self.config.server.name }), self.serialOperationQueue.operationCount == 0  else {
+        tokensNetwork.tokenBalance(for: TokensDataStore.etherToken()) { [weak self] (token, balance) in
+            guard let `self` = self, let balance = balance else {
                 completion?(true)
                 return
             }
-            self.store.update(tokens: [token], action: .updateValue(balance.value))
+            self.store.update(tokens: [token], action: .updateBalances([balance.value]))
             completion?(true)
         }
     }
 
     private func runOperations() {
-        guard serialOperationQueue.operationCount == 0, let chaineToken = self.store.objects.first (where: { $0.name == self.config.server.name }), parallelOperationQueue.operationCount == 0 else {
+        guard serialOperationQueue.operationCount == 0, parallelOperationQueue.operationCount == 0 else {
             return
         }
 
         let ethBalanceOperation = EthBalanceOperation(network: tokensNetwork)
-
         let tokensOperation = TokensOperation(network: tokensNetwork, address: address)
-
-        let etherToken = TokensDataStore.etherToken(for: config)
-        etherToken.value = chaineToken.value
 
         serialOperationQueue.addOperation(ethBalanceOperation)
 
         ethBalanceOperation.completionBlock = { [weak self] in
-            etherToken.value = ethBalanceOperation.balance.value.description
-            tokensOperation.tokens.append(etherToken)
+            tokensOperation.tokens.append(TokensDataStore.etherToken())
             self?.serialOperationQueue.addOperation(tokensOperation)
         }
 
@@ -195,6 +187,7 @@ class TokensViewModel: NSObject {
     }
 
     func fetch() {
-       runOperations()
+        updateEthBalance()
+        runOperations()
     }
 }

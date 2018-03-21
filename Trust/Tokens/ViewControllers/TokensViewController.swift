@@ -148,19 +148,21 @@ class TokensViewController: UIViewController {
             case .initial:
                 tableView.reloadData()
             case .update(_, let deletions, let insertions, let modifications):
-                tableView.beginUpdates()
-                tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) },
-                                     with: .none)
-                tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) },
-                                     with: .none)
-                for row in modifications {
-                    let indexPath = IndexPath(row: row, section: 0)
-                    let model = strongSelf.viewModel.cellViewModel(for: indexPath)
-                    if let cell = tableView.cellForRow(at: indexPath) as? TokenViewCell {
-                        cell.configure(viewModel: model)
+                UIView.performWithoutAnimation {
+                    tableView.beginUpdates()
+                    tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) },
+                                         with: .none)
+                    tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) },
+                                         with: .none)
+                    for row in modifications {
+                        let indexPath = IndexPath(row: row, section: 0)
+                        let model = strongSelf.viewModel.cellViewModel(for: indexPath)
+                        if let cell = tableView.cellForRow(at: indexPath) as? TokenViewCell {
+                            cell.configure(viewModel: model)
+                        }
                     }
+                    tableView.endUpdates()
                 }
-                tableView.endUpdates()
                 self?.endLoading()
             case .error(let error):
                 self?.endLoading(animated: true, error: error, completion: nil)

@@ -29,10 +29,6 @@ class FakeTokensNetwork: NetworkProtocol {
         completion([ticker])
     }
     
-    func ethBalance(completion: @escaping (Balance?) -> Void) {
-        completion(Balance(value: BigInt(100)))
-    }
-    
     func tokenBalance(for token: TokenObject, completion: @escaping ((TokenObject, Balance?)) -> Void) {
         completion((token, Balance(value: BigInt(400))))
     }

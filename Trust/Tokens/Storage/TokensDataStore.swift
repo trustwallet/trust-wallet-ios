@@ -9,7 +9,6 @@ import Moya
 import TrustKeystore
 
 enum TokenAction {
-    case updateValue(BigInt)
     case updateBalances([BigInt])
     case disable(Bool)
     case updateInfo
@@ -99,8 +98,6 @@ class TokensDataStore {
         try! realm.write {
             for (index, token) in tokens.enumerated() {
                 switch action {
-                case .updateValue(let value):
-                    token.value = value.description
                 case .updateBalances(let balances):
                     let update = [
                         "contract": token.address.description,
@@ -147,7 +144,7 @@ class TokensDataStore {
         config.defaults.removeObject(forKey: tickersKey)
     }
 
-    static func etherToken(for config: Config) -> TokenObject {
+    static func etherToken(for config: Config = .current) -> TokenObject {
         return TokenObject(
             contract: "0x0000000000000000000000000000000000000000",
             name: config.server.name,
