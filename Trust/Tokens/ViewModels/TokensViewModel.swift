@@ -139,21 +139,15 @@ class TokensViewModel: NSObject {
             return
         }
 
-        let ethBalanceOperation = EthBalanceOperation(network: tokensNetwork)
         let tokensOperation = TokensOperation(network: tokensNetwork, address: address)
 
-        serialOperationQueue.addOperation(ethBalanceOperation)
-
-        ethBalanceOperation.completionBlock = { [weak self] in
-            tokensOperation.tokens.append(TokensDataStore.etherToken())
-            self?.serialOperationQueue.addOperation(tokensOperation)
-        }
+        serialOperationQueue.addOperation(tokensOperation)
 
         tokensOperation.completionBlock = { [weak self] in
-            self?.parallelOperations(for: tokensOperation.tokens)
             DispatchQueue.main.async {
                 self?.store.update(tokens: tokensOperation.tokens, action: .updateInfo)
             }
+            self?.parallelOperations(for: tokensOperation.tokens)
         }
     }
 
@@ -188,5 +182,11 @@ class TokensViewModel: NSObject {
     func fetch() {
         updateEthBalance()
         runOperations()
+    }
+
+    func cancelOperations() {
+        tokensObserver = nil
+        serialOperationQueue.cancelAllOperations()
+        parallelOperationQueue.cancelAllOperations()
     }
 }

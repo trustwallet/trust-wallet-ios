@@ -184,6 +184,10 @@ class TokensViewController: UIViewController {
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
 
+    func cancelOperations() {
+        viewModel.cancelOperations()
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
         stopTimer()
