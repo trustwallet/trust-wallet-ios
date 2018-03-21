@@ -34,7 +34,7 @@ class SettingsViewController: FormViewController, Coordinator {
     let session: WalletSession
     let keystore: Keystore
     let balanceCoordinator: TokensBalanceService
-    let accountsCoordinator: AccountsCoordinator
+    weak var accountsCoordinator: AccountsCoordinator?
 
     init(
         session: WalletSession,
@@ -91,9 +91,11 @@ class SettingsViewController: FormViewController, Coordinator {
             <<< AppFormAppearance.button { [weak self] row in
                 guard let `self` = self else { return }
                 row.cellStyle = .value1
-                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
-                    return self.accountsCoordinator.accountsViewController
-                }, onDismiss: { _ in })
+                if let accountsViewController = self.accountsCoordinator?.accountsViewController {
+                    row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+                        return accountsViewController
+                    }, onDismiss: { _ in })
+                }
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_wallet()
