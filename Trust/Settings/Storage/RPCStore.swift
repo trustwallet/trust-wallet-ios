@@ -3,7 +3,7 @@
 import Foundation
 import RealmSwift
 
-class RPCStorage {
+class RPCStore {
     var endpoints: Results<CustomRPC> {
         return realm.objects(CustomRPC.self)
     }
