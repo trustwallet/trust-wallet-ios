@@ -53,10 +53,11 @@ enum RPCServer {
         return "\(self.name) (\(self.symbol))"
     }
 
-    var isTestNetwork: Bool {
+    var networkType: NetworkType {
         switch self {
-        case .main, .poa, .classic, .callisto, .custom: return false
-        case .kovan, .ropsten, .rinkeby, .sokol: return true
+        case .main, .poa, .classic, .callisto: return .main
+        case .kovan, .ropsten, .rinkeby, .sokol: return .test
+        case .custom: return .custom
         }
     }
 
