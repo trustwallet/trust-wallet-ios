@@ -46,8 +46,8 @@ class TokenHeaderView: UIView {
         return stackView
     }()
 
-    let currencyAmountLabel = UILabel()
-    let percentChange = UILabel()
+//    let currencyAmountLabel = UILabel()
+//    let percentChange = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -58,27 +58,27 @@ class TokenHeaderView: UIView {
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
         amountLabel.textAlignment = .right
 
-        currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
-        currencyAmountLabel.textAlignment = .right
-
-        percentChange.translatesAutoresizingMaskIntoConstraints = false
-        percentChange.textAlignment = .right
+//        currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
+//        currencyAmountLabel.textAlignment = .right
+//
+//        percentChange.translatesAutoresizingMaskIntoConstraints = false
+//        percentChange.textAlignment = .right
 
         let amountStack = UIStackView(arrangedSubviews: [amountLabel, fiatAmountLabel])
         amountStack.translatesAutoresizingMaskIntoConstraints = false
         amountStack.axis = .horizontal
         amountStack.spacing = 5
 
-        let marketPriceStack = UIStackView(arrangedSubviews: [currencyAmountLabel, percentChange])
-        marketPriceStack.translatesAutoresizingMaskIntoConstraints = false
-        marketPriceStack.axis = .horizontal
-        marketPriceStack.spacing = 5
-
-        let rightStackView = UIStackView(arrangedSubviews: [marketPriceStack])
-        rightStackView.translatesAutoresizingMaskIntoConstraints = false
-        rightStackView.axis = .vertical
-        rightStackView.alignment = .center
-        rightStackView.spacing =  5
+//        let marketPriceStack = UIStackView(arrangedSubviews: [currencyAmountLabel, percentChange])
+//        marketPriceStack.translatesAutoresizingMaskIntoConstraints = false
+//        marketPriceStack.axis = .horizontal
+//        marketPriceStack.spacing = 5
+//
+//        let rightStackView = UIStackView(arrangedSubviews: [marketPriceStack])
+//        rightStackView.translatesAutoresizingMaskIntoConstraints = false
+//        rightStackView.axis = .vertical
+//        rightStackView.alignment = .center
+//        rightStackView.spacing =  5
 
         container.addArrangedSubview(.spacer(height: StyleLayout.sideMargin * 2))
         container.addArrangedSubview(imageView)
