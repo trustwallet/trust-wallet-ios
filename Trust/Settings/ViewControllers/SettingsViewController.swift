@@ -71,45 +71,9 @@ class SettingsViewController: FormViewController, Coordinator {
                 $0.displayValueFor = { value in
                     return value?.displayName
                 }
-            }.onChange {[weak self] row in
-                let runSelectedNetwork = { [weak self, unowned row] in
-                    self?.config.chainID = row.value?.chainID ?? RPCServer.main.chainID
-                    self?.run(action: .RPCServer)
-                }
-
-                let popupWarningMessage = { [weak self] in
-                    let alertViewController = UIAlertController.alertController(
-                        title: self?.viewModel.testNetworkWarningTitle,
-                        message: self?.viewModel.testNetworkWarningMessage,
-                        style: .alert,
-                        in: self!.navigationController!
-                    )
-
-                    if let navigationController = self?.navigationController {
-                        alertViewController.popoverPresentationController?.sourceView = navigationController.view
-                        alertViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
-                    }
-
-                    let okAction = UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default) { _ in
-                        runSelectedNetwork()
-                    }
-                    let dontShowAgainAction = UIAlertAction(title: self?.viewModel.testNetworkWarningDontShowAgainLabel, style: .default) { _ in
-                        self?.config.testNetworkWarningOff = true
-                        runSelectedNetwork()
-                    }
-
-                    alertViewController.addAction(dontShowAgainAction)
-                    alertViewController.addAction(okAction)
-
-                    self?.present(alertViewController, animated: true, completion: nil)
-                }
-
-                let selectedRPCServer = row.value ?? RPCServer.main
-                if selectedRPCServer.isTestNetwork == true && self?.config.testNetworkWarningOff == false {
-                    popupWarningMessage()
-                } else {
-                    runSelectedNetwork()
-                }
+            }.onChange { [weak self] row in
+                let server = row.value ?? RPCServer.main
+                self?.run(action: .RPCServer(server: server))
             }.onPresent { _, selectorController in
                 selectorController.enableDeselection = false
                 selectorController.sectionKeyForValue = { option in

@@ -68,12 +68,54 @@ class SettingsCoordinator: Coordinator {
     func restart(for wallet: Wallet) {
         delegate?.didRestart(with: wallet, in: self)
     }
+
+    private func presentSwitchNetworkWarning(for server: RPCServer) {
+        var config = session.config
+        let viewModel = SettingsViewModel()
+        let alertViewController = UIAlertController.alertController(
+            title: viewModel.testNetworkWarningTitle,
+            message: viewModel.testNetworkWarningMessage,
+            style: .alert,
+            in: navigationController
+        )
+
+        alertViewController.popoverPresentationController?.sourceView = navigationController.view
+        alertViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
+
+        let okAction = UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default) { _ in
+            self.switchNetwork(for: server)
+        }
+        let dontShowAgainAction = UIAlertAction(title: viewModel.testNetworkWarningDontShowAgainLabel, style: .default) { _ in
+            config.testNetworkWarningOff = true
+            self.switchNetwork(for: server)
+        }
+
+        alertViewController.addAction(dontShowAgainAction)
+        alertViewController.addAction(okAction)
+        navigationController.present(alertViewController, animated: true, completion: nil)
+    }
+
+    func prepareSwitchNetwork(for server: RPCServer) {
+        if server.isTestNetwork == true && session.config.testNetworkWarningOff == false {
+            presentSwitchNetworkWarning(for: server)
+        } else {
+            switchNetwork(for: server)
+        }
+    }
+
+    func switchNetwork(for server: RPCServer) {
+        var config = session.config
+        config.chainID = server.chainID
+        restart(for: session.account)
+    }
 }
 
 extension SettingsCoordinator: SettingsViewControllerDelegate {
     func didAction(action: SettingsAction, in viewController: SettingsViewController) {
         switch action {
-        case .RPCServer, .currency:
+        case .RPCServer(let server):
+            prepareSwitchNetwork(for: server)
+        case .currency:
             restart(for: session.account)
         case .pushNotifications(let change):
             switch change {

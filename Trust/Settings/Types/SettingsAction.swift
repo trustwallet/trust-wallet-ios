@@ -3,7 +3,7 @@
 import Foundation
 
 enum SettingsAction {
-    case RPCServer
+    case RPCServer(server: RPCServer)
     case currency
     case pushNotifications(NotificationChanged)
 }
