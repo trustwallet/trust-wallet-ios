@@ -12,6 +12,14 @@ class TokenHeaderView: UIView {
         return label
     }()
 
+    lazy var fiatAmountLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.textColor = Colors.black
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     lazy var imageView: TokenImageView = {
         let imageView = TokenImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,13 +46,44 @@ class TokenHeaderView: UIView {
         return stackView
     }()
 
+    let currencyAmountLabel = UILabel()
+    let percentChange = UILabel()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+        fiatAmountLabel.translatesAutoresizingMaskIntoConstraints = false
+        fiatAmountLabel.textAlignment = .right
+
+        amountLabel.translatesAutoresizingMaskIntoConstraints = false
+        amountLabel.textAlignment = .right
+
+        currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
+        currencyAmountLabel.textAlignment = .right
+
+        percentChange.translatesAutoresizingMaskIntoConstraints = false
+        percentChange.textAlignment = .right
+
+        let amountStack = UIStackView(arrangedSubviews: [amountLabel, fiatAmountLabel])
+        amountStack.translatesAutoresizingMaskIntoConstraints = false
+        amountStack.axis = .horizontal
+        amountStack.spacing = 5
+
+        let marketPriceStack = UIStackView(arrangedSubviews: [currencyAmountLabel, percentChange])
+        marketPriceStack.translatesAutoresizingMaskIntoConstraints = false
+        marketPriceStack.axis = .horizontal
+        marketPriceStack.spacing = 5
+
+        let rightStackView = UIStackView(arrangedSubviews: [amountStack, marketPriceStack])
+        rightStackView.translatesAutoresizingMaskIntoConstraints = false
+        rightStackView.axis = .vertical
+        rightStackView.alignment = .center
+        rightStackView.spacing =  5
+
         container.addArrangedSubview(.spacer(height: StyleLayout.sideMargin * 2))
         container.addArrangedSubview(imageView)
-        container.addArrangedSubview(.spacer(height: 10))
-        container.addArrangedSubview(amountLabel)
+        container.addArrangedSubview(.spacer(height: 12))
+        container.addArrangedSubview(rightStackView)
         container.addArrangedSubview(.spacer(height: 10))
         container.addArrangedSubview(buttonsView)
 

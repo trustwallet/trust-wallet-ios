@@ -90,11 +90,11 @@ class TokenViewCell: UITableViewCell {
         titleLabel.font = viewModel.titleFont
 
         amountLabel.text = viewModel.amount
-        amountLabel.textColor = viewModel.amountTextColor
+        amountLabel.textColor = TokensLayout.cell.amountTextColor
         amountLabel.font = viewModel.amountFont
 
         currencyAmountLabel.text = viewModel.currencyAmount
-        currencyAmountLabel.textColor = viewModel.currencyAmountTextColor
+        currencyAmountLabel.textColor = TokensLayout.cell.currencyAmountTextColor
         currencyAmountLabel.font = viewModel.currencyAmountFont
 
         percentChange.text = viewModel.percentChange

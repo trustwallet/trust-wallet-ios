@@ -74,6 +74,51 @@ class TokenViewModel {
         prepareDataSource(for: token)
     }
 
+    var ticker: CoinTicker? {
+        return store.coinTicker(for: token)
+    }
+
+    var totalFiatAmount: String? {
+        guard let amount = TokensLayout.cell.totalFiatAmount(for: ticker, token: token) else { return .none }
+        return "(\(amount))"
+    }
+
+    var fiatAmountTextColor: UIColor {
+        return TokensLayout.cell.fiatAmountTextColor
+    }
+
+    var fiatAmountFont: UIFont {
+        return UIFont.systemFont(ofSize: 15, weight: .regular)
+    }
+
+    var currencyAmount: String? {
+        return TokensLayout.cell.currencyAmount(for: ticker, token: token)
+    }
+
+    var amountTextColor: UIColor {
+        return TokensLayout.cell.amountTextColor
+    }
+
+    var currencyAmountTextColor: UIColor {
+        return TokensLayout.cell.currencyAmountTextColor
+    }
+
+    var percentChange: String? {
+        return TokensLayout.cell.percentChange(for: ticker)
+    }
+
+    var percentChangeColor: UIColor {
+        return TokensLayout.cell.percentChangeColor(for: ticker)
+    }
+
+    var percentChangeFont: UIFont {
+        return UIFont.systemFont(ofSize: 13, weight: .light)
+    }
+
+    var currencyAmountFont: UIFont {
+        return UIFont.systemFont(ofSize: 13, weight: .regular)
+    }
+
     func fetch() {
         getTokenBalance()
         fetchTransactions()

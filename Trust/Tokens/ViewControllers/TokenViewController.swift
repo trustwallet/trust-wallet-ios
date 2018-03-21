@@ -16,13 +16,7 @@ class TokenViewController: UIViewController {
     private var tableView = UITableView()
 
     private lazy var header: TokenHeaderView = {
-        let view = TokenHeaderView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 240))
-        view.imageView.kf.setImage(
-            with: viewModel.imageURL,
-            placeholder: viewModel.imagePlaceholder
-        )
-        view.amountLabel.text = viewModel.amount
-        view.amountLabel.font = viewModel.amountFont
+        let view = TokenHeaderView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 250))
         return view
     }()
 
@@ -64,6 +58,8 @@ class TokenViewController: UIViewController {
 
         observToken()
         observTransactions()
+
+        updateHeader()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -90,7 +86,25 @@ class TokenViewController: UIViewController {
     }
 
     private func updateHeader() {
-         header.amountLabel.text = viewModel.amount
+        header.imageView.kf.setImage(
+            with: viewModel.imageURL,
+            placeholder: viewModel.imagePlaceholder
+        )
+        header.amountLabel.text = viewModel.amount
+        header.amountLabel.font = viewModel.amountFont
+        header.amountLabel.textColor = viewModel.amountTextColor
+
+        header.fiatAmountLabel.text = viewModel.totalFiatAmount
+        header.fiatAmountLabel.font = viewModel.fiatAmountFont
+        header.fiatAmountLabel.textColor = viewModel.fiatAmountTextColor
+
+        header.currencyAmountLabel.text = viewModel.currencyAmount
+        header.currencyAmountLabel.textColor = viewModel.currencyAmountTextColor
+        header.currencyAmountLabel.font = viewModel.currencyAmountFont
+
+        header.percentChange.text = viewModel.percentChange
+        header.percentChange.textColor = viewModel.percentChangeColor
+        header.percentChange.font = viewModel.percentChangeFont
     }
 
     @objc func pullToRefresh() {
