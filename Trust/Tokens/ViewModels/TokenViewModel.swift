@@ -88,7 +88,7 @@ class TokenViewModel {
     }
 
     var fiatAmountFont: UIFont {
-        return UIFont.systemFont(ofSize: 15, weight: .regular)
+        return UIFont.systemFont(ofSize: 16, weight: .regular)
     }
 
     var currencyAmount: String? {

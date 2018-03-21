@@ -74,7 +74,7 @@ class TokenHeaderView: UIView {
         marketPriceStack.axis = .horizontal
         marketPriceStack.spacing = 5
 
-        let rightStackView = UIStackView(arrangedSubviews: [amountStack, marketPriceStack])
+        let rightStackView = UIStackView(arrangedSubviews: [marketPriceStack])
         rightStackView.translatesAutoresizingMaskIntoConstraints = false
         rightStackView.axis = .vertical
         rightStackView.alignment = .center
@@ -83,7 +83,9 @@ class TokenHeaderView: UIView {
         container.addArrangedSubview(.spacer(height: StyleLayout.sideMargin * 2))
         container.addArrangedSubview(imageView)
         container.addArrangedSubview(.spacer(height: 12))
-        container.addArrangedSubview(rightStackView)
+        container.addArrangedSubview(amountLabel)
+        container.addArrangedSubview(fiatAmountLabel)
+        //container.addArrangedSubview(rightStackView)
         container.addArrangedSubview(.spacer(height: 10))
         container.addArrangedSubview(buttonsView)
 

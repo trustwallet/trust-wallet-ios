@@ -12,7 +12,6 @@ class TokenViewCell: UITableViewCell {
     let amountLabel = UILabel()
     let currencyAmountLabel = UILabel()
     let symbolImageView = TokenImageView()
-    let percentChange = UILabel()
 
     private struct Layout {
         static let imageSize: CGFloat = 54
@@ -36,15 +35,12 @@ class TokenViewCell: UITableViewCell {
         currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         currencyAmountLabel.textAlignment = .right
 
-        percentChange.translatesAutoresizingMaskIntoConstraints = false
-        percentChange.textAlignment = .right
-
         let leftStackView = UIStackView(arrangedSubviews: [titleLabel])
         leftStackView.translatesAutoresizingMaskIntoConstraints = false
         leftStackView.axis = .vertical
         leftStackView.spacing = 12
 
-        let rightBottomStackView = UIStackView(arrangedSubviews: [currencyAmountLabel, percentChange])
+        let rightBottomStackView = UIStackView(arrangedSubviews: [currencyAmountLabel])
         rightBottomStackView.translatesAutoresizingMaskIntoConstraints = false
         rightBottomStackView.axis = .horizontal
         rightBottomStackView.spacing = 5
@@ -96,10 +92,6 @@ class TokenViewCell: UITableViewCell {
         currencyAmountLabel.text = viewModel.currencyAmount
         currencyAmountLabel.textColor = TokensLayout.cell.currencyAmountTextColor
         currencyAmountLabel.font = viewModel.currencyAmountFont
-
-        percentChange.text = viewModel.percentChange
-        percentChange.textColor = viewModel.percentChangeColor
-        percentChange.font = viewModel.percentChangeFont
 
         symbolImageView.kf.setImage(
             with: viewModel.imageUrl,

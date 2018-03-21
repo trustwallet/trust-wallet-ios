@@ -36,19 +36,7 @@ struct TokenViewCellViewModel {
     }
 
     var currencyAmount: String? {
-        return TokensLayout.cell.currencyAmount(for: ticker, token: token)
-    }
-
-    var percentChange: String? {
-        return TokensLayout.cell.percentChange(for: ticker)
-    }
-
-    var percentChangeColor: UIColor {
-        return TokensLayout.cell.percentChangeColor(for: ticker)
-    }
-
-    var percentChangeFont: UIFont {
-        return UIFont.systemFont(ofSize: 12, weight: .light)
+        return TokensLayout.cell.totalFiatAmount(for: ticker, token: token)
     }
 
     var amountFont: UIFont {

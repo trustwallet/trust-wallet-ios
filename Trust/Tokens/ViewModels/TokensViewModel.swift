@@ -18,8 +18,8 @@ class TokensViewModel: NSObject {
     var tokensObserver: NotificationToken?
     let address: Address
 
-    var headerBalance: String? {
-        return amount
+    var headerBalance: String {
+        return amount ?? "0.00"
     }
 
     var headerBalanceTextColor: UIColor {
@@ -96,7 +96,6 @@ class TokensViewModel: NSObject {
         tokens.forEach { token in
             totalAmount += amount(for: token)
         }
-        guard totalAmount != 0 else { return "--" }
         return CurrencyFormatter.formatter.string(from: NSNumber(value: totalAmount))
     }
 
