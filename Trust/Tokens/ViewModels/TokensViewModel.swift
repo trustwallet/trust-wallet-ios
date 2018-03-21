@@ -139,22 +139,16 @@ class TokensViewModel: NSObject {
         guard serialOperationQueue.operationCount == 0, parallelOperationQueue.operationCount == 0 else {
             return
         }
-        
-        let ethBalanceOperation = EthBalanceOperation(network: tokensNetwork)
+
         let tokensOperation = TokensOperation(network: tokensNetwork, address: address)
 
-        serialOperationQueue.addOperation(ethBalanceOperation)
-
-        ethBalanceOperation.completionBlock = { [weak self] in
-            tokensOperation.tokens.append(TokensDataStore.etherToken())
-            self?.serialOperationQueue.addOperation(tokensOperation)
-        }
+        serialOperationQueue.addOperation(tokensOperation)
 
         tokensOperation.completionBlock = { [weak self] in
-            self?.parallelOperations(for: tokensOperation.tokens)
             DispatchQueue.main.async {
                 self?.store.update(tokens: tokensOperation.tokens, action: .updateInfo)
             }
+            self?.parallelOperations(for: tokensOperation.tokens)
         }
     }
 
