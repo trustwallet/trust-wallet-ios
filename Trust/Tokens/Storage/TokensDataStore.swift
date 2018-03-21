@@ -91,6 +91,7 @@ class TokensDataStore {
         try! realm.write {
             realm.delete(realm.objects(TokenObject.self))
             realm.delete(realm.objects(NonFungibleTokenObject.self))
+            realm.delete(realm.objects(NonFungibleTokenCategory.self))
         }
     }
 
