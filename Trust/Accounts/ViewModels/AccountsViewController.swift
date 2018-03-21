@@ -115,10 +115,10 @@ class AccountsViewController: UITableViewController {
             message: NSLocalizedString("accounts.confirm.delete.message", value: "Make sure you have backup of your wallet.", comment: ""),
             okTitle: NSLocalizedString("accounts.confirm.delete.okTitle", value: "Delete", comment: ""),
             okStyle: .destructive
-        ) { result in
+        ) { [weak self] result in
             switch result {
             case .success:
-                self.delete(wallet: wallet)
+                self?.delete(wallet: wallet)
             case .failure: break
             }
         }
