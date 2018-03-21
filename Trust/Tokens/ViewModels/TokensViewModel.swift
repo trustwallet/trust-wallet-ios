@@ -139,7 +139,7 @@ class TokensViewModel: NSObject {
         guard serialOperationQueue.operationCount == 0, parallelOperationQueue.operationCount == 0 else {
             return
         }
-
+        
         let ethBalanceOperation = EthBalanceOperation(network: tokensNetwork)
         let tokensOperation = TokensOperation(network: tokensNetwork, address: address)
 
@@ -189,5 +189,11 @@ class TokensViewModel: NSObject {
     func fetch() {
         updateEthBalance()
         runOperations()
+    }
+
+    func cancelOperations() {
+        tokensObserver = nil
+        serialOperationQueue.cancelAllOperations()
+        parallelOperationQueue.cancelAllOperations()
     }
 }
