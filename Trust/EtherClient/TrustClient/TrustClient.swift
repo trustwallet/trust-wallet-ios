@@ -27,7 +27,7 @@ struct TokenPrice: Encodable {
 
 extension TrustService: TargetType {
 
-    var baseURL: URL { return Config().remoteURL }
+    var baseURL: URL { return Config().server.remoteURL }
 
     var path: String {
         switch self {

@@ -96,7 +96,7 @@ class SettingsCoordinator: Coordinator {
     }
 
     func prepareSwitchNetwork(for server: RPCServer) {
-        if server.isTestNetwork == true && session.config.testNetworkWarningOff == false {
+        if server.networkType != .main && session.config.testNetworkWarningOff == false {
             presentSwitchNetworkWarning(for: server)
         } else {
             switchNetwork(for: server)

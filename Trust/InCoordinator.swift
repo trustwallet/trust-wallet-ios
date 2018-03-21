@@ -234,7 +234,7 @@ class InCoordinator: Coordinator {
     }
 
     private func web3(for server: RPCServer) -> Web3Swift {
-        return Web3Swift(url: config.rpcURL)
+        return Web3Swift(url: config.server.rpcURL)
     }
 
     private func showTransactionSent(transaction: SentTransaction) {
