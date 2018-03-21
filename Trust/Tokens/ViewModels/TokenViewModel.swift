@@ -182,11 +182,11 @@ class TokenViewModel {
     }
 
     private func getTokenBalance() {
-        tokensNetwork.tokenBalance(for: token) { [weak self] (result) in
-            guard let balance = result.1 else {
+        tokensNetwork.tokenBalance(for: token.address) { [weak self] (result) in
+            guard let balance = result, let token = self?.token else {
                 return
             }
-            self?.store.update(tokens: [result.0], action: .updateBalances([balance.value]))
+            self?.store.update(tokens: [token], action: .updateBalances([balance.value]))
         }
     }
 

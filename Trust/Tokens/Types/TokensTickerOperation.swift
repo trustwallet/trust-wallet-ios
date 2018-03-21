@@ -5,20 +5,19 @@ import TrustKeystore
 
 class TokensTickerOperation: TrustOperation {
     private var network: NetworkProtocol
-    private let address: Address
-    var tokens: [TokenObject] = [TokenObject]()
+    private let tokenPrices: [TokenPrice]
     var tickers: [CoinTicker] = [CoinTicker]()
 
     init(
         network: NetworkProtocol,
-        address: Address
+        tokenPrices: [TokenPrice]
         ) {
         self.network = network
-        self.address = address
+        self.tokenPrices = tokenPrices
     }
 
     override func main() {
-        guard isCancelled == false, !tokens.isEmpty else {
+        guard isCancelled == false, !tokenPrices.isEmpty else {
             finish(true)
             return
         }
@@ -27,7 +26,7 @@ class TokensTickerOperation: TrustOperation {
 
     private func fetchTickers() {
         executing(true)
-        network.tickers(for: tokens) {[weak self] result in
+        network.tickers(with: tokenPrices) {[weak self] result in
             guard let tickers = result else {
                 self?.executing(false)
                 self?.finish(true)
