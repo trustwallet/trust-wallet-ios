@@ -95,6 +95,18 @@ class TokensDataStore {
         }
     }
 
+    func update(balances: [Address: BigInt]) {
+        try! realm.write {
+            for balance in balances {
+                let update = [
+                    "contract": balance.key.description,
+                    "value": balance.value.description,
+                    ]
+                realm.create(TokenObject.self, value: update, update: true)
+            }
+        }
+    }
+
     func update(tokens: [TokenObject], action: TokenAction) {
         try! realm.write {
             for (index, token) in tokens.enumerated() {
@@ -121,6 +133,9 @@ class TokensDataStore {
     }
 
     func saveTickers(tickers: [CoinTicker]) {
+        guard !tickers.isEmpty else {
+            return
+        }
         do {
             config.defaults.set(try PropertyListEncoder().encode(tickers), forKey: tickersKey)
         } catch {

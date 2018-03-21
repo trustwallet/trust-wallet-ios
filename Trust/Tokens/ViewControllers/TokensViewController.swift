@@ -12,6 +12,7 @@ protocol TokensViewControllerDelegate: class {
     func didSelect(token: TokenObject, in viewController: UIViewController)
     func didDelete(token: TokenObject, in viewController: UIViewController)
     func didEdit(token: TokenObject, in viewController: UIViewController)
+    func didDisable(token: TokenObject, in viewController: UIViewController)
 }
 
 class TokensViewController: UIViewController {
@@ -203,9 +204,6 @@ extension TokensViewController: UITableViewDelegate {
         let token = viewModel.item(for: indexPath)
         delegate?.didSelect(token: token, in: self)
     }
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return viewModel.canEdit(for: indexPath)
-    }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let token = viewModel.item(for: indexPath)
         let delete = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Delete", value: "Delete", comment: "")) {[unowned self] (_, _) in
@@ -214,7 +212,15 @@ extension TokensViewController: UITableViewDelegate {
         let edit = UITableViewRowAction(style: .normal, title: NSLocalizedString("Edit", value: "Edit", comment: "")) {[unowned self] (_, _) in
             self.delegate?.didEdit(token: token, in: self)
         }
-        return [delete, edit]
+        let disable = UITableViewRowAction(style: .normal, title: NSLocalizedString("Disable", value: "Disable", comment: "")) {[unowned self] (_, _) in
+            self.delegate?.didDisable(token: token, in: self)
+        }
+
+        if viewModel.canEdit(for: indexPath) {
+            return [delete, disable, edit]
+        } else {
+            return [disable]
+        }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return TokensLayout.tableView.height

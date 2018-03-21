@@ -21,7 +21,7 @@ class EthBalanceOperation: TrustOperation {
 
     private func fetchBalance() {
         executing(true)
-        network.tokenBalance(for: TokensDataStore.etherToken()) { [weak self] (_, balance) in
+        network.tokenBalance(for: TokensDataStore.etherToken().address) { [weak self] (balance) in
             self?.balance = balance ?? Balance(value: BigInt(0))
             self?.executing(false)
             self?.finish(true)
