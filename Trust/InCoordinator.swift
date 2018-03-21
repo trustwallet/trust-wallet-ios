@@ -107,11 +107,6 @@ class InCoordinator: Coordinator {
             transactionCoordinator.navigationController,
         ]
         tabBarController.tabBar.isTranslucent = false
-        tabBarController.didShake = { [weak self] in
-            if inCoordinatorViewModel.canActivateDebugMode {
-                self?.activateDebug()
-            }
-        }
 
         let coordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator)
         coordinator.delegate = self
@@ -184,13 +179,6 @@ class InCoordinator: Coordinator {
         }
 
         tabBarController?.selectedViewController = nav
-    }
-
-    @objc func activateDebug() {
-        config.isDebugEnabled = !config.isDebugEnabled
-
-        guard let transactionCoordinator = transactionCoordinator else { return }
-        restart(for: transactionCoordinator.session.account, in: transactionCoordinator)
     }
 
     func restart(for account: Wallet, in coordinator: TransactionCoordinator) {

@@ -56,11 +56,6 @@ struct Config {
         set { defaults.set(newValue, forKey: Keys.isCryptoPrimaryCurrency) }
     }
 
-    var isDebugEnabled: Bool {
-        get { return defaults.bool(forKey: Keys.isDebugEnabled) }
-        set { defaults.set(newValue, forKey: Keys.isDebugEnabled) }
-    }
-
     var server: RPCServer {
         return RPCServer(chainID: chainID)
     }

@@ -21,8 +21,4 @@ struct InCoordinatorViewModel {
         case .callisto: return false
         }
     }
-
-    var canActivateDebugMode: Bool {
-        return config.server.isTestNetwork
-    }
 }
