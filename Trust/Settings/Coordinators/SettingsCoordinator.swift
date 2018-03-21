@@ -17,6 +17,7 @@ class SettingsCoordinator: Coordinator {
     let keystore: Keystore
     let session: WalletSession
     let storage: TransactionsStorage
+    let rpcStore: RPCStore
     let balanceCoordinator: TokensBalanceService
     weak var delegate: SettingsCoordinatorDelegate?
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
@@ -44,16 +45,13 @@ class SettingsCoordinator: Coordinator {
         controller.modalPresentationStyle = .pageSheet
         return controller
     }()
-    
-    private lazy var rpcStore: RPCStore = {
-        return RPCStore(realm: try! Realm())
-    }()
 
     init(
         navigationController: UINavigationController = NavigationController(),
         keystore: Keystore,
         session: WalletSession,
         storage: TransactionsStorage,
+        rpcStore: RPCStore,
         balanceCoordinator: TokensBalanceService
     ) {
         self.navigationController = navigationController
@@ -61,6 +59,7 @@ class SettingsCoordinator: Coordinator {
         self.keystore = keystore
         self.session = session
         self.storage = storage
+        self.rpcStore = rpcStore
         self.balanceCoordinator = balanceCoordinator
 
         addCoordinator(accountsCoordinator)

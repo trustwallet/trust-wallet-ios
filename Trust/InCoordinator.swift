@@ -87,6 +87,9 @@ class InCoordinator: Coordinator {
         let transactionsStorage = TransactionsStorage(
             realm: realm
         )
+        let rpcStore = RPCStore(
+            realm: realm
+        )
         transactionsStorage.removeTransactions(for: [.failed, .pending, .unknown])
 
         let inCoordinatorViewModel = InCoordinatorViewModel(config: config)
@@ -141,6 +144,7 @@ class InCoordinator: Coordinator {
             keystore: keystore,
             session: session,
             storage: transactionsStorage,
+            rpcStore: rpcStore,
             balanceCoordinator: balanceCoordinator
         )
         settingsCoordinator.rootViewController.tabBarItem = UITabBarItem(
