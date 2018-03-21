@@ -11,7 +11,7 @@ struct EtherServiceRequest<Batch: JSONRPCKit.Batch>: APIKit.Request {
 
     var baseURL: URL {
         let config = Config()
-        return config.rpcURL
+        return config.server.rpcURL
     }
 
     var method: HTTPMethod {

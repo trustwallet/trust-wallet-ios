@@ -29,7 +29,7 @@ extension WKWebViewConfiguration {
         js +=
         """
         const addressHex = "\(address)"
-        const rpcURL = "\(sessionConfig.rpcURL.absoluteString)"
+        const rpcURL = "\(sessionConfig.server.rpcURL.absoluteString)"
         const chainID = "\(sessionConfig.chainID)"
 
         function executeCallback (id, error, value) {

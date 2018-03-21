@@ -79,6 +79,42 @@ enum RPCServer {
         return 18
     }
 
+    var rpcURL: URL {
+        let urlString: String = {
+            switch self {
+            case .main: return "https://mainnet.infura.io/llyrtzQ3YhkdESt2Fzrk"
+            case .classic: return "https://web3.gastracker.io"
+            case .callisto: return "https://rpc.callisto.network"
+            case .kovan: return "https://kovan.infura.io/llyrtzQ3YhkdESt2Fzrk"
+            case .ropsten: return "https://ropsten.infura.io/llyrtzQ3YhkdESt2Fzrk"
+            case .rinkeby: return "https://rinkeby.infura.io/llyrtzQ3YhkdESt2Fzrk"
+            case .poa: return "https://core.poa.network"
+            case .sokol: return "https://sokol.poa.network"
+            case .custom(let custom):
+                return custom.endpoint
+            }
+        }()
+        return URL(string: urlString)!
+    }
+    
+    var remoteURL: URL {
+        let urlString: String = {
+            switch self {
+            case .main: return "https://api.trustwalletapp.com"
+            case .classic: return "https://classic.trustwalletapp.com"
+            case .callisto: return "https://callisto.trustwalletapp.com"
+            case .kovan: return "https://kovan.trustwalletapp.com"
+            case .ropsten: return "https://ropsten.trustwalletapp.com"
+            case .rinkeby: return "https://rinkeby.trustwalletapp.com"
+            case .poa: return "https://poa.trustwalletapp.com"
+            case .sokol: return "https://trust-sokol.herokuapp.com"
+            case .custom(let custom):
+                return "" // Enable? make optional
+            }
+        }()
+        return URL(string: urlString)!
+    }
+
     init(name: String) {
         self = {
             switch name {
