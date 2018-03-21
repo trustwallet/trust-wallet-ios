@@ -13,11 +13,7 @@ protocol BrowserViewControllerDelegate: class {
 }
 
 class BrowserViewController: BaseViewController {
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
-
+    
     private var myContext = 0
     let account: Wallet
     let sessionConfig: Config

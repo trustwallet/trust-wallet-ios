@@ -394,6 +394,7 @@
 		A2BC8DD72062B392009A75F3 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BC8DD62062B392009A75F3 /* BaseViewController.swift */; };
 		A2BC8DD92062B688009A75F3 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BC8DD82062B688009A75F3 /* FormViewController.swift */; };
 		A2BC8DDB2062B78F009A75F3 /* UITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BC8DDA2062B78F009A75F3 /* UITableViewController.swift */; };
+		A2BC8DDD2062BB68009A75F3 /* BrowserViewController+StatusBarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2BC8DDC2062BB68009A75F3 /* BrowserViewController+StatusBarStyle.swift */; };
 		BB03A86D20416AF600649DA0 /* BalanceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A86C20416AF600649DA0 /* BalanceStatus.swift */; };
 		BB03A8712042B01300649DA0 /* BalanceStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A8702042B01300649DA0 /* BalanceStatusTests.swift */; };
 		BB1CC266203BA4440042E56C /* SendMaxAmountTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1CC265203BA4440042E56C /* SendMaxAmountTest.swift */; };
@@ -860,6 +861,7 @@
 		A2BC8DD62062B392009A75F3 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		A2BC8DD82062B688009A75F3 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
 		A2BC8DDA2062B78F009A75F3 /* UITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewController.swift; sourceTree = "<group>"; };
+		A2BC8DDC2062BB68009A75F3 /* BrowserViewController+StatusBarStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+StatusBarStyle.swift"; sourceTree = "<group>"; };
 		A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B13A87D3BA5167741E5D0801 /* Pods-Trust.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trust.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trust/Pods-Trust.release.xcconfig"; sourceTree = "<group>"; };
@@ -1655,6 +1657,7 @@
 				73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */,
 				A2BC8DD82062B688009A75F3 /* FormViewController.swift */,
 				A2BC8DDA2062B78F009A75F3 /* UITableViewController.swift */,
+				A2BC8DDC2062BB68009A75F3 /* BrowserViewController+StatusBarStyle.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3175,6 +3178,7 @@
 				A2B7ECAA2038122200828E7D /* ExportPrivateKeyCoordinator.swift in Sources */,
 				29E6E06E1FE897EE0079265A /* BrowserViewController.swift in Sources */,
 				2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */,
+				A2BC8DDD2062BB68009A75F3 /* BrowserViewController+StatusBarStyle.swift in Sources */,
 				7302405C204C65DF00B327DF /* NonFungibleTokenCategory.swift in Sources */,
 				615F105D1FCBF55E008A45AF /* OnboardingCollectionViewController.swift in Sources */,
 				29A0E1851F706B8C00BAAAED /* String.swift in Sources */,
