@@ -7,8 +7,8 @@ import APIKit
 import Result
 
 protocol NetworkProtocol: TrustNetworkProtocol {
-    func tickers(for tokens: [TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void)
-    func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void)
+    func tickers(with tokenPrices: [TokenPrice], completion: @escaping (_ tickers: [CoinTicker]?) -> Void)
+    func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void)
     func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void)
     func tokensList(for address: Address, completion: @escaping (_ result: ([TokenObject]?)) -> Void)
     func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
@@ -17,7 +17,6 @@ protocol NetworkProtocol: TrustNetworkProtocol {
 }
 
 class TrustNetwork: NetworkProtocol {
-
     static let deleteMissingInternalSeconds: Double = 60.0
     static let deleyedTransactionInternalSeconds: Double = 60.0
     let provider: MoyaProvider<TrustService>
@@ -32,10 +31,10 @@ class TrustNetwork: NetworkProtocol {
         self.config = config
     }
 
-    func tickers(for tokens: [TokenObject], completion: @escaping (_ tickers: [CoinTicker]?) -> Void) {
+    func tickers(with tokenPrices: [TokenPrice], completion: @escaping (_ tickers: [CoinTicker]?) -> Void) {
         let tokensPriceToFetch = TokensPrice(
             currency: config.currency.rawValue,
-            tokens: tokens.map { TokenPrice(contract: $0.contract, symbol: $0.symbol) }
+            tokens: tokenPrices
         )
         provider.request(.prices(tokensPriceToFetch)) { result in
             guard case .success(let response) = result else {
@@ -51,23 +50,23 @@ class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func tokenBalance(for token: TokenObject, completion: @escaping (_ result: (TokenObject, Balance?)) -> Void) {
-        if token == TokensDataStore.etherToken(for: config) {
+    func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void) {
+        if contract == TokensDataStore.etherToken(for: config).address {
             balanceService.getEthBalance(for: account.address) { result in
                 switch result {
                 case .success(let balance):
-                    completion((token, balance))
+                    completion(balance)
                 case .failure:
-                    completion((token, nil))
+                    completion(nil)
                 }
             }
         } else {
-            balanceService.getBalance(for: account.address, contract: token.address) { result in
+            balanceService.getBalance(for: account.address, contract: contract) { result in
                 switch result {
                 case .success(let balance):
-                    completion((token, Balance(value: balance)))
+                    completion(Balance(value: balance))
                 case .failure:
-                    completion((token, nil))
+                    completion(nil)
                 }
             }
         }

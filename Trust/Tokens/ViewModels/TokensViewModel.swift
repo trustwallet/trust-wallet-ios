@@ -124,18 +124,19 @@ class TokensViewModel: NSObject {
     }
 
     func updateEthBalance(completion: ((_ completed: Bool) -> Void)? = nil) {
-        tokensNetwork.tokenBalance(for: TokensDataStore.etherToken()) { [weak self] (token, balance) in
+        tokensNetwork.tokenBalance(for: TokensDataStore.etherToken().address) { [weak self] (balance) in
             guard let `self` = self, let balance = balance else {
                 completion?(true)
                 return
             }
-            self.store.update(tokens: [token], action: .updateBalances([balance.value]))
+            self.store.update(tokens: [TokensDataStore.etherToken()], action: .updateBalances([balance.value]))
             completion?(true)
         }
     }
 
     private func runOperations() {
-        guard serialOperationQueue.operationCount == 0, parallelOperationQueue.operationCount == 0 else {
+        guard serialOperationQueue.operationCount == 0 else {
+            self.parallelOperations(for: self.store.enabledObject)
             return
         }
 
@@ -146,28 +147,30 @@ class TokensViewModel: NSObject {
         tokensOperation.completionBlock = { [weak self] in
             DispatchQueue.main.async {
                 self?.store.update(tokens: tokensOperation.tokens, action: .updateInfo)
+                if let tokens = self?.store.enabledObject {
+                    self?.parallelOperations(for: tokens)
+                }
             }
-            self?.parallelOperations(for: tokensOperation.tokens)
         }
     }
 
     private func parallelOperations(for tokens: [TokenObject]) {
+        guard parallelOperationQueue.operationCount == 0, !tokens.isEmpty else {
+            return
+        }
+
         let tokensBalanceOperation = TokensBalanceOperation(
             network: tokensNetwork,
-            address: address,
-            fetchTokens: tokens
+            addresses: tokens.map { $0.address }
         )
 
         tokensBalanceOperation.completionBlock = { [weak self] in
-            let tokens = tokensBalanceOperation.tokens.map { $0.key }
-            let balances = tokensBalanceOperation.tokens.map { $0.value }
             DispatchQueue.main.async {
-                self?.store.update(tokens: tokens, action: .updateBalances(balances))
+                self?.store.update(balances: tokensBalanceOperation.balances)
             }
         }
 
-        let tokensTickerOperation = TokensTickerOperation(network: tokensNetwork, address: address)
-        tokensTickerOperation.tokens = tokens
+        let tokensTickerOperation = TokensTickerOperation(network: tokensNetwork, tokenPrices: tokens.map { TokenPrice(contract: $0.contract, symbol: $0.symbol) })
 
         tokensTickerOperation.completionBlock = { [weak self] in
             self?.store.saveTickers(tickers: tokensTickerOperation.tickers)
@@ -176,7 +179,7 @@ class TokensViewModel: NSObject {
             }
         }
 
-        parallelOperationQueue.addOperations([tokensBalanceOperation, tokensTickerOperation], waitUntilFinished: true)
+        parallelOperationQueue.addOperations([tokensBalanceOperation, tokensTickerOperation], waitUntilFinished: false)
     }
 
     func fetch() {

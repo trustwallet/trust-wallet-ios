@@ -6,23 +6,20 @@ import BigInt
 
 class TokensBalanceOperation: TrustOperation {
     private var network: NetworkProtocol
-    private let address: Address
-    private let fetchTokens: [TokenObject]
-    var tokens = [TokenObject: BigInt]()
+    private let addresses: [Address]
+    var balances = [Address: BigInt]()
     private var pos = 0
 
     init(
         network: NetworkProtocol,
-        address: Address,
-        fetchTokens: [TokenObject]
+        addresses: [Address]
     ) {
         self.network = network
-        self.address = address
-        self.fetchTokens = fetchTokens
+        self.addresses = addresses
     }
 
     override func main() {
-        guard isCancelled == false, !fetchTokens.isEmpty else {
+        guard isCancelled == false, !addresses.isEmpty else {
             finish(true)
             return
         }
@@ -31,17 +28,18 @@ class TokensBalanceOperation: TrustOperation {
     }
 
     private func updateTokens() {
-        updateBalance(for: fetchTokens[pos]) { [weak self] (token, balance) in
+        let address = addresses[pos]
+        updateBalance(for: address) { [weak self] (balance) in
             guard let strongSelf = self else {
                 self?.executing(false)
                 self?.finish(true)
                 return
             }
             if balance != nil {
-                strongSelf.tokens[token] = balance
+                strongSelf.balances[address] = balance
             }
             strongSelf.pos += 1
-            if strongSelf.pos < strongSelf.fetchTokens.count {
+            if strongSelf.pos < strongSelf.addresses.count {
                 strongSelf.updateTokens()
             } else {
                 self?.executing(false)
@@ -50,13 +48,9 @@ class TokensBalanceOperation: TrustOperation {
         }
     }
 
-    private func updateBalance(for token: TokenObject, completion: @escaping ((TokenObject, BigInt?) -> Void)) {
-        network.tokenBalance(for: token) { result in
-            guard let balance = result.1 else {
-                completion(token, .none)
-                return
-            }
-            completion(token, balance.value)
+    private func updateBalance(for address: Address, completion: @escaping (BigInt?) -> Void) {
+        network.tokenBalance(for: address) { result in
+            completion(result?.value)
         }
     }
 }
