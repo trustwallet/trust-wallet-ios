@@ -292,6 +292,7 @@
 		73200B732048A7FC00118A82 /* TokensViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B722048A7FC00118A82 /* TokensViewModelTest.swift */; };
 		73200B752048B67E00118A82 /* NonFungibleTokenObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B742048B67E00118A82 /* NonFungibleTokenObject.swift */; };
 		732086B9201508690047F605 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732086B8201508690047F605 /* SplashCoordinator.swift */; };
+		732C51462062B625007134C7 /* ScriptMessageProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732C51452062B625007134C7 /* ScriptMessageProxy.swift */; };
 		732E0F502022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */; };
 		732E0F522022754600B39C1F /* FakeLockProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F512022754600B39C1F /* FakeLockProtocol.swift */; };
 		732E0F542022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */; };
@@ -751,6 +752,7 @@
 		73200B722048A7FC00118A82 /* TokensViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensViewModelTest.swift; sourceTree = "<group>"; };
 		73200B742048B67E00118A82 /* NonFungibleTokenObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenObject.swift; sourceTree = "<group>"; };
 		732086B8201508690047F605 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
+		732C51452062B625007134C7 /* ScriptMessageProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptMessageProxy.swift; sourceTree = "<group>"; };
 		732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
 		732E0F512022754600B39C1F /* FakeLockProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeLockProtocol.swift; sourceTree = "<group>"; };
 		732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockCreatePasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
@@ -2448,6 +2450,7 @@
 			children = (
 				CCA4FE351FD4282400749AE4 /* DeviceChecker.swift */,
 				CCA4FE371FD428B300749AE4 /* JailbreakChecker.swift */,
+				732C51452062B625007134C7 /* ScriptMessageProxy.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -3124,6 +3127,7 @@
 				73ACEEF5201631A3003DD71D /* ProtectionCoordinator.swift in Sources */,
 				29C0FCE1200DA94A004A13CB /* SignMessageCoordinator.swift in Sources */,
 				BB3B86BD204CE9730061FCBA /* URLNavigatorCoordinator.swift in Sources */,
+				732C51462062B625007134C7 /* ScriptMessageProxy.swift in Sources */,
 				29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */,
 				2963B6BF1F9AB9A2003063C1 /* ContractERC20Transfer.swift in Sources */,
 				29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */,
