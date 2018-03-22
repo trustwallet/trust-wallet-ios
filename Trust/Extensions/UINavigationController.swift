@@ -10,8 +10,13 @@ extension UINavigationController {
     }
 
     @discardableResult
-    static func openFormSheet(for controller: UIViewController, in navigationController: UINavigationController) -> UIViewController {
+    static func openFormSheet(
+        for controller: UIViewController,
+        in navigationController: UINavigationController,
+        barItem: UIBarButtonItem
+    ) -> UIViewController {
         if UIDevice.current.userInterfaceIdiom == .pad {
+            controller.navigationItem.leftBarButtonItem = barItem
             let nav = UINavigationController(rootViewController: controller)
             nav.modalPresentationStyle = .formSheet
             navigationController.present(nav, animated: true, completion: nil)

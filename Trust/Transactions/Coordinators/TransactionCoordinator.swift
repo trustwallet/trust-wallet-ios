@@ -113,8 +113,11 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
             session: session,
             transaction: transaction
         )
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        UINavigationController.openFormSheet(for: controller, in: navigationController)
+        UINavigationController.openFormSheet(
+            for: controller,
+            in: navigationController,
+            barItem: UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        )
     }
 
     func didPressDeposit(for account: Wallet, sender: UIView, in viewController: TransactionsViewController) {
