@@ -7,13 +7,9 @@ import BigInt
 import TrustKeystore
 
 class FakeTokensNetwork: NetworkProtocol {
-
     var provider: MoyaProvider<TrustService>
-    
     var balanceService: TokensBalanceService
-    
     var account: Trust.Wallet
-    
     var config: Config
     
     required init(provider: MoyaProvider<TrustService>, balanceService: TokensBalanceService, account: Trust.Wallet, config: Config) {
@@ -51,5 +47,13 @@ class FakeTokensNetwork: NetworkProtocol {
 
     func search(token: String, completion: @escaping (([TokenObject]) -> Void)) {
         completion([])
+    }
+
+    func tickers(with tokenPrices: [TokenPrice], completion: @escaping ([CoinTicker]?) -> Void) {
+
+    }
+
+    func tokenBalance(for contract: Address, completion: @escaping (Balance?) -> Void) {
+
     }
 }
