@@ -24,10 +24,6 @@ class FakeTokensNetwork: NetworkProtocol {
         let ticker = CoinTicker(id: "ethereum", symbol: "ETH", price: "100", percent_change_24h: "-2.39", contract: eth_contract, image: "https://files.coinmarketcap.com/static/img/coins/128x128/ethereum.png")
         completion([ticker])
     }
-    
-    func tokenBalance(for token: TokenObject, completion: @escaping ((TokenObject, Balance?)) -> Void) {
-        completion((token, Balance(value: BigInt(400))))
-    }
 
     func assets(completion: @escaping (([NonFungibleTokenCategory]?)) -> Void) {
         
@@ -54,6 +50,6 @@ class FakeTokensNetwork: NetworkProtocol {
     }
 
     func tokenBalance(for contract: Address, completion: @escaping (Balance?) -> Void) {
-
+        completion(Balance(value: BigInt(100)))
     }
 }
