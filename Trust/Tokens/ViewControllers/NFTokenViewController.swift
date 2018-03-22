@@ -25,7 +25,6 @@ class NFTokenViewController: UIViewController {
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
 
         view.addSubview(stackView)
 
@@ -62,6 +61,7 @@ class NFTokenViewController: UIViewController {
         stackView.addArrangedSubview(internalButton)
         stackView.addArrangedSubview(.spacer(height: 10))
         stackView.addArrangedSubview(externalButton)
+        stackView.addArrangedSubview(.spacer(height: 10))
 
         NSLayoutConstraint.activate([
             imageView.heightAnchor.constraint(equalToConstant: 260),
