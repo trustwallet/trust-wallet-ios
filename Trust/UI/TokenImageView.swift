@@ -9,7 +9,6 @@ class TokenImageView: UIImageView {
         layer.cornerRadius = bounds.size.width / 2.0
         layer.borderColor = UIColor(hex: "dddddd").cgColor
         layer.borderWidth = 0.5
-        layer.shouldRasterize = true
         layer.masksToBounds = false
         contentMode = .scaleAspectFit
         clipsToBounds = true
