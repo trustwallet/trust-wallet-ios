@@ -3,17 +3,23 @@
 import Foundation
 import JSONRPCKit
 import APIKit
+import BigInt
 
 class ChainState {
 
     struct Keys {
         static let latestBlock = "chainID"
+        static let gasPrice = "gasPrice"
     }
 
     let config: Config
 
     private var latestBlockKey: String {
         return "\(config.chainID)-" + Keys.latestBlock
+    }
+
+    private var gasPriceBlockKey: String {
+        return "\(config.chainID)-" + Keys.gasPrice
     }
 
     var chainStateCompletion: ((Bool, Int) -> Void)?
@@ -26,6 +32,14 @@ class ChainState {
             defaults.set(newValue, forKey: latestBlockKey)
         }
     }
+    var gasPrice: BigInt? {
+        get {
+            guard let value = defaults.string(forKey: gasPriceBlockKey) else { return .none }
+            return BigInt(value, radix: 10)
+        }
+        set { defaults.set(newValue?.description, forKey: gasPriceBlockKey) }
+    }
+
     let defaults: UserDefaults
 
     var updateLatestBlock: Timer?
@@ -60,7 +74,13 @@ class ChainState {
         }
         self.updateLatestBlock = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(fetch), userInfo: nil, repeats: true)
     }
+
     @objc func fetch() {
+        getLastBlock()
+        getGasPrice()
+    }
+
+    private func getLastBlock() {
         let request = EtherServiceRequest(batch: BatchFactory().create(BlockNumberRequest()))
         Session.send(request) { [weak self] result in
             guard let `self` = self else { return }
@@ -70,6 +90,17 @@ class ChainState {
                 self.chainStateCompletion?(true, number)
             case .failure:
                 self.chainStateCompletion?(false, 0)
+            }
+        }
+    }
+
+    private func getGasPrice() {
+        let request = EtherServiceRequest(batch: BatchFactory().create(GasPriceRequest()))
+        Session.send(request) { [weak self] result in
+            switch result {
+            case .success(let balance):
+                self?.gasPrice = BigInt(balance.drop0x, radix: 16)
+            case .failure: break
             }
         }
     }

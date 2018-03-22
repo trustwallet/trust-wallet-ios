@@ -5,7 +5,7 @@ import BigInt
 @testable import Trust
 
 class SendViewModelTest: XCTestCase {
-    var sendViewModel = SendViewModel(transferType: .ether(destination: .none), config: .make(), storage: FakeTokensDataStore(), balance: Balance(value: BigInt("11274902618710000000000")))
+    var sendViewModel = SendViewModel(transferType: .ether(destination: .none), config: .make(), chainState: .make(), storage: FakeTokensDataStore(), balance: Balance(value: BigInt("11274902618710000000000")))
     var decimalFormatter = DecimalFormatter()
     override func setUp() {
         sendViewModel.amount = "198212312.123123"
