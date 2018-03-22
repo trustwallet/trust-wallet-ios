@@ -97,16 +97,6 @@ class NFTokenViewController: UIViewController {
         stackView.addArrangedSubview(.spacer(height: 10))
         stackView.addArrangedSubview(externalButton)
         stackView.addArrangedSubview(.spacer(height: 10))
-        stackView.addArrangedSubview(externalButton1)
-        stackView.addArrangedSubview(.spacer(height: 10))
-        stackView.addArrangedSubview(externalButton2)
-        stackView.addArrangedSubview(.spacer(height: 10))
-        stackView.addArrangedSubview(externalButton3)
-        stackView.addArrangedSubview(.spacer(height: 10))
-        stackView.addArrangedSubview(externalButton4)
-        stackView.addArrangedSubview(.spacer(height: 10))
-        stackView.addArrangedSubview(externalButton5)
-        stackView.addArrangedSubview(.spacer(height: 10))
 
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
