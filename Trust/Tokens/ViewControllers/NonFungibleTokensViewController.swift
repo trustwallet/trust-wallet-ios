@@ -44,7 +44,7 @@ class NonFungibleTokensViewController: UIViewController {
         loadingView = LoadingView()
         emptyView = EmptyView(
             title: NSLocalizedString("emptyView.noNonTokens.label.title", value: "No Collectibles Found", comment: ""),
-            actionTitle: NSLocalizedString("collectibles.discover.label.title", value: "Discover", comment: ""),
+            actionTitle: NSLocalizedString("collectibles.discover.label.title", value: "Explore on OpenSea.io", comment: ""),
             onRetry: { [weak self] in
                 self?.delegate?.didPressDiscover()
         })

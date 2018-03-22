@@ -290,7 +290,7 @@ extension InCoordinator: TokensCoordinatorDelegate {
     }
 
     func didPressDiscover(in coordinator: TokensCoordinator) {
-        guard let url = URL(string: Constants.dappsBrowserExploreURL) else { return }
+        guard let url = URL(string: Constants.dappsOpenSea) else { return }
         showTab(.browser(openURL: url))
     }
 }

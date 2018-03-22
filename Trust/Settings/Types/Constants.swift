@@ -21,6 +21,7 @@ public struct Constants {
 
     public static let dappsBrowserURL = "https://dapps.trustwalletapp.com"
     public static let dappsBrowserExploreURL = "https://dapps.trustwalletapp.com/browser"
+    public static let dappsOpenSea = "https://opensea.io"
 
     public static let images = "https://trustwalletapp.com/images"
 }

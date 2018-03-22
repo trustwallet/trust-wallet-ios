@@ -73,7 +73,7 @@
 "transactions.deposit.button.title" = "Buy";
 "transactions.myAddress.button.title" = "My Address";
 "transactions.noTransactions.label.title" = "No Transactions Yet!";
-"wallet.navigation.title" = "Wallets";
+"wallet.navigation.title" = "Wallet";
 "wallets.backup.alertSheet.title" = "Backup Keystore";
 "welcome.createWallet.button.title" = "CREATE WALLET";
 "welcome.erc20.label.description" = "Support for ERC20 tokens by default. ";
@@ -209,10 +209,12 @@
 "tokens.token.edit.navigation.title" = "Edit Custom Token";
 "wallet.section.hdWallet.title" = "HD Wallet";
 "wallets.export.alertSheet.title" = "Export Private Key";
-"collectibles.discover.label.title" = "Discover";
+"collectibles.discover.label.title" = "Explore on OpenSea.io";
 "configureTransaction.error.gasFeeHigh" = "Gas Fee is too high. Max available: %1$@ %2$@";
 "sent.transaction.message" = "Wait for the transaction to be mined on the network to see details.";
 "sent.transaction.title" = "Transaction Sent!";
 "settings.network.test.warnning.dont.show.again" = "Don't show again";
 "settings.network.test.warnning.message" = "You are switching to a test network where transactions are for testing purpose only";
 "settings.network.test.warnning.title" = "Warning";
+"Disable" = "Disable";
+"wallets.navigation.title" = "Wallets";
