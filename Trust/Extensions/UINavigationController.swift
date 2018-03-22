@@ -8,4 +8,16 @@ extension UINavigationController {
         navigationBar.tintAdjustmentMode = .normal
         navigationBar.tintAdjustmentMode = .automatic
     }
+
+    @discardableResult
+    static func openFormSheet(for controller: UIViewController, in navigationController: UINavigationController) -> UIViewController {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .formSheet
+            navigationController.present(nav, animated: true, completion: nil)
+        } else {
+            navigationController.pushViewController(controller, animated: true)
+        }
+        return controller
+    }
 }

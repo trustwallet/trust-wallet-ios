@@ -183,6 +183,11 @@ extension TokensCoordinator: TokenViewControllerDelegate {
     }
 
     func didPress(transaction: Transaction, in controller: UIViewController) {
-        TransactionCoordinator.openTransaction(transaction, in: navigationController, session: session)
+        let controller = TransactionViewController(
+            session: session,
+            transaction: transaction
+        )
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        UINavigationController.openFormSheet(for: controller, in: navigationController)
     }
 }
