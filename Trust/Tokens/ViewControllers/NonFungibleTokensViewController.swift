@@ -14,6 +14,11 @@ class NonFungibleTokensViewController: UIViewController {
     private var viewModel: NonFungibleTokenViewModel
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
+    lazy var footer: NFTFooterView = {
+        let footer = NFTFooterView()
+        footer.frame.size = footer.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+        return footer
+    }()
 
     weak var delegate: NonFungibleTokensViewControllerDelegate?
 
@@ -28,6 +33,7 @@ class NonFungibleTokensViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
+        tableView.tableFooterView = footer
         view.addSubview(tableView)
         tableView.register(R.nib.nonFungibleTokenViewCell(), forCellReuseIdentifier: R.nib.nonFungibleTokenViewCell.name)
         NSLayoutConstraint.activate([
@@ -60,17 +66,18 @@ class NonFungibleTokensViewController: UIViewController {
                 tableView.reloadData()
                 self?.endLoading()
             case .update(_, let deletions, let insertions, let modifications):
-                tableView.beginUpdates()
-                var insertIndexSet = IndexSet()
-                insertions.forEach { insertIndexSet.insert($0) }
-                tableView.insertSections(insertIndexSet, with: .none)
-                var deleteIndexSet = IndexSet()
-                deletions.forEach { deleteIndexSet.insert($0) }
-                tableView.deleteSections(deleteIndexSet, with: .none)
-                var updateIndexSet = IndexSet()
-                modifications.forEach { updateIndexSet.insert($0) }
-                tableView.reloadSections(updateIndexSet, with: .none)
-                tableView.endUpdates()
+                tableView.reloadData()
+//                tableView.beginUpdates()
+//                var insertIndexSet = IndexSet()
+//                insertions.forEach { insertIndexSet.insert($0) }
+//                tableView.insertSections(insertIndexSet, with: .none)
+//                var deleteIndexSet = IndexSet()
+//                deletions.forEach { deleteIndexSet.insert($0) }
+//                tableView.deleteSections(deleteIndexSet, with: .none)
+//                var updateIndexSet = IndexSet()
+//                modifications.forEach { updateIndexSet.insert($0) }
+//                tableView.reloadSections(updateIndexSet, with: .none)
+//                tableView.endUpdates()
                 self?.endLoading()
             case .error(let error):
                 self?.endLoading(animated: true, error: error, completion: nil)
@@ -119,7 +126,7 @@ extension NonFungibleTokensViewController: StatefulViewController {
 
 extension NonFungibleTokensViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 106
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

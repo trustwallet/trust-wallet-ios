@@ -47,7 +47,6 @@ class TokensDataStore {
     ) {
         self.config = config
         self.realm = realm
-        self.deleteAll()
         self.addEthToken()
     }
 

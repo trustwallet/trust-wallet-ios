@@ -285,12 +285,12 @@ extension InCoordinator: TokensCoordinatorDelegate {
         showPaymentFlow(for: type)
     }
 
-    func didPress(on token: NonFungibleTokenObject, in coordinator: TokensCoordinator) {
-        showTab(.browser(openURL: token.extentalURL))
-    }
-
     func didPressDiscover(in coordinator: TokensCoordinator) {
         guard let url = URL(string: Constants.dappsOpenSea) else { return }
+        showTab(.browser(openURL: url))
+    }
+
+    func didPress(url: URL, in coordinator: TokensCoordinator) {
         showTab(.browser(openURL: url))
     }
 }

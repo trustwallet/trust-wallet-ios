@@ -9,6 +9,7 @@ class NonFungibleTokenObject: Object, Decodable {
     @objc dynamic var uniqueID: String = ""
     @objc dynamic var contract: String = ""
     @objc dynamic var name: String = ""
+    @objc dynamic var category: String = ""
     @objc dynamic var annotation: String = ""
     @objc dynamic var imagePath: String = ""
     @objc dynamic var externalPath: String = ""
@@ -17,6 +18,7 @@ class NonFungibleTokenObject: Object, Decodable {
         id: String,
         contract: String,
         name: String,
+        category: String,
         annotation: String,
         imagePath: String,
         externalPath: String
@@ -25,6 +27,7 @@ class NonFungibleTokenObject: Object, Decodable {
         self.id = id
         self.contract = contract
         self.name = name
+        self.category = category
         self.annotation = annotation
         self.imagePath = imagePath
         self.externalPath = externalPath
@@ -39,6 +42,7 @@ class NonFungibleTokenObject: Object, Decodable {
         case id = "token_id"
         case contract = "contract_address"
         case name = "name"
+        case category = "category"
         case annotation = "description"
         case imagePath = "image_url"
         case externalPath = "external_link"
@@ -49,10 +53,19 @@ class NonFungibleTokenObject: Object, Decodable {
         let id = try container.decodeIfPresent(String.self, forKey: .id)  ?? ""
         let contract = try container.decodeIfPresent(String.self, forKey: .contract)  ?? ""
         let name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
+        let category = try container.decodeIfPresent(String.self, forKey: .category) ?? ""
         let annotation = try container.decodeIfPresent(String.self, forKey: .annotation) ?? ""
         let imagePath = try container.decodeIfPresent(String.self, forKey: .imagePath) ?? ""
         let externalPath = try container.decodeIfPresent(String.self, forKey: .externalPath) ?? ""
-        self.init(id: id, contract: contract, name: name, annotation: annotation, imagePath: imagePath, externalPath: externalPath)
+        self.init(
+            id: id,
+            contract: contract,
+            name: name,
+            category: category,
+            annotation: annotation,
+            imagePath: imagePath,
+            externalPath: externalPath
+        )
     }
 
     required init() {
@@ -65,6 +78,10 @@ class NonFungibleTokenObject: Object, Decodable {
 
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
         super.init(realm: realm, schema: schema)
+    }
+
+    var imageURL: URL? {
+        return URL(string: imagePath)
     }
 
     var extentalURL: URL? {
