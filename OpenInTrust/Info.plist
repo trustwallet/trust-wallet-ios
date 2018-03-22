@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2.11</string>
+	<string>1.2.12</string>
 	<key>CFBundleVersion</key>
-	<string>184</string>
+	<string>185</string>
 	<key>LSHasLocalizedDisplayName</key>
 	<true/>
 	<key>NSExtension</key>
