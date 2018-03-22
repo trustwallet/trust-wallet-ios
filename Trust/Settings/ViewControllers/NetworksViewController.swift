@@ -4,18 +4,19 @@ import Foundation
 import UIKit
 import Eureka
 
-class NetworksViewController: FormViewController {
+protocol NetworksViewControllerDelegate: class {
+    //TODO
+}
 
-    lazy var addButton: UIBarButtonItem = {
-        return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(addNetwork))
-    }()
+class NetworksViewController: FormViewController {
+    weak var delegate: NetworksViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.isEditing = false
-        let nameList = ["1"]
+        let nameList = ["Some status info?", "More status data", "Even more data"]
 
-        let section =  MultivaluedSection(multivaluedOptions: .None, footer: "")
+        let section =  MultivaluedSection(multivaluedOptions: .None, footer: "eyee")
         for _ in 1..<4 {
             section <<< PickerInlineRow<String> {
                 $0.title = "Tap to select"
@@ -25,9 +26,5 @@ class NetworksViewController: FormViewController {
         }
 
         form +++ section
-    }
-
-    @objc func addNetwork(sender: UIBarButtonItem) {
-
     }
 }

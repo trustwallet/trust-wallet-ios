@@ -35,6 +35,7 @@ class SettingsViewController: FormViewController, Coordinator {
     let keystore: Keystore
     let balanceCoordinator: TokensBalanceService
     weak var accountsCoordinator: AccountsCoordinator?
+    weak var networksCoordinator:
 
     init(
         session: WalletSession,
@@ -248,10 +249,6 @@ class SettingsViewController: FormViewController, Coordinator {
                 $0.value = Bundle.main.fullVersion
                 $0.disabled = true
             }
-    }
-    
-    @objc func addNetwork() {
-        
     }
 
     func setPasscode(completion: ((Bool) -> Void)? = .none) {
