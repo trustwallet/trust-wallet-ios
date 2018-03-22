@@ -18,6 +18,8 @@ open class EtherKeystore: Keystore {
         static let watchAddresses = "watchAddresses"
     }
 
+    static let shared = EtherKeystore()
+
     private let keychain: KeychainSwift
     private let datadir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     let keyStore: KeyStore
@@ -29,14 +31,11 @@ open class EtherKeystore: Keystore {
         keychain: KeychainSwift = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix),
         keysSubfolder: String = "/keystore",
         userDefaults: UserDefaults = UserDefaults.standard
-    ) throws {
-        if !UIApplication.shared.isProtectedDataAvailable {
-            throw EtherKeystoreError.protectionDisabled
-        }
+    ) {
         self.keysDirectory = URL(fileURLWithPath: datadir + keysSubfolder)
         self.keychain = keychain
         self.keychain.synchronizable = false
-        self.keyStore = try KeyStore(keyDirectory: keysDirectory)
+        self.keyStore = try! KeyStore(keyDirectory: keysDirectory)
         self.userDefaults = userDefaults
     }
 
@@ -74,11 +73,7 @@ open class EtherKeystore: Keystore {
     }
 
     static var current: Wallet? {
-        do {
-            return try EtherKeystore().recentlyUsedWallet
-        } catch {
-            return .none
-        }
+        return EtherKeystore.shared.recentlyUsedWallet
     }
 
     // Async
