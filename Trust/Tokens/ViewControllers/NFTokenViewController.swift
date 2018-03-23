@@ -14,8 +14,6 @@ class NFTokenViewController: UIViewController {
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsHorizontalScrollIndicator = true
-        scrollView.showsVerticalScrollIndicator = true
         return scrollView
     }()
 
@@ -66,26 +64,6 @@ class NFTokenViewController: UIViewController {
         externalButton.setTitle(viewModel.externalButtonTitle, for: .normal)
         externalButton.addTarget(self, action: #selector(externalTap), for: .touchUpInside)
 
-        let externalButton1 = Button(size: .normal, style: .border)
-        externalButton.translatesAutoresizingMaskIntoConstraints = false
-        externalButton.setTitle(viewModel.externalButtonTitle, for: .normal)
-        externalButton.addTarget(self, action: #selector(externalTap), for: .touchUpInside)
-        let externalButton2 = Button(size: .normal, style: .border)
-        externalButton.translatesAutoresizingMaskIntoConstraints = false
-        externalButton.setTitle(viewModel.externalButtonTitle, for: .normal)
-        externalButton.addTarget(self, action: #selector(externalTap), for: .touchUpInside)
-        let externalButton3 = Button(size: .normal, style: .border)
-        externalButton.translatesAutoresizingMaskIntoConstraints = false
-        externalButton.setTitle(viewModel.externalButtonTitle, for: .normal)
-        externalButton.addTarget(self, action: #selector(externalTap), for: .touchUpInside)
-        let externalButton4 = Button(size: .normal, style: .border)
-        externalButton.translatesAutoresizingMaskIntoConstraints = false
-        externalButton.setTitle(viewModel.externalButtonTitle, for: .normal)
-        externalButton.addTarget(self, action: #selector(externalTap), for: .touchUpInside)
-        let externalButton5 = Button(size: .normal, style: .border)
-        externalButton.translatesAutoresizingMaskIntoConstraints = false
-        externalButton.setTitle(viewModel.externalButtonTitle, for: .normal)
-        externalButton.addTarget(self, action: #selector(externalTap), for: .touchUpInside)
 
         view.backgroundColor = .white
         navigationItem.title = viewModel.title
