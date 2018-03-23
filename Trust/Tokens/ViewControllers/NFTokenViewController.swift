@@ -11,7 +11,21 @@ protocol NFTokenViewControllerDelegate: class {
 
 class NFTokenViewController: UIViewController {
 
-    let stackView = UIStackView()
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+
+    lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .equalSpacing
+        return stackView
+    }()
+
     let token: NonFungibleTokenObject
 
     lazy var viewModel: NFTDetailsViewModel = {
@@ -23,10 +37,8 @@ class NFTokenViewController: UIViewController {
         self.token = token
         super.init(nibName: nil, bundle: nil)
 
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-
-        view.addSubview(stackView)
+        self.view.addSubview(scrollView)
+        scrollView.addSubview(stackView)
 
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,6 +64,7 @@ class NFTokenViewController: UIViewController {
         externalButton.setTitle(viewModel.externalButtonTitle, for: .normal)
         externalButton.addTarget(self, action: #selector(externalTap), for: .touchUpInside)
 
+
         view.backgroundColor = .white
         navigationItem.title = viewModel.title
         stackView.addArrangedSubview(imageView)
@@ -64,10 +77,15 @@ class NFTokenViewController: UIViewController {
         stackView.addArrangedSubview(.spacer(height: 10))
 
         NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             imageView.heightAnchor.constraint(equalToConstant: 260),
-            stackView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
         ])
     }
