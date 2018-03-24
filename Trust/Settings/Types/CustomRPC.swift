@@ -8,8 +8,8 @@ class CustomRPC: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var symbol: String = ""
     @objc dynamic var endpoint: String = ""
-    @objc dynamic var id: Int = 0
-    
+    @objc dynamic var id: String = UUID().uuidString
+
     convenience init(
             chainID: Int = 0,
             name: String = "",
@@ -21,15 +21,9 @@ class CustomRPC: Object {
         self.name = name
         self.symbol = symbol
         self.endpoint = endpoint
-        self.id = incrementID()
     }
-    
+
     override class func primaryKey() -> String? {
         return "id"
-    }
-    
-    func incrementID() -> Int {
-        let realm = try! Realm()
-        return (realm.objects(Bookmark.self).max(ofProperty: "id") as Int? ?? 1) + 1
     }
 }
