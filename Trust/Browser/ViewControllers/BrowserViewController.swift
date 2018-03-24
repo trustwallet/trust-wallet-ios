@@ -96,7 +96,7 @@ class BrowserViewController: UIViewController {
             progressView.topAnchor.constraint(equalTo: view.layoutGuide.topAnchor),
             progressView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
             progressView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
-            progressView.heightAnchor.constraint(equalToConstant: 3),
+            progressView.heightAnchor.constraint(equalToConstant: 2),
 
             errorView.topAnchor.constraint(equalTo: webView.topAnchor),
             errorView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
