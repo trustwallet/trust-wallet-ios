@@ -108,7 +108,7 @@ class InCoordinator: Coordinator {
         ]
         tabBarController.tabBar.isTranslucent = false
 
-        let coordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator)
+        let coordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator, realm: realm)
         coordinator.delegate = self
         coordinator.start()
         coordinator.rootViewController.tabBarItem = UITabBarItem(
