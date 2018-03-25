@@ -33,13 +33,23 @@ class SettingsCoordinator: Coordinator {
         coordinator.delegate = self
         return coordinator
     }()
+    
+    lazy var networksCoordinator: NetworksCoordinator = {
+        let coordinator = NetworksCoordinator(
+            navigationController: navigationController,
+            rpcStore: rpcStore
+        )
+        //coordinator.delegate = self
+        return coordinator
+    }()
 
     lazy var rootViewController: SettingsViewController = {
         let controller = SettingsViewController(
             session: session,
             keystore: keystore,
             balanceCoordinator: balanceCoordinator,
-            accountsCoordinator: accountsCoordinator
+            accountsCoordinator: accountsCoordinator,
+            networksCoordinator: networksCoordinator
         )
         controller.delegate = self
         controller.modalPresentationStyle = .pageSheet

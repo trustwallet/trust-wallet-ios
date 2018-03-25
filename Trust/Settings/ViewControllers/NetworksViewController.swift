@@ -9,13 +9,27 @@ protocol NetworksViewControllerDelegate: class {
 }
 
 class NetworksViewController: FormViewController {
-    
+
     weak var delegate: NetworksViewControllerDelegate?
     var headerTitle: String?
-    /*var viewModel: NetworksViewModel {
-        
-    }*/
+
     private let config = Config()
+    private let networksStore: RPCStore
+
+    lazy var viewModel: NetworksViewModel = {
+        return NetworksViewModel(networksStore: networksStore)
+    }()
+
+    init(
+        networksStore: RPCStore
+    ) {
+        self.networksStore = networksStore
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,11 +38,15 @@ class NetworksViewController: FormViewController {
 
             +++ PushRow<RPCServer> { [weak self] in
                 guard let strongSelf = self else { return }
-                $0.title = "strongSelf.viewModel.networkTitle"
-                //$0.options = strongSelf
-                
+                $0.title = strongSelf.viewModel.networkTitle
+                $0.options = strongSelf.viewModel.servers
+                $0.value = RPCServer(chainID: strongSelf.config.chainID)
+                $0.selectorTitle = strongSelf.viewModel.networkTitle
+                $0.displayValueFor = { value in
+                    return value?.displayName
+                }
             }.onChange { [weak self] row in
-                    
+                let server = row.value ?? RPCServer.main
             }.onPresent { _, selectorController in
                     
             }.cellSetup { cell, _ in

@@ -15,9 +15,9 @@ struct NetworksViewModel {
     var hasCustomNetworks: Bool {
         return !networksStore.endpoints.isEmpty
     }
-
-    var title: String {
-        return NSLocalizedString("settings.networks.title", value: "Networks", comment: "")
+    
+    var networkTitle: String {
+        return NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
     }
 
     func add(network: CustomRPC) {
@@ -39,5 +39,9 @@ struct NetworksViewModel {
             RPCServer.rinkeby,
             RPCServer.sokol,
         ]
+    }
+    
+    var customServers: [CustomRPC] {
+        return Array(networksStore.endpoints)
     }
 }

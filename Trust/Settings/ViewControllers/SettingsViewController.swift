@@ -41,12 +41,14 @@ class SettingsViewController: FormViewController, Coordinator {
         session: WalletSession,
         keystore: Keystore,
         balanceCoordinator: TokensBalanceService,
-        accountsCoordinator: AccountsCoordinator
+        accountsCoordinator: AccountsCoordinator,
+        networksCoordinator: NetworksCoordinator
     ) {
         self.session = session
         self.keystore = keystore
         self.balanceCoordinator = balanceCoordinator
         self.accountsCoordinator = accountsCoordinator
+        self.networksCoordinator = networksCoordinator
         super.init(nibName: nil, bundle: nil)
         self.chaineStateObservation()
     }
@@ -102,7 +104,7 @@ class SettingsViewController: FormViewController, Coordinator {
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_server()
-                cell.textLabel?.text = self.viewModel.networkTitle
+                cell.textLabel?.text = "self.viewModel.networkTitle"
                 cell.detailTextLabel?.text = "Ayy lmao"
                 cell.accessoryType = .disclosureIndicator
             }

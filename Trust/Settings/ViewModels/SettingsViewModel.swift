@@ -28,10 +28,6 @@ struct SettingsViewModel {
         }
     }
 
-    var networkTitle: String {
-        return NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
-    }
-
     var currencyTitle: String {
         return NSLocalizedString("settings.currency.button.title", value: "Currency", comment: "")
     }

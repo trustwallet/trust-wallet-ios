@@ -14,7 +14,7 @@ class NetworksCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
 
     lazy var networksViewController: NetworksViewController = {
-        let controller = NetworksViewController()
+        let controller = NetworksViewController(networksStore: rpcStore)
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNetwork))
         controller.delegate = self
         return controller
@@ -37,9 +37,9 @@ class NetworksCoordinator: Coordinator {
     @objc func addNetwork() {
         showAddNetwork()
     }
-    
+
     func showAddNetwork() {
-        
+
     }
 }
 
