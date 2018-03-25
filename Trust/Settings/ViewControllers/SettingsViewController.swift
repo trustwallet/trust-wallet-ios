@@ -93,10 +93,11 @@ class SettingsViewController: FormViewController, Coordinator {
             <<< AppFormAppearance.button { [weak self] row in
                 guard let `self` = self else { return }
                 row.cellStyle = .value1
-                let networksViewController = NetworksViewController()
-                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
-                    return networksViewController
-                }, onDismiss: { _ in })
+                if let networksViewController = self.networksCoordinator?.networksViewController {
+                    row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+                        return networksViewController
+                    }, onDismiss: { _ in })
+                }
 
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black

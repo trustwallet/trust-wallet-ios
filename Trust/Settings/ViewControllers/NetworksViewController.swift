@@ -9,22 +9,30 @@ protocol NetworksViewControllerDelegate: class {
 }
 
 class NetworksViewController: FormViewController {
+    
     weak var delegate: NetworksViewControllerDelegate?
+    var headerTitle: String?
+    /*var viewModel: NetworksViewModel {
+        
+    }*/
+    private let config = Config()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.isEditing = false
-        let nameList = ["Some status info?", "More status data", "Even more data"]
 
-        let section =  MultivaluedSection(multivaluedOptions: .None, footer: "eyee")
-        for _ in 1..<4 {
-            section <<< PickerInlineRow<String> {
-                $0.title = "Tap to select"
-                $0.value = "client"
-                $0.options = nameList
+        form = Section()
+
+            +++ PushRow<RPCServer> { [weak self] in
+                guard let strongSelf = self else { return }
+                $0.title = "strongSelf.viewModel.networkTitle"
+                //$0.options = strongSelf
+                
+            }.onChange { [weak self] row in
+                    
+            }.onPresent { _, selectorController in
+                    
+            }.cellSetup { cell, _ in
+                    
             }
-        }
-
-        form +++ section
     }
 }

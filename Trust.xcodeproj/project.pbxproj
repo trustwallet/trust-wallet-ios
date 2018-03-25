@@ -386,6 +386,7 @@
 		77E81D962036883B00534C99 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E81D952036883B00534C99 /* NotificationsViewModel.swift */; };
 		9011C0C22062F9FA0015DD55 /* RPCStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9011C0C12062F9FA0015DD55 /* RPCStore.swift */; };
 		9011C0C420636F290015DD55 /* NetworksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9011C0C320636F290015DD55 /* NetworksCoordinator.swift */; };
+		9011C0C620684E230015DD55 /* NetworksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9011C0C520684E230015DD55 /* NetworksViewModel.swift */; };
 		902CAB592051818B00F96FFE /* BookmarkViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 902CAB582051818A00F96FFE /* BookmarkViewCell.xib */; };
 		902CAB5B2051835E00F96FFE /* BookmarkViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902CAB5A2051835E00F96FFE /* BookmarkViewCell.swift */; };
 		903682F1204A6DB800013479 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682F0204A6DB800013479 /* BookmarkViewController.swift */; };
@@ -855,6 +856,7 @@
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9011C0C12062F9FA0015DD55 /* RPCStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCStore.swift; sourceTree = "<group>"; };
 		9011C0C320636F290015DD55 /* NetworksCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksCoordinator.swift; sourceTree = "<group>"; };
+		9011C0C520684E230015DD55 /* NetworksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksViewModel.swift; sourceTree = "<group>"; };
 		902CAB582051818A00F96FFE /* BookmarkViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkViewCell.xib; sourceTree = "<group>"; };
 		902CAB5A2051835E00F96FFE /* BookmarkViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewCell.swift; sourceTree = "<group>"; };
 		903682F0204A6DB800013479 /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
@@ -1594,6 +1596,7 @@
 				771A847420322FD700528D28 /* PreferencesViewModel.swift */,
 				77E81D952036883B00534C99 /* NotificationsViewModel.swift */,
 				29525B9D203C34CF00900DE9 /* SupportViewModel.swift */,
+				9011C0C520684E230015DD55 /* NetworksViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -3171,6 +3174,7 @@
 				775DF42D2037D338009CD082 /* BranchCoordinator.swift in Sources */,
 				298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */,
 				29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */,
+				9011C0C620684E230015DD55 /* NetworksViewModel.swift in Sources */,
 				771A847520322FD700528D28 /* PreferencesViewModel.swift in Sources */,
 				296AF9A51F736BA20058AF78 /* Config.swift in Sources */,
 				615F10621FCD3F0F008A45AF /* OnboardingPageStyle.swift in Sources */,
