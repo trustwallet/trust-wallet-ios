@@ -102,7 +102,9 @@ class TransactionsViewController: UIViewController {
 
     func fetch() {
         startLoading()
-        viewModel.fetch()
+        viewModel.fetch { [weak self] in
+            self?.endLoading()
+        }
     }
 
     @objc func send() {
@@ -151,7 +153,7 @@ class TransactionsViewController: UIViewController {
 
 extension TransactionsViewController: StatefulViewController {
     func hasContent() -> Bool {
-        return viewModel.hasContent()
+        return viewModel.hasContent
     }
 }
 

@@ -46,12 +46,13 @@ struct TransactionsViewModel {
         return storage.transactionSections.count
     }
 
+    var hasContent: Bool {
+        return !self.storage.transactions.isEmpty
+    }
+
     private let config: Config
-
     private let network: TrustNetwork
-
     private let storage: TransactionsStorage
-
     private let session: WalletSession
 
     init(
@@ -112,19 +113,16 @@ struct TransactionsViewModel {
         return transaction.blockNumber - 2000
     }
 
-    mutating func fetch() {
-        fetchTransactions()
+    mutating func fetch(completion: (() -> Void)? = .none) {
+        fetchTransactions(completion: completion)
         fetchPending()
     }
 
-    func hasContent() -> Bool {
-        return !self.storage.transactions.isEmpty
-    }
-
-    func fetchTransactions() {
+    func fetchTransactions(completion: (() -> Void)? = .none) {
         self.network.transactions(for: session.account.address, startBlock: 1, page: 0, contract: nil) { result in
             guard let transactions = result.0 else { return }
             self.storage.add(transactions)
+            completion?()
         }
     }
 

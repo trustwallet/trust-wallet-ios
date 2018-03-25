@@ -27,12 +27,12 @@ class TokensViewModelTest: XCTestCase {
          XCTAssertEqual(false, model.canEdit(for: firstItem))
     }
 
-    func testUpdateTicker() {
-        //model.updateTickers()
-        let ethTicker = model.store.tickers().first
-        XCTAssertNotNil(ethTicker)
-        XCTAssertEqual("947.102", ethTicker?.price)
-    }
+//    func testUpdateTicker() {
+//        model.updateTickers()
+//        let ethTicker = model.store.tickers().first
+//        XCTAssertNotNil(ethTicker)
+//        XCTAssertEqual("947.102", ethTicker?.price)
+//    }
 
     func testBalance() {
         model.updateEthBalance()

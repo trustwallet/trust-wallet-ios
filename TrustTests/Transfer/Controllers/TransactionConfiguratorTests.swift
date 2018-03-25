@@ -11,6 +11,7 @@ class TransactionConfiguratorTests: XCTestCase {
         
         XCTAssertEqual(GasPriceConfiguration.default, configurator.configuration.gasPrice)
         XCTAssertEqual(GasLimitConfiguration.default, configurator.configuration.gasLimit)
+        XCTAssertEqual(GasPriceConfiguration.default, configurator.calculatedGasPrice)
     }
     
     func testAdjustGasPrice() {
@@ -20,10 +21,17 @@ class TransactionConfiguratorTests: XCTestCase {
         XCTAssertEqual(desiderGasPrice, configurator.configuration.gasPrice)
     }
     
-    func testMinGasPrice() {
-        let configurator = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(gasPrice: BigInt(1)))
+    func testMinCalculatedGasPrice() {
+        let configurator = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(gasPrice: BigInt(0)))
         
-        XCTAssertEqual(GasPriceConfiguration.min, configurator.configuration.gasPrice)
+        XCTAssertEqual(GasPriceConfiguration.min, configurator.calculatedGasPrice)
+    }
+
+    func testSetCalculatedGasPrice() {
+        let gasPrice = BigInt(990000000000)
+        let configurator = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(gasPrice: gasPrice))
+
+        XCTAssertEqual(gasPrice, configurator.calculatedGasPrice)
     }
     
     func testMaxGasPrice() {

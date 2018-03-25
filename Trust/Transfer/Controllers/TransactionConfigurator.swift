@@ -31,7 +31,7 @@ class TransactionConfigurator {
     }
 
     lazy var calculatedGasPrice: BigInt = {
-        return transaction.gasPrice ?? configuration.gasPrice
+        return max(transaction.gasPrice ?? configuration.gasPrice, GasPriceConfiguration.min)
     }()
 
     var calculatedGasLimit: BigInt? {
@@ -81,7 +81,7 @@ class TransactionConfigurator {
                     let data = Data(hex: res.drop0x)
                     self.configuration = TransactionConfiguration(
                         gasPrice: self.calculatedGasPrice,
-                        gasLimit: 144000,
+                        gasLimit: GasLimitConfiguration.tokenTransfer,
                         data: data
                     )
                     completion(.success(()))

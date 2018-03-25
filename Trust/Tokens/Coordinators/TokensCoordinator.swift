@@ -6,7 +6,7 @@ import TrustKeystore
 
 protocol TokensCoordinatorDelegate: class {
     func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator)
-    func didPress(on token: NonFungibleTokenObject, in coordinator: TokensCoordinator)
+    func didPress(url: URL, in coordinator: TokensCoordinator)
     func didPressDiscover(in coordinator: TokensCoordinator)
 }
 
@@ -161,7 +161,11 @@ extension TokensCoordinator: NewTokenViewControllerDelegate {
 
 extension TokensCoordinator: NonFungibleTokensViewControllerDelegate {
     func didSelectToken(_ token: NonFungibleTokenObject) {
-        delegate?.didPress(on: token, in: self)
+        //delegate?.didPress(on: token, in: self)
+
+        let controller = NFTokenViewController(token: token)
+        controller.delegate = self
+        navigationController.pushViewController(controller, animated: true)
     }
 
     func didPressDiscover() {
@@ -183,6 +187,20 @@ extension TokensCoordinator: TokenViewControllerDelegate {
     }
 
     func didPress(transaction: Transaction, in controller: UIViewController) {
-        TransactionCoordinator.openTransaction(transaction, in: navigationController, session: session)
+        let controller = TransactionViewController(
+            session: session,
+            transaction: transaction
+        )
+        UINavigationController.openFormSheet(
+            for: controller,
+            in: navigationController,
+            barItem: UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        )
+    }
+}
+
+extension TokensCoordinator: NFTokenViewControllerDelegate {
+    func didPressLink(url: URL, in viewController: NFTokenViewController) {
+        delegate?.didPress(url: url, in: self)
     }
 }

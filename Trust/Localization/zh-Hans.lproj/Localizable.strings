@@ -209,3 +209,9 @@
 "tokens.token.edit.navigation.title" = "编辑自定义通证";
 "wallet.section.hdWallet.title" = "HD 钱包";
 "wallets.export.alertSheet.title" = "导出私钥";
+"collectibles.discover.label.title" = "发现";
+"configureTransaction.error.gasFeeHigh" = "Gas 费用太高，最大可用：%1$@ %2$@";
+"sent.transaction.title" = "交易已发送！";
+"settings.network.test.warnning.dont.show.again" = "不要再显示";
+"settings.network.test.warnning.message" = "您正在切换到测试网络，交易仅用于测试目的";
+"settings.network.test.warnning.title" = "警告";

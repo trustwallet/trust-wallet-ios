@@ -31,23 +31,27 @@ struct SendViewModel {
     /// amount of a `SendViewModel` to represent current amount to send.
     var amount = "0.0"
     /// gasPrice of a `SendViewModel` to represent gas price for send transaction.
-    var gasPrice: BigInt?
+    var gasPrice: BigInt? {
+        return chainState.gasPrice
+    }
     /// transferType of a `SendViewModel` to know if it is token or ETH.
     let transferType: TransferType
     /// config of a `SendViewModel` to know configuration of the current account.
     let config: Config
-    /// storage of a `SendViewModel` to know pair rate.
+    let chainState: ChainState
     let storage: TokensDataStore
     /// current wallet balance
     let balance: Balance?
     init(
         transferType: TransferType,
         config: Config,
+        chainState: ChainState,
         storage: TokensDataStore,
         balance: Balance?
     ) {
         self.transferType = transferType
         self.config = config
+        self.chainState = chainState
         self.storage = storage
         self.balance = balance
     }

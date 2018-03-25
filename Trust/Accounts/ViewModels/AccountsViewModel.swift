@@ -35,7 +35,7 @@ struct AccountsViewModel {
     }
 
     var title: String {
-        return NSLocalizedString("wallet.navigation.title", value: "Wallets", comment: "")
+        return NSLocalizedString("wallets.navigation.title", value: "Wallets", comment: "")
     }
 
     var numberOfSections: Int {

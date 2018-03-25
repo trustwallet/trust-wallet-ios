@@ -18,7 +18,7 @@ protocol SendViewControllerDelegate: class {
 }
 class SendViewController: FormViewController {
     private lazy var viewModel: SendViewModel = {
-        return .init(transferType: self.transferType, config: Config(), storage: self.storage, balance: self.session.balance)
+        return .init(transferType: transferType, config: session.config, chainState: session.chainState, storage: storage, balance: session.balance)
     }()
     weak var delegate: SendViewControllerDelegate?
     struct Values {
@@ -58,7 +58,6 @@ class SendViewController: FormViewController {
         self.transferType = transferType
         self.storage = storage
         super.init(nibName: nil, bundle: nil)
-        getGasPrice()
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
         let recipientRightView = FieldAppereance.addressFieldRightView(
@@ -106,16 +105,6 @@ class SendViewController: FormViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.applyTintAdjustment()
-    }
-    func getGasPrice() {
-        let request = EtherServiceRequest(batch: BatchFactory().create(GasPriceRequest()))
-        Session.send(request) { [weak self] result in
-            switch result {
-            case .success(let balance):
-                self?.viewModel.gasPrice = BigInt(balance.drop0x, radix: 16)
-            case .failure: break
-            }
-        }
     }
     func clear() {
         let fields = [addressRow, amountRow]

@@ -111,7 +111,7 @@ class InCoordinator: Coordinator {
         ]
         tabBarController.tabBar.isTranslucent = false
 
-        let coordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator)
+        let coordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator, realm: realm)
         coordinator.delegate = self
         coordinator.start()
         coordinator.rootViewController.tabBarItem = UITabBarItem(
@@ -289,12 +289,12 @@ extension InCoordinator: TokensCoordinatorDelegate {
         showPaymentFlow(for: type)
     }
 
-    func didPress(on token: NonFungibleTokenObject, in coordinator: TokensCoordinator) {
-        showTab(.browser(openURL: token.extentalURL))
+    func didPressDiscover(in coordinator: TokensCoordinator) {
+        guard let url = URL(string: Constants.dappsOpenSea) else { return }
+        showTab(.browser(openURL: url))
     }
 
-    func didPressDiscover(in coordinator: TokensCoordinator) {
-        guard let url = URL(string: Constants.dappsBrowserExploreURL) else { return }
+    func didPress(url: URL, in coordinator: TokensCoordinator) {
         showTab(.browser(openURL: url))
     }
 }

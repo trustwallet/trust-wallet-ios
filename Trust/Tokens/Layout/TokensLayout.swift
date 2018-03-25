@@ -11,6 +11,12 @@ struct TokensLayout {
     }
 
     struct cell {
+        static var imageSize: CGFloat {
+            return 54
+            // TODO: return 44 for 2 scale, same for xib file.
+            //if UIScreen.main.scale == 3 { return 54 }
+            //return 44
+        }
         static let amountTextColor = Colors.black
         static let currencyAmountTextColor = Colors.lightGray
         static let fiatAmountTextColor = Colors.gray

@@ -42,6 +42,7 @@ class EmptyView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(actionTitle, for: .normal)
         button.addTarget(self, action: #selector(retry), for: .touchUpInside)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
 
         let stackView = UIStackView(arrangedSubviews: [
             imageView,
@@ -63,7 +64,7 @@ class EmptyView: UIView {
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            button.widthAnchor.constraint(equalToConstant: 160),
+            button.widthAnchor.constraint(equalToConstant: 180),
         ])
     }
 

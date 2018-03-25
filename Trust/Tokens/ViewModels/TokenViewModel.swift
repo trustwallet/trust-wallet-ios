@@ -79,8 +79,7 @@ class TokenViewModel {
     }
 
     var totalFiatAmount: String? {
-        guard let amount = TokensLayout.cell.totalFiatAmount(for: ticker, token: token) else { return .none }
-        return "(\(amount))"
+        return TokensLayout.cell.totalFiatAmount(for: ticker, token: token)
     }
 
     var fiatAmountTextColor: UIColor {
@@ -186,7 +185,7 @@ class TokenViewModel {
             guard let balance = result, let token = self?.token else {
                 return
             }
-            self?.store.update(tokens: [token], action: .updateBalances([balance.value]))
+            self?.store.update(balances: [token.address: balance.value])
         }
     }
 

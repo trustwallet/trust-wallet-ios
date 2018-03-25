@@ -33,7 +33,7 @@ platform :ios do
     cocoapods(use_bundle_exec: false)
     increment_build_number
     ensure_git_branch()
-    increment_version_number(bump_type: "patch")
+    increment_version_number(bump_type: "minor")
     cert
     match(type: "appstore", readonly: true)
     gym(scheme: "Trust")

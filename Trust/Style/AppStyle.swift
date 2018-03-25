@@ -20,10 +20,11 @@ func applyStyle() {
     UITextField.appearance().tintColor = Colors.blue
 
     UIImageView.appearance().tintColor = Colors.lightBlue
-    UIImageView.appearance(whenContainedInInstancesOf: [BrowserNavigationBar.self]).tintColor = .white
 
     BalanceTitleView.appearance().titleTextColor = UIColor.white
     BalanceTitleView.appearance().subTitleTextColor = UIColor(white: 0.9, alpha: 1)
+
+    BrowserNavigationBar.appearance().setBackgroundImage(.filled(with: .white), for: .default)
 }
 
 struct Colors {

@@ -78,25 +78,6 @@ class TransactionCoordinator: Coordinator {
         return controller
     }
 
-    static func openTransaction(
-        _ transaction: Transaction,
-        in navigationController: UINavigationController,
-        session: WalletSession
-    ) {
-        let controller = TransactionViewController(
-            session: session,
-            transaction: transaction
-        )
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            let nav = UINavigationController(rootViewController: controller)
-            nav.modalPresentationStyle = .formSheet
-            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-            navigationController.present(nav, animated: true, completion: nil)
-        } else {
-            navigationController.pushViewController(controller, animated: true)
-        }
-    }
-
     @objc func dismiss() {
         navigationController.dismiss(animated: true, completion: nil)
     }
@@ -128,7 +109,15 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
     }
 
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController) {
-        TransactionCoordinator.openTransaction(transaction, in: navigationController, session: session)
+        let controller = TransactionViewController(
+            session: session,
+            transaction: transaction
+        )
+        UINavigationController.openFormSheet(
+            for: controller,
+            in: navigationController,
+            barItem: UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        )
     }
 
     func didPressDeposit(for account: Wallet, sender: UIView, in viewController: TransactionsViewController) {

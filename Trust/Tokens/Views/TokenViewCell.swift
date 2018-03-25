@@ -14,7 +14,6 @@ class TokenViewCell: UITableViewCell {
     let symbolImageView = TokenImageView()
 
     private struct Layout {
-        static let imageSize: CGFloat = 54
         static let stackVericalOffset: CGFloat = 10
     }
 
@@ -66,8 +65,8 @@ class TokenViewCell: UITableViewCell {
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            symbolImageView.widthAnchor.constraint(equalToConstant: Layout.imageSize),
-            symbolImageView.heightAnchor.constraint(equalToConstant: Layout.imageSize),
+            symbolImageView.widthAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
+            symbolImageView.heightAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: Layout.stackVericalOffset),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Layout.stackVericalOffset),
