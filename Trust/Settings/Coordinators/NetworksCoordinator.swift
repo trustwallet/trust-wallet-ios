@@ -10,18 +10,18 @@ protocol NetworksCoordinatorDelegate: class {
 class NetworksCoordinator: Coordinator {
     let navigationController: UINavigationController
     let rpcStore: RPCStore
-    //Get existing networks in here too
+    //TODO: Get existing networks in here too
     var coordinators: [Coordinator] = []
-    
+
     lazy var networksViewController: NetworksViewController = {
         let controller = NetworksViewController()
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNetwork))
         controller.delegate = self
         return controller
     }()
-    
+
     weak var delegate: NetworksCoordinatorDelegate?
-    
+
     init(
         navigationController: UINavigationController,
         rpcStore: RPCStore
@@ -29,12 +29,16 @@ class NetworksCoordinator: Coordinator {
         self.navigationController = navigationController
         self.rpcStore = rpcStore
     }
-    
+
     func start() {
         navigationController.pushViewController(networksViewController, animated: false)
     }
-    
+
     @objc func addNetwork() {
+        showAddNetwork()
+    }
+    
+    func showAddNetwork() {
         
     }
 }

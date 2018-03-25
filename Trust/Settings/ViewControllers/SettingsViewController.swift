@@ -35,7 +35,7 @@ class SettingsViewController: FormViewController, Coordinator {
     let keystore: Keystore
     let balanceCoordinator: TokensBalanceService
     weak var accountsCoordinator: AccountsCoordinator?
-    weak var networksCoordinator:
+    weak var networksCoordinator: NetworksCoordinator?
 
     init(
         session: WalletSession,
