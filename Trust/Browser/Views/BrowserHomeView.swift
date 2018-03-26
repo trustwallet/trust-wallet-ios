@@ -10,6 +10,12 @@ class BrowserHomeView: UIView {
 
     override init(frame: CGRect) {
 
+        let dapps = [
+            DAppModel(name: "Cat", image: "https://www.cryptokitties.co/images/letterHead.png"),
+            DAppModel(name: "Dog", image: "https://www.cryptokitties.co/images/letterHead.png"),
+            DAppModel(name: "Kyber", image: "https://www.cryptokitties.co/images/letterHead.png"),
+        ]
+
         qrButton = UIButton(type: .custom)
         qrButton.translatesAutoresizingMaskIntoConstraints = false
         qrButton.setImage(R.image.qr_code_icon(), for: .normal)
@@ -25,6 +31,11 @@ class BrowserHomeView: UIView {
         stackView = UIStackView(arrangedSubviews: [
             .spacer(height: 100),
             searchBar,
+            .spacer(height: 20),
+            BrowserHomeView.header(for: "Popular"),
+            BrowserHomeView.collection(dapps: dapps),
+            BrowserHomeView.header(for: "Trending"),
+            BrowserHomeView.collection(dapps: dapps),
         ])
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,5 +63,19 @@ class BrowserHomeView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private static func header(for text: String) -> UIView {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = text
+        return label
+    }
+
+    private static func collection(dapps: [DAppModel]) -> DAppCollectionView {
+        let popularCollectionView = DAppCollectionView()
+        popularCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        popularCollectionView.elements = dapps
+        return popularCollectionView
     }
 }
