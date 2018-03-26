@@ -51,6 +51,18 @@ class BrowserViewController: UIViewController {
         return errorView
     }()
 
+    lazy var homeView: BrowserHomeView = {
+        let homeView = BrowserHomeView()
+        homeView.translatesAutoresizingMaskIntoConstraints = false
+        return homeView
+    }()
+
+    var homeViewHidden: Bool = false {
+        didSet {
+            homeView.isHidden = homeViewHidden
+        }
+    }
+
     weak var delegate: BrowserViewControllerDelegate?
     private let urlParser = BrowserURLParser()
 
@@ -86,6 +98,7 @@ class BrowserViewController: UIViewController {
         webView.addSubview(progressView)
         webView.bringSubview(toFront: progressView)
         view.addSubview(errorView)
+        view.addSubview(homeView)
 
         NSLayoutConstraint.activate([
             webView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
@@ -102,6 +115,11 @@ class BrowserViewController: UIViewController {
             errorView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
             errorView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
             errorView.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
+
+            homeView.topAnchor.constraint(equalTo: webView.topAnchor),
+            homeView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
+            homeView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+            homeView.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
         ])
         view.backgroundColor = .white
         webView.addObserver(self, forKeyPath: Keys.estimatedProgress, options: .new, context: &myContext)
