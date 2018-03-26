@@ -276,6 +276,9 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
             webView.goBack()
         case .more(let sender):
             presentMoreOptions(sender: sender)
+        case .home:
+            //TODO: Implement
+            break
         case .enter(let string):
             guard let url = urlParser.url(from: string) else { return }
             goTo(url: url)
