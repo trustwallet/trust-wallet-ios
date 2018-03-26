@@ -5,14 +5,14 @@ import Foundation
 enum Tabs {
     case browser(openURL: URL?)
     case transactions
-    case tokens
+    case wallet
     case settings
 
     var index: Int {
         switch self {
         case .browser: return 0
-        case .transactions: return 1
-        case .tokens: return 2
+        case .wallet: return 1
+        case .transactions: return 2
         case .settings: return 3
         }
     }
@@ -24,12 +24,12 @@ extension Tabs: Equatable {
         case (let .browser(lhs), let .browser(rhs)):
             return lhs == rhs
         case (.transactions, .transactions),
-             (.tokens, .tokens),
+             (.wallet, .wallet),
              (.settings, .settings):
             return true
         case (_, .browser),
              (_, .transactions),
-             (_, .tokens),
+             (_, .wallet),
              (_, .settings):
             return false
         }

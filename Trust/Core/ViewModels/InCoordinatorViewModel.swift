@@ -14,11 +14,4 @@ struct InCoordinatorViewModel {
         self.config = config
         self.preferences = preferences
     }
-
-    var tokensAvailable: Bool {
-        switch config.server {
-        case .main, .classic, .kovan, .ropsten, .rinkeby, .poa, .sokol, .custom: return true
-        case .callisto: return false
-        }
-    }
 }

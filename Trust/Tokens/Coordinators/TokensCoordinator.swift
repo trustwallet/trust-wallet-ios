@@ -34,14 +34,14 @@ class TokensCoordinator: Coordinator {
         controller.delegate = self
         return controller
     }()
-    lazy var masterViewController: MasterViewController = {
-        let masterViewController = MasterViewController(tokensViewController: self.tokensViewController, nonFungibleTokensViewController: self.nonFungibleTokensViewController)
+    lazy var masterViewController: WalletViewController = {
+        let masterViewController = WalletViewController(tokensViewController: self.tokensViewController, nonFungibleTokensViewController: self.nonFungibleTokensViewController)
         masterViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(edit))
         return masterViewController
     }()
     weak var delegate: TokensCoordinatorDelegate?
 
-    lazy var rootViewController: MasterViewController = {
+    lazy var rootViewController: WalletViewController = {
         return self.masterViewController
     }()
 

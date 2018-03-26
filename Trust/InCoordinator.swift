@@ -103,40 +103,34 @@ class InCoordinator: Coordinator {
         addCoordinator(transactionCoordinator)
 
         let tabBarController = TabBarController()
-        tabBarController.viewControllers = [
-            transactionCoordinator.navigationController,
-        ]
+
         tabBarController.tabBar.isTranslucent = false
 
-        let coordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator, realm: realm)
-        coordinator.delegate = self
-        coordinator.start()
-        coordinator.rootViewController.tabBarItem = UITabBarItem(
+        let browserCoordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator, realm: realm)
+        browserCoordinator.delegate = self
+        browserCoordinator.start()
+        browserCoordinator.rootViewController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
             image: R.image.dapps_icon(),
             selectedImage: nil
         )
-        addCoordinator(coordinator)
-        tabBarController.viewControllers?.insert(coordinator.navigationController, at: 0)
+        addCoordinator(browserCoordinator)
 
-        if inCoordinatorViewModel.tokensAvailable {
-            let tokenCoordinator = TokensCoordinator(
-                session: session,
-                keystore: keystore,
-                tokensStorage: tokensStorage,
-                network: trustNetwork,
-                transactionsStore: transactionsStorage
-            )
-            tokenCoordinator.rootViewController.tabBarItem = UITabBarItem(
-                title: NSLocalizedString("wallet.navigation.title", value: "Wallet", comment: ""),
-                image: R.image.settingsWallet(),
-                selectedImage: nil
-            )
-            tokenCoordinator.delegate = self
-            tokenCoordinator.start()
-            addCoordinator(tokenCoordinator)
-            tabBarController.viewControllers?.append(tokenCoordinator.navigationController)
-        }
+        let walletCoordinator = TokensCoordinator(
+            session: session,
+            keystore: keystore,
+            tokensStorage: tokensStorage,
+            network: trustNetwork,
+            transactionsStore: transactionsStorage
+        )
+        walletCoordinator.rootViewController.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("wallet.navigation.title", value: "Wallet", comment: ""),
+            image: R.image.settingsWallet(),
+            selectedImage: nil
+        )
+        walletCoordinator.delegate = self
+        walletCoordinator.start()
+        addCoordinator(walletCoordinator)
         let settingsCoordinator = SettingsCoordinator(
             keystore: keystore,
             session: session,
@@ -151,7 +145,13 @@ class InCoordinator: Coordinator {
         settingsCoordinator.delegate = self
         settingsCoordinator.start()
         addCoordinator(settingsCoordinator)
-        tabBarController.viewControllers?.append(settingsCoordinator.navigationController)
+
+        tabBarController.viewControllers = [
+            browserCoordinator.navigationController,
+            walletCoordinator.navigationController,
+            transactionCoordinator.navigationController,
+            settingsCoordinator.navigationController,
+        ]
 
         navigationController.setViewControllers(
             [tabBarController],
@@ -160,7 +160,7 @@ class InCoordinator: Coordinator {
         navigationController.setNavigationBarHidden(true, animated: false)
         addCoordinator(transactionCoordinator)
 
-        showTab(.tokens)
+        showTab(.wallet)
 
         keystore.recentlyUsedWallet = account
     }
@@ -174,7 +174,7 @@ class InCoordinator: Coordinator {
             if let openURL = openURL, let controller = nav.viewControllers[0] as? BrowserViewController {
                 controller.goTo(url: openURL)
             }
-        case .settings, .tokens, .transactions:
+        case .settings, .wallet, .transactions:
             break
         }
 
