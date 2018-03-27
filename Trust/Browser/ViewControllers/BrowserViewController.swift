@@ -10,6 +10,7 @@ protocol BrowserViewControllerDelegate: class {
     func didCall(action: DappAction, callbackID: Int)
     func didAddBookmark(bookmark: Bookmark)
     func didOpenBookmarkList()
+    func didRequestScanQrCode()
 }
 
 class BrowserViewController: UIViewController {
@@ -406,7 +407,7 @@ extension BrowserViewController: BrowserErrorViewDelegate {
 
 extension BrowserViewController: BrowserHomeViewDelegate {
     func didPressQrCode() {
-        //TODO: Scan QR Code - model view controller?
+        delegate?.didRequestScanQrCode()
     }
 
     func didPressSearch() {
