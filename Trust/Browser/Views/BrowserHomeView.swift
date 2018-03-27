@@ -42,7 +42,7 @@ class BrowserHomeView: UIView {
 
         qrButton = UIButton(type: .custom)
         qrButton.translatesAutoresizingMaskIntoConstraints = false
-        qrButton.setImage(R.image.qr_code_icon(), for: .normal)
+        qrButton.setImage(R.image.scan(), for: .normal)
 
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.layer.borderWidth = 0.5
@@ -80,8 +80,8 @@ class BrowserHomeView: UIView {
             imageView.heightAnchor.constraint(equalToConstant: 80),
             imageView.widthAnchor.constraint(equalToConstant: 80),
 
-            qrButton.heightAnchor.constraint(equalToConstant: 34),
-            qrButton.widthAnchor.constraint(equalToConstant: 42),
+            qrButton.heightAnchor.constraint(equalToConstant: 32),
+            qrButton.widthAnchor.constraint(equalToConstant: 32),
 
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -30),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),

@@ -10,6 +10,7 @@ protocol BrowserViewControllerDelegate: class {
     func didCall(action: DappAction, callbackID: Int)
     func didAddBookmark(bookmark: Bookmark)
     func didOpenBookmarkList()
+    func didRequestScanQrCode()
 }
 
 class BrowserViewController: UIViewController {
@@ -148,7 +149,7 @@ class BrowserViewController: UIViewController {
     }
 
     func goTo(url: URL) {
-        showHomeView(false)
+        showHomeView(false, keyboard: false)
         webView.load(URLRequest(url: url))
     }
 
@@ -194,18 +195,23 @@ class BrowserViewController: UIViewController {
         errorView.isHidden = true
     }
 
-    private func showHomeView(_ show: Bool, animated: Bool = true) {
+    private func showHomeView(_ show: Bool, animated: Bool = true, keyboard: Bool = true) {
         let duration = animated ? 0.4 : 0
         UIView.animate(withDuration: duration, delay: 0.0, options: [], animations: {
             self.homeView.alpha = show ? 1 : 0
             self.browserNavBar.alpha = show ? 0 : 1
-            if show {
-                self.browserNavBar.textField.text = ""
+        })
+
+        if show {
+            if keyboard {
                 self.browserNavBar.textField.resignFirstResponder()
-            } else {
+            }
+        } else {
+            self.browserNavBar.textField.text = ""
+            if keyboard {
                 self.browserNavBar.textField.becomeFirstResponder()
             }
-        })
+        }
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
@@ -424,11 +430,11 @@ extension BrowserViewController: BrowserHomeViewDelegate {
     func didCall(action: HomeAction) {
         switch action {
         case .qrCode:
-            break
+            delegate?.didRequestScanQrCode()
         case .search:
             showHomeView(false)
         case .endSearch:
-            break
+            browserNavBar.textField.text = webView.url?.absoluteString
         case .select(let dapp):
             guard let url = dapp.linkURL else { return }
             goTo(url: url)
