@@ -35,7 +35,7 @@ class BrowserCoordinator: Coordinator {
         navigator: Navigator,
         realm: Realm
     ) {
-        self.navigationController = UINavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
+        self.navigationController = UINavigationController()
         self.session = session
         self.keystore = keystore
         self.realm = realm

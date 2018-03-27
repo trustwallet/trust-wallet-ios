@@ -20,7 +20,8 @@ class DAppCollectionView: UIView {
     }()
 
     private struct Layout {
-        static let cellHeight: CGFloat = 80
+        static let cellHeight: CGFloat = 90
+        static let numberOfItems = 4
     }
 
     var elements: [DAppModel] = [] {
@@ -65,11 +66,11 @@ class DAppCollectionView: UIView {
 
 extension DAppCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return Layout.numberOfItems
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return self.elements.count / 2
+        return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -89,6 +90,6 @@ extension DAppCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width/2, height: Layout.cellHeight)
+        return CGSize(width: frame.width/CGFloat(Layout.numberOfItems), height: Layout.cellHeight)
     }
 }
