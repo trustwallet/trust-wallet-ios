@@ -115,6 +115,10 @@ enum RPCServer {
         return URL(string: urlString)!
     }
 
+    var apiURL: URL {
+        return URL(string: "https://trust-api.herokuapp.com/")!
+    }
+
     init(name: String) {
         self = {
             switch name {
