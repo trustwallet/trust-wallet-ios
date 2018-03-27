@@ -66,6 +66,7 @@ class BrowserViewController: UIViewController {
     lazy var config: WKWebViewConfiguration = {
         return WKWebViewConfiguration.make(for: account, with: sessionConfig, in: ScriptMessageProxy(delegate: self))
     }()
+    let viewModel = DAppsViewModel()
 
     init(
         account: Wallet,
@@ -124,6 +125,17 @@ class BrowserViewController: UIViewController {
         }
 
         reloadButtons()
+    }
+
+    func fetchDApps() {
+        viewModel.fetch { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let dapps):
+                self.homeView.update(dapps)
+            case .failure(let error): break
+            }
+        }
     }
 
     private func injectUserAgent() {
