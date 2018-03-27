@@ -4,6 +4,7 @@ import Foundation
 
 struct DAppModel: Codable {
     let name: String
+    let description: String
     let image: String
     let url: String
 

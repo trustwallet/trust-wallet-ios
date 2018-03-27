@@ -20,15 +20,19 @@ class BrowserHomeView: UIView {
     let stackView: UIStackView
     let titleLabel = UILabel()
     let qrButton: UIButton
-    lazy var collectionView: DAppCollectionView = {
-        let collectionView: DAppCollectionView = BrowserHomeView.collection(dapps: [])
-        collectionView.delegate = self
-        return collectionView
-    }()
+    let collectionView: DAppCollectionView
+
+    let tableView: DAppsTableView
 
     weak var delegate: BrowserHomeViewDelegate?
 
     override init(frame: CGRect) {
+
+        tableView = DAppsTableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+
+        collectionView = BrowserHomeView.collection(dapps: [])
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = R.image.launch_screen_logo()
@@ -43,6 +47,8 @@ class BrowserHomeView: UIView {
         qrButton = UIButton(type: .custom)
         qrButton.translatesAutoresizingMaskIntoConstraints = false
         qrButton.setImage(R.image.scan(), for: .normal)
+        qrButton.imageView?.contentMode = .scaleAspectFit
+        qrButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
 
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.layer.borderWidth = 0.5
@@ -53,17 +59,20 @@ class BrowserHomeView: UIView {
         searchBar.rightViewMode = .always
         searchBar.layer.cornerRadius = 5
         searchBar.layer.masksToBounds = true
-        searchBar.placeholder = NSLocalizedString("browser.home.search.placeholder", value: "Search & enter dApp URL", comment: "")
+        searchBar.placeholder = NSLocalizedString("browser.home.search.placeholder", value: "Search & Enter DApp URL", comment: "")
 
         stackView = UIStackView(arrangedSubviews: [
-            .spacer(height: 20),
-            imageView,
-            .spacer(height: 0),
-            titleLabel,
-            .spacer(height: 30),
+            BrowserHomeView.header(for: "DApp of Today", aligment: .center),
+            .spacer(height: 6),
+            tableView,
+            .spacer(height: 25),
             searchBar,
-            .spacer(height: 20),
-            BrowserHomeView.header(for: "dApp of Today"),
+            .spacer(height: 4),
+            BrowserHomeView.header(for: "Explore decentralized web", aligment: .center),
+            .spacer(height: 25),
+            .spacer(height: 6),
+            collectionView,
+            BrowserHomeView.more(title: "More"),
         ])
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,14 +90,16 @@ class BrowserHomeView: UIView {
             imageView.widthAnchor.constraint(equalToConstant: 80),
 
             qrButton.heightAnchor.constraint(equalToConstant: 32),
-            qrButton.widthAnchor.constraint(equalToConstant: 32),
+            qrButton.widthAnchor.constraint(equalToConstant: 42),
 
-            stackView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -30),
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: StyleLayout.sideMargin),
         ])
 
         searchBar.delegate = self
+        tableView.dappsDelegate = self
+        collectionView.delegate = self
         qrButton.addTarget(self, action: #selector(qrCode), for: .touchUpInside)
     }
 
@@ -96,11 +107,21 @@ class BrowserHomeView: UIView {
         delegate?.didCall(action: .qrCode)
     }
 
-    private static func header(for text: String) -> UIView {
+    private static func more(title: String) -> UIView {
+        let button = Button(size: .small, style: .borderless)
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        button.titleLabel?.textColor = Colors.lightGray
+        return button
+    }
+
+    private static func header(for text: String, aligment: NSTextAlignment = .left) -> UIView {
         let label = UILabel()
         label.textColor = Colors.gray
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = text
+        label.textAlignment = aligment
         return label
     }
 
@@ -112,9 +133,11 @@ class BrowserHomeView: UIView {
     }
 
     func update(_ dapps: DAppsBootstrap) {
-        stackView.removeArrangedSubview(collectionView)
         collectionView.elements = dapps.new
-        stackView.addArrangedSubview(collectionView)
+        tableView.dapps = dapps.new
+        tableView.invalidateIntrinsicContentSize()
+        collectionView.invalidateIntrinsicContentSize()
+        stackView.invalidateIntrinsicContentSize()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -134,7 +157,13 @@ extension BrowserHomeView: UITextFieldDelegate {
 }
 
 extension BrowserHomeView: DAppCollectionViewDelegate {
-    func didSelect(dapp: DAppModel) {
+    func didSelect(dapp: DAppModel, in view: DAppCollectionView) {
+        delegate?.didCall(action: .select(dapp))
+    }
+}
+
+extension BrowserHomeView: DAppsTableViewDelegate {
+    func didSelect(dapp: DAppModel, in view: DAppsTableView) {
         delegate?.didCall(action: .select(dapp))
     }
 }

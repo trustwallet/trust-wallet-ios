@@ -5,7 +5,7 @@ import UIKit
 import Kingfisher
 
 protocol DAppCollectionViewDelegate: class {
-    func didSelect(dapp: DAppModel)
+    func didSelect(dapp: DAppModel, in view: DAppCollectionView)
 }
 
 class DAppCollectionView: UIView {
@@ -25,7 +25,7 @@ class DAppCollectionView: UIView {
     weak var delegate: DAppCollectionViewDelegate?
 
     private struct Layout {
-        static let cellHeight: CGFloat = 90
+        static let cellHeight: CGFloat = 78
         static let numberOfItems = 4
     }
 
@@ -75,7 +75,7 @@ extension DAppCollectionView: UICollectionViewDataSource {
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return max(min(elements.count/Layout.numberOfItems, 1), 0)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -93,7 +93,7 @@ extension DAppCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let index = self.index(for: indexPath)
         let dapp = elements[index]
-        delegate?.didSelect(dapp: dapp)
+        delegate?.didSelect(dapp: dapp, in: self)
     }
 }
 

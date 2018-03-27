@@ -383,6 +383,11 @@
 		77974D882069BCFC004D0F8E /* DAppRowVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77974D872069BCFC004D0F8E /* DAppRowVIew.swift */; };
 		77974D8A206A2BB8004D0F8E /* TrustAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77974D89206A2BB8004D0F8E /* TrustAPI.swift */; };
 		77974D8C206A2D93004D0F8E /* DAppsBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77974D8B206A2D93004D0F8E /* DAppsBootstrap.swift */; };
+		77974D8E206A49C5004D0F8E /* DAppsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77974D8D206A49C5004D0F8E /* DAppsTableView.swift */; };
+		77974D91206A49DC004D0F8E /* DAppTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77974D8F206A49DC004D0F8E /* DAppTableViewCell.swift */; };
+		77974D92206A49DC004D0F8E /* DAppTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77974D90206A49DC004D0F8E /* DAppTableViewCell.xib */; };
+		77974D94206A4F43004D0F8E /* DAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77974D93206A4F43004D0F8E /* DAppViewModel.swift */; };
+		77974D96206A7D3E004D0F8E /* DAppsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77974D95206A7D3E004D0F8E /* DAppsViewController.swift */; };
 		77B1EAFF20639DEB007970AA /* NFTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B1EAFE20639DEB007970AA /* NFTokenViewController.swift */; };
 		77B1EB012063A198007970AA /* NFTDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B1EB002063A198007970AA /* NFTDetailsViewModel.swift */; };
 		77B1EB032063AC61007970AA /* NFTFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B1EB022063AC61007970AA /* NFTFooterView.swift */; };
@@ -858,6 +863,11 @@
 		77974D872069BCFC004D0F8E /* DAppRowVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppRowVIew.swift; sourceTree = "<group>"; };
 		77974D89206A2BB8004D0F8E /* TrustAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustAPI.swift; sourceTree = "<group>"; };
 		77974D8B206A2D93004D0F8E /* DAppsBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppsBootstrap.swift; sourceTree = "<group>"; };
+		77974D8D206A49C5004D0F8E /* DAppsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppsTableView.swift; sourceTree = "<group>"; };
+		77974D8F206A49DC004D0F8E /* DAppTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppTableViewCell.swift; sourceTree = "<group>"; };
+		77974D90206A49DC004D0F8E /* DAppTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DAppTableViewCell.xib; sourceTree = "<group>"; };
+		77974D93206A4F43004D0F8E /* DAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppViewModel.swift; sourceTree = "<group>"; };
+		77974D95206A7D3E004D0F8E /* DAppsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppsViewController.swift; sourceTree = "<group>"; };
 		77B1EAFE20639DEB007970AA /* NFTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTokenViewController.swift; sourceTree = "<group>"; };
 		77B1EB002063A198007970AA /* NFTDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTDetailsViewModel.swift; sourceTree = "<group>"; };
 		77B1EB022063AC61007970AA /* NFTFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTFooterView.swift; sourceTree = "<group>"; };
@@ -1926,6 +1936,7 @@
 			children = (
 				29E6E06D1FE897EE0079265A /* BrowserViewController.swift */,
 				903682F0204A6DB800013479 /* BookmarkViewController.swift */,
+				77974D95206A7D3E004D0F8E /* DAppsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2378,6 +2389,9 @@
 				77974D81206914FA004D0F8E /* DAppViewCell.swift */,
 				77974D82206914FA004D0F8E /* DAppViewCell.xib */,
 				77974D872069BCFC004D0F8E /* DAppRowVIew.swift */,
+				77974D8D206A49C5004D0F8E /* DAppsTableView.swift */,
+				77974D8F206A49DC004D0F8E /* DAppTableViewCell.swift */,
+				77974D90206A49DC004D0F8E /* DAppTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2388,6 +2402,7 @@
 				77B3BF342017D0D000EEC15A /* DAppsViewModel.swift */,
 				903682F7204AC52F00013479 /* BookmarksViewModel.swift */,
 				90DDF48420518AE50016E6D4 /* BookmarkViewModel.swift */,
+				77974D93206A4F43004D0F8E /* DAppViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2690,6 +2705,7 @@
 				902CAB592051818B00F96FFE /* BookmarkViewCell.xib in Resources */,
 				771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */,
 				291794FC1F95DE5F00539A30 /* index.html in Resources */,
+				77974D92206A49DC004D0F8E /* DAppTableViewCell.xib in Resources */,
 				775DF43F203E38D3009CD082 /* NonFungibleTokenViewCell.xib in Resources */,
 				296106CE1F777E410006164B /* LaunchScreen.storyboard in Resources */,
 				290B2B541F8F50030053C83E /* Localizable.strings in Resources */,
@@ -3108,6 +3124,7 @@
 				2923D9B31FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift in Sources */,
 				77974D8620691D78004D0F8E /* DAppModel.swift in Sources */,
 				294DFBA01FE0CADE004CEB56 /* TransactionDetailsViewModel.swift in Sources */,
+				77974D8E206A49C5004D0F8E /* DAppsTableView.swift in Sources */,
 				90DDF48520518AE50016E6D4 /* BookmarkViewModel.swift in Sources */,
 				BBB61E122050993A00428BBD /* BrowserErrorView.swift in Sources */,
 				29C80D4B1FB51C460037B1E0 /* Decimal.swift in Sources */,
@@ -3178,6 +3195,7 @@
 				29AD8A061F93DC8C008E10E7 /* PushDevice.swift in Sources */,
 				294DFBA91FE6EBFB004CEB56 /* NewTokenViewController.swift in Sources */,
 				29B933F51F860074009FCABB /* SendTransactionCoordinator.swift in Sources */,
+				77974D96206A7D3E004D0F8E /* DAppsViewController.swift in Sources */,
 				73F2FF3E20557C440021976E /* TransactionOperation.swift in Sources */,
 				2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */,
 				291F52A51F6B762300B369AB /* EtherServiceRequest.swift in Sources */,
@@ -3248,6 +3266,7 @@
 				29F1C84C1FEC4F6F003780D8 /* TokensFooterView.swift in Sources */,
 				29F114F41FA8117C00114A29 /* SendCoordinator.swift in Sources */,
 				293B8B411F707F4600356286 /* TransactionViewModel.swift in Sources */,
+				77974D94206A4F43004D0F8E /* DAppViewModel.swift in Sources */,
 				771A847D2032409000528D28 /* PreferenceOption.swift in Sources */,
 				77B3BF4A2019247200EEC15A /* BrowserNavigationBar.swift in Sources */,
 				29BB94951F6FC54C009B09CC /* EthereumUnit.swift in Sources */,
@@ -3283,6 +3302,7 @@
 				77B1EB032063AC61007970AA /* NFTFooterView.swift in Sources */,
 				77B1EB012063A198007970AA /* NFTDetailsViewModel.swift in Sources */,
 				298542F31FBD594D00CB5081 /* SettingsViewModel.swift in Sources */,
+				77974D91206A49DC004D0F8E /* DAppTableViewCell.swift in Sources */,
 				CCA4FE381FD428B300749AE4 /* JailbreakChecker.swift in Sources */,
 				291A1B651F974E8600ADEC80 /* WalletEntryPoint.swift in Sources */,
 				2959960E1FAB05C200DB66A8 /* TransactionsEmptyView.swift in Sources */,

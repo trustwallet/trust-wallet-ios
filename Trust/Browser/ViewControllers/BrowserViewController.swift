@@ -69,6 +69,12 @@ class BrowserViewController: UIViewController {
     }()
     let viewModel = DAppsViewModel()
 
+    lazy var dappsController: DAppsViewController = {
+        let dappsController = DAppsViewController()
+        dappsController.delegate = self
+        return dappsController
+    }()
+
     init(
         account: Wallet,
         config: Config
@@ -86,7 +92,7 @@ class BrowserViewController: UIViewController {
         injectUserAgent()
 
         view.addSubview(errorView)
-        view.addSubview(homeView)
+        view.addSubview(dappsController.view)
 
         NSLayoutConstraint.activate([
             browserNavBar.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
@@ -104,10 +110,10 @@ class BrowserViewController: UIViewController {
             errorView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
             errorView.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
 
-            homeView.topAnchor.constraint(equalTo: view.topAnchor),
-            homeView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            homeView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            homeView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            dappsController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            dappsController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            dappsController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            dappsController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         view.backgroundColor = .white
         webView.addObserver(self, forKeyPath: Keys.estimatedProgress, options: .new, context: &myContext)
@@ -198,8 +204,10 @@ class BrowserViewController: UIViewController {
     private func showHomeView(_ show: Bool, animated: Bool = true, keyboard: Bool = true) {
         let duration = animated ? 0.4 : 0
         UIView.animate(withDuration: duration, delay: 0.0, options: [], animations: {
-            self.homeView.alpha = show ? 1 : 0
+            self.dappsController.view.alpha = show ? 1 : 0
             self.browserNavBar.alpha = show ? 0 : 1
+
+            //self.homeView.sea
         })
 
         if show {
@@ -439,5 +447,12 @@ extension BrowserViewController: BrowserHomeViewDelegate {
             guard let url = dapp.linkURL else { return }
             goTo(url: url)
         }
+    }
+}
+
+extension BrowserViewController: DAppsViewControllerDelegate {
+    func didSelect(dapp: DAppModel, in viewController: DAppsViewController) {
+        guard let url = dapp.linkURL else { return }
+        goTo(url: url)
     }
 }
