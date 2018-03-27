@@ -6,6 +6,7 @@ import BigInt
 import TrustKeystore
 import RealmSwift
 import URLNavigator
+import QRCodeReaderViewController
 
 protocol BrowserCoordinatorDelegate: class {
     func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator)
@@ -35,7 +36,7 @@ class BrowserCoordinator: Coordinator {
         navigator: Navigator,
         realm: Realm
     ) {
-        self.navigationController = UINavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
+        self.navigationController = UINavigationController()
         self.session = session
         self.keystore = keystore
         self.realm = realm
@@ -109,6 +110,15 @@ class BrowserCoordinator: Coordinator {
         rootViewController.goTo(url: url)
     }
 
+    func presentQRCodeReader() {
+        let coordinator = ScanQRCodeCoordinator(
+            navigationController: NavigationController()
+        )
+        coordinator.delegate = self
+        addCoordinator(coordinator)
+        navigationController.present(coordinator.qrcodeController, animated: true, completion: nil)
+    }
+
     func signMessage(with type: SignMesageType, account: Account, callbackID: Int) {
         let coordinator = SignMessageCoordinator(
             navigationController: navigationController,
@@ -153,6 +163,23 @@ extension BrowserCoordinator: BookmarksCoordinatorDelegate {
     }
 }
 
+extension BrowserCoordinator: ScanQRCodeCoordinatorDelegate {
+
+    func didCancel(in coordinator: ScanQRCodeCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+    }
+
+    func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+        guard let url = URL(string: result) else {
+            return
+        }
+        rootViewController.goTo(url: url)
+    }
+}
+
 extension BrowserCoordinator: BrowserViewControllerDelegate {
     func didCall(action: DappAction, callbackID: Int) {
         switch session.account.type {
@@ -183,6 +210,10 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
 
     func didOpenBookmarkList() {
         showBookmarks()
+    }
+
+    func didRequestScanQrCode() {
+        presentQRCodeReader()
     }
 }
 

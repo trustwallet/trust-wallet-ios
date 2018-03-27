@@ -23,8 +23,6 @@ func applyStyle() {
 
     BalanceTitleView.appearance().titleTextColor = UIColor.white
     BalanceTitleView.appearance().subTitleTextColor = UIColor(white: 0.9, alpha: 1)
-
-    BrowserNavigationBar.appearance().setBackgroundImage(.filled(with: .white), for: .default)
 }
 
 struct Colors {

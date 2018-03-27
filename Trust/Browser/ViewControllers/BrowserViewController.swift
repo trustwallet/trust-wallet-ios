@@ -10,6 +10,7 @@ protocol BrowserViewControllerDelegate: class {
     func didCall(action: DappAction, callbackID: Int)
     func didAddBookmark(bookmark: Bookmark)
     func didOpenBookmarkList()
+    func didRequestScanQrCode()
 }
 
 class BrowserViewController: UIViewController {
@@ -51,24 +52,27 @@ class BrowserViewController: UIViewController {
         return errorView
     }()
 
+    lazy var homeView: BrowserHomeView = {
+        let homeView = BrowserHomeView()
+        homeView.translatesAutoresizingMaskIntoConstraints = false
+        homeView.delegate = self
+        return homeView
+    }()
+
     weak var delegate: BrowserViewControllerDelegate?
     private let urlParser = BrowserURLParser()
-
-    var browserNavBar: BrowserNavigationBar? {
-        return navigationController?.navigationBar as? BrowserNavigationBar
-    }
-
-    lazy var progressView: UIProgressView = {
-        let progressView = UIProgressView(progressViewStyle: .default)
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.tintColor = Colors.darkBlue
-        progressView.trackTintColor = .clear
-        return progressView
-    }()
+    let browserNavBar = BrowserNavigationBar()
 
     //Take a look at this issue : https://stackoverflow.com/questions/26383031/wkwebview-causes-my-view-controller-to-leak
     lazy var config: WKWebViewConfiguration = {
         return WKWebViewConfiguration.make(for: account, with: sessionConfig, in: ScriptMessageProxy(delegate: self))
+    }()
+    let viewModel = DAppsViewModel()
+
+    lazy var dappsController: DAppsViewController = {
+        let dappsController = DAppsViewController()
+        dappsController.delegate = self
+        return dappsController
     }()
 
     init(
@@ -80,33 +84,40 @@ class BrowserViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
+        browserNavBar.translatesAutoresizingMaskIntoConstraints = false
+        browserNavBar.browserDelegate = self
+        view.addSubview(browserNavBar)
+
         view.addSubview(webView)
         injectUserAgent()
 
-        webView.addSubview(progressView)
-        webView.bringSubview(toFront: progressView)
         view.addSubview(errorView)
+        view.addSubview(dappsController.view)
 
         NSLayoutConstraint.activate([
-            webView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
+            browserNavBar.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
+            browserNavBar.heightAnchor.constraint(equalToConstant: 44),
+            browserNavBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            browserNavBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            webView.topAnchor.constraint(equalTo: browserNavBar.bottomAnchor),
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             webView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor),
-
-            progressView.topAnchor.constraint(equalTo: view.layoutGuide.topAnchor),
-            progressView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
-            progressView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
-            progressView.heightAnchor.constraint(equalToConstant: 2),
 
             errorView.topAnchor.constraint(equalTo: webView.topAnchor),
             errorView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
             errorView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
             errorView.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
+
+            dappsController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            dappsController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            dappsController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            dappsController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         view.backgroundColor = .white
         webView.addObserver(self, forKeyPath: Keys.estimatedProgress, options: .new, context: &myContext)
         webView.addObserver(self, forKeyPath: Keys.URL, options: [.new, .initial], context: &myContext)
-        goHome()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -116,8 +127,24 @@ class BrowserViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        browserNavBar?.browserDelegate = self
+        if browserNavBar.alpha != 0 {
+            navigationController?.setNavigationBarHidden(true, animated: false)
+        }
+
         reloadButtons()
+
+        fetchDApps()
+    }
+
+    func fetchDApps() {
+        viewModel.fetch { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let dapps):
+                self.homeView.update(dapps)
+            case .failure: break
+            }
+        }
     }
 
     private func injectUserAgent() {
@@ -128,6 +155,7 @@ class BrowserViewController: UIViewController {
     }
 
     func goTo(url: URL) {
+        showHomeView(false, keyboard: false)
         webView.load(URLRequest(url: url))
     }
 
@@ -148,7 +176,7 @@ class BrowserViewController: UIViewController {
         guard let url = URL(string: Constants.dappsBrowserURL) else { return }
         hideErrorView()
         webView.load(URLRequest(url: url))
-        browserNavBar?.textField.text = url.absoluteString
+        browserNavBar.textField.text = url.absoluteString
     }
 
     private func reload() {
@@ -161,16 +189,37 @@ class BrowserViewController: UIViewController {
     }
 
     private func refreshURL() {
-        browserNavBar?.textField.text = webView.url?.absoluteString
+        browserNavBar.textField.text = webView.url?.absoluteString
     }
 
     private func reloadButtons() {
-        browserNavBar?.goBack.isEnabled = webView.canGoBack
-        browserNavBar?.goForward.isEnabled = webView.canGoForward
+        browserNavBar.goBack.isEnabled = webView.canGoBack
+        browserNavBar.goForward.isEnabled = webView.canGoForward
     }
 
     private func hideErrorView() {
         errorView.isHidden = true
+    }
+
+    private func showHomeView(_ show: Bool, animated: Bool = true, keyboard: Bool = true) {
+        let duration = animated ? 0.4 : 0
+        UIView.animate(withDuration: duration, delay: 0.0, options: [], animations: {
+            self.dappsController.view.alpha = show ? 1 : 0
+            self.browserNavBar.alpha = show ? 0 : 1
+
+            //self.homeView.sea
+        })
+
+        if show {
+            if keyboard {
+                self.browserNavBar.textField.resignFirstResponder()
+            }
+        } else {
+            self.browserNavBar.textField.text = ""
+            if keyboard {
+                self.browserNavBar.textField.becomeFirstResponder()
+            }
+        }
     }
 
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
@@ -181,12 +230,12 @@ class BrowserViewController: UIViewController {
         }
         if keyPath == Keys.estimatedProgress {
             if let progress = (change[NSKeyValueChangeKey.newKey] as AnyObject).floatValue {
-                progressView.progress = progress
-                progressView.isHidden = progress == 1
+                browserNavBar.progressView.progress = progress
+                browserNavBar.progressView.isHidden = progress == 1
             }
         } else if keyPath == Keys.URL {
             if let url = webView.url {
-                self.browserNavBar?.textField.text = url.absoluteString
+                self.browserNavBar.textField.text = url.absoluteString
             }
         }
     }
@@ -277,8 +326,7 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
         case .more(let sender):
             presentMoreOptions(sender: sender)
         case .home:
-            //TODO: Implement
-            break
+            showHomeView(true)
         case .enter(let string):
             guard let url = urlParser.url(from: string) else { return }
             goTo(url: url)
@@ -383,5 +431,28 @@ extension BrowserViewController: WKScriptMessageHandler {
 extension BrowserViewController: BrowserErrorViewDelegate {
     func didTapReload(_ sender: Button) {
         reload()
+    }
+}
+
+extension BrowserViewController: BrowserHomeViewDelegate {
+    func didCall(action: HomeAction) {
+        switch action {
+        case .qrCode:
+            delegate?.didRequestScanQrCode()
+        case .search:
+            showHomeView(false)
+        case .endSearch:
+            browserNavBar.textField.text = webView.url?.absoluteString
+        case .select(let dapp):
+            guard let url = dapp.linkURL else { return }
+            goTo(url: url)
+        }
+    }
+}
+
+extension BrowserViewController: DAppsViewControllerDelegate {
+    func didSelect(dapp: DAppModel, in viewController: DAppsViewController) {
+        guard let url = dapp.linkURL else { return }
+        goTo(url: url)
     }
 }

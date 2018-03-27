@@ -6,14 +6,24 @@ protocol BrowserNavigationBarDelegate: class {
     func did(action: BrowserAction)
 }
 
-class BrowserNavigationBar: UINavigationBar {
+class BrowserNavigationBar: UIView {
 
     let goBack = UIButton()
     let goForward = UIButton()
     let textField = UITextField()
     let moreButton = UIButton()
     let homeButton = UIButton()
+    let stackView = UIStackView()
+    let hairLine = UIView()
     weak var browserDelegate: BrowserNavigationBarDelegate?
+
+    lazy var progressView: UIProgressView = {
+        let progressView = UIProgressView(progressViewStyle: .default)
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        progressView.tintColor = Colors.darkBlue
+        progressView.trackTintColor = .clear
+        return progressView
+    }()
 
     private struct Layout {
         static let width: CGFloat = 34
@@ -22,6 +32,11 @@ class BrowserNavigationBar: UINavigationBar {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        backgroundColor = .white
+
+        hairLine.translatesAutoresizingMaskIntoConstraints = false
+        hairLine.backgroundColor = Colors.lightGray
 
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
@@ -57,30 +72,49 @@ class BrowserNavigationBar: UINavigationBar {
         homeButton.setImage(R.image.dapps_icon(), for: .normal)
         homeButton.addTarget(self, action: #selector(homeAction(_:)), for: .touchUpInside)
 
-        let stackView = UIStackView(arrangedSubviews: [
+        let elements: [UIView] = [
             goBack,
             goForward,
             textField,
             .spacerWidth(),
             homeButton,
             moreButton,
-        ])
+        ]
+        for item in elements {
+            stackView.addArrangedSubview(item)
+        }
+
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.spacing = 4
 
+        addSubview(hairLine)
         addSubview(stackView)
+        addSubview(progressView)
+        bringSubview(toFront: progressView)
 
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
+            stackView.bottomAnchor.constraint(equalTo: progressView.topAnchor, constant: -6),
 
+            homeButton.widthAnchor.constraint(equalToConstant: Layout.width),
             goForward.widthAnchor.constraint(equalToConstant: Layout.width),
             goBack.widthAnchor.constraint(equalToConstant: Layout.width),
             moreButton.widthAnchor.constraint(equalToConstant: Layout.moreButtonWidth),
+
+            progressView.topAnchor.constraint(equalTo: stackView.bottomAnchor),
+            progressView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            progressView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            progressView.heightAnchor.constraint(equalToConstant: 2),
+            progressView.bottomAnchor.constraint(equalTo: hairLine.topAnchor),
+
+            hairLine.heightAnchor.constraint(equalToConstant: 0.5),
+            hairLine.leadingAnchor.constraint(equalTo: leadingAnchor),
+            hairLine.trailingAnchor.constraint(equalTo: trailingAnchor),
+            hairLine.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 
@@ -98,6 +132,10 @@ class BrowserNavigationBar: UINavigationBar {
 
     @objc private func homeAction(_ sender: UIView) {
         browserDelegate?.did(action: .home)
+    }
+
+    func showElements(show: Bool) {
+        stackView.isHidden = show
     }
 
     required init?(coder aDecoder: NSCoder) {

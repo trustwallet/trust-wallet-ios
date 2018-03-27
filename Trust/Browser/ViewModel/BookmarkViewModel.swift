@@ -25,6 +25,7 @@ struct BookmarkViewModel {
         }
         return URL(string: "https://api.statvoo.com/favicon/?url=\(host)")
     }
+    
 
     var placeholderImage: UIImage? {
         return R.image.launch_screen_logo()
