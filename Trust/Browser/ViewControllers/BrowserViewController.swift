@@ -185,6 +185,7 @@ class BrowserViewController: UIViewController {
             self.homeView.alpha = show ? 1 : 0
             self.browserNavBar.alpha = show ? 0 : 1
             if show {
+                self.browserNavBar.textField.text = ""
                 self.browserNavBar.textField.resignFirstResponder()
             } else {
                 self.browserNavBar.textField.becomeFirstResponder()
