@@ -125,6 +125,8 @@ class BrowserViewController: UIViewController {
         }
 
         reloadButtons()
+
+        fetchDApps()
     }
 
     func fetchDApps() {
@@ -133,7 +135,7 @@ class BrowserViewController: UIViewController {
             switch result {
             case .success(let dapps):
                 self.homeView.update(dapps)
-            case .failure(let error): break
+            case .failure: break
             }
         }
     }
@@ -146,6 +148,7 @@ class BrowserViewController: UIViewController {
     }
 
     func goTo(url: URL) {
+        showHomeView(false)
         webView.load(URLRequest(url: url))
     }
 
@@ -418,11 +421,17 @@ extension BrowserViewController: BrowserErrorViewDelegate {
 }
 
 extension BrowserViewController: BrowserHomeViewDelegate {
-    func didPressQrCode() {
-        //TODO: Scan QR Code - model view controller?
-    }
-
-    func didPressSearch() {
-        showHomeView(false)
+    func didCall(action: HomeAction) {
+        switch action {
+        case .qrCode:
+            break
+        case .search:
+            showHomeView(false)
+        case .endSearch:
+            break
+        case .select(let dapp):
+            guard let url = dapp.linkURL else { return }
+            goTo(url: url)
+        }
     }
 }

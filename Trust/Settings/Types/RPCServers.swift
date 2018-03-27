@@ -116,7 +116,7 @@ enum RPCServer {
     }
 
     var apiURL: URL {
-        return URL(string: "https://trust-api.herokuapp.com/")!
+        return URL(string: "https://trust-api.herokuapp.com")!
     }
 
     init(name: String) {

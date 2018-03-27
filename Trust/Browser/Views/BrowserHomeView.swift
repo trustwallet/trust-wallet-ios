@@ -2,9 +2,15 @@
 
 import UIKit
 
+enum HomeAction {
+    case qrCode
+    case search
+    case endSearch
+    case select(DAppModel)
+}
+
 protocol BrowserHomeViewDelegate: class {
-    func didPressQrCode()
-    func didPressSearch()
+    func didCall(action: HomeAction)
 }
 
 class BrowserHomeView: UIView {
@@ -14,17 +20,15 @@ class BrowserHomeView: UIView {
     let stackView: UIStackView
     let titleLabel = UILabel()
     let qrButton: UIButton
+    lazy var collectionView: DAppCollectionView = {
+        let collectionView: DAppCollectionView = BrowserHomeView.collection(dapps: [])
+        collectionView.delegate = self
+        return collectionView
+    }()
 
     weak var delegate: BrowserHomeViewDelegate?
 
     override init(frame: CGRect) {
-
-        let dapps = [
-            DAppModel(name: "Cat", image: "https://www.cryptokitties.co/images/letterHead.png"),
-            DAppModel(name: "Dog", image: "https://www.cryptokitties.co/images/letterHead.png"),
-            DAppModel(name: "Kyber", image: "https://www.cryptokitties.co/images/letterHead.png"),
-            DAppModel(name: "Bancor", image: "https://www.cryptokitties.co/images/letterHead.png"),
-        ]
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = R.image.launch_screen_logo()
@@ -60,8 +64,6 @@ class BrowserHomeView: UIView {
             searchBar,
             .spacer(height: 20),
             BrowserHomeView.header(for: "dApp of Today"),
-            BrowserHomeView.collection(dapps: dapps),
-            BrowserHomeView.collection(dapps: dapps),
         ])
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -91,7 +93,7 @@ class BrowserHomeView: UIView {
     }
 
     @objc func qrCode() {
-        delegate?.didPressQrCode()
+        delegate?.didCall(action: .qrCode)
     }
 
     private static func header(for text: String) -> UIView {
@@ -110,7 +112,9 @@ class BrowserHomeView: UIView {
     }
 
     func update(_ dapps: DAppsBootstrap) {
-        //
+        stackView.removeArrangedSubview(collectionView)
+        collectionView.elements = dapps.new
+        stackView.addArrangedSubview(collectionView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -120,7 +124,17 @@ class BrowserHomeView: UIView {
 
 extension BrowserHomeView: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        delegate?.didPressSearch()
+        delegate?.didCall(action: .search)
         return false
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        delegate?.didCall(action: .endSearch)
+    }
+}
+
+extension BrowserHomeView: DAppCollectionViewDelegate {
+    func didSelect(dapp: DAppModel) {
+        delegate?.didCall(action: .select(dapp))
     }
 }

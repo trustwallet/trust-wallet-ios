@@ -4,6 +4,10 @@ import Foundation
 import UIKit
 import Kingfisher
 
+protocol DAppCollectionViewDelegate: class {
+    func didSelect(dapp: DAppModel)
+}
+
 class DAppCollectionView: UIView {
 
     lazy var layout: UICollectionViewLayout = {
@@ -18,6 +22,7 @@ class DAppCollectionView: UIView {
         collectionView.isScrollEnabled = false
         return collectionView
     }()
+    weak var delegate: DAppCollectionViewDelegate?
 
     private struct Layout {
         static let cellHeight: CGFloat = 90
@@ -66,11 +71,11 @@ class DAppCollectionView: UIView {
 
 extension DAppCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Layout.numberOfItems
+        return max(Layout.numberOfItems, 0)
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 2
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -83,6 +88,12 @@ extension DAppCollectionView: UICollectionViewDataSource {
             placeholder: .none
         )
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let index = self.index(for: indexPath)
+        let dapp = elements[index]
+        delegate?.didSelect(dapp: dapp)
     }
 }
 
