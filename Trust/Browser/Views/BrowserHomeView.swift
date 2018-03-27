@@ -65,15 +65,12 @@ class BrowserHomeView: UIView {
         ])
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        //stackView.alignment = .center
         stackView.axis = .vertical
 
         super.init(frame: .zero)
 
         backgroundColor = .white
-
         addSubview(stackView)
-        //stackView.anchor(to: self, margin: 15)
 
         NSLayoutConstraint.activate([
             searchBar.heightAnchor.constraint(equalToConstant: 40),
@@ -83,10 +80,6 @@ class BrowserHomeView: UIView {
 
             qrButton.heightAnchor.constraint(equalToConstant: 36),
             qrButton.widthAnchor.constraint(equalToConstant: 36),
-//            homeView.topAnchor.constraint(equalTo: webView.topAnchor),
-//            homeView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
-//            homeView.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
-//            homeView.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
 
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -30),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
@@ -114,6 +107,10 @@ class BrowserHomeView: UIView {
         popularCollectionView.translatesAutoresizingMaskIntoConstraints = false
         popularCollectionView.elements = dapps
         return popularCollectionView
+    }
+
+    func update(_ dapps: DAppsBootstrap) {
+        //
     }
 
     required init?(coder aDecoder: NSCoder) {
