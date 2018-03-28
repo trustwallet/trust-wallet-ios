@@ -34,9 +34,36 @@ class NetworksViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        form = Section()
+        form +++ SelectableSection<ListCheckRow<String>>("", selectionType: .singleSelection(enableDeselection: true))
+        for server in viewModel.servers where server.networkType == .main {
+            form.last! <<< ListCheckRow<String>(server.displayName) { listRow in
+                listRow.title = server.displayName
+                listRow.selectableValue = server.displayName
+                listRow.value = nil
+            }
+        }
 
-            +++ PushRow<RPCServer> { [weak self] in
+        form +++ SelectableSection<ListCheckRow<String>>("TEST", selectionType: .singleSelection(enableDeselection: true))
+        for server in viewModel.servers where server.networkType == .test {
+            form.last! <<< ListCheckRow<String>(server.displayName) { listRow in
+                listRow.title = server.displayName
+                listRow.selectableValue = server.displayName
+                listRow.value = nil
+            }
+        }
+
+        if !self.viewModel.customServers.isEmpty {
+            form +++ SelectableSection<ListCheckRow<String>>("CUSTOM", selectionType: .singleSelection(enableDeselection: true))
+            for server in viewModel.servers where server.networkType == .custom {
+                form.last! <<< ListCheckRow<String>(server.displayName) { listRow in
+                    listRow.title = server.displayName
+                    listRow.selectableValue = server.displayName
+                    listRow.value = nil
+                }
+            }
+        }
+
+            /*+++ PushRow<RPCServer> { [weak self] in
                 guard let strongSelf = self else { return }
                 $0.title = strongSelf.viewModel.networkTitle
                 $0.options = strongSelf.viewModel.servers
@@ -51,6 +78,6 @@ class NetworksViewController: FormViewController {
                     
             }.cellSetup { cell, _ in
                     
-            }
+            }*/
     }
 }

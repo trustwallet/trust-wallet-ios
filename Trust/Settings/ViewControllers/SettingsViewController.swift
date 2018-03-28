@@ -104,8 +104,8 @@ class SettingsViewController: FormViewController, Coordinator {
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_server()
-                cell.textLabel?.text = "self.viewModel.networkTitle"
-                cell.detailTextLabel?.text = "Ayy lmao"
+                cell.textLabel?.text = NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
+                cell.detailTextLabel?.text = RPCServer(chainID: self.config.chainID).displayName 
                 cell.accessoryType = .disclosureIndicator
             }
 
