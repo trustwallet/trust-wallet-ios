@@ -63,7 +63,6 @@ class TokensViewController: UIViewController {
         tableView = UITableView(frame: .zero, style: .plain)
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
-        self.tokensObservation()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -100,8 +99,9 @@ class TokensViewController: UIViewController {
         tableView.tableFooterView = footer
         refreshHeaderAndFooterView()
         sheduleBalanceUpdate()
-        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.stopTimer), name: .UIApplicationWillResignActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.restartTimer), name: .UIApplicationDidBecomeActive, object: nil)
+        tokensObservation()
+        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -141,7 +141,9 @@ class TokensViewController: UIViewController {
             let tableView = strongSelf.tableView
             switch changes {
             case .initial:
-                tableView.reloadData()
+                UIView.performWithoutAnimation {
+                    tableView.reloadData()
+                }
             case .update(_, let deletions, let insertions, let modifications):
                 UIView.performWithoutAnimation {
                     tableView.beginUpdates()
@@ -169,12 +171,13 @@ class TokensViewController: UIViewController {
         }
     }
 
-    @objc func stopTimer() {
+    @objc func resignActive() {
         etherFetchTimer?.invalidate()
         etherFetchTimer = nil
+        cancelOperations()
     }
 
-    @objc func restartTimer() {
+    @objc func didBecomeActive() {
         sheduleBalanceUpdate()
     }
 
@@ -190,7 +193,7 @@ class TokensViewController: UIViewController {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
-        stopTimer()
+        resignActive()
     }
 }
 extension TokensViewController: StatefulViewController {
