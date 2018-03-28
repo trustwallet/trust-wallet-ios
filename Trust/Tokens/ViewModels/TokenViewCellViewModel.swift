@@ -59,6 +59,21 @@ struct TokenViewCellViewModel {
         return Colors.lightGray
     }
 
+    var percentChange: String? {
+        guard let _ = currencyAmount else {
+            return .none
+        }
+        return TokensLayout.cell.percentChange(for: ticker)
+    }
+
+    var percentChangeColor: UIColor {
+        return TokensLayout.cell.percentChangeColor(for: ticker)
+    }
+
+    var percentChangeFont: UIFont {
+        return UIFont.systemFont(ofSize: 12, weight: .light)
+    }
+
     var placeholderImage: UIImage? {
         return R.image.ethereum_logo_256()
     }
