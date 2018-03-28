@@ -213,9 +213,6 @@ class BrowserViewController: UIViewController {
         )
         alertController.popoverPresentationController?.sourceView = sender
         alertController.popoverPresentationController?.sourceRect = sender.centerRect
-        let homeAction = UIAlertAction(title: NSLocalizedString("browser.home.button.title", value: "Home", comment: ""), style: .default) { [unowned self] _ in
-            self.goHome()
-        }
         let QRCodeAction = UIAlertAction(title: NSLocalizedString("browser.qrCode.button.title", value: "QR Reader", comment: ""), style: .default) { [unowned self] _ in
             self.qrReader()
         }
@@ -233,7 +230,6 @@ class BrowserViewController: UIViewController {
             self.showBookmarks()
         }
 
-        alertController.addAction(homeAction)
         alertController.addAction(reloadAction)
         alertController.addAction(QRCodeAction)
         alertController.addAction(shareAction)
