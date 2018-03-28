@@ -10,6 +10,7 @@ protocol BrowserViewControllerDelegate: class {
     func didCall(action: DappAction, callbackID: Int)
     func didAddBookmark(bookmark: Bookmark)
     func didOpenBookmarkList()
+    func didOpenQRCode()
 }
 
 class BrowserViewController: UIViewController {
@@ -106,7 +107,6 @@ class BrowserViewController: UIViewController {
         view.backgroundColor = .white
         webView.addObserver(self, forKeyPath: Keys.estimatedProgress, options: .new, context: &myContext)
         webView.addObserver(self, forKeyPath: Keys.URL, options: [.new, .initial], context: &myContext)
-        goHome()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -144,11 +144,15 @@ class BrowserViewController: UIViewController {
         self.webView.evaluateJavaScript(script, completionHandler: nil)
     }
 
-    private func goHome() {
+    func goHome() {
         guard let url = URL(string: Constants.dappsBrowserURL) else { return }
         hideErrorView()
         webView.load(URLRequest(url: url))
         browserNavBar?.textField.text = url.absoluteString
+    }
+
+    private func qrReader() {
+        delegate?.didOpenQRCode()
     }
 
     private func reload() {
@@ -212,6 +216,9 @@ class BrowserViewController: UIViewController {
         let homeAction = UIAlertAction(title: NSLocalizedString("browser.home.button.title", value: "Home", comment: ""), style: .default) { [unowned self] _ in
             self.goHome()
         }
+        let QRCodeAction = UIAlertAction(title: NSLocalizedString("browser.qrCode.button.title", value: "QR Reader", comment: ""), style: .default) { [unowned self] _ in
+            self.qrReader()
+        }
         let reloadAction = UIAlertAction(title: NSLocalizedString("browser.reload.button.title", value: "Reload", comment: ""), style: .default) { [unowned self] _ in
             self.reload()
         }
@@ -228,6 +235,7 @@ class BrowserViewController: UIViewController {
 
         alertController.addAction(homeAction)
         alertController.addAction(reloadAction)
+        alertController.addAction(QRCodeAction)
         alertController.addAction(shareAction)
         alertController.addAction(addBookmarkAction)
         alertController.addAction(viewBookmarksAction)
@@ -277,8 +285,7 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
         case .more(let sender):
             presentMoreOptions(sender: sender)
         case .home:
-            //TODO: Implement
-            break
+            goHome()
         case .enter(let string):
             guard let url = urlParser.url(from: string) else { return }
             goTo(url: url)

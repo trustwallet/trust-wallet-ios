@@ -43,6 +43,7 @@ class BrowserCoordinator: Coordinator {
 
     func start() {
         navigationController.viewControllers = [rootViewController]
+        rootViewController.goHome()
     }
 
     @objc func dismiss() {
@@ -138,6 +139,15 @@ class BrowserCoordinator: Coordinator {
         addCoordinator(coordinator)
         coordinator.start(with: type)
     }
+
+    func presentQRCodeReader() {
+        let coordinator = ScanQRCodeCoordinator(
+            navigationController: NavigationController()
+        )
+        coordinator.delegate = self
+        addCoordinator(coordinator)
+        navigationController.present(coordinator.qrcodeController, animated: true, completion: nil)
+    }
 }
 
 extension BrowserCoordinator: BookmarksCoordinatorDelegate {
@@ -154,6 +164,10 @@ extension BrowserCoordinator: BookmarksCoordinatorDelegate {
 }
 
 extension BrowserCoordinator: BrowserViewControllerDelegate {
+    func didOpenQRCode() {
+        presentQRCodeReader()
+    }
+
     func didCall(action: DappAction, callbackID: Int) {
         switch session.account.type {
         case .privateKey(let account), .hd(let account) :
@@ -196,5 +210,21 @@ extension BrowserCoordinator: ConfirmCoordinatorDelegate {
     func didCancel(in coordinator: ConfirmCoordinator) {
         navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
+    }
+}
+
+extension BrowserCoordinator: ScanQRCodeCoordinatorDelegate {
+    func didCancel(in coordinator: ScanQRCodeCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+    }
+
+    func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+        guard let url = URL(string: result) else {
+            return
+        }
+        rootViewController.goTo(url: url)
     }
 }

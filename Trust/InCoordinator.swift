@@ -89,7 +89,6 @@ class InCoordinator: Coordinator {
         )
         transactionsStorage.removeTransactions(for: [.failed, .pending, .unknown])
 
-        let inCoordinatorViewModel = InCoordinatorViewModel(config: config)
         let transactionCoordinator = TransactionCoordinator(
             session: session,
             storage: transactionsStorage,

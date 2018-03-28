@@ -381,6 +381,7 @@
 		77B3BF352017D0D000EEC15A /* MarketplaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF342017D0D000EEC15A /* MarketplaceViewModel.swift */; };
 		77B3BF3C201908ED00EEC15A /* ConfirmCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */; };
 		77B3BF4A2019247200EEC15A /* BrowserNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */; };
+		77CB8398206B8E1C006F34A8 /* ScanQRCodeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB8397206B8E1C006F34A8 /* ScanQRCodeCoordinator.swift */; };
 		77E0E773201FAD06009B4B31 /* BrowserURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E0E772201FAD05009B4B31 /* BrowserURLParser.swift */; };
 		77E81D94203687FB00534C99 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E81D93203687FB00534C99 /* NotificationsViewController.swift */; };
 		77E81D962036883B00534C99 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E81D952036883B00534C99 /* NotificationsViewModel.swift */; };
@@ -847,6 +848,7 @@
 		77B3BF342017D0D000EEC15A /* MarketplaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceViewModel.swift; sourceTree = "<group>"; };
 		77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCoordinator.swift; sourceTree = "<group>"; };
 		77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserNavigationBar.swift; sourceTree = "<group>"; };
+		77CB8397206B8E1C006F34A8 /* ScanQRCodeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRCodeCoordinator.swift; sourceTree = "<group>"; };
 		77E0E772201FAD05009B4B31 /* BrowserURLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserURLParser.swift; sourceTree = "<group>"; };
 		77E81D93203687FB00534C99 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		77E81D952036883B00534C99 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
@@ -2291,6 +2293,7 @@
 			children = (
 				771D536C2058BB0D00C79485 /* BookmarkCoordinator.swift */,
 				771D536D2058BB0D00C79485 /* BrowserCoordinator.swift */,
+				77CB8397206B8E1C006F34A8 /* ScanQRCodeCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -3233,6 +3236,7 @@
 				290B2B611F9179880053C83E /* AccountViewModel.swift in Sources */,
 				2963B6C11F9AE0E4003063C1 /* Data.swift in Sources */,
 				2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */,
+				77CB8398206B8E1C006F34A8 /* ScanQRCodeCoordinator.swift in Sources */,
 				771D5371205923F500C79485 /* NetworkConditionViewModel.swift in Sources */,
 				2912CD321F6A83EE00C6CBE3 /* WelcomeViewController.swift in Sources */,
 				29F114F61FA8147300114A29 /* RequestCoordinator.swift in Sources */,

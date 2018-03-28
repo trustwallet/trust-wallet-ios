@@ -80,6 +80,7 @@ class BrowserNavigationBar: UINavigationBar {
 
             goForward.widthAnchor.constraint(equalToConstant: Layout.width),
             goBack.widthAnchor.constraint(equalToConstant: Layout.width),
+            homeButton.widthAnchor.constraint(equalToConstant: Layout.width),
             moreButton.widthAnchor.constraint(equalToConstant: Layout.moreButtonWidth),
         ])
     }
