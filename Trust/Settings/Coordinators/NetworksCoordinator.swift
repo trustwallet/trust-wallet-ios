@@ -15,7 +15,6 @@ class NetworksCoordinator: Coordinator {
 
     lazy var networksViewController: NetworksViewController = {
         let controller = NetworksViewController(networksStore: rpcStore)
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNetwork))
         controller.delegate = self
         return controller
     }()
@@ -34,15 +33,30 @@ class NetworksCoordinator: Coordinator {
         navigationController.pushViewController(networksViewController, animated: false)
     }
 
-    @objc func addNetwork() {
-        showAddNetwork()
+    func showAddNetwork() {
+        let coordinator = AddCustomNetworkCoordinator(navigationController: NavigationController(), rpcStore: rpcStore)
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+    }
+}
+
+extension NetworksCoordinator: AddCustomNetworkCoordinatorDelegate {
+    func didAddNetwork(network: CustomRPC, in coordinator: AddCustomNetworkCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+        //TODO: Add the customRPC
     }
 
-    func showAddNetwork() {
-
+    func didCancel(in coordinator: AddCustomNetworkCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 }
 
 extension NetworksCoordinator: NetworksViewControllerDelegate {
-    //TODO
+    func didClickAddNetwork() {
+        showAddNetwork()
+    }
 }

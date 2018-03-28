@@ -15,15 +15,24 @@ class AddCustomNetworkCoordinator: Coordinator {
 
     lazy var addNetworkItem: UIBarButtonItem = {
         return UIBarButtonItem(
-            barButtonSystemItem: .add,
+            barButtonSystemItem: .done,
             target: self,
             action: #selector(addNetwork)
+        )
+    }()
+
+    lazy var cancelItem: UIBarButtonItem = {
+        return UIBarButtonItem(
+            barButtonSystemItem: .cancel,
+            target: self,
+            action: #selector(cancel)
         )
     }()
 
     lazy var addCustomNetworkController: AddCustomNetworkViewController = {
         let controller = AddCustomNetworkViewController()
         controller.navigationItem.rightBarButtonItem = addNetworkItem
+        controller.navigationItem.leftBarButtonItem = cancelItem
         return controller
     }()
 
@@ -51,5 +60,9 @@ class AddCustomNetworkCoordinator: Coordinator {
             case .failure: break
             }
         }
+    }
+
+    @objc func cancel() {
+        self.delegate?.didCancel(in: self)
     }
 }

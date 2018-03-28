@@ -5,7 +5,7 @@ import UIKit
 import Eureka
 
 protocol NetworksViewControllerDelegate: class {
-    //TODO
+    func didClickAddNetwork()
 }
 
 class NetworksViewController: FormViewController {
@@ -25,10 +25,15 @@ class NetworksViewController: FormViewController {
     ) {
         self.networksStore = networksStore
         super.init(nibName: nil, bundle: nil)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNetwork))
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc private func addNetwork() {
+        delegate?.didClickAddNetwork()
     }
 
     override func viewDidLoad() {
