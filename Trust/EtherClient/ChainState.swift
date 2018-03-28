@@ -81,7 +81,7 @@ class ChainState {
     }
 
     private func getLastBlock() {
-        let request = EtherServiceRequest(batch: BatchFactory().create(BlockNumberRequest()))
+        let request = EtherServiceRequest(batch: BatchFactory().create(BlockNumberRequest()), timeoutInterval: 5.0)
         Session.send(request) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
