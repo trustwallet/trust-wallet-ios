@@ -10,7 +10,7 @@ PODS:
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - CryptoSwift (0.8.0)
-  - Eureka (4.0.1)
+  - Eureka (4.1.1)
   - Fabric (1.7.2)
   - JavaScriptKit (1.0.0):
     - Result (~> 3.1)
@@ -57,7 +57,7 @@ DEPENDENCIES:
   - Branch
   - Crashlytics
   - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift`, branch `master`)
-  - Eureka (~> 4.0.1)
+  - Eureka (~> 4.1.1)
   - Fabric
   - JavaScriptKit
   - JdenticonSwift
@@ -112,7 +112,7 @@ SPEC CHECKSUMS:
   Branch: 4f0482418d99e77d15b0e6065ef216c10e24797b
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   CryptoSwift: 475ae2a25439f52412686d68b854c0ca724c8dfd
-  Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
+  Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   JavaScriptKit: 9ff565209e6efe21bcb9c6d6ca3e863a67a8ecf7
   JdenticonSwift: bc532f2761566eb29f26b085e5f72de25bc065ce
@@ -139,6 +139,6 @@ SPEC CHECKSUMS:
   TrustWeb3Provider: 3d5c9f17aa6cc3fcd083d232aed5e90615be5383
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
-PODFILE CHECKSUM: d70134c067fee2a555025b2d122b92c0027618b6
+PODFILE CHECKSUM: ce1115872c4fffb95ee1a92013e9ae0ba9b20ebc
 
 COCOAPODS: 1.4.0
