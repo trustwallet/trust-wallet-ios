@@ -38,8 +38,13 @@ class AddCustomNetworkViewController: FormViewController {
 
             +++ Section()
 
+            <<< AppFormAppearance.textFieldFloat(tag: Values.endpoint) {
+                $0.add(rule: RuleRequired())
+                $0.validationOptions = .validatesOnDemand
+                $0.title = NSLocalizedString("RPC Endpoint", value: "RPC Endpoint", comment: "")
+            }
+
             <<< AppFormAppearance.textFieldFloat(tag: Values.chainID) {
-                $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
                 $0.title = NSLocalizedString("Chain ID", value: "Chain ID", comment: "")
             }.cellUpdate { cell, _ in
@@ -56,12 +61,6 @@ class AddCustomNetworkViewController: FormViewController {
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
                 $0.title = NSLocalizedString("Symbol", value: "Symbol", comment: "")
-            }
-
-            <<< AppFormAppearance.textFieldFloat(tag: Values.endpoint) {
-                $0.add(rule: RuleRequired())
-                $0.validationOptions = .validatesOnDemand
-                $0.title = NSLocalizedString("Endpoint", value: "Endpoint", comment: "")
             }
     }
 
