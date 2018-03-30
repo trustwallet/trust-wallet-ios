@@ -32,7 +32,7 @@ class SendTransactionCoordinator {
         } else {
             let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(
                 address: session.account.address.description,
-                state: "pending"
+                state: "latest"
             )))
             Session.send(request) { [weak self] result in
                 guard let `self` = self else { return }
