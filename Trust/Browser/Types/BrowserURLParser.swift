@@ -16,7 +16,7 @@ class BrowserURLParser {
         let range = NSRange(string.startIndex ..< string.endIndex, in: string)
         if urlRegEx.firstMatch(in: string, options: .anchored, range: range) != nil {
             if !validSchemes.contains(where: { string.hasPrefix("\($0)://") }) {
-                return URL(string: "https://" + string)
+                return URL(string: "http://" + string)
             } else {
                 return URL(string: string)
             }

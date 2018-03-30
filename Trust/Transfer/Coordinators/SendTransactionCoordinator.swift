@@ -68,27 +68,31 @@ class SendTransactionCoordinator {
 
         switch signedTransaction {
         case .success(let data):
-            let transaction = SentTransaction(
-                id: data.sha3(.keccak256).hexEncoded,
-                original: transaction,
-                data: data
-            )
             switch confirmType {
             case .sign:
-                completion(.success(.signedTransaction(transaction)))
+                approve(transaction: transaction, data: data, completion: completion)
             case .signThenSend:
-                let request = EtherServiceRequest(batch: BatchFactory().create(SendRawTransactionRequest(signedTransaction: data.hexEncoded)))
-                Session.send(request) { result in
-                    switch result {
-                    case .success:
-                        completion(.success(.sentTransaction(transaction)))
-                    case .failure(let error):
-                        completion(.failure(AnyError(error)))
-                    }
-                }
+                approve(transaction: transaction, data: data, completion: completion)
             }
         case .failure(let error):
             completion(.failure(AnyError(error)))
+        }
+    }
+
+    func approve(transaction: SignTransaction, data: Data, completion: @escaping (Result<ConfirmResult, AnyError>) -> Void) {
+        let transaction = SentTransaction(
+            id: data.sha3(.keccak256).hexEncoded,
+            original: transaction,
+            data: data
+        )
+        let request = EtherServiceRequest(batch: BatchFactory().create(SendRawTransactionRequest(signedTransaction: data.hexEncoded)))
+        Session.send(request) { result in
+            switch result {
+            case .success:
+                completion(.success(.sentTransaction(transaction)))
+            case .failure(let error):
+                completion(.failure(AnyError(error)))
+            }
         }
     }
 }

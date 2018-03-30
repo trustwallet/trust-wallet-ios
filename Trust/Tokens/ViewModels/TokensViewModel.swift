@@ -188,7 +188,6 @@ class TokensViewModel: NSObject {
     }
 
     func cancelOperations() {
-        tokensObserver = nil
         serialOperationQueue.cancelAllOperations()
         parallelOperationQueue.cancelAllOperations()
     }

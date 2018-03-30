@@ -38,7 +38,7 @@ class TokensDataStore {
     }
 
     private lazy var tickersKey: String = {
-        return "tickers-" + config.currency.rawValue
+        return "tickers-" + config.currency.rawValue + "-" + String(config.chainID)
     }()
 
     init(

@@ -28,7 +28,7 @@ class BrowserURLParserTests: XCTestCase {
         let query = "trustwalletapp.com"
         let result = parser.url(from: query)
 
-        XCTAssertEqual(result?.absoluteString, "https://trustwalletapp.com")
+        XCTAssertEqual(result?.absoluteString, "http://trustwalletapp.com")
     }
 
     func testParseHttp() {
@@ -52,7 +52,7 @@ class BrowserURLParserTests: XCTestCase {
         let string = "trustwalletapp.com/path?q=1"
         let result = parser.url(from: string)
 
-        XCTAssertEqual(result?.absoluteString, "https://\(string)")
+        XCTAssertEqual(result?.absoluteString, "http://\(string)")
     }
 
     func testParseLongDomain() {
@@ -60,7 +60,7 @@ class BrowserURLParserTests: XCTestCase {
         let string = "test.trustwalletapp.info"
         let result = parser.url(from: string)
 
-        XCTAssertEqual(result?.absoluteString, "https://\(string)")
+        XCTAssertEqual(result?.absoluteString, "http://\(string)")
     }
 
     func testSearchURL() {

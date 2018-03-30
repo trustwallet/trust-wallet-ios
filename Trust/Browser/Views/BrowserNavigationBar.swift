@@ -12,6 +12,7 @@ class BrowserNavigationBar: UINavigationBar {
     let goForward = UIButton()
     let textField = UITextField()
     let moreButton = UIButton()
+    let homeButton = UIButton()
     weak var browserDelegate: BrowserNavigationBarDelegate?
 
     private struct Layout {
@@ -52,10 +53,16 @@ class BrowserNavigationBar: UINavigationBar {
         moreButton.setImage(R.image.toolbarMenu(), for: .normal)
         moreButton.addTarget(self, action: #selector(moreAction(_:)), for: .touchUpInside)
 
+        homeButton.translatesAutoresizingMaskIntoConstraints = false
+        homeButton.setImage(R.image.dapps_icon(), for: .normal)
+        homeButton.addTarget(self, action: #selector(homeAction(_:)), for: .touchUpInside)
+
         let stackView = UIStackView(arrangedSubviews: [
             goBack,
             goForward,
             textField,
+            .spacerWidth(),
+            homeButton,
             moreButton,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -73,6 +80,7 @@ class BrowserNavigationBar: UINavigationBar {
 
             goForward.widthAnchor.constraint(equalToConstant: Layout.width),
             goBack.widthAnchor.constraint(equalToConstant: Layout.width),
+            homeButton.widthAnchor.constraint(equalToConstant: Layout.width),
             moreButton.widthAnchor.constraint(equalToConstant: Layout.moreButtonWidth),
         ])
     }
@@ -87,6 +95,10 @@ class BrowserNavigationBar: UINavigationBar {
 
     @objc private func moreAction(_ sender: UIView) {
         browserDelegate?.did(action: .more(sender: sender))
+    }
+
+    @objc private func homeAction(_ sender: UIView) {
+        browserDelegate?.did(action: .home)
     }
 
     required init?(coder aDecoder: NSCoder) {
