@@ -31,7 +31,7 @@ class NetworksViewController: FormViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     @objc private func addNetwork() {
         delegate?.didClickAddNetwork()
     }
@@ -59,10 +59,10 @@ class NetworksViewController: FormViewController {
 
         if !self.viewModel.customServers.isEmpty {
             form +++ SelectableSection<ListCheckRow<String>>("CUSTOM", selectionType: .singleSelection(enableDeselection: true))
-            for server in viewModel.servers where server.networkType == .custom {
-                form.last! <<< ListCheckRow<String>(server.displayName) { listRow in
-                    listRow.title = server.displayName
-                    listRow.selectableValue = server.displayName
+            for server in viewModel.customServers where server.networkType == .custom {
+                form.last! <<< ListCheckRow<String>(server.name) { listRow in
+                    listRow.title = server.name
+                    listRow.selectableValue = server.name
                     listRow.value = nil
                 }
             }

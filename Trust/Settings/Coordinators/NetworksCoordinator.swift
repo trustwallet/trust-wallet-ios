@@ -46,7 +46,7 @@ extension NetworksCoordinator: AddCustomNetworkCoordinatorDelegate {
     func didAddNetwork(network: CustomRPC, in coordinator: AddCustomNetworkCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
-        //TODO: Add the customRPC
+        rpcStore.add(endpoints: [network])
     }
 
     func didCancel(in coordinator: AddCustomNetworkCoordinator) {
