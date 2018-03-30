@@ -34,7 +34,7 @@
 "importWallet.importingIndicator.label.title" = "Importer un portefeuille ...";
 "Loading" = "Chargement";
 "Loading..." = "Chargement...";
-"Next" = "Prochain";
+"Next" = "Suivant";
 "OK" = "D'accord";
 "Password" = "Mot de passe";
 "Refresh" = "Rafraîchir";
@@ -120,3 +120,11 @@
 "transaction.cell.sent.title" = "Envoyé";
 "transaction.cell.tokenTransfer.title" = "Transférer %@";
 "Yesterday" = "Hier";
+"transaction.cell.pending.title" = "En attente";
+"sent.transaction.message" = "Attendez que la transaction soit minée sur le réseau pour voir les détails.";
+"sent.transaction.title" = "Transaction Effectuée !";
+"settings.network.test.warnning.dont.show.again" = "Ne plus afficher";
+"settings.network.test.warnning.message" = "Vous passez à un réseau de test où les transactions sont uniquement à des fins de test";
+"settings.network.test.warnning.title" = "Attention";
+"Disable" = "Désactiver";
+"wallets.navigation.title" = "Portefeuilles";

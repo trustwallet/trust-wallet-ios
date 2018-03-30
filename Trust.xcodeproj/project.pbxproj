@@ -851,6 +851,8 @@
 		77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserNavigationBar.swift; sourceTree = "<group>"; };
 		77CB8397206B8E1C006F34A8 /* ScanQRCodeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRCodeCoordinator.swift; sourceTree = "<group>"; };
 		77CB8399206CEED7006F34A8 /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
+		77CB839B206EF2C2006F34A8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		77CB839C206EF2C2006F34A8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		77E0E772201FAD05009B4B31 /* BrowserURLParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserURLParser.swift; sourceTree = "<group>"; };
 		77E81D93203687FB00534C99 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		77E81D952036883B00534C99 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
@@ -2645,6 +2647,7 @@
 				"zh-Hant",
 				vi,
 				Base,
+				ja,
 			);
 			mainGroup = 2912CCEC1F6A830700C6CBE3;
 			productRefGroup = 2912CCF61F6A830700C6CBE3 /* Products */;
@@ -3423,6 +3426,7 @@
 				BB3B86D6204D3BED0061FCBA /* zh-Hans */,
 				BB3B86D7204D3BF20061FCBA /* zh-Hant */,
 				BB3B86D8204D3BF30061FCBA /* vi */,
+				77CB839B206EF2C2006F34A8 /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -3440,6 +3444,7 @@
 				BB3B86DF204D3C070061FCBA /* zh-Hans */,
 				BB3B86E0204D3C090061FCBA /* zh-Hant */,
 				BB3B86E1204D3C0A0061FCBA /* vi */,
+				77CB839C206EF2C2006F34A8 /* ja */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

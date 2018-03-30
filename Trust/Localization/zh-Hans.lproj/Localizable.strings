@@ -211,7 +211,10 @@
 "wallets.export.alertSheet.title" = "导出私钥";
 "collectibles.discover.label.title" = "发现";
 "configureTransaction.error.gasFeeHigh" = "Gas 费用太高，最大可用：%1$@ %2$@";
+"sent.transaction.message" = "等待交易在网络上被挖掘以查看详细信息。";
 "sent.transaction.title" = "交易已发送！";
 "settings.network.test.warnning.dont.show.again" = "不要再显示";
 "settings.network.test.warnning.message" = "您正在切换到测试网络，交易仅用于测试目的";
 "settings.network.test.warnning.title" = "警告";
+"Disable" = "禁用";
+"wallets.navigation.title" = "钱包";

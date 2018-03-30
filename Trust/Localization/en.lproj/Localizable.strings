@@ -218,3 +218,7 @@
 "settings.network.test.warnning.title" = "Warning";
 "Disable" = "Disable";
 "wallets.navigation.title" = "Wallets";
+"browser.qrCode.button.title" = "QR Reader";
+"nft.details.external.button.title" = "Open on OpenSea.io";
+"nft.details.internal.button.title" = "Open on %@";
+"nft.poweredBy.label.text" = "Powered by OpenSea";

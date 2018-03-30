@@ -209,3 +209,12 @@
 "tokens.token.edit.navigation.title" = "Thêm đồng tiền mã hóa tùy chỉnh.";
 "wallet.section.hdWallet.title" = "Ví HD";
 "wallets.export.alertSheet.title" = "Xuất khóa cá nhân";
+"collectibles.discover.label.title" = "Mở bằng OpenSea.io";
+"configureTransaction.error.gasFeeHigh" = "Phí Gas quá cao. Giới hạn tối đa: %1$@ %2$@";
+"sent.transaction.message" = "Chờ giao dịch được khai thác trên mạng để xem chi tiết.";
+"sent.transaction.title" = "Giao dịch đã được thực hiện";
+"settings.network.test.warnning.dont.show.again" = "Không hiển thị lại";
+"settings.network.test.warnning.message" = "Bạn đang chuyển sang mạng thử nghiệm, nơi các giao dịch chỉ dành cho mục đích thử nghiệm";
+"settings.network.test.warnning.title" = "Cảnh báo";
+"Disable" = "Vô hiệu hóa";
+"wallets.navigation.title" = "Ví";
