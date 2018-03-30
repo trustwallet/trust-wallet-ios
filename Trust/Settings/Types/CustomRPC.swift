@@ -23,6 +23,10 @@ class CustomRPC: Object {
         self.endpoint = endpoint
     }
 
+    var networkType: NetworkType {
+        return .custom
+    }
+
     override class func primaryKey() -> String? {
         return "id"
     }
