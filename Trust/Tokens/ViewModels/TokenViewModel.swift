@@ -87,7 +87,7 @@ class TokenViewModel {
     }
 
     var fiatAmountFont: UIFont {
-        return UIFont.systemFont(ofSize: 16, weight: .regular)
+        return UIFont.systemFont(ofSize: 14, weight: .regular)
     }
 
     var currencyAmount: String? {
@@ -102,16 +102,19 @@ class TokenViewModel {
         return TokensLayout.cell.currencyAmountTextColor
     }
 
-    var percentChange: String? {
-        return TokensLayout.cell.percentChange(for: ticker)
-    }
-
     var percentChangeColor: UIColor {
         return TokensLayout.cell.percentChangeColor(for: ticker)
     }
 
     var percentChangeFont: UIFont {
-        return UIFont.systemFont(ofSize: 13, weight: .light)
+        return UIFont.systemFont(ofSize: 12, weight: .light)
+    }
+
+    var percentChange: String? {
+        guard let _ = currencyAmount else {
+            return .none
+        }
+        return TokensLayout.cell.percentChange(for: ticker)
     }
 
     var currencyAmountFont: UIFont {

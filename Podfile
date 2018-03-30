@@ -9,7 +9,7 @@ target 'Trust' do
   pod 'R.swift'
   pod 'JSONRPCKit', :git=> 'https://github.com/bricklife/JSONRPCKit.git'
   pod 'APIKit'
-  pod 'Eureka', '~> 4.0.1'
+  pod 'Eureka', '~> 4.1.1'
   pod 'MBProgressHUD'
   pod 'StatefulViewController'
   pod 'QRCodeReaderViewController', :git=>'https://github.com/yannickl/QRCodeReaderViewController.git', :branch=>'master'

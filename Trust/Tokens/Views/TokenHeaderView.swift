@@ -47,7 +47,7 @@ class TokenHeaderView: UIView {
     }()
 
 //    let currencyAmountLabel = UILabel()
-//    let percentChange = UILabel()
+    let percentChange = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,18 +61,19 @@ class TokenHeaderView: UIView {
 //        currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
 //        currencyAmountLabel.textAlignment = .right
 //
-//        percentChange.translatesAutoresizingMaskIntoConstraints = false
-//        percentChange.textAlignment = .right
+        percentChange.translatesAutoresizingMaskIntoConstraints = false
+        percentChange.textAlignment = .right
 
-        let amountStack = UIStackView(arrangedSubviews: [amountLabel, fiatAmountLabel])
+        let amountStack = UIStackView(arrangedSubviews: [amountLabel])
         amountStack.translatesAutoresizingMaskIntoConstraints = false
         amountStack.axis = .horizontal
         amountStack.spacing = 5
 
-//        let marketPriceStack = UIStackView(arrangedSubviews: [currencyAmountLabel, percentChange])
-//        marketPriceStack.translatesAutoresizingMaskIntoConstraints = false
-//        marketPriceStack.axis = .horizontal
-//        marketPriceStack.spacing = 5
+        let marketPriceStack = UIStackView(arrangedSubviews: [fiatAmountLabel, percentChange])
+        marketPriceStack.translatesAutoresizingMaskIntoConstraints = false
+        marketPriceStack.axis = .horizontal
+        marketPriceStack.spacing = 5
+
 //
 //        let rightStackView = UIStackView(arrangedSubviews: [marketPriceStack])
 //        rightStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -84,8 +85,7 @@ class TokenHeaderView: UIView {
         container.addArrangedSubview(imageView)
         container.addArrangedSubview(.spacer(height: 12))
         container.addArrangedSubview(amountLabel)
-        container.addArrangedSubview(fiatAmountLabel)
-        //container.addArrangedSubview(rightStackView)
+        container.addArrangedSubview(marketPriceStack)
         container.addArrangedSubview(.spacer(height: 10))
         container.addArrangedSubview(buttonsView)
 

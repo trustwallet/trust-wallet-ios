@@ -38,7 +38,7 @@ extension WKWebViewConfiguration {
 
         Trust.init(rpcURL, {
           getAccounts: function (cb) { cb(null, [addressHex]) },
-          signTransaction: function (tx, cb){
+          processTransaction: function (tx, cb){
             console.log('signing a transaction', tx)
             const { id = 8888 } = tx
             Trust.addCallback(id, cb)

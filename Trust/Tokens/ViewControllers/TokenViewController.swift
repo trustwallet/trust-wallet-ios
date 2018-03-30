@@ -102,9 +102,9 @@ class TokenViewController: UIViewController {
 //        header.currencyAmountLabel.textColor = viewModel.currencyAmountTextColor
 //        header.currencyAmountLabel.font = viewModel.currencyAmountFont
 //
-//        header.percentChange.text = viewModel.percentChange
-//        header.percentChange.textColor = viewModel.percentChangeColor
-//        header.percentChange.font = viewModel.percentChangeFont
+        header.percentChange.text = viewModel.percentChange
+        header.percentChange.textColor = viewModel.percentChangeColor
+        header.percentChange.font = viewModel.percentChangeFont
     }
 
     @objc func pullToRefresh() {

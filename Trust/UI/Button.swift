@@ -11,10 +11,10 @@ enum ButtonSize: Int {
 
     var height: CGFloat {
         switch self {
-        case .small: return 32
-        case .normal: return 44
-        case .large: return 50
-        case .extraLarge: return 64
+        case .small: return Size.scale(size: 32)
+        case .normal: return Size.scale(size: 44)
+        case .large: return  Size.scale(size: 50)
+        case .extraLarge: return Size.scale(size: 64)
         }
     }
 }
@@ -105,7 +105,7 @@ class Button: UIButton {
     func apply(size: ButtonSize, style: ButtonStyle) {
         NSLayoutConstraint.activate([
             heightAnchor.constraint(equalToConstant: size.height),
-            ])
+        ])
 
         backgroundColor = style.backgroundColor
         layer.cornerRadius = style.cornerRadius
