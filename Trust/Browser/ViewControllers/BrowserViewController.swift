@@ -11,6 +11,7 @@ protocol BrowserViewControllerDelegate: class {
     func didAddBookmark(bookmark: Bookmark)
     func didOpenBookmarkList()
     func didOpenQRCode()
+    func didVisitURL(url: URL, title: String)
 }
 
 class BrowserViewController: UIViewController {
@@ -191,6 +192,7 @@ class BrowserViewController: UIViewController {
         } else if keyPath == Keys.URL {
             if let url = webView.url {
                 self.browserNavBar?.textField.text = url.absoluteString
+                delegate?.didVisitURL(url: url, title: webView.title ?? "")
             }
         }
     }
