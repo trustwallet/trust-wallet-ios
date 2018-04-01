@@ -67,6 +67,7 @@ class AppCoordinator: NSObject, Coordinator {
 
         let initializers: [Initializer] = [
             CrashReportInitializer(),
+            FirebaseInitializer(),
             LokaliseInitializer(),
             SkipBackupFilesInitializer(paths: paths),
         ]
