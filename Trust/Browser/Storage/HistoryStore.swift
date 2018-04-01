@@ -24,32 +24,16 @@ class HistoryStore {
         guard !ignoreSet.contains(url.absoluteString) else {
             return
         }
-        let results = histories.filter(NSPredicate(format: "url = %@", url.absoluteString))
-        if results.isEmpty {
-            // create
-            let history = History(url: url.absoluteString, title: title)
-            history.visitCount += 1
-            add(histories: [history])
-        } else {
-            let now = Date()
-            do {
-                realm.beginWrite()
-                for history in results {
-                    history.updatedAt = now
-                    history.visitCount += 1
-                }
-                try realm.commitWrite()
-            } catch let error {
-                print(error.localizedDescription)
-            }
-        }
+        let history = History(url: url.absoluteString, title: title)
+        add(histories: [history])
     }
 
     func add(histories: [History]) {
+
         do {
-            realm.beginWrite()
-            realm.add(histories, update: true)
-            try realm.commitWrite()
+            try realm.write {
+                realm.add(histories, update: true)
+            }
         } catch let error {
             print(error.localizedDescription)
         }
@@ -57,9 +41,9 @@ class HistoryStore {
 
     func delete(histories: [History]) {
         do {
-            realm.beginWrite()
-            realm.delete(histories)
-            try realm.commitWrite()
+            try realm.write {
+                realm.delete(histories)
+            }
         } catch let error {
             print(error.localizedDescription)
         }

@@ -169,6 +169,13 @@ class BrowserViewController: UIViewController {
         browserNavBar?.textField.text = webView.url?.absoluteString
     }
 
+    private func recordURL() {
+        guard let url = webView.url else {
+            return
+        }
+        delegate?.didVisitURL(url: url, title: webView.title ?? "")
+    }
+
     private func reloadButtons() {
         browserNavBar?.goBack.isEnabled = webView.canGoBack
         browserNavBar?.goForward.isEnabled = webView.canGoForward
@@ -192,7 +199,6 @@ class BrowserViewController: UIViewController {
         } else if keyPath == Keys.URL {
             if let url = webView.url {
                 self.browserNavBar?.textField.text = url.absoluteString
-                delegate?.didVisitURL(url: url, title: webView.title ?? "")
             }
         }
     }
@@ -297,6 +303,7 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
 extension BrowserViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         refreshURL()
+        recordURL()
         reloadButtons()
         hideErrorView()
     }
