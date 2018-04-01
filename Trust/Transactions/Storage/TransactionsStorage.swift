@@ -16,7 +16,10 @@ class TransactionsStorage {
     var transactionsUpdateHandler: () -> Void = {}
 
     var transactions: Results<Transaction> {
-        return realm.objects(Transaction.self).filter(NSPredicate(format: "id!=''")).sorted(byKeyPath: "date", ascending: false)
+        return realm.objects(Transaction.self).filter(NSPredicate(format: "id!=''")).sorted(byKeyPath: "nonce", ascending: false)
+    }
+    var latestTransaction: Transaction? {
+        return transactions.first
     }
 
     var transactionSections: [TransactionSection] = []

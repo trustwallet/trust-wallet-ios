@@ -16,7 +16,8 @@ extension WalletSession {
             account: account,
             config: config,
             web3: web3,
-            balanceCoordinator: balance
+            balanceCoordinator: balance,
+            nonceProvider: GetNonceProvider.make()
         )
     }
     static func makeWithEthBalance(
@@ -31,7 +32,8 @@ extension WalletSession {
             account: account,
             config: config,
             web3: web3,
-            balanceCoordinator: balance
+            balanceCoordinator: balance,
+            nonceProvider: GetNonceProvider.make()
         )
     }
 }

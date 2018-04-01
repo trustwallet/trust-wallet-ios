@@ -124,7 +124,7 @@ class Transaction: Object, Decodable {
     }
 
     override static func primaryKey() -> String? {
-        return "id"
+        return "nonce"
     }
 
     var state: TransactionState {

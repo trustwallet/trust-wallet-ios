@@ -77,12 +77,23 @@ class SendCoordinator: Coordinator {
 
 extension SendCoordinator: SendViewControllerDelegate {
     func didPressConfirm(transaction: UnconfirmedTransaction, transferType: TransferType, in viewController: SendViewController) {
-
         let configurator = TransactionConfigurator(
             session: session,
             account: account,
             transaction: transaction
         )
+
+//        let coordinator = ConfirmCoordinator(
+//            navigationController: navigationController,
+//            session: session,
+//            configurator: configurator,
+//            keystore: keystore,
+//            account: account,
+//            type: .signThenSend
+//        )
+//        coordinator.start()
+//        addCoordinator(coordinator)
+
         let controller = ConfirmPaymentViewController(
             session: session,
             keystore: keystore,

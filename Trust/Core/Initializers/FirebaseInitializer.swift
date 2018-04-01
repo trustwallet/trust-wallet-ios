@@ -6,7 +6,7 @@ import Firebase
 struct FirebaseInitializer: Initializer {
 
     func perform() {
-        //guard !isDebug else { return }
+        guard !isDebug else { return }
 
         FirebaseApp.configure()
     }

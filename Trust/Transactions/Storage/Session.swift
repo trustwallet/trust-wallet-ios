@@ -23,17 +23,20 @@ class WalletSession {
     }
 
     var balanceViewModel: Subscribable<BalanceBaseViewModel> = Subscribable(nil)
+    var nonceProvider: NonceProvider
 
     init(
         account: Wallet,
         config: Config,
         web3: Web3Swift,
-        balanceCoordinator: BalanceCoordinator
+        balanceCoordinator: BalanceCoordinator,
+        nonceProvider: NonceProvider
     ) {
         self.account = account
         self.config = config
         self.web3 = web3
         self.chainState = ChainState(config: config)
+        self.nonceProvider = nonceProvider
         self.balanceCoordinator = balanceCoordinator
         self.balanceCoordinator.delegate = self
         self.chainState.start()

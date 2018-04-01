@@ -29,7 +29,6 @@ class TransactionConfigurator {
             configurationUpdate.value = configuration
         }
     }
-
     lazy var calculatedGasPrice: BigInt = {
         return max(transaction.gasPrice ?? configuration.gasPrice, GasPriceConfiguration.min)
     }()
@@ -144,11 +143,11 @@ class TransactionConfigurator {
 
     func previewTransaction() -> PreviewTransaction {
         return PreviewTransaction(
-            value: self.valueToSend(),
+            value: valueToSend(),
             account: account,
             address: transaction.to,
             contract: .none,
-            nonce: Int(transaction.nonce?.description ?? "-1") ?? -1,
+            nonce: session.nonceProvider.getNonce(for: transaction),
             data: configuration.data,
             gasPrice: configuration.gasPrice,
             gasLimit: configuration.gasLimit,
@@ -159,7 +158,7 @@ class TransactionConfigurator {
     func signTransaction() -> SignTransaction {
         let value: BigInt = {
             switch transaction.transferType {
-            case .ether: return self.valueToSend()
+            case .ether: return valueToSend()
             case .token: return 0
             }
         }()
@@ -173,7 +172,7 @@ class TransactionConfigurator {
             value: value,
             account: account,
             to: address,
-            nonce: Int(transaction.nonce?.description ?? "-1") ?? -1,
+            nonce: session.nonceProvider.getNonce(for: transaction),
             data: configuration.data,
             gasPrice: configuration.gasPrice,
             gasLimit: configuration.gasLimit,

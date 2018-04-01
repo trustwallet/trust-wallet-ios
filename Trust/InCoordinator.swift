@@ -78,14 +78,16 @@ class InCoordinator: Coordinator {
         let balanceCoordinator =  TokensBalanceService(web3: web3)
         let trustNetwork = TrustNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
         let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
+        let transactionsStorage = TransactionsStorage(
+            realm: realm
+        )
+        let nonceProvider = GetNonceProvider(storage: transactionsStorage)
         let session = WalletSession(
             account: account,
             config: config,
             web3: web3,
-            balanceCoordinator: balance
-        )
-        let transactionsStorage = TransactionsStorage(
-            realm: realm
+            balanceCoordinator: balance,
+            nonceProvider: nonceProvider
         )
         transactionsStorage.removeTransactions(for: [.failed, .pending, .unknown])
 
