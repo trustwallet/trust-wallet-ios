@@ -249,6 +249,12 @@ class BrowserViewController: UIViewController {
         let controller = makeShareController(url: url)
         controller.popoverPresentationController?.sourceView = navigationController.view
         controller.popoverPresentationController?.sourceRect = navigationController.view.centerRect
+        controller.setActivityCompletion {
+            self.navigationController?.navigationBar.barTintColor = Colors.darkBlue
+            self.navigationController?.navigationBar.titleTextAttributes = [
+                .foregroundColor: UIColor.white,
+            ]
+        }
         navigationController.present(controller, animated: true, completion: nil)
     }
 

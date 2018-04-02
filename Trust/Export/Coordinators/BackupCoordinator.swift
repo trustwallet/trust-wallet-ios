@@ -22,7 +22,7 @@ class BackupCoordinator: Coordinator {
         navigationController: UINavigationController,
         keystore: Keystore,
         account: Account
-    ) {
+        ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
@@ -67,8 +67,12 @@ class BackupCoordinator: Coordinator {
                 applicationActivities: nil
             )
             activityViewController.completionWithItemsHandler = { _, result, _, error in
+                self.navigationController.navigationBar.barTintColor = Colors.darkBlue
+                self.navigationController.navigationBar.titleTextAttributes = [
+                    .foregroundColor: UIColor.white,
+                ]
                 do { try FileManager.default.removeItem(at: url)
-            } catch { }
+                } catch { }
                 completion(.success(result))
             }
             activityViewController.popoverPresentationController?.sourceView = navigationController.view

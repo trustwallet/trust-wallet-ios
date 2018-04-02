@@ -11,12 +11,10 @@ func applyStyle() {
         UINavigationBar.appearance().isTranslucent = false
     }
     UINavigationBar.appearance().tintColor = AppStyle.navigationBarTintColor
-    UINavigationBar.appearance().setBackgroundImage(.filled(with: Colors.darkBlue), for: .default)
-
+    UINavigationBar.appearance().barTintColor = Colors.darkBlue
     UINavigationBar.appearance().titleTextAttributes = [
         .foregroundColor: UIColor.white,
     ]
-
     UITextField.appearance().tintColor = Colors.blue
 
     UIImageView.appearance().tintColor = Colors.lightBlue

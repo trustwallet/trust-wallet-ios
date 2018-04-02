@@ -56,6 +56,12 @@ class HelpUsCoordinator: Coordinator {
         )
         activityViewController.popoverPresentationController?.sourceView = sender
         activityViewController.popoverPresentationController?.sourceRect = sender.centerRect
+        activityViewController.setActivityCompletion {
+            viewController.navigationController?.navigationBar.barTintColor = Colors.darkBlue
+            viewController.navigationController?.navigationBar.titleTextAttributes = [
+                .foregroundColor: UIColor.white,
+            ]
+        }
         viewController.present(activityViewController, animated: true, completion: nil)
     }
 }

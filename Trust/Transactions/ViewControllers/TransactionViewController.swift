@@ -126,6 +126,12 @@ class TransactionViewController: UIViewController {
             applicationActivities: nil
         )
         activityViewController.popoverPresentationController?.barButtonItem = sender
+        activityViewController.setActivityCompletion {
+            self.navigationController?.navigationBar.barTintColor = Colors.darkBlue
+            self.navigationController?.navigationBar.titleTextAttributes = [
+                .foregroundColor: UIColor.white,
+            ]
+        }
         navigationController?.present(activityViewController, animated: true, completion: nil)
     }
 
