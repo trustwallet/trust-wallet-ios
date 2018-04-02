@@ -202,13 +202,13 @@ class SettingsViewController: FormViewController, Coordinator {
                 self.helpUsCoordinator.presentSharing(in: self, from: cell.contentView)
             }
 
-            <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("settings.rateUsAppStore.button.title", value: "Rate Us on App Store", comment: "")
-            }.onCellSelection { [weak self] _, _  in
-                self?.helpUsCoordinator.rateUs()
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_rating()
-            }
+//            <<< AppFormAppearance.button { button in
+//                button.title = NSLocalizedString("settings.rateUsAppStore.button.title", value: "Rate Us on App Store", comment: "")
+//            }.onCellSelection { [weak self] _, _  in
+//                self?.helpUsCoordinator.rateUs()
+//            }.cellSetup { cell, _ in
+//                cell.imageView?.image = R.image.settings_rating()
+//            }
 
             +++ Section()
 
