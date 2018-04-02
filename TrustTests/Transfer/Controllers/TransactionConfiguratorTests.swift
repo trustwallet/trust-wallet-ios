@@ -13,6 +13,22 @@ class TransactionConfiguratorTests: XCTestCase {
         XCTAssertEqual(GasLimitConfiguration.default, configurator.configuration.gasLimit)
         XCTAssertEqual(GasPriceConfiguration.default, configurator.calculatedGasPrice)
     }
+
+    func testTokensDefault() {
+        let configurator = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(transferType: .token(.make()), gasLimit: .none, gasPrice: .none))
+
+        XCTAssertEqual(GasPriceConfiguration.default, configurator.configuration.gasPrice)
+        XCTAssertEqual(GasLimitConfiguration.tokenTransfer, configurator.configuration.gasLimit)
+        XCTAssertEqual(GasPriceConfiguration.default, configurator.calculatedGasPrice)
+    }
+
+    func testDAppDefault() {
+        let configurator = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(transferType: .dapp, gasLimit: .none, gasPrice: .none))
+
+        XCTAssertEqual(GasPriceConfiguration.default, configurator.configuration.gasPrice)
+        XCTAssertEqual(GasLimitConfiguration.dappTransfer, configurator.configuration.gasLimit)
+        XCTAssertEqual(GasPriceConfiguration.default, configurator.calculatedGasPrice)
+    }
     
     func testAdjustGasPrice() {
         let desiderGasPrice = BigInt(2000000000)
@@ -47,6 +63,15 @@ class TransactionConfiguratorTests: XCTestCase {
         
         XCTAssertEqual(BigInt(GasPriceConfiguration.default), configurator.configuration.gasPrice)
         XCTAssertEqual(BigInt(90000), configurator.configuration.gasLimit)
+    }
+
+    func testLoadDAppConfiguration() {
+        let configurator = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(transferType: .dapp, gasLimit: .none, gasPrice: .none))
+
+        configurator.load { _ in }
+
+        XCTAssertEqual(BigInt(GasPriceConfiguration.default), configurator.configuration.gasPrice)
+        XCTAssertEqual(GasLimitConfiguration.dappTransfer, configurator.configuration.gasLimit)
     }
     
     func testBalanceValidationWithNoBalance() {

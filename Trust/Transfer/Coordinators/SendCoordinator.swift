@@ -64,7 +64,7 @@ class SendCoordinator: Coordinator {
         case .ether(let destination):
             controller.addressRow?.value = destination?.description
             controller.addressRow?.cell.row.updateCell()
-        case .token: break
+        case .token, .dapp: break
         }
         controller.delegate = self
         return controller
