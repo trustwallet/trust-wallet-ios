@@ -122,7 +122,7 @@ struct ConfirmPaymentDetailsViewModel {
             return amountAttributedText(
                 string: fullFormatter.string(from: transaction.value, decimals: token.decimals)
             )
-        case .ether:
+        case .ether, .dapp:
             return amountAttributedText(
                 string: fullFormatter.string(from: transaction.value)
             )

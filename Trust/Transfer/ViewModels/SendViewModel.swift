@@ -18,7 +18,7 @@ struct SendViewModel {
     /// decimals of a `SendViewModel` to represent amount of digits after coma.
     lazy var decimals: Int = {
         switch self.transferType {
-        case .ether:
+        case .ether, .dapp:
             return config.server.decimals
         case .token(let token):
             return token.decimals
@@ -92,7 +92,7 @@ struct SendViewModel {
     mutating func sendMaxAmount() -> String {
         var max: Decimal? = 0
         switch transferType {
-        case .ether: max = EtherNumberFormatter.full.decimal(from: balance?.value ?? 0, decimals: decimals)
+        case .ether, .dapp: max = EtherNumberFormatter.full.decimal(from: balance?.value ?? 0, decimals: decimals)
         case .token(let token): max = EtherNumberFormatter.full.decimal(from: token.valueBigInt, decimals: decimals)
         }
         guard let maxAmount = max else {

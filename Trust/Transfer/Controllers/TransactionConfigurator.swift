@@ -54,9 +54,20 @@ class TransactionConfigurator {
 
         self.configuration = TransactionConfiguration(
             gasPrice: min(max(transaction.gasPrice ?? GasPriceConfiguration.default, GasPriceConfiguration.min), GasPriceConfiguration.max),
-            gasLimit: transaction.gasLimit ?? GasLimitConfiguration.default,
+            gasLimit: transaction.gasLimit ?? TransactionConfigurator.gasLimit(for: transaction.transferType),
             data: transaction.data ?? Data()
         )
+    }
+
+    private static func gasLimit(for type: TransferType) -> BigInt {
+        switch type {
+        case .ether:
+            return GasLimitConfiguration.default
+        case .token:
+            return GasLimitConfiguration.tokenTransfer
+        case .dapp:
+            return GasLimitConfiguration.dappTransfer
+        }
     }
 
     func load(completion: @escaping (Result<Void, AnyError>) -> Void) {
@@ -88,13 +99,24 @@ class TransactionConfigurator {
                     completion(.failure(error))
                 }
             }
+        case .dapp:
+            guard requestEstimateGas else {
+                return completion(.success(()))
+            }
+            estimateGasLimit()
+            self.configuration = TransactionConfiguration(
+                gasPrice: calculatedGasPrice,
+                gasLimit: GasLimitConfiguration.dappTransfer,
+                data: transaction.data ?? self.configuration.data
+            )
+            completion(.success(()))
         }
     }
 
     func estimateGasLimit() {
         let to: Address? = {
             switch transaction.transferType {
-            case .ether: return transaction.to
+            case .ether, .dapp: return transaction.to
             case .token(let token):
                 return Address(string: token.contract)
             }
@@ -158,13 +180,13 @@ class TransactionConfigurator {
     func signTransaction() -> SignTransaction {
         let value: BigInt = {
             switch transaction.transferType {
-            case .ether: return valueToSend()
+            case .ether, .dapp: return valueToSend()
             case .token: return 0
             }
         }()
         let address: Address? = {
             switch transaction.transferType {
-            case .ether: return transaction.to
+            case .ether, .dapp: return transaction.to
             case .token(let token): return token.address
             }
         }()
@@ -199,7 +221,7 @@ class TransactionConfigurator {
 
         //We check if it is ETH or token operation.
         switch transaction.transferType {
-        case .ether:
+        case .ether, .dapp:
             if transaction.value > balance.value {
                 etherSufficient = false
                 gasSufficient = false
