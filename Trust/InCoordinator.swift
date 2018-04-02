@@ -89,7 +89,7 @@ class InCoordinator: Coordinator {
             balanceCoordinator: balance,
             nonceProvider: nonceProvider
         )
-        transactionsStorage.removeTransactions(for: [.failed, .pending, .unknown])
+        transactionsStorage.removeTransactions(for: [.failed, .unknown])
 
         let transactionCoordinator = TransactionCoordinator(
             session: session,
