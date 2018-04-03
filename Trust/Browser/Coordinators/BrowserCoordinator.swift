@@ -26,6 +26,9 @@ class BrowserCoordinator: Coordinator {
     private lazy var bookmarksStore: BookmarksStore = {
         return BookmarksStore(realm: realm)
     }()
+    private lazy var historyStore: HistoryStore = {
+        return HistoryStore(realm: realm)
+    }()
 
     weak var delegate: BrowserCoordinatorDelegate?
 
@@ -197,6 +200,10 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
 
     func didOpenBookmarkList() {
         showBookmarks()
+    }
+
+    func didVisitURL(url: URL, title: String) {
+        historyStore.record(url: url, title: title)
     }
 }
 
