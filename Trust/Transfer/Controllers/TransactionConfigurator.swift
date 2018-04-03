@@ -53,7 +53,7 @@ class TransactionConfigurator {
         self.transaction = transaction
 
         self.configuration = TransactionConfiguration(
-            gasPrice: min(max(transaction.gasPrice ?? GasPriceConfiguration.default, GasPriceConfiguration.min), GasPriceConfiguration.max),
+            gasPrice: min(max(transaction.gasPrice ?? session.chainState.gasPrice ?? GasPriceConfiguration.default, GasPriceConfiguration.min), GasPriceConfiguration.max),
             gasLimit: transaction.gasLimit ?? TransactionConfigurator.gasLimit(for: transaction.transferType),
             data: transaction.data ?? Data(),
             nonce: transaction.nonce ?? BigInt(session.nonceProvider.nextNonce ?? -1)
