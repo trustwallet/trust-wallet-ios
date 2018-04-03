@@ -43,9 +43,16 @@ class GetNonceProvider: NonceProvider {
             case .success(let count):
                 self.remoteNonce = count - 1
             case .failure:
-                break
+                // try to fetch latest nonce if failed
+                self.scheduleFetch()
             }
         }
+    }
+
+    private func scheduleFetch() {
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { [weak self] _ in
+            self?.fetch()
+        })
     }
 
     func fetchIfNeeded() {
