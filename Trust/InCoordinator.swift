@@ -79,7 +79,8 @@ class InCoordinator: Coordinator {
         let trustNetwork = TrustNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
         let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
         let transactionsStorage = TransactionsStorage(
-            realm: realm
+            realm: realm,
+            account: account
         )
         let nonceProvider = GetNonceProvider(storage: transactionsStorage)
         let session = WalletSession(
