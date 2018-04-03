@@ -221,8 +221,10 @@ extension TokensViewController: UITableViewDelegate {
 
         if viewModel.canEdit(for: indexPath) {
             return [delete, disable, edit]
-        } else {
+        } else if viewModel.canDisable(for: indexPath) {
             return [disable]
+        } else {
+            return []
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
