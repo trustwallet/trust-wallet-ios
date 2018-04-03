@@ -11,6 +11,7 @@ protocol BrowserViewControllerDelegate: class {
     func didAddBookmark(bookmark: Bookmark)
     func didOpenBookmarkList()
     func didOpenQRCode()
+    func didVisitURL(url: URL, title: String)
 }
 
 class BrowserViewController: UIViewController {
@@ -168,6 +169,13 @@ class BrowserViewController: UIViewController {
         browserNavBar?.textField.text = webView.url?.absoluteString
     }
 
+    private func recordURL() {
+        guard let url = webView.url else {
+            return
+        }
+        delegate?.didVisitURL(url: url, title: webView.title ?? "")
+    }
+
     private func reloadButtons() {
         browserNavBar?.goBack.isEnabled = webView.canGoBack
         browserNavBar?.goForward.isEnabled = webView.canGoForward
@@ -295,6 +303,7 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
 extension BrowserViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         refreshURL()
+        recordURL()
         reloadButtons()
         hideErrorView()
     }

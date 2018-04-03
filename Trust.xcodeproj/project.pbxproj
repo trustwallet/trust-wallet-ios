@@ -421,6 +421,8 @@
 		BB3B86C5204D2EF10061FCBA /* InCoordinator+Navigable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86C4204D2EF10061FCBA /* InCoordinator+Navigable.swift */; };
 		BB3B86C9204D35A20061FCBA /* DispatchMainSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86C8204D35A20061FCBA /* DispatchMainSafe.swift */; };
 		BB3B86CC204D36A90061FCBA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BB3B86CE204D36A90061FCBA /* Localizable.strings */; };
+		BB58B92D206F70E800A70A3C /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB58B92C206F70E800A70A3C /* HistoryStore.swift */; };
+		BB58B92F206F70FE00A70A3C /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB58B92E206F70FE00A70A3C /* History.swift */; };
 		BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */; };
 		BB767E2E205E10FD00263658 /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB767E2D205E10FD00263658 /* Debounce.swift */; };
 		BBAA2A3B2058155100B0878C /* signTypedMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAA2A3A2058155100B0878C /* signTypedMessageTests.swift */; };
@@ -922,6 +924,8 @@
 		BB3B86DF204D3C070061FCBA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BB3B86E0204D3C090061FCBA /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BB3B86E1204D3C0A0061FCBA /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		BB58B92C206F70E800A70A3C /* HistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStore.swift; sourceTree = "<group>"; };
+		BB58B92E206F70FE00A70A3C /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrencyRate+Fee.swift"; sourceTree = "<group>"; };
 		BB767E2D205E10FD00263658 /* Debounce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debounce.swift; sourceTree = "<group>"; };
 		BBAA2A3A2058155100B0878C /* signTypedMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signTypedMessageTests.swift; sourceTree = "<group>"; };
@@ -2290,6 +2294,7 @@
 				29FA00CF201CA66A002F7DC5 /* DAppError.swift */,
 				77E0E772201FAD05009B4B31 /* BrowserURLParser.swift */,
 				903682F5204A71B000013479 /* Bookmark.swift */,
+				BB58B92E206F70FE00A70A3C /* History.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2430,6 +2435,7 @@
 			isa = PBXGroup;
 			children = (
 				903682F3204A714C00013479 /* BookmarksStore.swift */,
+				BB58B92C206F70E800A70A3C /* HistoryStore.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -3088,6 +3094,7 @@
 				29F1C85120032688003780D8 /* Address.swift in Sources */,
 				295B61D11FE7B20400642E60 /* TokensHeaderView.swift in Sources */,
 				29FA00D4201EC662002F7DC5 /* NSObject.swift in Sources */,
+				BB58B92D206F70E800A70A3C /* HistoryStore.swift in Sources */,
 				291ED0921F6FA5D900E7E93A /* RequestViewController.swift in Sources */,
 				299B5E341FCBC5180051361C /* ConfirmPaymentViewModel.swift in Sources */,
 				902CAB5B2051835E00F96FFE /* BookmarkViewCell.swift in Sources */,
@@ -3172,6 +3179,7 @@
 				29E14FD11F7F457D00185568 /* TransactionsStorage.swift in Sources */,
 				299B5E451FD22FB40051361C /* ConfigureTransactionViewModel.swift in Sources */,
 				29F114EE1FA65DEF00114A29 /* ImportType.swift in Sources */,
+				BB58B92F206F70FE00A70A3C /* History.swift in Sources */,
 				29BDF1981FEE4DB00023A45F /* GasPriceConfiguration.swift in Sources */,
 				BB3B86C5204D2EF10061FCBA /* InCoordinator+Navigable.swift in Sources */,
 				29FA00CC201CA63C002F7DC5 /* Method.swift in Sources */,
