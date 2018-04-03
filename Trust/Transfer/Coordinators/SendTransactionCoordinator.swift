@@ -47,7 +47,7 @@ class SendTransactionCoordinator {
         }
     }
 
-    private func appendNonce(to: SignTransaction, currentNonce: Int) -> SignTransaction {
+    private func appendNonce(to: SignTransaction, currentNonce: BigInt) -> SignTransaction {
         return SignTransaction(
             value: to.value,
             account: to.account,

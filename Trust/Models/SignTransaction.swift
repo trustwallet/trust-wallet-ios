@@ -8,7 +8,7 @@ public struct SignTransaction {
     let value: BigInt
     let account: Account
     let to: Address?
-    let nonce: Int
+    let nonce: BigInt
     let data: Data
     let gasPrice: BigInt
     let gasLimit: BigInt

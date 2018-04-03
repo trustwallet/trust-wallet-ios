@@ -12,7 +12,7 @@ public struct PreviewTransaction {
     let account: Account
     let address: Address?
     let contract: Address?
-    let nonce: Int
+    let nonce: BigInt
     let data: Data
     let gasPrice: BigInt
     let gasLimit: BigInt
@@ -55,7 +55,8 @@ class TransactionConfigurator {
         self.configuration = TransactionConfiguration(
             gasPrice: min(max(transaction.gasPrice ?? GasPriceConfiguration.default, GasPriceConfiguration.min), GasPriceConfiguration.max),
             gasLimit: transaction.gasLimit ?? TransactionConfigurator.gasLimit(for: transaction.transferType),
-            data: transaction.data ?? Data()
+            data: transaction.data ?? Data(),
+            nonce: transaction.nonce ?? BigInt(session.nonceProvider.nextNonce ?? -1)
         )
     }
 
@@ -80,7 +81,8 @@ class TransactionConfigurator {
             self.configuration = TransactionConfiguration(
                 gasPrice: calculatedGasPrice,
                 gasLimit: GasLimitConfiguration.default,
-                data: transaction.data ?? self.configuration.data
+                data: transaction.data ?? self.configuration.data,
+                nonce: self.configuration.nonce
             )
             completion(.success(()))
         case .token:
@@ -92,7 +94,8 @@ class TransactionConfigurator {
                     self.configuration = TransactionConfiguration(
                         gasPrice: self.calculatedGasPrice,
                         gasLimit: GasLimitConfiguration.tokenTransfer,
-                        data: data
+                        data: data,
+                        nonce: self.configuration.nonce
                     )
                     completion(.success(()))
                 case .failure(let error):
@@ -107,7 +110,8 @@ class TransactionConfigurator {
             self.configuration = TransactionConfiguration(
                 gasPrice: calculatedGasPrice,
                 gasLimit: GasLimitConfiguration.dappTransfer,
-                data: transaction.data ?? self.configuration.data
+                data: transaction.data ?? self.configuration.data,
+                nonce: self.configuration.nonce
             )
             completion(.success(()))
         }
@@ -143,7 +147,8 @@ class TransactionConfigurator {
                 self.configuration =  TransactionConfiguration(
                     gasPrice: self.calculatedGasPrice,
                     gasLimit: gasLimit,
-                    data: self.configuration.data
+                    data: self.configuration.data,
+                    nonce: self.configuration.nonce
                 )
             case .failure: break
             }
@@ -169,7 +174,7 @@ class TransactionConfigurator {
             account: account,
             address: transaction.to,
             contract: .none,
-            nonce: session.nonceProvider.getNonce(for: transaction),
+            nonce: configuration.nonce,
             data: configuration.data,
             gasPrice: configuration.gasPrice,
             gasLimit: configuration.gasLimit,
@@ -194,7 +199,7 @@ class TransactionConfigurator {
             value: value,
             account: account,
             to: address,
-            nonce: session.nonceProvider.getNonce(for: transaction),
+            nonce: configuration.nonce,
             data: configuration.data,
             gasPrice: configuration.gasPrice,
             gasLimit: configuration.gasLimit,

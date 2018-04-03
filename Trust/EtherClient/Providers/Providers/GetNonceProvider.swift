@@ -3,31 +3,32 @@
 import Foundation
 import JSONRPCKit
 import APIKit
+import BigInt
 
 class GetNonceProvider: NonceProvider {
 
     let storage: TransactionsStorage
-    var remoteNonce: Int? = .none
-    var latestNonce: Int? {
-        guard let nonce = storage.latestTransaction?.nonce, let nonceInt = Int(nonce) else {
+    var remoteNonce: BigInt? = .none
+    var latestNonce: BigInt? {
+        guard let nonce = storage.latestTransaction?.nonce, let nonceBigInt = BigInt(nonce) else {
             return .none
         }
-        let remoteNonceInt = remoteNonce ?? -1
-        return max(nonceInt, remoteNonceInt)
+        let remoteNonceInt = remoteNonce ?? BigInt(-1)
+        return max(nonceBigInt, remoteNonceInt)
     }
 
-    var nextNonce: Int? {
+    var nextNonce: BigInt? {
         guard let latestNonce = latestNonce else {
             return .none
         }
         return latestNonce + 1
     }
 
-    func getNonce(for transaction: UnconfirmedTransaction) -> Int {
+    func getNonce(for transaction: UnconfirmedTransaction) -> BigInt {
         guard let nonce = transaction.nonce else {
             return nextNonce ?? -1
         }
-        return Int(nonce)
+        return BigInt(nonce)
     }
 
     init(
@@ -47,8 +48,9 @@ class GetNonceProvider: NonceProvider {
             guard let `self` = self else { return }
             switch result {
             case .success(let count):
-                self.remoteNonce = count
-            case .failure: break
+                self.remoteNonce = count - 1
+            case .failure:
+                break
             }
         }
     }
