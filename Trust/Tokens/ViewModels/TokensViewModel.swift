@@ -60,14 +60,14 @@ class TokensViewModel: NSObject {
 
     weak var delegate: TokensViewModelDelegate?
 
-    private var serialOperationQueue: OperationQueue = {
+    private lazy var serialOperationQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .background
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
 
-    private var parallelOperationQueue: OperationQueue = {
+    private lazy var parallelOperationQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .background
         return queue
@@ -142,8 +142,6 @@ class TokensViewModel: NSObject {
 
         let tokensOperation = TokensOperation(network: tokensNetwork, address: address)
 
-        serialOperationQueue.addOperation(tokensOperation)
-
         tokensOperation.completionBlock = { [weak self] in
             DispatchQueue.main.async {
                 self?.store.update(tokens: tokensOperation.tokens, action: .updateInfo)
@@ -152,6 +150,8 @@ class TokensViewModel: NSObject {
                 }
             }
         }
+
+        serialOperationQueue.addOperation(tokensOperation)
     }
 
     private func parallelOperations(for tokens: [TokenObject]) {
