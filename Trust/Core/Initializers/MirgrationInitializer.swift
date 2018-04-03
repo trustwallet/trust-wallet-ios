@@ -20,7 +20,7 @@ class MigrationInitializer: Initializer {
     }
 
     func perform() {
-        config.schemaVersion = 45
+        config.schemaVersion = 47
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
             case 0...32:
@@ -33,7 +33,7 @@ class MigrationInitializer: Initializer {
 
                     newObject["contract"] = address.description
                 }
-            case 42...44:
+            case 33...46:
                 migration.deleteData(forType: Transaction.className)
             default: break
             }

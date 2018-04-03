@@ -28,9 +28,9 @@
       }
     },
     {
-      "filter": "SendRequest",
+      "filter": "Browser",
       "title": {
-        "text": "Send and Request"
+        "text": "Web3 DApp Browser"
       }
     },
     {
