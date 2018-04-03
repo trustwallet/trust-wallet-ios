@@ -7,7 +7,7 @@ import APIKit
 class GetNonceProvider: NonceProvider {
 
     let storage: TransactionsStorage
-    var remoteNonce: Int? = 0
+    var remoteNonce: Int? = .none
     var latestNonce: Int? {
         guard let nonce = storage.latestTransaction?.nonce, let nonceInt = Int(nonce) else {
             return .none
