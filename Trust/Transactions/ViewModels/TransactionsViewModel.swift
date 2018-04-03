@@ -47,7 +47,12 @@ struct TransactionsViewModel {
     }
 
     var hasContent: Bool {
-        return !self.storage.transactions.isEmpty
+        return !storage.transactions.isEmpty
+    }
+
+    var badgeValue: String? {
+        let pendingTransactions = storage.pendingObjects
+        return pendingTransactions.isEmpty ? .none : "\(pendingTransactions.count)"
     }
 
     private let config: Config

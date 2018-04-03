@@ -89,9 +89,11 @@ class TransactionsViewController: UIViewController {
 
     private func transactionsObservation() {
         viewModel.transactionsUpdateObservation { [weak self] in
-            self?.tableView.reloadData()
-            self?.endLoading()
-            self?.refreshControl.endRefreshing()
+            guard let `self` = self else { return }
+            self.tableView.reloadData()
+            self.endLoading()
+            self.refreshControl.endRefreshing()
+            self.tabBarItem.badgeValue = self.viewModel.badgeValue
         }
     }
 
