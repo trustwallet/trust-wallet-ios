@@ -1,16 +1,19 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import JSONRPCKit
+import APIKit
 
 class GetNonceProvider: NonceProvider {
 
     let storage: TransactionsStorage
-
+    var remoteNonce: Int? = 0
     var latestNonce: Int? {
-        guard let nonce = storage.latestTransaction?.nonce else {
+        guard let nonce = storage.latestTransaction?.nonce, let nonceInt = Int(nonce) else {
             return .none
         }
-        return Int(nonce)
+        let remoteNonceInt = remoteNonce ?? -1
+        return max(nonceInt, remoteNonceInt)
     }
 
     var nextNonce: Int? {
@@ -31,5 +34,28 @@ class GetNonceProvider: NonceProvider {
         storage: TransactionsStorage
     ) {
         self.storage = storage
+
+        fetch()
+    }
+
+    func fetch() {
+        let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(
+            address: storage.account.address.description,
+            state: "latest"
+        )))
+        Session.send(request) { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let count):
+                self.remoteNonce = count
+            case .failure: break
+            }
+        }
+    }
+
+    func fetchIfNeeded() {
+        if remoteNonce == nil {
+            fetch()
+        }
     }
 }

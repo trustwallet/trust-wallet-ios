@@ -57,6 +57,7 @@ class GetNonceProviderTests: XCTestCase {
         let provider = GetNonceProvider(
             storage: storage
         )
+        provider.fetch()
         let nonce = provider.getNonce(for: .make(nonce: BigInt(123)))
 
         XCTAssertEqual(123, nonce)

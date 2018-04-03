@@ -6,6 +6,7 @@ import TrustKeystore
 
 class Transaction: Object, Decodable {
     @objc dynamic var id: String = ""
+    @objc dynamic var uniqueID: String = ""
     @objc dynamic var blockNumber: Int = 0
     @objc dynamic var from = ""
     @objc dynamic var to = ""
@@ -35,6 +36,7 @@ class Transaction: Object, Decodable {
 
         self.init()
         self.id = id
+        self.uniqueID = from + "-" + nonce
         self.blockNumber = blockNumber
         self.from = from
         self.to = to
@@ -112,19 +114,8 @@ class Transaction: Object, Decodable {
                   state: state)
     }
 
-    convenience init(
-        id: String,
-        date: Date,
-        state: TransactionState
-    ) {
-        self.init()
-        self.id = id
-        self.date = date
-        self.internalState = state.rawValue
-    }
-
     override static func primaryKey() -> String? {
-        return "nonce"
+        return "uniqueID"
     }
 
     var state: TransactionState {
