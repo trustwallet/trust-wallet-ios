@@ -222,3 +222,4 @@
 "nft.details.external.button.title" = "Open on OpenSea.io";
 "nft.details.internal.button.title" = "Open on %@";
 "nft.poweredBy.label.text" = "Powered by OpenSea";
+"configureTransaction.nonce.label.title" = "Nonce";
