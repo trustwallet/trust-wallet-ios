@@ -109,6 +109,10 @@ class EditTokensViewController: UITableViewController {
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .onDrag
     }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
 
 extension EditTokensViewController: EditTokenTableViewCellDelegate {
