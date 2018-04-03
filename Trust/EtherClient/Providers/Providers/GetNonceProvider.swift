@@ -24,13 +24,6 @@ class GetNonceProvider: NonceProvider {
         return latestNonce + 1
     }
 
-    func getNonce(for transaction: UnconfirmedTransaction) -> BigInt {
-        guard let nonce = transaction.nonce else {
-            return nextNonce ?? -1
-        }
-        return BigInt(nonce)
-    }
-
     init(
         storage: TransactionsStorage
     ) {
