@@ -70,6 +70,9 @@ class EditTokenViewModel {
     }
 
     func didSelectRowAt(_ indexPath: IndexPath) -> Bool {
+        guard indexValidation(with: indexPath) else {
+            return false
+        }
         let pair = token(for: indexPath)
         if !pair.local {
             storage.add(tokens: [pair.token])
@@ -107,5 +110,16 @@ class EditTokenViewModel {
     func updateToken(indexPath: IndexPath, action: TokenAction) {
         let token = self.token(for: indexPath)
         self.storage.update(tokens: [token.token], action: action)
+    }
+
+    private func indexValidation(with path: IndexPath ) -> Bool {
+        if path.section == EditTokenSection.search.rawValue {
+            return searchResults.count > path.row
+        } else {
+            if isSearching {
+                return filteredTokens.count > path.row
+            }
+            return storage.objects.count > path.row
+        }
     }
 }
