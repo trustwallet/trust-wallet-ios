@@ -4,9 +4,9 @@ import Foundation
 import JSONRPCKit
 import APIKit
 import BigInt
+import Result
 
 class GetNonceProvider: NonceProvider {
-
     let storage: TransactionsStorage
     var remoteNonce: BigInt? = .none
     var latestNonce: BigInt? {
@@ -24,15 +24,30 @@ class GetNonceProvider: NonceProvider {
         return latestNonce + 1
     }
 
+    var nonceAvailable: Bool {
+        return latestNonce != nil
+    }
+
     init(
         storage: TransactionsStorage
     ) {
         self.storage = storage
 
-        fetch()
+        fetchLatestNonce()
     }
 
-    func fetch() {
+    func fetchLatestNonce() {
+        fetch { _ in }
+    }
+
+    func getNextNonce(completion: @escaping (Result<BigInt, AnyError>) -> Void) {
+        guard let nextNonce = nextNonce else {
+            return fetch(completion: completion)
+        }
+        completion(.success(nextNonce))
+    }
+
+    func fetch(completion: @escaping (Result<BigInt, AnyError>) -> Void) {
         let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(
             address: storage.account.address.description,
             state: "latest"
@@ -41,23 +56,12 @@ class GetNonceProvider: NonceProvider {
             guard let `self` = self else { return }
             switch result {
             case .success(let count):
-                self.remoteNonce = count - 1
-            case .failure:
-                // try to fetch latest nonce if failed
-                self.scheduleFetch()
+                let nonce = count - 1
+                self.remoteNonce = nonce
+                completion(.success(nonce))
+            case .failure(let error):
+                completion(.failure(AnyError(error)))
             }
-        }
-    }
-
-    private func scheduleFetch() {
-        Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { [weak self] _ in
-            self?.fetch()
-        })
-    }
-
-    func fetchIfNeeded() {
-        if remoteNonce == nil {
-            fetch()
         }
     }
 }
