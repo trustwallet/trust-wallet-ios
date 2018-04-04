@@ -22,7 +22,7 @@ class BackupCoordinator: Coordinator {
         navigationController: UINavigationController,
         keystore: Keystore,
         account: Account
-    ) {
+        ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
@@ -62,15 +62,17 @@ class BackupCoordinator: Coordinator {
                 return completion(.failure(AnyError(error)))
             }
 
-            let activityViewController = UIActivityViewController(
+            let activityViewController = ActivityViewController(
                 activityItems: [url],
                 applicationActivities: nil
             )
-            activityViewController.completionWithItemsHandler = { _, result, _, error in
+            activityViewController.setCompletion(navigation: navigationController)
+            activityViewController.completionWithItemsHandler = { _, result, _, _ in
                 do { try FileManager.default.removeItem(at: url)
-            } catch { }
+                } catch { }
                 completion(.success(result))
             }
+
             activityViewController.popoverPresentationController?.sourceView = navigationController.view
             activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
             navigationController.present(activityViewController, animated: true) { [unowned self] in

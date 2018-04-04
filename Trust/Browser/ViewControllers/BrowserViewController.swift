@@ -247,17 +247,20 @@ class BrowserViewController: UIViewController {
         return alertController
     }
 
-    private func makeShareController(url: URL) -> UIActivityViewController {
-        return UIActivityViewController(activityItems: [url], applicationActivities: nil)
-    }
-
     private func share() {
         guard let url = webView.url else { return }
         guard let navigationController = navigationController else { return }
-        let controller = makeShareController(url: url)
-        controller.popoverPresentationController?.sourceView = navigationController.view
-        controller.popoverPresentationController?.sourceRect = navigationController.view.centerRect
-        navigationController.present(controller, animated: true, completion: nil)
+        let activityViewController = ActivityViewController(
+            activityItems: [
+                url,
+                ],
+            applicationActivities: nil
+        )
+        activityViewController.popoverPresentationController?.sourceView = navigationController.view
+        activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
+        activityViewController.setCompletion(navigation: navigationController)
+
+        navigationController.present(activityViewController, animated: true, completion: nil)
     }
 
     private func addBookmark() {
