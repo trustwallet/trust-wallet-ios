@@ -5,6 +5,7 @@ import Foundation
 import Result
 import KeychainSwift
 import CryptoSwift
+import TrustCore
 import TrustKeystore
 
 enum EtherKeystoreError: LocalizedError {

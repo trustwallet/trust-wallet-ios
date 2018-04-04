@@ -5,7 +5,7 @@ import APIKit
 import JSONRPCKit
 import StatefulViewController
 import Result
-import TrustKeystore
+import TrustCore
 import RealmSwift
 
 protocol TransactionsViewControllerDelegate: class {

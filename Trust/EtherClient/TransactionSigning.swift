@@ -2,6 +2,7 @@
 
 import BigInt
 import CryptoSwift
+import TrustCore
 
 protocol Signer {
     func hash(transaction: SignTransaction) -> Data

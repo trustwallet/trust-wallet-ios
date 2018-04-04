@@ -2,7 +2,7 @@
 
 import Foundation
 import RealmSwift
-import TrustKeystore
+import TrustCore
 
 class LocalizedOperationObject: Object, Decodable {
     @objc dynamic var from: String = ""

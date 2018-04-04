@@ -2,7 +2,7 @@
 
 import Foundation
 import UIKit
-import TrustKeystore
+import TrustCore
 
 protocol PaymentCoordinatorDelegate: class {
     func didFinish(_ result: ConfirmResult, in coordinator: PaymentCoordinator)

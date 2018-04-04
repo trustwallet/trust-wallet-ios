@@ -2,7 +2,7 @@
 
 import XCTest
 @testable import Trust
-import TrustKeystore
+import TrustCore
 import RealmSwift
 
 class TransactionsStorageTests: XCTestCase {
@@ -16,7 +16,7 @@ class TransactionsStorageTests: XCTestCase {
 
     func testAddItem() {
         let storage = FakeTransactionsStorage()
-        let item: Transaction = .make()
+        let item: Trust.Transaction = .make()
 
         storage.add([item])
 
@@ -48,8 +48,8 @@ class TransactionsStorageTests: XCTestCase {
 
     func testDelete() {
         let storage = FakeTransactionsStorage()
-        let one: Transaction = .make(nonce: "0x1")
-        let two: Transaction = .make(nonce: "0x2")
+        let one: Trust.Transaction = .make(nonce: "0x1")
+        let two: Trust.Transaction = .make(nonce: "0x2")
 
         storage.add([
             one,

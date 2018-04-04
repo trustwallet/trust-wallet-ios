@@ -5,7 +5,7 @@ import BigInt
 import JSONRPCKit
 import APIKit
 import Result
-import TrustKeystore
+import TrustCore
 
 class TokensBalanceService {
 
