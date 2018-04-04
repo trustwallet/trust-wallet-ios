@@ -12,17 +12,27 @@ extension Data {
     }
 
     init(hex: String) {
-        let len = hex.count / 2
-        var data = Data(capacity: len)
-        for i in 0..<len {
-            let from = hex.index(hex.startIndex, offsetBy: i*2)
-            let to = hex.index(hex.startIndex, offsetBy: i*2 + 2)
-            let bytes = hex[from ..< to]
-            if var num = UInt8(bytes, radix: 16) {
-                data.append(&num, count: 1)
+        var data = Data(capacity: hex.count/2)
+        let stringBytes = hex.data(using: .ascii, allowLossyConversion: true)?.bytes ?? Array(hex.utf8)
+        for i in stride(from: 0, to: stringBytes.count, by: 2) {
+            if let high = Data.value(of: stringBytes[i]), let low = Data.value(of: stringBytes[i + 1]) {
+                data.append((high << 4) | low)
             }
         }
         self = data
+    }
+
+    private static func value(of nibble: UInt8) -> UInt8? {
+        switch nibble {
+        case UInt8(ascii: "0") ... UInt8(ascii: "9"):
+            return nibble - UInt8(ascii: "0")
+        case UInt8(ascii: "a") ... UInt8(ascii: "f"):
+            return 10 + nibble - UInt8(ascii: "a")
+        case UInt8(ascii: "A") ... UInt8(ascii: "F"):
+            return 10 + nibble - UInt8(ascii: "A")
+        default:
+            return nil
+        }
     }
 
     init?(fromHexEncodedString string: String) {
