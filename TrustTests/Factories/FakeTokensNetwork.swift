@@ -4,6 +4,7 @@ import Foundation
 import Moya
 @testable import Trust
 import BigInt
+import TrustCore
 import TrustKeystore
 
 class FakeTokensNetwork: NetworkProtocol {
@@ -29,15 +30,15 @@ class FakeTokensNetwork: NetworkProtocol {
         
     }
 
-    func tokensList(for address: TrustKeystore.Address, completion: @escaping (([TokenObject]?)) -> Void) {
+    func tokensList(for address: Address, completion: @escaping (([TokenObject]?)) -> Void) {
 
     }
 
-    func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (([Transaction]?, Bool)) -> Void) {
+    func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (([Trust.Transaction]?, Bool)) -> Void) {
         
     }
 
-    func update(for transaction: Transaction, completion: @escaping ((Transaction, TransactionState)) -> Void) {
+    func update(for transaction: Trust.Transaction, completion: @escaping ((Trust.Transaction, TransactionState)) -> Void) {
         
     }
 

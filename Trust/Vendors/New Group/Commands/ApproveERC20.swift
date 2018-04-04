@@ -2,7 +2,7 @@
 
 import Foundation
 import BigInt
-import TrustKeystore
+import TrustCore
 
 struct ApproveERC20Encode: Web3Request {
     typealias Response = String

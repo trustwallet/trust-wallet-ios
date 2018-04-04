@@ -2,8 +2,8 @@
 
 import Foundation
 import UIKit
+import TrustCore
 import TrustKeystore
-import CryptoSwift
 import Result
 
 enum SignMesageType {

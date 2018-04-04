@@ -2,6 +2,7 @@
 
 import Foundation
 import BigInt
+import TrustCore
 import TrustKeystore
 
 public struct SignTransaction {

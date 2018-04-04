@@ -3,6 +3,7 @@
 import Foundation
 import UIKit
 import BigInt
+import TrustCore
 import TrustKeystore
 
 protocol SendCoordinatorDelegate: class {

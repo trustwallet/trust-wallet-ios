@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import TrustCore
 import TrustKeystore
 import Result
 

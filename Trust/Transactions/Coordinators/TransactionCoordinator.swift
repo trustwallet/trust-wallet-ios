@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 import Result
-import TrustKeystore
+import TrustCore
 
 protocol TransactionCoordinatorDelegate: class {
     func didPress(for type: PaymentFlow, in coordinator: TransactionCoordinator)

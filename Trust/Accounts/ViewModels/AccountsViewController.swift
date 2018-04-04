@@ -1,6 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
-import TrustKeystore
+import TrustCore
 import UIKit
 
 protocol AccountsViewControllerDelegate: class {

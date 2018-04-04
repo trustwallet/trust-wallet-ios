@@ -6,7 +6,7 @@ import APIKit
 import RealmSwift
 import BigInt
 import Moya
-import TrustKeystore
+import TrustCore
 
 enum TokenAction {
     case disable(Bool)

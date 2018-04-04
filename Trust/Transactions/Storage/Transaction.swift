@@ -2,7 +2,7 @@
 
 import Foundation
 import RealmSwift
-import TrustKeystore
+import TrustCore
 
 class Transaction: Object, Decodable {
     @objc dynamic var id: String = ""

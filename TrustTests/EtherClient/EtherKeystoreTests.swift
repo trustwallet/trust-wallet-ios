@@ -2,6 +2,7 @@
 
 import XCTest
 @testable import Trust
+import TrustCore
 import TrustKeystore
 import KeychainSwift
 import BigInt

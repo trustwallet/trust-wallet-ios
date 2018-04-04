@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 import StatefulViewController
 import Result
-import TrustKeystore
+import TrustCore
 import RealmSwift
 
 protocol TokensViewControllerDelegate: class {

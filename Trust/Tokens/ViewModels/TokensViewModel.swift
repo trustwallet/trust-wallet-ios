@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import TrustKeystore
+import TrustCore
 
 protocol TokensViewModelDelegate: class {
     func refresh()

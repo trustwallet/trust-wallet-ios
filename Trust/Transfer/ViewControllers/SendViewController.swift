@@ -7,6 +7,7 @@ import JSONRPCKit
 import APIKit
 import BigInt
 import QRCodeReaderViewController
+import TrustCore
 import TrustKeystore
 
 protocol SendViewControllerDelegate: class {
