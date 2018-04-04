@@ -250,13 +250,7 @@ class BrowserViewController: UIViewController {
     private func share() {
         guard let url = webView.url else { return }
         guard let navigationController = navigationController else { return }
-        let activityViewController = ActivityViewController(
-            activityItems: [
-                url,
-                ],
-            applicationActivities: nil,
-            navigation: navigationController
-        )
+        let activityViewController = ActivityViewController.makeShareController(url: url, navigationController: navigationController)
         activityViewController.popoverPresentationController?.sourceView = navigationController.view
         activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
         navigationController.present(activityViewController, animated: true, completion: nil)

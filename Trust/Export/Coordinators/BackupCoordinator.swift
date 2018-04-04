@@ -62,11 +62,7 @@ class BackupCoordinator: Coordinator {
                 return completion(.failure(AnyError(error)))
             }
 
-            let activityViewController = ActivityViewController(
-                activityItems: [url],
-                applicationActivities: nil,
-                navigation: navigationController
-            )
+            let activityViewController = ActivityViewController.makeShareController(url: url, navigationController: navigationController)
             activityViewController.completionWithItemsHandler = { _, result, _, error in
                 do { try FileManager.default.removeItem(at: url)
             } catch { }
