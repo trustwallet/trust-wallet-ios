@@ -11,7 +11,7 @@ class SettingsCoordinatorTests: XCTestCase {
             navigationController: FakeNavigationController(),
             keystore: FakeEtherKeystore(),
             session: .make(),
-            storage: FakeTransactionsStorage(),
+            storage: storage,
             balanceCoordinator: FakeGetBalanceCoordinator()
         )
         storage.add([.make()])
