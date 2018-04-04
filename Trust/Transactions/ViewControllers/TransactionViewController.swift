@@ -118,20 +118,15 @@ class TransactionViewController: UIViewController {
     }
 
     @objc func share(_ sender: UIBarButtonItem) {
-        guard let item = viewModel.shareItem else { return }
-        let activityViewController = UIActivityViewController(
+        guard let item = viewModel.shareItem, let navigation = navigationController else { return }
+        let activityViewController = ActivityViewController(
             activityItems: [
                 item,
             ],
             applicationActivities: nil
         )
         activityViewController.popoverPresentationController?.barButtonItem = sender
-        activityViewController.setActivityCompletion {
-            self.navigationController?.navigationBar.barTintColor = Colors.darkBlue
-            self.navigationController?.navigationBar.titleTextAttributes = [
-                .foregroundColor: UIColor.white,
-            ]
-        }
+        activityViewController.setCompletion(navigation: navigation)
         navigationController?.present(activityViewController, animated: true, completion: nil)
     }
 

@@ -62,19 +62,17 @@ class BackupCoordinator: Coordinator {
                 return completion(.failure(AnyError(error)))
             }
 
-            let activityViewController = UIActivityViewController(
+            let activityViewController = ActivityViewController(
                 activityItems: [url],
                 applicationActivities: nil
             )
-            activityViewController.completionWithItemsHandler = { _, result, _, error in
-                self.navigationController.navigationBar.barTintColor = Colors.darkBlue
-                self.navigationController.navigationBar.titleTextAttributes = [
-                    .foregroundColor: UIColor.white,
-                ]
+            activityViewController.setCompletion(navigation: navigationController)
+            activityViewController.completionWithItemsHandler = { _, result, _, _ in
                 do { try FileManager.default.removeItem(at: url)
                 } catch { }
                 completion(.success(result))
             }
+
             activityViewController.popoverPresentationController?.sourceView = navigationController.view
             activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
             navigationController.present(activityViewController, animated: true) { [unowned self] in

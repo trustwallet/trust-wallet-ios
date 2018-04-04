@@ -44,19 +44,14 @@ class RequestCoordinator: Coordinator {
     }
 
     @objc func share(_ sender: UIBarButtonItem) {
-        let activityViewController = UIActivityViewController(
+        let activityViewController = ActivityViewController(
             activityItems: [
                 viewModel.shareMyAddressText,
             ],
             applicationActivities: nil
         )
         activityViewController.popoverPresentationController?.barButtonItem = sender
-        activityViewController.setActivityCompletion {
-            self.navigationController.navigationBar.barTintColor = Colors.darkBlue
-            self.navigationController.navigationBar.titleTextAttributes = [
-                .foregroundColor: UIColor.white,
-            ]
-        }
+        activityViewController.setCompletion(navigation: navigationController)
         navigationController.present(activityViewController, animated: true, completion: nil)
     }
 

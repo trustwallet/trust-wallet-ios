@@ -45,6 +45,8 @@ struct Colors {
 struct AppStyle {
     static let navigationBarTintColor = UIColor.white
     static let docPickerNavigationBarTintColor = Colors.blue
+    static let activityViewControllerNavigationBarText = UIColor.white
+    static let activityViewControllerNavigationBarTintColor = Colors.darkBlue
 }
 
 struct StyleLayout {
