@@ -74,7 +74,7 @@
 "transactions.deposit.button.title" = "Купить";
 "transactions.myAddress.button.title" = "Мой адрес";
 "transactions.noTransactions.label.title" = "Транзакций пока нет!";
-"wallet.navigation.title" = "Кошельки";
+"wallet.navigation.title" = "Кошелек";
 "wallets.backup.alertSheet.title" = "Резервное хранилище ключей";
 "welcome.createWallet.button.title" = "СОЗДАТЬ КОШЕЛЕК";
 "welcome.erc20.label.description" = "Поддержка токенов ERC20 по умолчанию";

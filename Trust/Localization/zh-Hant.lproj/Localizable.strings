@@ -74,7 +74,7 @@
 "transactions.deposit.button.title" = "購買";
 "transactions.myAddress.button.title" = "我的地址";
 "transactions.noTransactions.label.title" = "暫無交易";
-"wallet.navigation.title" = "錢包";
+"wallet.navigation.title" = "钱包";
 "wallets.backup.alertSheet.title" = "備份 Keystore";
 "welcome.createWallet.button.title" = "創建錢包";
 "welcome.erc20.label.description" = "默認支持 ERC20 通證。";
