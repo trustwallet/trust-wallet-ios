@@ -48,10 +48,10 @@ class RequestCoordinator: Coordinator {
             activityItems: [
                 viewModel.shareMyAddressText,
             ],
-            applicationActivities: nil
+            applicationActivities: nil,
+            navigation: navigationController
         )
         activityViewController.popoverPresentationController?.barButtonItem = sender
-        activityViewController.setCompletion(navigation: navigationController)
         navigationController.present(activityViewController, animated: true, completion: nil)
     }
 

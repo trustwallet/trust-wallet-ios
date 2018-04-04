@@ -3,7 +3,9 @@
 import UIKit
 
 class ActivityViewController: UIActivityViewController {
-    func setCompletion(navigation: UINavigationController) {
+    init(activityItems: [Any], applicationActivities: [UIActivity]?, navigation: UINavigationController) {
+        super.init(activityItems: activityItems, applicationActivities: applicationActivities)
+        // Set a default completion
         self.completionWithItemsHandler = { _, _, _, _ in
             // Set the tint globally via appearance proxy
             UINavigationBar.appearance().barTintColor = AppStyle.activityViewControllerNavigationBarTintColor
@@ -20,5 +22,4 @@ class ActivityViewController: UIActivityViewController {
         UINavigationBar.appearance().barTintColor = nil // This fixes the issue with notes
         UINavigationBar.appearance().titleTextAttributes = nil // This makes the text black for messages and mail
     }
-
 }

@@ -53,11 +53,11 @@ class HelpUsCoordinator: Coordinator {
         guard let navigation = viewController.navigationController else { return }
         let activityViewController = ActivityViewController(
             activityItems: viewModel.activityItems,
-            applicationActivities: nil
+            applicationActivities: nil,
+            navigation: navigation
         )
         activityViewController.popoverPresentationController?.sourceView = sender
         activityViewController.popoverPresentationController?.sourceRect = sender.centerRect
-        activityViewController.setCompletion(navigation: navigation)
         viewController.present(activityViewController, animated: true, completion: nil)
     }
 }

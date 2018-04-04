@@ -254,11 +254,11 @@ class BrowserViewController: UIViewController {
             activityItems: [
                 url,
                 ],
-            applicationActivities: nil
+            applicationActivities: nil,
+            navigation: navigationController
         )
         activityViewController.popoverPresentationController?.sourceView = navigationController.view
         activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
-        activityViewController.setCompletion(navigation: navigationController)
         navigationController.present(activityViewController, animated: true, completion: nil)
     }
 

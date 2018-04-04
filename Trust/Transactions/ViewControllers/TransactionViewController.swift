@@ -123,10 +123,10 @@ class TransactionViewController: UIViewController {
             activityItems: [
                 item,
             ],
-            applicationActivities: nil
+            applicationActivities: nil,
+            navigation: navigation
         )
         activityViewController.popoverPresentationController?.barButtonItem = sender
-        activityViewController.setCompletion(navigation: navigation)
         navigationController?.present(activityViewController, animated: true, completion: nil)
     }
 
