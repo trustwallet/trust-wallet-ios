@@ -386,6 +386,7 @@
 		77B3BF352017D0D000EEC15A /* MarketplaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF342017D0D000EEC15A /* MarketplaceViewModel.swift */; };
 		77B3BF3C201908ED00EEC15A /* ConfirmCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */; };
 		77B3BF4A2019247200EEC15A /* BrowserNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */; };
+		77B806A52075C33D005FDCBE /* SharedMigrationInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B806A42075C33D005FDCBE /* SharedMigrationInitializer.swift */; };
 		77CB8398206B8E1C006F34A8 /* ScanQRCodeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB8397206B8E1C006F34A8 /* ScanQRCodeCoordinator.swift */; };
 		77CB839A206CEED7006F34A8 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB8399206CEED7006F34A8 /* Size.swift */; };
 		77CB83A0206EFE71006F34A8 /* FirebaseInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CB839F206EFE70006F34A8 /* FirebaseInitializer.swift */; };
@@ -861,6 +862,7 @@
 		77B3BF342017D0D000EEC15A /* MarketplaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceViewModel.swift; sourceTree = "<group>"; };
 		77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCoordinator.swift; sourceTree = "<group>"; };
 		77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserNavigationBar.swift; sourceTree = "<group>"; };
+		77B806A42075C33D005FDCBE /* SharedMigrationInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedMigrationInitializer.swift; sourceTree = "<group>"; };
 		77CB8397206B8E1C006F34A8 /* ScanQRCodeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRCodeCoordinator.swift; sourceTree = "<group>"; };
 		77CB8399206CEED7006F34A8 /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		77CB839B206EF2C2006F34A8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1998,6 +2000,7 @@
 				2923D9B21FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift */,
 				294DFB971FDF8CBB004CEB56 /* CrashReportInitializer.swift */,
 				77CB839F206EFE70006F34A8 /* FirebaseInitializer.swift */,
+				77B806A42075C33D005FDCBE /* SharedMigrationInitializer.swift */,
 			);
 			path = Initializers;
 			sourceTree = "<group>";
@@ -3289,6 +3292,7 @@
 				295247E71F835BA0007FDC31 /* InfoHeaderView.swift in Sources */,
 				29B6AED61F7CA4A700EC6DE3 /* TransactionConfiguration.swift in Sources */,
 				29F1C84C1FEC4F6F003780D8 /* TokensFooterView.swift in Sources */,
+				77B806A52075C33D005FDCBE /* SharedMigrationInitializer.swift in Sources */,
 				29F114F41FA8117C00114A29 /* SendCoordinator.swift in Sources */,
 				293B8B411F707F4600356286 /* TransactionViewModel.swift in Sources */,
 				771A847D2032409000528D28 /* PreferenceOption.swift in Sources */,

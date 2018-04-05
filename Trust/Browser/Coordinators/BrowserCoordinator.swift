@@ -22,12 +22,12 @@ class BrowserCoordinator: Coordinator {
         controller.delegate = self
         return controller
     }()
-    private let realm: Realm
+    private let sharedRealm: Realm
     private lazy var bookmarksStore: BookmarksStore = {
-        return BookmarksStore(realm: realm)
+        return BookmarksStore(realm: sharedRealm)
     }()
     private lazy var historyStore: HistoryStore = {
-        return HistoryStore(realm: realm)
+        return HistoryStore(realm: sharedRealm)
     }()
 
     weak var delegate: BrowserCoordinatorDelegate?
@@ -36,12 +36,12 @@ class BrowserCoordinator: Coordinator {
         session: WalletSession,
         keystore: Keystore,
         navigator: Navigator,
-        realm: Realm
+        sharedRealm: Realm
     ) {
         self.navigationController = UINavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
         self.session = session
         self.keystore = keystore
-        self.realm = realm
+        self.sharedRealm = sharedRealm
     }
 
     func start() {

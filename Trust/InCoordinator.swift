@@ -71,9 +71,13 @@ class InCoordinator: Coordinator {
         let migration = MigrationInitializer(account: account, chainID: config.chainID)
         migration.perform()
 
+        let sharedMigration = SharedMigrationInitializer()
+        sharedMigration.perform()
+
         let web3 = self.web3(for: config.server)
         web3.start()
         let realm = self.realm(for: migration.config)
+        let sharedRealm = self.realm(for: sharedMigration.config)
         let tokensStorage = TokensDataStore(realm: realm, config: config)
         let balanceCoordinator =  TokensBalanceService(web3: web3)
         let trustNetwork = TrustNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
@@ -108,7 +112,7 @@ class InCoordinator: Coordinator {
 
         tabBarController.tabBar.isTranslucent = false
 
-        let browserCoordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator, realm: realm)
+        let browserCoordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator, sharedRealm: sharedRealm)
         browserCoordinator.delegate = self
         browserCoordinator.start()
         browserCoordinator.rootViewController.tabBarItem = UITabBarItem(
