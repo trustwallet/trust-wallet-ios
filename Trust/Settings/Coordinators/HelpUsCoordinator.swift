@@ -50,10 +50,8 @@ class HelpUsCoordinator: Coordinator {
     }
 
     func presentSharing(in viewController: UIViewController, from sender: UIView) {
-        let activityViewController = UIActivityViewController(
-            activityItems: viewModel.activityItems,
-            applicationActivities: nil
-        )
+        guard let navigation = viewController.navigationController else { return }
+        let activityViewController = ActivityViewController.makeShareController(url: viewModel.activityItems, navigationController: navigation)
         activityViewController.popoverPresentationController?.sourceView = sender
         activityViewController.popoverPresentationController?.sourceRect = sender.centerRect
         viewController.present(activityViewController, animated: true, completion: nil)
