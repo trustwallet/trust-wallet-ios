@@ -140,7 +140,7 @@ class AccountsViewController: UITableViewController {
     }
 
     private func refreshWalletBalances() {
-       let addresses = wallets.flatMap { $0.address }
+       let addresses = wallets.compactMap { $0.address }
        var counter = 0
        for address in addresses {
             balanceCoordinator.getEthBalance(for: address, completion: { [weak self] (result) in

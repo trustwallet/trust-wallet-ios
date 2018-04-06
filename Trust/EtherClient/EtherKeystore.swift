@@ -201,7 +201,7 @@ open class EtherKeystore: Keystore {
     }
 
     var wallets: [Wallet] {
-        let addresses = watchAddresses.flatMap { Address(string: $0) }
+        let addresses = watchAddresses.compactMap { Address(string: $0) }
         return [
             keyStore.accounts.map {
                 switch $0.type {
