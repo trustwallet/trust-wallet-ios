@@ -138,7 +138,7 @@ class TokensDataStore {
 
     func tickers() -> [CoinTicker] {
 
-        guard let storedObject: Data = UserDefaults.standard.data(forKey: tickersKey) else {
+        guard let storedObject: Data = config.defaults.data(forKey: tickersKey) else {
             return [CoinTicker]()
         }
 
