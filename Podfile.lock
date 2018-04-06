@@ -60,7 +60,7 @@ PODS:
   - SeedStackViewController (0.4.0)
   - SipHash (1.2.0)
   - StatefulViewController (3.0)
-  - SwiftLint (0.24.1)
+  - SwiftLint (0.25.0)
   - TrezorCrypto (0.0.5)
   - TrustCore (0.0.4):
     - BigInt
@@ -161,7 +161,7 @@ SPEC CHECKSUMS:
   SeedStackViewController: 45e88ca1493a610e74d661d3feced7098f72dbd3
   SipHash: c6e9e43e9c531b5bc6602545130c26194a6d31ce
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
-  SwiftLint: 2e4b89feed5909c42c3735bbd6745f4345c4b772
+  SwiftLint: e14651157288e9e01d6e1a71db7014fb5744a8ea
   TrezorCrypto: ecef681446bf02af6248d3b5e394026d7e766e56
   TrustCore: 305289e5b1d484d6fe935fc47c724f3ceeae4100
   TrustKeystore: 1bd016c67de7314e84b79dba2c22ef64b86bb63e
