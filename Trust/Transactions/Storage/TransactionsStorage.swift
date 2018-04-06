@@ -54,7 +54,7 @@ class TransactionsStorage {
     }
 
     private func tokens(from transactions: [Transaction]) -> [Token] {
-        let tokens: [Token] = transactions.flatMap { transaction in
+        let tokens: [Token] = transactions.compactMap { transaction in
             guard
                 let operation = transaction.localizedOperations.first,
                 let contract = Address(string: operation.contract ?? ""),
