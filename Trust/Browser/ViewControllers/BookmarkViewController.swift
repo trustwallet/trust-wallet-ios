@@ -31,8 +31,10 @@ class BookmarkViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .singleLine
-        tableView.rowHeight = 55
+        tableView.rowHeight = 60
+        tableView.register(R.nib.bookmarkViewCell(), forCellReuseIdentifier: R.nib.bookmarkViewCell.name)
         view.addSubview(tableView)
+        emptyView = EmptyView(title: NSLocalizedString("bookmarks.noBookmarks.label.title", value: "No bookmarks yet!", comment: ""))
 
         NSLayoutConstraint.activate([
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -40,22 +42,11 @@ class BookmarkViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 55
-        tableView.register(R.nib.bookmarkViewCell(), forCellReuseIdentifier: R.nib.bookmarkViewCell.name)
-        emptyView = EmptyView(title: NSLocalizedString("bookmarks.noBookmarks.label.title", value: "No bookmarks yet!", comment: ""))
-
-        configure(viewModel: viewModel)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupInitialViewState()
-    }
-
-    func configure(viewModel: BookmarksViewModel) {
-        title = viewModel.title
     }
 
     func confirmDelete(bookmark: Bookmark, index: IndexPath) {
@@ -95,10 +86,6 @@ extension BookmarkViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: R.nib.bookmarkViewCell.name, for: indexPath) as! BookmarkViewCell
         cell.viewModel = BookmarkViewModel(bookmark: viewModel.bookmark(for: indexPath))
-        cell.faviconImage?.kf.setImage(
-            with: cell.viewModel?.imageURL,
-            placeholder: cell.viewModel?.placeholderImage
-        )
         return cell
     }
 }

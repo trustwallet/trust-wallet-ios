@@ -12,7 +12,7 @@ class SharedMigrationInitializer: Initializer {
     init() { }
 
     func perform() {
-        config.schemaVersion = 1
+        config.schemaVersion = 2
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
             default:
@@ -21,4 +21,3 @@ class SharedMigrationInitializer: Initializer {
         }
     }
 }
-

@@ -97,10 +97,12 @@ class BrowserCoordinator: Coordinator {
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
-    func showBookmarks() {
+    func showBookmarks(for view: BookmarksViewType) {
         let coordinator = BookmarkCoordinator(
             navigationController: NavigationController(),
-            bookmarksStore: bookmarksStore
+            bookmarksStore: bookmarksStore,
+            historyStore: historyStore,
+            type: view
         )
         coordinator.delegate = self
         coordinator.start()
@@ -108,8 +110,7 @@ class BrowserCoordinator: Coordinator {
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
-    func openBookmark(bookmark: Bookmark) {
-        guard let url = bookmark.linkURL else { return }
+    func openURL(_ url: URL) {
         rootViewController.goTo(url: url)
     }
 
@@ -159,16 +160,26 @@ extension BrowserCoordinator: BookmarksCoordinatorDelegate {
         removeCoordinator(coordinator)
     }
 
-    func didSelectBookmark(_ bookmark: Bookmark, in coordinator: BookmarkCoordinator) {
+    func didSelectURL(_ url: URL, in coordinator: BookmarkCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
-        openBookmark(bookmark: bookmark)
+        openURL(url)
     }
 }
 
 extension BrowserCoordinator: BrowserViewControllerDelegate {
-    func didOpenQRCode() {
-        presentQRCodeReader()
+
+    func runAction(action: BrowserAction) {
+        switch action {
+        case .bookmarks:
+            showBookmarks(for: .bookmarks)
+        case .addBookmark(let bookmark):
+            bookmarksStore.add(bookmarks: [bookmark])
+        case .qrCode:
+            presentQRCodeReader()
+        case .history:
+            showBookmarks(for: .history)
+        }
     }
 
     func didCall(action: DappAction, callbackID: Int) {
@@ -192,14 +203,6 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
             self.rootViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
             self.navigationController.displayError(error: InCoordinatorError.onlyWatchAccount)
         }
-    }
-
-    func didAddBookmark(bookmark: Bookmark) {
-        bookmarksStore.add(bookmarks: [bookmark])
-    }
-
-    func didOpenBookmarkList() {
-        showBookmarks()
     }
 
     func didVisitURL(url: URL, title: String) {
@@ -232,6 +235,6 @@ extension BrowserCoordinator: ScanQRCodeCoordinatorDelegate {
         guard let url = URL(string: result) else {
             return
         }
-        rootViewController.goTo(url: url)
+        openURL(url)
     }
 }

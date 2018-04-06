@@ -6,11 +6,16 @@ import WebKit
 import JavaScriptCore
 import Result
 
+enum BrowserAction {
+    case history
+    case addBookmark(bookmark: Bookmark)
+    case bookmarks
+    case qrCode
+}
+
 protocol BrowserViewControllerDelegate: class {
     func didCall(action: DappAction, callbackID: Int)
-    func didAddBookmark(bookmark: Bookmark)
-    func didOpenBookmarkList()
-    func didOpenQRCode()
+    func runAction(action: BrowserAction)
     func didVisitURL(url: URL, title: String)
 }
 
@@ -68,6 +73,15 @@ class BrowserViewController: UIViewController {
         return progressView
     }()
 
+    lazy var floatingFooter: FloatingBrowserFooter = {
+        let view = FloatingBrowserFooter(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.historyButton.addTarget(self, action: #selector(history), for: .touchUpInside)
+        view.bookmarksButton.addTarget(self, action: #selector(showBookmarks), for: .touchUpInside)
+        view.qrcodeButton.addTarget(self, action: #selector(qrReader), for: .touchUpInside)
+        return view
+    }()
+
     //Take a look at this issue : https://stackoverflow.com/questions/26383031/wkwebview-causes-my-view-controller-to-leak
     lazy var config: WKWebViewConfiguration = {
         return WKWebViewConfiguration.make(for: account, with: sessionConfig, in: ScriptMessageProxy(delegate: self))
@@ -87,6 +101,7 @@ class BrowserViewController: UIViewController {
 
         webView.addSubview(progressView)
         webView.bringSubview(toFront: progressView)
+        webView.addSubview(floatingFooter)
         view.addSubview(errorView)
 
         NSLayoutConstraint.activate([
@@ -94,6 +109,12 @@ class BrowserViewController: UIViewController {
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             webView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor),
+
+            //floatingFooter.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
+            //floatingFooter.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
+            //floatingFooter.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+            floatingFooter.centerXAnchor.constraint(equalTo: webView.centerXAnchor),
+            floatingFooter.bottomAnchor.constraint(equalTo: webView.bottomAnchor, constant: -StyleLayout.sideMargin),
 
             progressView.topAnchor.constraint(equalTo: view.layoutGuide.topAnchor),
             progressView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
@@ -118,7 +139,6 @@ class BrowserViewController: UIViewController {
         super.viewWillAppear(animated)
 
         browserNavBar?.browserDelegate = self
-        reloadButtons()
     }
 
     private func injectUserAgent() {
@@ -147,13 +167,15 @@ class BrowserViewController: UIViewController {
 
     func goHome() {
         guard let url = URL(string: Constants.dappsBrowserURL) else { return }
+        var request = URLRequest(url: url)
+        request.cachePolicy = .returnCacheDataElseLoad
         hideErrorView()
-        webView.load(URLRequest(url: url))
+        webView.load(request)
         browserNavBar?.textField.text = url.absoluteString
     }
 
-    private func qrReader() {
-        delegate?.didOpenQRCode()
+    @objc private func qrReader() {
+        delegate?.runAction(action: .qrCode)
     }
 
     private func reload() {
@@ -176,11 +198,6 @@ class BrowserViewController: UIViewController {
         delegate?.didVisitURL(url: url, title: webView.title ?? "")
     }
 
-    private func reloadButtons() {
-        browserNavBar?.goBack.isEnabled = webView.canGoBack
-        browserNavBar?.goForward.isEnabled = webView.canGoForward
-    }
-
     private func hideErrorView() {
         errorView.isHidden = true
     }
@@ -199,6 +216,11 @@ class BrowserViewController: UIViewController {
         } else if keyPath == Keys.URL {
             if let url = webView.url {
                 self.browserNavBar?.textField.text = url.absoluteString
+
+                let footerAlpha: CGFloat = (url.host == URL(string: Constants.dappsBrowserURL)!.host) ? 1.0 : 0.0
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.floatingFooter.alpha = footerAlpha
+                }, completion: nil)
             }
         }
     }
@@ -221,9 +243,6 @@ class BrowserViewController: UIViewController {
         )
         alertController.popoverPresentationController?.sourceView = sender
         alertController.popoverPresentationController?.sourceRect = sender.centerRect
-        let QRCodeAction = UIAlertAction(title: NSLocalizedString("browser.qrCode.button.title", value: "QR Reader", comment: ""), style: .default) { [unowned self] _ in
-            self.qrReader()
-        }
         let reloadAction = UIAlertAction(title: NSLocalizedString("browser.reload.button.title", value: "Reload", comment: ""), style: .default) { [unowned self] _ in
             self.reload()
         }
@@ -234,15 +253,9 @@ class BrowserViewController: UIViewController {
         let addBookmarkAction = UIAlertAction(title: NSLocalizedString("browser.addbookmark.button.title", value: "Add Bookmark", comment: ""), style: .default) { [unowned self] _ in
             self.addBookmark()
         }
-        let viewBookmarksAction = UIAlertAction(title: NSLocalizedString("browser.bookmarks.button.title", value: "Bookmarks", comment: ""), style: .default) { [unowned self] _ in
-            self.showBookmarks()
-        }
-
         alertController.addAction(reloadAction)
-        alertController.addAction(QRCodeAction)
         alertController.addAction(shareAction)
         alertController.addAction(addBookmarkAction)
-        alertController.addAction(viewBookmarksAction)
         alertController.addAction(cancelAction)
         return alertController
     }
@@ -259,11 +272,15 @@ class BrowserViewController: UIViewController {
     private func addBookmark() {
         guard let url = webView.url?.absoluteString else { return }
         guard let title = webView.title else { return }
-        delegate?.didAddBookmark(bookmark: Bookmark(url: url, title: title))
+        delegate?.runAction(action: .addBookmark(bookmark: Bookmark(url: url, title: title)))
     }
 
-    private func showBookmarks() {
-        delegate?.didOpenBookmarkList()
+    @objc private func showBookmarks() {
+        delegate?.runAction(action: .bookmarks)
+    }
+
+    @objc private func history() {
+        delegate?.runAction(action: .history)
     }
 
     func handleError(error: Error) {
@@ -276,7 +293,7 @@ class BrowserViewController: UIViewController {
 }
 
 extension BrowserViewController: BrowserNavigationBarDelegate {
-    func did(action: BrowserAction) {
+    func did(action: BrowserNavigation) {
         switch action {
         case .goForward:
             webView.goForward()
@@ -292,7 +309,6 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
         case .beginEditing:
             stopLoading()
         }
-        reloadButtons()
     }
 }
 
@@ -300,12 +316,10 @@ extension BrowserViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         refreshURL()
         recordURL()
-        reloadButtons()
         hideErrorView()
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        reloadButtons()
         hideErrorView()
     }
 
