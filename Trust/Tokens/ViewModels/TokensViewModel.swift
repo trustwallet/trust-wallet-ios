@@ -173,8 +173,8 @@ class TokensViewModel: NSObject {
         let tokensTickerOperation = TokensTickerOperation(network: tokensNetwork, tokenPrices: tokens.map { TokenPrice(contract: $0.contract, symbol: $0.symbol) })
 
         tokensTickerOperation.completionBlock = { [weak self] in
-            self?.store.saveTickers(tickers: tokensTickerOperation.tickers)
             DispatchQueue.main.async {
+                self?.store.saveTickers(tickers: tokensTickerOperation.tickers)
                 self?.delegate?.refresh()
             }
         }

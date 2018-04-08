@@ -24,4 +24,8 @@ class TokensDataStoreTest: XCTestCase {
         XCTAssertEqual("id2", returnedCoinTickers[1].id)
         XCTAssertEqual("id3", returnedCoinTickers[2].id)
     }
+    
+    func testDeleteTickers() {
+        tokensDataStore.deleteTickers()
+    }
 }
