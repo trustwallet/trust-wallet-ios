@@ -26,6 +26,41 @@ class TokensDataStoreTest: XCTestCase {
     }
     
     func testDeleteTickers() {
+        XCTAssertEqual(0, tokensDataStore.realm.objects(CoinTickerObject.self).count)
+        XCTAssertEqual(0, tokensDataStore.tickers().count)
+
+        do {
+            let coinTickerObject = CoinTickerObject(
+                id: "",
+                symbol: "",
+                price: "",
+                percent_change_24h: "",
+                contract: "",
+                image: "",
+                tickersKey: "This is a tickers key that does not match anyone"
+            )
+            try tokensDataStore.realm.write {
+                tokensDataStore.realm.add(coinTickerObject, update: true)
+            }
+        } catch let error {
+            print(error.localizedDescription)
+        }
+
+        XCTAssertEqual(1, tokensDataStore.realm.objects(CoinTickerObject.self).count)
+        XCTAssertEqual(0, tokensDataStore.tickers().count)
+
+        let coinTickers = [
+            CoinTicker(id: "id1", symbol: "", price: "", percent_change_24h: "", contract: "", image: "")
+        ]
+
+        tokensDataStore.saveTickers(tickers: coinTickers)
+
+        XCTAssertEqual(2, tokensDataStore.realm.objects(CoinTickerObject.self).count)
+        XCTAssertEqual(1, tokensDataStore.tickers().count)
+
         tokensDataStore.deleteTickers()
+
+        XCTAssertEqual(1, tokensDataStore.realm.objects(CoinTickerObject.self).count)
+        XCTAssertEqual(0, tokensDataStore.tickers().count)
     }
 }

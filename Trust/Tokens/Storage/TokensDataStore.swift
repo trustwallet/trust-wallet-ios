@@ -130,14 +130,6 @@ class TokensDataStore {
             return
         }
 
-        /*
-        do {
-            config.defaults.set(try PropertyListEncoder().encode(tickers), forKey: tickersKey)
-        } catch {
-            print(error.localizedDescription)
-        }
-        */
-
         deleteTickers()
 
         let coinTickerObjects = tickers.map { (ticker) -> CoinTickerObject in
@@ -162,19 +154,7 @@ class TokensDataStore {
     }
 
     func tickers() -> [CoinTicker] {
-        /*
-        guard let storedObject: Data = config.defaults.data(forKey: tickersKey) else {
-            return [CoinTicker]()
-        }
-
-        do {
-            return try PropertyListDecoder().decode([CoinTicker].self, from: storedObject)
-        } catch {
-           return [CoinTicker]()
-        }
-        */
-
-        let coinTickerObjects: [CoinTickerObject] = getTickerResultsByTickersKey().map { $0 }
+        let coinTickerObjects: [CoinTickerObject] = tickerResultsByTickersKey.map { $0 }
 
         let tickers = coinTickerObjects.map { (coinTickerObject) -> CoinTicker in
             return CoinTicker(
@@ -194,20 +174,14 @@ class TokensDataStore {
         return tickers
     }
 
-    func getTickerResultsByTickersKey() -> Results<CoinTickerObject> {
+    private var tickerResultsByTickersKey: Results<CoinTickerObject> {
         return realm.objects(CoinTickerObject.self).filter("tickersKey == %@", self.tickersKey)
     }
 
     func deleteTickers() {
-        /*
-        config.defaults.removeObject(forKey: tickersKey)
-        */
-
-        let results = getTickerResultsByTickersKey()
-
         do {
             try realm.write {
-                realm.delete(results)
+                realm.delete(tickerResultsByTickersKey)
             }
         } catch let error {
             print(error.localizedDescription)
