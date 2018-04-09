@@ -29,8 +29,8 @@ class BrowserCoordinator: Coordinator {
         return controller
     }()
 
-    lazy var rootViewController: MasterBoookmarksViewController = {
-        let controller = MasterBoookmarksViewController(
+    lazy var rootViewController: MasterBrowserViewController = {
+        let controller = MasterBrowserViewController(
             bookmarksViewController: bookmarksViewController,
             historyViewController: historyViewController,
             browserViewController: browserViewController,
@@ -315,7 +315,7 @@ extension BrowserCoordinator: HistoryViewControllerDelegate {
     }
 }
 
-extension BrowserCoordinator: MasterBoookmarksViewControllerDelegate {
+extension BrowserCoordinator: MasterBrowserViewControllerDelegate {
     func didPressAction(_ action: BrowserToolbarAction) {
         switch action {
         case .view(let viewType):

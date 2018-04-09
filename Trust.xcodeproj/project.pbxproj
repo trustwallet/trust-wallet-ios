@@ -386,7 +386,7 @@
 		77B3BF3C201908ED00EEC15A /* ConfirmCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */; };
 		77B3BF4A2019247200EEC15A /* BrowserNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */; };
 		77B806A52075C33D005FDCBE /* SharedMigrationInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B806A42075C33D005FDCBE /* SharedMigrationInitializer.swift */; };
-		77B806A9207766DC005FDCBE /* MasterBookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B806A8207766DC005FDCBE /* MasterBookmarksViewController.swift */; };
+		77B806A9207766DC005FDCBE /* MasterBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B806A8207766DC005FDCBE /* MasterBrowserViewController.swift */; };
 		77B806AB20776781005FDCBE /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B806AA20776781005FDCBE /* HistoryViewController.swift */; };
 		77B806AD20776BFD005FDCBE /* HistoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B806AC20776BFD005FDCBE /* HistoriesViewModel.swift */; };
 		77B806AF20776EDA005FDCBE /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B806AE20776EDA005FDCBE /* HistoryViewModel.swift */; };
@@ -867,7 +867,7 @@
 		77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCoordinator.swift; sourceTree = "<group>"; };
 		77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserNavigationBar.swift; sourceTree = "<group>"; };
 		77B806A42075C33D005FDCBE /* SharedMigrationInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedMigrationInitializer.swift; sourceTree = "<group>"; };
-		77B806A8207766DC005FDCBE /* MasterBookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterBookmarksViewController.swift; sourceTree = "<group>"; };
+		77B806A8207766DC005FDCBE /* MasterBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterBrowserViewController.swift; sourceTree = "<group>"; };
 		77B806AA20776781005FDCBE /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		77B806AC20776BFD005FDCBE /* HistoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoriesViewModel.swift; sourceTree = "<group>"; };
 		77B806AE20776EDA005FDCBE /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
@@ -1946,7 +1946,7 @@
 			children = (
 				29E6E06D1FE897EE0079265A /* BrowserViewController.swift */,
 				903682F0204A6DB800013479 /* BookmarkViewController.swift */,
-				77B806A8207766DC005FDCBE /* MasterBookmarksViewController.swift */,
+				77B806A8207766DC005FDCBE /* MasterBrowserViewController.swift */,
 				77B806AA20776781005FDCBE /* HistoryViewController.swift */,
 			);
 			path = ViewControllers;
@@ -3212,7 +3212,7 @@
 				73B1A6BE204B55FA001F546C /* NonFungibleTokenCellViewModel.swift in Sources */,
 				771D53732059337100C79485 /* TokenImageView.swift in Sources */,
 				73200B7020488C9300118A82 /* TrustNetworkProtocol.swift in Sources */,
-				77B806A9207766DC005FDCBE /* MasterBookmarksViewController.swift in Sources */,
+				77B806A9207766DC005FDCBE /* MasterBrowserViewController.swift in Sources */,
 				2955378C205F2670006049B3 /* ImageURLFormatter.swift in Sources */,
 				771D536F2058BB0D00C79485 /* BrowserCoordinator.swift in Sources */,
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,

@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-protocol MasterBoookmarksViewControllerDelegate: class {
+protocol MasterBrowserViewControllerDelegate: class {
     func didPressAction(_ action: BrowserToolbarAction)
 }
 
@@ -18,7 +18,7 @@ enum BookmarksViewType: Int {
     case history
 }
 
-class MasterBoookmarksViewController: UIViewController {
+class MasterBrowserViewController: UIViewController {
 
     fileprivate lazy var segmentController: UISegmentedControl = {
         let items = [
@@ -40,7 +40,7 @@ class MasterBoookmarksViewController: UIViewController {
         return button
     }()
 
-    weak var delegate: MasterBoookmarksViewControllerDelegate?
+    weak var delegate: MasterBrowserViewControllerDelegate?
 
     let bookmarksViewController: BookmarkViewController
     let historyViewController: HistoryViewController

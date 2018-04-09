@@ -28,7 +28,7 @@ extension UINavigationController {
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         var preferredStyle: UIStatusBarStyle
-        if topViewController is BrowserViewController {
+        if topViewController is MasterBrowserViewController {
             preferredStyle = .default
         } else {
             preferredStyle = .lightContent
