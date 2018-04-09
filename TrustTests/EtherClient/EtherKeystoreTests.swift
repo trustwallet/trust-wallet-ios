@@ -244,6 +244,35 @@ class EtherKeystoreTests: XCTestCase {
         // signature: '0xb91467e570a6466aa9e9876cbcd013baba02900b8979d43fe208a4a4f339f5fd6007e74cd82e037b800186422fc2da167c747ef045e5d18a5f5d4300f8e1a0291c'
     }
 
+    func testSignUTF8PersonalMessage() {
+        let keystore = FakeEtherKeystore()
+        let privateKeyResult = keystore.convertPrivateKeyToKeystoreFile(privateKey: "0xD30519BCAE8D180DBFCC94FE0B8383DC310185B0BE97B4365083EBCECCD75759", passphrase: TestKeyStore.password)
+
+        guard case let .success(keystoreString) = privateKeyResult else {
+            return XCTFail()
+        }
+
+        let result = keystore.importKeystore(
+            value: keystoreString.jsonString!,
+            password: TestKeyStore.password,
+            newPassword: TestKeyStore.password
+        )
+
+        guard case let .success(account) = result else {
+            return XCTFail()
+        }
+
+        let signResult = keystore.signPersonalMessage("♥".data(using: .utf8)!, for: account)
+
+        guard case let .success(data) = signResult else {
+            return XCTFail()
+        }
+
+        let expected = Data(hexString: "0x2b3d550f0bf9dce1a6e8ddaa0491317b52baf666fa5edd2940691271df50891933a16253ab2589825a2e1bfe9718c3a27723c51e61a78c28a048b63d9f2baaee1b")
+
+        XCTAssertEqual(expected, data)
+    }
+
     func testSignMessage() {
         let keystore = FakeEtherKeystore()
 
