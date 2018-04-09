@@ -11,6 +11,7 @@ enum BrowserAction {
     case addBookmark(bookmark: Bookmark)
     case bookmarks
     case qrCode
+    case changeURL(URL)
     case navigationAction(BrowserNavigation)
 }
 
@@ -60,8 +61,7 @@ class BrowserViewController: UIViewController {
     }()
 
     weak var delegate: BrowserViewControllerDelegate?
-    private let urlParser = BrowserURLParser()
-
+    
     var browserNavBar: BrowserNavigationBar? {
         return navigationController?.navigationBar as? BrowserNavigationBar
     }
@@ -198,6 +198,7 @@ class BrowserViewController: UIViewController {
         } else if keyPath == Keys.URL {
             if let url = webView.url {
                 self.browserNavBar?.textField.text = url.absoluteString
+                self.delegate?.runAction(action: .changeURL(url))
             }
         }
     }
@@ -241,10 +242,9 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
         case .more:
             break
         case .home:
-            goHome()
-        case .enter(let string):
-            guard let url = urlParser.url(from: string) else { return }
-            goTo(url: url)
+            break
+        case .enter:
+            break
         case .beginEditing:
             stopLoading()
         }

@@ -52,6 +52,7 @@ class BrowserCoordinator: Coordinator {
     private lazy var historyStore: HistoryStore = {
         return HistoryStore(realm: sharedRealm)
     }()
+    private let urlParser = BrowserURLParser()
 
     weak var delegate: BrowserCoordinatorDelegate?
 
@@ -128,9 +129,12 @@ class BrowserCoordinator: Coordinator {
 
     func openURL(_ url: URL) {
         rootViewController.browserViewController.goTo(url: url)
+        handleToolbar(for: url)
+    }
 
+    func handleToolbar(for url: URL) {
         let isToolbarHidden = url.absoluteString != Constants.dappsBrowserURL
-        self.navigationController.isToolbarHidden = isToolbarHidden
+        navigationController.isToolbarHidden = isToolbarHidden
 
         if isToolbarHidden {
             rootViewController.select(viewType: .browser)
@@ -233,10 +237,16 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
             case .home:
                 enableToolbar = true
                 rootViewController.select(viewType: .browser)
+                rootViewController.browserViewController.goHome()
             case .more(let sender):
                 presentMoreOptions(sender: sender)
+            case .enter(let string):
+                guard let url = urlParser.url(from: string) else { return }
+                openURL(url)
             default: break
             }
+        case .changeURL(let url):
+            handleToolbar(for: url)
         }
     }
 
