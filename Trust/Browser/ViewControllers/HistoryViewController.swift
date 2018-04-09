@@ -48,6 +48,12 @@ class HistoryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupInitialViewState()
+
+        fetch()
+    }
+
+    func fetch() {
+        tableView.reloadData()
     }
 
     required init?(coder aDecoder: NSCoder) {

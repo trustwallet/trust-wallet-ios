@@ -11,6 +11,7 @@ enum BrowserAction {
     case addBookmark(bookmark: Bookmark)
     case bookmarks
     case qrCode
+    case navigationAction(BrowserNavigation)
 }
 
 protocol BrowserViewControllerDelegate: class {
@@ -73,15 +74,6 @@ class BrowserViewController: UIViewController {
         return progressView
     }()
 
-    lazy var floatingFooter: FloatingBrowserFooter = {
-        let view = FloatingBrowserFooter(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.historyButton.addTarget(self, action: #selector(history), for: .touchUpInside)
-        view.bookmarksButton.addTarget(self, action: #selector(showBookmarks), for: .touchUpInside)
-        view.qrcodeButton.addTarget(self, action: #selector(qrReader), for: .touchUpInside)
-        return view
-    }()
-
     //Take a look at this issue : https://stackoverflow.com/questions/26383031/wkwebview-causes-my-view-controller-to-leak
     lazy var config: WKWebViewConfiguration = {
         return WKWebViewConfiguration.make(for: account, with: sessionConfig, in: ScriptMessageProxy(delegate: self))
@@ -101,7 +93,6 @@ class BrowserViewController: UIViewController {
 
         webView.addSubview(progressView)
         webView.bringSubview(toFront: progressView)
-        webView.addSubview(floatingFooter)
         view.addSubview(errorView)
 
         NSLayoutConstraint.activate([
@@ -109,12 +100,6 @@ class BrowserViewController: UIViewController {
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             webView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor),
-
-            //floatingFooter.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
-            //floatingFooter.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
-            //floatingFooter.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
-            floatingFooter.centerXAnchor.constraint(equalTo: webView.centerXAnchor),
-            floatingFooter.bottomAnchor.constraint(equalTo: webView.bottomAnchor, constant: -StyleLayout.sideMargin),
 
             progressView.topAnchor.constraint(equalTo: view.layoutGuide.topAnchor),
             progressView.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
@@ -139,6 +124,7 @@ class BrowserViewController: UIViewController {
         super.viewWillAppear(animated)
 
         browserNavBar?.browserDelegate = self
+        refreshURL()
     }
 
     private func injectUserAgent() {
@@ -174,11 +160,7 @@ class BrowserViewController: UIViewController {
         browserNavBar?.textField.text = url.absoluteString
     }
 
-    @objc private func qrReader() {
-        delegate?.runAction(action: .qrCode)
-    }
-
-    private func reload() {
+    func reload() {
         hideErrorView()
         webView.reload()
     }
@@ -216,11 +198,6 @@ class BrowserViewController: UIViewController {
         } else if keyPath == Keys.URL {
             if let url = webView.url {
                 self.browserNavBar?.textField.text = url.absoluteString
-
-                let footerAlpha: CGFloat = (url.host == URL(string: Constants.dappsBrowserURL)!.host) ? 1.0 : 0.0
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.floatingFooter.alpha = footerAlpha
-                }, completion: nil)
             }
         }
     }
@@ -230,46 +207,7 @@ class BrowserViewController: UIViewController {
         webView.removeObserver(self, forKeyPath: Keys.URL)
     }
 
-    private func presentMoreOptions(sender: UIView) {
-        let alertController = makeMoreAlertSheet(sender: sender)
-        present(alertController, animated: true, completion: nil)
-    }
-
-    private func makeMoreAlertSheet(sender: UIView) -> UIAlertController {
-        let alertController = UIAlertController(
-            title: nil,
-            message: nil,
-            preferredStyle: .actionSheet
-        )
-        alertController.popoverPresentationController?.sourceView = sender
-        alertController.popoverPresentationController?.sourceRect = sender.centerRect
-        let reloadAction = UIAlertAction(title: NSLocalizedString("browser.reload.button.title", value: "Reload", comment: ""), style: .default) { [unowned self] _ in
-            self.reload()
-        }
-        let shareAction = UIAlertAction(title: NSLocalizedString("browser.share.button.title", value: "Share", comment: ""), style: .default) { [unowned self] _ in
-            self.share()
-        }
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
-        let addBookmarkAction = UIAlertAction(title: NSLocalizedString("browser.addbookmark.button.title", value: "Add Bookmark", comment: ""), style: .default) { [unowned self] _ in
-            self.addBookmark()
-        }
-        alertController.addAction(reloadAction)
-        alertController.addAction(shareAction)
-        alertController.addAction(addBookmarkAction)
-        alertController.addAction(cancelAction)
-        return alertController
-    }
-
-    private func share() {
-        guard let url = webView.url else { return }
-        guard let navigationController = navigationController else { return }
-        let activityViewController = ActivityViewController.makeShareController(url: url, navigationController: navigationController)
-        activityViewController.popoverPresentationController?.sourceView = navigationController.view
-        activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
-        navigationController.present(activityViewController, animated: true, completion: nil)
-    }
-
-    private func addBookmark() {
+    func addBookmark() {
         guard let url = webView.url?.absoluteString else { return }
         guard let title = webView.title else { return }
         delegate?.runAction(action: .addBookmark(bookmark: Bookmark(url: url, title: title)))
@@ -294,13 +232,14 @@ class BrowserViewController: UIViewController {
 
 extension BrowserViewController: BrowserNavigationBarDelegate {
     func did(action: BrowserNavigation) {
+        delegate?.runAction(action: .navigationAction(action))
         switch action {
         case .goForward:
             webView.goForward()
         case .goBack:
             webView.goBack()
-        case .more(let sender):
-            presentMoreOptions(sender: sender)
+        case .more:
+            break
         case .home:
             goHome()
         case .enter(let string):
@@ -314,7 +253,6 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
 
 extension BrowserViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        refreshURL()
         recordURL()
         hideErrorView()
     }
@@ -350,7 +288,7 @@ extension BrowserViewController: WKUIDelegate {
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
             completionHandler()
         }))
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
@@ -366,7 +304,7 @@ extension BrowserViewController: WKUIDelegate {
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .default, handler: { _ in
             completionHandler(false)
         }))
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
@@ -389,7 +327,7 @@ extension BrowserViewController: WKUIDelegate {
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .default, handler: { _ in
             completionHandler(nil)
         }))
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }
 

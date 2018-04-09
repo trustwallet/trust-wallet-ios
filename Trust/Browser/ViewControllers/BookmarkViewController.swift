@@ -47,6 +47,12 @@ class BookmarkViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupInitialViewState()
+
+        fetch()
+    }
+
+    func fetch() {
+        tableView.reloadData()
     }
 
     func confirmDelete(bookmark: Bookmark, index: IndexPath) {

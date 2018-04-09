@@ -57,6 +57,7 @@
                     <constraint firstItem="mbU-gV-kxo" firstAttribute="centerY" secondItem="iFR-Po-1R4" secondAttribute="centerY" id="g19-tD-vg2"/>
                 </constraints>
             </tableViewCellContentView>
+            <inset key="separatorInset" minX="56" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="bookmarkTitleLabel" destination="scJ-RY-qk3" id="tvj-El-Mov"/>
                 <outlet property="faviconImage" destination="mbU-gV-kxo" id="wl3-79-sLc"/>
