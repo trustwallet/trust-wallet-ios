@@ -13,7 +13,7 @@ struct PendingTransaction: Decodable {
     let gasPrice: String
     let hash: String
     let value: String
-    let nonce: String
+    let nonce: Int
 }
 
 extension PendingTransaction {
@@ -36,7 +36,7 @@ extension PendingTransaction {
             gasPrice: BigInt(gasPrice.drop0x, radix: 16)?.description ?? "",
             hash: hash,
             value: BigInt(value.drop0x, radix: 16)?.description ?? "",
-            nonce: BigInt(nonce.drop0x, radix: 16)?.description ?? ""
+            nonce: Int(BigInt(nonce.drop0x, radix: 16)?.description ?? "-1") ?? -1
         )
     }
 }

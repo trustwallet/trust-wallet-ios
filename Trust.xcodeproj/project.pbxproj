@@ -141,7 +141,6 @@
 		298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FA1FBEA03300CB5081 /* SendInputErrors.swift */; };
 		298542FE1FBEADEF00CB5081 /* TransactionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FD1FBEADEF00CB5081 /* TransactionViewModelTests.swift */; };
 		298543001FBEAE2F00CB5081 /* ChainState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298542FF1FBEAE2F00CB5081 /* ChainState.swift */; };
-		298994FE2053D47C00576B8B /* BookmarkCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298994FD2053D47C00576B8B /* BookmarkCoordinatorTests.swift */; };
 		298995002053D52700576B8B /* FakeRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298994FF2053D52700576B8B /* FakeRealm.swift */; };
 		2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2995739E1FA1F294006F17FD /* QRURLParser.swift */; };
 		299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299573A11FA1F369006F17FD /* QRURLParserTests.swift */; };
@@ -612,7 +611,6 @@
 		298542FA1FBEA03300CB5081 /* SendInputErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInputErrors.swift; sourceTree = "<group>"; };
 		298542FD1FBEADEF00CB5081 /* TransactionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModelTests.swift; sourceTree = "<group>"; };
 		298542FF1FBEAE2F00CB5081 /* ChainState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainState.swift; sourceTree = "<group>"; };
-		298994FD2053D47C00576B8B /* BookmarkCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCoordinatorTests.swift; sourceTree = "<group>"; };
 		298994FF2053D52700576B8B /* FakeRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeRealm.swift; sourceTree = "<group>"; };
 		2995739E1FA1F294006F17FD /* QRURLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParser.swift; sourceTree = "<group>"; };
 		299573A11FA1F369006F17FD /* QRURLParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRURLParserTests.swift; sourceTree = "<group>"; };
@@ -1642,7 +1640,6 @@
 		298994FC2053D46800576B8B /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				298994FD2053D47C00576B8B /* BookmarkCoordinatorTests.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -3400,7 +3397,6 @@
 				299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */,
 				CCA4FE3A1FD42B4100749AE4 /* FakeJailbreakChecker.swift in Sources */,
 				29F114F81FA8165200114A29 /* SendCoordinatorTests.swift in Sources */,
-				298994FE2053D47C00576B8B /* BookmarkCoordinatorTests.swift in Sources */,
 				299573A21FA1F369006F17FD /* QRURLParserTests.swift in Sources */,
 				61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */,
 				29E14FD91F7F4D4E00185568 /* FakeTransactionsStorage.swift in Sources */,
@@ -3674,7 +3670,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 207;
+				CURRENT_PROJECT_VERSION = 208;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Trust/Info.plist;
@@ -3698,7 +3694,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 207;
+				CURRENT_PROJECT_VERSION = 208;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Trust/Info.plist;

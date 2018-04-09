@@ -13,7 +13,7 @@ extension Transaction {
         gas: String = "0x1",
         gasPrice: String = "0x1",
         gasUsed: String = "0x1",
-        nonce: String = "0",
+        nonce: Int = 0,
         date: Date = Date(),
         localizedOperations: [LocalizedOperationObject] = [],
         state: TransactionState = .completed

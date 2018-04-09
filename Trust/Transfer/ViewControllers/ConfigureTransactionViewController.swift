@@ -133,11 +133,8 @@ class ConfigureTransactionViewController: FormViewController {
             }
         }
 
-        +++ Section {
-            $0.hidden = Eureka.Condition.function([], { _ in
-                return self.viewModel.isDataInputHidden
-            })
-        }
+        +++ Section()
+
         <<< AppFormAppearance.textFieldFloat(tag: Values.data) {
             $0.title = NSLocalizedString("configureTransaction.data.label.title", value: "Transaction Data (Optional)", comment: "")
             $0.value = self.configuration.data.hexEncoded

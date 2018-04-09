@@ -10,11 +10,11 @@ class GetNonceProvider: NonceProvider {
     let storage: TransactionsStorage
     var remoteNonce: BigInt? = .none
     var latestNonce: BigInt? {
-        guard let nonce = storage.latestTransaction?.nonce, let nonceBigInt = BigInt(nonce) else {
+        guard let nonce = storage.latestTransaction?.nonce else {
             return .none
         }
         let remoteNonceInt = remoteNonce ?? BigInt(-1)
-        return max(nonceBigInt, remoteNonceInt)
+        return max(BigInt(nonce), remoteNonceInt)
     }
 
     var nextNonce: BigInt? {
@@ -42,9 +42,20 @@ class GetNonceProvider: NonceProvider {
 
     func getNextNonce(completion: @escaping (Result<BigInt, AnyError>) -> Void) {
         guard let nextNonce = nextNonce else {
-            return fetch(completion: completion)
+            return fetchNextNonce(completion: completion)
         }
         completion(.success(nextNonce))
+    }
+
+    func fetchNextNonce(completion: @escaping (Result<BigInt, AnyError>) -> Void) {
+        fetch { result in
+            switch result {
+            case .success(let nonce):
+                completion(.success(nonce + 1))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 
     func fetch(completion: @escaping (Result<BigInt, AnyError>) -> Void) {

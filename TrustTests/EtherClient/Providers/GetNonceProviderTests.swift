@@ -15,7 +15,7 @@ class GetNonceProviderTests: XCTestCase {
 
     func testExistOneTransaction() {
         let storage = FakeTransactionsStorage()
-        storage.add([.make(nonce: "0")])
+        storage.add([.make(nonce: 0)])
         let provider = GetNonceProvider(
             storage: storage
         )
@@ -26,7 +26,7 @@ class GetNonceProviderTests: XCTestCase {
 
     func testExistMultipleTransactions() {
         let storage = FakeTransactionsStorage()
-        storage.add([.make(nonce: "5"),.make(nonce: "6")])
+        storage.add([.make(nonce: 5),.make(nonce: 6)])
         let provider = GetNonceProvider(
             storage: storage
         )
@@ -37,7 +37,7 @@ class GetNonceProviderTests: XCTestCase {
 
     func testChangingNonceWhenNewTransactionAdded() {
         let storage = FakeTransactionsStorage()
-        storage.add([.make(nonce: "5")])
+        storage.add([.make(nonce: 5)])
         let provider = GetNonceProvider(
             storage: storage
         )
@@ -45,7 +45,7 @@ class GetNonceProviderTests: XCTestCase {
         XCTAssertEqual(BigInt(5), provider.latestNonce)
         XCTAssertEqual(BigInt(6), provider.nextNonce)
 
-        storage.add([.make(nonce: "6")])
+        storage.add([.make(nonce: 6)])
 
         XCTAssertEqual(BigInt(6), provider.latestNonce)
         XCTAssertEqual(BigInt(7), provider.nextNonce)

@@ -14,7 +14,7 @@ class Transaction: Object, Decodable {
     @objc dynamic var gas = ""
     @objc dynamic var gasPrice = ""
     @objc dynamic var gasUsed = ""
-    @objc dynamic var nonce: String = ""
+    @objc dynamic var nonce: Int = 0
     @objc dynamic var date = Date()
     @objc dynamic var internalState: Int = TransactionState.completed.rawValue
     var localizedOperations = List<LocalizedOperationObject>()
@@ -28,7 +28,7 @@ class Transaction: Object, Decodable {
         gas: String,
         gasPrice: String,
         gasUsed: String,
-        nonce: String,
+        nonce: Int,
         date: Date,
         localizedOperations: [LocalizedOperationObject],
         state: TransactionState
@@ -36,7 +36,7 @@ class Transaction: Object, Decodable {
 
         self.init()
         self.id = id
-        self.uniqueID = from + "-" + nonce
+        self.uniqueID = from + "-" + String(nonce)
         self.blockNumber = blockNumber
         self.from = from
         self.to = to
@@ -108,7 +108,7 @@ class Transaction: Object, Decodable {
                   gas: gas,
                   gasPrice: gasPrice,
                   gasUsed: gasUsed,
-                  nonce: String(rawNonce),
+                  nonce: rawNonce,
                   date: Date(timeIntervalSince1970: TimeInterval(timeStamp) ?? 0),
                   localizedOperations: operations,
                   state: state)

@@ -20,7 +20,7 @@ extension SentTransaction {
             gas: transaction.original.gasLimit.description,
             gasPrice: transaction.original.gasPrice.description,
             gasUsed: "",
-            nonce: String(transaction.original.nonce),
+            nonce: Int(transaction.original.nonce),
             date: Date(),
             localizedOperations: [],
             state: .pending

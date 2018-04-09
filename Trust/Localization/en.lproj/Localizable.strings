@@ -223,3 +223,7 @@
 "nft.details.internal.button.title" = "Open on %@";
 "nft.poweredBy.label.text" = "Powered by OpenSea";
 "configureTransaction.nonce.label.title" = "Nonce";
+"Bookmarks" = "Bookmarks";
+"History" = "History";
+"history.noHistory.label.title" = "No history yet!";
+"New" = "New";

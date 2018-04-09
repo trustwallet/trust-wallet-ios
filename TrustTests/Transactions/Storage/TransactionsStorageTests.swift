@@ -27,8 +27,8 @@ class TransactionsStorageTests: XCTestCase {
         let storage = FakeTransactionsStorage()
 
         storage.add([
-            .make(nonce: "0x1"),
-            .make(nonce: "0x2")
+            .make(nonce: 1),
+            .make(nonce: 2)
         ])
 
         XCTAssertEqual(2, storage.transactions.count)
@@ -38,9 +38,9 @@ class TransactionsStorageTests: XCTestCase {
         let storage = FakeTransactionsStorage()
 
         storage.add([
-            .make(nonce: "0x1"),
-            .make(nonce: "0x1"),
-            .make(nonce: "0x2")
+            .make(nonce: 1),
+            .make(nonce: 1),
+            .make(nonce: 2)
         ])
 
         XCTAssertEqual(2, storage.transactions.count)
@@ -48,8 +48,8 @@ class TransactionsStorageTests: XCTestCase {
 
     func testDelete() {
         let storage = FakeTransactionsStorage()
-        let one: Trust.Transaction = .make(nonce: "0x1")
-        let two: Trust.Transaction = .make(nonce: "0x2")
+        let one: Trust.Transaction = .make(nonce: 1)
+        let two: Trust.Transaction = .make(nonce: 2)
 
         storage.add([
             one,
@@ -69,8 +69,8 @@ class TransactionsStorageTests: XCTestCase {
         let storage = FakeTransactionsStorage()
 
         storage.add([
-            .make(nonce: "0x1"),
-            .make(nonce: "0x2")
+            .make(nonce: 1),
+            .make(nonce: 2)
         ])
 
         XCTAssertEqual(2, storage.transactions.count)
