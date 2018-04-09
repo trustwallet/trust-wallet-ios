@@ -300,10 +300,9 @@ open class EtherKeystore: Keystore {
         }
     }
 
-    func signPersonalMessage(_ data: Data, for account: Account) -> Result<Data, KeystoreError> {
-        let message = String(data: data, encoding: .utf8)!
-        let formattedMessage: String = "\u{19}Ethereum Signed Message:\n" + "\(message.count)" + message
-        return signMessage(formattedMessage.data(using: .utf8)!, for: account)
+    func signPersonalMessage(_ message: Data, for account: Account) -> Result<Data, KeystoreError> {
+        let prefix = "\u{19}Ethereum Signed Message:\n\(message.count)".data(using: .utf8)!
+        return signMessage(prefix + message, for: account)
     }
 
     func signMessage(_ message: Data, for account: Account) -> Result<Data, KeystoreError> {
