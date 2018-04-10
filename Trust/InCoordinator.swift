@@ -21,6 +21,9 @@ class InCoordinator: Coordinator {
     let appTracker: AppTracker
     let navigator: Navigator
     weak var delegate: InCoordinatorDelegate?
+    var browserCoordinator: BrowserCoordinator? {
+        return self.coordinators.compactMap { $0 as? BrowserCoordinator }.first
+    }
     var transactionCoordinator: TransactionCoordinator? {
         return self.coordinators.compactMap { $0 as? TransactionCoordinator }.first
     }
@@ -176,9 +179,9 @@ class InCoordinator: Coordinator {
         guard let nav = viewControllers[selectTab.index] as? UINavigationController else { return }
 
         switch selectTab {
-        case .browser(let openURL):
-            if let openURL = openURL, let controller = nav.viewControllers[0] as? BrowserViewController {
-                controller.goTo(url: openURL)
+        case .browser(let url):
+            if let url = url {
+                browserCoordinator?.openURL(url)
             }
         case .settings, .wallet, .transactions:
             break
