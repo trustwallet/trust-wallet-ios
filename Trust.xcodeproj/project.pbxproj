@@ -115,7 +115,6 @@
 		2963B6AD1F981A96003063C1 /* TransactionAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6AC1F981A96003063C1 /* TransactionAppearance.swift */; };
 		2963B6AF1F9823E6003063C1 /* UnconfirmedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6AE1F9823E6003063C1 /* UnconfirmedTransaction.swift */; };
 		2963B6B11F9891F5003063C1 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6B01F9891F5003063C1 /* UIButton.swift */; };
-		2963B6B91F9A7EEA003063C1 /* CoinTicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6B81F9A7EEA003063C1 /* CoinTicker.swift */; };
 		2963B6BF1F9AB9A2003063C1 /* ContractERC20Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6BE1F9AB9A2003063C1 /* ContractERC20Transfer.swift */; };
 		2963B6C11F9AE0E4003063C1 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6C01F9AE0E4003063C1 /* Data.swift */; };
 		296421951F70C1EC00EB363B /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296421941F70C1EC00EB363B /* LoadingView.swift */; };
@@ -584,7 +583,6 @@
 		2963B6AC1F981A96003063C1 /* TransactionAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionAppearance.swift; sourceTree = "<group>"; };
 		2963B6AE1F9823E6003063C1 /* UnconfirmedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnconfirmedTransaction.swift; sourceTree = "<group>"; };
 		2963B6B01F9891F5003063C1 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
-		2963B6B81F9A7EEA003063C1 /* CoinTicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTicker.swift; sourceTree = "<group>"; };
 		2963B6BE1F9AB9A2003063C1 /* ContractERC20Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractERC20Transfer.swift; sourceTree = "<group>"; };
 		2963B6C01F9AE0E4003063C1 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		296421941F70C1EC00EB363B /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -1235,7 +1233,6 @@
 			children = (
 				773B8DB320716E9C00D05690 /* Providers */,
 				771D53612050AFBD00C79485 /* Types */,
-				2963B6B41F9A7E13003063C1 /* CoinMarket */,
 				291F52A31F6B760A00B369AB /* Requests */,
 				2959961D1FAE756400DB66A8 /* TrustClient */,
 				291F52B61F6B870400B369AB /* CastError.swift */,
@@ -1386,22 +1383,6 @@
 				2977CAF01F7E0C2E009682A0 /* Views */,
 			);
 			path = Tokens;
-			sourceTree = "<group>";
-		};
-		2963B6B41F9A7E13003063C1 /* CoinMarket */ = {
-			isa = PBXGroup;
-			children = (
-				2963B6B71F9A7EDE003063C1 /* Types */,
-			);
-			path = CoinMarket;
-			sourceTree = "<group>";
-		};
-		2963B6B71F9A7EDE003063C1 /* Types */ = {
-			isa = PBXGroup;
-			children = (
-				2963B6B81F9A7EEA003063C1 /* CoinTicker.swift */,
-			);
-			path = Types;
 			sourceTree = "<group>";
 		};
 		2977CAE11F7E0B17009682A0 /* Coordinators */ = {
@@ -3092,7 +3073,6 @@
 				77CB83A0206EFE71006F34A8 /* FirebaseInitializer.swift in Sources */,
 				29BDF1A11FEE51A80023A45F /* GasLimitConfiguration.swift in Sources */,
 				615F10591FCBEF7C008A45AF /* OnboardingPage.swift in Sources */,
-				2963B6B91F9A7EEA003063C1 /* CoinTicker.swift in Sources */,
 				29F114EC1FA448F400114A29 /* TokensCoordinator.swift in Sources */,
 				29F1C85820036926003780D8 /* AppTracker.swift in Sources */,
 				293E62711FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift in Sources */,

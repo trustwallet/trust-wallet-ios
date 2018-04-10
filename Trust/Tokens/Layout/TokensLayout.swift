@@ -21,17 +21,17 @@ struct TokensLayout {
         static let currencyAmountTextColor = Colors.lightGray
         static let fiatAmountTextColor = Colors.gray
 
-        static func percentChangeColor(for ticker: CoinTicker?) -> UIColor {
+        static func percentChangeColor(for ticker: CoinTickerObject?) -> UIColor {
             guard let ticker = ticker else { return Colors.lightGray }
             return ticker.percent_change_24h.starts(with: "-") ? Colors.red : Colors.green
         }
 
-        static func percentChange(for ticker: CoinTicker?) -> String? {
+        static func percentChange(for ticker: CoinTickerObject?) -> String? {
             guard let percent_change_24h = ticker?.percent_change_24h, !percent_change_24h.isEmpty else { return nil }
             return "(" + percent_change_24h + "%)"
         }
 
-        static func totalFiatAmount(for ticker: CoinTicker?, token: TokenObject) -> String? {
+        static func totalFiatAmount(for ticker: CoinTickerObject?, token: TokenObject) -> String? {
             guard let ticker = ticker else { return nil }
             let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
             let priceInUsd = Double(ticker.price) ?? 0
@@ -40,7 +40,7 @@ struct TokensLayout {
             return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
         }
 
-        static func currencyAmount(for ticker: CoinTicker?, token: TokenObject) -> String? {
+        static func currencyAmount(for ticker: CoinTickerObject?, token: TokenObject) -> String? {
             guard let ticker = ticker, let price = Double(ticker.price), price > 0 else { return .none }
             return CurrencyFormatter.formatter.string(from: NSNumber(value: price))
         }

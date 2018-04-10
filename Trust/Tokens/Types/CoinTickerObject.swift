@@ -4,7 +4,7 @@ import Foundation
 import Realm
 import RealmSwift
 
-class CoinTickerObject: Object {
+class CoinTickerObject: Object, Decodable {
     @objc dynamic var id: String = ""
     @objc dynamic var symbol: String = ""
     @objc dynamic var price: String = ""

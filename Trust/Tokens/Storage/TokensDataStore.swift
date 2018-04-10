@@ -37,10 +37,6 @@ class TokensDataStore {
         return realm.objects(NonFungibleTokenObject.self).map { $0 }
     }
 
-    private lazy var tickersKey: String = {
-        return "tickers-" + config.currency.rawValue + "-" + String(config.chainID)
-    }()
-
     init(
         realm: Realm,
         config: Config
@@ -57,7 +53,7 @@ class TokensDataStore {
         }
     }
 
-    func coinTicker(for token: TokenObject) -> CoinTicker? {
+    func coinTicker(for token: TokenObject) -> CoinTickerObject? {
         return tickers().first(where: { $0.contract == token.contract })
     }
 
@@ -86,7 +82,7 @@ class TokensDataStore {
     }
 
     func deleteAll() {
-        deleteTickers()
+        deleteAllExistingTickers()
         try! realm.write {
             realm.delete(realm.objects(TokenObject.self))
             realm.delete(realm.objects(NonFungibleTokenObject.self))
@@ -125,14 +121,15 @@ class TokensDataStore {
         }
     }
 
-    func saveTickers(tickers: [CoinTicker]) {
+    func saveTickers(tickers: [CoinTickerObject]) {
         guard !tickers.isEmpty else {
             return
         }
 
-        deleteTickers()
+        deleteAllExistingTickers()
 
         let coinTickerObjects = tickers.map { (ticker) -> CoinTickerObject in
+            let tickersKey = self.config.tickersKey
             return CoinTickerObject(
                 id: ticker.id,
                 symbol: ticker.symbol,
@@ -140,7 +137,7 @@ class TokensDataStore {
                 percent_change_24h: ticker.percent_change_24h,
                 contract: ticker.contract,
                 image: ticker.image,
-                tickersKey: self.tickersKey
+                tickersKey: tickersKey
             )
         }
 
@@ -153,32 +150,21 @@ class TokensDataStore {
         }
     }
 
-    func tickers() -> [CoinTicker] {
+    func tickers() -> [CoinTickerObject] {
         let coinTickerObjects: [CoinTickerObject] = tickerResultsByTickersKey.map { $0 }
 
-        let tickers = coinTickerObjects.map { (coinTickerObject) -> CoinTicker in
-            return CoinTicker(
-                id: coinTickerObject.id,
-                symbol: coinTickerObject.symbol,
-                price: coinTickerObject.price,
-                percent_change_24h: coinTickerObject.percent_change_24h,
-                contract: coinTickerObject.contract,
-                image: coinTickerObject.image
-            )
+        guard !coinTickerObjects.isEmpty else {
+            return [CoinTickerObject]()
         }
 
-        guard !tickers.isEmpty else {
-            return [CoinTicker]()
-        }
-
-        return tickers
+        return coinTickerObjects
     }
 
     private var tickerResultsByTickersKey: Results<CoinTickerObject> {
-        return realm.objects(CoinTickerObject.self).filter("tickersKey == %@", self.tickersKey)
+        return realm.objects(CoinTickerObject.self).filter("tickersKey == %@", self.config.tickersKey)
     }
 
-    func deleteTickers() {
+    func deleteAllExistingTickers() {
         do {
             try realm.write {
                 realm.delete(tickerResultsByTickersKey)

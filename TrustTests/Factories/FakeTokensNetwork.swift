@@ -19,9 +19,9 @@ class FakeTokensNetwork: NetworkProtocol {
         self.config = config
     }
     
-    func tickers(for tokens: [TokenObject], completion: @escaping ([CoinTicker]?) -> Void) {
+    func tickers(for tokens: [TokenObject], completion: @escaping ([CoinTickerObject]?) -> Void) {
         let eth_contract = "0x0000000000000000000000000000000000000000"
-        let ticker = CoinTicker(id: "ethereum", symbol: "ETH", price: "100", percent_change_24h: "-2.39", contract: eth_contract, image: "https://files.coinmarketcap.com/static/img/coins/128x128/ethereum.png")
+        let ticker = CoinTickerObject(id: "ethereum", symbol: "ETH", price: "100", percent_change_24h: "-2.39", contract: eth_contract, image: "https://files.coinmarketcap.com/static/img/coins/128x128/ethereum.png", tickersKey="tickersKey")
         completion([ticker])
     }
 
@@ -45,7 +45,7 @@ class FakeTokensNetwork: NetworkProtocol {
         completion([])
     }
 
-    func tickers(with tokenPrices: [TokenPrice], completion: @escaping ([CoinTicker]?) -> Void) {
+    func tickers(with tokenPrices: [TokenPrice], completion: @escaping ([CoinTickerObject]?) -> Void) {
 
     }
 
