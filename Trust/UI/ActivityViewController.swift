@@ -11,4 +11,16 @@ class ActivityViewController: UIActivityViewController {
     static func makeShareController(url: Any) -> ActivityViewController {
         return ActivityViewController(activityItems: [url], applicationActivities: nil)
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UINavigationBar.appearance().titleTextAttributes = nil // This makes the text black for messages and mail
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UINavigationBar.appearance().titleTextAttributes = [
+            .foregroundColor: UIColor.white,
+        ]
+    }
 }
