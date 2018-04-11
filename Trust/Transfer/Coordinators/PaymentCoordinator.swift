@@ -16,7 +16,7 @@ class PaymentCoordinator: Coordinator {
 
     let flow: PaymentFlow
     var coordinators: [Coordinator] = []
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     let keystore: Keystore
     let storage: TokensDataStore
 
@@ -30,7 +30,7 @@ class PaymentCoordinator: Coordinator {
     }()
 
     init(
-        navigationController: UINavigationController = UINavigationController(),
+        navigationController: NavigationController = NavigationController(),
         flow: PaymentFlow,
         session: WalletSession,
         keystore: Keystore,

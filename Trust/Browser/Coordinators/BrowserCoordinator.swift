@@ -15,7 +15,7 @@ class BrowserCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     let session: WalletSession
     let keystore: Keystore
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
 
     lazy var bookmarksViewController: BookmarkViewController = {
         let controller = BookmarkViewController(bookmarksStore: bookmarksStore)
@@ -68,7 +68,7 @@ class BrowserCoordinator: Coordinator {
         navigator: Navigator,
         sharedRealm: Realm
     ) {
-        self.navigationController = UINavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
+        self.navigationController = NavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
         self.session = session
         self.keystore = keystore
         self.sharedRealm = sharedRealm
@@ -90,7 +90,7 @@ class BrowserCoordinator: Coordinator {
             transaction: transaction
         )
         let coordinator = ConfirmCoordinator(
-            navigationController: UINavigationController(),
+            navigationController: NavigationController(),
             session: session,
             configurator: configurator,
             keystore: keystore,

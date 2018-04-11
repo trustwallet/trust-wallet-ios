@@ -283,7 +283,7 @@ extension BrowserViewController: WKUIDelegate {
             title: .none,
             message: message,
             style: .alert,
-            in: navigationController!
+            in: navigationController! as! NavigationController
         )
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
             completionHandler()
@@ -296,7 +296,7 @@ extension BrowserViewController: WKUIDelegate {
             title: .none,
             message: message,
             style: .alert,
-            in: navigationController!
+            in: navigationController! as! NavigationController
         )
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
             completionHandler(true)
@@ -312,7 +312,7 @@ extension BrowserViewController: WKUIDelegate {
             title: .none,
             message: prompt,
             style: .alert,
-            in: navigationController!
+            in: navigationController! as! NavigationController
         )
         alertController.addTextField { (textField) in
             textField.text = defaultText

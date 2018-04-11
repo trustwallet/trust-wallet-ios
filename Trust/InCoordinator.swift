@@ -13,7 +13,7 @@ protocol InCoordinatorDelegate: class {
 
 class InCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     var coordinators: [Coordinator] = []
     let initialWallet: Wallet
     var keystore: Keystore
@@ -45,7 +45,7 @@ class InCoordinator: Coordinator {
     }()
 
     init(
-        navigationController: UINavigationController = NavigationController(),
+        navigationController: NavigationController = NavigationController(),
         wallet: Wallet,
         keystore: Keystore,
         config: Config = Config(),

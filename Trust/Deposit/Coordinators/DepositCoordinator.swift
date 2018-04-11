@@ -6,12 +6,12 @@ import UIKit
 
 class DepositCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     let account: Wallet
     var coordinators: [Coordinator] = []
 
     init(
-        navigationController: UINavigationController,
+        navigationController: NavigationController,
         account: Wallet
     ) {
         self.navigationController = navigationController

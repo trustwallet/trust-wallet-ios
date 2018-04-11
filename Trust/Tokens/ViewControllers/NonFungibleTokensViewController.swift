@@ -14,6 +14,7 @@ class NonFungibleTokensViewController: UIViewController {
     private var viewModel: NonFungibleTokenViewModel
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
+    let navigation = NavigationController()
     lazy var footer: NFTFooterView = {
         let footer = NFTFooterView()
         footer.frame.size = footer.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
@@ -94,8 +95,7 @@ class NonFungibleTokensViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.applyTintAdjustment()
-
+        navigation.applyTintAdjustment()
         fetch()
     }
 

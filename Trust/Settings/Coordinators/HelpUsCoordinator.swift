@@ -5,13 +5,13 @@ import StoreKit
 
 class HelpUsCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     let appTracker: AppTracker
     var coordinators: [Coordinator] = []
 
     private let viewModel = HelpUsViewModel()
     init(
-        navigationController: UINavigationController = NavigationController(),
+        navigationController: NavigationController = NavigationController(),
         appTracker: AppTracker = AppTracker()
     ) {
         self.navigationController = navigationController

@@ -52,6 +52,7 @@ class TokensViewController: UIViewController {
 
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
+    let navigation = NavigationController()
     weak var delegate: TokensViewControllerDelegate?
     var etherFetchTimer: Timer?
     let intervalToETHRefresh = 10.0
@@ -106,7 +107,7 @@ class TokensViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.applyTintAdjustment()
+        navigation.applyTintAdjustment()
         fetch()
     }
 

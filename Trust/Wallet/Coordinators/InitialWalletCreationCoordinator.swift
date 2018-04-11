@@ -11,14 +11,14 @@ protocol InitialWalletCreationCoordinatorDelegate: class {
 
 class InitialWalletCreationCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     let keystore: Keystore
     var coordinators: [Coordinator] = []
     weak var delegate: InitialWalletCreationCoordinatorDelegate?
     let entryPoint: WalletEntryPoint
 
     init(
-        navigationController: UINavigationController = NavigationController(),
+        navigationController: NavigationController = NavigationController(),
         keystore: Keystore,
         entryPoint: WalletEntryPoint
     ) {

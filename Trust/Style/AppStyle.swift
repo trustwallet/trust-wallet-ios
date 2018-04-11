@@ -8,12 +8,12 @@ func applyStyle() {
 
     if #available(iOS 11, *) {
     } else {
-        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).isTranslucent = false
     }
-    UINavigationBar.appearance().tintColor = AppStyle.navigationBarTintColor
-    UINavigationBar.appearance().barTintColor = Colors.darkBlue
+    UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).tintColor = AppStyle.navigationBarTintColor
+    UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).barTintColor = Colors.darkBlue
 
-    UINavigationBar.appearance().titleTextAttributes = [
+    UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).titleTextAttributes = [
         .foregroundColor: UIColor.white,
     ]
 

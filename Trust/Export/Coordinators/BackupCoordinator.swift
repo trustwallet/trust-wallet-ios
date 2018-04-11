@@ -13,14 +13,14 @@ protocol BackupCoordinatorDelegate: class {
 
 class BackupCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     weak var delegate: BackupCoordinatorDelegate?
     let keystore: Keystore
     let account: Account
     var coordinators: [Coordinator] = []
 
     init(
-        navigationController: UINavigationController,
+        navigationController: NavigationController,
         keystore: Keystore,
         account: Account
     ) {
