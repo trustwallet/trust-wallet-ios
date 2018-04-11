@@ -25,6 +25,7 @@ target 'Trust' do
   pod 'Crashlytics', '~> 3.10'
   pod 'Firebase/Core'
   pod 'Kingfisher', '~> 4.0'
+  pod 'TrustCore', '~> 0.0.5'
   pod 'TrustKeystore', '~> 0.4.0'
   pod 'Branch'
   # pod 'web3swift', :git=>'https://github.com/BANKEX/web3swift', :branch=>'master'

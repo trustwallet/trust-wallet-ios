@@ -116,7 +116,6 @@
 		2963B6AF1F9823E6003063C1 /* UnconfirmedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6AE1F9823E6003063C1 /* UnconfirmedTransaction.swift */; };
 		2963B6B11F9891F5003063C1 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6B01F9891F5003063C1 /* UIButton.swift */; };
 		2963B6B91F9A7EEA003063C1 /* CoinTicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6B81F9A7EEA003063C1 /* CoinTicker.swift */; };
-		2963B6BF1F9AB9A2003063C1 /* ContractERC20Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6BE1F9AB9A2003063C1 /* ContractERC20Transfer.swift */; };
 		2963B6C11F9AE0E4003063C1 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6C01F9AE0E4003063C1 /* Data.swift */; };
 		296421951F70C1EC00EB363B /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296421941F70C1EC00EB363B /* LoadingView.swift */; };
 		296421971F70C1F200EB363B /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296421961F70C1F200EB363B /* ErrorView.swift */; };
@@ -149,8 +148,6 @@
 		2996F1461F6C98B3005C33AE /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2996F1451F6C98B3005C33AE /* SettingsViewController.swift */; };
 		2996F1481F6C9AE5005C33AE /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2996F1471F6C9AE5005C33AE /* SettingsCoordinator.swift */; };
 		2996F14D1F6CA743005C33AE /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2996F14C1F6CA742005C33AE /* UIViewController.swift */; };
-		299B5E291FCA8F040051361C /* GetERC20Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E281FCA8F040051361C /* GetERC20Balance.swift */; };
-		299B5E2B1FCA9A640051361C /* ApproveERC20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E2A1FCA9A640051361C /* ApproveERC20.swift */; };
 		299B5E2D1FCBC0660051361C /* BalanceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E2C1FCBC0660051361C /* BalanceProtocol.swift */; };
 		299B5E341FCBC5180051361C /* ConfirmPaymentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E331FCBC5180051361C /* ConfirmPaymentViewModel.swift */; };
 		299B5E381FCBCDF70051361C /* RequestViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B5E371FCBCDF70051361C /* RequestViewModelTests.swift */; };
@@ -586,7 +583,6 @@
 		2963B6AE1F9823E6003063C1 /* UnconfirmedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnconfirmedTransaction.swift; sourceTree = "<group>"; };
 		2963B6B01F9891F5003063C1 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		2963B6B81F9A7EEA003063C1 /* CoinTicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTicker.swift; sourceTree = "<group>"; };
-		2963B6BE1F9AB9A2003063C1 /* ContractERC20Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractERC20Transfer.swift; sourceTree = "<group>"; };
 		2963B6C01F9AE0E4003063C1 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		296421941F70C1EC00EB363B /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		296421961F70C1F200EB363B /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -619,8 +615,6 @@
 		2996F1451F6C98B3005C33AE /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2996F1471F6C9AE5005C33AE /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		2996F14C1F6CA742005C33AE /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
-		299B5E281FCA8F040051361C /* GetERC20Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetERC20Balance.swift; sourceTree = "<group>"; };
-		299B5E2A1FCA9A640051361C /* ApproveERC20.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproveERC20.swift; sourceTree = "<group>"; };
 		299B5E2C1FCBC0660051361C /* BalanceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceProtocol.swift; sourceTree = "<group>"; };
 		299B5E331FCBC5180051361C /* ConfirmPaymentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPaymentViewModel.swift; sourceTree = "<group>"; };
 		299B5E371FCBCDF70051361C /* RequestViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestViewModelTests.swift; sourceTree = "<group>"; };
@@ -1159,9 +1153,6 @@
 			isa = PBXGroup;
 			children = (
 				291795001F95F5E200539A30 /* GetBalance.swift */,
-				2963B6BE1F9AB9A2003063C1 /* ContractERC20Transfer.swift */,
-				299B5E281FCA8F040051361C /* GetERC20Balance.swift */,
-				299B5E2A1FCA9A640051361C /* ApproveERC20.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -2605,8 +2596,6 @@
 				2912CD071F6A830700C6CBE3 /* Sources */,
 				2912CD081F6A830700C6CBE3 /* Frameworks */,
 				2912CD091F6A830700C6CBE3 /* Resources */,
-				21113C0DD6E65F7B19B7168D /* [CP] Embed Pods Frameworks */,
-				1C9163CAD4D9FEA04F88B1B8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2626,8 +2615,6 @@
 				2912CD121F6A830700C6CBE3 /* Sources */,
 				2912CD131F6A830700C6CBE3 /* Frameworks */,
 				2912CD141F6A830700C6CBE3 /* Resources */,
-				EE4505A9D0560D5774C59C3B /* [CP] Embed Pods Frameworks */,
-				8179B50383DC9D917751421B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2790,36 +2777,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1C9163CAD4D9FEA04F88B1B8 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		21113C0DD6E65F7B19B7168D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2909B06A324FDD6FB858F676 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2897,21 +2854,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8179B50383DC9D917751421B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		EB2D49CBEF37022D8861D8E0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2928,21 +2870,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EE4505A9D0560D5774C59C3B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F291FF6299FBB0600050DA49 /* [CP] Embed Pods Frameworks */ = {
@@ -3236,7 +3163,6 @@
 				BB3B86BD204CE9730061FCBA /* URLNavigatorCoordinator.swift in Sources */,
 				732C51462062B625007134C7 /* ScriptMessageProxy.swift in Sources */,
 				29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */,
-				2963B6BF1F9AB9A2003063C1 /* ContractERC20Transfer.swift in Sources */,
 				29A13E331F6B1B7A00E432A2 /* AppStyle.swift in Sources */,
 				737EEDDA201BE3A8009D9D5D /* Lock.swift in Sources */,
 				29FF12F81F747D6C00AFD326 /* Error.swift in Sources */,
@@ -3270,7 +3196,6 @@
 				2912CD2B1F6A833E00C6CBE3 /* TransactionsViewController.swift in Sources */,
 				775C00B520195BFB001B5EBC /* BrowserAction.swift in Sources */,
 				BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */,
-				299B5E291FCA8F040051361C /* GetERC20Balance.swift in Sources */,
 				77E0E773201FAD06009B4B31 /* BrowserURLParser.swift in Sources */,
 				73ACEF0520163F46003DD71D /* LockEnterPasscodeCoordinator.swift in Sources */,
 				29F1C863200375D2003780D8 /* Wallet.swift in Sources */,
@@ -3329,7 +3254,6 @@
 				291F52B71F6B870400B369AB /* CastError.swift in Sources */,
 				664D11A12007D59F0041A0B0 /* EstimateGasRequest.swift in Sources */,
 				293248841F88CCD2008A9818 /* SplashState.swift in Sources */,
-				299B5E2B1FCA9A640051361C /* ApproveERC20.swift in Sources */,
 				771A847320322F2500528D28 /* PreferencesViewController.swift in Sources */,
 				291794FB1F95DC2200539A30 /* Web3Swift.swift in Sources */,
 				29DBF2A31F9DBFF400327C60 /* BackupCoordinator.swift in Sources */,
