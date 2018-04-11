@@ -63,11 +63,18 @@ class BackupCoordinator: Coordinator {
                 return completion(.failure(AnyError(error)))
             }
 
-            let activityViewController = ActivityViewController.makeShareController(url: url, navigationController: navigationController)
+            let activityViewController = ActivityViewController.makeShareController(
+                url: url,
+                navigationController: navigationController
+            )
             activityViewController.completionWithItemsHandler = { _, result, _, error in
-                do { try FileManager.default.removeItem(at: url)
-            } catch { }
-                completion(.success(result))
+                do {
+                    try FileManager.default.removeItem(at: url)
+                } catch { }
+                guard let error = error else {
+                    return completion(.success(result))
+                }
+                completion(.failure(AnyError(error)))
             }
             activityViewController.popoverPresentationController?.sourceView = navigationController.view
             activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
