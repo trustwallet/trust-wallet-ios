@@ -10,7 +10,6 @@ enum RefreshType {
 
 class WalletSession {
     let account: Wallet
-    let web3: Web3Swift
     let balanceCoordinator: BalanceCoordinator
     let config: Config
     let chainState: ChainState
@@ -28,13 +27,11 @@ class WalletSession {
     init(
         account: Wallet,
         config: Config,
-        web3: Web3Swift,
         balanceCoordinator: BalanceCoordinator,
         nonceProvider: NonceProvider
     ) {
         self.account = account
         self.config = config
-        self.web3 = web3
         self.chainState = ChainState(config: config)
         self.nonceProvider = nonceProvider
         self.balanceCoordinator = balanceCoordinator

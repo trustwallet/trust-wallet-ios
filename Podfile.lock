@@ -27,8 +27,6 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.3)
   - "GoogleToolboxForMac/NSData+zlib (2.1.3)":
     - GoogleToolboxForMac/Defines (= 2.1.3)
-  - JavaScriptKit (1.0.0):
-    - Result (~> 3.1)
   - JdenticonSwift (0.0.1)
   - JSONRPCKit (2.0.0):
     - Result (~> 3.0)
@@ -82,7 +80,6 @@ DEPENDENCIES:
   - Eureka (~> 4.1.1)
   - Fabric
   - Firebase/Core
-  - JavaScriptKit
   - JdenticonSwift
   - JSONRPCKit (from `https://github.com/bricklife/JSONRPCKit.git`)
   - KeychainSwift
@@ -116,7 +113,6 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseInstanceID
     - GoogleToolboxForMac
-    - JavaScriptKit
     - JdenticonSwift
     - KeychainSwift
     - Kingfisher
@@ -180,7 +176,6 @@ SPEC CHECKSUMS:
   FirebaseCore: b981f47e5254cbcfdeb483355300d743f6fcab2c
   FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  JavaScriptKit: 9ff565209e6efe21bcb9c6d6ca3e863a67a8ecf7
   JdenticonSwift: bc532f2761566eb29f26b085e5f72de25bc065ce
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
@@ -206,6 +201,6 @@ SPEC CHECKSUMS:
   TrustWeb3Provider: 3d5c9f17aa6cc3fcd083d232aed5e90615be5383
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
-PODFILE CHECKSUM: 4f0582cc1997ca74f067b620931494d91c513670
+PODFILE CHECKSUM: b820986f521f0dd389617b23b5e588fe684c56b2
 
 COCOAPODS: 1.5.0

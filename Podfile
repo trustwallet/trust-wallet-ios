@@ -19,7 +19,6 @@ target 'Trust' do
   pod 'RealmSwift'
   pod 'Lokalise'
   pod 'Moya', '~> 10.0.1'
-  pod 'JavaScriptKit'
   pod 'CryptoSwift', :git=>'https://github.com/krzyzanowskim/CryptoSwift', :branch=>'master'
   pod 'Fabric'
   pod 'Crashlytics', '~> 3.10'

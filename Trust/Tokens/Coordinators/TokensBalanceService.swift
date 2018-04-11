@@ -9,14 +9,6 @@ import TrustCore
 
 class TokensBalanceService {
 
-    private let web3: Web3Swift
-
-    init(
-        web3: Web3Swift
-    ) {
-        self.web3 = web3
-    }
-
     func getBalance(
         for address: Address,
         contract: Address,
@@ -24,7 +16,7 @@ class TokensBalanceService {
     ) {
         let encoded = ERC20Encoder.encodeBalanceOf(address: address)
         let request2 = EtherServiceRequest(
-            batch: BatchFactory().create(CallRequest(to: contract.description, data: encoded.hexString))
+            batch: BatchFactory().create(CallRequest(to: contract.description, data: encoded.hexEncoded))
         )
         Session.send(request2) { result2 in
             switch result2 {

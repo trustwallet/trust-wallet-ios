@@ -77,12 +77,10 @@ class InCoordinator: Coordinator {
         let sharedMigration = SharedMigrationInitializer()
         sharedMigration.perform()
 
-        let web3 = self.web3(for: config.server)
-        web3.start()
         let realm = self.realm(for: migration.config)
         let sharedRealm = self.realm(for: sharedMigration.config)
         let tokensStorage = TokensDataStore(realm: realm, config: config)
-        let balanceCoordinator =  TokensBalanceService(web3: web3)
+        let balanceCoordinator =  TokensBalanceService()
         let trustNetwork = TrustNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
         let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
         let transactionsStorage = TransactionsStorage(
@@ -93,7 +91,6 @@ class InCoordinator: Coordinator {
         let session = WalletSession(
             account: account,
             config: config,
-            web3: web3,
             balanceCoordinator: balance,
             nonceProvider: nonceProvider
         )
@@ -240,10 +237,6 @@ class InCoordinator: Coordinator {
 
     private func realm(for config: Realm.Configuration) -> Realm {
         return try! Realm(configuration: config)
-    }
-
-    private func web3(for server: RPCServer) -> Web3Swift {
-        return Web3Swift(url: config.server.rpcURL)
     }
 
     private func showTransactionSent(transaction: SentTransaction) {
