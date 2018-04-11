@@ -87,22 +87,14 @@ class TransactionConfigurator {
             )
             completion(.success(()))
         case .token:
-            session.web3.request(request: ContractERC20Transfer(amount: transaction.value, address: transaction.to!.description)) { [weak self] result in
-                guard let `self` = self else { return }
-                switch result {
-                case .success(let res):
-                    let data = Data(hex: res.drop0x)
-                    self.configuration = TransactionConfiguration(
-                        gasPrice: self.calculatedGasPrice,
-                        gasLimit: GasLimitConfiguration.tokenTransfer,
-                        data: data,
-                        nonce: self.configuration.nonce
-                    )
-                    completion(.success(()))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
+            let encoded = ERC20Encoder.encodeTransfer(to: transaction.to!, tokens: transaction.value.magnitude)
+            self.configuration = TransactionConfiguration(
+                gasPrice: self.calculatedGasPrice,
+                gasLimit: GasLimitConfiguration.tokenTransfer,
+                data: encoded,
+                nonce: self.configuration.nonce
+            )
+            completion(.success(()))
         case .dapp:
             guard requestEstimateGas else {
                 return completion(.success(()))

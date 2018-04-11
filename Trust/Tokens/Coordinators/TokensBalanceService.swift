@@ -22,37 +22,22 @@ class TokensBalanceService {
         contract: Address,
         completion: @escaping (Result<BigInt, AnyError>) -> Void
     ) {
-        let request = GetERC20BalanceEncode(address: address)
-        web3.request(request: request) { result in
-            switch result {
-            case .success(let res):
-                let request2 = EtherServiceRequest(
-                    batch: BatchFactory().create(CallRequest(to: contract.description, data: res))
-                )
-                Session.send(request2) { [weak self] result2 in
-                    switch result2 {
-                    case .success(let balance):
-                        let request = GetERC20BalanceDecode(data: balance)
-                        self?.web3.request(request: request) { result in
-                            switch result {
-                            case .success(let res):
-                                completion(.success(BigInt(res) ?? BigInt()))
-                            case .failure(let error):
-                                NSLog("getPrice3 error \(error)")
-                                completion(.failure(AnyError(error)))
-                            }
-                        }
-                    case .failure(let error):
-                        NSLog("getPrice2 error \(error)")
-                        completion(.failure(AnyError(error)))
-                    }
-                }
+        let encoded = ERC20Encoder.encodeBalanceOf(address: address)
+        let request2 = EtherServiceRequest(
+            batch: BatchFactory().create(CallRequest(to: contract.description, data: encoded.hexString))
+        )
+        Session.send(request2) { result2 in
+            switch result2 {
+            case .success(let balance):
+                let biguint = BigUInt(Data(hex: balance))
+                completion(.success(BigInt(sign: .plus, magnitude: biguint)))
             case .failure(let error):
-                NSLog("getPrice error \(error)")
+                NSLog("getPrice2 error \(error)")
                 completion(.failure(AnyError(error)))
             }
         }
     }
+
     func getEthBalance(
         for address: Address,
         completion: @escaping (Result<Balance, AnyError>) -> Void
