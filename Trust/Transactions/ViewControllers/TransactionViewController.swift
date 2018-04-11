@@ -118,8 +118,8 @@ class TransactionViewController: UIViewController {
     }
 
     @objc func share(_ sender: UIBarButtonItem) {
-        guard let item = viewModel.shareItem, let navigation = navigationController else { return }
-        let activityViewController = ActivityViewController.makeShareController(url: item, navigationController: navigation)
+        guard let item = viewModel.shareItem else { return }
+        let activityViewController = ActivityViewController.makeShareController(url: item)
         activityViewController.popoverPresentationController?.barButtonItem = sender
         navigationController?.present(activityViewController, animated: true, completion: nil)
     }
