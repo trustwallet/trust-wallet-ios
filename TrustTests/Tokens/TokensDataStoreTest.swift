@@ -5,16 +5,16 @@ import XCTest
 
 class TokensDataStoreTest: XCTestCase {
     let tokensDataStore = TokensDataStore(realm: .make(), config: .make())
-    
+
+    let coinTickerObjects = [
+        CoinTickerObject(id: "id1", symbol: "symbol1", price: "10", percent_change_24h: "percent_change_24h_1", contract: "contract1", image: "image1", tickersKey: "tickersKey"),
+        CoinTickerObject(id: "id2", symbol: "symbol2", price: "20", percent_change_24h: "percent_change_24h_2", contract: "contract2", image: "image2", tickersKey: "tickersKey"),
+        CoinTickerObject(id: "id3", symbol: "symbol3", price: "30", percent_change_24h: "percent_change_24h_3", contract: "contract3", image: "image3", tickersKey: "tickersKey"),
+    ]
+
     func testGetAndSetTickers() {
         XCTAssertEqual(0, tokensDataStore.tickers().count)
-        
-        let coinTickerObjects = [
-            CoinTickerObject(id: "id1", symbol: "symbol1", price: "price1", percent_change_24h: "percent_change_24h_1", contract: "contract1", image: "image1", tickersKey: "tickersKey"),
-            CoinTickerObject(id: "id2", symbol: "symbol2", price: "price2", percent_change_24h: "percent_change_24h_2", contract: "contract2", image: "image2", tickersKey: "tickersKey"),
-            CoinTickerObject(id: "id3", symbol: "symbol3", price: "price3", percent_change_24h: "percent_change_24h_3", contract: "contract3", image: "image3", tickersKey: "tickersKey"),
-        ]
-        
+
         tokensDataStore.saveTickers(tickers: coinTickerObjects)
         
         let returnedCoinTickers = tokensDataStore.tickers()
@@ -62,5 +62,34 @@ class TokensDataStoreTest: XCTestCase {
 
         XCTAssertEqual(1, tokensDataStore.realm.objects(CoinTickerObject.self).count)
         XCTAssertEqual(0, tokensDataStore.tickers().count)
+    }
+
+    func testGetBalance() {
+        var tokenObject = TokenObject(
+            contract: "contract1",
+            decimals: 2,
+            value: "10000"
+        )
+
+        XCTAssertEqual("1000.00", tokensDataStore.getBalance(for: tokenObject, with: coinTickerObjects))
+
+        XCTAssertEqual("?", tokensDataStore.getBalance(for: tokenObject, with: [CoinTickerObject(price: "", contract: "contract1")]))
+        XCTAssertEqual("?", tokensDataStore.getBalance(for: tokenObject, with: [CoinTickerObject]()))
+
+        tokenObject = TokenObject(
+            contract: "contract2",
+            decimals: 3,
+            value: "20000"
+        )
+
+        XCTAssertEqual("400.00", tokensDataStore.getBalance(for: tokenObject, with: coinTickerObjects))
+
+        tokenObject = TokenObject(
+            contract: "contract that doesn't match any",
+            decimals: 4,
+            value: "30000"
+        )
+
+        XCTAssertEqual("?", tokensDataStore.getBalance(for: tokenObject, with: coinTickerObjects))
     }
 }

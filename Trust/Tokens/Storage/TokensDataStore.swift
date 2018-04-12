@@ -71,7 +71,15 @@ class TokensDataStore {
 
     func add(tokens: [Object]) {
         try! realm.write {
-            realm.add(tokens, update: true)
+            if let tokenObjects = tokens as? [TokenObject] {
+                let tokenObjectsWithBalance = tokenObjects.map { tokenObject -> TokenObject in
+                    tokenObject.balance = self.getBalance(for: tokenObject, with: self.tickers())
+                    return tokenObject
+                }
+                realm.add(tokenObjectsWithBalance, update: true)
+            } else {
+                realm.add(tokens, update: true)
+            }
         }
     }
 
@@ -93,11 +101,14 @@ class TokensDataStore {
     func update(balances: [Address: BigInt]) {
         try! realm.write {
             for balance in balances {
-                let update = [
-                    "contract": balance.key.description,
-                    "value": balance.value.description,
-                ]
-                realm.create(TokenObject.self, value: update, update: true)
+                guard let tokenObject = realm.object(ofType: TokenObject.self, forPrimaryKey: balance.key.description) else {
+                    continue
+                }
+
+                tokenObject.value = balance.value.description
+                tokenObject.balance = self.getBalance(for: tokenObject, with: self.tickers())
+
+                realm.add(tokenObject, update: true)
             }
         }
     }
@@ -114,6 +125,7 @@ class TokensDataStore {
                         "name": token.name,
                         "symbol": token.symbol,
                         "decimals": token.decimals,
+                        "balance": self.getBalance(for: token, with: self.tickers()),
                     ]
                     realm.create(TokenObject.self, value: update, update: true)
                 }
@@ -183,5 +195,23 @@ class TokensDataStore {
             value: "0",
             isCustom: false
         )
+    }
+
+    func getBalance(for token: TokenObject, with tickers: [CoinTickerObject]) -> String {
+        let unknownValue = "?"
+
+        guard let ticker = tickers.first(where: { $0.contract == token.contract }) else {
+            return unknownValue
+        }
+
+        guard let amountInBigInt = BigInt(token.value), let price = Double(ticker.price) else {
+            return unknownValue
+        }
+
+        guard let amountInDecimal = EtherNumberFormatter.full.decimal(from: amountInBigInt, decimals: token.decimals) else {
+            return unknownValue
+        }
+
+        return String(format: "%.2f", amountInDecimal.doubleValue * price)
     }
 }

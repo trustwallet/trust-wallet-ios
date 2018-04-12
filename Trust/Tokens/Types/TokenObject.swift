@@ -18,6 +18,7 @@ class TokenObject: Object, Decodable {
     @objc dynamic var value: String = ""
     @objc dynamic var isCustom: Bool = false
     @objc dynamic var isDisabled: Bool = false
+    @objc dynamic var balance: String = ""
 
     convenience init(
         contract: String = "",

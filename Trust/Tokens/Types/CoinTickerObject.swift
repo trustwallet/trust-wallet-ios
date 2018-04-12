@@ -15,13 +15,13 @@ class CoinTickerObject: Object, Decodable {
     @objc dynamic var key: String = ""
 
     convenience init(
-        id: String,
-        symbol: String,
-        price: String,
-        percent_change_24h: String,
-        contract: String,
-        image: String,
-        tickersKey: String) {
+        id: String = "",
+        symbol: String = "",
+        price: String = "",
+        percent_change_24h: String = "",
+        contract: String = "",
+        image: String = "",
+        tickersKey: String = "") {
         self.init()
         self.id = id
         self.symbol = symbol
