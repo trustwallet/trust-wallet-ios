@@ -18,14 +18,14 @@ PODS:
   - FirebaseAnalytics (4.1.0):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
   - FirebaseCore (4.0.18):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseInstanceID (2.0.10):
     - FirebaseCore (~> 4.0)
   - GoogleToolboxForMac/Defines (2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
+  - "GoogleToolboxForMac/NSData+zlib (2.1.3)":
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - JdenticonSwift (0.0.1)
   - JSONRPCKit (2.0.0):
@@ -99,6 +99,42 @@ DEPENDENCIES:
   - TrustWeb3Provider (from `https://github.com/TrustWallet/trust-web3-provider`, branch `master`)
   - URLNavigator
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - APIKit
+    - BigInt
+    - Branch
+    - Crashlytics
+    - Eureka
+    - Fabric
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseInstanceID
+    - GoogleToolboxForMac
+    - JdenticonSwift
+    - KeychainSwift
+    - Kingfisher
+    - Lokalise
+    - MBProgressHUD
+    - Moya
+    - nanopb
+    - R.swift
+    - R.swift.Library
+    - Realm
+    - RealmSwift
+    - Result
+    - SAMKeychain
+    - SeedStackViewController
+    - SipHash
+    - StatefulViewController
+    - SwiftLint
+    - TrezorCrypto
+    - TrustCore
+    - TrustKeystore
+    - URLNavigator
+
 EXTERNAL SOURCES:
   CryptoSwift:
     :branch: master
@@ -167,4 +203,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: b820986f521f0dd389617b23b5e588fe684c56b2
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0
