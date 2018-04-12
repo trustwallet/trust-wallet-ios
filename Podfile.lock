@@ -60,7 +60,7 @@ PODS:
   - StatefulViewController (3.0)
   - SwiftLint (0.25.0)
   - TrezorCrypto (0.0.5)
-  - TrustCore (0.0.5):
+  - TrustCore (0.0.6):
     - BigInt
     - TrezorCrypto
   - TrustKeystore (0.4.0):
@@ -94,7 +94,7 @@ DEPENDENCIES:
   - SeedStackViewController
   - StatefulViewController
   - SwiftLint
-  - TrustCore (~> 0.0.5)
+  - TrustCore (~> 0.0.6)
   - TrustKeystore (~> 0.4.0)
   - TrustWeb3Provider (from `https://github.com/TrustWallet/trust-web3-provider`, branch `master`)
   - URLNavigator
@@ -196,11 +196,11 @@ SPEC CHECKSUMS:
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: e14651157288e9e01d6e1a71db7014fb5744a8ea
   TrezorCrypto: ecef681446bf02af6248d3b5e394026d7e766e56
-  TrustCore: 6d093f73a0c90ee1944c8f8f77994fcbafccce62
+  TrustCore: 231439190d1941dc4e945c51c55c5effa8e7b9b4
   TrustKeystore: 1bd016c67de7314e84b79dba2c22ef64b86bb63e
   TrustWeb3Provider: 3d5c9f17aa6cc3fcd083d232aed5e90615be5383
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
-PODFILE CHECKSUM: b820986f521f0dd389617b23b5e588fe684c56b2
+PODFILE CHECKSUM: 7f1175e0e6447ae992c9047de2c88e12564ca350
 
 COCOAPODS: 1.5.0
