@@ -10,7 +10,7 @@ protocol RequestCoordinatorDelegate: class {
 class RequestCoordinator: Coordinator {
 
     let session: WalletSession
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     var coordinators: [Coordinator] = []
     weak var delegate: RequestCoordinatorDelegate?
     lazy var requestViewController: RequestViewController = {
@@ -22,7 +22,7 @@ class RequestCoordinator: Coordinator {
     private let token: TokenObject
 
     init(
-        navigationController: UINavigationController = UINavigationController(),
+        navigationController: NavigationController = NavigationController(),
         session: WalletSession,
         token: TokenObject
     ) {

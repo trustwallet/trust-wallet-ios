@@ -14,7 +14,7 @@ protocol AccountsCoordinatorDelegate: class {
 
 class AccountsCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     let keystore: Keystore
     let session: WalletSession
     let balanceCoordinator: TokensBalanceService
@@ -30,7 +30,7 @@ class AccountsCoordinator: Coordinator {
     weak var delegate: AccountsCoordinatorDelegate?
 
     init(
-        navigationController: UINavigationController,
+        navigationController: NavigationController,
         keystore: Keystore,
         session: WalletSession,
         balanceCoordinator: TokensBalanceService

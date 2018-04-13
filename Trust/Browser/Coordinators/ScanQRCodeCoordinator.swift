@@ -12,7 +12,7 @@ class ScanQRCodeCoordinator: NSObject, Coordinator {
     var coordinators: [Coordinator] = []
     weak var delegate: ScanQRCodeCoordinatorDelegate?
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     lazy var qrcodeController: QRCodeReaderViewController = {
         let controller = QRCodeReaderViewController(cancelButtonTitle: "Cancel")
         controller.delegate = self
@@ -22,7 +22,7 @@ class ScanQRCodeCoordinator: NSObject, Coordinator {
     }()
 
     init(
-        navigationController: UINavigationController = NavigationController()
+        navigationController: NavigationController = NavigationController()
         ) {
         self.navigationController = navigationController
     }

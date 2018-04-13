@@ -12,14 +12,14 @@ protocol WalletCoordinatorDelegate: class {
 
 class WalletCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     weak var delegate: WalletCoordinatorDelegate?
     var entryPoint: WalletEntryPoint?
     let keystore: Keystore
     var coordinators: [Coordinator] = []
 
     init(
-        navigationController: UINavigationController = NavigationController(),
+        navigationController: NavigationController = NavigationController(),
         keystore: Keystore
     ) {
         self.navigationController = navigationController

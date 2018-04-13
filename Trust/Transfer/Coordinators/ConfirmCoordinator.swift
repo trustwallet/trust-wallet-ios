@@ -12,7 +12,7 @@ protocol ConfirmCoordinatorDelegate: class {
 
 class ConfirmCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     let session: WalletSession
     let account: Account
     let keystore: Keystore
@@ -24,7 +24,7 @@ class ConfirmCoordinator: Coordinator {
     weak var delegate: ConfirmCoordinatorDelegate?
 
     init(
-        navigationController: UINavigationController,
+        navigationController: NavigationController,
         session: WalletSession,
         configurator: TransactionConfigurator,
         keystore: Keystore,

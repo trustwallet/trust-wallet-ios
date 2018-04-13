@@ -6,7 +6,7 @@ import UIKit
 import URLNavigator
 
 class AppCoordinator: NSObject, Coordinator {
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     lazy var welcomeViewController: WelcomeViewController = {
         let controller = WelcomeViewController()
         controller.delegate = self
@@ -23,7 +23,7 @@ class AppCoordinator: NSObject, Coordinator {
         window: UIWindow,
         keystore: Keystore,
         navigator: Navigator = Navigator(),
-        navigationController: UINavigationController = NavigationController()
+        navigationController: NavigationController = NavigationController()
     ) {
         self.navigationController = navigationController
         self.keystore = keystore

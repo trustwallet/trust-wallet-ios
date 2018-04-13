@@ -95,7 +95,6 @@ class NonFungibleTokensViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.applyTintAdjustment()
-
         fetch()
     }
 

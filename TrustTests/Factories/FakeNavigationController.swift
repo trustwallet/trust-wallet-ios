@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class FakeNavigationController: UINavigationController {
+class FakeNavigationController: NavigationController {
 
     private var _presentedViewController: UIViewController?
 

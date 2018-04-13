@@ -32,13 +32,13 @@ class TransactionCoordinator: Coordinator {
 
     let network: TrustNetwork
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
 
     var coordinators: [Coordinator] = []
 
     init(
         session: WalletSession,
-        navigationController: UINavigationController = NavigationController(),
+        navigationController: NavigationController = NavigationController(),
         storage: TransactionsStorage,
         tokensStorage: TokensDataStore,
         network: TrustNetwork,
@@ -113,7 +113,7 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
             session: session,
             transaction: transaction
         )
-        UINavigationController.openFormSheet(
+        NavigationController.openFormSheet(
             for: controller,
             in: navigationController,
             barItem: UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
