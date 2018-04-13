@@ -54,7 +54,6 @@ class NonFungibleTokensViewController: UIViewController {
             onRetry: { [weak self] in
                 self?.delegate?.didPressDiscover()
         })
-        tokensObservation()
     }
 
     private func tokensObservation() {
@@ -67,17 +66,6 @@ class NonFungibleTokensViewController: UIViewController {
                 self?.endLoading()
             case .update:
                 tableView.reloadData()
-//                tableView.beginUpdates()
-//                var insertIndexSet = IndexSet()
-//                insertions.forEach { insertIndexSet.insert($0) }
-//                tableView.insertSections(insertIndexSet, with: .none)
-//                var deleteIndexSet = IndexSet()
-//                deletions.forEach { deleteIndexSet.insert($0) }
-//                tableView.deleteSections(deleteIndexSet, with: .none)
-//                var updateIndexSet = IndexSet()
-//                modifications.forEach { updateIndexSet.insert($0) }
-//                tableView.reloadSections(updateIndexSet, with: .none)
-//                tableView.endUpdates()
                 self?.endLoading()
             case .error(let error):
                 self?.endLoading(animated: true, error: error, completion: nil)
@@ -95,7 +83,13 @@ class NonFungibleTokensViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.applyTintAdjustment()
+        tokensObservation()
         fetch()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel.invalidateTokensObservation()
     }
 
     @objc func pullToRefresh() {

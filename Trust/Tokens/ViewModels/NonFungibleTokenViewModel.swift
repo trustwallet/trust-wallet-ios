@@ -3,7 +3,7 @@
 import RealmSwift
 import TrustCore
 
-struct NonFungibleTokenViewModel {
+class NonFungibleTokenViewModel {
 
     let config: Config
     let storage: TokensDataStore
@@ -53,7 +53,7 @@ struct NonFungibleTokenViewModel {
         }
     }
 
-    mutating func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<NonFungibleTokenCategory>>) -> Void) {
+    func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<NonFungibleTokenCategory>>) -> Void) {
         tokensObserver = tokens.observe(block)
     }
 
@@ -76,5 +76,10 @@ struct NonFungibleTokenViewModel {
 
     func title(for section: Int) -> String {
         return tokens[section].name
+    }
+
+    func invalidateTokensObservation() {
+        tokensObserver?.invalidate()
+        tokensObserver = nil
     }
 }
