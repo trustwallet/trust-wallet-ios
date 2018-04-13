@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+@testable import Trust
 
 class FakeNavigationController: NavigationController {
 
