@@ -21,6 +21,7 @@ class EditTokenViewModel {
     var filteredTokens = [TokenObject]()
     var isSearching = false
     var localSet = Set<TokenObject>()
+    var localArray = [TokenObject]()
 
     init(network: NetworkProtocol,
          storage: TokensDataStore,
@@ -32,7 +33,8 @@ class EditTokenViewModel {
         self.config = config
         self.tableView = table
 
-        self.localSet = Set(storage.objects)
+        self.localArray.append(contentsOf: storage.objects)
+        self.localSet = Set(self.localArray)
     }
 
     var title: String {
@@ -54,7 +56,7 @@ class EditTokenViewModel {
             if isSearching {
                 return filteredTokens.count
             }
-            return storage.objects.count
+            return localArray.count
         }
     }
 
@@ -65,7 +67,7 @@ class EditTokenViewModel {
             if isSearching {
                 return (filteredTokens[indexPath.row], true)
             }
-            return (storage.objects[indexPath.row], true)
+            return (localArray[indexPath.row], true)
         }
     }
 
@@ -109,7 +111,7 @@ class EditTokenViewModel {
 
     func updateToken(indexPath: IndexPath, action: TokenAction) {
         let token = self.token(for: indexPath)
-        self.storage.update(tokens: [token.token], action: action)
+        storage.update(tokens: [token.token], action: action)
     }
 
     private func indexValidation(with path: IndexPath ) -> Bool {
@@ -119,7 +121,7 @@ class EditTokenViewModel {
             if isSearching {
                 return filteredTokens.count > path.row
             }
-            return storage.objects.count > path.row
+            return localArray.count > path.row
         }
     }
 }
