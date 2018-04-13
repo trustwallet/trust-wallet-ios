@@ -61,7 +61,7 @@ class BrowserViewController: UIViewController {
     }()
 
     weak var delegate: BrowserViewControllerDelegate?
-    
+
     var browserNavBar: BrowserNavigationBar? {
         return navigationController?.navigationBar as? BrowserNavigationBar
     }
@@ -180,6 +180,10 @@ class BrowserViewController: UIViewController {
         delegate?.didVisitURL(url: url, title: webView.title ?? "")
     }
 
+    private func changeURL(_ url: URL) {
+        delegate?.runAction(action: .changeURL(url))
+    }
+
     private func hideErrorView() {
         errorView.isHidden = true
     }
@@ -198,7 +202,7 @@ class BrowserViewController: UIViewController {
         } else if keyPath == Keys.URL {
             if let url = webView.url {
                 self.browserNavBar?.textField.text = url.absoluteString
-                self.delegate?.runAction(action: .changeURL(url))
+                changeURL(url)
             }
         }
     }
@@ -226,6 +230,10 @@ class BrowserViewController: UIViewController {
         if error.code == NSURLErrorCancelled {
             return
         } else {
+            if error.domain == NSURLErrorDomain,
+                let failedURL = (error as NSError).userInfo[NSURLErrorFailingURLErrorKey] as? URL {
+                changeURL(failedURL)
+            }
             errorView.show(error: error)
         }
     }
