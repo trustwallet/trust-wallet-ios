@@ -394,7 +394,7 @@
 		903682F6204A71B000013479 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682F5204A71B000013479 /* Bookmark.swift */; };
 		903682F8204AC52F00013479 /* BookmarksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682F7204AC52F00013479 /* BookmarksViewModel.swift */; };
 		90DDF48520518AE50016E6D4 /* BookmarkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DDF48420518AE50016E6D4 /* BookmarkViewModel.swift */; };
-		A24CE7122074807400726D43 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24CE7112074807400726D43 /* ActivityViewController.swift */; };
+		A207B8212080779200A0CD89 /* UIActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A207B8202080779200A0CD89 /* UIActivityViewController.swift */; };
 		A2B7ECAA2038122200828E7D /* ExportPrivateKeyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECA92038122200828E7D /* ExportPrivateKeyCoordinator.swift */; };
 		A2B7ECAC2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAB2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift */; };
 		A2B7ECAE2039001300828E7D /* ExportPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */; };
@@ -868,7 +868,7 @@
 		903682F5204A71B000013479 /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
 		903682F7204AC52F00013479 /* BookmarksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewModel.swift; sourceTree = "<group>"; };
 		90DDF48420518AE50016E6D4 /* BookmarkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewModel.swift; sourceTree = "<group>"; };
-		A24CE7112074807400726D43 /* ActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
+		A207B8202080779200A0CD89 /* UIActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityViewController.swift; sourceTree = "<group>"; };
 		A2B7ECA92038122200828E7D /* ExportPrivateKeyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPrivateKeyCoordinator.swift; sourceTree = "<group>"; };
 		A2B7ECAB2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPrivateKeyViewModel.swift; sourceTree = "<group>"; };
 		A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPrivateKeyViewController.swift; sourceTree = "<group>"; };
@@ -1149,7 +1149,6 @@
 				771D53722059337100C79485 /* TokenImageView.swift */,
 				7374ED2D2059A6A3004A8BC2 /* SectionHeader.swift */,
 				77CB8399206CEED7006F34A8 /* Size.swift */,
-				A24CE7112074807400726D43 /* ActivityViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1624,6 +1623,7 @@
 				7721A6BD202A5677004DB16C /* DecryptError.swift */,
 				73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */,
 				A2E43B4D20802879001FAD3D /* UINavigationController.swift */,
+				A207B8202080779200A0CD89 /* UIActivityViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3151,7 +3151,6 @@
 				7721A6D0202EFD07004DB16C /* AddCustomNetworkCoordinator.swift in Sources */,
 				2996F1461F6C98B3005C33AE /* SettingsViewController.swift in Sources */,
 				73F2FF3C20557C020021976E /* TrustOperation.swift in Sources */,
-				A24CE7122074807400726D43 /* ActivityViewController.swift in Sources */,
 				2963B6AD1F981A96003063C1 /* TransactionAppearance.swift in Sources */,
 				77B1EAFF20639DEB007970AA /* NFTokenViewController.swift in Sources */,
 				29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */,
@@ -3171,6 +3170,7 @@
 				73C41C73201B5EFF00243C6C /* LockCreatePasscodeViewModel.swift in Sources */,
 				2959961A1FADB79300DB66A8 /* TokenTransfer.swift in Sources */,
 				295247E71F835BA0007FDC31 /* InfoHeaderView.swift in Sources */,
+				A207B8212080779200A0CD89 /* UIActivityViewController.swift in Sources */,
 				29B6AED61F7CA4A700EC6DE3 /* TransactionConfiguration.swift in Sources */,
 				29F1C84C1FEC4F6F003780D8 /* TokensFooterView.swift in Sources */,
 				77B806A52075C33D005FDCBE /* SharedMigrationInitializer.swift in Sources */,
