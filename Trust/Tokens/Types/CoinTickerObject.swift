@@ -48,6 +48,15 @@ class CoinTickerObject: Object, Decodable {
     override static func primaryKey() -> String? {
         return "key"
     }
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case symbol
+        case price
+        case percent_change_24h
+        case contract
+        case image
+    }
 }
 
 extension CoinTickerObject {
