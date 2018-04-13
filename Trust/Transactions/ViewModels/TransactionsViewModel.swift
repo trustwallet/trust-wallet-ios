@@ -76,6 +76,10 @@ struct TransactionsViewModel {
         self.storage.transactionsUpdateHandler = block
     }
 
+    func invalidateTransactionsObservation() {
+        self.storage.invalidateTransactionsObservation()
+    }
+
     func numberOfItems(for section: Int) -> Int {
         return storage.transactionSections[section].items.count
     }

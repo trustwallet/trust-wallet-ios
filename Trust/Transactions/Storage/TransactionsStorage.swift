@@ -124,4 +124,9 @@ class TransactionsStorage {
             self?.transactionsUpdateHandler()
         }
     }
+
+    func invalidateTransactionsObservation() {
+        transactionsObserver?.invalidate()
+        transactionsObserver = nil
+    }
 }
