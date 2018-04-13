@@ -87,11 +87,12 @@ class ImportWalletViewController: FormViewController {
             +++ Section {
                 var header = HeaderFooterView<InfoHeaderView>(.class)
                 header.height = { 90 }
-                header.onSetupView = { (view, section) -> Void in
+                header.onSetupView = {[weak self] (view, section) -> Void in
+                    guard let strongSelf = self else { return }
                     view.label.attributedText = NSAttributedString(string: "Importing wallet as easy as creating", attributes: [
                         NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular),
                         NSAttributedStringKey.foregroundColor: UIColor(hex: "6e6e72"),
-                        NSAttributedStringKey.paragraphStyle: self.pargraphStyle,
+                        NSAttributedStringKey.paragraphStyle: strongSelf.pargraphStyle,
                         ])
                     view.logoImageView.image = R.image.create_wallet_import()
                 }
@@ -114,8 +115,8 @@ class ImportWalletViewController: FormViewController {
                 $0.add(rule: RuleRequired())
                 $0.cell.textView?.autocapitalizationType = .none
 
-                $0.hidden = Eureka.Condition.function([Values.segment], { _ in
-                    return self.segmentRow?.value != ImportSelectionType.mnemonic.title
+                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
+                    return self?.segmentRow?.value != ImportSelectionType.mnemonic.title
                 })
             }
 
@@ -124,8 +125,8 @@ class ImportWalletViewController: FormViewController {
                 $0.textAreaHeight = .fixed(cellHeight: 140)
                 $0.add(rule: RuleRequired())
 
-                $0.hidden = Eureka.Condition.function([Values.segment], { _ in
-                    return self.segmentRow?.value != ImportSelectionType.keystore.title
+                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
+                    return self?.segmentRow?.value != ImportSelectionType.keystore.title
                 })
             }
 
@@ -134,27 +135,27 @@ class ImportWalletViewController: FormViewController {
                 $0.textAreaHeight = .fixed(cellHeight: 140)
                 $0.add(rule: RuleRequired())
                 $0.add(rule: PrivateKeyRule())
-                $0.hidden = Eureka.Condition.function([Values.segment], { _ in
-                    return self.segmentRow?.value != ImportSelectionType.privateKey.title
+                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
+                    return self?.segmentRow?.value != ImportSelectionType.privateKey.title
                 })
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.watch) {
                 $0.add(rule: RuleRequired())
                 $0.add(rule: EthereumAddressRule())
-                $0.hidden = Eureka.Condition.function([Values.segment], { _ in
-                 return self.segmentRow?.value != ImportSelectionType.watch.title
+                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
+                 return self?.segmentRow?.value != ImportSelectionType.watch.title
             })
-            }.cellUpdate { cell, _ in
-                cell.textField.placeholder = self.viewModel.watchAddressPlaceholder
+            }.cellUpdate { [weak self] cell, _ in
+                cell.textField.placeholder = self?.viewModel.watchAddressPlaceholder
                 cell.textField.rightView = recipientRightView
                 cell.textField.rightViewMode = .always
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.password) {
                 $0.validationOptions = .validatesOnDemand
-                $0.hidden = Eureka.Condition.function([Values.segment], { _ in
-                    return self.segmentRow?.value != ImportSelectionType.keystore.title
+                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
+                    return self?.segmentRow?.value != ImportSelectionType.keystore.title
                 })
             }.cellUpdate { cell, _ in
                 cell.textField.isSecureTextEntry = true
@@ -166,8 +167,8 @@ class ImportWalletViewController: FormViewController {
 
             <<< ButtonRow(NSLocalizedString("importWallet.import.button.title", value: "Import", comment: "")) {
                 $0.title = $0.tag
-            }.onCellSelection { [unowned self] _, _ in
-                self.importWallet()
+            }.onCellSelection { [weak self] _, _ in
+                self?.importWallet()
             }
     }
 

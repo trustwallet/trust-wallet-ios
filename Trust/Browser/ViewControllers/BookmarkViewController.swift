@@ -2,7 +2,6 @@
 
 import Foundation
 import UIKit
-import Kingfisher
 import StatefulViewController
 
 protocol BookmarkViewControllerDelegate: class {

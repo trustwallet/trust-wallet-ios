@@ -212,4 +212,11 @@ class TokenViewModel {
         guard let tokens = tokenTransactions else { return }
         tokenTransactionSections = transactionsStore.mappedSections(for: Array(tokens))
     }
+
+    func invalidateObservers() {
+        notificationToken?.invalidate()
+        notificationToken = nil
+        transactionToken?.invalidate()
+        transactionToken = nil
+    }
 }

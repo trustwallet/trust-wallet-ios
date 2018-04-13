@@ -76,14 +76,20 @@ class TransactionsViewController: UIViewController {
         }()
 
         navigationItem.title = viewModel.title
-        transactionsObservation()
         runScheduledTimers()
         NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.stopTimers), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel.invalidateTransactionsObservation()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        refreshControl.endRefreshing()
+        transactionsObservation()
         fetch()
     }
 
@@ -106,6 +112,7 @@ class TransactionsViewController: UIViewController {
         startLoading()
         viewModel.fetch { [weak self] in
             self?.endLoading()
+            self?.refreshControl.endRefreshing()
         }
     }
 
@@ -130,10 +137,12 @@ class TransactionsViewController: UIViewController {
         timer = nil
         updateTransactionsTimer?.invalidate()
         updateTransactionsTimer = nil
+        viewModel.invalidateTransactionsObservation()
     }
 
     @objc func restartTimers() {
         runScheduledTimers()
+        transactionsObservation()
     }
 
     private func runScheduledTimers() {
@@ -150,6 +159,7 @@ class TransactionsViewController: UIViewController {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+        viewModel.invalidateTransactionsObservation()
     }
 }
 
