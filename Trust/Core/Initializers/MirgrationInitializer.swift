@@ -23,6 +23,11 @@ class MigrationInitializer: Initializer {
         config.schemaVersion = 46
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
+            case 0...45:
+                migration.enumerateObjects(ofType: TokenObject.className()) { _, newObject in
+                    newObject?["balance"] = TokenObject.DEFAULT_BALANCE
+                }
+                fallthrough
             case 0...32:
                 migration.enumerateObjects(ofType: TokenObject.className()) { oldObject, newObject in
 
@@ -35,10 +40,6 @@ class MigrationInitializer: Initializer {
                 }
             case 42...44:
                 migration.deleteData(forType: Transaction.className)
-            case 45:
-                migration.enumerateObjects(ofType: TokenObject.className()) { _, newObject in
-                    newObject?["balance"] = TokenObject.DEFAULT_BALANCE
-                }
             default: break
             }
         }

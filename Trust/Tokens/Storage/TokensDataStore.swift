@@ -197,7 +197,7 @@ class TokensDataStore {
         )
     }
 
-    func getBalance(for token: TokenObject, with tickers: [CoinTickerObject]) -> String {
+    func getBalance(for token: TokenObject, with tickers: [CoinTickerObject]) -> Double {
         guard let ticker = tickers.first(where: { $0.contract == token.contract }) else {
             return TokenObject.DEFAULT_BALANCE
         }
@@ -210,6 +210,6 @@ class TokensDataStore {
             return TokenObject.DEFAULT_BALANCE
         }
 
-        return String(format: "%.2f", amountInDecimal.doubleValue * price)
+        return amountInDecimal.doubleValue * price
     }
 }
