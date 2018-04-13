@@ -73,6 +73,7 @@ struct TransactionsViewModel {
     }
 
     func transactionsUpdateObservation(with block: @escaping () -> Void) {
+        self.storage.transactionsObservation()
         self.storage.transactionsUpdateHandler = block
     }
 

@@ -108,15 +108,9 @@ class TokensViewController: UIViewController {
         startTokenObservation()
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        stopTokenObservation()
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.applyTintAdjustment()
-        startTokenObservation()
         fetch()
     }
 
@@ -194,6 +188,8 @@ class TokensViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
         resignActive()
+        cancelOperations()
+        stopTokenObservation()
     }
 }
 extension TokensViewController: StatefulViewController {

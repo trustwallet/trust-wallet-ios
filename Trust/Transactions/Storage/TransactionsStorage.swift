@@ -35,7 +35,6 @@ class TransactionsStorage {
     ) {
         self.realm = realm
         self.account = account
-        transactionsObservation()
     }
 
     var completedObjects: [Transaction] {
@@ -118,7 +117,7 @@ class TransactionsStorage {
         return items
     }
 
-    private func transactionsObservation() {
+    func transactionsObservation() {
         transactionsObserver = transactions.observe { [weak self] _ in
             self?.updateTransactionSection()
             self?.transactionsUpdateHandler()

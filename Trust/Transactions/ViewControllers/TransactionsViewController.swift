@@ -86,8 +86,9 @@ class TransactionsViewController: UIViewController {
         viewModel.invalidateTransactionsObservation()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        refreshControl.endRefreshing()
         transactionsObservation()
         fetch()
     }
@@ -111,6 +112,7 @@ class TransactionsViewController: UIViewController {
         startLoading()
         viewModel.fetch { [weak self] in
             self?.endLoading()
+            self?.refreshControl.endRefreshing()
         }
     }
 
