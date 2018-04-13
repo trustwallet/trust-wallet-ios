@@ -4,12 +4,6 @@ import Foundation
 import UIKit
 
 class NavigationController: UINavigationController {
-    //Remove after iOS 11.2 will patch this bug.
-    func applyTintAdjustment() {
-        navigationBar.tintAdjustmentMode = .normal
-        navigationBar.tintAdjustmentMode = .automatic
-    }
-
     @discardableResult
     static func openFormSheet(
         for controller: UIViewController,

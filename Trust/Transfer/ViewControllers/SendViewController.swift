@@ -26,7 +26,6 @@ class SendViewController: FormViewController {
         static let address = "address"
         static let amount = "amount"
     }
-    let navigation = NavigationController()
     let session: WalletSession
     let account: Account
     let transferType: TransferType
@@ -106,7 +105,7 @@ class SendViewController: FormViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigation.applyTintAdjustment()
+        self.navigationController?.applyTintAdjustment()
     }
     func clear() {
         let fields = [addressRow, amountRow]
