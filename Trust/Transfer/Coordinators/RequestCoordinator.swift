@@ -44,7 +44,7 @@ class RequestCoordinator: Coordinator {
     }
 
     @objc func share(_ sender: UIBarButtonItem) {
-        let activityViewController = ActivityViewController.makeShareController(url: viewModel.shareMyAddressText)
+        let activityViewController = UIActivityViewController.make(items: [viewModel.shareMyAddressText])
         activityViewController.popoverPresentationController?.barButtonItem = sender
         navigationController.present(activityViewController, animated: true, completion: nil)
     }

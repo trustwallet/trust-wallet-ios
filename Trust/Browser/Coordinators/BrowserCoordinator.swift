@@ -212,7 +212,7 @@ class BrowserCoordinator: Coordinator {
 
     private func share() {
         guard let url = rootViewController.browserViewController.webView.url else { return }
-        let activityViewController = ActivityViewController.makeShareController(url: url)
+        let activityViewController = UIActivityViewController.make(items: [url])
         activityViewController.popoverPresentationController?.sourceView = navigationController.view
         activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
         navigationController.present(activityViewController, animated: true, completion: nil)
