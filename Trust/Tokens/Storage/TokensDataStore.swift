@@ -198,18 +198,16 @@ class TokensDataStore {
     }
 
     func getBalance(for token: TokenObject, with tickers: [CoinTickerObject]) -> String {
-        let unknownValue = "?"
-
         guard let ticker = tickers.first(where: { $0.contract == token.contract }) else {
-            return unknownValue
+            return TokenObject.DEFAULT_BALANCE
         }
 
         guard let amountInBigInt = BigInt(token.value), let price = Double(ticker.price) else {
-            return unknownValue
+            return TokenObject.DEFAULT_BALANCE
         }
 
         guard let amountInDecimal = EtherNumberFormatter.full.decimal(from: amountInBigInt, decimals: token.decimals) else {
-            return unknownValue
+            return TokenObject.DEFAULT_BALANCE
         }
 
         return String(format: "%.2f", amountInDecimal.doubleValue * price)

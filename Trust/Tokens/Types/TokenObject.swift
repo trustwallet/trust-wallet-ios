@@ -11,6 +11,8 @@ struct TokenObjectList: Decodable {
 }
 
 class TokenObject: Object, Decodable {
+    static let DEFAULT_BALANCE = "?"
+
     @objc dynamic var contract: String = ""
     @objc dynamic var name: String = ""
     @objc dynamic var symbol: String = ""
@@ -18,7 +20,7 @@ class TokenObject: Object, Decodable {
     @objc dynamic var value: String = ""
     @objc dynamic var isCustom: Bool = false
     @objc dynamic var isDisabled: Bool = false
-    @objc dynamic var balance: String = ""
+    @objc dynamic var balance: String = DEFAULT_BALANCE
 
     convenience init(
         contract: String = "",
