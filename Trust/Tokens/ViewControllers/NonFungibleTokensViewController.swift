@@ -65,7 +65,7 @@ class NonFungibleTokensViewController: UIViewController {
             case .initial:
                 tableView.reloadData()
                 self?.endLoading()
-            case .update(_, let deletions, let insertions, let modifications):
+            case .update:
                 tableView.reloadData()
 //                tableView.beginUpdates()
 //                var insertIndexSet = IndexSet()
