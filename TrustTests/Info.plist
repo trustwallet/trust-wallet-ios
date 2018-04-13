@@ -15,8 +15,8 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.27.0</string>
+	<string>1.28.0</string>
 	<key>CFBundleVersion</key>
-	<string>213</string>
+	<string>214</string>
 </dict>
 </plist>
