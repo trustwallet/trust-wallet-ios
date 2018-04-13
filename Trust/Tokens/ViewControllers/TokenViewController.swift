@@ -1,7 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import UIKit
-import Kingfisher
 
 protocol TokenViewControllerDelegate: class {
     func didPressRequest(for token: TokenObject, in controller: UIViewController)
