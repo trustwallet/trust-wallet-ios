@@ -61,7 +61,7 @@ class BrowserViewController: UIViewController {
     }()
 
     weak var delegate: BrowserViewControllerDelegate?
-    
+
     var browserNavBar: BrowserNavigationBar? {
         return navigationController?.navigationBar as? BrowserNavigationBar
     }
@@ -226,6 +226,10 @@ class BrowserViewController: UIViewController {
         if error.code == NSURLErrorCancelled {
             return
         } else {
+            if error.domain == NSURLErrorDomain,
+                let failedURL = (error as NSError).userInfo[NSURLErrorFailingURLErrorKey] as? URL {
+                delegate?.runAction(action: .changeURL(failedURL))
+            }
             errorView.show(error: error)
         }
     }
