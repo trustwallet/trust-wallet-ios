@@ -100,7 +100,10 @@ class TokensViewModel: NSObject {
     }
 
     private func amount(for token: TokenObject) -> Double {
-        return token.balance
+        guard let tickersSymbol = store.tickers().first(where: { $0.contract == token.contract }) else { return 0 }
+        let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
+        let price = Double(tickersSymbol.price) ?? 0
+        return tokenValue * price
     }
 
     func numberOfItems(for section: Int) -> Int {
