@@ -17,7 +17,7 @@ class InCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     let initialWallet: Wallet
     var keystore: Keystore
-    var config: Config
+    let config: Config
     let appTracker: AppTracker
     let navigator: Navigator
     weak var delegate: InCoordinatorDelegate?
@@ -48,7 +48,7 @@ class InCoordinator: Coordinator {
         navigationController: NavigationController = NavigationController(),
         wallet: Wallet,
         keystore: Keystore,
-        config: Config = Config(),
+        config: Config = .current,
         appTracker: AppTracker = AppTracker(),
         navigator: Navigator = Navigator()
     ) {
