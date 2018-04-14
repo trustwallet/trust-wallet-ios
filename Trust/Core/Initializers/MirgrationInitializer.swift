@@ -33,9 +33,11 @@ class MigrationInitializer: Initializer {
 
                     newObject["contract"] = address.description
                 }
+                fallthrough
             case 33...48:
                 migration.deleteData(forType: Transaction.className)
-            default: break
+            default:
+                break
             }
         }
     }
