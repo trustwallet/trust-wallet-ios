@@ -71,10 +71,10 @@ class TokensDataStoreTest: XCTestCase {
             value: "10000"
         )
 
-        XCTAssertEqual("1000.00", tokensDataStore.getBalance(for: tokenObject, with: coinTickerObjects))
+        XCTAssertEqual(1000.00, tokensDataStore.getBalance(for: tokenObject, with: coinTickerObjects))
 
-        XCTAssertEqual("?", tokensDataStore.getBalance(for: tokenObject, with: [CoinTickerObject(price: "", contract: "contract1")]))
-        XCTAssertEqual("?", tokensDataStore.getBalance(for: tokenObject, with: [CoinTickerObject]()))
+        XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject, with: [CoinTickerObject(price: "", contract: "contract1")]))
+        XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject, with: [CoinTickerObject]()))
 
         tokenObject = TokenObject(
             contract: "contract2",
@@ -82,7 +82,7 @@ class TokensDataStoreTest: XCTestCase {
             value: "20000"
         )
 
-        XCTAssertEqual("400.00", tokensDataStore.getBalance(for: tokenObject, with: coinTickerObjects))
+        XCTAssertEqual(400.00, tokensDataStore.getBalance(for: tokenObject, with: coinTickerObjects))
 
         tokenObject = TokenObject(
             contract: "contract that doesn't match any",
@@ -90,6 +90,6 @@ class TokensDataStoreTest: XCTestCase {
             value: "30000"
         )
 
-        XCTAssertEqual("?", tokensDataStore.getBalance(for: tokenObject, with: coinTickerObjects))
+        XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject, with: coinTickerObjects))
     }
 }
