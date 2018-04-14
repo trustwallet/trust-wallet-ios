@@ -79,7 +79,7 @@ class TokenViewModel {
     }
 
     var totalFiatAmount: String? {
-        return TokensLayout.cell.totalFiatAmount(for: ticker, token: token)
+        return TokensLayout.cell.totalFiatAmount(token: token)
     }
 
     var fiatAmountTextColor: UIColor {
