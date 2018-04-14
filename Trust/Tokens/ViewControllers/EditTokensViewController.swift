@@ -13,13 +13,12 @@ class EditTokensViewController: UITableViewController {
         return EditTokenViewModel(
             network: network,
             storage: storage,
-            config: session.config,
-            table: tableView
+            config: session.config
         )
     }()
 
     lazy var searchController: UISearchController = {
-        let searchController = UISearchController(searchResultsController: nil)
+        let searchController = UISearchController(searchResultsController: self.searchResultsController)
         searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -27,15 +26,24 @@ class EditTokensViewController: UITableViewController {
         searchController.searchBar.sizeToFit()
         searchController.searchBar.barTintColor = Colors.lightGray
         searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
         definesPresentationContext = true
         return searchController
     }()
 
+    lazy var searchResultsController: SearchTokenResultsController = {
+        let resultsController = SearchTokenResultsController()
+        resultsController.delegate = self
+        return resultsController
+    }()
+
     lazy var searchClosure: (String) -> Void = {
         return debounce(delay: .milliseconds(250), action: { [weak self] (query) in
-            self?.viewModel.search(token: query)
+            self?.search(token: query)
         })
     }()
+
+    let feedbackGenerator = UINotificationFeedbackGenerator()
 
     init(
         session: WalletSession,
@@ -56,6 +64,10 @@ class EditTokensViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -72,29 +84,14 @@ class EditTokensViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.editTokenTableViewCell.name, for: indexPath) as! EditTokenTableViewCell
-        cell.delegate = self
         let token = self.viewModel.token(for: indexPath)
-        cell.viewModel = EditTokenTableCellViewModel(
-            token: token.token,
-            coinTicker: storage.coinTicker(for: token.token),
-            config: session.config,
-            isLocal: token.local
-        )
-        cell.separatorInset = TokensLayout.tableView.layoutInsets
-        cell.selectionStyle = token.local ? .none : .default
+        configCell(cell, token: token)
+        cell.delegate = self
         return cell
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return TokensLayout.tableView.height
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        if viewModel.didSelectRowAt(indexPath) {
-            searchController.isActive = false
-            searchBarCancelButtonClicked(searchController.searchBar)
-        }
     }
 
     func configureTableView() {
@@ -110,8 +107,23 @@ class EditTokensViewController: UITableViewController {
         tableView.keyboardDismissMode = .onDrag
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+    private func configCell(_ cell: EditTokenTableViewCell, token: (token: TokenObject, local: Bool)) {
+        cell.viewModel = EditTokenTableCellViewModel(
+            token: token.token,
+            coinTicker: storage.coinTicker(for: token.token),
+            config: session.config,
+            isLocal: token.local
+        )
+        cell.separatorInset = TokensLayout.tableView.layoutInsets
+        cell.selectionStyle = token.local ? .none : .default
+    }
+
+    private func search(token: String) {
+        let localResults = viewModel.searchLocal(token: token)
+        searchResultsController.localResults = localResults
+        viewModel.searchNetwork(token: token) { [weak self] (tokens) in
+            self?.searchResultsController.remoteResults = tokens
+        }
     }
 }
 
@@ -121,6 +133,27 @@ extension EditTokensViewController: EditTokenTableViewCellDelegate {
             return
         }
         self.viewModel.updateToken(indexPath: indexPath, action: .disable(!state))
+    }
+}
+
+extension EditTokensViewController: SearchTokenResultsControllerDelegate {
+    func searchResultsController(configureCell cell: EditTokenTableViewCell, with token: (token: TokenObject, local: Bool)) {
+        self.configCell(cell, token: token)
+    }
+
+    func searchResultsController(didSelect cell: EditTokenTableViewCell, with token: (token: TokenObject, local: Bool)) {
+        if !token.local {
+            storage.add(tokens: [token.token])
+            feedbackGenerator.notificationOccurred(.success)
+            searchController.isActive = false
+            searchBarCancelButtonClicked(searchController.searchBar)
+            tableView.reloadData()
+        }
+    }
+
+    func searchResultsController(didUpdate token: TokenObject, with action: TokenAction) {
+        self.storage.update(tokens: [token], action: action)
+        tableView.reloadData()
     }
 }
 
@@ -135,7 +168,7 @@ extension EditTokensViewController: UISearchBarDelegate {
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.viewModel.search(token: "")
+        self.search(token: "")
     }
 }
 

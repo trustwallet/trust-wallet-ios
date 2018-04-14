@@ -33,18 +33,15 @@ class MigrationInitializer: Initializer {
 
                     newObject["contract"] = address.description
                 }
-                self.addBalanceInTokenObject(migration)
+                fallthrough
             case 33...48:
                 migration.deleteData(forType: Transaction.className)
-                self.addBalanceInTokenObject(migration)
-            default: break
+                migration.enumerateObjects(ofType: TokenObject.className()) { _, newObject in
+                    newObject?["balance"] = TokenObject.DEFAULT_BALANCE
+                }
+            default:
+                break
             }
-        }
-    }
-
-    func addBalanceInTokenObject(_ migration: Migration) {
-        migration.enumerateObjects(ofType: TokenObject.className()) { _, newObject in
-            newObject?["balance"] = TokenObject.DEFAULT_BALANCE
         }
     }
 }
