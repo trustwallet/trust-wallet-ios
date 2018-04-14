@@ -54,9 +54,9 @@ struct HomesteadSigner: Signer {
 
     func values(transaction: SignTransaction, signature: Data) -> (r: BigInt, s: BigInt, v: BigInt) {
         precondition(signature.count == 65, "Wrong size for signature")
-        let r = BigInt(sign: .plus, magnitude: BigUInt(signature[..<32]))
-        let s = BigInt(sign: .plus, magnitude: BigUInt(signature[32..<64]))
-        let v = BigInt(sign: .plus, magnitude: BigUInt(signature[64] + 27))
+        let r = BigInt(sign: .plus, magnitude: BigUInt(Data(signature[..<32])))
+        let s = BigInt(sign: .plus, magnitude: BigUInt(Data(signature[32..<64])))
+        let v = BigInt(sign: .plus, magnitude: BigUInt(Data(signature[64] + 27)))
         return (r, s, v)
     }
 }
