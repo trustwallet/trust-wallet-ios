@@ -8,6 +8,8 @@
 	<array>
 		<string>applinks:eps2.app.link</string>
 		<string>applinks:eps2-alternate.app.link</string>
+		<string>applinks:links.trustwalletapp.com</string>
+	</string>
 	</array>
 	<key>com.apple.developer.default-data-protection</key>
 	<string>NSFileProtectionComplete</string>
