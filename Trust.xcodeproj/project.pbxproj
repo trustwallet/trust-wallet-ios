@@ -419,6 +419,7 @@
 		BB58B92F206F70FE00A70A3C /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB58B92E206F70FE00A70A3C /* History.swift */; };
 		BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */; };
 		BB767E2E205E10FD00263658 /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB767E2D205E10FD00263658 /* Debounce.swift */; };
+		BB8E747920818E5E001BA99A /* SearchTokenResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8E747820818E5E001BA99A /* SearchTokenResultsController.swift */; };
 		BBAA2A3B2058155100B0878C /* signTypedMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAA2A3A2058155100B0878C /* signTypedMessageTests.swift */; };
 		BBB61E122050993A00428BBD /* BrowserErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB61E112050993A00428BBD /* BrowserErrorView.swift */; };
 		BBD4E416205654E4005545E9 /* EthTypedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD4E415205654E4005545E9 /* EthTypedData.swift */; };
@@ -917,6 +918,7 @@
 		BB58B92E206F70FE00A70A3C /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrencyRate+Fee.swift"; sourceTree = "<group>"; };
 		BB767E2D205E10FD00263658 /* Debounce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debounce.swift; sourceTree = "<group>"; };
+		BB8E747820818E5E001BA99A /* SearchTokenResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTokenResultsController.swift; sourceTree = "<group>"; };
 		BBAA2A3A2058155100B0878C /* signTypedMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signTypedMessageTests.swift; sourceTree = "<group>"; };
 		BBB61E112050993A00428BBD /* BrowserErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserErrorView.swift; sourceTree = "<group>"; };
 		BBD4E415205654E4005545E9 /* EthTypedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthTypedData.swift; sourceTree = "<group>"; };
@@ -1488,6 +1490,7 @@
 		2977CAF11F7E0C33009682A0 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				BB8E747820818E5E001BA99A /* SearchTokenResultsController.swift */,
 				296106C51F7645CC0006164B /* TokensViewController.swift */,
 				294DFBA81FE6EBFB004CEB56 /* NewTokenViewController.swift */,
 				29F1C83D1FEB5C91003780D8 /* EditTokensViewController.swift */,
@@ -3202,6 +3205,7 @@
 				773B8DB920716EFF00D05690 /* GetNonceProvider.swift in Sources */,
 				776C114C20605AAC00449539 /* TokensLayout.swift in Sources */,
 				73ED85A520349BE400593BF3 /* StringFormatter.swift in Sources */,
+				BB8E747920818E5E001BA99A /* SearchTokenResultsController.swift in Sources */,
 				293112101FC4ADCB00966EEA /* InCoordinatorViewModel.swift in Sources */,
 				293112351FC9A0D500966EEA /* CallRequest.swift in Sources */,
 				291F52A91F6B7BE100B369AB /* BlockNumber.swift in Sources */,
