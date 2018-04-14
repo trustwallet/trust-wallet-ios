@@ -5,6 +5,7 @@ import Foundation
 import UIKit
 import StackViewController
 import Result
+import StatefulViewController
 
 enum ConfirmType {
     case sign
@@ -57,6 +58,15 @@ class ConfirmPaymentViewController: UIViewController {
         stackViewController.view.backgroundColor = viewModel.backgroundColor
         navigationItem.title = viewModel.title
 
+        errorView = ErrorView(onRetry: { [weak self] in
+            self?.fetch()
+        })
+
+        loadConfiguration()
+        fetch()
+    }
+
+    func loadConfiguration() {
         configurator.load { [weak self] result in
             guard let `self` = self else { return }
             switch result {
@@ -69,6 +79,22 @@ class ConfirmPaymentViewController: UIViewController {
         configurator.configurationUpdate.subscribe { [weak self] _ in
             guard let `self` = self else { return }
             self.reloadView()
+        }
+    }
+
+    func fetch() {
+        if !session.nonceProvider.nonceAvailable {
+            startLoading()
+            session.nonceProvider.getNextNonce(completion: { [weak self] result in
+                guard let `self` = self else { return }
+                switch result {
+                case .success:
+                    self.endLoading()
+                    self.loadConfiguration()
+                case .failure(let error):
+                    self.endLoading(animated: true, error: error, completion: nil)
+                }
+            })
         }
     }
 
@@ -184,6 +210,12 @@ class ConfirmPaymentViewController: UIViewController {
             self.didCompleted?(result)
             self.hideLoading()
         }
+    }
+}
+
+extension ConfirmPaymentViewController: StatefulViewController {
+    func hasContent() -> Bool {
+        return true
     }
 }
 

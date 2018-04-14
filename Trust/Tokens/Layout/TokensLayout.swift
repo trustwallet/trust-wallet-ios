@@ -5,14 +5,14 @@ import UIKit
 
 struct TokensLayout {
     struct tableView {
-        static let height: CGFloat = 84
+        static let height: CGFloat = 80
         static let separatorColor = UIColor(hex: "d7d7d7")
         static let layoutInsets = UIEdgeInsets(top: 0, left: 86, bottom: 0, right: 0)
     }
 
     struct cell {
         static var imageSize: CGFloat {
-            return 54
+            return 52
             // TODO: return 44 for 2 scale, same for xib file.
             //if UIScreen.main.scale == 3 { return 54 }
             //return 44

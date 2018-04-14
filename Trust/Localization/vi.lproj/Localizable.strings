@@ -73,7 +73,7 @@
 "transactions.deposit.button.title" = "Mua";
 "transactions.myAddress.button.title" = "Địa chỉ ví của tôi";
 "transactions.noTransactions.label.title" = "Không có giao dịch!";
-"wallet.navigation.title" = "Các ví";
+"wallet.navigation.title" = "Ví tiền";
 "wallets.backup.alertSheet.title" = "Sao lưu Keystore ";
 "welcome.createWallet.button.title" = "TẠO VÍ";
 "welcome.erc20.label.description" = "Mặc định hỗ trợ cho các đồng tiền mã hóa theo chuẩn ERC20.";

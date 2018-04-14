@@ -1,7 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Moya
-import TrustKeystore
+import TrustCore
 import JSONRPCKit
 import APIKit
 import Result

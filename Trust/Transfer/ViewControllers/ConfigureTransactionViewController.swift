@@ -21,6 +21,7 @@ class ConfigureTransactionViewController: FormViewController {
         static let gasLimit = "gasLimit"
         static let totalFee = "totalFee"
         static let data = "data"
+        static let nonce = "nonce"
     }
 
     lazy var viewModel: ConfigureTransactionViewModel = {
@@ -42,6 +43,9 @@ class ConfigureTransactionViewController: FormViewController {
     private var dataRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.data) as? TextFloatLabelRow
     }
+    private var nonceRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.nonce) as? TextFloatLabelRow
+    }
 
     private var gasLimit: BigInt {
         return BigInt(String(Int(gasLimitRow?.value ?? 0)), radix: 10) ?? BigInt()
@@ -54,6 +58,9 @@ class ConfigureTransactionViewController: FormViewController {
     }
     private var dataString: String {
         return dataRow?.value ?? "0x"
+    }
+    private var nonce: BigInt {
+        return BigInt(nonceRow?.value ?? "0") ?? 0
     }
 
     private var gasViewModel: GasViewModel {
@@ -126,14 +133,18 @@ class ConfigureTransactionViewController: FormViewController {
             }
         }
 
-        +++ Section {
-            $0.hidden = Eureka.Condition.function([], { _ in
-                return self.viewModel.isDataInputHidden
-            })
-        }
+        +++ Section()
+
         <<< AppFormAppearance.textFieldFloat(tag: Values.data) {
             $0.title = NSLocalizedString("configureTransaction.data.label.title", value: "Transaction Data (Optional)", comment: "")
             $0.value = self.configuration.data.hexEncoded
+        }
+
+        <<< AppFormAppearance.textFieldFloat(tag: Values.nonce) {
+            $0.title = NSLocalizedString("configureTransaction.nonce.label.title", value: "Nonce", comment: "")
+            $0.value = "\(self.configuration.nonce)"
+        }.cellUpdate { cell, _ in
+            cell.textField.keyboardType = .numberPad
         }
 
         +++ Section()
@@ -171,7 +182,8 @@ class ConfigureTransactionViewController: FormViewController {
         let configuration = TransactionConfiguration(
             gasPrice: gasPrice,
             gasLimit: gasLimit,
-            data: data
+            data: data,
+            nonce: nonce
         )
         delegate?.didEdit(configuration: configuration, in: self)
     }

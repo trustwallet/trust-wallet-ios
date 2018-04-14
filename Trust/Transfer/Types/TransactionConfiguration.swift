@@ -7,4 +7,5 @@ struct TransactionConfiguration {
     let gasPrice: BigInt
     let gasLimit: BigInt
     let data: Data
+    let nonce: BigInt
 }

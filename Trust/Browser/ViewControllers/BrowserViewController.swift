@@ -6,11 +6,18 @@ import WebKit
 import JavaScriptCore
 import Result
 
+enum BrowserAction {
+    case history
+    case addBookmark(bookmark: Bookmark)
+    case bookmarks
+    case qrCode
+    case changeURL(URL)
+    case navigationAction(BrowserNavigation)
+}
+
 protocol BrowserViewControllerDelegate: class {
     func didCall(action: DappAction, callbackID: Int)
-    func didAddBookmark(bookmark: Bookmark)
-    func didOpenBookmarkList()
-    func didOpenQRCode()
+    func runAction(action: BrowserAction)
     func didVisitURL(url: URL, title: String)
 }
 
@@ -54,7 +61,6 @@ class BrowserViewController: UIViewController {
     }()
 
     weak var delegate: BrowserViewControllerDelegate?
-    private let urlParser = BrowserURLParser()
 
     var browserNavBar: BrowserNavigationBar? {
         return navigationController?.navigationBar as? BrowserNavigationBar
@@ -118,7 +124,7 @@ class BrowserViewController: UIViewController {
         super.viewWillAppear(animated)
 
         browserNavBar?.browserDelegate = self
-        reloadButtons()
+        refreshURL()
     }
 
     private func injectUserAgent() {
@@ -147,16 +153,14 @@ class BrowserViewController: UIViewController {
 
     func goHome() {
         guard let url = URL(string: Constants.dappsBrowserURL) else { return }
+        var request = URLRequest(url: url)
+        request.cachePolicy = .returnCacheDataElseLoad
         hideErrorView()
-        webView.load(URLRequest(url: url))
+        webView.load(request)
         browserNavBar?.textField.text = url.absoluteString
     }
 
-    private func qrReader() {
-        delegate?.didOpenQRCode()
-    }
-
-    private func reload() {
+    func reload() {
         hideErrorView()
         webView.reload()
     }
@@ -176,9 +180,8 @@ class BrowserViewController: UIViewController {
         delegate?.didVisitURL(url: url, title: webView.title ?? "")
     }
 
-    private func reloadButtons() {
-        browserNavBar?.goBack.isEnabled = webView.canGoBack
-        browserNavBar?.goForward.isEnabled = webView.canGoForward
+    private func changeURL(_ url: URL) {
+        delegate?.runAction(action: .changeURL(url))
     }
 
     private func hideErrorView() {
@@ -199,6 +202,7 @@ class BrowserViewController: UIViewController {
         } else if keyPath == Keys.URL {
             if let url = webView.url {
                 self.browserNavBar?.textField.text = url.absoluteString
+                changeURL(url)
             }
         }
     }
@@ -208,108 +212,60 @@ class BrowserViewController: UIViewController {
         webView.removeObserver(self, forKeyPath: Keys.URL)
     }
 
-    private func presentMoreOptions(sender: UIView) {
-        let alertController = makeMoreAlertSheet(sender: sender)
-        present(alertController, animated: true, completion: nil)
-    }
-
-    private func makeMoreAlertSheet(sender: UIView) -> UIAlertController {
-        let alertController = UIAlertController(
-            title: nil,
-            message: nil,
-            preferredStyle: .actionSheet
-        )
-        alertController.popoverPresentationController?.sourceView = sender
-        alertController.popoverPresentationController?.sourceRect = sender.centerRect
-        let QRCodeAction = UIAlertAction(title: NSLocalizedString("browser.qrCode.button.title", value: "QR Reader", comment: ""), style: .default) { [unowned self] _ in
-            self.qrReader()
-        }
-        let reloadAction = UIAlertAction(title: NSLocalizedString("browser.reload.button.title", value: "Reload", comment: ""), style: .default) { [unowned self] _ in
-            self.reload()
-        }
-        let shareAction = UIAlertAction(title: NSLocalizedString("browser.share.button.title", value: "Share", comment: ""), style: .default) { [unowned self] _ in
-            self.share()
-        }
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
-        let addBookmarkAction = UIAlertAction(title: NSLocalizedString("browser.addbookmark.button.title", value: "Add Bookmark", comment: ""), style: .default) { [unowned self] _ in
-            self.addBookmark()
-        }
-        let viewBookmarksAction = UIAlertAction(title: NSLocalizedString("browser.bookmarks.button.title", value: "Bookmarks", comment: ""), style: .default) { [unowned self] _ in
-            self.showBookmarks()
-        }
-
-        alertController.addAction(reloadAction)
-        alertController.addAction(QRCodeAction)
-        alertController.addAction(shareAction)
-        alertController.addAction(addBookmarkAction)
-        alertController.addAction(viewBookmarksAction)
-        alertController.addAction(cancelAction)
-        return alertController
-    }
-
-    private func makeShareController(url: URL) -> UIActivityViewController {
-        return UIActivityViewController(activityItems: [url], applicationActivities: nil)
-    }
-
-    private func share() {
-        guard let url = webView.url else { return }
-        guard let navigationController = navigationController else { return }
-        let controller = makeShareController(url: url)
-        controller.popoverPresentationController?.sourceView = navigationController.view
-        controller.popoverPresentationController?.sourceRect = navigationController.view.centerRect
-        navigationController.present(controller, animated: true, completion: nil)
-    }
-
-    private func addBookmark() {
+    func addBookmark() {
         guard let url = webView.url?.absoluteString else { return }
         guard let title = webView.title else { return }
-        delegate?.didAddBookmark(bookmark: Bookmark(url: url, title: title))
+        delegate?.runAction(action: .addBookmark(bookmark: Bookmark(url: url, title: title)))
     }
 
-    private func showBookmarks() {
-        delegate?.didOpenBookmarkList()
+    @objc private func showBookmarks() {
+        delegate?.runAction(action: .bookmarks)
+    }
+
+    @objc private func history() {
+        delegate?.runAction(action: .history)
     }
 
     func handleError(error: Error) {
         if error.code == NSURLErrorCancelled {
             return
         } else {
+            if error.domain == NSURLErrorDomain,
+                let failedURL = (error as NSError).userInfo[NSURLErrorFailingURLErrorKey] as? URL {
+                changeURL(failedURL)
+            }
             errorView.show(error: error)
         }
     }
 }
 
 extension BrowserViewController: BrowserNavigationBarDelegate {
-    func did(action: BrowserAction) {
+    func did(action: BrowserNavigation) {
+        delegate?.runAction(action: .navigationAction(action))
         switch action {
         case .goForward:
             webView.goForward()
         case .goBack:
             webView.goBack()
-        case .more(let sender):
-            presentMoreOptions(sender: sender)
+        case .more:
+            break
         case .home:
-            goHome()
-        case .enter(let string):
-            guard let url = urlParser.url(from: string) else { return }
-            goTo(url: url)
+            break
+        case .enter:
+            break
         case .beginEditing:
             stopLoading()
         }
-        reloadButtons()
     }
 }
 
 extension BrowserViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        refreshURL()
         recordURL()
-        reloadButtons()
         hideErrorView()
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        reloadButtons()
         hideErrorView()
     }
 
@@ -335,12 +291,12 @@ extension BrowserViewController: WKUIDelegate {
             title: .none,
             message: message,
             style: .alert,
-            in: navigationController!
+            in: navigationController! as! NavigationController
         )
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
             completionHandler()
         }))
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 
     func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
@@ -348,7 +304,7 @@ extension BrowserViewController: WKUIDelegate {
             title: .none,
             message: message,
             style: .alert,
-            in: navigationController!
+            in: navigationController! as! NavigationController
         )
         alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
             completionHandler(true)
@@ -356,7 +312,7 @@ extension BrowserViewController: WKUIDelegate {
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .default, handler: { _ in
             completionHandler(false)
         }))
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
@@ -364,7 +320,7 @@ extension BrowserViewController: WKUIDelegate {
             title: .none,
             message: prompt,
             style: .alert,
-            in: navigationController!
+            in: navigationController! as! NavigationController
         )
         alertController.addTextField { (textField) in
             textField.text = defaultText
@@ -379,7 +335,7 @@ extension BrowserViewController: WKUIDelegate {
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .default, handler: { _ in
             completionHandler(nil)
         }))
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }
 

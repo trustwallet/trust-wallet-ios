@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import TrustKeystore
+import TrustCore
 
 protocol TokensViewModelDelegate: class {
     func refresh()
@@ -60,14 +60,14 @@ class TokensViewModel: NSObject {
 
     weak var delegate: TokensViewModelDelegate?
 
-    private var serialOperationQueue: OperationQueue = {
+    private lazy var serialOperationQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .background
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
 
-    private var parallelOperationQueue: OperationQueue = {
+    private lazy var parallelOperationQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .background
         return queue
@@ -118,6 +118,10 @@ class TokensViewModel: NSObject {
         return tokens[path.row].isCustom
     }
 
+    func canDisable(for path: IndexPath) -> Bool {
+        return item(for: path) != TokensDataStore.etherToken()
+    }
+
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
         return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token))
@@ -142,8 +146,6 @@ class TokensViewModel: NSObject {
 
         let tokensOperation = TokensOperation(network: tokensNetwork, address: address)
 
-        serialOperationQueue.addOperation(tokensOperation)
-
         tokensOperation.completionBlock = { [weak self] in
             DispatchQueue.main.async {
                 self?.store.update(tokens: tokensOperation.tokens, action: .updateInfo)
@@ -152,6 +154,8 @@ class TokensViewModel: NSObject {
                 }
             }
         }
+
+        serialOperationQueue.addOperation(tokensOperation)
     }
 
     private func parallelOperations(for tokens: [TokenObject]) {
@@ -190,5 +194,10 @@ class TokensViewModel: NSObject {
     func cancelOperations() {
         serialOperationQueue.cancelAllOperations()
         parallelOperationQueue.cancelAllOperations()
+    }
+
+    func invalidateTokensObservation() {
+        tokensObserver?.invalidate()
+        tokensObserver = nil
     }
 }

@@ -1,12 +1,13 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import BigInt
+import Result
 
 protocol NonceProvider {
-    var remoteNonce: Int? { get }
-    var latestNonce: Int? { get }
-    var nextNonce: Int? { get }
-    func getNonce(for transaction: UnconfirmedTransaction) -> Int
-    func fetch()
-    func fetchIfNeeded()
+    var remoteNonce: BigInt? { get }
+    var latestNonce: BigInt? { get }
+    var nextNonce: BigInt? { get }
+    var nonceAvailable: Bool { get }
+    func getNextNonce(completion: @escaping (Result<BigInt, AnyError>) -> Void)
 }

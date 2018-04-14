@@ -1,7 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
-import TrustKeystore
+import TrustCore
 import UIKit
 import RealmSwift
 import URLNavigator
@@ -13,7 +13,7 @@ protocol InCoordinatorDelegate: class {
 
 class InCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     var coordinators: [Coordinator] = []
     let initialWallet: Wallet
     var keystore: Keystore
@@ -21,14 +21,17 @@ class InCoordinator: Coordinator {
     let appTracker: AppTracker
     let navigator: Navigator
     weak var delegate: InCoordinatorDelegate?
+    var browserCoordinator: BrowserCoordinator? {
+        return self.coordinators.compactMap { $0 as? BrowserCoordinator }.first
+    }
     var transactionCoordinator: TransactionCoordinator? {
-        return self.coordinators.flatMap { $0 as? TransactionCoordinator }.first
+        return self.coordinators.compactMap { $0 as? TransactionCoordinator }.first
     }
     var settingsCoordinator: SettingsCoordinator? {
-        return self.coordinators.flatMap { $0 as? SettingsCoordinator }.first
+        return self.coordinators.compactMap { $0 as? SettingsCoordinator }.first
     }
     var tokensCoordinator: TokensCoordinator? {
-        return self.coordinators.flatMap { $0 as? TokensCoordinator }.first
+        return self.coordinators.compactMap { $0 as? TokensCoordinator }.first
     }
     var tabBarController: UITabBarController? {
         return self.navigationController.viewControllers.first as? UITabBarController
@@ -42,7 +45,7 @@ class InCoordinator: Coordinator {
     }()
 
     init(
-        navigationController: UINavigationController = NavigationController(),
+        navigationController: NavigationController = NavigationController(),
         wallet: Wallet,
         keystore: Keystore,
         config: Config = Config(),
@@ -71,11 +74,13 @@ class InCoordinator: Coordinator {
         let migration = MigrationInitializer(account: account, chainID: config.chainID)
         migration.perform()
 
-        let web3 = self.web3(for: config.server)
-        web3.start()
+        let sharedMigration = SharedMigrationInitializer()
+        sharedMigration.perform()
+
         let realm = self.realm(for: migration.config)
+        let sharedRealm = self.realm(for: sharedMigration.config)
         let tokensStorage = TokensDataStore(realm: realm, config: config)
-        let balanceCoordinator =  TokensBalanceService(web3: web3)
+        let balanceCoordinator =  TokensBalanceService()
         let trustNetwork = TrustNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
         let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
         let transactionsStorage = TransactionsStorage(
@@ -86,7 +91,6 @@ class InCoordinator: Coordinator {
         let session = WalletSession(
             account: account,
             config: config,
-            web3: web3,
             balanceCoordinator: balance,
             nonceProvider: nonceProvider
         )
@@ -108,7 +112,7 @@ class InCoordinator: Coordinator {
 
         tabBarController.tabBar.isTranslucent = false
 
-        let browserCoordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator, realm: realm)
+        let browserCoordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator, sharedRealm: sharedRealm)
         browserCoordinator.delegate = self
         browserCoordinator.start()
         browserCoordinator.rootViewController.tabBarItem = UITabBarItem(
@@ -172,9 +176,9 @@ class InCoordinator: Coordinator {
         guard let nav = viewControllers[selectTab.index] as? UINavigationController else { return }
 
         switch selectTab {
-        case .browser(let openURL):
-            if let openURL = openURL, let controller = nav.viewControllers[0] as? BrowserViewController {
-                controller.goTo(url: openURL)
+        case .browser(let url):
+            if let url = url {
+                browserCoordinator?.openURL(url)
             }
         case .settings, .wallet, .transactions:
             break
@@ -233,10 +237,6 @@ class InCoordinator: Coordinator {
 
     private func realm(for config: Realm.Configuration) -> Realm {
         return try! Realm(configuration: config)
-    }
-
-    private func web3(for server: RPCServer) -> Web3Swift {
-        return Web3Swift(url: config.server.rpcURL)
     }
 
     private func showTransactionSent(transaction: SentTransaction) {

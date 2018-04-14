@@ -5,13 +5,13 @@ import StoreKit
 
 class HelpUsCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     let appTracker: AppTracker
     var coordinators: [Coordinator] = []
 
     private let viewModel = HelpUsViewModel()
     init(
-        navigationController: UINavigationController = NavigationController(),
+        navigationController: NavigationController = NavigationController(),
         appTracker: AppTracker = AppTracker()
     ) {
         self.navigationController = navigationController
@@ -31,7 +31,8 @@ class HelpUsCoordinator: Coordinator {
 
     func rateUs() {
         if #available(iOS 10.3, *) { SKStoreReviewController.requestReview() } else {
-            UIApplication.shared.openURL(URL(string: "itms-apps://itunes.apple.com/app/id1288339409")!)
+            let url = URL(string: "itms-apps://itunes.apple.com/app/id1288339409")!
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
         appTracker.completedRating = true
     }
@@ -50,10 +51,7 @@ class HelpUsCoordinator: Coordinator {
     }
 
     func presentSharing(in viewController: UIViewController, from sender: UIView) {
-        let activityViewController = UIActivityViewController(
-            activityItems: viewModel.activityItems,
-            applicationActivities: nil
-        )
+        let activityViewController = UIActivityViewController.make(items: viewModel.activityItems)
         activityViewController.popoverPresentationController?.sourceView = sender
         activityViewController.popoverPresentationController?.sourceRect = sender.centerRect
         viewController.present(activityViewController, animated: true, completion: nil)

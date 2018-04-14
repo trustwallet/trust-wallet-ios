@@ -1,7 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import UIKit
-import TrustKeystore
+import TrustCore
 import BigInt
 
 class TokensBalanceOperation: TrustOperation {

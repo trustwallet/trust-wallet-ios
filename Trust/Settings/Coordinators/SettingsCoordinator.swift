@@ -1,7 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
-import TrustKeystore
+import TrustCore
 import UIKit
 
 protocol SettingsCoordinatorDelegate: class {
@@ -12,7 +12,7 @@ protocol SettingsCoordinatorDelegate: class {
 
 class SettingsCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     let keystore: Keystore
     let session: WalletSession
     let storage: TransactionsStorage
@@ -45,7 +45,7 @@ class SettingsCoordinator: Coordinator {
     }()
 
     init(
-        navigationController: UINavigationController = NavigationController(),
+        navigationController: NavigationController = NavigationController(),
         keystore: Keystore,
         session: WalletSession,
         storage: TransactionsStorage,

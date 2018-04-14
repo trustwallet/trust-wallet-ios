@@ -61,4 +61,9 @@ class BalanceCoordinator {
         self.currencyRate = ticker?.rate()
         self.update()
     }
+
+    deinit {
+        ethTokenObservation?.invalidate()
+        ethTokenObservation = nil
+    }
 }

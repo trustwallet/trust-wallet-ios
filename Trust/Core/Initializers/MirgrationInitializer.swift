@@ -2,7 +2,7 @@
 
 import Foundation
 import RealmSwift
-import TrustKeystore
+import TrustCore
 
 class MigrationInitializer: Initializer {
 
@@ -20,7 +20,7 @@ class MigrationInitializer: Initializer {
     }
 
     func perform() {
-        config.schemaVersion = 46
+        config.schemaVersion = 49
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
             case 0...32:
@@ -34,7 +34,7 @@ class MigrationInitializer: Initializer {
                     newObject["contract"] = address.description
                 }
                 self.addBalanceInTokenObject(migration)
-            case 40...45:
+            case 33...48:
                 migration.deleteData(forType: Transaction.className)
                 self.addBalanceInTokenObject(migration)
             default: break

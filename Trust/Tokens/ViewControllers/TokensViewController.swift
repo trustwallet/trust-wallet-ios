@@ -1,10 +1,10 @@
-// Copyright SIX DAY LLC. All rights reserved.
+ // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
 import UIKit
 import StatefulViewController
 import Result
-import TrustKeystore
+import TrustCore
 import RealmSwift
 
 protocol TokensViewControllerDelegate: class {
@@ -99,9 +99,13 @@ class TokensViewController: UIViewController {
         tableView.tableFooterView = footer
         refreshHeaderAndFooterView()
         sheduleBalanceUpdate()
-        tokensObservation()
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        startTokenObservation()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -135,31 +139,15 @@ class TokensViewController: UIViewController {
         delegate?.didPressAddToken(in: self)
     }
 
-    private func tokensObservation() {
+    private func startTokenObservation() {
         viewModel.setTokenObservation { [weak self] (changes: RealmCollectionChange) in
             guard let strongSelf = self else { return }
             let tableView = strongSelf.tableView
             switch changes {
             case .initial:
-                UIView.performWithoutAnimation {
-                    tableView.reloadData()
-                }
-            case .update(_, let deletions, let insertions, let modifications):
-                UIView.performWithoutAnimation {
-                    tableView.beginUpdates()
-                    tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) },
-                                         with: .none)
-                    tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) },
-                                         with: .none)
-                    for row in modifications {
-                        let indexPath = IndexPath(row: row, section: 0)
-                        let model = strongSelf.viewModel.cellViewModel(for: indexPath)
-                        if let cell = tableView.cellForRow(at: indexPath) as? TokenViewCell {
-                            cell.configure(viewModel: model)
-                        }
-                    }
-                    tableView.endUpdates()
-                }
+                tableView.reloadData()
+            case .update:
+                self?.tableView.reloadData()
                 self?.endLoading()
             case .error(let error):
                 self?.endLoading(animated: true, error: error, completion: nil)
@@ -175,10 +163,12 @@ class TokensViewController: UIViewController {
         etherFetchTimer?.invalidate()
         etherFetchTimer = nil
         cancelOperations()
+        stopTokenObservation()
     }
 
     @objc func didBecomeActive() {
         sheduleBalanceUpdate()
+        startTokenObservation()
     }
 
     private func sheduleBalanceUpdate() {
@@ -191,9 +181,15 @@ class TokensViewController: UIViewController {
         viewModel.cancelOperations()
     }
 
+    private func stopTokenObservation() {
+        viewModel.invalidateTokensObservation()
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
         resignActive()
+        cancelOperations()
+        stopTokenObservation()
     }
 }
 extension TokensViewController: StatefulViewController {
@@ -221,8 +217,10 @@ extension TokensViewController: UITableViewDelegate {
 
         if viewModel.canEdit(for: indexPath) {
             return [delete, disable, edit]
-        } else {
+        } else if viewModel.canDisable(for: indexPath) {
             return [disable]
+        } else {
+            return []
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

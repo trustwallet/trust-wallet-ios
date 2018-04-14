@@ -2,7 +2,7 @@
 
 import Foundation
 import JSONRPCKit
-import TrustKeystore
+import TrustCore
 import BigInt
 
 struct EstimateGasRequest: JSONRPCKit.Request {

@@ -5,13 +5,13 @@ import XCTest
 
 class LockCreatePasscodeCoordinatorTest: XCTestCase {
     func testStart() {
-        let navigationController = UINavigationController()
+        let navigationController = NavigationController()
         let coordinator = LockCreatePasscodeCoordinator(navigationController: navigationController, model: LockCreatePasscodeViewModel())
         coordinator.start()
         XCTAssertTrue(navigationController.viewControllers.first is LockCreatePasscodeViewController)
     }
     func testStop() {
-        let navigationController = UINavigationController()
+        let navigationController = NavigationController()
         let coordinator = LockCreatePasscodeCoordinator(navigationController: navigationController, model: LockCreatePasscodeViewModel())
         coordinator.start()
         XCTAssertTrue(navigationController.viewControllers.first is LockCreatePasscodeViewController)

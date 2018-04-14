@@ -10,7 +10,7 @@ protocol RequestCoordinatorDelegate: class {
 class RequestCoordinator: Coordinator {
 
     let session: WalletSession
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     var coordinators: [Coordinator] = []
     weak var delegate: RequestCoordinatorDelegate?
     lazy var requestViewController: RequestViewController = {
@@ -22,7 +22,7 @@ class RequestCoordinator: Coordinator {
     private let token: TokenObject
 
     init(
-        navigationController: UINavigationController = UINavigationController(),
+        navigationController: NavigationController = NavigationController(),
         session: WalletSession,
         token: TokenObject
     ) {
@@ -44,12 +44,7 @@ class RequestCoordinator: Coordinator {
     }
 
     @objc func share(_ sender: UIBarButtonItem) {
-        let activityViewController = UIActivityViewController(
-            activityItems: [
-                viewModel.shareMyAddressText,
-            ],
-            applicationActivities: nil
-        )
+        let activityViewController = UIActivityViewController.make(items: [viewModel.shareMyAddressText])
         activityViewController.popoverPresentationController?.barButtonItem = sender
         navigationController.present(activityViewController, animated: true, completion: nil)
     }

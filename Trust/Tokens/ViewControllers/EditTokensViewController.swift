@@ -32,8 +32,8 @@ class EditTokensViewController: UITableViewController {
     }()
 
     lazy var searchClosure: (String) -> Void = {
-        return debounce(delay: .milliseconds(250), action: { (query) in
-            self.viewModel.search(token: query)
+        return debounce(delay: .milliseconds(250), action: { [weak self] (query) in
+            self?.viewModel.search(token: query)
         })
     }()
 
@@ -108,6 +108,10 @@ class EditTokensViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .onDrag
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
 

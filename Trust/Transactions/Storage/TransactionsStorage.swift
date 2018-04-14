@@ -2,7 +2,7 @@
 
 import Foundation
 import RealmSwift
-import TrustKeystore
+import TrustCore
 
 struct TransactionSection {
     let title: String
@@ -19,7 +19,10 @@ class TransactionsStorage {
         return realm.objects(Transaction.self).filter(NSPredicate(format: "id!=''")).sorted(byKeyPath: "date", ascending: false)
     }
     var latestTransaction: Transaction? {
-        return realm.objects(Transaction.self).filter(NSPredicate(format: "from == %@", account.address.description)).sorted(byKeyPath: "nonce", ascending: false).first
+        return realm.objects(Transaction.self)
+            .filter(NSPredicate(format: "from == %@", account.address.description))
+            .sorted(byKeyPath: "nonce", ascending: false)
+            .first
     }
 
     var transactionSections: [TransactionSection] = []
@@ -32,7 +35,6 @@ class TransactionsStorage {
     ) {
         self.realm = realm
         self.account = account
-        transactionsObservation()
     }
 
     var completedObjects: [Transaction] {
@@ -54,7 +56,7 @@ class TransactionsStorage {
     }
 
     private func tokens(from transactions: [Transaction]) -> [Token] {
-        let tokens: [Token] = transactions.flatMap { transaction in
+        let tokens: [Token] = transactions.compactMap { transaction in
             guard
                 let operation = transaction.localizedOperations.first,
                 let contract = Address(string: operation.contract ?? ""),
@@ -115,10 +117,15 @@ class TransactionsStorage {
         return items
     }
 
-    private func transactionsObservation() {
+    func transactionsObservation() {
         transactionsObserver = transactions.observe { [weak self] _ in
             self?.updateTransactionSection()
             self?.transactionsUpdateHandler()
         }
+    }
+
+    func invalidateTransactionsObservation() {
+        transactionsObserver?.invalidate()
+        transactionsObserver = nil
     }
 }

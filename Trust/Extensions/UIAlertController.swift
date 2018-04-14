@@ -35,7 +35,7 @@ extension UIAlertController {
         title: String? = .none,
         message: String? = .none,
         style: UIAlertControllerStyle,
-        in navigationController: UINavigationController
+        in navigationController: NavigationController
     ) -> UIAlertController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
         alertController.popoverPresentationController?.sourceView = navigationController.view

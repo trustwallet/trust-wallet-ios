@@ -8,12 +8,12 @@ func applyStyle() {
 
     if #available(iOS 11, *) {
     } else {
-        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).isTranslucent = false
     }
-    UINavigationBar.appearance().tintColor = AppStyle.navigationBarTintColor
-    UINavigationBar.appearance().setBackgroundImage(.filled(with: Colors.darkBlue), for: .default)
+    UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).tintColor = AppStyle.navigationBarTintColor
+    UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).barTintColor = Colors.darkBlue
 
-    UINavigationBar.appearance().titleTextAttributes = [
+    UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).titleTextAttributes = [
         .foregroundColor: UIColor.white,
     ]
 
@@ -47,6 +47,8 @@ struct Colors {
 struct AppStyle {
     static let navigationBarTintColor = UIColor.white
     static let docPickerNavigationBarTintColor = Colors.blue
+    static let activityViewControllerNavigationBarText = UIColor.white
+    static let activityViewControllerNavigationBarTintColor = Colors.darkBlue
 }
 
 struct StyleLayout {

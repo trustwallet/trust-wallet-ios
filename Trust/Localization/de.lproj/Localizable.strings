@@ -73,7 +73,7 @@
 "transactions.deposit.button.title" = "Kaufen";
 "transactions.myAddress.button.title" = "Meine Adresse";
 "transactions.noTransactions.label.title" = "Noch keine Transaktionen!";
-"wallet.navigation.title" = "Wallets";
+"wallet.navigation.title" = "Brieftasche";
 "wallets.backup.alertSheet.title" = "Sicherungsschlüsselspeicher";
 "welcome.createWallet.button.title" = "WALLET ERSTELLEN";
 "welcome.erc20.label.description" = "Trust Wallet unterstützt standardmäßig ERC20-Tokens.";

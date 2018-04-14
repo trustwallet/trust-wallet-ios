@@ -218,3 +218,7 @@
 "settings.network.test.warnning.title" = "警告";
 "Disable" = "禁用";
 "wallets.navigation.title" = "钱包";
+"browser.qrCode.button.title" = "扫一扫";
+"nft.details.external.button.title" = "在 OpenSea.io 里打开";
+"nft.details.internal.button.title" = "在 %@ 里打开";
+"nft.poweredBy.label.text" = "由 OpenSea 提供支持";

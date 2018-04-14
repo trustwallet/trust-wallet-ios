@@ -73,7 +73,7 @@
 "transactions.deposit.button.title" = "Acquista";
 "transactions.myAddress.button.title" = "Il mio indirizzo";
 "transactions.noTransactions.label.title" = "Nessuna transazione ancora!";
-"wallet.navigation.title" = "Portafogli";
+"wallet.navigation.title" = "Portafoglio";
 "wallets.backup.alertSheet.title" = "Backup Keystore";
 "welcome.createWallet.button.title" = "CREA PORTAFOGLIO";
 "welcome.erc20.label.description" = "Supporto per i tokens ERC20 in modo predefinito";

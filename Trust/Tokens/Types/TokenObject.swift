@@ -3,7 +3,7 @@
 import Foundation
 import RealmSwift
 import BigInt
-import TrustKeystore
+import TrustCore
 import Realm
 
 struct TokenObjectList: Decodable {

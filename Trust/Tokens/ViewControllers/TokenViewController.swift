@@ -1,7 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import UIKit
-import Kingfisher
 
 protocol TokenViewControllerDelegate: class {
     func didPressRequest(for token: TokenObject, in controller: UIViewController)
@@ -55,11 +54,13 @@ class TokenViewController: UIViewController {
 
         header.buttonsView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
         header.buttonsView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
+        updateHeader()
+    }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
         observToken()
         observTransactions()
-
-        updateHeader()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -118,6 +119,10 @@ class TokenViewController: UIViewController {
 
     @objc func request() {
         delegate?.didPressRequest(for: viewModel.token, in: self)
+    }
+
+    deinit {
+        viewModel.invalidateObservers()
     }
 }
 
