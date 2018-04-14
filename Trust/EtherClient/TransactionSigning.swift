@@ -56,7 +56,7 @@ struct HomesteadSigner: Signer {
         precondition(signature.count == 65, "Wrong size for signature")
         let r = BigInt(sign: .plus, magnitude: BigUInt(Data(signature[..<32])))
         let s = BigInt(sign: .plus, magnitude: BigUInt(Data(signature[32..<64])))
-        let v = BigInt(sign: .plus, magnitude: BigUInt(Data(signature[64] + 27)))
+        let v = BigInt(sign: .plus, magnitude: BigUInt(Data(bytes: [signature[64] + 27])))
         return (r, s, v)
     }
 }
