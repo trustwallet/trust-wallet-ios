@@ -5,6 +5,10 @@ import StackViewController
 import Result
 import SafariServices
 
+protocol TransactionViewControllerDelegate: class {
+    func didPressURL(_ url: URL)
+}
+
 class TransactionViewController: UIViewController {
 
     private lazy var viewModel: TransactionDetailsViewModel = {
@@ -21,6 +25,7 @@ class TransactionViewController: UIViewController {
     let session: WalletSession
     let transaction: Transaction
     let config = Config()
+    weak var delegate: TransactionViewControllerDelegate?
 
     init(
         session: WalletSession,
@@ -114,7 +119,7 @@ class TransactionViewController: UIViewController {
 
     @objc func more() {
         guard let url = viewModel.detailsURL else { return }
-        openURL(url)
+        delegate?.didPressURL(url)
     }
 
     @objc func share(_ sender: UIBarButtonItem) {

@@ -123,6 +123,10 @@ class TokensCoordinator: Coordinator {
     @objc func send() {
         delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
     }
+
+    private func openURL(_ url: URL) {
+        delegate?.didPress(url: url, in: self)
+    }
 }
 
 extension TokensCoordinator: TokensViewControllerDelegate {
@@ -191,6 +195,7 @@ extension TokensCoordinator: TokenViewControllerDelegate {
             session: session,
             transaction: transaction
         )
+        controller.delegate = self
         NavigationController.openFormSheet(
             for: controller,
             in: navigationController,
@@ -201,6 +206,12 @@ extension TokensCoordinator: TokenViewControllerDelegate {
 
 extension TokensCoordinator: NFTokenViewControllerDelegate {
     func didPressLink(url: URL, in viewController: NFTokenViewController) {
-        delegate?.didPress(url: url, in: self)
+        openURL(url)
+    }
+}
+
+extension TokensCoordinator: TransactionViewControllerDelegate {
+    func didPressURL(_ url: URL) {
+        openURL(url)
     }
 }

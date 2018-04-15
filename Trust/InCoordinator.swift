@@ -254,6 +254,10 @@ extension InCoordinator: TransactionCoordinatorDelegate {
         coordinator.stop()
         removeAllCoordinators()
     }
+
+    func didPressURL(_ url: URL) {
+        showTab(.browser(openURL: url))
+    }
 }
 
 extension InCoordinator: SettingsCoordinatorDelegate {
@@ -270,6 +274,10 @@ extension InCoordinator: SettingsCoordinatorDelegate {
 
     func didUpdateAccounts(in coordinator: SettingsCoordinator) {
         delegate?.didUpdateAccounts(in: self)
+    }
+
+    func didPressURL(_ url: URL, in coordinator: SettingsCoordinator) {
+        showTab(.browser(openURL: url))
     }
 }
 
