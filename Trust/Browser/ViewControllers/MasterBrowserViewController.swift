@@ -20,7 +20,7 @@ enum BookmarksViewType: Int {
 
 class MasterBrowserViewController: UIViewController {
 
-    fileprivate lazy var segmentController: UISegmentedControl = {
+    private lazy var segmentController: UISegmentedControl = {
         let items = [
             NSLocalizedString("New", value: "New", comment: ""),
             NSLocalizedString("Bookmarks", value: "Bookmarks", comment: ""),
@@ -32,7 +32,7 @@ class MasterBrowserViewController: UIViewController {
         return segmentedControl
     }()
 
-    lazy var qrcodeButton: UIButton = {
+    private lazy var qrcodeButton: UIButton = {
         let button = Button(size: .normal, style: .borderless)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(R.image.browser_scan(), for: .normal)
