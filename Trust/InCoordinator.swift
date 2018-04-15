@@ -168,6 +168,9 @@ class InCoordinator: Coordinator {
 
         showTab(.wallet)
 
+        // activate all view controllers.
+        let _ = [Tabs.wallet, Tabs.transactions].map { tabBarController.viewControllers?[$0.index].view }
+
         keystore.recentlyUsedWallet = account
     }
 
@@ -238,18 +241,6 @@ class InCoordinator: Coordinator {
     private func realm(for config: Realm.Configuration) -> Realm {
         return try! Realm(configuration: config)
     }
-
-    private func showTransactionSent(transaction: SentTransaction) {
-        let alertController = UIAlertController(title: NSLocalizedString("sent.transaction.title", value: "Transaction Sent!", comment: ""),
-                                                message: NSLocalizedString("sent.transaction.message", value: "Wait for the transaction to be mined on the network to see details.", comment: ""),
-                                                preferredStyle: UIAlertControllerStyle.alert)
-        let copyAction = UIAlertAction(title: NSLocalizedString("send.action.copy.transaction.title", value: "Copy Transaction ID", comment: ""), style: UIAlertActionStyle.default, handler: { _ in
-            UIPasteboard.general.string = transaction.id
-        })
-        alertController.addAction(copyAction)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: UIAlertActionStyle.default, handler: nil))
-        navigationController.present(alertController, animated: true, completion: nil)
-    }
 }
 
 extension InCoordinator: TransactionCoordinatorDelegate {
@@ -303,12 +294,9 @@ extension InCoordinator: PaymentCoordinatorDelegate {
         case .sentTransaction(let transaction):
             handlePendingTransaction(transaction: transaction)
             coordinator.navigationController.dismiss(animated: true, completion: nil)
-            showTransactionSent(transaction: transaction)
             removeCoordinator(coordinator)
-
-            // Once transaction sent, show transactions screen.
-            showTab(.transactions)
-        case .signedTransaction: break
+        case .signedTransaction:
+            break
         }
     }
 
