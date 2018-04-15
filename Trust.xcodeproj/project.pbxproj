@@ -359,6 +359,7 @@
 		776C1149205D02E800449539 /* TokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776C1148205D02E800449539 /* TokenViewModel.swift */; };
 		776C114C20605AAC00449539 /* TokensLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776C114B20605AAC00449539 /* TokensLayout.swift */; };
 		776C114E2060E61500449539 /* TokenObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776C114D2060E61500449539 /* TokenObject.swift */; };
+		777871312082DF3D00CF7303 /* GetTransactionReceiptRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777871302082DF3D00CF7303 /* GetTransactionReceiptRequest.swift */; };
 		77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D222023F43B0032D687 /* TransactionsTracker.swift */; };
 		77872D25202505B70032D687 /* EnterPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D24202505B70032D687 /* EnterPasswordViewController.swift */; };
 		77872D27202505C00032D687 /* EnterPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D26202505C00032D687 /* EnterPasswordViewModel.swift */; };
@@ -830,6 +831,7 @@
 		776C1148205D02E800449539 /* TokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenViewModel.swift; sourceTree = "<group>"; };
 		776C114B20605AAC00449539 /* TokensLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensLayout.swift; sourceTree = "<group>"; };
 		776C114D2060E61500449539 /* TokenObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenObject.swift; sourceTree = "<group>"; };
+		777871302082DF3D00CF7303 /* GetTransactionReceiptRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionReceiptRequest.swift; sourceTree = "<group>"; };
 		77872D222023F43B0032D687 /* TransactionsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTracker.swift; sourceTree = "<group>"; };
 		77872D24202505B70032D687 /* EnterPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewController.swift; sourceTree = "<group>"; };
 		77872D26202505C00032D687 /* EnterPasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewModel.swift; sourceTree = "<group>"; };
@@ -1201,6 +1203,7 @@
 				293112341FC9A0D500966EEA /* CallRequest.swift */,
 				294EC1D91FD8E4E60065EB20 /* GasPriceRequest.swift */,
 				664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */,
+				777871302082DF3D00CF7303 /* GetTransactionReceiptRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -3203,6 +3206,7 @@
 				29F114F61FA8147300114A29 /* RequestCoordinator.swift in Sources */,
 				29525B9E203C34CF00900DE9 /* SupportViewModel.swift in Sources */,
 				773B8DB920716EFF00D05690 /* GetNonceProvider.swift in Sources */,
+				777871312082DF3D00CF7303 /* GetTransactionReceiptRequest.swift in Sources */,
 				776C114C20605AAC00449539 /* TokensLayout.swift in Sources */,
 				73ED85A520349BE400593BF3 /* StringFormatter.swift in Sources */,
 				BB8E747920818E5E001BA99A /* SearchTokenResultsController.swift in Sources */,

@@ -12,7 +12,7 @@ protocol NetworkProtocol: TrustNetworkProtocol {
     func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void)
     func tokensList(for address: Address, completion: @escaping (_ result: ([TokenObject]?)) -> Void)
     func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
-    func update(for transaction: Transaction, completion: @escaping (_ result: (Transaction, TransactionState)) -> Void)
+    func update(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void)
     func search(token: String, completion: @escaping (([TokenObject]) -> Void))
 }
 
@@ -121,13 +121,16 @@ class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func update(for transaction: Transaction, completion: @escaping (_ result: (Transaction, TransactionState)) -> Void) {
+    func update(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void) {
         let request = GetTransactionRequest(hash: transaction.id)
-        Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { result in
+        Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { [weak self] result in
             switch result {
-            case .success:
-                if transaction.date > Date().addingTimeInterval(TrustNetwork.deleyedTransactionInternalSeconds) {
-                    completion((transaction, .completed))
+            case .success(let tx):
+                guard let newTransaction = Transaction.from(transaction: tx) else {
+                    return completion(.success((transaction, .pending)))
+                }
+                if newTransaction.blockNumber > 0 {
+                    self?.getReceipt(for: newTransaction, completion: completion)
                 }
             case .failure(let error):
                 switch error {
@@ -135,10 +138,12 @@ class TrustNetwork: NetworkProtocol {
                     guard let error = error as? JSONRPCError else { return }
                     switch error {
                     case .responseError:
-                        completion((transaction, .deleted))
+                        if transaction.date > Date().addingTimeInterval(TrustNetwork.deleteMissingInternalSeconds) {
+                            completion(.success((transaction, .deleted)))
+                        }
                     case .resultObjectParseError:
                         if transaction.date > Date().addingTimeInterval(TrustNetwork.deleteMissingInternalSeconds) {
-                            completion((transaction, .failed))
+                            completion(.success((transaction, .failed)))
                         }
                     default: break
                     }
@@ -147,6 +152,22 @@ class TrustNetwork: NetworkProtocol {
             }
         }
     }
+
+    private func getReceipt(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void) {
+        let request = GetTransactionReceiptRequest(hash: transaction.id)
+        Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { result in
+            switch result {
+            case .success(let receipt):
+                let newTransaction = transaction
+                newTransaction.gasUsed = receipt.gasUsed
+                let state: TransactionState = receipt.status ? .completed : .failed
+                completion(.success((newTransaction, state)))
+            case .failure(let error):
+                completion(.failure(AnyError(error)))
+            }
+        }
+    }
+
     func search(token: String, completion: @escaping (([TokenObject]) -> Void)) {
         provider.request(.search(token: token)) { result in
             switch result {

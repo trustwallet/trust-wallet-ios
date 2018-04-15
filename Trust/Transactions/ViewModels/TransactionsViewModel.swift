@@ -142,18 +142,21 @@ struct TransactionsViewModel {
     }
 
     func fetchPending() {
-        /*
-        self.storage.transactions.forEach { transaction in
+        self.storage.pendingObjects.forEach { transaction in
             self.network.update(for: transaction, completion: { result in
-                switch result.1 {
-                case .deleted:
-                    //self.storage.delete([result.0])
-                default:
-                    //self.storage.update(state: result.1, for: result.0)
+                switch result {
+                case .success(let tempResult):
+                    switch tempResult.1 {
+                    case .deleted:
+                        self.storage.delete([tempResult.0])
+                    default:
+                        self.storage.update(state: tempResult.1, for: tempResult.0)
+                    }
+                case .failure:
+                    break
                 }
             })
         }
-        */
     }
 
     static func convert(from title: String) -> Date? {
