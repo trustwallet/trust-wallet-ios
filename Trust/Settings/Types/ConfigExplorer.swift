@@ -54,7 +54,9 @@ struct ConfigExplorer {
             return "https://poaexplorer.com"
         case .sokol:
             return "https://sokol-explorer.poa.network"
-        case .custom, .callisto:
+        case .callisto:
+            return "https://explorer.callisto.network/tx/"
+        case .custom:
             return .none
         }
     }

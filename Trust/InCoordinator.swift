@@ -169,7 +169,9 @@ class InCoordinator: Coordinator {
         showTab(.wallet)
 
         // activate all view controllers.
-        let _ = [Tabs.wallet, Tabs.transactions].map { tabBarController.viewControllers?[$0.index].view }
+        [Tabs.wallet, Tabs.transactions].forEach {
+            tabBarController.viewControllers?[$0.index].view
+        }
 
         keystore.recentlyUsedWallet = account
     }
