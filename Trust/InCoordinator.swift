@@ -81,6 +81,7 @@ class InCoordinator: Coordinator {
         let sharedRealm = self.realm(for: sharedMigration.config)
         let tokensStorage = TokensDataStore(realm: realm, config: config)
         let balanceCoordinator =  TokensBalanceService()
+        let viewModel = InCoordinatorViewModel(config: config)
         let trustNetwork = TrustNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
         let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
         let transactionsStorage = TransactionsStorage(
@@ -103,7 +104,7 @@ class InCoordinator: Coordinator {
             network: trustNetwork,
             keystore: keystore
         )
-        transactionCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("transactions.tabbar.item.title", value: "Transactions", comment: ""), image: R.image.feed(), selectedImage: nil)
+        transactionCoordinator.rootViewController.tabBarItem = viewModel.transactionsBarItem
         transactionCoordinator.delegate = self
         transactionCoordinator.start()
         addCoordinator(transactionCoordinator)
@@ -115,11 +116,7 @@ class InCoordinator: Coordinator {
         let browserCoordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator, sharedRealm: sharedRealm)
         browserCoordinator.delegate = self
         browserCoordinator.start()
-        browserCoordinator.rootViewController.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
-            image: R.image.dapps_icon(),
-            selectedImage: nil
-        )
+        browserCoordinator.rootViewController.tabBarItem = viewModel.browserBarItem
         addCoordinator(browserCoordinator)
 
         let walletCoordinator = TokensCoordinator(
@@ -129,11 +126,7 @@ class InCoordinator: Coordinator {
             network: trustNetwork,
             transactionsStore: transactionsStorage
         )
-        walletCoordinator.rootViewController.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("wallet.navigation.title", value: "Wallet", comment: ""),
-            image: R.image.settingsWallet(),
-            selectedImage: nil
-        )
+        walletCoordinator.rootViewController.tabBarItem = viewModel.walletBarItem
         walletCoordinator.delegate = self
         walletCoordinator.start()
         addCoordinator(walletCoordinator)
@@ -143,11 +136,7 @@ class InCoordinator: Coordinator {
             storage: transactionsStorage,
             balanceCoordinator: balanceCoordinator
         )
-        settingsCoordinator.rootViewController.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("settings.navigation.title", value: "Settings", comment: ""),
-            image: R.image.settings_icon(),
-            selectedImage: nil
-        )
+        settingsCoordinator.rootViewController.tabBarItem = viewModel.settingsBarItem
         settingsCoordinator.delegate = self
         settingsCoordinator.start()
         addCoordinator(settingsCoordinator)
@@ -159,21 +148,18 @@ class InCoordinator: Coordinator {
             settingsCoordinator.navigationController,
         ]
 
-        navigationController.setViewControllers(
-            [tabBarController],
-            animated: false
-        )
+        navigationController.setViewControllers([tabBarController],animated: false)
         navigationController.setNavigationBarHidden(true, animated: false)
         addCoordinator(transactionCoordinator)
 
         showTab(.wallet)
 
+        keystore.recentlyUsedWallet = account
+
         // activate all view controllers.
         [Tabs.wallet, Tabs.transactions].forEach {
-            tabBarController.viewControllers?[$0.index].view
+            let _ = (tabBarController.viewControllers?[$0.index] as? NavigationController)?.viewControllers[0].view
         }
-
-        keystore.recentlyUsedWallet = account
     }
 
     func showTab(_ selectTab: Tabs) {

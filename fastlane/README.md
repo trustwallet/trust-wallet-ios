@@ -16,6 +16,11 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
+### ios refresh_dsyms
+```
+fastlane ios refresh_dsyms
+```
+
 ### ios release
 ```
 fastlane ios release

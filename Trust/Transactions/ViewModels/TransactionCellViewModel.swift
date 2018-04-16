@@ -118,15 +118,6 @@ struct TransactionCellViewModel {
     }
 
     var statusImage: UIImage? {
-        switch transaction.state {
-        case .error, .unknown, .failed, .deleted: return R.image.transaction_error()
-        case .completed:
-            switch transactionViewModel.direction {
-            case .incoming: return R.image.transaction_received()
-            case .outgoing: return R.image.transaction_sent()
-            }
-        case .pending:
-            return R.image.transaction_pending()
-        }
+        return transactionViewModel.statusImage
     }
 }
