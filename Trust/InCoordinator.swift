@@ -179,7 +179,6 @@ class InCoordinator: Coordinator {
     }
 
     func restart(for account: Wallet, in coordinator: TransactionCoordinator) {
-        tokensCoordinator?.tokensViewController.cancelOperations()
         settingsCoordinator?.rootViewController.navigationItem.leftBarButtonItem = nil
         settingsCoordinator?.rootViewController.networkStateView = nil
         navigationController.dismiss(animated: false, completion: nil)

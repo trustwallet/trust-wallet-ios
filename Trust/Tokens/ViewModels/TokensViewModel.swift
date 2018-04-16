@@ -4,6 +4,7 @@ import Foundation
 import UIKit
 import RealmSwift
 import TrustCore
+import PromiseKit
 
 protocol TokensViewModelDelegate: class {
     func refresh()
@@ -60,19 +61,6 @@ class TokensViewModel: NSObject {
 
     weak var delegate: TokensViewModelDelegate?
 
-    private lazy var serialOperationQueue: OperationQueue = {
-        let queue = OperationQueue()
-        queue.qualityOfService = .background
-        queue.maxConcurrentOperationCount = 1
-        return queue
-    }()
-
-    private lazy var parallelOperationQueue: OperationQueue = {
-        let queue = OperationQueue()
-        queue.qualityOfService = .background
-        return queue
-    }()
-
     init(
         config: Config = Config(),
         address: Address,
@@ -127,41 +115,33 @@ class TokensViewModel: NSObject {
         return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token))
     }
 
-    func updateEthBalance(completion: ((_ completed: Bool) -> Void)? = nil) {
-        tokensNetwork.tokenBalance(for: TokensDataStore.etherToken().address) { [weak self] (balance) in
-            guard let `self` = self, let balance = balance else {
-                completion?(true)
-                return
-            }
-            self.store.update(balances: [TokensDataStore.etherToken().address: balance.value])
-            completion?(true)
+    func updateEthBalance() {
+        firstly {
+            tokensNetwork.ethBalance()
+        }.done { [weak self] balance in
+            self?.store.update(balances: [TokensDataStore.etherToken().address: balance.value])
+        }.catch { error in
+            print(error)
         }
     }
 
-    private func runOperations() {
-        guard serialOperationQueue.operationCount == 0 else {
-            self.parallelOperations(for: self.store.enabledObject)
-            return
+    private func requests() {
+        firstly {
+            tokensNetwork.ethBalance()
+        }.done {  balance in
+            self.store.update(balances: [TokensDataStore.etherToken().address: balance.value])
+        }.then { _ in
+            self.tokensNetwork.tokensList(for: self.address)
+        }.done { tokens in
+            self.store.update(tokens: tokens, action: .updateInfo)
+        }.catch { error in
+            print(error)
+        }.finally {
+              
         }
-
-        let tokensOperation = TokensOperation(network: tokensNetwork, address: address)
-
-        tokensOperation.completionBlock = { [weak self] in
-            DispatchQueue.main.async {
-                self?.store.update(tokens: tokensOperation.tokens, action: .updateInfo)
-                if let tokens = self?.store.enabledObject {
-                    self?.parallelOperations(for: tokens)
-                }
-            }
-        }
-
-        serialOperationQueue.addOperation(tokensOperation)
     }
 
     private func parallelOperations(for tokens: [TokenObject]) {
-        guard parallelOperationQueue.operationCount == 0, !tokens.isEmpty else {
-            return
-        }
 
         let tokensBalanceOperation = TokensBalanceOperation(
             network: tokensNetwork,
@@ -183,17 +163,10 @@ class TokensViewModel: NSObject {
             }
         }
 
-        parallelOperationQueue.addOperations([tokensBalanceOperation, tokensTickerOperation], waitUntilFinished: false)
     }
 
     func fetch() {
-        updateEthBalance()
-        runOperations()
-    }
-
-    func cancelOperations() {
-        serialOperationQueue.cancelAllOperations()
-        parallelOperationQueue.cancelAllOperations()
+        requests()
     }
 
     func invalidateTokensObservation() {

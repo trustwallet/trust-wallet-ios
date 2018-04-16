@@ -162,7 +162,6 @@ class TokensViewController: UIViewController {
     @objc func resignActive() {
         etherFetchTimer?.invalidate()
         etherFetchTimer = nil
-        cancelOperations()
         stopTokenObservation()
     }
 
@@ -177,10 +176,6 @@ class TokensViewController: UIViewController {
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
 
-    func cancelOperations() {
-        viewModel.cancelOperations()
-    }
-
     private func stopTokenObservation() {
         viewModel.invalidateTokensObservation()
     }
@@ -188,7 +183,6 @@ class TokensViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
         resignActive()
-        cancelOperations()
         stopTokenObservation()
     }
 }
