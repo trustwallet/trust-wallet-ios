@@ -6,6 +6,7 @@ import TrustCore
 import JSONRPCKit
 import APIKit
 import Result
+import enum Result.Result
 
 enum TrustNetworkProtocolError: Error {
     case missingPrices
@@ -16,7 +17,7 @@ protocol NetworkProtocol: TrustNetworkProtocol {
     func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void)
     func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]>
     func ethBalance() -> Promise<Balance>
-    func tokensList(for address: Address?) -> Promise<[TokenObject]>
+    func tokensList(for address: Address) -> Promise<[TokenObject]>
     func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
     func update(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void)
     func search(token: String, completion: @escaping (([TokenObject]) -> Void))

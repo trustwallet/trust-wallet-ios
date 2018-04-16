@@ -8,6 +8,7 @@ target 'Trust' do
   pod 'BigInt', '~> 3.0'
   pod 'R.swift'
   pod 'JSONRPCKit', :git=> 'https://github.com/bricklife/JSONRPCKit.git'
+  pod 'PromiseKit', '~> 6.0'
   pod 'APIKit'
   pod 'Eureka', '~> 4.1.1'
   pod 'MBProgressHUD'
