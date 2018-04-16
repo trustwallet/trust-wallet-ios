@@ -41,9 +41,10 @@ class TransactionsViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .none
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = StyleLayout.TableView.separatorColor
         tableView.backgroundColor = .white
-        tableView.rowHeight = 68
+        tableView.rowHeight = TransactionsLayout.tableView.height
         view.addSubview(tableView)
 
         tableView.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)

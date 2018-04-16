@@ -60,8 +60,10 @@ struct TransactionCellViewModel {
         switch transaction.state {
         case .completed:
             switch transactionViewModel.direction {
-            case .incoming: return NSLocalizedString("transaction.cell.received.title", value: "Received", comment: "")
-            case .outgoing: return NSLocalizedString("transaction.cell.sent.title", value: "Sent", comment: "")
+            case .incoming:
+                return NSLocalizedString("transaction.cell.received.title", value: "Received", comment: "")
+            case .outgoing:
+                return NSLocalizedString("transaction.cell.sent.title", value: "Sent", comment: "")
             }
         case .error:
             return NSLocalizedString("transaction.cell.error.title", value: "Error", comment: "")
@@ -78,8 +80,10 @@ struct TransactionCellViewModel {
 
     var subTitle: String {
         switch transactionViewModel.direction {
-        case .incoming: return "\(transactionViewModel.transactionFrom)"
-        case .outgoing: return "\(transactionViewModel.transactionTo)"
+        case .incoming:
+            return "From: \(transactionViewModel.transactionFrom)"
+        case .outgoing:
+            return "To: \(transactionViewModel.transactionTo)"
         }
     }
 
@@ -100,16 +104,17 @@ struct TransactionCellViewModel {
         }
     }
 
-    var amountAttributedString: NSAttributedString {
+    var amountText: String {
         let value = transactionViewModel.shortValue
+        return transactionViewModel.amountWithSign(for: value.amount) + " " + value.symbol
+    }
 
-        return NSAttributedString(
-            string: transactionViewModel.amountWithSign(for: value.amount) + " " + value.symbol,
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold),
-                .foregroundColor: transactionViewModel.amountTextColor,
-            ]
-        )
+    var amountFont: UIFont {
+        return UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
+    }
+
+    var amountTextColor: UIColor {
+        return transactionViewModel.amountTextColor
     }
 
     var statusImage: UIImage? {

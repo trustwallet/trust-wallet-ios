@@ -55,12 +55,12 @@ class SectionHeader: UIView {
 
             titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0.0),
             titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0.0),
-            titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20.0),
+            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20.0),
 
             bottomBorder.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             bottomBorder.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             bottomBorder.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             bottomBorder.heightAnchor.constraint(equalToConstant: 0.5),
-            ])
+        ])
     }
 }
