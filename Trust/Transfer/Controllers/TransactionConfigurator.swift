@@ -77,10 +77,10 @@ class TransactionConfigurator {
     }
 
     func load(completion: @escaping (Result<Void, AnyError>) -> Void) {
+        refreshConfiguration()
         if requestEstimateGas {
             estimateGasLimit()
         }
-        refreshConfiguration()
         loadNonce(completion: completion)
     }
 
@@ -112,20 +112,7 @@ class TransactionConfigurator {
     }
 
     func estimateGasLimit() {
-        let to: Address? = {
-            switch transaction.transferType {
-            case .ether, .dapp: return transaction.to
-            case .token(let token):
-                return Address(string: token.contract)
-            }
-        }()
-
-        let request = EstimateGasRequest(
-            from: session.account.address,
-            to: to,
-            value: transaction.value,
-            data: configuration.data
-        )
+        let request = EstimateGasRequest(transaction: signTransaction())
         Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
@@ -144,7 +131,8 @@ class TransactionConfigurator {
                     data: self.configuration.data,
                     nonce: self.configuration.nonce
                 )
-            case .failure: break
+            case .failure(let error):
+                NSLog("estimateGasLimit \(error)")
             }
         }
     }

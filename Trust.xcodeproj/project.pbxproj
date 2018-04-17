@@ -364,6 +364,7 @@
 		777871362085D77000CF7303 /* BranchEventParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777871352085D77000CF7303 /* BranchEventParser.swift */; };
 		777871382085D7A600CF7303 /* BranchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777871372085D7A600CF7303 /* BranchEvent.swift */; };
 		7778713A2085DB2900CF7303 /* BranchEventParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777871392085DB2900CF7303 /* BranchEventParserTests.swift */; };
+		7778713C2086AD9900CF7303 /* BigInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7778713B2086AD9900CF7303 /* BigInt.swift */; };
 		77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D222023F43B0032D687 /* TransactionsTracker.swift */; };
 		77872D25202505B70032D687 /* EnterPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D24202505B70032D687 /* EnterPasswordViewController.swift */; };
 		77872D27202505C00032D687 /* EnterPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D26202505C00032D687 /* EnterPasswordViewModel.swift */; };
@@ -840,6 +841,7 @@
 		777871352085D77000CF7303 /* BranchEventParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchEventParser.swift; sourceTree = "<group>"; };
 		777871372085D7A600CF7303 /* BranchEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchEvent.swift; sourceTree = "<group>"; };
 		777871392085DB2900CF7303 /* BranchEventParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchEventParserTests.swift; sourceTree = "<group>"; };
+		7778713B2086AD9900CF7303 /* BigInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigInt.swift; sourceTree = "<group>"; };
 		77872D222023F43B0032D687 /* TransactionsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTracker.swift; sourceTree = "<group>"; };
 		77872D24202505B70032D687 /* EnterPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewController.swift; sourceTree = "<group>"; };
 		77872D26202505C00032D687 /* EnterPasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewModel.swift; sourceTree = "<group>"; };
@@ -1639,6 +1641,7 @@
 				73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */,
 				A2E43B4D20802879001FAD3D /* UINavigationController.swift */,
 				A207B8202080779200A0CD89 /* UIActivityViewController.swift */,
+				7778713B2086AD9900CF7303 /* BigInt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3069,6 +3072,7 @@
 				77B3BF3C201908ED00EEC15A /* ConfirmCoordinator.swift in Sources */,
 				298542F91FBE9A0100CB5081 /* CryptoAddressValidator.swift in Sources */,
 				291F52C11F6C8A1F00B369AB /* AccountsViewModel.swift in Sources */,
+				7778713C2086AD9900CF7303 /* BigInt.swift in Sources */,
 				7721A6CC202EFBC5004DB16C /* AddCustomNetworkViewController.swift in Sources */,
 				77872D322027AA4A0032D687 /* SliderTextFieldRow.swift in Sources */,
 				298542E31FBA722F00CB5081 /* ContainerView.swift in Sources */,
