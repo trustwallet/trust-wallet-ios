@@ -43,6 +43,7 @@ class InCoordinator: Coordinator {
             appTracker: appTracker
         )
     }()
+    let events: [BranchEvent] = []
 
     init(
         navigationController: NavigationController = NavigationController(),
@@ -50,7 +51,8 @@ class InCoordinator: Coordinator {
         keystore: Keystore,
         config: Config = .current,
         appTracker: AppTracker = AppTracker(),
-        navigator: Navigator = Navigator()
+        navigator: Navigator = Navigator(),
+        events: [BranchEvent] = []
     ) {
         self.navigationController = navigationController
         self.initialWallet = wallet
@@ -148,7 +150,7 @@ class InCoordinator: Coordinator {
             settingsCoordinator.navigationController,
         ]
 
-        navigationController.setViewControllers([tabBarController],animated: false)
+        navigationController.setViewControllers([tabBarController], animated: false)
         navigationController.setNavigationBarHidden(true, animated: false)
         addCoordinator(transactionCoordinator)
 
@@ -228,6 +230,15 @@ class InCoordinator: Coordinator {
 
     private func realm(for config: Realm.Configuration) -> Realm {
         return try! Realm(configuration: config)
+    }
+
+    @discardableResult
+    func handleEvent(_ event: BranchEvent) -> Bool {
+        switch event {
+        case .openURL(let url):
+            showTab(.browser(openURL: url))
+        }
+        return true
     }
 }
 

@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
 
         let keystore = EtherKeystore.shared
-        coordinator = AppCoordinator(window: window!, keystore: keystore, navigator: urlNavigatorCoordinator.navigator)
+        coordinator = AppCoordinator(window: window!, keystore: keystore, navigator: urlNavigatorCoordinator)
         coordinator.start()
 
         protectionCoordinator.didFinishLaunchingWithOptions()
