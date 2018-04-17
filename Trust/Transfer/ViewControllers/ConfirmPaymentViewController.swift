@@ -130,13 +130,6 @@ class ConfirmPaymentViewController: UIViewController {
             ))
         }
 
-        items.append(TransactionAppearance.item(
-            title: detailsViewModel.dataTitle,
-            subTitle: detailsViewModel.dataText
-        ) { [unowned self] _, _, _ in
-            self.edit()
-        })
-
         for item in items {
             stackViewController.addItem(item)
         }

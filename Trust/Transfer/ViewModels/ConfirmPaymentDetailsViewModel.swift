@@ -108,14 +108,6 @@ struct ConfirmPaymentDetailsViewModel {
         return totalViewModel.feeText
     }
 
-    var dataTitle: String {
-        return NSLocalizedString("confirmPayment.data.label.title", value: "Data", comment: "")
-    }
-
-    var dataText: String {
-        return transaction.data.description
-    }
-
     var amountAttributedString: NSAttributedString {
         switch transaction.transferType {
         case .token(let token):

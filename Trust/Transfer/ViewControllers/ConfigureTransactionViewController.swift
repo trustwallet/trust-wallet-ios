@@ -136,9 +136,17 @@ class ConfigureTransactionViewController: FormViewController {
         +++ Section()
 
         <<< AppFormAppearance.textFieldFloat(tag: Values.data) {
-            $0.title = NSLocalizedString("configureTransaction.data.label.title", value: "Transaction Data (Optional)", comment: "")
+            let dataText = String(format:
+                NSLocalizedString(
+                    "configureTransaction.dataField.label.title",
+                    value: "Data (Optional). %@",
+                    comment: ""
+            ), self.configuration.data.description)
+            $0.title = dataText
             $0.value = self.configuration.data.hexEncoded
         }
+
+        +++ Section()
 
         <<< AppFormAppearance.textFieldFloat(tag: Values.nonce) {
             $0.title = NSLocalizedString("configureTransaction.nonce.label.title", value: "Nonce", comment: "")
