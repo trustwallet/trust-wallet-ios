@@ -62,39 +62,24 @@ class ConfirmPaymentViewController: UIViewController {
             self?.fetch()
         })
 
-        loadConfiguration()
         fetch()
     }
 
-    func loadConfiguration() {
+    func fetch() {
+        startLoading()
         configurator.load { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .success:
                 self.reloadView()
+                self.endLoading()
             case .failure(let error):
-                self.displayError(error: error)
+                self.endLoading(animated: true, error: error, completion: nil)
             }
         }
         configurator.configurationUpdate.subscribe { [weak self] _ in
             guard let `self` = self else { return }
             self.reloadView()
-        }
-    }
-
-    func fetch() {
-        if !session.nonceProvider.nonceAvailable {
-            startLoading()
-            session.nonceProvider.getNextNonce(completion: { [weak self] result in
-                guard let `self` = self else { return }
-                switch result {
-                case .success:
-                    self.endLoading()
-                    self.loadConfiguration()
-                case .failure(let error):
-                    self.endLoading(animated: true, error: error, completion: nil)
-                }
-            })
         }
     }
 

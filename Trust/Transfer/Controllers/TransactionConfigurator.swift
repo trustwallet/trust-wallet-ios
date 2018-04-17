@@ -72,41 +72,42 @@ class TransactionConfigurator {
         }
     }
 
+    private static func gasPrice(for type: TransferType) -> BigInt {
+        return GasPriceConfiguration.default
+    }
+
     func load(completion: @escaping (Result<Void, AnyError>) -> Void) {
+        if requestEstimateGas {
+            estimateGasLimit()
+        }
+        refreshConfiguration()
+        loadNonce(completion: completion)
+    }
+
+    func refreshConfiguration() {
         switch transaction.transferType {
         case .ether:
-            guard requestEstimateGas else {
-                return completion(.success(()))
-            }
-            estimateGasLimit()
             self.configuration = TransactionConfiguration(
                 gasPrice: calculatedGasPrice,
                 gasLimit: GasLimitConfiguration.default,
-                data: transaction.data ?? self.configuration.data,
-                nonce: self.configuration.nonce
+                data: transaction.data ?? configuration.data,
+                nonce: configuration.nonce
             )
-            completion(.success(()))
         case .token:
             let encoded = ERC20Encoder.encodeTransfer(to: transaction.to!, tokens: transaction.value.magnitude)
             self.configuration = TransactionConfiguration(
-                gasPrice: self.calculatedGasPrice,
+                gasPrice: calculatedGasPrice,
                 gasLimit: GasLimitConfiguration.tokenTransfer,
                 data: encoded,
-                nonce: self.configuration.nonce
+                nonce: configuration.nonce
             )
-            completion(.success(()))
         case .dapp:
-            guard requestEstimateGas else {
-                return completion(.success(()))
-            }
-            estimateGasLimit()
             self.configuration = TransactionConfiguration(
                 gasPrice: calculatedGasPrice,
                 gasLimit: GasLimitConfiguration.dappTransfer,
-                data: transaction.data ?? self.configuration.data,
-                nonce: self.configuration.nonce
+                data: transaction.data ?? configuration.data,
+                nonce: configuration.nonce
             )
-            completion(.success(()))
         }
     }
 
@@ -148,6 +149,17 @@ class TransactionConfigurator {
         }
     }
 
+    func loadNonce(completion: @escaping (Result<Void, AnyError>) -> Void) {
+        session.nonceProvider.getNextNonce(force: false) { [weak self] result in
+            switch result {
+            case .success:
+                self?.refreshConfiguration()
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
     func valueToSend() -> BigInt {
         var value = transaction.value
         if let balance = session.balance?.value,
