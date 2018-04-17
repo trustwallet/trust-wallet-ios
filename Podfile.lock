@@ -4,9 +4,9 @@ PODS:
     - Result (~> 3.0)
   - BigInt (3.0.1):
     - SipHash (~> 1.2)
-  - Branch (0.22.5):
-    - Branch/Core (= 0.22.5)
-  - Branch/Core (0.22.5)
+  - Branch (0.24.1):
+    - Branch/Core (= 0.24.1)
+  - Branch/Core (0.24.1)
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
   - CryptoSwift (0.8.0)
@@ -166,7 +166,7 @@ SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   APIKit: 7460983f490d3bde6aaaaa4164d18c9865a6f91d
   BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
-  Branch: 4f0482418d99e77d15b0e6065ef216c10e24797b
+  Branch: 8b59411a12867bde4fe8c9d3c0f107c5811e303e
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   CryptoSwift: 475ae2a25439f52412686d68b854c0ca724c8dfd
   Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
