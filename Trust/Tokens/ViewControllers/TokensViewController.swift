@@ -172,7 +172,7 @@ class TokensViewController: UIViewController {
 
     private func sheduleBalanceUpdate() {
         guard etherFetchTimer == nil else { return }
-        etherFetchTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in self?.viewModel.updateEthBalance() } , selector: #selector(Operation.main), userInfo: nil, repeats: true)
+        etherFetchTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in self?.viewModel.updateEthBalance() }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
 
     private func stopTokenObservation() {
