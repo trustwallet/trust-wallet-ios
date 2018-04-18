@@ -30,8 +30,6 @@ func applyStyle() {
 struct AppGlobalStyle {
     static let navigationBarTintColor = UIColor.white
     static let docPickerNavigationBarTintColor = Colors.darkBlue
-    static let activityViewControllerNavigationBarText = UIColor.white
-    static let activityViewControllerNavigationBarTintColor = Colors.darkBlue
 }
 
 struct StyleLayout {
