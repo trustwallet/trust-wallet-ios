@@ -5,6 +5,7 @@ import UIKit
 import RealmSwift
 import TrustCore
 import PromiseKit
+import Crashlytics
 
 protocol TokensViewModelDelegate: class {
     func refresh()
@@ -131,7 +132,7 @@ class TokensViewModel: NSObject {
         }.done { [weak self] tokens in
              self?.store.update(tokens: tokens, action: .updateInfo)
         }.catch { error in
-            print(error)
+            Answers.logCustomEvent(withName: "Fetch token list request error: \(error)", customAttributes: nil)
         }.finally { [weak self] in
             guard let strongSelf = self else { return }
             let tokens = strongSelf.store.enabledObject
@@ -147,7 +148,7 @@ class TokensViewModel: NSObject {
         }.done { [weak self] tickers in
             self?.store.saveTickers(tickers: tickers)
         }.catch { error in
-            print(error)
+            Answers.logCustomEvent(withName: "Token tickers request error: \(error)", customAttributes: nil)
         }.finally { [weak self] in
             self?.delegate?.refresh()
         }
