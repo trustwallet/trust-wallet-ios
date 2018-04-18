@@ -108,35 +108,20 @@ struct ConfirmPaymentDetailsViewModel {
         return totalViewModel.feeText
     }
 
-    var amountAttributedString: NSAttributedString {
-        switch transaction.transferType {
-        case .token(let token):
-            return amountAttributedText(
-                string: fullFormatter.string(from: transaction.value, decimals: token.decimals)
-            )
-        case .ether, .dapp:
-            return amountAttributedText(
-                string: fullFormatter.string(from: transaction.value)
-            )
-        }
+    var amountString: String {
+        let amount: String = {
+            switch transaction.transferType {
+            case .token(let token):
+                return fullFormatter.string(from: transaction.value, decimals: token.decimals)
+            case .ether, .dapp:
+                return fullFormatter.string(from: transaction.value)
+            }
+        }()
+        return amountWithSign(for: amount) + " \(transaction.transferType.symbol(server: config.server))"
     }
 
-    private func amountAttributedText(string: String) -> NSAttributedString {
-        let amount = NSAttributedString(
-            string: amountWithSign(for: string),
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 28),
-                .foregroundColor: amountTextColor,
-            ]
-        )
-
-        let currency = NSAttributedString(
-            string: " \(transaction.transferType.symbol(server: config.server))",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 20),
-            ]
-        )
-        return amount + currency
+    var amountFont: UIFont {
+        return UIFont.systemFont(ofSize: 20, weight: .medium)
     }
 
     private func amountWithSign(for amount: String) -> String {

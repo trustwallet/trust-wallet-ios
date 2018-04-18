@@ -20,7 +20,6 @@ enum ConfirmResult {
 class ConfirmPaymentViewController: UIViewController {
 
     private let keystore: Keystore
-    //let transaction: UnconfirmedTransaction
     let session: WalletSession
     let stackViewController = StackViewController()
     lazy var sendTransactionCoordinator = {
@@ -88,7 +87,8 @@ class ConfirmPaymentViewController: UIViewController {
 
         let header = TransactionHeaderView()
         header.translatesAutoresizingMaskIntoConstraints = false
-        header.amountLabel.attributedText = detailsViewModel.amountAttributedString
+        header.amountLabel.text = detailsViewModel.amountString
+        header.amountLabel.font = detailsViewModel.amountFont
 
         var items: [UIView] = [
             .spacer(),
