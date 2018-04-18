@@ -43,7 +43,13 @@ struct TransactionDetailsViewModel {
     }
 
     var title: String {
-        return "Transaction"
+        if transaction.state == .pending {
+            return NSLocalizedString("Pending", value: "Pending", comment: "")
+        }
+        if transactionViewModel.direction == .incoming {
+            return NSLocalizedString("Incoming", value: "Incoming", comment: "")
+        }
+        return NSLocalizedString("Outgoing", value: "Outgoing", comment: "")
     }
 
     var backgroundColor: UIColor {
@@ -127,7 +133,7 @@ struct TransactionDetailsViewModel {
     var gasFeeLabelTitle: String {
         return NSLocalizedString("transaction.gasFee.label.title", value: "Gas Fee", comment: "")
     }
-
+        
     var confirmation: String {
         guard let confirmation = chainState.confirmations(fromBlock: transaction.blockNumber) else {
             return "--"
@@ -137,14 +143,6 @@ struct TransactionDetailsViewModel {
 
     var confirmationLabelTitle: String {
         return NSLocalizedString("transaction.confirmation.label.title", value: "Confirmation", comment: "")
-    }
-
-    var blockNumber: String {
-        return String(transaction.blockNumber)
-    }
-
-    var blockNumberLabelTitle: String {
-        return NSLocalizedString("transaction.blockNumber.label.title", value: "Block #", comment: "")
     }
 
     var amountAttributedString: NSAttributedString {

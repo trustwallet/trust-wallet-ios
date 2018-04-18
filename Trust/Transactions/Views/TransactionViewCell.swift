@@ -63,8 +63,6 @@ class TransactionViewCell: UITableViewCell {
             left: TransactionsLayout.tableView.layoutInsets.left - contentView.layoutInsets.left - layoutInsets.left,
             bottom: 0, right: 0
         )
-
-        accessoryType = .disclosureIndicator
     }
 
     required init?(coder aDecoder: NSCoder) {
