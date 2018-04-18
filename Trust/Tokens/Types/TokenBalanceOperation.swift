@@ -38,10 +38,7 @@ class TokenBalanceOperation: TrustOperation {
     }
 
     private func updateModel(with balance: Balance) {
-        //DispatchQueue.main.async {
-        //    self.store.update(balances: [self.address: balance.value])
-        //}
-        //print("\(balance) for \(self.address)")
+        self.store.update(balance: balance.value, for: self.address)
         self.executing(false)
         self.finish(true)
     }
