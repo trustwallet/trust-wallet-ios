@@ -11,7 +11,7 @@ func applyStyle() {
         UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).isTranslucent = false
     }
     UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).tintColor = AppGlobalStyle.navigationBarTintColor
-    UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).barTintColor = Colors.darkBlue
+    UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).barTintColor = AppGlobalStyle.barTintColor
 
     UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).titleTextAttributes = [
         .foregroundColor: UIColor.white,
@@ -30,8 +30,7 @@ func applyStyle() {
 struct AppGlobalStyle {
     static let navigationBarTintColor = UIColor.white
     static let docPickerNavigationBarTintColor = Colors.darkBlue
-    static let activityViewControllerNavigationBarText = UIColor.white
-    static let activityViewControllerNavigationBarTintColor = Colors.darkBlue
+    static let barTintColor = Colors.darkBlue
 }
 
 struct StyleLayout {
