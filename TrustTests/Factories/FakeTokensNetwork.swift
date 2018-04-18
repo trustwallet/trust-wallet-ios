@@ -7,6 +7,8 @@ import BigInt
 import TrustCore
 import TrustKeystore
 import Result
+import PromiseKit
+import enum Result.Result
 
 class FakeTokensNetwork: NetworkProtocol {
     var provider: MoyaProvider<TrustService>
@@ -53,5 +55,26 @@ class FakeTokensNetwork: NetworkProtocol {
 
     func tokenBalance(for contract: Address, completion: @escaping (Balance?) -> Void) {
         completion(Balance(value: BigInt(100)))
+    }
+
+    func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]> {
+        return Promise { seal in
+            let eth_contract = "0x0000000000000000000000000000000000000000"
+            let ticker = CoinTicker(id: "ethereum", symbol: "ETH", price: "100", percent_change_24h: "-2.39", contract: eth_contract, image: "https://files.coinmarketcap.com/static/img/coins/128x128/ethereum.png")
+            seal.fulfill([ticker])
+        }
+    }
+
+    func ethBalance() -> Promise<Balance> {
+        return Promise { seal in
+            seal.fulfill(Balance(value: BigInt(100)))
+        }
+    }
+
+    func tokensList(for address: Address) -> Promise<[TokenObject]> {
+        return Promise { seal in
+           let token = TokenObject(contract: "0xe41d2489571d322189246dafa5ebde1f4699f498", name: "0x project", symbol: "ZRX", decimals: 18, value: "39330812000000000000000", isCustom: true, isDisabled: false)
+            seal.fulfill([token])
+        }
     }
 }
