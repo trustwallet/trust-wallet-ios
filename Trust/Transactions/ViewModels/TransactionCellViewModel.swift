@@ -79,11 +79,22 @@ struct TransactionCellViewModel {
     }
 
     var subTitle: String {
+        if transaction.toAddress == nil {
+            return NSLocalizedString("transaction.deployContract.label.title", value: "Deploy smart contract", comment: "")
+        }
         switch transactionViewModel.direction {
         case .incoming:
-            return "From: \(transactionViewModel.transactionFrom)"
+            return String(
+                format: "%@: %@",
+                NSLocalizedString("transaction.from.label.title", value: "From", comment: ""),
+                transactionViewModel.transactionFrom
+            )
         case .outgoing:
-            return "To: \(transactionViewModel.transactionTo)"
+            return String(
+                format: "%@: %@",
+                NSLocalizedString("transaction.to.label.title", value: "To", comment: ""),
+                transactionViewModel.transactionTo
+            )
         }
     }
 
@@ -105,8 +116,7 @@ struct TransactionCellViewModel {
     }
 
     var amountText: String {
-        let value = transactionViewModel.shortValue
-        return transactionViewModel.amountWithSign(for: value.amount) + " " + value.symbol
+        return transactionViewModel.amountText
     }
 
     var amountFont: UIFont {

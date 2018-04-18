@@ -121,7 +121,7 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     var amountFont: UIFont {
-        return UIFont.systemFont(ofSize: 20, weight: .medium)
+        return AppStyle.largeAmount.font
     }
 
     private func amountWithSign(for amount: String) -> String {

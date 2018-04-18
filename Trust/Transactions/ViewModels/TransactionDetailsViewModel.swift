@@ -3,6 +3,7 @@
 import BigInt
 import Foundation
 import UIKit
+import TrustCore
 
 struct TransactionDetailsViewModel {
 
@@ -85,6 +86,9 @@ struct TransactionDetailsViewModel {
     }
 
     var address: String {
+        if transaction.toAddress == nil {
+            return Address.zero.description
+        }
         if transactionViewModel.direction == .incoming {
             return transaction.from
         } else {
@@ -133,7 +137,7 @@ struct TransactionDetailsViewModel {
     var gasFeeLabelTitle: String {
         return NSLocalizedString("transaction.gasFee.label.title", value: "Gas Fee", comment: "")
     }
-        
+
     var confirmation: String {
         guard let confirmation = chainState.confirmations(fromBlock: transaction.blockNumber) else {
             return "--"
@@ -145,8 +149,16 @@ struct TransactionDetailsViewModel {
         return NSLocalizedString("transaction.confirmation.label.title", value: "Confirmation", comment: "")
     }
 
-    var amountAttributedString: NSAttributedString {
-        return transactionViewModel.fullAmountAttributedString
+    var amountString: String {
+        return transactionViewModel.amountText
+    }
+
+    var amountTextColor: UIColor {
+        return transactionViewModel.amountTextColor
+    }
+
+    var amountFont: UIFont {
+        return AppStyle.largeAmount.font
     }
 
     var shareItem: URL? {

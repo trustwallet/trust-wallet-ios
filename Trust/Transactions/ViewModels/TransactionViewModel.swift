@@ -61,33 +61,6 @@ struct TransactionViewModel {
         return transactionValue(for: fullFormatter)
     }
 
-    var shortAmountAttributedString: NSAttributedString {
-        return amountAttributedString(for: shortValue)
-    }
-
-    var fullAmountAttributedString: NSAttributedString {
-        return amountAttributedString(for: fullValue)
-    }
-
-    func amountAttributedString(for value: TransactionValue) -> NSAttributedString {
-        let amount = NSAttributedString(
-            string: amountWithSign(for: value.amount),
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 24),
-                .foregroundColor: amountTextColor,
-            ]
-        )
-
-        let currency = NSAttributedString(
-            string: " " + value.symbol,
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 14),
-            ]
-        )
-
-        return amount + currency
-    }
-
     func amountWithSign(for amount: String) -> String {
         guard amount != "0" else { return amount }
         switch direction {
@@ -123,5 +96,10 @@ struct TransactionViewModel {
         case .pending:
             return R.image.transaction_pending()
         }
+    }
+
+    var amountText: String {
+        let value = shortValue
+        return amountWithSign(for: value.amount) + " " + value.symbol
     }
 }

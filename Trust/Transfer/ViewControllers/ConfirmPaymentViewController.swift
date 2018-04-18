@@ -89,6 +89,7 @@ class ConfirmPaymentViewController: UIViewController {
         header.translatesAutoresizingMaskIntoConstraints = false
         header.amountLabel.text = detailsViewModel.amountString
         header.amountLabel.font = detailsViewModel.amountFont
+        header.amountLabel.textColor = detailsViewModel.amountTextColor
 
         var items: [UIView] = [
             .spacer(),
