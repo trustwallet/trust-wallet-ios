@@ -8,7 +8,7 @@ import APIKit
 import Result
 import enum Result.Result
 
-enum TrustNetworkProtocolError: Error {
+enum TrustNetworkProtocolError: LocalizedError {
     case missingPrices
 }
 
