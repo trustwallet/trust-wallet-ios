@@ -36,11 +36,19 @@ class MigrationInitializer: Initializer {
                 fallthrough
             case 33...49:
                 migration.deleteData(forType: Transaction.className)
-                migration.enumerateObjects(ofType: TokenObject.className()) { _, newObject in
-                    newObject?["balance"] = TokenObject.DEFAULT_BALANCE
-                }
+                MigrationInitializer.migrateTokenObjectBalanceField(migration)
             default:
                 break
+            }
+        }
+    }
+
+    static func migrateTokenObjectBalanceField(_ migration: Migration) {
+        migration.enumerateObjects(ofType: TokenObject.className()) { oldObject, newObject in
+            let newFieldName = "balance"
+            let fieldExistAlready = oldObject?.objectSchema.properties.contains(where: { $0.name == newFieldName }) ?? false
+            if !fieldExistAlready {
+                newObject?[newFieldName] = TokenObject.DEFAULT_BALANCE
             }
         }
     }

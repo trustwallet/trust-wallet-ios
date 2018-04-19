@@ -12,9 +12,11 @@ class SharedMigrationInitializer: Initializer {
     init() { }
 
     func perform() {
-        config.schemaVersion = 3
+        config.schemaVersion = 4
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
+            case 0...3:
+                MigrationInitializer.migrateTokenObjectBalanceField(migration)
             default:
                 break
             }
