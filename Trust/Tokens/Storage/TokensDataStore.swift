@@ -125,7 +125,6 @@ class TokensDataStore {
                         "name": token.name,
                         "symbol": token.symbol,
                         "decimals": token.decimals,
-                        "balance": self.getBalance(for: token, with: self.tickers()),
                     ]
                     realm.create(TokenObject.self, value: update, update: true)
                 }
