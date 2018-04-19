@@ -20,7 +20,7 @@ class MigrationInitializer: Initializer {
     }
 
     func perform() {
-        config.schemaVersion = 49
+        config.schemaVersion = 50
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
             case 0...32:
@@ -34,7 +34,7 @@ class MigrationInitializer: Initializer {
                     newObject["contract"] = address.description
                 }
                 fallthrough
-            case 33...48:
+            case 33...49:
                 migration.deleteData(forType: Transaction.className)
                 migration.enumerateObjects(ofType: TokenObject.className()) { _, newObject in
                     newObject?["balance"] = TokenObject.DEFAULT_BALANCE
