@@ -33,7 +33,6 @@
 "export.skip.button.title" = "القيام بذلك في وقت لاحق";
 "importWallet.importingIndicator.label.title" = "جار استيراد المحفظة ...";
 "Loading" = "جار التحميل %@";
-"Loading..." = "جار التحميل %@";
 "Next" = "التالى";
 "OK" = "موافق";
 "Password" = "كلمه السر";

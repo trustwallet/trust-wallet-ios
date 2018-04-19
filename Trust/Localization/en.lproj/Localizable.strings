@@ -33,7 +33,6 @@
 "export.skip.button.title" = "Do it later";
 "importWallet.importingIndicator.label.title" = "Importing wallet...";
 "Loading" = "Loading";
-"Loading..." = "Loading...";
 "Next" = "Next";
 "OK" = "OK";
 "Password" = "Password";
@@ -227,3 +226,7 @@
 "History" = "History";
 "history.noHistory.label.title" = "No history yet!";
 "New" = "New";
+"configureTransaction.dataField.label.title" = "Data (Optional). %@";
+"Nonce" = "Nonce";
+"transaction.recipient.label.title" = "Recipient";
+"transaction.sender.label.title" = "Sender";

@@ -35,7 +35,12 @@ class TransactionViewCell: UITableViewCell {
         rightStackView.translatesAutoresizingMaskIntoConstraints = false
         rightStackView.axis = .vertical
 
-        let stackView = UIStackView(arrangedSubviews: [statusImageView, titlesStackView, rightStackView])
+        let stackView = UIStackView(arrangedSubviews: [
+            statusImageView,
+            titlesStackView,
+            .spacerWidth(),
+            rightStackView,
+        ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 15
@@ -44,6 +49,8 @@ class TransactionViewCell: UITableViewCell {
         statusImageView.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
         subTitleLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
         titleLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        subTitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
 
         amountLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         stackView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
@@ -63,8 +70,6 @@ class TransactionViewCell: UITableViewCell {
             left: TransactionsLayout.tableView.layoutInsets.left - contentView.layoutInsets.left - layoutInsets.left,
             bottom: 0, right: 0
         )
-
-        accessoryType = .disclosureIndicator
     }
 
     required init?(coder aDecoder: NSCoder) {

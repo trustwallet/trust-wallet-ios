@@ -3,6 +3,7 @@
 import BigInt
 import Foundation
 import UIKit
+import TrustCore
 
 struct TransactionDetailsViewModel {
 
@@ -43,7 +44,13 @@ struct TransactionDetailsViewModel {
     }
 
     var title: String {
-        return "Transaction"
+        if transaction.state == .pending {
+            return NSLocalizedString("Pending", value: "Pending", comment: "")
+        }
+        if transactionViewModel.direction == .incoming {
+            return NSLocalizedString("Incoming", value: "Incoming", comment: "")
+        }
+        return NSLocalizedString("Outgoing", value: "Outgoing", comment: "")
     }
 
     var backgroundColor: UIColor {
@@ -79,6 +86,9 @@ struct TransactionDetailsViewModel {
     }
 
     var address: String {
+        if transaction.toAddress == nil {
+            return Address.zero.description
+        }
         if transactionViewModel.direction == .incoming {
             return transaction.from
         } else {
@@ -139,16 +149,16 @@ struct TransactionDetailsViewModel {
         return NSLocalizedString("transaction.confirmation.label.title", value: "Confirmation", comment: "")
     }
 
-    var blockNumber: String {
-        return String(transaction.blockNumber)
+    var amountString: String {
+        return transactionViewModel.amountText
     }
 
-    var blockNumberLabelTitle: String {
-        return NSLocalizedString("transaction.blockNumber.label.title", value: "Block #", comment: "")
+    var amountTextColor: UIColor {
+        return transactionViewModel.amountTextColor
     }
 
-    var amountAttributedString: NSAttributedString {
-        return transactionViewModel.fullAmountAttributedString
+    var amountFont: UIFont {
+        return AppStyle.largeAmount.font
     }
 
     var shareItem: URL? {

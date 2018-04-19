@@ -11,7 +11,6 @@ class TransactionConfiguratorTests: XCTestCase {
         
         XCTAssertEqual(GasPriceConfiguration.default, configurator.configuration.gasPrice)
         XCTAssertEqual(GasLimitConfiguration.default, configurator.configuration.gasLimit)
-        XCTAssertEqual(GasPriceConfiguration.default, configurator.calculatedGasPrice)
     }
 
     func testTokensDefault() {
@@ -19,15 +18,14 @@ class TransactionConfiguratorTests: XCTestCase {
 
         XCTAssertEqual(GasPriceConfiguration.default, configurator.configuration.gasPrice)
         XCTAssertEqual(GasLimitConfiguration.tokenTransfer, configurator.configuration.gasLimit)
-        XCTAssertEqual(GasPriceConfiguration.default, configurator.calculatedGasPrice)
     }
 
     func testDAppDefault() {
-        let configurator = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(transferType: .dapp, gasLimit: .none, gasPrice: .none))
+        let configurator = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(transferType: .dapp(DAppRequester(title: .none, url: .none)), gasLimit: .none, gasPrice: .none))
 
         XCTAssertEqual(GasPriceConfiguration.default, configurator.configuration.gasPrice)
         XCTAssertEqual(GasLimitConfiguration.dappTransfer, configurator.configuration.gasLimit)
-        XCTAssertEqual(GasPriceConfiguration.default, configurator.calculatedGasPrice)
+        XCTAssertEqual(GasPriceConfiguration.default, configurator.configuration.gasPrice)
     }
     
     func testAdjustGasPrice() {
@@ -40,14 +38,14 @@ class TransactionConfiguratorTests: XCTestCase {
     func testMinCalculatedGasPrice() {
         let configurator = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(gasPrice: BigInt(0)))
         
-        XCTAssertEqual(GasPriceConfiguration.min, configurator.calculatedGasPrice)
+        XCTAssertEqual(GasPriceConfiguration.min, configurator.configuration.gasPrice)
     }
 
     func testSetCalculatedGasPrice() {
-        let gasPrice = BigInt(990000000000)
+        let gasPrice = BigInt(1900000000)
         let configurator = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(gasPrice: gasPrice))
 
-        XCTAssertEqual(gasPrice, configurator.calculatedGasPrice)
+        XCTAssertEqual(gasPrice, configurator.configuration.gasPrice)
     }
     
     func testMaxGasPrice() {
@@ -66,7 +64,7 @@ class TransactionConfiguratorTests: XCTestCase {
     }
 
     func testLoadDAppConfiguration() {
-        let configurator = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(transferType: .dapp, gasLimit: .none, gasPrice: .none))
+        let configurator = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(transferType: .dapp(DAppRequester(title: .none, url: .none)), gasLimit: .none, gasPrice: .none))
 
         configurator.load { _ in }
 

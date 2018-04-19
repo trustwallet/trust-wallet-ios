@@ -4,23 +4,23 @@ PODS:
     - Result (~> 3.0)
   - BigInt (3.0.1):
     - SipHash (~> 1.2)
-  - Branch (0.22.5):
-    - Branch/Core (= 0.22.5)
-  - Branch/Core (0.22.5)
+  - Branch (0.24.1):
+    - Branch/Core (= 0.24.1)
+  - Branch/Core (0.24.1)
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
   - CryptoSwift (0.8.0)
   - Eureka (4.1.1)
   - Fabric (1.7.6)
-  - Firebase/Core (4.11.0):
-    - FirebaseAnalytics (= 4.1.0)
-    - FirebaseCore (= 4.0.18)
-  - FirebaseAnalytics (4.1.0):
+  - Firebase/Core (4.13.0):
+    - FirebaseAnalytics (= 4.2.0)
+    - FirebaseCore (= 4.0.20)
+  - FirebaseAnalytics (4.2.0):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.18):
+  - FirebaseCore (4.0.20):
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseInstanceID (2.0.10):
     - FirebaseCore (~> 4.0)
@@ -166,14 +166,14 @@ SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   APIKit: 7460983f490d3bde6aaaaa4164d18c9865a6f91d
   BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
-  Branch: 4f0482418d99e77d15b0e6065ef216c10e24797b
+  Branch: 8b59411a12867bde4fe8c9d3c0f107c5811e303e
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   CryptoSwift: 475ae2a25439f52412686d68b854c0ca724c8dfd
   Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
-  Firebase: cc13dfab1038c8b45d7903e01fc690451d6d0b24
-  FirebaseAnalytics: 3dfae28d4a5e06f86c4fae830efc2ad3fadb19bc
-  FirebaseCore: b981f47e5254cbcfdeb483355300d743f6fcab2c
+  Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
+  FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
+  FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
   FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   JdenticonSwift: bc532f2761566eb29f26b085e5f72de25bc065ce

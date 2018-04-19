@@ -34,7 +34,6 @@
 "export.skip.button.title" = "Сделайте это позже";
 "importWallet.importingIndicator.label.title" = "Импорт кошелька ...";
 "Loading" = "Загрузка";
-"Loading..." = "Загрузка...";
 "Next" = "Далее";
 "OK" = "ОК";
 "Password" = "Пароль";
@@ -122,3 +121,14 @@
 "transaction.cell.tokenTransfer.title" = "Transfer %@";
 "Yesterday" = "Вчера";
 "transactions.receive.button.title" = "Получить";
+"sent.transaction.message" = "Подождите, пока транзакция будет подтверждена в сети, чтобы просмотреть детали.";
+"sent.transaction.title" = "Транзакция Отправлена!";
+"settings.network.test.warnning.dont.show.again" = "Не показывать снова";
+"settings.network.test.warnning.message" = "Переключении на тестовую сеть, где транзакции являются для тестирования целей только";
+"settings.network.test.warnning.title" = "Предупреждение";
+"Disable" = "Отключить";
+"wallets.navigation.title" = "Кошельки";
+"Bookmarks" = "Закладки";
+"History" = "История";
+"history.noHistory.label.title" = "История еще нет!";
+"New" = "Новые";

@@ -25,7 +25,7 @@ extension UITextField {
         return additions!
     }
     open override func target(forAction action: Selector, withSender sender: Any?) -> Any? {
-        if ((action == #selector(UIResponderStandardEditActions.paste(_:)) || (action == #selector(UIResponderStandardEditActions.cut(_:)))) && self.isCopyPasteDisabled) {
+        if (action == #selector(UIResponderStandardEditActions.paste(_:)) || (action == #selector(UIResponderStandardEditActions.cut(_:)))) && self.isCopyPasteDisabled {
             return nil
         }
         return super.target(forAction: action, withSender: sender)

@@ -89,7 +89,7 @@ class TokensCoordinator: Coordinator {
     @objc func addToken() {
         let controller = newTokenViewController(token: .none)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        let nav = UINavigationController(rootViewController: controller)
+        let nav = NavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .formSheet
         navigationController.present(nav, animated: true, completion: nil)
     }
@@ -97,7 +97,7 @@ class TokensCoordinator: Coordinator {
     func editToken(_ token: TokenObject) {
         let controller = editTokenViewController(token: token)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        let nav = UINavigationController(rootViewController: controller)
+        let nav = NavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .formSheet
         navigationController.present(nav, animated: true, completion: nil)
     }

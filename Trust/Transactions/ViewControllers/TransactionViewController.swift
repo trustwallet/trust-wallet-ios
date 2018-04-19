@@ -35,7 +35,7 @@ class TransactionViewController: UIViewController {
         self.transaction = transaction
 
         stackViewController.scrollView.alwaysBounceVertical = true
-        stackViewController.stackView.spacing = 10
+        stackViewController.stackView.spacing = 16
 
         super.init(nibName: nil, bundle: nil)
 
@@ -44,19 +44,35 @@ class TransactionViewController: UIViewController {
 
         let header = TransactionHeaderView()
         header.translatesAutoresizingMaskIntoConstraints = false
-        header.amountLabel.attributedText = viewModel.amountAttributedString
+        header.amountLabel.text = viewModel.amountString
+        header.amountLabel.textColor = viewModel.amountTextColor
+        header.amountLabel.font = viewModel.amountFont
+
+        let dividerColor = Colors.whisper
+        let dividerOffset = UIEdgeInsets(top: 0, left: 26, bottom: 0, right: 26)
+
+        let confirmationView = item(title: viewModel.confirmationLabelTitle, value: viewModel.confirmation)
+        confirmationView.widthAnchor.constraint(equalToConstant: 140).isActive = true
+
+        let confirmationStackView = UIStackView(arrangedSubviews: [
+            confirmationView,
+            TransactionAppearance.divider(direction: .vertical, color: dividerColor, alpha: 1, layoutInsets: .zero),
+            item(title: viewModel.createdAtLabelTitle, value: viewModel.createdAt),
+        ])
+        confirmationStackView.translatesAutoresizingMaskIntoConstraints = false
 
         var items: [UIView] = [
             .spacer(),
             header,
-            TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
+            TransactionAppearance.divider(color: dividerColor, alpha: 1, layoutInsets: dividerOffset),
             item(title: viewModel.addressTitle, value: viewModel.address),
-            item(title: viewModel.gasFeeLabelTitle, value: viewModel.gasFee),
-            item(title: viewModel.confirmationLabelTitle, value: viewModel.confirmation),
-            TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
+            TransactionAppearance.divider(color: dividerColor, alpha: 1, layoutInsets: dividerOffset),
             item(title: viewModel.transactionIDLabelTitle, value: viewModel.transactionID),
-            item(title: viewModel.createdAtLabelTitle, value: viewModel.createdAt),
-            item(title: viewModel.blockNumberLabelTitle, value: viewModel.blockNumber),
+            TransactionAppearance.divider(color: dividerColor, alpha: 1, layoutInsets: dividerOffset),
+            item(title: viewModel.gasFeeLabelTitle, value: viewModel.gasFee),
+            TransactionAppearance.divider(color: dividerColor, alpha: 1),
+            confirmationStackView,
+            TransactionAppearance.divider(color: dividerColor, alpha: 1, layoutInsets: dividerOffset),
             item(title: viewModel.nonceTitle, value: viewModel.nonce),
         ]
 
@@ -67,6 +83,7 @@ class TransactionViewController: UIViewController {
         for item in items {
             stackViewController.addItem(item)
         }
+        stackViewController.stackView.preservesSuperviewLayoutMargins = true
 
         displayChildViewController(viewController: stackViewController)
 
@@ -75,7 +92,10 @@ class TransactionViewController: UIViewController {
         }
     }
 
-    private func item(title: String, value: String) -> UIView {
+    private func item(
+        title: String,
+        value: String
+    ) -> UIView {
         return  TransactionAppearance.item(
             title: title,
             subTitle: value
@@ -85,7 +105,7 @@ class TransactionViewController: UIViewController {
     }
 
     private func moreDetails() -> UIView {
-        let button = Button(size: .large, style: .border)
+        let button = Button(size: .large, style: .solid)
         button.setTitle(NSLocalizedString("More Details", value: "More Details", comment: ""), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(more), for: .touchUpInside)

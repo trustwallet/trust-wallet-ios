@@ -40,8 +40,8 @@ class GetNonceProvider: NonceProvider {
         fetch { _ in }
     }
 
-    func getNextNonce(completion: @escaping (Result<BigInt, AnyError>) -> Void) {
-        guard let nextNonce = nextNonce else {
+    func getNextNonce(force: Bool = false, completion: @escaping (Result<BigInt, AnyError>) -> Void) {
+        guard let nextNonce = nextNonce, force == false else {
             return fetchNextNonce(completion: completion)
         }
         completion(.success(nextNonce))

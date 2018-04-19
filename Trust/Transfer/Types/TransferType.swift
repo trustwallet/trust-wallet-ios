@@ -6,7 +6,7 @@ import TrustCore
 enum TransferType {
     case ether(destination: Address?)
     case token(TokenObject)
-    case dapp
+    case dapp(DAppRequester)
 }
 
 extension TransferType {
