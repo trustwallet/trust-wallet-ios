@@ -121,6 +121,14 @@ class Transaction: Object, Decodable {
     var state: TransactionState {
         return TransactionState(int: self.internalState)
     }
+
+    var toAddress: Address? {
+        return Address(string: to)
+    }
+
+    var fromAddress: Address? {
+        return Address(string: from)
+    }
 }
 
 extension Transaction {

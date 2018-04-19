@@ -7,6 +7,7 @@ import UIKit
 protocol SettingsCoordinatorDelegate: class {
     func didRestart(with account: Wallet, in coordinator: SettingsCoordinator)
     func didUpdateAccounts(in coordinator: SettingsCoordinator)
+    func didPressURL(_ url: URL, in coordinator: SettingsCoordinator)
     func didCancel(in coordinator: SettingsCoordinator)
 }
 
@@ -129,6 +130,8 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
             case .preferences:
                 pushNotificationsRegistrar.register()
             }
+        case .openURL(let url):
+            delegate?.didPressURL(url, in: self)
         }
     }
 }

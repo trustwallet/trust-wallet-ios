@@ -6,6 +6,7 @@ import Moya
 import BigInt
 import TrustCore
 import TrustKeystore
+import Result
 
 class FakeTokensNetwork: NetworkProtocol {
     var provider: MoyaProvider<TrustService>
@@ -45,7 +46,7 @@ class FakeTokensNetwork: NetworkProtocol {
         
     }
 
-    func update(for transaction: Trust.Transaction, completion: @escaping ((Trust.Transaction, TransactionState)) -> Void) {
+    func update(for transaction: Trust.Transaction, completion: @escaping (Result<(Trust.Transaction, TransactionState), AnyError>) -> Void) {
         
     }
 

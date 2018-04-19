@@ -98,7 +98,7 @@ class EditTokensViewController: UITableViewController {
         tableView.register(R.nib.editTokenTableViewCell(), forCellReuseIdentifier: R.nib.editTokenTableViewCell.name)
         tableView.tableHeaderView = searchController.searchBar
         tableView.separatorStyle = .singleLine
-        tableView.separatorColor = TokensLayout.tableView.separatorColor
+        tableView.separatorColor = StyleLayout.TableView.separatorColor
         tableView.separatorInset = TokensLayout.tableView.layoutInsets
         tableView.backgroundColor = .white
         tableView.cellLayoutMarginsFollowReadableWidth = false

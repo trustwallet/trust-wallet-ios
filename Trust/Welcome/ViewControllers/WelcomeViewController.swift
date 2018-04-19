@@ -40,12 +40,10 @@ class WelcomeViewController: UIViewController {
         return button
     }()
     let importWalletButton: UIButton = {
-        let importWalletButton = Button(size: .large, style: .solid)
+        let importWalletButton = Button(size: .large, style: .border)
         importWalletButton.translatesAutoresizingMaskIntoConstraints = false
         importWalletButton.setTitle(NSLocalizedString("welcome.importWallet.button.title", value: "IMPORT WALLET", comment: ""), for: .normal)
         importWalletButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
-        importWalletButton.setBackgroundColor(Colors.gray, forState: .normal)
-        importWalletButton.setBackgroundColor(Colors.lightGray, forState: .highlighted)
         importWalletButton.accessibilityIdentifier = "import-wallet"
         return importWalletButton
     }()

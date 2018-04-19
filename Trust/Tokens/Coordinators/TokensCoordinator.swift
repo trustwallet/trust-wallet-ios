@@ -89,7 +89,7 @@ class TokensCoordinator: Coordinator {
     @objc func addToken() {
         let controller = newTokenViewController(token: .none)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        let nav = UINavigationController(rootViewController: controller)
+        let nav = NavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .formSheet
         navigationController.present(nav, animated: true, completion: nil)
     }
@@ -97,7 +97,7 @@ class TokensCoordinator: Coordinator {
     func editToken(_ token: TokenObject) {
         let controller = editTokenViewController(token: token)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        let nav = UINavigationController(rootViewController: controller)
+        let nav = NavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .formSheet
         navigationController.present(nav, animated: true, completion: nil)
     }
@@ -122,6 +122,10 @@ class TokensCoordinator: Coordinator {
 
     @objc func send() {
         delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
+    }
+
+    private func openURL(_ url: URL) {
+        delegate?.didPress(url: url, in: self)
     }
 }
 
@@ -191,6 +195,7 @@ extension TokensCoordinator: TokenViewControllerDelegate {
             session: session,
             transaction: transaction
         )
+        controller.delegate = self
         NavigationController.openFormSheet(
             for: controller,
             in: navigationController,
@@ -201,6 +206,12 @@ extension TokensCoordinator: TokenViewControllerDelegate {
 
 extension TokensCoordinator: NFTokenViewControllerDelegate {
     func didPressLink(url: URL, in viewController: NFTokenViewController) {
-        delegate?.didPress(url: url, in: self)
+        openURL(url)
+    }
+}
+
+extension TokensCoordinator: TransactionViewControllerDelegate {
+    func didPressURL(_ url: URL) {
+        openURL(url)
     }
 }

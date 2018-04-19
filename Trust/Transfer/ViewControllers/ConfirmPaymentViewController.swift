@@ -20,7 +20,6 @@ enum ConfirmResult {
 class ConfirmPaymentViewController: UIViewController {
 
     private let keystore: Keystore
-    //let transaction: UnconfirmedTransaction
     let session: WalletSession
     let stackViewController = StackViewController()
     lazy var sendTransactionCoordinator = {
@@ -62,18 +61,19 @@ class ConfirmPaymentViewController: UIViewController {
             self?.fetch()
         })
 
-        loadConfiguration()
         fetch()
     }
 
-    func loadConfiguration() {
+    func fetch() {
+        startLoading()
         configurator.load { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .success:
                 self.reloadView()
+                self.endLoading()
             case .failure(let error):
-                self.displayError(error: error)
+                self.endLoading(animated: true, error: error, completion: nil)
             }
         }
         configurator.configurationUpdate.subscribe { [weak self] _ in
@@ -82,28 +82,14 @@ class ConfirmPaymentViewController: UIViewController {
         }
     }
 
-    func fetch() {
-        if !session.nonceProvider.nonceAvailable {
-            startLoading()
-            session.nonceProvider.getNextNonce(completion: { [weak self] result in
-                guard let `self` = self else { return }
-                switch result {
-                case .success:
-                    self.endLoading()
-                    self.loadConfiguration()
-                case .failure(let error):
-                    self.endLoading(animated: true, error: error, completion: nil)
-                }
-            })
-        }
-    }
-
     func configure(for detailsViewModel: ConfirmPaymentDetailsViewModel) {
         stackViewController.items.forEach { stackViewController.removeItem($0) }
 
         let header = TransactionHeaderView()
         header.translatesAutoresizingMaskIntoConstraints = false
-        header.amountLabel.attributedText = detailsViewModel.amountAttributedString
+        header.amountLabel.text = detailsViewModel.amountString
+        header.amountLabel.font = detailsViewModel.amountFont
+        header.amountLabel.textColor = detailsViewModel.amountTextColor
 
         var items: [UIView] = [
             .spacer(),
@@ -144,13 +130,6 @@ class ConfirmPaymentViewController: UIViewController {
                 subTitle: detailsViewModel.totalText
             ))
         }
-
-        items.append(TransactionAppearance.item(
-            title: detailsViewModel.dataTitle,
-            subTitle: detailsViewModel.dataText
-        ) { [unowned self] _, _, _ in
-            self.edit()
-        })
 
         for item in items {
             stackViewController.addItem(item)

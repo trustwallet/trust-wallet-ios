@@ -30,7 +30,9 @@ struct ConfigExplorer {
                 return endpoint + "/txid/search/" + ID
             case .sokol:
                 return endpoint + "/tx/" + ID
-            case .custom, .callisto:
+            case .callisto:
+                return endpoint + "/tx/" + ID
+            case .custom:
                 return .none
             }
         }()
@@ -54,7 +56,9 @@ struct ConfigExplorer {
             return "https://poaexplorer.com"
         case .sokol:
             return "https://sokol-explorer.poa.network"
-        case .custom, .callisto:
+        case .callisto:
+            return "https://explorer.callisto.network"
+        case .custom:
             return .none
         }
     }

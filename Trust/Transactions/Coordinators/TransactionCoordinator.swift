@@ -7,6 +7,7 @@ import TrustCore
 
 protocol TransactionCoordinatorDelegate: class {
     func didPress(for type: PaymentFlow, in coordinator: TransactionCoordinator)
+    func didPressURL(_ url: URL)
     func didCancel(in coordinator: TransactionCoordinator)
 }
 
@@ -113,6 +114,7 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
             session: session,
             transaction: transaction
         )
+        controller.delegate = self
         NavigationController.openFormSheet(
             for: controller,
             in: navigationController,
@@ -130,5 +132,11 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
 
     func reset() {
         delegate?.didCancel(in: self)
+    }
+}
+
+extension TransactionCoordinator: TransactionViewControllerDelegate {
+    func didPressURL(_ url: URL) {
+        delegate?.didPressURL(url)
     }
 }

@@ -28,7 +28,7 @@ enum RPCServer {
         case .poa: return 99
         case .sokol: return 77
         case .classic: return 61
-        case .callisto: return 104729
+        case .callisto: return 820
         case .custom(let custom):
             return custom.chainID
         }
@@ -84,7 +84,7 @@ enum RPCServer {
             switch self {
             case .main: return "https://mainnet.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .classic: return "https://web3.gastracker.io"
-            case .callisto: return "https://rpc.callisto.network"
+            case .callisto: return "https://clo-geth.0xinfra.com"
             case .kovan: return "https://kovan.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .ropsten: return "https://ropsten.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .rinkeby: return "https://rinkeby.infura.io/llyrtzQ3YhkdESt2Fzrk"
@@ -96,7 +96,7 @@ enum RPCServer {
         }()
         return URL(string: urlString)!
     }
-    
+
     var remoteURL: URL {
         let urlString: String = {
             switch self {

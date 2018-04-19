@@ -5,19 +5,24 @@ import XCTest
 
 class TransactionViewModelTests: XCTestCase {
 
-    func testErrorState() {
-        let viewModel = TransactionViewModel(transaction: .make(state: .error), config: .make(), chainState: .make(), currentWallet: .make())
-
-    }
-
     func testPendingState() {
-        let blockNumber = 1
+        let blockNumber = 0
         let chainState: ChainState = .make()
         chainState.latestBlock = blockNumber
 
         let viewModel = TransactionViewModel(transaction: .make(blockNumber: blockNumber), config: .make(), chainState: chainState, currentWallet: .make())
 
         XCTAssertEqual(.none, viewModel.confirmations)
+    }
+
+    func testConfirmedState() {
+        let blockNumber = 1
+        let chainState: ChainState = .make()
+        chainState.latestBlock = blockNumber
+
+        let viewModel = TransactionViewModel(transaction: .make(blockNumber: blockNumber), config: .make(), chainState: chainState, currentWallet: .make())
+
+        XCTAssertEqual(1, viewModel.confirmations)
     }
 
     func testCompleteStateWhenLatestBlockBehind() {

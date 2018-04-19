@@ -8,25 +8,25 @@ import BigInt
 struct EstimateGasRequest: JSONRPCKit.Request {
     typealias Response = String
 
-    let from: Address
-    let to: Address?
-    let value: BigInt
-    let data: Data
+    let transaction: SignTransaction
 
     var method: String {
         return "eth_estimateGas"
     }
 
     var parameters: Any? {
-        let results = [
+        return [
             [
-                "from": from.description,
-                "to": to?.description ?? "",
-                "value": value.description.hexEncoded,
-                "data": data.hexEncoded,
+                "from": transaction.account.address.description.lowercased(),
+                "to": transaction.to?.description.lowercased() ?? "",
+                //TODO: Update gas limit when changed by the user.
+                // Hardcoded for simplicify to fetch estimated gas
+                "gas": BigInt(7_000_000).hexEncoded,
+                "gasPrice": transaction.gasPrice.hexEncoded,
+                "value": transaction.value.hexEncoded,
+                "data": transaction.data.hexEncoded,
             ],
         ]
-        return results
     }
 
     func response(from resultObject: Any) throws -> Response {

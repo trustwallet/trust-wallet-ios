@@ -33,7 +33,6 @@
 "export.skip.button.title" = "之后再导出";
 "importWallet.importingIndicator.label.title" = "导入钱包...";
 "Loading" = "正在加载";
-"Loading..." = "正在加载...";
 "Next" = "下一步";
 "OK" = "OK";
 "Password" = "密码";
@@ -222,3 +221,8 @@
 "nft.details.external.button.title" = "在 OpenSea.io 里打开";
 "nft.details.internal.button.title" = "在 %@ 里打开";
 "nft.poweredBy.label.text" = "由 OpenSea 提供支持";
+"configureTransaction.nonce.label.title" = "Nonce";
+"Bookmarks" = "书签";
+"History" = "历史记录";
+"history.noHistory.label.title" = "暂时还没有历史记录";
+"New" = "新 DApp";
