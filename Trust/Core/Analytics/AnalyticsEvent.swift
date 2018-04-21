@@ -12,6 +12,8 @@ enum AnalyticsEvent {
             return "welcomeScreen"
         case .importWallet:
             return "importWallet"
+        case .createdWallet:
+            return "createdWallet"
         }
     }
 
@@ -21,6 +23,9 @@ enum AnalyticsEvent {
             return [:]
         case .importWallet(let type):
             return ["type": type.title]
+        case .createdWallet:
+            return [:]
+            
         }
     }
 }
