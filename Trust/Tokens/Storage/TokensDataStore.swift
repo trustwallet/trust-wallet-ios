@@ -101,14 +101,16 @@ class TokensDataStore {
     func update(balances: [Address: BigInt]) {
         try! realm.write {
             for balance in balances {
-                guard let tokenObject = realm.object(ofType: TokenObject.self, forPrimaryKey: balance.key.description) else {
-                    continue
+                var update: [String: Any] = [
+                    "contract": balance.key.description,
+                    "value": balance.value.description,
+                ]
+
+                if let tokenObject = realm.object(ofType: TokenObject.self, forPrimaryKey: balance.key.description) {
+                    update["balance"] = self.getBalance(for: tokenObject, with: self.tickers())
                 }
 
-                tokenObject.value = balance.value.description
-                tokenObject.balance = self.getBalance(for: tokenObject, with: self.tickers())
-
-                realm.add(tokenObject, update: true)
+                realm.create(TokenObject.self, value: update, update: true)
             }
         }
     }
