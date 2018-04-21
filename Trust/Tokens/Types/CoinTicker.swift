@@ -66,7 +66,6 @@ extension CoinTicker {
 
     func rate() -> CurrencyRate {
         return CurrencyRate(
-            currency: symbol,
             rates: [
                 Rate(
                     code: symbol,
