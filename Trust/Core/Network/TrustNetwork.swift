@@ -252,8 +252,7 @@ class TrustNetwork: NetworkProtocol {
                 case .success(let response):
                     do {
                         let tokens = try response.map([TokenObject].self)
-
-                        guard let token = tokens.first(where: { $0.address.eip55String == Address(string: token)?.eip55String } ) else {
+                        guard let token = tokens.first(where: { $0.address.eip55String == Address(string: token)?.eip55String }) else {
                              return seal.reject(TrustNetworkProtocolError.missingContractInfo)
                         }
                         seal.fulfill(token)

@@ -10,8 +10,7 @@ struct NewTokenViewModel {
 
     let token: ERC20Token?
 
-    init(token: ERC20Token?,
-        tokensNetwork: NetworkProtocol) {
+    init(token: ERC20Token?, tokensNetwork: NetworkProtocol) {
         self.token = token
         self.tokensNetwork = tokensNetwork
     }
