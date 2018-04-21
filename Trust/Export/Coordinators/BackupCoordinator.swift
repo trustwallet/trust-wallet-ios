@@ -78,6 +78,8 @@ class BackupCoordinator: Coordinator {
             navigationController.present(activityViewController, animated: true) { [unowned self] in
                 self.navigationController.hideLoading()
             }
+            // analytics event for successful backup
+            Analytics.track(.backedUpWallet)
         case .failure(let error):
             navigationController.hideLoading()
             navigationController.displayError(error: error)

@@ -166,7 +166,7 @@ class BrowserCoordinator: Coordinator {
                 }
                 self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
                 // analytics event for succesfully signed message by type
-                Analytics.track(.signedMessage(type))
+                Analytics.track(.signedMessage)
             case .failure:
                 self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
                 // analytics event for failed message signing
