@@ -143,6 +143,7 @@ class NewTokenViewController: FormViewController {
     }
 
     private func fetchInfo(for contract: String) {
+        displayLoading()
         firstly {
             viewModel.info(for: contract)
         }.done { [weak self] token in
@@ -152,9 +153,12 @@ class NewTokenViewController: FormViewController {
             self?.nameRow?.reload()
             self?.decimalsRow?.reload()
             self?.symbolRow?.reload()
+        }.ensure { [weak self] in
+            self?.hideLoading()
         }.catch {_ in
-           //We could not find any info about this contract.This error is already logged in crashlytics.
+            //We could not find any info about this contract.This error is already logged in crashlytics.
         }
+
     }
 
     required init?(coder aDecoder: NSCoder) {
