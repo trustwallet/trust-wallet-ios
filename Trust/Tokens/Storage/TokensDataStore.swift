@@ -141,22 +141,9 @@ class TokensDataStore {
 
         deleteAllExistingTickers()
 
-        let coinTickerObjects = tickers.map { (ticker) -> CoinTickerObject in
-            let tickersKey = self.config.tickersKey
-            return CoinTickerObject(
-                id: ticker.id,
-                symbol: ticker.symbol,
-                price: ticker.price,
-                percent_change_24h: ticker.percent_change_24h,
-                contract: ticker.contract,
-                image: ticker.image,
-                tickersKey: tickersKey
-            )
-        }
-
         do {
             try realm.write {
-                realm.add(coinTickerObjects, update: true)
+                realm.add(tickers, update: true)
             }
         } catch let error {
             print(error.localizedDescription)

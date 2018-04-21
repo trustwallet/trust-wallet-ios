@@ -44,21 +44,25 @@ class TrustNetwork: NetworkProtocol {
             do {
                 let rawTickers = try response.map([CoinTickerObject].self, atKeyPath: "response", using: JSONDecoder())
                 let tickers = rawTickers.map {rawTicker in
-                    return CoinTickerObject(
-                        id: rawTicker.id,
-                        symbol: rawTicker.symbol,
-                        price: rawTicker.price,
-                        percent_change_24h: rawTicker.percent_change_24h,
-                        contract: rawTicker.contract,
-                        image: rawTicker.image,
-                        tickersKey: self.config.tickersKey
-                    )
+                    return self.getTickerFrom(rawTicker: rawTicker, withKey: self.config.tickersKey)
                 }
                 completion(tickers)
             } catch {
                 completion(nil)
             }
         }
+    }
+
+    private func getTickerFrom(rawTicker: CoinTickerObject, withKey tickersKey: String) -> CoinTickerObject {
+        return CoinTickerObject(
+            id: rawTicker.id,
+            symbol: rawTicker.symbol,
+            price: rawTicker.price,
+            percent_change_24h: rawTicker.percent_change_24h,
+            contract: rawTicker.contract,
+            image: rawTicker.image,
+            tickersKey: tickersKey
+        )
     }
 
     func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void) {
