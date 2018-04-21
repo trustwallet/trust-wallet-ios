@@ -141,12 +141,8 @@ class TokensDataStore {
 
         deleteAllExistingTickers()
 
-        do {
-            try realm.write {
-                realm.add(tickers, update: true)
-            }
-        } catch let error {
-            print(error.localizedDescription)
+        try? realm.write {
+            realm.add(tickers, update: true)
         }
     }
 
@@ -165,12 +161,8 @@ class TokensDataStore {
     }
 
     func deleteAllExistingTickers() {
-        do {
-            try realm.write {
-                realm.delete(tickerResultsByTickersKey)
-            }
-        } catch let error {
-            print(error.localizedDescription)
+        try? realm.write {
+            realm.delete(tickerResultsByTickersKey)
         }
     }
 
