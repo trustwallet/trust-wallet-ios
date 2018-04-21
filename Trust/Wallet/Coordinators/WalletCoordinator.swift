@@ -59,7 +59,7 @@ class WalletCoordinator: Coordinator {
             case .success(let account):
                 self.pushBackup(for: account)
                 // analytics event for wallet successfully created
-                Analytics.track(.createdWallet(type))
+                Analytics.track(.createdWallet)
             case .failure(let error):
                 self.navigationController.displayError(error: error)
             }
