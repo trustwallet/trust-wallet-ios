@@ -143,7 +143,6 @@ class NewTokenViewController: FormViewController {
     }
 
     private func fetchInfo(for contract: String) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         firstly {
             viewModel.info(for: contract)
         }.done { [weak self] token in
@@ -153,8 +152,6 @@ class NewTokenViewController: FormViewController {
             self?.nameRow?.reload()
             self?.decimalsRow?.reload()
             self?.symbolRow?.reload()
-        }.ensure {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }.catch {_ in
            //We could not find any info about this contract.This error is already logged in crashlytics.
         }
