@@ -4,7 +4,7 @@ import Foundation
 import Realm
 import RealmSwift
 
-class CoinTickerObject: Object, Decodable {
+class CoinTicker: Object, Decodable {
     @objc dynamic var id: String = ""
     @objc dynamic var symbol: String = ""
     @objc dynamic var price: String = ""
@@ -59,7 +59,7 @@ class CoinTickerObject: Object, Decodable {
     }
 }
 
-extension CoinTickerObject {
+extension CoinTicker {
     var imageURL: URL? {
         return URL(string: image)
     }

@@ -6,13 +6,13 @@ import UIKit
 struct EditTokenTableCellViewModel {
 
     let token: TokenObject
-    let coinTicker: CoinTickerObject?
+    let coinTicker: CoinTicker?
     let config: Config
     let isLocal: Bool
 
     init(
         token: TokenObject,
-        coinTicker: CoinTickerObject?,
+        coinTicker: CoinTicker?,
         config: Config,
         isLocal: Bool = true
     ) {

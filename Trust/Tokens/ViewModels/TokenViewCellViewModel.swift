@@ -9,11 +9,11 @@ struct TokenViewCellViewModel {
     private let shortFormatter = EtherNumberFormatter.short
 
     let token: TokenObject
-    let ticker: CoinTickerObject?
+    let ticker: CoinTicker?
 
     init(
         token: TokenObject,
-        ticker: CoinTickerObject?
+        ticker: CoinTicker?
     ) {
         self.token = token
         self.ticker = ticker

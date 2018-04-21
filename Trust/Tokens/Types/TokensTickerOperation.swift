@@ -6,7 +6,7 @@ import TrustCore
 class TokensTickerOperation: TrustOperation {
     private var network: NetworkProtocol
     private let tokenPrices: [TokenPrice]
-    var tickers: [CoinTickerObject] = [CoinTickerObject]()
+    var tickers: [CoinTicker] = [CoinTicker]()
 
     init(
         network: NetworkProtocol,

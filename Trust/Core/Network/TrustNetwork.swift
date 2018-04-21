@@ -7,7 +7,7 @@ import APIKit
 import Result
 
 protocol NetworkProtocol: TrustNetworkProtocol {
-    func tickers(with tokenPrices: [TokenPrice], completion: @escaping (_ tickers: [CoinTickerObject]?) -> Void)
+    func tickers(with tokenPrices: [TokenPrice], completion: @escaping (_ tickers: [CoinTicker]?) -> Void)
     func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void)
     func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void)
     func tokensList(for address: Address, completion: @escaping (_ result: ([TokenObject]?)) -> Void)
@@ -31,7 +31,7 @@ class TrustNetwork: NetworkProtocol {
         self.config = config
     }
 
-    func tickers(with tokenPrices: [TokenPrice], completion: @escaping (_ tickers: [CoinTickerObject]?) -> Void) {
+    func tickers(with tokenPrices: [TokenPrice], completion: @escaping (_ tickers: [CoinTicker]?) -> Void) {
         let tokensPriceToFetch = TokensPrice(
             currency: config.currency.rawValue,
             tokens: tokenPrices
@@ -42,7 +42,7 @@ class TrustNetwork: NetworkProtocol {
                 return
             }
             do {
-                let rawTickers = try response.map([CoinTickerObject].self, atKeyPath: "response", using: JSONDecoder())
+                let rawTickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
                 let tickers = rawTickers.map {rawTicker in
                     return self.getTickerFrom(rawTicker: rawTicker, withKey: self.config.tickersKey)
                 }
@@ -53,8 +53,8 @@ class TrustNetwork: NetworkProtocol {
         }
     }
 
-    private func getTickerFrom(rawTicker: CoinTickerObject, withKey tickersKey: String) -> CoinTickerObject {
-        return CoinTickerObject(
+    private func getTickerFrom(rawTicker: CoinTicker, withKey tickersKey: String) -> CoinTicker {
+        return CoinTicker(
             id: rawTicker.id,
             symbol: rawTicker.symbol,
             price: rawTicker.price,

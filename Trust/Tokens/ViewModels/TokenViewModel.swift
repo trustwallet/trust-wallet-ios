@@ -74,7 +74,7 @@ class TokenViewModel {
         prepareDataSource(for: token)
     }
 
-    var ticker: CoinTickerObject? {
+    var ticker: CoinTicker? {
         return store.coinTicker(for: token)
     }
 

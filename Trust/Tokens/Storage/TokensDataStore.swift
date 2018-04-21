@@ -53,7 +53,7 @@ class TokensDataStore {
         }
     }
 
-    func coinTicker(for token: TokenObject) -> CoinTickerObject? {
+    func coinTicker(for token: TokenObject) -> CoinTicker? {
         return tickers().first(where: { $0.contract == token.contract })
     }
 
@@ -134,7 +134,7 @@ class TokensDataStore {
         }
     }
 
-    func saveTickers(tickers: [CoinTickerObject]) {
+    func saveTickers(tickers: [CoinTicker]) {
         guard !tickers.isEmpty else {
             return
         }
@@ -146,18 +146,18 @@ class TokensDataStore {
         }
     }
 
-    func tickers() -> [CoinTickerObject] {
-        let coinTickerObjects: [CoinTickerObject] = tickerResultsByTickersKey.map { $0 }
+    func tickers() -> [CoinTicker] {
+        let coinTickers: [CoinTicker] = tickerResultsByTickersKey.map { $0 }
 
-        guard !coinTickerObjects.isEmpty else {
-            return [CoinTickerObject]()
+        guard !coinTickers.isEmpty else {
+            return [CoinTicker]()
         }
 
-        return coinTickerObjects
+        return coinTickers
     }
 
-    private var tickerResultsByTickersKey: Results<CoinTickerObject> {
-        return realm.objects(CoinTickerObject.self).filter("tickersKey == %@", self.config.tickersKey)
+    private var tickerResultsByTickersKey: Results<CoinTicker> {
+        return realm.objects(CoinTicker.self).filter("tickersKey == %@", self.config.tickersKey)
     }
 
     func deleteAllExistingTickers() {
@@ -177,7 +177,7 @@ class TokensDataStore {
         )
     }
 
-    func getBalance(for token: TokenObject, with tickers: [CoinTickerObject]) -> Double {
+    func getBalance(for token: TokenObject, with tickers: [CoinTicker]) -> Double {
         guard let ticker = tickers.first(where: { $0.contract == token.contract }) else {
             return TokenObject.DEFAULT_BALANCE
         }
