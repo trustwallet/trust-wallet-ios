@@ -114,11 +114,15 @@ class BrowserCoordinator: Coordinator {
                     self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
                     self.delegate?.didSentTransaction(transaction: transaction, in: self)
                 }
+                // analytics event for successfully completed transaction by type
+                Analytics.track(.completedTransaction(type))
             case .failure:
                 self.rootViewController.browserViewController.notifyFinish(
                     callbackID: callbackID,
                     value: .failure(DAppError.cancelled)
                 )
+                // analytics event for failed transaction by type
+                Analytics.track(.failedTransaction(type))
             }
             self.removeCoordinator(coordinator)
             self.navigationController.dismiss(animated: true, completion: nil)
@@ -161,14 +165,19 @@ class BrowserCoordinator: Coordinator {
                     callback = DappCallback(id: callbackID, value: .signTypedMessage(data))
                 }
                 self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+                // analytics event for succesfully signed message by type
+                Analytics.track(.signedMessage(type))
             case .failure:
                 self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
+                // analytics event for failed message signing
+                Analytics.track(.failedSignedMessage)
             }
             self.removeCoordinator(coordinator)
         }
         coordinator.delegate = self
         addCoordinator(coordinator)
         coordinator.start(with: type)
+        
     }
 
     func presentQRCodeReader() {
