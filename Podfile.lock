@@ -68,7 +68,7 @@ PODS:
     - CryptoSwift
     - TrezorCrypto
     - TrustCore
-  - TrustWeb3Provider (0.1.4)
+  - TrustWeb3Provider (0.1.6)
   - URLNavigator (2.0.4)
 
 DEPENDENCIES:
@@ -159,7 +159,7 @@ CHECKOUT OPTIONS:
     :commit: 80bd79cbeede842949b229f81bc6328f53701c5a
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
   TrustWeb3Provider:
-    :commit: 38fa22041e090dd87693502407cbb939cd0af0f5
+    :commit: 4b75a0e6bd4282d23bac911c66e98cb8a2c9215a
     :git: https://github.com/TrustWallet/trust-web3-provider
 
 SPEC CHECKSUMS:
@@ -198,7 +198,7 @@ SPEC CHECKSUMS:
   TrezorCrypto: ecef681446bf02af6248d3b5e394026d7e766e56
   TrustCore: 231439190d1941dc4e945c51c55c5effa8e7b9b4
   TrustKeystore: 1bd016c67de7314e84b79dba2c22ef64b86bb63e
-  TrustWeb3Provider: 3d5c9f17aa6cc3fcd083d232aed5e90615be5383
+  TrustWeb3Provider: 28b6d50d67fada7174a0c279d45cee95d90ec66f
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
 PODFILE CHECKSUM: 7f1175e0e6447ae992c9047de2c88e12564ca350
