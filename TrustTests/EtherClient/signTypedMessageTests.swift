@@ -97,6 +97,26 @@ class signTypedMessageTests: XCTestCase {
         XCTAssertEqual(data.hexEncoded, "0xe6d4d981485013055ee978c39cf9c18096b4e05bc0471de72377db9b392c7582276d2d8e7b6329f784aac8fbd42417c74906285e072019e025883e52f94a169d1c")
     }
 
+    func testType_int_Value_bigInt() {
+        // from https://like.co/
+        let typedData = EthTypedData(type: "int256", name: "how much?", value: .string(value: "-57896044618658097711785492504343953926634992332820282019728792003956564819968"))
+        let signResult = keystore.signTypedMessage([typedData], for: account)
+        guard case let .success(data) = signResult else {
+            return XCTFail()
+        }
+        XCTAssertEqual(data.hexEncoded, "0xa1cd93b6dd2a18748993c727c8c9be20a784504b7f1fc9eece228bc5004e805d6a0bcabce62994881b562243ace5cc3ce18bd41302c793dce38c301036af01761c")
+    }
+
+    func testType_int_Value_bigUInt() {
+        // from https://like.co/
+        let typedData = EthTypedData(type: "uint256", name: "how much?", value: .string(value: "6739986666787659948666753771754907668409286105635143120275902562304"))
+        let signResult = keystore.signTypedMessage([typedData], for: account)
+        guard case let .success(data) = signResult else {
+            return XCTFail()
+        }
+        XCTAssertEqual(data.hexEncoded, "0xb88c74fd791b6f1e201c8bb08ff977a938d9ca379f83fd00140f683f3a04fcf6220db28ff750efafc642b525d00d0e3e37d2a1af8cd50940306e690f5b93c8d81c")
+    }
+    
     func testType_bytes_Value_string() {
         let typedData = EthTypedData(type: "bytes", name: "your address", value: .string(value: "0x2c7536e3605d9c16a7a3d7b1898e529396a65c23"))
         let signResult = keystore.signTypedMessage([typedData], for: account)

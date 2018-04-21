@@ -72,6 +72,9 @@ class WelcomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        Analytics.track(.welcomeScreen)
+
         viewModel.numberOfPages = pages.count
         view.addSubview(collectionViewController.view)
 
