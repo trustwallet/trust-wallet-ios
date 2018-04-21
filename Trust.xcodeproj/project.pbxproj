@@ -334,6 +334,7 @@
 		771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */; };
 		771D0641208AC30800016B72 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D0640208AC30800016B72 /* Analytics.swift */; };
 		771D0644208AC34D00016B72 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D0643208AC34D00016B72 /* AnalyticsEvent.swift */; };
+		771D0646208B3FAD00016B72 /* MonetaryAmountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D0645208B3FAD00016B72 /* MonetaryAmountViewModel.swift */; };
 		771D53632050AFC700C79485 /* WalletType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D53622050AFC700C79485 /* WalletType.swift */; };
 		771D536F2058BB0D00C79485 /* BrowserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D536D2058BB0D00C79485 /* BrowserCoordinator.swift */; };
 		771D5371205923F500C79485 /* NetworkConditionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D5370205923F500C79485 /* NetworkConditionViewModel.swift */; };
@@ -816,6 +817,7 @@
 		771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WordCollectionViewCell.xib; sourceTree = "<group>"; };
 		771D0640208AC30800016B72 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		771D0643208AC34D00016B72 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
+		771D0645208B3FAD00016B72 /* MonetaryAmountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetaryAmountViewModel.swift; sourceTree = "<group>"; };
 		771D53622050AFC700C79485 /* WalletType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletType.swift; sourceTree = "<group>"; };
 		771D536D2058BB0D00C79485 /* BrowserCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserCoordinator.swift; sourceTree = "<group>"; };
 		771D5370205923F500C79485 /* NetworkConditionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConditionViewModel.swift; sourceTree = "<group>"; };
@@ -1772,6 +1774,7 @@
 				29E6E0711FEA200D0079265A /* ConfirmPaymentDetailsViewModel.swift */,
 				299B5E441FD22FB40051361C /* ConfigureTransactionViewModel.swift */,
 				7391DC8B203715DF002C5ADE /* Pair.swift */,
+				771D0645208B3FAD00016B72 /* MonetaryAmountViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -3046,6 +3049,7 @@
 				296105951FA2DEF000292494 /* TransactionDirection.swift in Sources */,
 				291ED08B1F6F5D2100E7E93A /* Bundle.swift in Sources */,
 				293B8B451F70A20200356286 /* TransactionViewCell.swift in Sources */,
+				771D0646208B3FAD00016B72 /* MonetaryAmountViewModel.swift in Sources */,
 				29FC0CB81F8299510036089F /* Coordinator.swift in Sources */,
 				296106C61F7645CC0006164B /* TokensViewController.swift in Sources */,
 				29282B531F7630970067F88D /* Token.swift in Sources */,
