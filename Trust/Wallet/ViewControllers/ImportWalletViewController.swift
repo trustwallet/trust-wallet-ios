@@ -89,7 +89,7 @@ class ImportWalletViewController: FormViewController {
                 header.height = { 90 }
                 header.onSetupView = {[weak self] (view, section) -> Void in
                     guard let strongSelf = self else { return }
-                    view.label.attributedText = NSAttributedString(string: "Importing a wallet is as easy as creating", attributes: [
+                    view.label.attributedText = NSAttributedString(string: "Importing wallet as easy as creating", attributes: [
                         NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular),
                         NSAttributedStringKey.foregroundColor: UIColor(hex: "6e6e72"),
                         NSAttributedStringKey.paragraphStyle: strongSelf.pargraphStyle,
