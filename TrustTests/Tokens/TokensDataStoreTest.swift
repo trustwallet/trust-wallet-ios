@@ -4,13 +4,23 @@ import XCTest
 @testable import Trust
 
 class TokensDataStoreTest: XCTestCase {
-    let tokensDataStore = TokensDataStore(realm: .make(), config: .make())
+    var tokensDataStore: TokensDataStore!
+    var coinTickers: [CoinTicker]!
 
-    let coinTickers = [
-        CoinTicker(id: "id1", symbol: "symbol1", price: "10", percent_change_24h: "percent_change_24h_1", contract: "contract1", image: "image1", tickersKey: "tickersKey"),
-        CoinTicker(id: "id2", symbol: "symbol2", price: "20", percent_change_24h: "percent_change_24h_2", contract: "contract2", image: "image2", tickersKey: "tickersKey"),
-        CoinTicker(id: "id3", symbol: "symbol3", price: "30", percent_change_24h: "percent_change_24h_3", contract: "contract3", image: "image3", tickersKey: "tickersKey"),
-    ]
+    override func setUp() {
+        super.setUp()
+
+        let config = Config.make()
+        let tickersKey = config.tickersKey
+
+        tokensDataStore = TokensDataStore(realm: .make(), config: config)
+
+        coinTickers = [
+            CoinTicker(id: "id1", symbol: "symbol1", price: "10", percent_change_24h: "percent_change_24h_1", contract: "contract1", image: "image1", tickersKey: tickersKey),
+            CoinTicker(id: "id2", symbol: "symbol2", price: "20", percent_change_24h: "percent_change_24h_2", contract: "contract2", image: "image2", tickersKey: tickersKey),
+            CoinTicker(id: "id3", symbol: "symbol3", price: "30", percent_change_24h: "percent_change_24h_3", contract: "contract3", image: "image3", tickersKey: tickersKey),
+        ]
+    }
 
     func testGetAndSetTickers() {
         XCTAssertEqual(0, tokensDataStore.tickers().count)
@@ -50,7 +60,7 @@ class TokensDataStoreTest: XCTestCase {
         XCTAssertEqual(0, tokensDataStore.tickers().count)
 
         let coinTickers = [
-            CoinTicker(id: "id1", symbol: "", price: "", percent_change_24h: "", contract: "", image: "", tickersKey: "")
+            CoinTicker(id: "id1", symbol: "", price: "", percent_change_24h: "", contract: "", image: "", tickersKey: tokensDataStore.config.tickersKey)
         ]
 
         tokensDataStore.saveTickers(tickers: coinTickers)
