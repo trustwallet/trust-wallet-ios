@@ -47,6 +47,9 @@ class TransactionViewController: UIViewController {
         header.amountLabel.text = viewModel.amountString
         header.amountLabel.textColor = viewModel.amountTextColor
         header.amountLabel.font = viewModel.amountFont
+        header.monetaryAmountLabel.text = viewModel.monetaryAmountString
+        header.monetaryAmountLabel.font = viewModel.monetaryLabelFont
+        header.monetaryAmountLabel.textColor = viewModel.monetaryLabelTextColor
 
         let dividerColor = Colors.whisper
         let dividerOffset = UIEdgeInsets(top: 0, left: 26, bottom: 0, right: 26)

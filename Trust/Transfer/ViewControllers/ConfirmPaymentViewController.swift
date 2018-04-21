@@ -90,6 +90,9 @@ class ConfirmPaymentViewController: UIViewController {
         header.amountLabel.text = detailsViewModel.amountString
         header.amountLabel.font = detailsViewModel.amountFont
         header.amountLabel.textColor = detailsViewModel.amountTextColor
+        header.monetaryAmountLabel.text = detailsViewModel.monetaryAmountString
+        header.monetaryAmountLabel.font = detailsViewModel.monetaryLabelFont
+        header.monetaryAmountLabel.textColor = detailsViewModel.monetaryLabelTextColor
 
         var items: [UIView] = [
             .spacer(),

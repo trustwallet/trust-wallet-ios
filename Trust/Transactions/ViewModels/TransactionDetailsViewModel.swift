@@ -23,7 +23,13 @@ struct TransactionDetailsViewModel {
     private let shortFormatter = EtherNumberFormatter.short
     private let fullFormatter = EtherNumberFormatter.full
     private let currencyRate: CurrencyRate?
-
+    private var monetaryAmountViewModel: MonetaryAmountViewModel {
+        return MonetaryAmountViewModel(
+            amount: transactionViewModel.shortValue.amount,
+            symbol: transactionViewModel.shortValue.symbol,
+            currencyRate: currencyRate
+        )
+    }
     init(
         transaction: Transaction,
         config: Config,
@@ -159,6 +165,18 @@ struct TransactionDetailsViewModel {
 
     var amountFont: UIFont {
         return AppStyle.largeAmount.font
+    }
+
+    var monetaryAmountString: String? {
+        return monetaryAmountViewModel.amountText
+    }
+
+    var monetaryLabelTextColor: UIColor {
+        return TokensLayout.cell.fiatAmountTextColor
+    }
+
+    var monetaryLabelFont: UIFont {
+        return UIFont.systemFont(ofSize: 13, weight: .light)
     }
 
     var shareItem: URL? {

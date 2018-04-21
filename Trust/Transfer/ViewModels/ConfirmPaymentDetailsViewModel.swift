@@ -10,7 +10,13 @@ struct ConfirmPaymentDetailsViewModel {
     let currencyRate: CurrencyRate?
     let config: Config
     private let fullFormatter = EtherNumberFormatter.full
-
+    private var monetaryAmountViewModel: MonetaryAmountViewModel {
+        return MonetaryAmountViewModel(
+            amount: amount,
+            symbol: transaction.transferType.symbol(server: config.server),
+            currencyRate: currencyRate
+        )
+    }
     init(
         transaction: PreviewTransaction,
         config: Config = Config(),
@@ -44,10 +50,6 @@ struct ConfirmPaymentDetailsViewModel {
 
     private var gasLimit: BigInt {
         return transaction.gasLimit
-    }
-
-    var amount: String {
-        return fullFormatter.string(from: transaction.value)
     }
 
     var paymentFromTitle: String {
@@ -108,20 +110,33 @@ struct ConfirmPaymentDetailsViewModel {
         return totalViewModel.feeText
     }
 
+    var amount: String {
+        switch transaction.transferType {
+        case .token(let token):
+            return fullFormatter.string(from: transaction.value, decimals: token.decimals)
+        case .ether, .dapp:
+            return fullFormatter.string(from: transaction.value)
+        }
+    }
+
     var amountString: String {
-        let amount: String = {
-            switch transaction.transferType {
-            case .token(let token):
-                return fullFormatter.string(from: transaction.value, decimals: token.decimals)
-            case .ether, .dapp:
-                return fullFormatter.string(from: transaction.value)
-            }
-        }()
         return amountWithSign(for: amount) + " \(transaction.transferType.symbol(server: config.server))"
     }
 
     var amountFont: UIFont {
         return AppStyle.largeAmount.font
+    }
+
+    var monetaryAmountString: String? {
+        return monetaryAmountViewModel.amountText
+    }
+
+    var monetaryLabelTextColor: UIColor {
+        return TokensLayout.cell.fiatAmountTextColor
+    }
+
+    var monetaryLabelFont: UIFont {
+        return UIFont.systemFont(ofSize: 13, weight: .light)
     }
 
     private func amountWithSign(for amount: String) -> String {

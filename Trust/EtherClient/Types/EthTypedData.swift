@@ -1,6 +1,8 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
+import BigInt
 import Foundation
+import TrustCore
 
 /*
 This enum is only used to support decode solidity types (represented by json values) to swift primitive types.
@@ -90,16 +92,20 @@ struct EthTypedData: Decodable {
                 guard size > 0 else { return Data() }
                 if let uint = UInt64(string) {
                     return getTypedData(for: uint, align: size)
-                } else {
-                    //TODO larger than UInt64, we may need BigInt
+                } else if let bigInt = BigUInt(string) {
+                    let encoder = ABIEncoder()
+                    try? encoder.encode(bigInt)
+                    return encoder.data
                 }
             } else if type.starts(with: "int") {
                 let size = parseIntSize(type: type, prefix: "int")
                 guard size > 0 else { return Data() }
                 if let int = Int64(string) {
                     return getTypedData(for: int, align: size)
-                } else {
-                    //TODO larger than Int64, we may need BigInt
+                } else if let bigInt = BigInt(string) {
+                    let encoder = ABIEncoder()
+                    try? encoder.encode(bigInt)
+                    return encoder.data
                 }
             }
             return Data(bytes: Array(string.utf8))
