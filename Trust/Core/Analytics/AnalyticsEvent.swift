@@ -5,6 +5,7 @@ import Foundation
 enum AnalyticsEvent {
     case welcomeScreen
     case importWallet(ImportSelectionType)
+    case createdWallet
 
     var event: String {
         switch self {
