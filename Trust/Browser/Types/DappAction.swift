@@ -15,14 +15,14 @@ enum DappAction {
 }
 
 extension DappAction {
-    static func fromCommand(_ command: DappCommand) -> DappAction {
+    static func fromCommand(_ command: DappCommand, requester: DAppRequester) -> DappAction {
         NSLog("command.name \(command.name)")
         NSLog("command.object \(command.object)")
         switch command.name {
         case .signTransaction:
-            return .signTransaction(DappAction.makeUnconfirmedTransaction(command.object))
+            return .signTransaction(DappAction.makeUnconfirmedTransaction(command.object, requester: requester))
         case .sendTransaction:
-            return .sendTransaction(DappAction.makeUnconfirmedTransaction(command.object))
+            return .sendTransaction(DappAction.makeUnconfirmedTransaction(command.object, requester: requester))
         case .signMessage:
             let data = command.object["data"]?.value ?? ""
             return .signMessage(data)
@@ -37,7 +37,7 @@ extension DappAction {
         }
     }
 
-    private static func makeUnconfirmedTransaction(_ object: [String: DappCommandObjectValue]) -> UnconfirmedTransaction {
+    private static func makeUnconfirmedTransaction(_ object: [String: DappCommandObjectValue], requester: DAppRequester) -> UnconfirmedTransaction {
         let to = Address(string: object["to"]?.value ?? "")
         let value = BigInt((object["value"]?.value ?? "0").drop0x, radix: 16) ?? BigInt()
         let nonce: BigInt? = {
@@ -55,7 +55,7 @@ extension DappAction {
         let data = Data(hex: object["data"]?.value ?? "0x")
 
         return UnconfirmedTransaction(
-            transferType: .dapp,
+            transferType: .dapp(requester),
             value: value,
             to: to,
             data: data,

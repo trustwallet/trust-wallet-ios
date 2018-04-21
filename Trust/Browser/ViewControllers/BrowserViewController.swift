@@ -342,7 +342,8 @@ extension BrowserViewController: WKUIDelegate {
 extension BrowserViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard let command = DappAction.fromMessage(message) else { return }
-        let action = DappAction.fromCommand(command)
+        let requester = DAppRequester(title: webView.title, url: webView.url)
+        let action = DappAction.fromCommand(command, requester: requester)
 
         delegate?.didCall(action: action, callbackID: command.id)
     }

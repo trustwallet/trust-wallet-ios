@@ -213,6 +213,8 @@ class ImportWalletViewController: FormViewController {
                 self.displayError(error: error)
             }
         }
+
+        Analytics.track(.importWallet(type))
     }
 
     @objc func demo() {

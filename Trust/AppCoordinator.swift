@@ -16,13 +16,17 @@ class AppCoordinator: NSObject, Coordinator {
     private let lock = Lock()
     private var keystore: Keystore
     private var appTracker = AppTracker()
-    private var navigator: Navigator
+    private var navigator: URLNavigatorCoordinator
+
+    var inCoordinator: InCoordinator? {
+        return self.coordinators.compactMap { $0 as? InCoordinator }.first
+    }
 
     var coordinators: [Coordinator] = []
     init(
         window: UIWindow,
         keystore: Keystore,
-        navigator: Navigator = Navigator(),
+        navigator: URLNavigatorCoordinator = URLNavigatorCoordinator(),
         navigationController: NavigationController = NavigationController()
     ) {
         self.navigationController = navigationController
@@ -46,6 +50,13 @@ class AppCoordinator: NSObject, Coordinator {
             resetToWelcomeScreen()
         }
         pushNotificationRegistrar.reRegister()
+
+        navigator.branch.newEvent = { [weak self] event in
+            guard let coordinator = self?.inCoordinator else {
+                return false
+            }
+            return coordinator.handleEvent(event)
+        }
     }
 
     func showTransactions(for wallet: Wallet) {
@@ -54,11 +65,16 @@ class AppCoordinator: NSObject, Coordinator {
             wallet: wallet,
             keystore: keystore,
             appTracker: appTracker,
-            navigator: navigator
+            navigator: navigator.navigator
         )
         coordinator.delegate = self
         coordinator.start()
         addCoordinator(coordinator)
+
+        // Activate last event on first sign in
+        guard let event = navigator.branch.lastEvent else { return }
+        coordinator.handleEvent(event)
+        navigator.branch.clearEvents()
     }
 
     func inializers() {

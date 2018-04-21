@@ -9,5 +9,5 @@ protocol NonceProvider {
     var latestNonce: BigInt? { get }
     var nextNonce: BigInt? { get }
     var nonceAvailable: Bool { get }
-    func getNextNonce(completion: @escaping (Result<BigInt, AnyError>) -> Void)
+    func getNextNonce(force: Bool, completion: @escaping (Result<BigInt, AnyError>) -> Void)
 }

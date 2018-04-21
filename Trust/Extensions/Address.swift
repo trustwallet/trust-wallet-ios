@@ -16,3 +16,9 @@ enum Errors: LocalizedError {
         }
     }
 }
+
+extension Address {
+    static var zero: Address {
+        return Address(string: "0x0000000000000000000000000000000000000000")!
+    }
+}

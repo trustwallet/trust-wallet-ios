@@ -22,10 +22,10 @@ struct GasViewModel {
     }
 
     var feeText: String {
-        let gasFee = formatter.string(from: self.fee)
-        var text = "\(gasFee.description) \(self.symbol)"
+        let gasFee = formatter.string(from: fee)
+        var text = "\(gasFee.description) \(symbol)"
 
-        if let feeInCurrency = currencyRate?.estimate(fee: gasFee, with: self.symbol),
+        if let feeInCurrency = currencyRate?.estimate(fee: gasFee, with: symbol),
             let result = currencyRate?.format(fee: feeInCurrency) {
             text += " (\(result))"
         }
