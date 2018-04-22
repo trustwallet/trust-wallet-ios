@@ -98,36 +98,54 @@ class TokensDataStore {
         }
     }
 
-    func update(balances: [Address: BigInt]) {
-        try! realm.write {
-            for balance in balances {
-                var update: [String: Any] = [
-                    "contract": balance.key.description,
-                    "value": balance.value.description,
-                ]
+    //Background update of the Realm model.
+    func update(balance: BigInt, for address: Address) {
+        if let tokenToUpdate = enabledObject.first(where: { $0.contract == address.description }) {
+            let tokenBalance = self.getBalance(for: tokenToUpdate)
 
-                if let tokenObject = realm.object(ofType: TokenObject.self, forPrimaryKey: balance.key.description) {
-                    update["balance"] = self.getBalance(for: tokenObject, with: self.tickers())
-                }
+            self.realm.writeAsync(obj: tokenToUpdate) { (realm, tokenToUpdate ) in
+                let update: [String: Any] = [
+                    "contract": address.description,
+                    "value": balance.description,
+                    "balance": tokenBalance,
+                ]
 
                 realm.create(TokenObject.self, value: update, update: true)
             }
         }
     }
 
+    func update(balances: [Address: BigInt]) {
+            for balance in balances {
+                let token = realm.object(ofType: TokenObject.self, forPrimaryKey: balance.key.description)
+                let tokenBalance = self.getBalance(for: token)
+
+                try! realm.write {
+                    let update: [String: Any] = [
+                        "contract": balance.key.description,
+                        "value": balance.value.description,
+                        "balance": tokenBalance,
+                    ]
+
+                    realm.create(TokenObject.self, value: update, update: true)
+                }
+            }
+    }
+
     func update(tokens: [TokenObject], action: TokenAction) {
-        try! realm.write {
-            for token in tokens {
-                switch action {
-                case .disable(let value):
-                    token.isDisabled = value
-                case .updateInfo:
+        for token in tokens {
+            switch action {
+            case .disable(let value):
+                token.isDisabled = value
+            case .updateInfo:
+                try! realm.write {
                     let update: [String: Any] = [
                         "contract": token.address.description,
                         "name": token.name,
                         "symbol": token.symbol,
                         "decimals": token.decimals,
                     ]
+
                     realm.create(TokenObject.self, value: update, update: true)
                 }
             }
@@ -177,7 +195,15 @@ class TokensDataStore {
         )
     }
 
-    func getBalance(for token: TokenObject, with tickers: [CoinTicker]) -> Double {
+    func getBalance(for token: TokenObject?) -> Double {
+        return getBalance(for: token, with: self.tickers())
+    }
+
+    func getBalance(for token: TokenObject?, with tickers: [CoinTicker]) -> Double {
+        guard let token = token else {
+            return TokenObject.DEFAULT_BALANCE
+        }
+
         guard let ticker = tickers.first(where: { $0.contract == token.contract }) else {
             return TokenObject.DEFAULT_BALANCE
         }

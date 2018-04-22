@@ -162,7 +162,6 @@ class TokensViewController: UIViewController {
     @objc func resignActive() {
         etherFetchTimer?.invalidate()
         etherFetchTimer = nil
-        cancelOperations()
         stopTokenObservation()
     }
 
@@ -172,13 +171,8 @@ class TokensViewController: UIViewController {
     }
 
     private func sheduleBalanceUpdate() {
-        etherFetchTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in
-            self?.viewModel.updateEthBalance()
-        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
-    }
-
-    func cancelOperations() {
-        viewModel.cancelOperations()
+        guard etherFetchTimer == nil else { return }
+        etherFetchTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in self?.viewModel.updateEthBalance() }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
 
     private func stopTokenObservation() {
@@ -188,7 +182,6 @@ class TokensViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
         resignActive()
-        cancelOperations()
         stopTokenObservation()
     }
 }
@@ -231,6 +224,8 @@ extension TokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TokenViewCell.identifier, for: indexPath) as! TokenViewCell
         cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
+        cell.contentView.isExclusiveTouch = true
+        cell.isExclusiveTouch = true
         return cell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
