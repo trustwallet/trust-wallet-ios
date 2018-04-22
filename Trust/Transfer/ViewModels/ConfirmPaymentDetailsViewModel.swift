@@ -52,6 +52,19 @@ struct ConfirmPaymentDetailsViewModel {
         return transaction.gasLimit
     }
 
+    var requesterTitle: String {
+        return NSLocalizedString("confirmPayment.requester.label.title", value: "Requester", comment: "")
+    }
+
+    var requesterText: String? {
+        switch transaction.transferType {
+        case .dapp(let request):
+            return request.url?.absoluteString
+        case .ether, .token:
+            return .none
+        }
+    }
+
     var paymentFromTitle: String {
         return NSLocalizedString("confirmPayment.from.label.title", value: "From", comment: "")
     }

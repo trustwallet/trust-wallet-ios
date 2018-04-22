@@ -126,6 +126,13 @@ class ConfirmPaymentViewController: UIViewController {
             },
         ]
 
+        if let requesterText = detailsViewModel.requesterText {
+            items.insert(TransactionAppearance.item(
+                title: detailsViewModel.requesterTitle,
+                subTitle: requesterText
+            ), at: 3)
+        }
+
         // show total ether
         if case TransferType.ether(_) = configurator.transaction.transferType {
             items.append(TransactionAppearance.item(
