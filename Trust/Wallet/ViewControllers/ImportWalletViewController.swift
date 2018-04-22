@@ -214,7 +214,7 @@ class ImportWalletViewController: FormViewController {
             case .failure(let error):
                 self.displayError(error: error)
                 // analytics event for failed wallet import
-                Analytics.track(.failedImportWallet(type))
+                Analytics.track(.failedImportWallet(type, error))
             }
         }
     }

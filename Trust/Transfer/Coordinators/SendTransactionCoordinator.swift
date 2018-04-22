@@ -45,7 +45,7 @@ class SendTransactionCoordinator {
                 case .failure(let error):
                     completion(.failure(AnyError(error)))
                     // analytics event for failed sent transaction from wallet
-                    Analytics.track(.failedTransactionFromWallet)
+                    Analytics.track(.failedTransactionFromWallet(error))
                 }
             }
         }

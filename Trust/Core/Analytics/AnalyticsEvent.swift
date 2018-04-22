@@ -7,7 +7,7 @@ enum AnalyticsEvent {
     case welcomeScreen
     // Activation events - creating or importing a wallet
     case importedWallet(ImportSelectionType)
-    case failedImportWallet(ImportSelectionType)
+    case failedImportWallet(ImportSelectionType, Error)
     case createdWallet
     // Retention events - signing a message or sending a transaction
     case completedTransactionFromBrowser
@@ -15,7 +15,7 @@ enum AnalyticsEvent {
     case signedMessageFromBrowser
     case failedSignedMessageFromBrowser
     case sentTransactionFromWallet
-    case failedTransactionFromWallet
+    case failedTransactionFromWallet(Error)
     // Other  events
     case backedUpWallet
 
@@ -52,8 +52,8 @@ enum AnalyticsEvent {
             return [:]
         case .importedWallet(let type):
             return ["type": type.title]
-        case .failedImportWallet(let type):
-            return ["type": type.title]
+        case .failedImportWallet(let type, let error):
+            return ["type": type.title, "error": error.prettyError]
         case .createdWallet:
             return [:]
         case .completedTransactionFromBrowser:
@@ -66,8 +66,8 @@ enum AnalyticsEvent {
             return [:]
         case .sentTransactionFromWallet:
             return [:]
-        case .failedTransactionFromWallet:
-            return [:]
+        case .failedTransactionFromWallet(let error):
+            return ["error": error.prettyError]
         case .backedUpWallet:
             return [:]
         }
