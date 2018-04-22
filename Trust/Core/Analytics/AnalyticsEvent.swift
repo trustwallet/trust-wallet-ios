@@ -3,31 +3,44 @@
 import Foundation
 
 enum AnalyticsEvent {
+    // Acquisition events
     case welcomeScreen
-    case importWallet(ImportSelectionType)
+    // Activation events - creating or importing a wallet
+    case importedWallet(ImportSelectionType)
+    case failedImportWallet(ImportSelectionType)
     case createdWallet
-    case completedTransaction
-    case failedTransaction
-    case signedMessage
-    case failedSignedMessage
+    // Retention events - signing a message or sending a transaction
+    case completedTransactionFromBrowser
+    case failedTransactionFromBrowser
+    case signedMessageFromBrowser
+    case failedSignedMessageFromBrowser
+    case sentTransactionFromWallet
+    case failedTransactionFromWallet
+    // Other  events
     case backedUpWallet
 
     var event: String {
         switch self {
         case .welcomeScreen:
             return "welcomeScreen"
-        case .importWallet:
-            return "importWallet"
+        case .importedWallet:
+            return "importedWallet"
+        case .failedImportWallet:
+            return "failedImportWallet"
         case .createdWallet:
             return "createdWallet"
-        case .completedTransaction:
-            return "completedTransaction"
-        case .failedTransaction:
-            return "failedTransaction"
-        case .signedMessage:
-            return "signedMessage"
-        case .failedSignedMessage:
-            return "failedSignedMessage"
+        case .completedTransactionFromBrowser:
+            return "completedTransactionFromBrowser"
+        case .failedTransactionFromBrowser:
+            return "failedTransactionFromBrowser"
+        case .signedMessageFromBrowser:
+            return "signedMessageFromBrowser"
+        case .failedSignedMessageFromBrowser:
+            return "failedSignedMessageFromBrowser"
+        case .sentTransactionFromWallet:
+            return "sentTransactionFromWallet"
+        case .failedTransactionFromWallet:
+            return "failedTransactionFromWallet"
         case .backedUpWallet:
             return "backedUpWallet"
         }
@@ -37,21 +50,26 @@ enum AnalyticsEvent {
         switch self {
         case .welcomeScreen:
             return [:]
-        case .importWallet(let type):
+        case .importedWallet(let type):
+            return ["type": type.title]
+        case .failedImportWallet(let type):
             return ["type": type.title]
         case .createdWallet:
             return [:]
-        case .completedTransaction:
+        case .completedTransactionFromBrowser:
             return [:]
-        case .failedTransaction:
+        case .failedTransactionFromBrowser:
             return [:]
-        case .signedMessage:
+        case .signedMessageFromBrowser:
             return [:]
-        case .failedSignedMessage:
+        case .failedSignedMessageFromBrowser:
+            return [:]
+        case .sentTransactionFromWallet:
+            return [:]
+        case .failedTransactionFromWallet:
             return [:]
         case .backedUpWallet:
             return [:]
-            
         }
     }
 }
