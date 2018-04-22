@@ -133,20 +133,19 @@ class TokensDataStore {
     }
 
     func update(tokens: [TokenObject], action: TokenAction) {
-        for token in tokens {
-            switch action {
-            case .disable(let value):
-                token.isDisabled = value
-            case .updateInfo:
-                try! realm.write {
-                    let update: [String: Any] = [
-                        "contract": token.address.description,
-                        "name": token.name,
-                        "symbol": token.symbol,
-                        "decimals": token.decimals,
-                    ]
-
-                    realm.create(TokenObject.self, value: update, update: true)
+        try! realm.write {
+            for token in tokens {
+                switch action {
+                case .disable(let value):
+                    token.isDisabled = value
+                case .updateInfo:
+                        let update: [String: Any] = [
+                            "contract": token.address.description,
+                            "name": token.name,
+                            "symbol": token.symbol,
+                            "decimals": token.decimals,
+                        ]
+                        realm.create(TokenObject.self, value: update, update: true)
                 }
             }
         }
