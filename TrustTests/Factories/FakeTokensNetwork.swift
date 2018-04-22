@@ -11,6 +11,7 @@ import PromiseKit
 import enum Result.Result
 
 class FakeTokensNetwork: NetworkProtocol {
+
     var provider: MoyaProvider<TrustService>
     var balanceService: TokensBalanceService
     var account: Trust.Wallet
@@ -82,6 +83,13 @@ class FakeTokensNetwork: NetworkProtocol {
         return Promise { seal in
            let token = TokenObject(contract: "0xe41d2489571d322189246dafa5ebde1f4699f498", name: "0x project", symbol: "ZRX", decimals: 18, value: "39330812000000000000000", isCustom: true, isDisabled: false)
             seal.fulfill([token])
+        }
+    }
+
+    func search(token: String) -> Promise<TokenObject> {
+        return Promise { seal in
+            let token = TokenObject(contract: "0xe41d2489571d322189246dafa5ebde1f4699f498", name: "0x project", symbol: "ZRX", decimals: 18, value: "39330812000000000000000", isCustom: true, isDisabled: false)
+            seal.fulfill(token)
         }
     }
 }

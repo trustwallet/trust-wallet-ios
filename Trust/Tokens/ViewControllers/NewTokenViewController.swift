@@ -4,6 +4,7 @@ import Foundation
 import Eureka
 import TrustCore
 import QRCodeReaderViewController
+import PromiseKit
 
 protocol NewTokenViewControllerDelegate: class {
     func didAddToken(token: ERC20Token, in viewController: NewTokenViewController)
@@ -11,9 +12,7 @@ protocol NewTokenViewControllerDelegate: class {
 
 class NewTokenViewController: FormViewController {
 
-    lazy var viewModel: NewTokenViewModel = {
-        return NewTokenViewModel(token: token)
-    }()
+    private var viewModel: NewTokenViewModel
 
     private struct Values {
         static let contract = "contract"
@@ -39,8 +38,9 @@ class NewTokenViewController: FormViewController {
 
     private let token: ERC20Token?
 
-    init(token: ERC20Token?) {
+    init(token: ERC20Token?, viewModel: NewTokenViewModel) {
         self.token = token
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -139,6 +139,26 @@ class NewTokenViewController: FormViewController {
     private func updateContractValue(value: String) {
         contractRow?.value = value
         contractRow?.reload()
+        fetchInfo(for: value)
+    }
+
+    private func fetchInfo(for contract: String) {
+        displayLoading()
+        firstly {
+            viewModel.info(for: contract)
+        }.done { [weak self] token in
+            self?.nameRow?.value = token.name
+            self?.decimalsRow?.value = token.decimals.description
+            self?.symbolRow?.value = token.symbol
+            self?.nameRow?.reload()
+            self?.decimalsRow?.reload()
+            self?.symbolRow?.reload()
+        }.ensure { [weak self] in
+            self?.hideLoading()
+        }.catch {_ in
+            //We could not find any info about this contract.This error is already logged in crashlytics.
+        }
+
     }
 
     required init?(coder aDecoder: NSCoder) {

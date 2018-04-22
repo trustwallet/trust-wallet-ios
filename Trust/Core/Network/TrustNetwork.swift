@@ -10,6 +10,7 @@ import enum Result.Result
 
 enum TrustNetworkProtocolError: LocalizedError {
     case missingPrices
+    case missingContractInfo
 }
 
 protocol NetworkProtocol: TrustNetworkProtocol {
@@ -21,6 +22,7 @@ protocol NetworkProtocol: TrustNetworkProtocol {
     func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
     func update(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void)
     func search(token: String, completion: @escaping (([TokenObject]) -> Void))
+    func search(token: String) -> Promise<TokenObject>
 }
 
 class TrustNetwork: NetworkProtocol {
@@ -257,6 +259,27 @@ class TrustNetwork: NetworkProtocol {
                     completion([])
                 }
             case .failure: completion([])
+            }
+        }
+    }
+
+    func search(token: String) -> Promise<TokenObject> {
+        return Promise { seal in
+            provider.request(.search(token: token)) { result in
+                switch result {
+                case .success(let response):
+                    do {
+                        let tokens = try response.map([TokenObject].self)
+                        guard let token = tokens.first(where: { $0.address.eip55String == Address(string: token)?.eip55String }) else {
+                             return seal.reject(TrustNetworkProtocolError.missingContractInfo)
+                        }
+                        seal.fulfill(token)
+                    } catch {
+                        seal.reject(error)
+                    }
+                case .failure(let error):
+                    seal.reject(error)
+                }
             }
         }
     }
