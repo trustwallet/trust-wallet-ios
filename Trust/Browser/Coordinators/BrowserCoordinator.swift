@@ -114,11 +114,16 @@ class BrowserCoordinator: Coordinator {
                     self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
                     self.delegate?.didSentTransaction(transaction: transaction, in: self)
                 }
+                // analytics event for successfully completed transaction
+                    // can we track by type without separate events for each case above?
+                Analytics.track(.completedTransactionFromBrowser)
             case .failure:
                 self.rootViewController.browserViewController.notifyFinish(
                     callbackID: callbackID,
                     value: .failure(DAppError.cancelled)
                 )
+                // analytics event for failed transaction
+                Analytics.track(.failedTransactionFromBrowser)
             }
             self.removeCoordinator(coordinator)
             self.navigationController.dismiss(animated: true, completion: nil)
@@ -161,8 +166,13 @@ class BrowserCoordinator: Coordinator {
                     callback = DappCallback(id: callbackID, value: .signTypedMessage(data))
                 }
                 self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+                // analytics event for succesfully signed message
+                    // can we track by type without separate events for each case above?
+                Analytics.track(.signedMessageFromBrowser)
             case .failure:
                 self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
+                // analytics event for failed message signing
+                Analytics.track(.failedSignedMessageFromBrowser)
             }
             self.removeCoordinator(coordinator)
         }
