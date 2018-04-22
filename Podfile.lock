@@ -44,6 +44,15 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - PromiseKit (6.2.4):
+    - PromiseKit/CorePromise (= 6.2.4)
+    - PromiseKit/Foundation (= 6.2.4)
+    - PromiseKit/UIKit (= 6.2.4)
+  - PromiseKit/CorePromise (6.2.4)
+  - PromiseKit/Foundation (6.2.4):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.2.4):
+    - PromiseKit/CorePromise
   - QRCodeReaderViewController (4.0.2)
   - R.swift (4.0.0):
     - R.swift.Library (~> 4.0.0)
@@ -87,6 +96,7 @@ DEPENDENCIES:
   - Lokalise
   - MBProgressHUD
   - Moya (~> 10.0.1)
+  - PromiseKit (~> 6.0)
   - QRCodeReaderViewController (from `https://github.com/yannickl/QRCodeReaderViewController.git`, branch `master`)
   - R.swift
   - RealmSwift
@@ -120,6 +130,7 @@ SPEC REPOS:
     - MBProgressHUD
     - Moya
     - nanopb
+    - PromiseKit
     - R.swift
     - R.swift.Library
     - Realm
@@ -184,6 +195,7 @@ SPEC CHECKSUMS:
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Moya: 9e621707ff754eeb51ff3ec51a3d54e517c0733a
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  PromiseKit: 625b1fc69944fc839503748101c5968cf54b527b
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
@@ -201,6 +213,6 @@ SPEC CHECKSUMS:
   TrustWeb3Provider: 28b6d50d67fada7174a0c279d45cee95d90ec66f
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
-PODFILE CHECKSUM: 7f1175e0e6447ae992c9047de2c88e12564ca350
+PODFILE CHECKSUM: 7d13c4b13c64b96d31680e6ab206eb0f07d1ce63
 
 COCOAPODS: 1.5.0
