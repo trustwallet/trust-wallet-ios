@@ -179,7 +179,6 @@ class BrowserCoordinator: Coordinator {
         coordinator.delegate = self
         addCoordinator(coordinator)
         coordinator.start(with: type)
-        
     }
 
     func presentQRCodeReader() {

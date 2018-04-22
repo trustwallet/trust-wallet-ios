@@ -217,8 +217,6 @@ class ImportWalletViewController: FormViewController {
                 Analytics.track(.failedImportWallet(type))
             }
         }
-
-        
     }
 
     @objc func demo() {
