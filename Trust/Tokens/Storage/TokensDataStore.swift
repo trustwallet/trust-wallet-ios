@@ -70,7 +70,7 @@ class TokensDataStore {
     }
 
     func add(tokens: [Object]) {
-        try! realm.write {
+        try? realm.write {
             if let tokenObjects = tokens as? [TokenObject] {
                 let tokenObjectsWithBalance = tokenObjects.map { tokenObject -> TokenObject in
                     tokenObject.balance = self.getBalance(for: tokenObject, with: self.tickers())
@@ -84,14 +84,14 @@ class TokensDataStore {
     }
 
     func delete(tokens: [Object]) {
-        try! realm.write {
+        try? realm.write {
             realm.delete(tokens)
         }
     }
 
     func deleteAll() {
         deleteAllExistingTickers()
-        try! realm.write {
+        try? realm.write {
             realm.delete(realm.objects(TokenObject.self))
             realm.delete(realm.objects(NonFungibleTokenObject.self))
             realm.delete(realm.objects(NonFungibleTokenCategory.self))
@@ -120,7 +120,7 @@ class TokensDataStore {
                 let token = realm.object(ofType: TokenObject.self, forPrimaryKey: balance.key.description)
                 let tokenBalance = self.getBalance(for: token)
 
-                try! realm.write {
+                try? realm.write {
                     let update: [String: Any] = [
                         "contract": balance.key.description,
                         "value": balance.value.description,
@@ -133,7 +133,7 @@ class TokensDataStore {
     }
 
     func update(tokens: [TokenObject], action: TokenAction) {
-        try! realm.write {
+        try? realm.write {
             for token in tokens {
                 switch action {
                 case .disable(let value):
