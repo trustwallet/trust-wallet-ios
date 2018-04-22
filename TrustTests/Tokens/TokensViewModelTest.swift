@@ -37,7 +37,9 @@ class TokensViewModelTest: XCTestCase {
     func testBalance() {
         model.updateEthBalance()
         let token = model.tokens[firstItem.row]
-        XCTAssertNotNil(token)
-        XCTAssertEqual(BigInt(100), token.valueBigInt)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: {
+            XCTAssertNotNil(token)
+            XCTAssertEqual(BigInt(100), token.valueBigInt)
+        })
     }
 }

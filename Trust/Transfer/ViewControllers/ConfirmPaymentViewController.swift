@@ -90,6 +90,9 @@ class ConfirmPaymentViewController: UIViewController {
         header.amountLabel.text = detailsViewModel.amountString
         header.amountLabel.font = detailsViewModel.amountFont
         header.amountLabel.textColor = detailsViewModel.amountTextColor
+        header.monetaryAmountLabel.text = detailsViewModel.monetaryAmountString
+        header.monetaryAmountLabel.font = detailsViewModel.monetaryLabelFont
+        header.monetaryAmountLabel.textColor = detailsViewModel.monetaryLabelTextColor
 
         var items: [UIView] = [
             .spacer(),
@@ -122,6 +125,13 @@ class ConfirmPaymentViewController: UIViewController {
                 self.edit()
             },
         ]
+
+        if let requesterText = detailsViewModel.requesterText {
+            items.insert(TransactionAppearance.item(
+                title: detailsViewModel.requesterTitle,
+                subTitle: requesterText
+            ), at: 3)
+        }
 
         // show total ether
         if case TransferType.ether(_) = configurator.transaction.transferType {

@@ -5,7 +5,8 @@ import UIKit
 
 class TransactionHeaderView: UIView {
 
-    let amountLabel = UILabel(frame: .zero)
+    let amountLabel = UILabel()
+    let monetaryAmountLabel = UILabel()
 
     override init(frame: CGRect = .zero) {
 
@@ -14,9 +15,22 @@ class TransactionHeaderView: UIView {
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
         amountLabel.textAlignment = .center
 
-        addSubview(amountLabel)
+        monetaryAmountLabel.translatesAutoresizingMaskIntoConstraints = false
+        monetaryAmountLabel.textAlignment = .center
 
-        amountLabel.anchor(to: self, margin: 15)
+        let stackView = UIStackView(arrangedSubviews: [
+            amountLabel,
+            monetaryAmountLabel,
+        ])
+        stackView.axis = .vertical
+        stackView.spacing = 6
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        addSubview(stackView)
+
+        stackView.anchor(to: self, margin: 15)
     }
 
     required init?(coder aDecoder: NSCoder) {

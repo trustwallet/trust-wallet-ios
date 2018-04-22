@@ -1,19 +1,28 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
+import PromiseKit
 import Moya
 import TrustCore
 import JSONRPCKit
 import APIKit
 import Result
+import enum Result.Result
+
+enum TrustNetworkProtocolError: LocalizedError {
+    case missingPrices
+    case missingContractInfo
+}
 
 protocol NetworkProtocol: TrustNetworkProtocol {
-    func tickers(with tokenPrices: [TokenPrice], completion: @escaping (_ tickers: [CoinTicker]?) -> Void)
     func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void)
     func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void)
-    func tokensList(for address: Address, completion: @escaping (_ result: ([TokenObject]?)) -> Void)
+    func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]>
+    func ethBalance() -> Promise<Balance>
+    func tokensList(for address: Address) -> Promise<[TokenObject]>
     func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
     func update(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void)
     func search(token: String, completion: @escaping (([TokenObject]) -> Void))
+    func search(token: String) -> Promise<TokenObject>
 }
 
 class TrustNetwork: NetworkProtocol {
@@ -42,12 +51,27 @@ class TrustNetwork: NetworkProtocol {
                 return
             }
             do {
-                let tickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
+                let rawTickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
+                let tickers = rawTickers.map {rawTicker in
+                    return self.getTickerFrom(rawTicker: rawTicker, withKey: self.config.tickersKey)
+                }
                 completion(tickers)
             } catch {
                 completion(nil)
             }
         }
+    }
+
+    private func getTickerFrom(rawTicker: CoinTicker, withKey tickersKey: String) -> CoinTicker {
+        return CoinTicker(
+            id: rawTicker.id,
+            symbol: rawTicker.symbol,
+            price: rawTicker.price,
+            percent_change_24h: rawTicker.percent_change_24h,
+            contract: rawTicker.contract,
+            image: rawTicker.image,
+            tickersKey: tickersKey
+        )
     }
 
     func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void) {
@@ -67,6 +91,62 @@ class TrustNetwork: NetworkProtocol {
                     completion(Balance(value: balance))
                 case .failure:
                     completion(nil)
+                }
+            }
+        }
+    }
+
+    func ethBalance() -> Promise<Balance> {
+        return Promise { seal in
+            balanceService.getEthBalance(for: account.address) { result in
+                switch result {
+                case .success(let balance):
+                    seal.fulfill(balance)
+                case .failure(let error):
+                    seal.reject(error)
+                }
+            }
+        }
+    }
+
+    func tokensList(for address: Address) -> Promise<[TokenObject]> {
+        return Promise { seal in
+            provider.request(.getTokens(address: address.description, showBalance: false)) { result in
+                switch result {
+                case .success(let response):
+                    do {
+                        let items = try response.map(ArrayResponse<TokenObjectList>.self).docs
+                        let tokens = items.map { $0.contract }
+                        seal.fulfill(tokens)
+                    } catch {
+                        seal.reject(error)
+                    }
+                case .failure(let error):
+                    seal.reject(error)
+                }
+            }
+        }
+    }
+
+    func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]> {
+        return Promise { seal in
+            let tokensPriceToFetch = TokensPrice(
+                currency: config.currency.rawValue,
+                tokens: tokenPrices
+            )
+            provider.request(.prices(tokensPriceToFetch)) { result in
+                guard case .success(let response) = result else {
+                    seal.reject(TrustNetworkProtocolError.missingPrices)
+                    return
+                }
+                do {
+                    let rawTickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
+                    let tickers = rawTickers.map {rawTicker in
+                        return self.getTickerFrom(rawTicker: rawTicker, withKey: self.config.tickersKey)
+                    }
+                    seal.fulfill(tickers)
+                } catch {
+                   seal.reject(error)
                 }
             }
         }
@@ -179,6 +259,27 @@ class TrustNetwork: NetworkProtocol {
                     completion([])
                 }
             case .failure: completion([])
+            }
+        }
+    }
+
+    func search(token: String) -> Promise<TokenObject> {
+        return Promise { seal in
+            provider.request(.search(token: token)) { result in
+                switch result {
+                case .success(let response):
+                    do {
+                        let tokens = try response.map([TokenObject].self)
+                        guard let token = tokens.first(where: { $0.address.eip55String == Address(string: token)?.eip55String }) else {
+                             return seal.reject(TrustNetworkProtocolError.missingContractInfo)
+                        }
+                        seal.fulfill(token)
+                    } catch {
+                        seal.reject(error)
+                    }
+                case .failure(let error):
+                    seal.reject(error)
+                }
             }
         }
     }
