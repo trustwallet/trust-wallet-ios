@@ -37,10 +37,6 @@ class TokensDataStore {
         return realm.objects(NonFungibleTokenObject.self).map { $0 }
     }
 
-    private lazy var tickersKey: String = {
-        return "tickers-" + config.currency.rawValue + "-" + String(config.chainID)
-    }()
-
     init(
         realm: Realm,
         config: Config
@@ -75,7 +71,15 @@ class TokensDataStore {
 
     func add(tokens: [Object]) {
         try! realm.write {
-            realm.add(tokens, update: true)
+            if let tokenObjects = tokens as? [TokenObject] {
+                let tokenObjectsWithBalance = tokenObjects.map { tokenObject -> TokenObject in
+                    tokenObject.balance = self.getBalance(for: tokenObject, with: self.tickers())
+                    return tokenObject
+                }
+                realm.add(tokenObjectsWithBalance, update: true)
+            } else {
+                realm.add(tokens, update: true)
+            }
         }
     }
 
@@ -86,7 +90,7 @@ class TokensDataStore {
     }
 
     func deleteAll() {
-        deleteTickers()
+        deleteAllExistingTickers()
         try! realm.write {
             realm.delete(realm.objects(TokenObject.self))
             realm.delete(realm.objects(NonFungibleTokenObject.self))
@@ -97,43 +101,51 @@ class TokensDataStore {
     //Background update of the Realm model.
     func update(balance: BigInt, for address: Address) {
         if let tokenToUpdate = enabledObject.first(where: { $0.contract == address.description }) {
+            let tokenBalance = self.getBalance(for: tokenToUpdate)
+
             self.realm.writeAsync(obj: tokenToUpdate) { (realm, tokenToUpdate ) in
-                let update = [
+                let update: [String: Any] = [
                     "contract": address.description,
                     "value": balance.description,
+                    "balance": tokenBalance,
                 ]
-                if tokenToUpdate?.value != balance.description {
-                    realm.create(TokenObject.self, value: update, update: true)
-                }
-            }
-        }
-    }
 
-    func update(balances: [Address: BigInt]) {
-        try! realm.write {
-            for balance in balances {
-                let update = [
-                    "contract": balance.key.description,
-                    "value": balance.value.description,
-                    ]
                 realm.create(TokenObject.self, value: update, update: true)
             }
         }
     }
 
+    func update(balances: [Address: BigInt]) {
+            for balance in balances {
+                let token = realm.object(ofType: TokenObject.self, forPrimaryKey: balance.key.description)
+                let tokenBalance = self.getBalance(for: token)
+
+                try! realm.write {
+                    let update: [String: Any] = [
+                        "contract": balance.key.description,
+                        "value": balance.value.description,
+                        "balance": tokenBalance,
+                    ]
+
+                    realm.create(TokenObject.self, value: update, update: true)
+                }
+            }
+    }
+
     func update(tokens: [TokenObject], action: TokenAction) {
-        try! realm.write {
-            for token in tokens {
-                switch action {
-                case .disable(let value):
-                    token.isDisabled = value
-                case .updateInfo:
+        for token in tokens {
+            switch action {
+            case .disable(let value):
+                token.isDisabled = value
+            case .updateInfo:
+                try! realm.write {
                     let update: [String: Any] = [
                         "contract": token.address.description,
                         "name": token.name,
                         "symbol": token.symbol,
                         "decimals": token.decimals,
                     ]
+
                     realm.create(TokenObject.self, value: update, update: true)
                 }
             }
@@ -144,28 +156,32 @@ class TokensDataStore {
         guard !tickers.isEmpty else {
             return
         }
-        do {
-            config.defaults.set(try PropertyListEncoder().encode(tickers), forKey: tickersKey)
-        } catch {
-            print(error.localizedDescription)
+
+        deleteAllExistingTickers()
+
+        try? realm.write {
+            realm.add(tickers, update: true)
         }
     }
 
     func tickers() -> [CoinTicker] {
+        let coinTickers: [CoinTicker] = tickerResultsByTickersKey.map { $0 }
 
-        guard let storedObject: Data = UserDefaults.standard.data(forKey: tickersKey) else {
+        guard !coinTickers.isEmpty else {
             return [CoinTicker]()
         }
 
-        do {
-            return try PropertyListDecoder().decode([CoinTicker].self, from: storedObject)
-        } catch {
-           return [CoinTicker]()
-        }
+        return coinTickers
     }
 
-    func deleteTickers() {
-        config.defaults.removeObject(forKey: tickersKey)
+    private var tickerResultsByTickersKey: Results<CoinTicker> {
+        return realm.objects(CoinTicker.self).filter("tickersKey == %@", self.config.tickersKey)
+    }
+
+    func deleteAllExistingTickers() {
+        try? realm.write {
+            realm.delete(tickerResultsByTickersKey)
+        }
     }
 
     static func etherToken(for config: Config = .current) -> TokenObject {
@@ -177,5 +193,29 @@ class TokensDataStore {
             value: "0",
             isCustom: false
         )
+    }
+
+    func getBalance(for token: TokenObject?) -> Double {
+        return getBalance(for: token, with: self.tickers())
+    }
+
+    func getBalance(for token: TokenObject?, with tickers: [CoinTicker]) -> Double {
+        guard let token = token else {
+            return TokenObject.DEFAULT_BALANCE
+        }
+
+        guard let ticker = tickers.first(where: { $0.contract == token.contract }) else {
+            return TokenObject.DEFAULT_BALANCE
+        }
+
+        guard let amountInBigInt = BigInt(token.value), let price = Double(ticker.price) else {
+            return TokenObject.DEFAULT_BALANCE
+        }
+
+        guard let amountInDecimal = EtherNumberFormatter.full.decimal(from: amountInBigInt, decimals: token.decimals) else {
+            return TokenObject.DEFAULT_BALANCE
+        }
+
+        return amountInDecimal.doubleValue * price
     }
 }
