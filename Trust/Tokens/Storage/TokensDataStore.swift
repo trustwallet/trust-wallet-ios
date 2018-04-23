@@ -156,9 +156,6 @@ class TokensDataStore {
         guard !tickers.isEmpty else {
             return
         }
-
-        deleteAllExistingTickers()
-
         try? realm.write {
             realm.add(tickers, update: true)
         }
