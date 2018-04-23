@@ -51,12 +51,12 @@ struct TransactionDetailsViewModel {
 
     var title: String {
         if transaction.state == .pending {
-            return NSLocalizedString("Pending", value: "Pending", comment: "")
+            return NSLocalizedString("Pending Transaction", value: "Pending Transaction", comment: "")
         }
         if transactionViewModel.direction == .incoming {
-            return NSLocalizedString("Incoming", value: "Incoming", comment: "")
+            return NSLocalizedString("Incoming Transaction", value: "Incoming Transaction", comment: "")
         }
-        return NSLocalizedString("Outgoing", value: "Outgoing", comment: "")
+        return NSLocalizedString("Outgoing Transaction", value: "Outgoing Transaction", comment: "")
     }
 
     var backgroundColor: UIColor {

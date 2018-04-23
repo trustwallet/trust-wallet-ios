@@ -65,10 +65,6 @@ struct ConfirmPaymentDetailsViewModel {
         }
     }
 
-    var paymentFromTitle: String {
-        return NSLocalizedString("confirmPayment.from.label.title", value: "From", comment: "")
-    }
-
     var paymentToTitle: String {
         return NSLocalizedString("confirmPayment.to.label.title", value: "To", comment: "")
     }

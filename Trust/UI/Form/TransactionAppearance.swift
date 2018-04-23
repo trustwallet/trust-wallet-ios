@@ -64,4 +64,45 @@ struct TransactionAppearance {
 
         return stackView
     }
+
+    static func horizontalItem(views: [UIView], distribution: UIStackViewDistribution = .fillProportionally) -> UIView {
+        let view = UIStackView(arrangedSubviews: views)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.distribution = distribution
+        return view
+    }
+
+    static func oneLine(
+        title: String,
+        subTitle: String,
+        layoutMargins: UIEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15),
+        completion:((_ title: String, _ value: String, _ sender: UIView) -> Void)? = .none
+    ) -> UIView {
+        let titleLabel = UILabel(frame: .zero)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.text = title
+        titleLabel.font = AppStyle.heading.font
+        titleLabel.textColor = AppStyle.heading.textColor
+        titleLabel.textAlignment = .left
+
+        let subTitleLabel = UILabel(frame: .zero)
+        subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        subTitleLabel.text = subTitle
+        subTitleLabel.font = AppStyle.paragraph.font
+        subTitleLabel.textColor = AppStyle.paragraph.textColor
+        subTitleLabel.textAlignment = .right
+
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 6
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        stackView.isLayoutMarginsRelativeArrangement = true
+
+        UITapGestureRecognizer(addToView: stackView) {
+            completion?(title, subTitle, stackView)
+        }
+
+        return stackView
+    }
 }

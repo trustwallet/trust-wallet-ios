@@ -57,13 +57,6 @@ class TransactionViewController: UIViewController {
         let confirmationView = item(title: viewModel.confirmationLabelTitle, value: viewModel.confirmation)
         confirmationView.widthAnchor.constraint(equalToConstant: 140).isActive = true
 
-        let confirmationStackView = UIStackView(arrangedSubviews: [
-            confirmationView,
-            TransactionAppearance.divider(direction: .vertical, color: dividerColor, alpha: 1, layoutInsets: .zero),
-            item(title: viewModel.createdAtLabelTitle, value: viewModel.createdAt),
-        ])
-        confirmationStackView.translatesAutoresizingMaskIntoConstraints = false
-
         var items: [UIView] = [
             .spacer(),
             header,
@@ -74,7 +67,11 @@ class TransactionViewController: UIViewController {
             TransactionAppearance.divider(color: dividerColor, alpha: 1, layoutInsets: dividerOffset),
             item(title: viewModel.gasFeeLabelTitle, value: viewModel.gasFee),
             TransactionAppearance.divider(color: dividerColor, alpha: 1),
-            confirmationStackView,
+            TransactionAppearance.horizontalItem(views: [
+                confirmationView,
+                TransactionAppearance.divider(direction: .vertical, color: dividerColor, alpha: 1, layoutInsets: .zero),
+                item(title: viewModel.createdAtLabelTitle, value: viewModel.createdAt),
+            ]),
             TransactionAppearance.divider(color: dividerColor, alpha: 1, layoutInsets: dividerOffset),
             item(title: viewModel.nonceTitle, value: viewModel.nonce),
         ]

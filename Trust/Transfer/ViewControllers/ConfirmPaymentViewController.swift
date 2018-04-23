@@ -99,26 +99,22 @@ class ConfirmPaymentViewController: UIViewController {
             header,
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(
-                title: detailsViewModel.paymentFromTitle,
-                subTitle: session.account.address.description
-            ),
-            TransactionAppearance.item(
                 title: detailsViewModel.paymentToTitle,
                 subTitle: detailsViewModel.paymentToText
             ),
-            TransactionAppearance.item(
-                title: detailsViewModel.gasLimitTitle,
-                subTitle: detailsViewModel.gasLimitText
-            ) { [unowned self] _, _, _ in
-                self.edit()
-            },
-            TransactionAppearance.item(
+            TransactionAppearance.oneLine(
                 title: detailsViewModel.gasPriceTitle,
                 subTitle: detailsViewModel.gasPriceText
             ) { [unowned self] _, _, _ in
                 self.edit()
             },
-            TransactionAppearance.item(
+            TransactionAppearance.oneLine(
+                title: detailsViewModel.gasLimitTitle,
+                subTitle: detailsViewModel.gasLimitText
+            ) { [unowned self] _, _, _ in
+                self.edit()
+            },
+            TransactionAppearance.oneLine(
                 title: detailsViewModel.feeTitle,
                 subTitle: detailsViewModel.feeText
             ) { [unowned self] _, _, _ in
@@ -127,7 +123,7 @@ class ConfirmPaymentViewController: UIViewController {
         ]
 
         if let requesterText = detailsViewModel.requesterText {
-            items.insert(TransactionAppearance.item(
+            items.insert(TransactionAppearance.oneLine(
                 title: detailsViewModel.requesterTitle,
                 subTitle: requesterText
             ), at: 3)
@@ -135,7 +131,7 @@ class ConfirmPaymentViewController: UIViewController {
 
         // show total ether
         if case TransferType.ether(_) = configurator.transaction.transferType {
-            items.append(TransactionAppearance.item(
+            items.append(TransactionAppearance.oneLine(
                 title: detailsViewModel.totalTitle,
                 subTitle: detailsViewModel.totalText
             ))
