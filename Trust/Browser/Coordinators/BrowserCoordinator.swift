@@ -6,12 +6,13 @@ import BigInt
 import TrustKeystore
 import RealmSwift
 import URLNavigator
+import WebKit
 
 protocol BrowserCoordinatorDelegate: class {
     func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator)
 }
 
-class BrowserCoordinator: Coordinator {
+class BrowserCoordinator: NSObject, Coordinator {
     var coordinators: [Coordinator] = []
     let session: WalletSession
     let keystore: Keystore
@@ -43,6 +44,7 @@ class BrowserCoordinator: Coordinator {
     lazy var browserViewController: BrowserViewController = {
         let controller = BrowserViewController(account: session.account, config: session.config)
         controller.delegate = self
+        controller.webView.uiDelegate = self
         return controller
     }()
     private let sharedRealm: Realm
@@ -252,6 +254,8 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
             case .enter(let string):
                 guard let url = urlParser.url(from: string) else { return }
                 openURL(url)
+            case .goBack:
+                rootViewController.browserViewController.webView.goBack()
             default: break
             }
         case .changeURL(let url):
@@ -331,6 +335,67 @@ extension BrowserCoordinator: HistoryViewControllerDelegate {
             return
         }
         openURL(url)
+    }
+}
+
+extension BrowserCoordinator: WKUIDelegate {
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        if navigationAction.targetFrame == nil {
+            browserViewController.webView.load(navigationAction.request)
+        }
+        return nil
+    }
+
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        let alertController = UIAlertController.alertController(
+            title: .none,
+            message: message,
+            style: .alert,
+            in: navigationController
+        )
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
+            completionHandler()
+        }))
+        navigationController.present(alertController, animated: true, completion: nil)
+    }
+
+    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+        let alertController = UIAlertController.alertController(
+            title: .none,
+            message: message,
+            style: .alert,
+            in: navigationController
+        )
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
+            completionHandler(true)
+        }))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .default, handler: { _ in
+            completionHandler(false)
+        }))
+        navigationController.present(alertController, animated: true, completion: nil)
+    }
+
+    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+        let alertController = UIAlertController.alertController(
+            title: .none,
+            message: prompt,
+            style: .alert,
+            in: navigationController
+        )
+        alertController.addTextField { (textField) in
+            textField.text = defaultText
+        }
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
+            if let text = alertController.textFields?.first?.text {
+                completionHandler(text)
+            } else {
+                completionHandler(defaultText)
+            }
+        }))
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .default, handler: { _ in
+            completionHandler(nil)
+        }))
+        navigationController.present(alertController, animated: true, completion: nil)
     }
 }
 

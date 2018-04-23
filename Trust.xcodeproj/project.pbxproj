@@ -204,7 +204,6 @@
 		29E14FDB1F7F4F3D00185568 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E14FDA1F7F4F3D00185568 /* Transaction.swift */; };
 		29E2E33A1F7A008C000CF94A /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E3391F7A008C000CF94A /* UIView.swift */; };
 		29E2E33E1F7A2423000CF94A /* TransactionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */; };
-		29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */; };
 		29E6E06E1FE897EE0079265A /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6E06D1FE897EE0079265A /* BrowserViewController.swift */; };
 		29E6E0701FEA12910079265A /* TransactionConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6E06F1FEA12910079265A /* TransactionConfigurator.swift */; };
 		29E6E0721FEA200D0079265A /* ConfirmPaymentDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E6E0711FEA200D0079265A /* ConfirmPaymentDetailsViewModel.swift */; };
@@ -679,7 +678,6 @@
 		29E14FDA1F7F4F3D00185568 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		29E2E3391F7A008C000CF94A /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		29E2E33D1F7A2423000CF94A /* TransactionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHeaderView.swift; sourceTree = "<group>"; };
-		29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonRow.swift; sourceTree = "<group>"; };
 		29E6E06D1FE897EE0079265A /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		29E6E06F1FEA12910079265A /* TransactionConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionConfigurator.swift; sourceTree = "<group>"; };
 		29E6E0711FEA200D0079265A /* ConfirmPaymentDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPaymentDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -2012,7 +2010,6 @@
 			isa = PBXGroup;
 			children = (
 				29FF12FA1F74CC8200AFD326 /* EthereumAddressRule.swift */,
-				29E2E3401F7B1585000CF94A /* ActionButtonRow.swift */,
 				295247E61F835BA0007FDC31 /* InfoHeaderView.swift */,
 				2963B6AC1F981A96003063C1 /* TransactionAppearance.swift */,
 				29F114F11FA7966300114A29 /* PrivateKeyRule.swift */,
@@ -2994,7 +2991,6 @@
 				299B5E471FD2C87F0051361C /* ConfigureTransactionError.swift in Sources */,
 				77E81D94203687FB00534C99 /* NotificationsViewController.swift in Sources */,
 				615F10561FCBEF2E008A45AF /* OnboardingPageViewModel.swift in Sources */,
-				29E2E3411F7B1585000CF94A /* ActionButtonRow.swift in Sources */,
 				29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */,
 				73200B752048B67E00118A82 /* NonFungibleTokenObject.swift in Sources */,
 				77872D27202505C00032D687 /* EnterPasswordViewModel.swift in Sources */,

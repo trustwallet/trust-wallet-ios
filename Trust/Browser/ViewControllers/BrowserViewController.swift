@@ -46,7 +46,6 @@ class BrowserViewController: UIViewController {
         webView.allowsBackForwardNavigationGestures = true
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.navigationDelegate = self
-        webView.uiDelegate = self
         if isDebug {
             webView.configuration.preferences.setValue(true, forKey: Keys.developerExtrasEnabled)
         }
@@ -148,7 +147,7 @@ class BrowserViewController: UIViewController {
             }
         }()
         NSLog("script \(script)")
-        self.webView.evaluateJavaScript(script, completionHandler: nil)
+        webView.evaluateJavaScript(script, completionHandler: nil)
     }
 
     func goHome() {
@@ -171,6 +170,8 @@ class BrowserViewController: UIViewController {
 
     private func refreshURL() {
         browserNavBar?.textField.text = webView.url?.absoluteString
+        browserNavBar?.backButton.isHidden = !webView.canGoBack
+
     }
 
     private func recordURL() {
@@ -182,6 +183,7 @@ class BrowserViewController: UIViewController {
 
     private func changeURL(_ url: URL) {
         delegate?.runAction(action: .changeURL(url))
+        refreshURL()
     }
 
     private func hideErrorView() {
@@ -243,10 +245,8 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
     func did(action: BrowserNavigation) {
         delegate?.runAction(action: .navigationAction(action))
         switch action {
-        case .goForward:
-            webView.goForward()
         case .goBack:
-            webView.goBack()
+            break
         case .more:
             break
         case .home:
@@ -263,6 +263,7 @@ extension BrowserViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         recordURL()
         hideErrorView()
+        refreshURL()
     }
 
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
@@ -275,67 +276,6 @@ extension BrowserViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         handleError(error: error)
-    }
-}
-
-extension BrowserViewController: WKUIDelegate {
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        if navigationAction.targetFrame == nil {
-            webView.load(navigationAction.request)
-        }
-        return nil
-    }
-
-    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
-        let alertController = UIAlertController.alertController(
-            title: .none,
-            message: message,
-            style: .alert,
-            in: navigationController! as! NavigationController
-        )
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
-            completionHandler()
-        }))
-        present(alertController, animated: true, completion: nil)
-    }
-
-    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
-        let alertController = UIAlertController.alertController(
-            title: .none,
-            message: message,
-            style: .alert,
-            in: navigationController! as! NavigationController
-        )
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
-            completionHandler(true)
-        }))
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .default, handler: { _ in
-            completionHandler(false)
-        }))
-        present(alertController, animated: true, completion: nil)
-    }
-
-    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
-        let alertController = UIAlertController.alertController(
-            title: .none,
-            message: prompt,
-            style: .alert,
-            in: navigationController! as! NavigationController
-        )
-        alertController.addTextField { (textField) in
-            textField.text = defaultText
-        }
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
-            if let text = alertController.textFields?.first?.text {
-                completionHandler(text)
-            } else {
-                completionHandler(defaultText)
-            }
-        }))
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .default, handler: { _ in
-            completionHandler(nil)
-        }))
-        present(alertController, animated: true, completion: nil)
     }
 }
 
