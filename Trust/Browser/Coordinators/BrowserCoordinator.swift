@@ -54,7 +54,13 @@ class BrowserCoordinator: NSObject, Coordinator {
     private lazy var historyStore: HistoryStore = {
         return HistoryStore(realm: sharedRealm)
     }()
-    private let urlParser = BrowserURLParser()
+    lazy var preferences: PreferencesController = {
+        return PreferencesController()
+    }()
+    var urlParser: BrowserURLParser {
+        let engine = SearchEngine(rawValue: preferences.get(for: .browserSearchEngine)) ?? .default
+        return BrowserURLParser(engine: engine)
+    }
 
     weak var delegate: BrowserCoordinatorDelegate?
 
