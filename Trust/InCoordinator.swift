@@ -136,7 +136,8 @@ class InCoordinator: Coordinator {
             keystore: keystore,
             session: session,
             storage: transactionsStorage,
-            balanceCoordinator: balanceCoordinator
+            balanceCoordinator: balanceCoordinator,
+            sharedRealm: sharedRealm
         )
         settingsCoordinator.rootViewController.tabBarItem = viewModel.settingsBarItem
         settingsCoordinator.delegate = self

@@ -43,4 +43,10 @@ class HistoryStore {
             realm.delete(histories)
         }
     }
+
+    func clearAll() {
+        try? realm.write {
+            realm.delete(histories)
+        }
+    }
 }

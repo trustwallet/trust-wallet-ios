@@ -12,7 +12,8 @@ class SettingsCoordinatorTests: XCTestCase {
             keystore: FakeEtherKeystore(),
             session: .make(),
             storage: storage,
-            balanceCoordinator: FakeGetBalanceCoordinator()
+            balanceCoordinator: FakeGetBalanceCoordinator(),
+            sharedRealm: .make()
         )
         storage.add([.make()])
         storage.updateTransactionSection()

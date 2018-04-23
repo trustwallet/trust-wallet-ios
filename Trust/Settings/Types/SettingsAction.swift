@@ -6,5 +6,6 @@ enum SettingsAction {
     case RPCServer(server: RPCServer)
     case currency
     case pushNotifications(NotificationChanged)
+    case clearBrowserCache
     case openURL(URL)
 }

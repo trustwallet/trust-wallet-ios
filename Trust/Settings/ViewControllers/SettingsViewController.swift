@@ -177,14 +177,16 @@ class SettingsViewController: FormViewController, Coordinator {
             <<< AppFormAppearance.button { row in
                 row.cellStyle = .value1
                 row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
-                    return PreferencesViewController()
+                    let controller = BrowserConfigurationViewController()
+                    controller.delegate = self
+                    return controller
                 }, onDismiss: { _ in
                     NSLog("test")
                 })
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.dapps_icon()
-                cell.textLabel?.text = NSLocalizedString("settings.browserConfiguration.title", value: "Browser Configuration", comment: "")
+                cell.textLabel?.text = NSLocalizedString("settings.browser.title", value: "DApp Browser", comment: "")
                 cell.accessoryType = .disclosureIndicator
             }
 
@@ -303,5 +305,11 @@ extension SettingsViewController: LockCreatePasscodeCoordinatorDelegate {
 extension SettingsViewController: SupportViewControllerDelegate {
     func didPressURL(_ url: URL, in controller: SupportViewController) {
         openURLInBrowser(url)
+    }
+}
+
+extension SettingsViewController: BrowserConfigurationViewControllerDelegate {
+    func didPressDeleteCache(in controller: BrowserConfigurationViewController) {
+        delegate?.didAction(action: .clearBrowserCache, in: self)
     }
 }
