@@ -97,7 +97,6 @@ class TokensViewController: UIViewController {
         })
         tableView.tableHeaderView = header
         tableView.tableFooterView = footer
-        refreshHeaderAndFooterView()
         sheduleBalanceUpdate()
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
@@ -106,6 +105,9 @@ class TokensViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         startTokenObservation()
+        title = viewModel.title
+        view.backgroundColor = viewModel.backgroundColor
+        footer.textLabel.text = viewModel.footerTitle
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -128,11 +130,8 @@ class TokensViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func refreshHeaderAndFooterView() {
-        title = viewModel.title
-        view.backgroundColor = viewModel.backgroundColor
+    func refreshHeaderView() {
         header.amountLabel.text = viewModel.headerBalance
-        footer.textLabel.text = viewModel.footerTitle
     }
 
     @objc func missingToken() {
@@ -152,10 +151,10 @@ class TokensViewController: UIViewController {
             case .error(let error):
                 self?.endLoading(animated: true, error: error, completion: nil)
             }
-            self?.refreshHeaderAndFooterView()
             if strongSelf.refreshControl.isRefreshing {
                 strongSelf.refreshControl.endRefreshing()
             }
+            self?.refreshHeaderView()
         }
     }
 
@@ -235,6 +234,6 @@ extension TokensViewController: UITableViewDataSource {
 extension TokensViewController: TokensViewModelDelegate {
     func refresh() {
         self.tableView.reloadData()
-        self.refreshHeaderAndFooterView()
+        self.refreshHeaderView()
     }
 }
