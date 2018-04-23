@@ -104,7 +104,7 @@ class TokensDataStore {
         if let tokenToUpdate = enabledObject.first(where: { $0.contract == address.description }) {
             let tokenBalance = self.getBalance(for: tokenToUpdate)
 
-            self.realm.writeAsync(obj: tokenToUpdate) { (realm, tokenToUpdate ) in
+            self.realm.writeAsync(obj: tokenToUpdate) { (realm, _ ) in
                 let update: [String: Any] = [
                     "contract": address.description,
                     "value": balance.description,
