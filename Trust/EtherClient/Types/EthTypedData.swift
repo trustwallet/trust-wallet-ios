@@ -77,21 +77,29 @@ struct EthTypedData: Decodable {
             let data = Data(hex: String(address.dropFirst(2)))
             return data
         case .uint(let uint):
+            if type.starts(with: "bytes") {
+                return uint.getHexData()
+            }
             let size = parseIntSize(type: type, prefix: "uint")
             guard size > 0 else { return Data() }
-            return getTypedData(for: uint, align: size)
+            return uint.getTypedData(size: size)
         case .int(let int):
+            if type.starts(with: "bytes") {
+                return int.getHexData()
+            }
             let size = parseIntSize(type: type, prefix: "int")
             guard size > 0 else { return Data() }
-            return getTypedData(for: int, align: size)
+            return int.getTypedData(size: size)
         case .string(let string):
             if type.starts(with: "bytes") {
-                return Data(hex: string)
+                if string.isHexEncoded {
+                    return Data(hex: string)
+                }
             } else if type.starts(with: "uint") {
                 let size = parseIntSize(type: type, prefix: "uint")
                 guard size > 0 else { return Data() }
                 if let uint = UInt64(string) {
-                    return getTypedData(for: uint, align: size)
+                    return uint.getTypedData(size: size)
                 } else if let bigInt = BigUInt(string) {
                     let encoder = ABIEncoder()
                     try? encoder.encode(bigInt)
@@ -101,7 +109,7 @@ struct EthTypedData: Decodable {
                 let size = parseIntSize(type: type, prefix: "int")
                 guard size > 0 else { return Data() }
                 if let int = Int64(string) {
-                    return getTypedData(for: int, align: size)
+                    return int.getTypedData(size: size)
                 } else if let bigInt = BigInt(string) {
                     let encoder = ABIEncoder()
                     try? encoder.encode(bigInt)
@@ -115,17 +123,28 @@ struct EthTypedData: Decodable {
     }
 }
 
-private func getTypedData<T: FixedWidthInteger>(for int: T, align size: Int) -> Data {
-    // assume int is UInt64 or Int64
-    var intValue = int.bigEndian
-    var data = Data(buffer: UnsafeBufferPointer(start: &intValue, count: 1))
-    let num = size / 8 - 8
-    if num > 0 {
-        data.insert(contentsOf: [UInt8].init(repeating: 0, count: num), at: 0)
-    } else if num < 0 {
-        data = data.advanced(by: abs(num))
+extension FixedWidthInteger {
+    func getHexData() -> Data {
+        var string = String(self, radix: 16)
+        if string.count % 2 != 0 {
+            //pad to even
+            string = "0" + string
+        }
+        let data = Data(hex: string)
+        return data
     }
-    return data
+
+    func getTypedData(size: Int) -> Data {
+        var intValue = self.bigEndian
+        var data = Data(buffer: UnsafeBufferPointer(start: &intValue, count: 1))
+        let num = size / 8 - 8
+        if num > 0 {
+            data.insert(contentsOf: [UInt8].init(repeating: 0, count: num), at: 0)
+        } else if num < 0 {
+            data = data.advanced(by: abs(num))
+        }
+        return data
+    }
 }
 
 private func parseIntSize(type: String, prefix: String) -> Int {
