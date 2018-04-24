@@ -86,7 +86,9 @@ struct EthTypedData: Decodable {
             return getTypedData(for: int, align: size)
         case .string(let string):
             if type.starts(with: "bytes") {
-                return Data(hex: string)
+                if string.isHexEncoded {
+                    return Data(hex: string)
+                }
             } else if type.starts(with: "uint") {
                 let size = parseIntSize(type: type, prefix: "uint")
                 guard size > 0 else { return Data() }

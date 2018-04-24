@@ -414,6 +414,9 @@
 		BB03A8712042B01300649DA0 /* BalanceStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A8702042B01300649DA0 /* BalanceStatusTests.swift */; };
 		BB1CC266203BA4440042E56C /* SendMaxAmountTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1CC265203BA4440042E56C /* SendMaxAmountTest.swift */; };
 		BB1CC27A203D061B0042E56C /* TrustDocumentPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1CC279203D061B0042E56C /* TrustDocumentPickerViewController.swift */; };
+		BB3864A3208F1C8A00CBF773 /* testIsHexEncoded.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3864A2208F1C8A00CBF773 /* testIsHexEncoded.swift */; };
+		BB3864A4208F1C9C00CBF773 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A0E1841F706B8C00BAAAED /* String.swift */; };
+		BB3864A5208F1D2600CBF773 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6C01F9AE0E4003063C1 /* Data.swift */; };
 		BB3B8691204BB1C60061FCBA /* OpenInTrustController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B8690204BB1C60061FCBA /* OpenInTrustController.swift */; };
 		BB3B869E204BB2190061FCBA /* OpenInTrustViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B869D204BB2190061FCBA /* OpenInTrustViewModel.swift */; };
 		BB3B86A2204BB2C80061FCBA /* OpenInTrustError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86A1204BB2C80061FCBA /* OpenInTrustError.swift */; };
@@ -431,7 +434,7 @@
 		BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */; };
 		BB767E2E205E10FD00263658 /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB767E2D205E10FD00263658 /* Debounce.swift */; };
 		BB8E747920818E5E001BA99A /* SearchTokenResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8E747820818E5E001BA99A /* SearchTokenResultsController.swift */; };
-		BBAA2A3B2058155100B0878C /* signTypedMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAA2A3A2058155100B0878C /* signTypedMessageTests.swift */; };
+		BBAA2A3B2058155100B0878C /* TypedMessageEncodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAA2A3A2058155100B0878C /* TypedMessageEncodingTests.swift */; };
 		BBB61E122050993A00428BBD /* BrowserErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB61E112050993A00428BBD /* BrowserErrorView.swift */; };
 		BBD4E416205654E4005545E9 /* EthTypedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD4E415205654E4005545E9 /* EthTypedData.swift */; };
 		BBF4F9B72029D0B3009E04C0 /* GasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF4F9B62029D0B2009E04C0 /* GasViewModel.swift */; };
@@ -903,6 +906,7 @@
 		BB03A8702042B01300649DA0 /* BalanceStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceStatusTests.swift; sourceTree = "<group>"; };
 		BB1CC265203BA4440042E56C /* SendMaxAmountTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMaxAmountTest.swift; sourceTree = "<group>"; };
 		BB1CC279203D061B0042E56C /* TrustDocumentPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustDocumentPickerViewController.swift; sourceTree = "<group>"; };
+		BB3864A2208F1C8A00CBF773 /* testIsHexEncoded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testIsHexEncoded.swift; sourceTree = "<group>"; };
 		BB3B868E204BB1C60061FCBA /* OpenInTrust.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenInTrust.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB3B8690204BB1C60061FCBA /* OpenInTrustController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenInTrustController.swift; sourceTree = "<group>"; };
 		BB3B8695204BB1C60061FCBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -941,7 +945,7 @@
 		BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrencyRate+Fee.swift"; sourceTree = "<group>"; };
 		BB767E2D205E10FD00263658 /* Debounce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debounce.swift; sourceTree = "<group>"; };
 		BB8E747820818E5E001BA99A /* SearchTokenResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTokenResultsController.swift; sourceTree = "<group>"; };
-		BBAA2A3A2058155100B0878C /* signTypedMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signTypedMessageTests.swift; sourceTree = "<group>"; };
+		BBAA2A3A2058155100B0878C /* TypedMessageEncodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedMessageEncodingTests.swift; sourceTree = "<group>"; };
 		BBB61E112050993A00428BBD /* BrowserErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserErrorView.swift; sourceTree = "<group>"; };
 		BBD4E415205654E4005545E9 /* EthTypedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthTypedData.swift; sourceTree = "<group>"; };
 		BBF4F9B62029D0B2009E04C0 /* GasViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GasViewModel.swift; sourceTree = "<group>"; };
@@ -1078,6 +1082,7 @@
 				77872D2A202514930032D687 /* Wallet */,
 				CCA4FE301FD3652100749AE4 /* Core */,
 				299B5E3C1FD143300051361C /* Export */,
+				BB3864A1208F1C3000CBF773 /* Extensions */,
 				299B5E351FCBCDE10051361C /* Transfer */,
 				299573A01FA1F35B006F17FD /* Foundation */,
 				290B2B681F92C0300053C83E /* Settings */,
@@ -1146,7 +1151,7 @@
 				773B8DBA207184B900D05690 /* Providers */,
 				778EA5FB2050A5E000E81F7F /* Types */,
 				291E8FBE1F7DEA85003F0ECF /* EtherKeystoreTests.swift */,
-				BBAA2A3A2058155100B0878C /* signTypedMessageTests.swift */,
+				BBAA2A3A2058155100B0878C /* TypedMessageEncodingTests.swift */,
 				2923D9B61FDA5E51000CF3F8 /* PasswordGeneratorTests.swift */,
 				61C359E12002AC9D0097B04D /* TransactionSigningTests.swift */,
 			);
@@ -2439,6 +2444,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		BB3864A1208F1C3000CBF773 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BB3864A2208F1C8A00CBF773 /* testIsHexEncoded.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		BB3B868F204BB1C60061FCBA /* OpenInTrust */ = {
 			isa = PBXGroup;
 			children = (
@@ -3294,9 +3307,10 @@
 				298995002053D52700576B8B /* FakeRealm.swift in Sources */,
 				776C1142205BAFA800449539 /* ExportPrivateKeyCoordinatorTests.swift in Sources */,
 				2923D9B71FDA5E51000CF3F8 /* PasswordGeneratorTests.swift in Sources */,
-				BBAA2A3B2058155100B0878C /* signTypedMessageTests.swift in Sources */,
+				BBAA2A3B2058155100B0878C /* TypedMessageEncodingTests.swift in Sources */,
 				29F1C865200384FE003780D8 /* Wallet.swift in Sources */,
 				73D2683B202E8411009777A1 /* DecimalNumberFormatterTest.swift in Sources */,
+				BB3864A3208F1C8A00CBF773 /* testIsHexEncoded.swift in Sources */,
 				2912CD101F6A830700C6CBE3 /* TrustTests.swift in Sources */,
 				29FF130D1F7626E800AFD326 /* FakeNavigationController.swift in Sources */,
 				299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */,
@@ -3319,6 +3333,7 @@
 				73200B6C20477FF900118A82 /* FakeTokensNetwork.swift in Sources */,
 				298543001FBEAE2F00CB5081 /* ChainState.swift in Sources */,
 				299B5E3F1FD143400051361C /* BackupViewModelTests.swift in Sources */,
+				BB3864A4208F1C9C00CBF773 /* String.swift in Sources */,
 				29AD8A0E1F93FF28008E10E7 /* WalletSession.swift in Sources */,
 				CCA4FE331FD3655900749AE4 /* CheckDeviceCoordinatorTests.swift in Sources */,
 				73200B732048A7FC00118A82 /* TokensViewModelTest.swift in Sources */,
@@ -3350,6 +3365,7 @@
 				73ED85A92034C42D00593BF3 /* StringFormatterTest.swift in Sources */,
 				7778713A2085DB2900CF7303 /* BranchEventParserTests.swift in Sources */,
 				29BDF19D1FEE50E90023A45F /* GasPriceConfigurationTests.swift in Sources */,
+				BB3864A5208F1D2600CBF773 /* Data.swift in Sources */,
 				295996141FAB09A200DB66A8 /* DepositCoordinatorTests.swift in Sources */,
 				773B8DBE2071859A00D05690 /* GetNonceProvider.swift in Sources */,
 				778EAF7D1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift in Sources */,
