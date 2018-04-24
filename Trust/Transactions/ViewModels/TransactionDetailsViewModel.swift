@@ -132,7 +132,7 @@ struct TransactionDetailsViewModel {
             }
         }()
 
-        return GasViewModel(fee: gasFee, symbol: config.server.symbol, currencyRate: currencyRate, formatter: fullFormatter)
+        return GasViewModel(fee: gasFee, server: config.server, currencyRate: currencyRate, formatter: fullFormatter)
     }
 
     var gasFee: String {
