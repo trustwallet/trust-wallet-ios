@@ -185,4 +185,14 @@ class TypedMessageEncodingTests: XCTestCase {
 
         XCTAssertEqual(data.hexEncoded, "0x30c390c4579cf166d2b61b7ec7b776219ff6ef44c5171d831b258614e9b00cf14f4ecc01c322cd94c3ef277252a4664f458eaba09e0e91bc63f4eedb145ff8851c")
     }
+
+    func testType_bytes_Value_int() {
+        let typedData = EthTypedData(type: "bytes", name: "a number?", value: .uint(value: 1100))
+        let signResult = keystore.signTypedMessage([typedData], for: account)
+        guard case let .success(data) = signResult else {
+            return XCTFail()
+        }
+
+        XCTAssertEqual(data.hexEncoded, "0xd90e257771b64fbc4ecd963f27ea371eb6a656c1912afda8a9184a4b81130dd71487f525d1ecca0d6008530c1bfcf5afc0c2224670ae68080d264ec96468c9bb1c")
+    }
 }
