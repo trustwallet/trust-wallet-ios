@@ -25,7 +25,7 @@ struct GasViewModel {
         let gasFee = formatter.string(from: fee)
         var text = "\(gasFee.description) \(server.symbol)"
 
-        if let feeInCurrency = currencyRate?.estimate(fee: gasFee, with: server.contract),
+        if let feeInCurrency = currencyRate?.estimate(fee: gasFee, with: server.address),
             let result = currencyRate?.format(fee: feeInCurrency) {
             text += " (\(result))"
         }

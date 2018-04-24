@@ -75,7 +75,7 @@ enum RPCServer {
         }
     }
 
-    var contract: String {
+    var address: String {
         return "0x0000000000000000000000000000000000000000"
     }
 
