@@ -89,13 +89,11 @@ class SettingsViewController: FormViewController, Coordinator {
             }
 
             <<< AppFormAppearance.button { [weak self] row in
-                guard let `self` = self else { return }
+                guard let strongSelf = self, let accountsViewController = strongSelf.accountsCoordinator?.accountsViewController else { return }
                 row.cellStyle = .value1
-                if let accountsViewController = self.accountsCoordinator?.accountsViewController {
-                    row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
-                        return accountsViewController
-                    }, onDismiss: { _ in })
-                }
+                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+                    return accountsViewController
+                }, onDismiss: nil)
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_wallet()
@@ -176,13 +174,11 @@ class SettingsViewController: FormViewController, Coordinator {
 
             <<< AppFormAppearance.button { row in
                 row.cellStyle = .value1
-                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+                row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback { [weak self] in
                     let controller = BrowserConfigurationViewController()
                     controller.delegate = self
                     return controller
-                }, onDismiss: { _ in
-                    NSLog("test")
-                })
+                }, onDismiss: nil)
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.dapps_icon()
