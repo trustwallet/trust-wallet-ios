@@ -30,7 +30,7 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     private var gasViewModel: GasViewModel {
-        return GasViewModel(fee: totalFee, symbol: config.server.symbol, currencyRate: currencyRate, formatter: fullFormatter)
+        return GasViewModel(fee: totalFee, server: config.server, currencyRate: currencyRate, formatter: fullFormatter)
     }
 
     private var totalViewModel: GasViewModel {
@@ -41,7 +41,7 @@ struct ConfirmPaymentDetailsViewModel {
             value += transaction.value
         }
 
-        return GasViewModel(fee: value, symbol: config.server.symbol, currencyRate: currencyRate, formatter: fullFormatter)
+        return GasViewModel(fee: value, server: config.server, currencyRate: currencyRate, formatter: fullFormatter)
     }
 
     private var totalFee: BigInt {

@@ -4,11 +4,11 @@ import Foundation
 import BigInt
 
 extension CurrencyRate {
-    func estimate(fee: String, with symbol: String) -> Double? {
+    func estimate(fee: String, with address: String) -> Double? {
         guard let feeInDouble = Double(fee) else {
             return nil
         }
-        guard let price = self.rates.filter({ $0.code == symbol }).first else {
+        guard let price = self.rates.filter({ $0.contract == address }).first else {
             return nil
         }
         return price.price * feeInDouble
