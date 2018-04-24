@@ -174,7 +174,7 @@ class SettingsViewController: FormViewController, Coordinator {
 
             <<< AppFormAppearance.button { row in
                 row.cellStyle = .value1
-                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback { [weak self] in 
+                row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback { [weak self] in
                     let controller = BrowserConfigurationViewController()
                     controller.delegate = self
                     return controller
