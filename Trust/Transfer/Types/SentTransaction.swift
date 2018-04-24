@@ -22,7 +22,7 @@ extension SentTransaction {
             gasUsed: "",
             nonce: Int(transaction.original.nonce),
             date: Date(),
-            localizedOperations: [],
+            localizedOperations: [transaction.original.localizedObject].compactMap { $0 },
             state: .pending
         )
     }

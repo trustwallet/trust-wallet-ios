@@ -60,11 +60,12 @@ class SendTransactionCoordinator {
             data: to.data,
             gasPrice: to.gasPrice,
             gasLimit: to.gasLimit,
-            chainID: to.chainID
+            chainID: to.chainID,
+            localizedObject: to.localizedObject
         )
     }
 
-    func signAndSend(
+    private func signAndSend(
         transaction: SignTransaction,
         completion: @escaping (Result<ConfirmResult, AnyError>) -> Void
     ) {
@@ -83,7 +84,7 @@ class SendTransactionCoordinator {
         }
     }
 
-    func approve(transaction: SignTransaction, data: Data, completion: @escaping (Result<ConfirmResult, AnyError>) -> Void) {
+    private func approve(transaction: SignTransaction, data: Data, completion: @escaping (Result<ConfirmResult, AnyError>) -> Void) {
         let transaction = SentTransaction(
             id: data.sha3(.keccak256).hexEncoded,
             original: transaction,

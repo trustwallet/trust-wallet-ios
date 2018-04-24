@@ -179,6 +179,23 @@ class TransactionConfigurator {
             case .token(let token): return token.address
             }
         }()
+        let localizedObject: LocalizedOperationObject? = {
+            switch transaction.transferType {
+            case .ether, .dapp: return .none
+            case .token(let token):
+                return LocalizedOperationObject(
+                    from: account.address.eip55String,
+                    to: transaction.to?.eip55String ?? "",
+                    contract: token.contract,
+                    type: OperationType.tokenTransfer.rawValue,
+                    value: BigInt(transaction.value.magnitude).description,
+                    symbol: token.symbol,
+                    name: token.name,
+                    decimals: token.decimals
+                )
+            }
+        }()
+
         let signTransaction = SignTransaction(
             value: value,
             account: account,
@@ -187,7 +204,8 @@ class TransactionConfigurator {
             data: configuration.data,
             gasPrice: configuration.gasPrice,
             gasLimit: configuration.gasLimit,
-            chainID: session.config.chainID
+            chainID: session.config.chainID,
+            localizedObject: localizedObject
         )
 
         return signTransaction

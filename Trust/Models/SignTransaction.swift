@@ -14,4 +14,7 @@ public struct SignTransaction {
     let gasPrice: BigInt
     let gasLimit: BigInt
     let chainID: Int
+
+    // additinalData
+    let localizedObject: LocalizedOperationObject?
 }
