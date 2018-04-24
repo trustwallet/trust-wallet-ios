@@ -8,7 +8,7 @@ extension CurrencyRate {
         guard let feeInDouble = Double(fee) else {
             return nil
         }
-        guard let price = self.rates.filter({ $0.contract.lowercased() == address.lowercased() }).first else {
+        guard let price = self.rates.filter({ $0.contract == address }).first else {
             return nil
         }
         return price.price * feeInDouble
