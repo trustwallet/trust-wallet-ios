@@ -410,7 +410,6 @@
 		A2B7ECAC2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAB2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift */; };
 		A2B7ECAE2039001300828E7D /* ExportPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */; };
 		A2CC7DD620903C9C002276D1 /* HalfModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC7DD420903C9C002276D1 /* HalfModalPresentationController.swift */; };
-		A2CC7DD720903C9C002276D1 /* HalfModalTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC7DD520903C9C002276D1 /* HalfModalTransitionDelegate.swift */; };
 		A2E43B4E20802879001FAD3D /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E43B4D20802879001FAD3D /* UINavigationController.swift */; };
 		BB03A86D20416AF600649DA0 /* BalanceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A86C20416AF600649DA0 /* BalanceStatus.swift */; };
 		BB03A8712042B01300649DA0 /* BalanceStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A8702042B01300649DA0 /* BalanceStatusTests.swift */; };
@@ -901,7 +900,6 @@
 		A2B7ECAB2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPrivateKeyViewModel.swift; sourceTree = "<group>"; };
 		A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPrivateKeyViewController.swift; sourceTree = "<group>"; };
 		A2CC7DD420903C9C002276D1 /* HalfModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfModalPresentationController.swift; sourceTree = "<group>"; };
-		A2CC7DD520903C9C002276D1 /* HalfModalTransitionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfModalTransitionDelegate.swift; sourceTree = "<group>"; };
 		A2E43B4D20802879001FAD3D /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2453,7 +2451,6 @@
 			isa = PBXGroup;
 			children = (
 				A2CC7DD420903C9C002276D1 /* HalfModalPresentationController.swift */,
-				A2CC7DD520903C9C002276D1 /* HalfModalTransitionDelegate.swift */,
 			);
 			path = HalfModal;
 			sourceTree = "<group>";
@@ -3018,7 +3015,6 @@
 				BBF4F9B72029D0B3009E04C0 /* GasViewModel.swift in Sources */,
 				73C41C75201B65AD00243C6C /* LockCreatePasscodeCoordinator.swift in Sources */,
 				296106C81F7646590006164B /* TokensViewModel.swift in Sources */,
-				A2CC7DD720903C9C002276D1 /* HalfModalTransitionDelegate.swift in Sources */,
 				299B5E471FD2C87F0051361C /* ConfigureTransactionError.swift in Sources */,
 				77E81D94203687FB00534C99 /* NotificationsViewController.swift in Sources */,
 				615F10561FCBEF2E008A45AF /* OnboardingPageViewModel.swift in Sources */,
