@@ -11,7 +11,6 @@ protocol ConfirmCoordinatorDelegate: class {
 }
 
 class ConfirmCoordinator: Coordinator {
-
     let navigationController: NavigationController
     let session: WalletSession
     let account: Account
@@ -32,12 +31,13 @@ class ConfirmCoordinator: Coordinator {
         type: ConfirmType
     ) {
         self.navigationController = navigationController
-        self.navigationController.modalPresentationStyle = .formSheet
+        self.navigationController.modalPresentationStyle = .custom
         self.session = session
         self.configurator = configurator
         self.keystore = keystore
         self.account = account
         self.type = type
+
     }
 
     func start() {
@@ -47,6 +47,8 @@ class ConfirmCoordinator: Coordinator {
             configurator: configurator,
             confirmType: type
         )
+        navigationController.transitioningDelegate = controller as UIViewControllerTransitioningDelegate
+
         controller.didCompleted = { result in
             switch result {
             case .success(let data):
@@ -63,5 +65,12 @@ class ConfirmCoordinator: Coordinator {
     @objc func dismiss() {
         didCompleted?(.failure(AnyError(DAppError.cancelled)))
         delegate?.didCancel(in: self)
+    }
+
+}
+
+extension ConfirmPaymentViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return HalfModalPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
