@@ -32,7 +32,7 @@ class HalfModalPresentationController: UIPresentationController {
     }
     override func adaptivePresentationStyle(for traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         var style: UIModalPresentationStyle = .custom
-        // Checks for iPad, since iPad is the only class of devices that has a regular size clas for both
+        // Checks for iPad, since iPad is the only class of devices that has a regular size class for both
         // traitCollection.horizontalSizeClass & traitCollection.verticalSizeClass
         if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular {
             style = .formSheet
