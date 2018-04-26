@@ -36,6 +36,10 @@ class HalfModalPresentationController: UIPresentationController {
         // Should probaly find a way to to this based on content
         return CGRect(x: 0.0, y: container.bounds.height / 3.8, width: container.bounds.width, height: container.bounds.height / 1.3 )
     }
+    override func containerViewWillLayoutSubviews() {
+        // This is needed to maintain the correct frame when rotaing
+        presentedView?.frame = frameOfPresentedViewInContainerView
+    }
     override func adaptivePresentationStyle(for traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         var style: UIModalPresentationStyle = .custom
         // Checks for iPad, since iPad is the only class of devices that has a regular size class for both
