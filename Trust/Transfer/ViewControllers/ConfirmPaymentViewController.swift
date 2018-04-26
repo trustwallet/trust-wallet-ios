@@ -146,7 +146,7 @@ class ConfirmPaymentViewController: UIViewController {
         stackViewController.view.addSubview(submitButton)
 
         NSLayoutConstraint.activate([
-            submitButton.bottomAnchor.constraint(equalTo: stackViewController.view.layoutGuide.bottomAnchor, constant: -15),
+            submitButton.bottomAnchor.constraint(greaterThanOrEqualTo: stackViewController.view.layoutGuide.bottomAnchor, constant: -30),
             submitButton.trailingAnchor.constraint(equalTo: stackViewController.view.trailingAnchor, constant: -15),
             submitButton.leadingAnchor.constraint(equalTo: stackViewController.view.leadingAnchor, constant: 15),
         ])
