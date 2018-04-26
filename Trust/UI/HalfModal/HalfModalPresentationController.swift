@@ -28,7 +28,8 @@ class HalfModalPresentationController: UIPresentationController {
     }
     override var frameOfPresentedViewInContainerView: CGRect {
         guard let container = containerView  else { return CGRect.zero }
-        return CGRect(x: 0.0, y: container.bounds.height / 3.8, width: container.bounds.width, height: container.bounds.height )
+        // Should probaly find a way to to this based on content
+        return CGRect(x: 0.0, y: container.bounds.height / 3.8, width: container.bounds.width, height: container.bounds.height / 1.3 )
     }
     override func adaptivePresentationStyle(for traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         var style: UIModalPresentationStyle = .custom
