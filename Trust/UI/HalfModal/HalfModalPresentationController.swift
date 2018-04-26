@@ -38,6 +38,10 @@ class HalfModalPresentationController: UIPresentationController {
         if traitCollection.horizontalSizeClass == .regular && traitCollection.verticalSizeClass == .regular {
             style = .formSheet
         }
+        // Make sure the presentation is full screen on iPhone when in landscape
+        if traitCollection.verticalSizeClass == .compact {
+            style = .fullScreen
+        }
         return style
     }
     private func setUpGestures() {
