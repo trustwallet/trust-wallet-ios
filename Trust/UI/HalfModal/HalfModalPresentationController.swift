@@ -7,14 +7,19 @@ class HalfModalPresentationController: UIPresentationController {
 
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
+        setUpGestures()
         dimmingView.backgroundColor = UIColor.darkGray.withAlphaComponent(0.5)
+        dimmingView.alpha = 0.0
     }
     override func presentationTransitionWillBegin() {
         guard let container = containerView else { return }
-        setUpGestures()
         dimmingView.frame = container.bounds
-        dimmingView.alpha = 0.0
         container.addSubview(dimmingView)
+
+        NSLayoutConstraint.activate([
+            dimmingView.topAnchor.constraint(equalTo: container.topAnchor),
+            dimmingView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            ])
 
         presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in
             self.dimmingView.alpha = 1.0
