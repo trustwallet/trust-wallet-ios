@@ -2,8 +2,9 @@
 
 import Foundation
 import UIKit
+@testable import Trust
 
-class FakeNavigationController: UINavigationController {
+class FakeNavigationController: NavigationController {
 
     private var _presentedViewController: UIViewController?
 

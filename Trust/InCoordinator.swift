@@ -1,7 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
-import TrustKeystore
+import TrustCore
 import UIKit
 import RealmSwift
 import URLNavigator
@@ -13,22 +13,25 @@ protocol InCoordinatorDelegate: class {
 
 class InCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     var coordinators: [Coordinator] = []
     let initialWallet: Wallet
     var keystore: Keystore
-    var config: Config
+    let config: Config
     let appTracker: AppTracker
     let navigator: Navigator
     weak var delegate: InCoordinatorDelegate?
+    var browserCoordinator: BrowserCoordinator? {
+        return self.coordinators.compactMap { $0 as? BrowserCoordinator }.first
+    }
     var transactionCoordinator: TransactionCoordinator? {
-        return self.coordinators.flatMap { $0 as? TransactionCoordinator }.first
+        return self.coordinators.compactMap { $0 as? TransactionCoordinator }.first
     }
     var settingsCoordinator: SettingsCoordinator? {
-        return self.coordinators.flatMap { $0 as? SettingsCoordinator }.first
+        return self.coordinators.compactMap { $0 as? SettingsCoordinator }.first
     }
     var tokensCoordinator: TokensCoordinator? {
-        return self.coordinators.flatMap { $0 as? TokensCoordinator }.first
+        return self.coordinators.compactMap { $0 as? TokensCoordinator }.first
     }
     var tabBarController: UITabBarController? {
         return self.navigationController.viewControllers.first as? UITabBarController
@@ -40,14 +43,16 @@ class InCoordinator: Coordinator {
             appTracker: appTracker
         )
     }()
+    let events: [BranchEvent] = []
 
     init(
-        navigationController: UINavigationController = NavigationController(),
+        navigationController: NavigationController = NavigationController(),
         wallet: Wallet,
         keystore: Keystore,
-        config: Config = Config(),
+        config: Config = .current,
         appTracker: AppTracker = AppTracker(),
-        navigator: Navigator = Navigator()
+        navigator: Navigator = Navigator(),
+        events: [BranchEvent] = []
     ) {
         self.navigationController = navigationController
         self.initialWallet = wallet
@@ -71,23 +76,28 @@ class InCoordinator: Coordinator {
         let migration = MigrationInitializer(account: account, chainID: config.chainID)
         migration.perform()
 
-        let web3 = self.web3(for: config.server)
-        web3.start()
+        let sharedMigration = SharedMigrationInitializer()
+        sharedMigration.perform()
+
         let realm = self.realm(for: migration.config)
+        let sharedRealm = self.realm(for: sharedMigration.config)
         let tokensStorage = TokensDataStore(realm: realm, config: config)
-        let balanceCoordinator =  TokensBalanceService(web3: web3)
+        let balanceCoordinator =  TokensBalanceService()
+        let viewModel = InCoordinatorViewModel(config: config)
         let trustNetwork = TrustNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
         let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
+        let transactionsStorage = TransactionsStorage(
+            realm: realm,
+            account: account
+        )
+        let nonceProvider = GetNonceProvider(storage: transactionsStorage)
         let session = WalletSession(
             account: account,
             config: config,
-            web3: web3,
-            balanceCoordinator: balance
+            balanceCoordinator: balance,
+            nonceProvider: nonceProvider
         )
-        let transactionsStorage = TransactionsStorage(
-            realm: realm
-        )
-        transactionsStorage.removeTransactions(for: [.failed, .pending, .unknown])
+        transactionsStorage.removeTransactions(for: [.failed, .unknown])
 
         let transactionCoordinator = TransactionCoordinator(
             session: session,
@@ -96,7 +106,7 @@ class InCoordinator: Coordinator {
             network: trustNetwork,
             keystore: keystore
         )
-        transactionCoordinator.rootViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("transactions.tabbar.item.title", value: "Transactions", comment: ""), image: R.image.feed(), selectedImage: nil)
+        transactionCoordinator.rootViewController.tabBarItem = viewModel.transactionsBarItem
         transactionCoordinator.delegate = self
         transactionCoordinator.start()
         addCoordinator(transactionCoordinator)
@@ -105,14 +115,10 @@ class InCoordinator: Coordinator {
 
         tabBarController.tabBar.isTranslucent = false
 
-        let browserCoordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator, realm: realm)
+        let browserCoordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator, sharedRealm: sharedRealm)
         browserCoordinator.delegate = self
         browserCoordinator.start()
-        browserCoordinator.rootViewController.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
-            image: R.image.dapps_icon(),
-            selectedImage: nil
-        )
+        browserCoordinator.rootViewController.tabBarItem = viewModel.browserBarItem
         addCoordinator(browserCoordinator)
 
         let walletCoordinator = TokensCoordinator(
@@ -122,11 +128,7 @@ class InCoordinator: Coordinator {
             network: trustNetwork,
             transactionsStore: transactionsStorage
         )
-        walletCoordinator.rootViewController.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("wallet.navigation.title", value: "Wallet", comment: ""),
-            image: R.image.settingsWallet(),
-            selectedImage: nil
-        )
+        walletCoordinator.rootViewController.tabBarItem = viewModel.walletBarItem
         walletCoordinator.delegate = self
         walletCoordinator.start()
         addCoordinator(walletCoordinator)
@@ -134,13 +136,10 @@ class InCoordinator: Coordinator {
             keystore: keystore,
             session: session,
             storage: transactionsStorage,
-            balanceCoordinator: balanceCoordinator
+            balanceCoordinator: balanceCoordinator,
+            sharedRealm: sharedRealm
         )
-        settingsCoordinator.rootViewController.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("settings.navigation.title", value: "Settings", comment: ""),
-            image: R.image.settings_icon(),
-            selectedImage: nil
-        )
+        settingsCoordinator.rootViewController.tabBarItem = viewModel.settingsBarItem
         settingsCoordinator.delegate = self
         settingsCoordinator.start()
         addCoordinator(settingsCoordinator)
@@ -152,16 +151,18 @@ class InCoordinator: Coordinator {
             settingsCoordinator.navigationController,
         ]
 
-        navigationController.setViewControllers(
-            [tabBarController],
-            animated: false
-        )
+        navigationController.setViewControllers([tabBarController], animated: false)
         navigationController.setNavigationBarHidden(true, animated: false)
         addCoordinator(transactionCoordinator)
 
         showTab(.wallet)
 
         keystore.recentlyUsedWallet = account
+
+        // activate all view controllers.
+        [Tabs.wallet, Tabs.transactions].forEach {
+            let _ = (tabBarController.viewControllers?[$0.index] as? NavigationController)?.viewControllers[0].view
+        }
     }
 
     func showTab(_ selectTab: Tabs) {
@@ -169,9 +170,9 @@ class InCoordinator: Coordinator {
         guard let nav = viewControllers[selectTab.index] as? UINavigationController else { return }
 
         switch selectTab {
-        case .browser(let openURL):
-            if let openURL = openURL, let controller = nav.viewControllers[0] as? BrowserViewController {
-                controller.goTo(url: openURL)
+        case .browser(let url):
+            if let url = url {
+                browserCoordinator?.openURL(url)
             }
         case .settings, .wallet, .transactions:
             break
@@ -181,7 +182,6 @@ class InCoordinator: Coordinator {
     }
 
     func restart(for account: Wallet, in coordinator: TransactionCoordinator) {
-        tokensCoordinator?.tokensViewController.cancelOperations()
         settingsCoordinator?.rootViewController.navigationItem.leftBarButtonItem = nil
         settingsCoordinator?.rootViewController.networkStateView = nil
         navigationController.dismiss(animated: false, completion: nil)
@@ -232,20 +232,13 @@ class InCoordinator: Coordinator {
         return try! Realm(configuration: config)
     }
 
-    private func web3(for server: RPCServer) -> Web3Swift {
-        return Web3Swift(url: config.server.rpcURL)
-    }
-
-    private func showTransactionSent(transaction: SentTransaction) {
-        let alertController = UIAlertController(title: NSLocalizedString("sent.transaction.title", value: "Transaction Sent!", comment: ""),
-                                                message: NSLocalizedString("sent.transaction.message", value: "Wait for the transaction to be mined on the network to see details.", comment: ""),
-                                                preferredStyle: UIAlertControllerStyle.alert)
-        let copyAction = UIAlertAction(title: NSLocalizedString("send.action.copy.transaction.title", value: "Copy Transaction ID", comment: ""), style: UIAlertActionStyle.default, handler: { _ in
-            UIPasteboard.general.string = transaction.id
-        })
-        alertController.addAction(copyAction)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: UIAlertActionStyle.default, handler: nil))
-        navigationController.present(alertController, animated: true, completion: nil)
+    @discardableResult
+    func handleEvent(_ event: BranchEvent) -> Bool {
+        switch event {
+        case .openURL(let url):
+            showTab(.browser(openURL: url))
+        }
+        return true
     }
 }
 
@@ -259,6 +252,10 @@ extension InCoordinator: TransactionCoordinatorDelegate {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         coordinator.stop()
         removeAllCoordinators()
+    }
+
+    func didPressURL(_ url: URL) {
+        showTab(.browser(openURL: url))
     }
 }
 
@@ -276,6 +273,10 @@ extension InCoordinator: SettingsCoordinatorDelegate {
 
     func didUpdateAccounts(in coordinator: SettingsCoordinator) {
         delegate?.didUpdateAccounts(in: self)
+    }
+
+    func didPressURL(_ url: URL, in coordinator: SettingsCoordinator) {
+        showTab(.browser(openURL: url))
     }
 }
 
@@ -300,12 +301,9 @@ extension InCoordinator: PaymentCoordinatorDelegate {
         case .sentTransaction(let transaction):
             handlePendingTransaction(transaction: transaction)
             coordinator.navigationController.dismiss(animated: true, completion: nil)
-            showTransactionSent(transaction: transaction)
             removeCoordinator(coordinator)
-
-            // Once transaction sent, show transactions screen.
-            showTab(.transactions)
-        case .signedTransaction: break
+        case .signedTransaction:
+            break
         }
     }
 

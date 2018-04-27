@@ -2,7 +2,7 @@
 
 import Foundation
 import RealmSwift
-import TrustKeystore
+import TrustCore
 
 class MigrationInitializer: Initializer {
 
@@ -20,7 +20,7 @@ class MigrationInitializer: Initializer {
     }
 
     func perform() {
-        config.schemaVersion = 42
+        config.schemaVersion = 50
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
             case 0...32:
@@ -33,7 +33,11 @@ class MigrationInitializer: Initializer {
 
                     newObject["contract"] = address.description
                 }
-            default: break
+                fallthrough
+            case 33...49:
+                migration.deleteData(forType: Transaction.className)
+            default:
+                break
             }
         }
     }

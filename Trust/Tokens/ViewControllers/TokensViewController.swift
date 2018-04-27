@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 import StatefulViewController
 import Result
-import TrustKeystore
+import TrustCore
 import RealmSwift
 
 protocol TokensViewControllerDelegate: class {
@@ -67,7 +67,7 @@ class TokensViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .singleLine
-        tableView.separatorColor = TokensLayout.tableView.separatorColor
+        tableView.separatorColor = StyleLayout.TableView.separatorColor
         tableView.backgroundColor = .white
         view.addSubview(tableView)
         view.addSubview(footerView)
@@ -97,11 +97,17 @@ class TokensViewController: UIViewController {
         })
         tableView.tableHeaderView = header
         tableView.tableFooterView = footer
-        refreshHeaderAndFooterView()
         sheduleBalanceUpdate()
-        tokensObservation()
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        startTokenObservation()
+        title = viewModel.title
+        view.backgroundColor = viewModel.backgroundColor
+        footer.textLabel.text = viewModel.footerTitle
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -124,76 +130,58 @@ class TokensViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func refreshHeaderAndFooterView() {
-        title = viewModel.title
-        view.backgroundColor = viewModel.backgroundColor
+    func refreshHeaderView() {
         header.amountLabel.text = viewModel.headerBalance
-        footer.textLabel.text = viewModel.footerTitle
     }
 
     @objc func missingToken() {
         delegate?.didPressAddToken(in: self)
     }
 
-    private func tokensObservation() {
+    private func startTokenObservation() {
         viewModel.setTokenObservation { [weak self] (changes: RealmCollectionChange) in
             guard let strongSelf = self else { return }
             let tableView = strongSelf.tableView
             switch changes {
             case .initial:
-                UIView.performWithoutAnimation {
-                    tableView.reloadData()
-                }
-            case .update(_, let deletions, let insertions, let modifications):
-                UIView.performWithoutAnimation {
-                    tableView.beginUpdates()
-                    tableView.insertRows(at: insertions.map { IndexPath(row: $0, section: 0) },
-                                         with: .none)
-                    tableView.deleteRows(at: deletions.map { IndexPath(row: $0, section: 0) },
-                                         with: .none)
-                    for row in modifications {
-                        let indexPath = IndexPath(row: row, section: 0)
-                        let model = strongSelf.viewModel.cellViewModel(for: indexPath)
-                        if let cell = tableView.cellForRow(at: indexPath) as? TokenViewCell {
-                            cell.configure(viewModel: model)
-                        }
-                    }
-                    tableView.endUpdates()
-                }
+                tableView.reloadData()
+            case .update:
+                self?.tableView.reloadData()
                 self?.endLoading()
             case .error(let error):
                 self?.endLoading(animated: true, error: error, completion: nil)
             }
-            self?.refreshHeaderAndFooterView()
             if strongSelf.refreshControl.isRefreshing {
                 strongSelf.refreshControl.endRefreshing()
             }
+            self?.refreshHeaderView()
         }
     }
 
     @objc func resignActive() {
         etherFetchTimer?.invalidate()
         etherFetchTimer = nil
-        cancelOperations()
+        stopTokenObservation()
     }
 
     @objc func didBecomeActive() {
         sheduleBalanceUpdate()
+        startTokenObservation()
     }
 
     private func sheduleBalanceUpdate() {
-        etherFetchTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in
-            self?.viewModel.updateEthBalance()
-        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
+        guard etherFetchTimer == nil else { return }
+        etherFetchTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in self?.viewModel.updateEthBalance() }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
 
-    func cancelOperations() {
-        viewModel.cancelOperations()
+    private func stopTokenObservation() {
+        viewModel.invalidateTokensObservation()
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
         resignActive()
+        stopTokenObservation()
     }
 }
 extension TokensViewController: StatefulViewController {
@@ -221,8 +209,10 @@ extension TokensViewController: UITableViewDelegate {
 
         if viewModel.canEdit(for: indexPath) {
             return [delete, disable, edit]
-        } else {
+        } else if viewModel.canDisable(for: indexPath) {
             return [disable]
+        } else {
+            return []
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -233,7 +223,8 @@ extension TokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TokenViewCell.identifier, for: indexPath) as! TokenViewCell
         cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
-        cell.separatorInset = TokensLayout.tableView.layoutInsets
+        cell.contentView.isExclusiveTouch = true
+        cell.isExclusiveTouch = true
         return cell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -243,6 +234,6 @@ extension TokensViewController: UITableViewDataSource {
 extension TokensViewController: TokensViewModelDelegate {
     func refresh() {
         self.tableView.reloadData()
-        self.refreshHeaderAndFooterView()
+        self.refreshHeaderView()
     }
 }

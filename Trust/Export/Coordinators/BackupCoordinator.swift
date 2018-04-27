@@ -3,6 +3,7 @@
 import Foundation
 import UIKit
 import Result
+import TrustCore
 import TrustKeystore
 
 protocol BackupCoordinatorDelegate: class {
@@ -12,14 +13,14 @@ protocol BackupCoordinatorDelegate: class {
 
 class BackupCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     weak var delegate: BackupCoordinatorDelegate?
     let keystore: Keystore
     let account: Account
     var coordinators: [Coordinator] = []
 
     init(
-        navigationController: UINavigationController,
+        navigationController: NavigationController,
         keystore: Keystore,
         account: Account
     ) {
@@ -62,20 +63,23 @@ class BackupCoordinator: Coordinator {
                 return completion(.failure(AnyError(error)))
             }
 
-            let activityViewController = UIActivityViewController(
-                activityItems: [url],
-                applicationActivities: nil
-            )
+            let activityViewController = UIActivityViewController.make(items: [url])
             activityViewController.completionWithItemsHandler = { _, result, _, error in
-                do { try FileManager.default.removeItem(at: url)
-            } catch { }
-                completion(.success(result))
+                do {
+                    try FileManager.default.removeItem(at: url)
+                } catch { }
+                guard let error = error else {
+                    return completion(.success(result))
+                }
+                completion(.failure(AnyError(error)))
             }
             activityViewController.popoverPresentationController?.sourceView = navigationController.view
             activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
             navigationController.present(activityViewController, animated: true) { [unowned self] in
                 self.navigationController.hideLoading()
             }
+            // analytics event for successful backup
+            Analytics.track(.backedUpWallet)
         case .failure(let error):
             navigationController.hideLoading()
             navigationController.displayError(error: error)

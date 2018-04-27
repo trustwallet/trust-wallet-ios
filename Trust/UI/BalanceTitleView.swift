@@ -99,7 +99,7 @@ extension BalanceTitleView {
         let view = BalanceTitleView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         switch transferType {
-        case .ether:
+        case .ether, .dapp:
             session.balanceViewModel.subscribe { viewModel in
                 guard let viewModel = viewModel else { return }
                 view.viewModel = viewModel

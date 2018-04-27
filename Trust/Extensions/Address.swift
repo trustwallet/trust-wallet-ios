@@ -1,7 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
-import TrustKeystore
+import TrustCore
 
 enum Errors: LocalizedError {
     case invalidAddress
@@ -14,5 +14,11 @@ enum Errors: LocalizedError {
         case .invalidAmount:
             return NSLocalizedString("send.error.invalidAmount", value: "Invalid Amount", comment: "")
         }
+    }
+}
+
+extension Address {
+    static var zero: Address {
+        return Address(string: "0x0000000000000000000000000000000000000000")!
     }
 }

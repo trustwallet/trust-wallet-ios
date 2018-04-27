@@ -9,7 +9,7 @@ protocol AddCustomNetworkCoordinatorDelegate: class {
 }
 
 class AddCustomNetworkCoordinator: Coordinator {
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     var coordinators: [Coordinator] = []
     weak var delegate: AddCustomNetworkCoordinatorDelegate?
 
@@ -28,7 +28,7 @@ class AddCustomNetworkCoordinator: Coordinator {
     }()
 
     init(
-        navigationController: UINavigationController = NavigationController()
+        navigationController: NavigationController = NavigationController()
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet

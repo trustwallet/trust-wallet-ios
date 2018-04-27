@@ -21,10 +21,6 @@ struct BookmarksViewModel {
         return bookmarksStore.bookmarks.count
     }
 
-    var title: String {
-        return NSLocalizedString("browser.bookmarks.title", value: "Bookmarks", comment: "")
-    }
-
     func bookmark(for indexPath: IndexPath) -> Bookmark {
         return bookmarksStore.bookmarks[indexPath.row]
     }

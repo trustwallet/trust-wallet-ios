@@ -10,7 +10,13 @@ struct ConfirmPaymentDetailsViewModel {
     let currencyRate: CurrencyRate?
     let config: Config
     private let fullFormatter = EtherNumberFormatter.full
-
+    private var monetaryAmountViewModel: MonetaryAmountViewModel {
+        return MonetaryAmountViewModel(
+            amount: amount,
+            symbol: transaction.transferType.symbol(server: config.server),
+            currencyRate: currencyRate
+        )
+    }
     init(
         transaction: PreviewTransaction,
         config: Config = Config(),
@@ -24,7 +30,7 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     private var gasViewModel: GasViewModel {
-        return GasViewModel(fee: totalFee, symbol: config.server.symbol, currencyRate: currencyRate, formatter: fullFormatter)
+        return GasViewModel(fee: totalFee, server: config.server, currencyRate: currencyRate, formatter: fullFormatter)
     }
 
     private var totalViewModel: GasViewModel {
@@ -35,7 +41,7 @@ struct ConfirmPaymentDetailsViewModel {
             value += transaction.value
         }
 
-        return GasViewModel(fee: value, symbol: config.server.symbol, currencyRate: currencyRate, formatter: fullFormatter)
+        return GasViewModel(fee: value, server: config.server, currencyRate: currencyRate, formatter: fullFormatter)
     }
 
     private var totalFee: BigInt {
@@ -46,12 +52,17 @@ struct ConfirmPaymentDetailsViewModel {
         return transaction.gasLimit
     }
 
-    var amount: String {
-        return fullFormatter.string(from: transaction.value)
+    var requesterTitle: String {
+        return NSLocalizedString("confirmPayment.requester.label.title", value: "Requester", comment: "")
     }
 
-    var paymentFromTitle: String {
-        return NSLocalizedString("confirmPayment.from.label.title", value: "From", comment: "")
+    var requesterText: String? {
+        switch transaction.transferType {
+        case .dapp(let request):
+            return request.url?.absoluteString
+        case .ether, .token:
+            return .none
+        }
     }
 
     var paymentToTitle: String {
@@ -108,43 +119,33 @@ struct ConfirmPaymentDetailsViewModel {
         return totalViewModel.feeText
     }
 
-    var dataTitle: String {
-        return NSLocalizedString("confirmPayment.data.label.title", value: "Data", comment: "")
-    }
-
-    var dataText: String {
-        return transaction.data.description
-    }
-
-    var amountAttributedString: NSAttributedString {
+    var amount: String {
         switch transaction.transferType {
         case .token(let token):
-            return amountAttributedText(
-                string: fullFormatter.string(from: transaction.value, decimals: token.decimals)
-            )
-        case .ether:
-            return amountAttributedText(
-                string: fullFormatter.string(from: transaction.value)
-            )
+            return fullFormatter.string(from: transaction.value, decimals: token.decimals)
+        case .ether, .dapp:
+            return fullFormatter.string(from: transaction.value)
         }
     }
 
-    private func amountAttributedText(string: String) -> NSAttributedString {
-        let amount = NSAttributedString(
-            string: amountWithSign(for: string),
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 28),
-                .foregroundColor: amountTextColor,
-            ]
-        )
+    var amountString: String {
+        return amountWithSign(for: amount) + " \(transaction.transferType.symbol(server: config.server))"
+    }
 
-        let currency = NSAttributedString(
-            string: " \(transaction.transferType.symbol(server: config.server))",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 20),
-            ]
-        )
-        return amount + currency
+    var amountFont: UIFont {
+        return AppStyle.largeAmount.font
+    }
+
+    var monetaryAmountString: String? {
+        return monetaryAmountViewModel.amountText
+    }
+
+    var monetaryLabelTextColor: UIColor {
+        return TokensLayout.cell.fiatAmountTextColor
+    }
+
+    var monetaryLabelFont: UIFont {
+        return UIFont.systemFont(ofSize: 13, weight: .light)
     }
 
     private func amountWithSign(for amount: String) -> String {

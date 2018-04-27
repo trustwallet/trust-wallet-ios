@@ -6,7 +6,7 @@ import UIKit
 class CheckDeviceCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
 
     let jailbreakChecker: JailbreakChecker
 
@@ -27,7 +27,7 @@ class CheckDeviceCoordinator: Coordinator {
     }()
 
     init(
-        navigationController: UINavigationController,
+        navigationController: NavigationController,
         jailbreakChecker: JailbreakChecker
     ) {
         self.navigationController = navigationController

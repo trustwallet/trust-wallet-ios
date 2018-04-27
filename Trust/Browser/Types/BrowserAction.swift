@@ -3,9 +3,8 @@
 import Foundation
 import UIKit
 
-enum BrowserAction {
+enum BrowserNavigation {
     case goBack
-    case goForward
     case more(sender: UIView)
     case home
     case enter(String)

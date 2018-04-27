@@ -2,7 +2,7 @@
 
 import XCTest
 @testable import Trust
-import TrustKeystore
+import TrustCore
 
 class InCoordinatorTests: XCTestCase {
     
@@ -21,7 +21,7 @@ class InCoordinatorTests: XCTestCase {
 
         XCTAssertNotNil(tabbarController)
 
-        XCTAssert((tabbarController?.viewControllers?[0] as? UINavigationController)?.viewControllers[0] is BrowserViewController)
+        XCTAssert((tabbarController?.viewControllers?[0] as? UINavigationController)?.viewControllers[0] is MasterBrowserViewController)
         XCTAssert((tabbarController?.viewControllers?[1] as? UINavigationController)?.viewControllers[0] is WalletViewController)
         XCTAssert((tabbarController?.viewControllers?[2] as? UINavigationController)?.viewControllers[0] is TransactionsViewController)
         XCTAssert((tabbarController?.viewControllers?[3] as? UINavigationController)?.viewControllers[0] is SettingsViewController)

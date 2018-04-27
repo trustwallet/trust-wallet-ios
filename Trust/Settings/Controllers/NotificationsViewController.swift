@@ -20,7 +20,6 @@ class NotificationsViewController: FormViewController {
 
     private struct Keys {
         static let pushNotifications = "pushNotifications"
-        static let airdropNotifications = "airdropNotifications"
         static let payment = "payment"
     }
 
@@ -59,28 +58,23 @@ class NotificationsViewController: FormViewController {
             }
 
         +++ Section(
-        footer: NSLocalizedString("settings.pushNotifications.allowPushNotifications.footer", value: "You will be notified for sent and received transactions.", comment: "")) {
+            footer: NSLocalizedString(
+                "settings.pushNotifications.allowPushNotifications.footer",
+                value: "You will be notified for sent and received transactions.",
+                comment: ""
+            )
+        ) {
             $0.hidden = showOptionsCondition
         }
-            <<< SwitchRow(Keys.payment) { [weak self] in
-                $0.title = NSLocalizedString("settings.pushNotifications.payment.button.title", value: "Sent and Receive", comment: "")
-                $0.value = true
-                $0.hidden = self?.showOptionsCondition
-                $0.disabled = Condition(booleanLiteral: true)
-            }.cellSetup { cell, _ in
-                cell.switchControl.isEnabled = false
-            }
-        +++ Section(
-        footer: NSLocalizedString("settings.pushNotifications.airdrop.footer", value: "Occasionally you will receive offers to participate in airdrops from our official partners.", comment: "")) {
-            $0.hidden = showOptionsCondition
+
+        <<< SwitchRow(Keys.payment) { [weak self] in
+            $0.title = NSLocalizedString("settings.pushNotifications.payment.button.title", value: "Sent and Receive", comment: "")
+            $0.value = true
+            $0.hidden = self?.showOptionsCondition
+            $0.disabled = Condition(booleanLiteral: true)
+        }.cellSetup { cell, _ in
+            cell.switchControl.isEnabled = false
         }
-            <<< SwitchRow(Keys.airdropNotifications) { [weak self] in
-                $0.title = NSLocalizedString("settings.pushNotifications.airdrop.button.title", value: "Airdrops from partners", comment: "")
-                $0.value = self?.preferencesController.get(for: .airdropNotifications)
-            }.onChange { [weak self] row in
-                self?.preferencesController.set(value: row.value ?? false, for: .airdropNotifications)
-                self?.updatePreferences()
-            }
     }
 
     func updatePreferences() {

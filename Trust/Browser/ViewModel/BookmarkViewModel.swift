@@ -3,7 +3,8 @@
 import Foundation
 import UIKit
 
-struct BookmarkViewModel {
+struct BookmarkViewModel: URLViewModel {
+
     let bookmark: Bookmark
     init(
         bookmark: Bookmark
@@ -11,8 +12,8 @@ struct BookmarkViewModel {
         self.bookmark = bookmark
     }
 
-    var url: String {
-        return bookmark.url
+    var urlText: String? {
+        return bookmark.linkURL?.absoluteString
     }
 
     var title: String {
@@ -20,13 +21,6 @@ struct BookmarkViewModel {
     }
 
     var imageURL: URL? {
-        guard let host = bookmark.linkURL?.host else {
-            return .none
-        }
-        return URL(string: "https://api.statvoo.com/favicon/?url=\(host)")
-    }
-
-    var placeholderImage: UIImage? {
-        return R.image.launch_screen_logo()
+        return Favicon.get(for: bookmark.linkURL)
     }
 }

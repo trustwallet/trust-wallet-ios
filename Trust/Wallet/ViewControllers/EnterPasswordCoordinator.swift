@@ -19,11 +19,11 @@ class EnterPasswordCoordinator: Coordinator {
         controller.delegate = self
         return controller
     }()
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     private let account: Account
 
     init(
-        navigationController: UINavigationController = UINavigationController(),
+        navigationController: NavigationController = NavigationController(),
         account: Account
     ) {
         self.navigationController = navigationController

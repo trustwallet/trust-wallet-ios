@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
 
         let keystore = EtherKeystore.shared
-        coordinator = AppCoordinator(window: window!, keystore: keystore, navigator: urlNavigatorCoordinator.navigator)
+        coordinator = AppCoordinator(window: window!, keystore: keystore, navigator: urlNavigatorCoordinator)
         coordinator.start()
 
         protectionCoordinator.didFinishLaunchingWithOptions()
@@ -56,16 +56,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return true
     }
 
-    func application(
-        _ application: UIApplication,
-        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        Branch.getInstance().handlePushNotification(userInfo)
-    }
+//    func application(
+//        _ application: UIApplication,
+//        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+//        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+//        Branch.getInstance().handlePushNotification(userInfo)
+//    }
 
     // Respond to URI scheme links
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return urlNavigatorCoordinator.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
+        return urlNavigatorCoordinator.application(app, open: url, options: options)
     }
 
     // Respond to Universal Links

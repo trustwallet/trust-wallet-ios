@@ -5,6 +5,7 @@ import Foundation
 import UIKit
 import StackViewController
 import Result
+import StatefulViewController
 
 enum ConfirmType {
     case sign
@@ -19,7 +20,6 @@ enum ConfirmResult {
 class ConfirmPaymentViewController: UIViewController {
 
     private let keystore: Keystore
-    //let transaction: UnconfirmedTransaction
     let session: WalletSession
     let stackViewController = StackViewController()
     lazy var sendTransactionCoordinator = {
@@ -57,13 +57,23 @@ class ConfirmPaymentViewController: UIViewController {
         stackViewController.view.backgroundColor = viewModel.backgroundColor
         navigationItem.title = viewModel.title
 
+        errorView = ErrorView(onRetry: { [weak self] in
+            self?.fetch()
+        })
+
+        fetch()
+    }
+
+    func fetch() {
+        startLoading()
         configurator.load { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .success:
                 self.reloadView()
+                self.endLoading()
             case .failure(let error):
-                self.displayError(error: error)
+                self.endLoading(animated: true, error: error, completion: nil)
             }
         }
         configurator.configurationUpdate.subscribe { [weak self] _ in
@@ -77,33 +87,34 @@ class ConfirmPaymentViewController: UIViewController {
 
         let header = TransactionHeaderView()
         header.translatesAutoresizingMaskIntoConstraints = false
-        header.amountLabel.attributedText = detailsViewModel.amountAttributedString
+        header.amountLabel.text = detailsViewModel.amountString
+        header.amountLabel.font = detailsViewModel.amountFont
+        header.amountLabel.textColor = detailsViewModel.amountTextColor
+        header.monetaryAmountLabel.text = detailsViewModel.monetaryAmountString
+        header.monetaryAmountLabel.font = detailsViewModel.monetaryLabelFont
+        header.monetaryAmountLabel.textColor = detailsViewModel.monetaryLabelTextColor
 
         var items: [UIView] = [
             .spacer(),
             header,
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.item(
-                title: detailsViewModel.paymentFromTitle,
-                subTitle: session.account.address.description
-            ),
-            TransactionAppearance.item(
                 title: detailsViewModel.paymentToTitle,
                 subTitle: detailsViewModel.paymentToText
             ),
-            TransactionAppearance.item(
-                title: detailsViewModel.gasLimitTitle,
-                subTitle: detailsViewModel.gasLimitText
-            ) { [unowned self] _, _, _ in
-                self.edit()
-            },
-            TransactionAppearance.item(
+            TransactionAppearance.oneLine(
                 title: detailsViewModel.gasPriceTitle,
                 subTitle: detailsViewModel.gasPriceText
             ) { [unowned self] _, _, _ in
                 self.edit()
             },
-            TransactionAppearance.item(
+            TransactionAppearance.oneLine(
+                title: detailsViewModel.gasLimitTitle,
+                subTitle: detailsViewModel.gasLimitText
+            ) { [unowned self] _, _, _ in
+                self.edit()
+            },
+            TransactionAppearance.oneLine(
                 title: detailsViewModel.feeTitle,
                 subTitle: detailsViewModel.feeText
             ) { [unowned self] _, _, _ in
@@ -111,20 +122,20 @@ class ConfirmPaymentViewController: UIViewController {
             },
         ]
 
+        if let requesterText = detailsViewModel.requesterText {
+            items.insert(TransactionAppearance.oneLine(
+                title: detailsViewModel.requesterTitle,
+                subTitle: requesterText
+            ), at: 3)
+        }
+
         // show total ether
         if case TransferType.ether(_) = configurator.transaction.transferType {
-            items.append(TransactionAppearance.item(
+            items.append(TransactionAppearance.oneLine(
                 title: detailsViewModel.totalTitle,
                 subTitle: detailsViewModel.totalText
             ))
         }
-
-        items.append(TransactionAppearance.item(
-            title: detailsViewModel.dataTitle,
-            subTitle: detailsViewModel.dataText
-        ) { [unowned self] _, _, _ in
-            self.edit()
-        })
 
         for item in items {
             stackViewController.addItem(item)
@@ -135,7 +146,7 @@ class ConfirmPaymentViewController: UIViewController {
         stackViewController.view.addSubview(submitButton)
 
         NSLayoutConstraint.activate([
-            submitButton.bottomAnchor.constraint(equalTo: stackViewController.view.layoutGuide.bottomAnchor, constant: -15),
+            submitButton.bottomAnchor.constraint(greaterThanOrEqualTo: stackViewController.view.layoutGuide.bottomAnchor, constant: -30),
             submitButton.trailingAnchor.constraint(equalTo: stackViewController.view.trailingAnchor, constant: -15),
             submitButton.leadingAnchor.constraint(equalTo: stackViewController.view.leadingAnchor, constant: 15),
         ])
@@ -184,6 +195,12 @@ class ConfirmPaymentViewController: UIViewController {
             self.didCompleted?(result)
             self.hideLoading()
         }
+    }
+}
+
+extension ConfirmPaymentViewController: StatefulViewController {
+    func hasContent() -> Bool {
+        return true
     }
 }
 

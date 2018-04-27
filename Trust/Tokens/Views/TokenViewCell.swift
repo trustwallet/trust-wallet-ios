@@ -66,16 +66,22 @@ class TokenViewCell: UITableViewCell {
         rightStackView.setContentHuggingPriority(.required, for: .horizontal)
         stackView.setContentHuggingPriority(.required, for: .horizontal)
 
-        addSubview(stackView)
+        contentView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
             symbolImageView.widthAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
             symbolImageView.heightAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: Layout.stackVericalOffset),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Layout.stackVericalOffset),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: StyleLayout.sideMargin),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Layout.stackVericalOffset),
+            stackView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Layout.stackVericalOffset),
+            stackView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
         ])
+
+        separatorInset = UIEdgeInsets(
+            top: 0,
+            left: TokensLayout.tableView.layoutInsets.left - contentView.layoutInsets.left - layoutInsets.left,
+            bottom: 0, right: 0
+        )
     }
 
     required init?(coder aDecoder: NSCoder) {

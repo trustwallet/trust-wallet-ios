@@ -1,7 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
-import TrustKeystore
+import TrustCore
 
 struct SentTransaction {
     let id: String
@@ -20,9 +20,9 @@ extension SentTransaction {
             gas: transaction.original.gasLimit.description,
             gasPrice: transaction.original.gasPrice.description,
             gasUsed: "",
-            nonce: String(transaction.original.nonce),
+            nonce: Int(transaction.original.nonce),
             date: Date(),
-            localizedOperations: [],
+            localizedOperations: [transaction.original.localizedObject].compactMap { $0 },
             state: .pending
         )
     }

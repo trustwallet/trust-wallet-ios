@@ -13,6 +13,17 @@ extension String {
         return data.hexEncoded
     }
 
+    var isHexEncoded: Bool {
+        guard starts(with: "0x") else {
+            return false
+        }
+        let regex = try! NSRegularExpression(pattern: "^0x[0-9A-Fa-f]*$")
+        if regex.matches(in: self, range: NSRange(self.startIndex..., in: self)).isEmpty {
+            return false
+        }
+        return true
+    }
+
     var doubleValue: Double {
         let formatter = NumberFormatter()
         formatter.locale = Locale.current

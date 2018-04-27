@@ -3,16 +3,15 @@
 import UIKit
 
 protocol BrowserNavigationBarDelegate: class {
-    func did(action: BrowserAction)
+    func did(action: BrowserNavigation)
 }
 
 class BrowserNavigationBar: UINavigationBar {
 
-    let goBack = UIButton()
-    let goForward = UIButton()
     let textField = UITextField()
     let moreButton = UIButton()
     let homeButton = UIButton()
+    let backButton = UIButton()
     weak var browserDelegate: BrowserNavigationBarDelegate?
 
     private struct Layout {
@@ -41,28 +40,24 @@ class BrowserNavigationBar: UINavigationBar {
         textField.placeholder = NSLocalizedString("browser.url.textfield.placeholder", value: "Search or enter website url", comment: "")
         textField.keyboardType = .webSearch
 
-        goBack.translatesAutoresizingMaskIntoConstraints = false
-        goBack.setImage(R.image.toolbarBack(), for: .normal)
-        goBack.addTarget(self, action: #selector(goBackAction), for: .touchUpInside)
-
-        goForward.translatesAutoresizingMaskIntoConstraints = false
-        goForward.setImage(R.image.toolbarForward(), for: .normal)
-        goForward.addTarget(self, action: #selector(goForwardAction), for: .touchUpInside)
-
         moreButton.translatesAutoresizingMaskIntoConstraints = false
         moreButton.setImage(R.image.toolbarMenu(), for: .normal)
         moreButton.addTarget(self, action: #selector(moreAction(_:)), for: .touchUpInside)
 
         homeButton.translatesAutoresizingMaskIntoConstraints = false
-        homeButton.setImage(R.image.dapps_icon(), for: .normal)
+        homeButton.setImage(R.image.browserHome(), for: .normal)
         homeButton.addTarget(self, action: #selector(homeAction(_:)), for: .touchUpInside)
 
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.setImage(R.image.toolbarBack(), for: .normal)
+        backButton.addTarget(self, action: #selector(goBackAction), for: .touchUpInside)
+
         let stackView = UIStackView(arrangedSubviews: [
-            goBack,
-            goForward,
+            homeButton,
+            .spacerWidth(),
+            backButton,
             textField,
             .spacerWidth(),
-            homeButton,
             moreButton,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -74,23 +69,18 @@ class BrowserNavigationBar: UINavigationBar {
 
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
 
-            goForward.widthAnchor.constraint(equalToConstant: Layout.width),
-            goBack.widthAnchor.constraint(equalToConstant: Layout.width),
             homeButton.widthAnchor.constraint(equalToConstant: Layout.width),
+            backButton.widthAnchor.constraint(equalToConstant: Layout.width),
             moreButton.widthAnchor.constraint(equalToConstant: Layout.moreButtonWidth),
         ])
     }
 
     @objc private func goBackAction() {
         browserDelegate?.did(action: .goBack)
-    }
-
-    @objc private func goForwardAction() {
-        browserDelegate?.did(action: .goForward)
     }
 
     @objc private func moreAction(_ sender: UIView) {

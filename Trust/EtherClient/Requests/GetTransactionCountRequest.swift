@@ -5,7 +5,7 @@ import Foundation
 import JSONRPCKit
 
 struct GetTransactionCountRequest: JSONRPCKit.Request {
-    typealias Response = Int
+    typealias Response = BigInt
 
     let address: String
     let state: String
@@ -23,7 +23,7 @@ struct GetTransactionCountRequest: JSONRPCKit.Request {
 
     func response(from resultObject: Any) throws -> Response {
         if let response = resultObject as? String {
-            return BigInt(response.drop0x, radix: 16).flatMap({ numericCast($0) }) ?? 0
+            return BigInt(response.drop0x, radix: 16) ?? BigInt()
         } else {
             throw CastError(actualValue: resultObject, expectedType: Response.self)
         }

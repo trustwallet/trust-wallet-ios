@@ -33,7 +33,6 @@
 "export.skip.button.title" = "之后再导出";
 "importWallet.importingIndicator.label.title" = "导入钱包...";
 "Loading" = "正在加载";
-"Loading..." = "正在加载...";
 "Next" = "下一步";
 "OK" = "OK";
 "Password" = "密码";
@@ -211,7 +210,19 @@
 "wallets.export.alertSheet.title" = "导出私钥";
 "collectibles.discover.label.title" = "发现";
 "configureTransaction.error.gasFeeHigh" = "Gas 费用太高，最大可用：%1$@ %2$@";
+"sent.transaction.message" = "等待交易在网络上被挖掘以查看详细信息。";
 "sent.transaction.title" = "交易已发送！";
 "settings.network.test.warnning.dont.show.again" = "不要再显示";
 "settings.network.test.warnning.message" = "您正在切换到测试网络，交易仅用于测试目的";
 "settings.network.test.warnning.title" = "警告";
+"Disable" = "禁用";
+"wallets.navigation.title" = "钱包";
+"browser.qrCode.button.title" = "扫一扫";
+"nft.details.external.button.title" = "在 OpenSea.io 里打开";
+"nft.details.internal.button.title" = "在 %@ 里打开";
+"nft.poweredBy.label.text" = "由 OpenSea 提供支持";
+"configureTransaction.nonce.label.title" = "Nonce";
+"Bookmarks" = "书签";
+"History" = "历史记录";
+"history.noHistory.label.title" = "暂时还没有历史记录";
+"New" = "新 DApp";

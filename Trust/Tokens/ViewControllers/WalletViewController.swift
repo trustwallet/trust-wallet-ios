@@ -66,20 +66,6 @@ class WalletViewController: UIViewController {
         updateView()
     }
 
-    private func add(asChildViewController viewController: UIViewController) {
-        addChildViewController(viewController)
-        view.addSubview(viewController.view)
-        viewController.view.frame = view.bounds
-        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        viewController.didMove(toParentViewController: self)
-    }
-
-    private func remove(asChildViewController viewController: UIViewController) {
-        viewController.willMove(toParentViewController: nil)
-        viewController.view.removeFromSuperview()
-        viewController.removeFromParentViewController()
-    }
-
     private func showBarButtonItems() {
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white

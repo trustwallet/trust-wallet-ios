@@ -3,6 +3,7 @@
 import Foundation
 import UIKit
 import BigInt
+import TrustCore
 import TrustKeystore
 
 protocol SendCoordinatorDelegate: class {
@@ -15,7 +16,7 @@ class SendCoordinator: Coordinator {
     let transferType: TransferType
     let session: WalletSession
     let account: Account
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     let keystore: Keystore
     let storage: TokensDataStore
     var coordinators: [Coordinator] = []
@@ -26,7 +27,7 @@ class SendCoordinator: Coordinator {
 
     init(
         transferType: TransferType,
-        navigationController: UINavigationController = UINavigationController(),
+        navigationController: NavigationController = NavigationController(),
         session: WalletSession,
         keystore: Keystore,
         storage: TokensDataStore,
@@ -64,7 +65,7 @@ class SendCoordinator: Coordinator {
         case .ether(let destination):
             controller.addressRow?.value = destination?.description
             controller.addressRow?.cell.row.updateCell()
-        case .token: break
+        case .token, .dapp: break
         }
         controller.delegate = self
         return controller
@@ -77,12 +78,23 @@ class SendCoordinator: Coordinator {
 
 extension SendCoordinator: SendViewControllerDelegate {
     func didPressConfirm(transaction: UnconfirmedTransaction, transferType: TransferType, in viewController: SendViewController) {
-
         let configurator = TransactionConfigurator(
             session: session,
             account: account,
             transaction: transaction
         )
+
+//        let coordinator = ConfirmCoordinator(
+//            navigationController: navigationController,
+//            session: session,
+//            configurator: configurator,
+//            keystore: keystore,
+//            account: account,
+//            type: .signThenSend
+//        )
+//        coordinator.start()
+//        addCoordinator(coordinator)
+
         let controller = ConfirmPaymentViewController(
             session: session,
             keystore: keystore,

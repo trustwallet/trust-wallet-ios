@@ -2,8 +2,8 @@
 
 import Foundation
 import UIKit
+import TrustCore
 import TrustKeystore
-import CryptoSwift
 import Result
 
 enum SignMesageType {
@@ -20,7 +20,7 @@ class SignMessageCoordinator: Coordinator {
 
     var coordinators: [Coordinator] = []
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     let keystore: Keystore
     let account: Account
 
@@ -28,7 +28,7 @@ class SignMessageCoordinator: Coordinator {
     var didComplete: ((Result<Data, AnyError>) -> Void)?
 
     init(
-        navigationController: UINavigationController,
+        navigationController: NavigationController,
         keystore: Keystore,
         account: Account
     ) {
