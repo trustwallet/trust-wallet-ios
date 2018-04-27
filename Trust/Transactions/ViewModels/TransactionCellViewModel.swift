@@ -60,8 +60,10 @@ struct TransactionCellViewModel {
         switch transaction.state {
         case .completed:
             switch transactionViewModel.direction {
-            case .incoming: return NSLocalizedString("transaction.cell.received.title", value: "Received", comment: "")
-            case .outgoing: return NSLocalizedString("transaction.cell.sent.title", value: "Sent", comment: "")
+            case .incoming:
+                return NSLocalizedString("transaction.cell.received.title", value: "Received", comment: "")
+            case .outgoing:
+                return NSLocalizedString("transaction.cell.sent.title", value: "Sent", comment: "")
             }
         case .error:
             return NSLocalizedString("transaction.cell.error.title", value: "Error", comment: "")
@@ -77,9 +79,22 @@ struct TransactionCellViewModel {
     }
 
     var subTitle: String {
+        if transaction.toAddress == nil {
+            return NSLocalizedString("transaction.deployContract.label.title", value: "Deploy smart contract", comment: "")
+        }
         switch transactionViewModel.direction {
-        case .incoming: return "\(transactionViewModel.transactionFrom)"
-        case .outgoing: return "\(transactionViewModel.transactionTo)"
+        case .incoming:
+            return String(
+                format: "%@: %@",
+                NSLocalizedString("transaction.from.label.title", value: "From", comment: ""),
+                transactionViewModel.transactionFrom
+            )
+        case .outgoing:
+            return String(
+                format: "%@: %@",
+                NSLocalizedString("transaction.to.label.title", value: "To", comment: ""),
+                transactionViewModel.transactionTo
+            )
         }
     }
 
@@ -100,28 +115,19 @@ struct TransactionCellViewModel {
         }
     }
 
-    var amountAttributedString: NSAttributedString {
-        let value = transactionViewModel.shortValue
+    var amountText: String {
+        return transactionViewModel.amountText
+    }
 
-        return NSAttributedString(
-            string: transactionViewModel.amountWithSign(for: value.amount) + " " + value.symbol,
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold),
-                .foregroundColor: transactionViewModel.amountTextColor,
-            ]
-        )
+    var amountFont: UIFont {
+        return UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
+    }
+
+    var amountTextColor: UIColor {
+        return transactionViewModel.amountTextColor
     }
 
     var statusImage: UIImage? {
-        switch transaction.state {
-        case .error, .unknown, .failed, .deleted: return R.image.transaction_error()
-        case .completed:
-            switch transactionViewModel.direction {
-            case .incoming: return R.image.transaction_received()
-            case .outgoing: return R.image.transaction_sent()
-            }
-        case .pending:
-            return R.image.transaction_pending()
-        }
+        return transactionViewModel.statusImage
     }
 }

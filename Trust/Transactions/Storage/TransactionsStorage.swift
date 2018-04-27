@@ -2,7 +2,7 @@
 
 import Foundation
 import RealmSwift
-import TrustKeystore
+import TrustCore
 
 struct TransactionSection {
     let title: String
@@ -18,16 +18,23 @@ class TransactionsStorage {
     var transactions: Results<Transaction> {
         return realm.objects(Transaction.self).filter(NSPredicate(format: "id!=''")).sorted(byKeyPath: "date", ascending: false)
     }
+    var latestTransaction: Transaction? {
+        return realm.objects(Transaction.self)
+            .filter(NSPredicate(format: "from == %@", account.address.description))
+            .sorted(byKeyPath: "nonce", ascending: false)
+            .first
+    }
 
     var transactionSections: [TransactionSection] = []
 
     private var transactionsObserver: NotificationToken?
-
+    let account: Wallet
     init(
-        realm: Realm
+        realm: Realm,
+        account: Wallet
     ) {
         self.realm = realm
-        transactionsObservation()
+        self.account = account
     }
 
     var completedObjects: [Transaction] {
@@ -49,7 +56,7 @@ class TransactionsStorage {
     }
 
     private func tokens(from transactions: [Transaction]) -> [Token] {
-        let tokens: [Token] = transactions.flatMap { transaction in
+        let tokens: [Token] = transactions.compactMap { transaction in
             guard
                 let operation = transaction.localizedOperations.first,
                 let contract = Address(string: operation.contract ?? ""),
@@ -110,10 +117,15 @@ class TransactionsStorage {
         return items
     }
 
-    private func transactionsObservation() {
+    func transactionsObservation() {
         transactionsObserver = transactions.observe { [weak self] _ in
             self?.updateTransactionSection()
             self?.transactionsUpdateHandler()
         }
+    }
+
+    func invalidateTransactionsObservation() {
+        transactionsObserver?.invalidate()
+        transactionsObserver = nil
     }
 }

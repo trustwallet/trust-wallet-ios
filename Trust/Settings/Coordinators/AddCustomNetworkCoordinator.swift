@@ -9,7 +9,7 @@ protocol AddCustomNetworkCoordinatorDelegate: class {
 }
 
 class AddCustomNetworkCoordinator: Coordinator {
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     var coordinators: [Coordinator] = []
     weak var delegate: AddCustomNetworkCoordinatorDelegate?
 
@@ -39,7 +39,7 @@ class AddCustomNetworkCoordinator: Coordinator {
     let rpcStore: RPCStore
 
     init(
-        navigationController: UINavigationController = NavigationController(),
+        navigationController: NavigationController = NavigationController(),
         rpcStore: RPCStore
     ) {
         self.navigationController = navigationController

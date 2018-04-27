@@ -7,6 +7,7 @@ import JSONRPCKit
 import APIKit
 import BigInt
 import QRCodeReaderViewController
+import TrustCore
 import TrustKeystore
 
 protocol SendViewControllerDelegate: class {
@@ -123,7 +124,7 @@ class SendViewController: FormViewController {
         }
         let parsedValue: BigInt? = {
             switch transferType {
-            case .ether:
+            case .ether, .dapp:
                 return EtherNumberFormatter.full.number(from: amountString, units: .ether)
             case .token(let token):
                 return EtherNumberFormatter.full.number(from: amountString, decimals: token.decimals)

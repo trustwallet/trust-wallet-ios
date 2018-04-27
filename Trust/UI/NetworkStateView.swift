@@ -53,7 +53,7 @@ class NetworkStateView: UIView {
 
     private lazy var blockImageView: UIImageView = {
         let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 12, height: 12))
-        view.image = UIImage(named: "cube")
+        view.image = R.image.cube()
         return view
     }()
 

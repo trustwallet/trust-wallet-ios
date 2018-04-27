@@ -5,7 +5,7 @@ import APIKit
 import JSONRPCKit
 import StatefulViewController
 import Result
-import TrustKeystore
+import TrustCore
 import RealmSwift
 
 protocol TransactionsViewControllerDelegate: class {
@@ -41,9 +41,10 @@ class TransactionsViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .none
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = StyleLayout.TableView.separatorColor
         tableView.backgroundColor = .white
-        tableView.rowHeight = 68
+        tableView.rowHeight = TransactionsLayout.tableView.height
         view.addSubview(tableView)
 
         tableView.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
@@ -76,22 +77,26 @@ class TransactionsViewController: UIViewController {
         }()
 
         navigationItem.title = viewModel.title
-        transactionsObservation()
         runScheduledTimers()
         NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.stopTimers), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
+
+        transactionsObservation()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        refreshControl.endRefreshing()
         fetch()
     }
 
     private func transactionsObservation() {
         viewModel.transactionsUpdateObservation { [weak self] in
-            self?.tableView.reloadData()
-            self?.endLoading()
-            self?.refreshControl.endRefreshing()
+            guard let `self` = self else { return }
+            self.tableView.reloadData()
+            self.endLoading()
+            self.refreshControl.endRefreshing()
+            self.tabBarItem.badgeValue = self.viewModel.badgeValue
         }
     }
 
@@ -104,6 +109,7 @@ class TransactionsViewController: UIViewController {
         startLoading()
         viewModel.fetch { [weak self] in
             self?.endLoading()
+            self?.refreshControl.endRefreshing()
         }
     }
 
@@ -128,10 +134,12 @@ class TransactionsViewController: UIViewController {
         timer = nil
         updateTransactionsTimer?.invalidate()
         updateTransactionsTimer = nil
+        viewModel.invalidateTransactionsObservation()
     }
 
     @objc func restartTimers() {
         runScheduledTimers()
+        transactionsObservation()
     }
 
     private func runScheduledTimers() {
@@ -148,6 +156,7 @@ class TransactionsViewController: UIViewController {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+        viewModel.invalidateTransactionsObservation()
     }
 }
 

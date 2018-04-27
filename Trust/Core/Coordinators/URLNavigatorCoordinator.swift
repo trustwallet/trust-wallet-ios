@@ -7,8 +7,8 @@ struct URLNavigatorCoordinator {
     let branch = BranchCoordinator()
     let navigator = Navigator()
 
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        var handled = branch.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
+        var handled = branch.application(app, open: url, options: options)
         if !handled {
             handled = navigator.open(url)
         }

@@ -2,6 +2,7 @@
 
 import BigInt
 @testable import Trust
+import TrustCore
 import TrustKeystore
 import XCTest
 
@@ -16,7 +17,9 @@ class TransactionSigningTests: XCTestCase {
             data: Data(),
             gasPrice: BigInt("20000000000"),
             gasLimit: BigInt("21000"),
-            chainID: 1)
+            chainID: 1,
+            localizedObject: .none
+        )
         let signer = EIP155Signer(chainId: 1)
         let hash = signer.hash(transaction: transaction)
 
@@ -33,7 +36,9 @@ class TransactionSigningTests: XCTestCase {
             data: Data(),
             gasPrice: BigInt("20000000000"),
             gasLimit: BigInt("21000"),
-            chainID: 1)
+            chainID: 1,
+            localizedObject: .none
+        )
         let signer = HomesteadSigner()
         let hash = signer.hash(transaction: transaction)
 
@@ -50,7 +55,8 @@ class TransactionSigningTests: XCTestCase {
             data: Data(),
             gasPrice: BigInt(20000000000),
             gasLimit: BigInt(21000),
-            chainID: 1
+            chainID: 1,
+            localizedObject: .none
         )
 
         let signer = EIP155Signer(chainId: 1)

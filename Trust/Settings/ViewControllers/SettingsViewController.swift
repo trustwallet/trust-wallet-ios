@@ -110,13 +110,11 @@ class SettingsViewController: FormViewController, Coordinator {
             }
 
             <<< AppFormAppearance.button { [weak self] row in
-                guard let `self` = self else { return }
+                guard let strongSelf = self, let accountsViewController = strongSelf.accountsCoordinator?.accountsViewController else { return }
                 row.cellStyle = .value1
-                if let accountsViewController = self.accountsCoordinator?.accountsViewController {
-                    row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
-                        return accountsViewController
-                    }, onDismiss: { _ in })
-                }
+                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+                    return accountsViewController
+                }, onDismiss: nil)
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
                 cell.imageView?.image = R.image.settings_wallet()
@@ -195,17 +193,19 @@ class SettingsViewController: FormViewController, Coordinator {
                 cell.imageView?.image = R.image.settingsCurrency()
             }
 
-//            <<< AppFormAppearance.button { row in
-//                row.cellStyle = .value1
-//                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
-//                    return PreferencesViewController()
-//                }, onDismiss: { _ in })
-//            }.cellUpdate { cell, _ in
-//                cell.textLabel?.textColor = .black
-//                cell.imageView?.image = R.image.settings_preferences()
-//                cell.textLabel?.text = NSLocalizedString("settings.preferences.title", value: "Preferences", comment: "")
-//                cell.accessoryType = .disclosureIndicator
-//            }
+            <<< AppFormAppearance.button { row in
+                row.cellStyle = .value1
+                row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback { [weak self] in
+                    let controller = BrowserConfigurationViewController()
+                    controller.delegate = self
+                    return controller
+                }, onDismiss: nil)
+            }.cellUpdate { cell, _ in
+                cell.textLabel?.textColor = .black
+                cell.imageView?.image = R.image.dapps_icon()
+                cell.textLabel?.text = NSLocalizedString("settings.browser.title", value: "DApp Browser", comment: "")
+                cell.accessoryType = .disclosureIndicator
+            }
 
             +++ Section(NSLocalizedString("settings.joinCommunity.label.title", value: "Join Community", comment: ""))
 
@@ -223,20 +223,22 @@ class SettingsViewController: FormViewController, Coordinator {
                 self.helpUsCoordinator.presentSharing(in: self, from: cell.contentView)
             }
 
-            <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("settings.rateUsAppStore.button.title", value: "Rate Us on App Store", comment: "")
-            }.onCellSelection { [weak self] _, _  in
-                self?.helpUsCoordinator.rateUs()
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_rating()
-            }
+//            <<< AppFormAppearance.button { button in
+//                button.title = NSLocalizedString("settings.rateUsAppStore.button.title", value: "Rate Us on App Store", comment: "")
+//            }.onCellSelection { [weak self] _, _  in
+//                self?.helpUsCoordinator.rateUs()
+//            }.cellSetup { cell, _ in
+//                cell.imageView?.image = R.image.settings_rating()
+//            }
 
             +++ Section()
 
             <<< AppFormAppearance.button { row in
                 row.cellStyle = .value1
-                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
-                    return SupportViewController()
+                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback { [weak self] in
+                    let controller = SupportViewController()
+                    controller.delegate = self
+                    return controller
                 }, onDismiss: { _ in })
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
@@ -273,11 +275,12 @@ class SettingsViewController: FormViewController, Coordinator {
     ) -> ButtonRow {
         return AppFormAppearance.button {
             $0.title = type.title
-        }.onCellSelection { [unowned self] _, _ in
+        }.onCellSelection { [weak self] _, _ in
+            guard let `self` = self else { return }
             if let localURL = type.localURL, UIApplication.shared.canOpenURL(localURL) {
                 UIApplication.shared.open(localURL, options: [:], completionHandler: .none)
             } else {
-                self.openURL(type.remoteURL)
+                self.openURLInBrowser(type.remoteURL)
             }
         }.cellSetup { cell, _ in
             cell.imageView?.image = type.image
@@ -299,6 +302,10 @@ class SettingsViewController: FormViewController, Coordinator {
         delegate?.didAction(action: action, in: self)
     }
 
+    func openURLInBrowser(_ url: URL) {
+        self.delegate?.didAction(action: .openURL(url), in: self)
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -309,5 +316,17 @@ extension SettingsViewController: LockCreatePasscodeCoordinatorDelegate {
         coordinator.lockViewController.willFinishWithResult?(false)
         navigationController?.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
+    }
+}
+
+extension SettingsViewController: SupportViewControllerDelegate {
+    func didPressURL(_ url: URL, in controller: SupportViewController) {
+        openURLInBrowser(url)
+    }
+}
+
+extension SettingsViewController: BrowserConfigurationViewControllerDelegate {
+    func didPressDeleteCache(in controller: BrowserConfigurationViewController) {
+        delegate?.didAction(action: .clearBrowserCache, in: self)
     }
 }

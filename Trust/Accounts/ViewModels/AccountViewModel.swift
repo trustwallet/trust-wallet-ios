@@ -2,7 +2,7 @@
 
 import Foundation
 import JdenticonSwift
-import TrustKeystore
+import TrustCore
 import UIKit
 
 struct AccountViewModel {

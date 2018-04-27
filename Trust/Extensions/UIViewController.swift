@@ -61,4 +61,18 @@ extension UIViewController {
         controller.modalPresentationStyle = .pageSheet
         present(controller, animated: true, completion: nil)
     }
+
+    func add(asChildViewController viewController: UIViewController) {
+        addChildViewController(viewController)
+        view.addSubview(viewController.view)
+        viewController.view.frame = view.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        viewController.didMove(toParentViewController: self)
+    }
+
+    func remove(asChildViewController viewController: UIViewController) {
+        viewController.willMove(toParentViewController: nil)
+        viewController.view.removeFromSuperview()
+        viewController.removeFromParentViewController()
+    }
 }

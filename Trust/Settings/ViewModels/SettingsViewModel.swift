@@ -12,6 +12,19 @@ struct SettingsViewModel {
         self.isDebug = isDebug
     }
 
+    var servers: [RPCServer] {
+        return [
+            RPCServer.main,
+            RPCServer.classic,
+            RPCServer.poa,
+            RPCServer.callisto,
+            RPCServer.kovan,
+            RPCServer.ropsten,
+            RPCServer.rinkeby,
+            RPCServer.sokol,
+        ]
+    }
+
     var currency: [Currency] {
         return Currency.allValues.map { $0 }
     }

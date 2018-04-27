@@ -25,17 +25,22 @@ class TransactionViewCell: UITableViewCell {
         amountLabel.textAlignment = .right
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        let leftStackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
-        leftStackView.translatesAutoresizingMaskIntoConstraints = false
-        leftStackView.axis = .vertical
-        leftStackView.distribution = .fillProportionally
-        leftStackView.spacing = 6
+        let titlesStackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
+        titlesStackView.translatesAutoresizingMaskIntoConstraints = false
+        titlesStackView.axis = .vertical
+        titlesStackView.distribution = .fillProportionally
+        titlesStackView.spacing = 8
 
         let rightStackView = UIStackView(arrangedSubviews: [amountLabel])
         rightStackView.translatesAutoresizingMaskIntoConstraints = false
         rightStackView.axis = .vertical
 
-        let stackView = UIStackView(arrangedSubviews: [statusImageView, leftStackView, rightStackView])
+        let stackView = UIStackView(arrangedSubviews: [
+            statusImageView,
+            titlesStackView,
+            .spacerWidth(),
+            rightStackView,
+        ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 15
@@ -44,19 +49,27 @@ class TransactionViewCell: UITableViewCell {
         statusImageView.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
         subTitleLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
         titleLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        subTitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
 
         amountLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         stackView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
 
-        addSubview(stackView)
+        contentView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
             statusImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 44),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -StyleLayout.sideMargin),
+            stackView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -StyleLayout.sideMargin),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: StyleLayout.sideMargin),
+            stackView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
         ])
+
+        separatorInset = UIEdgeInsets(
+            top: 0,
+            left: TransactionsLayout.tableView.layoutInsets.left - contentView.layoutInsets.left - layoutInsets.left,
+            bottom: 0, right: 0
+        )
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -73,7 +86,9 @@ class TransactionViewCell: UITableViewCell {
         subTitleLabel.textColor = viewModel.subTitleTextColor
         subTitleLabel.font = viewModel.subTitleFont
 
-        amountLabel.attributedText = viewModel.amountAttributedString
+        amountLabel.text = viewModel.amountText
+        amountLabel.font = viewModel.amountFont
+        amountLabel.textColor = viewModel.amountTextColor
 
         backgroundColor = viewModel.backgroundColor
     }

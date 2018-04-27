@@ -2,27 +2,25 @@
 
 import Foundation
 @testable import Trust
-import TrustKeystore
+import TrustCore
 import BigInt
 
 extension WalletSession {
     static func make(
         account: Trust.Wallet = .make(),
-        config: Config = .make(),
-        web3: Web3Swift = Web3Swift()
+        config: Config = .make()
     ) -> WalletSession {
         let balance =  BalanceCoordinator(account: account, config: config, storage: FakeTokensDataStore())
         return WalletSession(
             account: account,
             config: config,
-            web3: web3,
-            balanceCoordinator: balance
+            balanceCoordinator: balance,
+            nonceProvider: GetNonceProvider.make()
         )
     }
     static func makeWithEthBalance(
         account: Trust.Wallet = .make(),
         config: Config = .make(),
-        web3: Web3Swift = Web3Swift(),
         amount: String
         ) -> WalletSession {
         let balance =  BalanceCoordinator(account: account, config: config, storage: FakeTokensDataStore())
@@ -30,8 +28,8 @@ extension WalletSession {
         return WalletSession(
             account: account,
             config: config,
-            web3: web3,
-            balanceCoordinator: balance
+            balanceCoordinator: balance,
+            nonceProvider: GetNonceProvider.make()
         )
     }
 }

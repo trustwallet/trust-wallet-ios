@@ -1,19 +1,21 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
-import TrustKeystore
+import TrustCore
 import UIKit
+import WebKit
 import RealmSwift
 
 protocol SettingsCoordinatorDelegate: class {
     func didRestart(with account: Wallet, in coordinator: SettingsCoordinator)
     func didUpdateAccounts(in coordinator: SettingsCoordinator)
+    func didPressURL(_ url: URL, in coordinator: SettingsCoordinator)
     func didCancel(in coordinator: SettingsCoordinator)
 }
 
 class SettingsCoordinator: Coordinator {
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
     let keystore: Keystore
     let session: WalletSession
     let storage: TransactionsStorage
@@ -55,14 +57,18 @@ class SettingsCoordinator: Coordinator {
         controller.modalPresentationStyle = .pageSheet
         return controller
     }()
+    let sharedRealm: Realm
+    private lazy var historyStore: HistoryStore = {
+        return HistoryStore(realm: sharedRealm)
+    }()
 
     init(
-        navigationController: UINavigationController = NavigationController(),
+        navigationController: NavigationController = NavigationController(),
         keystore: Keystore,
         session: WalletSession,
         storage: TransactionsStorage,
         rpcStore: RPCStore,
-        balanceCoordinator: TokensBalanceService
+        sharedRealm: Realm
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
@@ -71,6 +77,7 @@ class SettingsCoordinator: Coordinator {
         self.storage = storage
         self.rpcStore = rpcStore
         self.balanceCoordinator = balanceCoordinator
+        self.sharedRealm = sharedRealm
 
         addCoordinator(accountsCoordinator)
     }
@@ -81,6 +88,14 @@ class SettingsCoordinator: Coordinator {
 
     func restart(for wallet: Wallet) {
         delegate?.didRestart(with: wallet, in: self)
+    }
+
+    func cleadCache() {
+        let dataStore = WKWebsiteDataStore.default()
+        dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { (records) in
+            dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: records, completionHandler: { })
+        }
+        historyStore.clearAll()
     }
 
     private func presentSwitchNetworkWarning(for server: RPCServer) {
@@ -143,6 +158,10 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
             case .preferences:
                 pushNotificationsRegistrar.register()
             }
+        case .openURL(let url):
+            delegate?.didPressURL(url, in: self)
+        case .clearBrowserCache:
+            cleadCache()
         }
     }
 }

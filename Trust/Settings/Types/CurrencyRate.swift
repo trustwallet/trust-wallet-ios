@@ -9,6 +9,5 @@ struct Rate: Codable {
 }
 
 struct CurrencyRate: Codable {
-    let currency: String
     let rates: [Rate]
 }

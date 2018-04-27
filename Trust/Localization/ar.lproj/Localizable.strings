@@ -33,7 +33,6 @@
 "export.skip.button.title" = "القيام بذلك في وقت لاحق";
 "importWallet.importingIndicator.label.title" = "جار استيراد المحفظة ...";
 "Loading" = "جار التحميل %@";
-"Loading..." = "جار التحميل %@";
 "Next" = "التالى";
 "OK" = "موافق";
 "Password" = "كلمه السر";
@@ -73,7 +72,7 @@
 "transactions.deposit.button.title" = "شراء";
 "transactions.myAddress.button.title" = "عنواني";
 "transactions.noTransactions.label.title" = "لا معاملات حتى الآن!";
-"wallet.navigation.title" = "المحافظ";
+"wallet.navigation.title" = "المحفظة";
 "wallets.backup.alertSheet.title" = "النسخ الاحتياطي Keystore";
 "welcome.createWallet.button.title" = "إنشاء المحفظة";
 "welcome.erc20.label.description" = "دعم تلقائي لعملات ERC20";

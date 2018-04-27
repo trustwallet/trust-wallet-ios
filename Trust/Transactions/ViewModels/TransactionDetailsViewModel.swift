@@ -3,6 +3,7 @@
 import BigInt
 import Foundation
 import UIKit
+import TrustCore
 
 struct TransactionDetailsViewModel {
 
@@ -22,7 +23,13 @@ struct TransactionDetailsViewModel {
     private let shortFormatter = EtherNumberFormatter.short
     private let fullFormatter = EtherNumberFormatter.full
     private let currencyRate: CurrencyRate?
-
+    private var monetaryAmountViewModel: MonetaryAmountViewModel {
+        return MonetaryAmountViewModel(
+            amount: transactionViewModel.shortValue.amount,
+            symbol: transactionViewModel.shortValue.symbol,
+            currencyRate: currencyRate
+        )
+    }
     init(
         transaction: Transaction,
         config: Config,
@@ -43,7 +50,13 @@ struct TransactionDetailsViewModel {
     }
 
     var title: String {
-        return "Transaction"
+        if transaction.state == .pending {
+            return NSLocalizedString("Pending Transaction", value: "Pending Transaction", comment: "")
+        }
+        if transactionViewModel.direction == .incoming {
+            return NSLocalizedString("Incoming Transaction", value: "Incoming Transaction", comment: "")
+        }
+        return NSLocalizedString("Outgoing Transaction", value: "Outgoing Transaction", comment: "")
     }
 
     var backgroundColor: UIColor {
@@ -78,23 +91,34 @@ struct TransactionDetailsViewModel {
         return NSLocalizedString("transaction.id.label.title", value: "Transaction #", comment: "")
     }
 
-    var to: String {
-        guard let to = transaction.operation?.to else {
-            return transaction.to
+    var address: String {
+        if transaction.toAddress == nil {
+            return Address.zero.description
         }
-        return to
+        if transactionViewModel.direction == .incoming {
+            return transaction.from
+        } else {
+            guard let to = transaction.operation?.to else {
+                return transaction.to
+            }
+            return to
+        }
     }
 
-    var toLabelTitle: String {
-        return NSLocalizedString("transaction.to.label.title", value: "To", comment: "")
+    var addressTitle: String {
+        if transactionViewModel.direction == .incoming {
+            return NSLocalizedString("transaction.sender.label.title", value: "Sender", comment: "")
+        } else {
+            return NSLocalizedString("transaction.recipient.label.title", value: "Recipient", comment: "")
+        }
     }
 
-    var from: String {
-        return transaction.from
+    var nonce: String {
+        return String(transaction.nonce)
     }
 
-    var fromLabelTitle: String {
-        return NSLocalizedString("transaction.from.label.title", value: "From", comment: "")
+    var nonceTitle: String {
+        return NSLocalizedString("Nonce", value: "Nonce", comment: "")
     }
 
     var gasViewModel: GasViewModel {
@@ -108,7 +132,7 @@ struct TransactionDetailsViewModel {
             }
         }()
 
-        return GasViewModel(fee: gasFee, symbol: config.server.symbol, currencyRate: currencyRate, formatter: fullFormatter)
+        return GasViewModel(fee: gasFee, server: config.server, currencyRate: currencyRate, formatter: fullFormatter)
     }
 
     var gasFee: String {
@@ -131,16 +155,28 @@ struct TransactionDetailsViewModel {
         return NSLocalizedString("transaction.confirmation.label.title", value: "Confirmation", comment: "")
     }
 
-    var blockNumber: String {
-        return String(transaction.blockNumber)
+    var amountString: String {
+        return transactionViewModel.amountText
     }
 
-    var blockNumberLabelTitle: String {
-        return NSLocalizedString("transaction.blockNumber.label.title", value: "Block #", comment: "")
+    var amountTextColor: UIColor {
+        return transactionViewModel.amountTextColor
     }
 
-    var amountAttributedString: NSAttributedString {
-        return transactionViewModel.fullAmountAttributedString
+    var amountFont: UIFont {
+        return AppStyle.largeAmount.font
+    }
+
+    var monetaryAmountString: String? {
+        return monetaryAmountViewModel.amountText
+    }
+
+    var monetaryLabelTextColor: UIColor {
+        return TokensLayout.cell.fiatAmountTextColor
+    }
+
+    var monetaryLabelFont: UIFont {
+        return UIFont.systemFont(ofSize: 13, weight: .light)
     }
 
     var shareItem: URL? {

@@ -3,10 +3,11 @@
 import Foundation
 import UIKit
 import Result
-import TrustKeystore
+import TrustCore
 
 protocol TransactionCoordinatorDelegate: class {
     func didPress(for type: PaymentFlow, in coordinator: TransactionCoordinator)
+    func didPressURL(_ url: URL)
     func didCancel(in coordinator: TransactionCoordinator)
 }
 
@@ -32,13 +33,13 @@ class TransactionCoordinator: Coordinator {
 
     let network: TrustNetwork
 
-    let navigationController: UINavigationController
+    let navigationController: NavigationController
 
     var coordinators: [Coordinator] = []
 
     init(
         session: WalletSession,
-        navigationController: UINavigationController = NavigationController(),
+        navigationController: NavigationController = NavigationController(),
         storage: TransactionsStorage,
         tokensStorage: TokensDataStore,
         network: TrustNetwork,
@@ -113,7 +114,8 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
             session: session,
             transaction: transaction
         )
-        UINavigationController.openFormSheet(
+        controller.delegate = self
+        NavigationController.openFormSheet(
             for: controller,
             in: navigationController,
             barItem: UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
@@ -130,5 +132,11 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
 
     func reset() {
         delegate?.didCancel(in: self)
+    }
+}
+
+extension TransactionCoordinator: TransactionViewControllerDelegate {
+    func didPressURL(_ url: URL) {
+        delegate?.didPressURL(url)
     }
 }

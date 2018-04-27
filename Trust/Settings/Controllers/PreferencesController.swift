@@ -16,7 +16,15 @@ class PreferencesController {
         userDefaults.set(value, forKey: option.key)
     }
 
+    func set(value: Int, for option: PreferenceOption) {
+        userDefaults.set(value, forKey: option.key)
+    }
+
     func get(for option: PreferenceOption) -> Bool {
         return userDefaults.bool(forKey: option.key)
+    }
+
+    func get(for option: PreferenceOption) -> Int {
+        return userDefaults.integer(forKey: option.key)
     }
 }
