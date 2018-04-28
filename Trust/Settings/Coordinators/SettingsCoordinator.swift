@@ -19,6 +19,7 @@ class SettingsCoordinator: Coordinator {
     let keystore: Keystore
     let session: WalletSession
     let storage: TransactionsStorage
+    let rpcStore: RPCStore
     let balanceCoordinator: TokensBalanceService
     weak var delegate: SettingsCoordinatorDelegate?
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
@@ -34,13 +35,23 @@ class SettingsCoordinator: Coordinator {
         coordinator.delegate = self
         return coordinator
     }()
+    
+    lazy var networksCoordinator: NetworksCoordinator = {
+        let coordinator = NetworksCoordinator(
+            navigationController: navigationController,
+            rpcStore: rpcStore
+        )
+        //coordinator.delegate = self
+        return coordinator
+    }()
 
     lazy var rootViewController: SettingsViewController = {
         let controller = SettingsViewController(
             session: session,
             keystore: keystore,
             balanceCoordinator: balanceCoordinator,
-            accountsCoordinator: accountsCoordinator
+            accountsCoordinator: accountsCoordinator,
+            networksCoordinator: networksCoordinator
         )
         controller.delegate = self
         controller.modalPresentationStyle = .pageSheet
@@ -56,7 +67,7 @@ class SettingsCoordinator: Coordinator {
         keystore: Keystore,
         session: WalletSession,
         storage: TransactionsStorage,
-        balanceCoordinator: TokensBalanceService,
+        rpcStore: RPCStore,
         sharedRealm: Realm
     ) {
         self.navigationController = navigationController
@@ -64,6 +75,7 @@ class SettingsCoordinator: Coordinator {
         self.keystore = keystore
         self.session = session
         self.storage = storage
+        self.rpcStore = rpcStore
         self.balanceCoordinator = balanceCoordinator
         self.sharedRealm = sharedRealm
 

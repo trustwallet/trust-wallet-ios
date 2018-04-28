@@ -35,17 +35,20 @@ class SettingsViewController: FormViewController, Coordinator {
     let keystore: Keystore
     let balanceCoordinator: TokensBalanceService
     weak var accountsCoordinator: AccountsCoordinator?
+    weak var networksCoordinator: NetworksCoordinator?
 
     init(
         session: WalletSession,
         keystore: Keystore,
         balanceCoordinator: TokensBalanceService,
-        accountsCoordinator: AccountsCoordinator
+        accountsCoordinator: AccountsCoordinator,
+        networksCoordinator: NetworksCoordinator
     ) {
         self.session = session
         self.keystore = keystore
         self.balanceCoordinator = balanceCoordinator
         self.accountsCoordinator = accountsCoordinator
+        self.networksCoordinator = networksCoordinator
         super.init(nibName: nil, bundle: nil)
         self.chaineStateObservation()
     }
@@ -60,7 +63,7 @@ class SettingsViewController: FormViewController, Coordinator {
 
         form = Section()
 
-            <<< PushRow<RPCServer> { [weak self] in
+            /*<<< PushRow<RPCServer> { [weak self] in
                 guard let strongSelf = self else {
                     return
                 }
@@ -84,8 +87,26 @@ class SettingsViewController: FormViewController, Coordinator {
                         return NSLocalizedString("settings.network.custom.label.title", value: "Custom", comment: "")
                     }
                 }
+                selectorController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.addNetwork))
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_server()
+            }*/
+
+            <<< AppFormAppearance.button { [weak self] row in
+                guard let `self` = self else { return }
+                row.cellStyle = .value1
+                if let networksViewController = self.networksCoordinator?.networksViewController {
+                    row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+                        return networksViewController
+                    }, onDismiss: { _ in })
+                }
+
+            }.cellUpdate { cell, _ in
+                cell.textLabel?.textColor = .black
+                cell.imageView?.image = R.image.settings_server()
+                cell.textLabel?.text = NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
+                cell.detailTextLabel?.text = RPCServer(chainID: self.config.chainID).displayName 
+                cell.accessoryType = .disclosureIndicator
             }
 
             <<< AppFormAppearance.button { [weak self] row in

@@ -97,6 +97,9 @@ class InCoordinator: Coordinator {
             balanceCoordinator: balance,
             nonceProvider: nonceProvider
         )
+        let rpcStore = RPCStore(
+            realm: realm
+        )
         transactionsStorage.removeTransactions(for: [.failed, .unknown])
 
         let transactionCoordinator = TransactionCoordinator(
@@ -136,6 +139,13 @@ class InCoordinator: Coordinator {
             keystore: keystore,
             session: session,
             storage: transactionsStorage,
+            rpcStore: rpcStore,
+            balanceCoordinator: balanceCoordinator
+        )
+        settingsCoordinator.rootViewController.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("settings.navigation.title", value: "Settings", comment: ""),
+            image: R.image.settings_icon(),
+            selectedImage: nil,
             balanceCoordinator: balanceCoordinator,
             sharedRealm: sharedRealm
         )
