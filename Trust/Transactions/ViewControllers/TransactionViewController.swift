@@ -66,9 +66,9 @@ class TransactionViewController: UIViewController {
             item(title: viewModel.gasFeeLabelTitle, value: viewModel.gasFee),
             TransactionAppearance.divider(color: dividerColor, alpha: 1),
             TransactionAppearance.horizontalItem(views: [
-                item(title: viewModel.createdAtLabelTitle, value: viewModel.createdAt),
-                TransactionAppearance.divider(direction: .vertical, color: dividerColor, alpha: 1, layoutInsets: .zero),
                 confirmationView,
+                TransactionAppearance.divider(direction: .vertical, color: dividerColor, alpha: 1, layoutInsets: .zero),
+                item(title: viewModel.createdAtLabelTitle, value: viewModel.createdAt),
             ]),
             TransactionAppearance.divider(color: dividerColor, alpha: 1, layoutInsets: dividerOffset),
             item(title: viewModel.nonceTitle, value: viewModel.nonce),
