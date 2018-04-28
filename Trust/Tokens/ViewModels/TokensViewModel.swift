@@ -134,9 +134,10 @@ class TokensViewModel: NSObject {
             Answers.logCustomEvent(withName: "Fetch token list request error: \(error)", customAttributes: nil)
         }.finally { [weak self] in
             guard let strongSelf = self else { return }
-            let tokens = strongSelf.store.enabledObject
+            let tokens = strongSelf.store.objects
+            let enabledTokens = strongSelf.store.enabledObject
             strongSelf.prices(for: tokens)
-            strongSelf.balances(for: tokens)
+            strongSelf.balances(for: enabledTokens)
         }
     }
 
