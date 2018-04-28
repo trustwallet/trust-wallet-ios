@@ -34,7 +34,10 @@ class HalfModalPresentationController: UIPresentationController {
     override var frameOfPresentedViewInContainerView: CGRect {
         guard let container = containerView  else { return CGRect.zero }
         // Should probaly find a way to to this based on content
-        return CGRect(x: 0.0, y: container.bounds.height / 3.8, width: container.bounds.width, height: container.bounds.height / 1.3 )
+        let height = container.bounds.height / 1.6
+        let y = container.bounds.height - height
+
+        return CGRect(x: 0.0, y: y, width: container.bounds.width, height: height )
     }
     override func containerViewWillLayoutSubviews() {
         // This is needed to maintain the correct frame when rotaing

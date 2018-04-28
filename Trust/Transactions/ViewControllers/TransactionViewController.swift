@@ -46,10 +46,8 @@ class TransactionViewController: UIViewController {
         header.translatesAutoresizingMaskIntoConstraints = false
         header.amountLabel.text = viewModel.amountString
         header.amountLabel.textColor = viewModel.amountTextColor
-        header.amountLabel.font = viewModel.amountFont
         header.monetaryAmountLabel.text = viewModel.monetaryAmountString
-        header.monetaryAmountLabel.font = viewModel.monetaryLabelFont
-        header.monetaryAmountLabel.textColor = viewModel.monetaryLabelTextColor
+        header.imageView.image = viewModel.statusImage
 
         let dividerColor = Colors.whisper
         let dividerOffset = UIEdgeInsets(top: 0, left: 26, bottom: 0, right: 26)
@@ -68,9 +66,9 @@ class TransactionViewController: UIViewController {
             item(title: viewModel.gasFeeLabelTitle, value: viewModel.gasFee),
             TransactionAppearance.divider(color: dividerColor, alpha: 1),
             TransactionAppearance.horizontalItem(views: [
-                confirmationView,
-                TransactionAppearance.divider(direction: .vertical, color: dividerColor, alpha: 1, layoutInsets: .zero),
                 item(title: viewModel.createdAtLabelTitle, value: viewModel.createdAt),
+                TransactionAppearance.divider(direction: .vertical, color: dividerColor, alpha: 1, layoutInsets: .zero),
+                confirmationView,
             ]),
             TransactionAppearance.divider(color: dividerColor, alpha: 1, layoutInsets: dividerOffset),
             item(title: viewModel.nonceTitle, value: viewModel.nonce),
@@ -105,7 +103,7 @@ class TransactionViewController: UIViewController {
     }
 
     private func moreDetails() -> UIView {
-        let button = Button(size: .large, style: .solid)
+        let button = Button(size: .large, style: .border)
         button.setTitle(NSLocalizedString("More Details", value: "More Details", comment: ""), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(more), for: .touchUpInside)

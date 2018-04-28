@@ -21,13 +21,27 @@ struct GasViewModel {
         self.formatter = formatter
     }
 
-    var feeText: String {
+    var etherFee: String {
         let gasFee = formatter.string(from: fee)
-        var text = "\(gasFee.description) \(server.symbol)"
+        return "\(gasFee.description) \(server.symbol)"
+    }
 
-        if let feeInCurrency = currencyRate?.estimate(fee: gasFee, with: server.address),
-            let result = currencyRate?.format(fee: feeInCurrency) {
-            text += " (\(result))"
+    var feeCurrency: Double? {
+        return currencyRate?.estimate(fee: formatter.string(from: fee), with: server.address)
+    }
+
+    var monetaryFee: String? {
+        guard let feeInCurrency = feeCurrency,
+            let fee = currencyRate?.format(fee: feeInCurrency) else {
+            return .none
+        }
+        return fee
+    }
+
+    var feeText: String {
+        var text = etherFee
+        if let monetaryFee = monetaryFee {
+            text += "(\(monetaryFee))"
         }
         return text
     }

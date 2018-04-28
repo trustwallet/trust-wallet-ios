@@ -33,21 +33,23 @@ struct TransactionAppearance {
     static func item(
         title: String,
         subTitle: String,
+        titleStyle: AppStyle = .heading,
+        subTitleStyle: AppStyle = .paragraphLight,
         layoutMargins: UIEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15),
         completion:((_ title: String, _ value: String, _ sender: UIView) -> Void)? = .none
     ) -> UIView {
         let titleLabel = UILabel(frame: .zero)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
-        titleLabel.font = AppStyle.heading.font
-        titleLabel.textColor = AppStyle.heading.textColor
+        titleLabel.font = titleStyle.font
+        titleLabel.textColor = titleStyle.textColor
         titleLabel.textAlignment = .left
 
         let subTitleLabel = UILabel(frame: .zero)
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subTitleLabel.text = subTitle
-        subTitleLabel.font = AppStyle.paragraph.font
-        subTitleLabel.textColor = AppStyle.paragraph.textColor
+        subTitleLabel.font = subTitleStyle.font
+        subTitleLabel.textColor = subTitleStyle.textColor
         subTitleLabel.textAlignment = .left
         subTitleLabel.numberOfLines = 0
 
@@ -75,34 +77,49 @@ struct TransactionAppearance {
     static func oneLine(
         title: String,
         subTitle: String,
+        titleStyle: AppStyle = .heading,
+        subTitleStyle: AppStyle = .paragraphLight,
         layoutMargins: UIEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15),
+        backgroundColor: UIColor = .clear,
         completion:((_ title: String, _ value: String, _ sender: UIView) -> Void)? = .none
     ) -> UIView {
         let titleLabel = UILabel(frame: .zero)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
-        titleLabel.font = AppStyle.heading.font
-        titleLabel.textColor = AppStyle.heading.textColor
+        titleLabel.font = titleStyle.font
+        titleLabel.textColor = titleStyle.textColor
         titleLabel.textAlignment = .left
+        titleLabel.backgroundColor = backgroundColor
 
         let subTitleLabel = UILabel(frame: .zero)
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subTitleLabel.text = subTitle
-        subTitleLabel.font = AppStyle.paragraph.font
-        subTitleLabel.textColor = AppStyle.paragraph.textColor
+        subTitleLabel.font = subTitleStyle.font
+        subTitleLabel.textColor = subTitleStyle.textColor
         subTitleLabel.textAlignment = .right
+        subTitleLabel.backgroundColor = backgroundColor
 
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 6
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        stackView.layoutMargins = layoutMargins
         stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.addBackground(color: backgroundColor)
 
         UITapGestureRecognizer(addToView: stackView) {
             completion?(title, subTitle, stackView)
         }
 
         return stackView
+    }
+}
+
+extension UIStackView {
+    func addBackground(color: UIColor) {
+        let subView = UIView(frame: bounds)
+        subView.backgroundColor = color
+        subView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        insertSubview(subView, at: 0)
     }
 }

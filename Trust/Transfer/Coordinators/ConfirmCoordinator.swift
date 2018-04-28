@@ -31,7 +31,8 @@ class ConfirmCoordinator: Coordinator {
         type: ConfirmType
     ) {
         self.navigationController = navigationController
-        self.navigationController.modalPresentationStyle = .custom
+        //self.navigationController.modalPresentationStyle = .custom
+        self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
         self.configurator = configurator
         self.keystore = keystore
@@ -47,8 +48,7 @@ class ConfirmCoordinator: Coordinator {
             configurator: configurator,
             confirmType: type
         )
-        navigationController.transitioningDelegate = controller as UIViewControllerTransitioningDelegate
-
+        //navigationController.transitioningDelegate = controller as UIViewControllerTransitioningDelegate
         controller.didCompleted = { result in
             switch result {
             case .success(let data):

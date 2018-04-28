@@ -26,7 +26,7 @@ struct TransactionDetailsViewModel {
     private var monetaryAmountViewModel: MonetaryAmountViewModel {
         return MonetaryAmountViewModel(
             amount: transactionViewModel.shortValue.amount,
-            symbol: transactionViewModel.shortValue.symbol,
+            address: transaction.contractAddress,
             currencyRate: currencyRate
         )
     }
@@ -68,7 +68,7 @@ struct TransactionDetailsViewModel {
     }
 
     var createdAtLabelTitle: String {
-        return NSLocalizedString("transaction.time.label.title", value: "Transaction time", comment: "")
+        return NSLocalizedString("transaction.time.label.title", value: "Transaction Time", comment: "")
     }
 
     var detailsAvailable: Bool {
@@ -163,23 +163,15 @@ struct TransactionDetailsViewModel {
         return transactionViewModel.amountTextColor
     }
 
-    var amountFont: UIFont {
-        return AppStyle.largeAmount.font
-    }
-
     var monetaryAmountString: String? {
         return monetaryAmountViewModel.amountText
     }
 
-    var monetaryLabelTextColor: UIColor {
-        return TokensLayout.cell.fiatAmountTextColor
-    }
-
-    var monetaryLabelFont: UIFont {
-        return UIFont.systemFont(ofSize: 13, weight: .light)
-    }
-
     var shareItem: URL? {
         return detailsURL
+    }
+
+    var statusImage: UIImage? {
+        return transactionViewModel.statusImage
     }
 }

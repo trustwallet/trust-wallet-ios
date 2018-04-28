@@ -3,8 +3,18 @@
 import Foundation
 import UIKit
 
+struct TransactionHeaderAppereance {
+    static let amountFont = AppStyle.largeAmount.font
+    static let monetaryFont = UIFont.systemFont(ofSize: 13, weight: .light)
+    static let monetaryTextColor = TokensLayout.cell.fiatAmountTextColor
+}
+
+struct TransactionHeaderViewViewModel {
+}
+
 class TransactionHeaderView: UIView {
 
+    let imageView = UIImageView()
     let amountLabel = UILabel()
     let monetaryAmountLabel = UILabel()
 
@@ -12,25 +22,36 @@ class TransactionHeaderView: UIView {
 
         super.init(frame: frame)
 
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
         amountLabel.textAlignment = .center
+        amountLabel.font = TransactionHeaderAppereance.amountFont
 
         monetaryAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         monetaryAmountLabel.textAlignment = .center
+        monetaryAmountLabel.font = TransactionHeaderAppereance.monetaryFont
+        monetaryAmountLabel.textColor = TransactionHeaderAppereance.monetaryTextColor
 
         let stackView = UIStackView(arrangedSubviews: [
+            imageView,
+            .spacerWidth(),
             amountLabel,
             monetaryAmountLabel,
         ])
-        stackView.axis = .vertical
-        stackView.spacing = 6
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        stackView.distribution = .fill
         stackView.alignment = .center
-        stackView.distribution = .equalSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         addSubview(stackView)
 
-        stackView.anchor(to: self, margin: 15)
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
+            stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -StyleLayout.sideMargin),
+        ])
     }
 
     required init?(coder aDecoder: NSCoder) {

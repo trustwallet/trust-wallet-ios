@@ -58,7 +58,7 @@ class TransactionViewCell: UITableViewCell {
         contentView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            statusImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 44),
+            statusImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 26),
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
             stackView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -StyleLayout.sideMargin),

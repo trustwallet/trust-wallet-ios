@@ -129,6 +129,16 @@ class Transaction: Object, Decodable {
     var fromAddress: Address? {
         return Address(string: from)
     }
+
+    var contractAddress: Address {
+        guard
+            let operation = operation,
+            let contract = operation.contract,
+            let contractAddress = Address(string: contract) else {
+            return TokensDataStore.etherToken().address
+        }
+        return contractAddress
+    }
 }
 
 extension Transaction {
