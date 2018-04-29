@@ -89,7 +89,9 @@ class TransactionConfigurator {
     }
 
     func estimateGasLimit() {
-        let request = EstimateGasRequest(transaction: signTransaction())
+        let request = EstimateGasRequest(
+            transaction: signTransaction
+        )
         Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
@@ -166,7 +168,7 @@ class TransactionConfigurator {
         )
     }
 
-    func signTransaction() -> SignTransaction {
+    var signTransaction: SignTransaction {
         let value: BigInt = {
             switch transaction.transferType {
             case .ether, .dapp: return valueToSend()

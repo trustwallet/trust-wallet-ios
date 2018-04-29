@@ -188,7 +188,7 @@ class ConfirmPaymentViewController: UIViewController {
     @objc func send() {
         self.displayLoading()
 
-        let transaction = configurator.signTransaction()
+        let transaction = configurator.signTransaction
         self.sendTransactionCoordinator.send(transaction: transaction) { [weak self] result in
             guard let `self` = self else { return }
             self.didCompleted?(result)
