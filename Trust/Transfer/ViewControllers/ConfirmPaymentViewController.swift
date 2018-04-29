@@ -111,6 +111,8 @@ class ConfirmPaymentViewController: UIViewController {
             .spacer(height: 15),
             header,
             .spacer(height: 15),
+            TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
+            .spacer(height: 10),
             TransactionAppearance.item(
                 title: detailsViewModel.paymentFromTitle,
                 subTitle: session.account.address.description

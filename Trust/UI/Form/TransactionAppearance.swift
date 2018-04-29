@@ -35,6 +35,7 @@ struct TransactionAppearance {
         subTitle: String,
         titleStyle: AppStyle = .heading,
         subTitleStyle: AppStyle = .paragraphLight,
+        subTitleMinimumScaleFactor: CGFloat  = 0.7,
         layoutMargins: UIEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15),
         completion:((_ title: String, _ value: String, _ sender: UIView) -> Void)? = .none
     ) -> UIView {
@@ -51,7 +52,10 @@ struct TransactionAppearance {
         subTitleLabel.font = subTitleStyle.font
         subTitleLabel.textColor = subTitleStyle.textColor
         subTitleLabel.textAlignment = .left
-        subTitleLabel.numberOfLines = 0
+        subTitleLabel.numberOfLines = 1
+        subTitleLabel.adjustsFontSizeToFitWidth = true
+        subTitleLabel.minimumScaleFactor = subTitleMinimumScaleFactor
+        subTitleLabel.lineBreakMode = .byTruncatingMiddle
 
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false

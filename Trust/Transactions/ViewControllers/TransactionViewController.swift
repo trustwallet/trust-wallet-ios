@@ -58,7 +58,11 @@ class TransactionViewController: UIViewController {
             TransactionAppearance.divider(color: dividerColor, alpha: 1, layoutInsets: dividerOffset),
             item(title: viewModel.addressTitle, value: viewModel.address),
             TransactionAppearance.divider(color: dividerColor, alpha: 1, layoutInsets: dividerOffset),
-            item(title: viewModel.transactionIDLabelTitle, value: viewModel.transactionID),
+            item(
+                title: viewModel.transactionIDLabelTitle,
+                value: viewModel.transactionID,
+                subTitleMinimumScaleFactor: 1
+            ),
             TransactionAppearance.divider(color: dividerColor, alpha: 1, layoutInsets: dividerOffset),
             item(title: viewModel.gasFeeLabelTitle, value: viewModel.gasFee),
             TransactionAppearance.divider(color: dividerColor, alpha: 1),
@@ -89,11 +93,13 @@ class TransactionViewController: UIViewController {
 
     private func item(
         title: String,
-        value: String
+        value: String,
+        subTitleMinimumScaleFactor: CGFloat  = 0.7
     ) -> UIView {
         return  TransactionAppearance.item(
             title: title,
-            subTitle: value
+            subTitle: value,
+            subTitleMinimumScaleFactor: subTitleMinimumScaleFactor
         ) { [weak self] in
             self?.showAlertSheet(title: $0, value: $1, sourceView: $2)
         }
