@@ -35,7 +35,7 @@ class TransactionViewController: UIViewController {
         self.transaction = transaction
 
         stackViewController.scrollView.alwaysBounceVertical = true
-        stackViewController.stackView.spacing = 16
+        stackViewController.stackView.spacing = TransactionAppearance.spacing
 
         super.init(nibName: nil, bundle: nil)
 

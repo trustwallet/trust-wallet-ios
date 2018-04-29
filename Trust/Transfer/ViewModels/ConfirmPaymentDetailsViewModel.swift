@@ -88,7 +88,7 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     var estimatedFeeTitle: String {
-        return NSLocalizedString("confirmPayment.estimatedFees.label.title", value: "Est. Network Fee", comment: "")
+        return NSLocalizedString("confirmPayment.networkFee.label.title", value: "Network Fee", comment: "")
     }
 
     var estimatedFeeText: String {

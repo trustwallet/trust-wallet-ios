@@ -10,6 +10,8 @@ enum DividerDirection {
 
 struct TransactionAppearance {
 
+    static let spacing: CGFloat = 16
+
     static func divider(direction: DividerDirection = .horizontal, color: UIColor, alpha: CGFloat = 1, layoutInsets: UIEdgeInsets = .zero) -> UIView {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false

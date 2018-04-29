@@ -108,37 +108,37 @@ class ConfirmPaymentViewController: UIViewController {
         header.configure(for: detailsViewModel.transactionHeaderViewModel)
 
         let items: [UIView] = [
-            .spacer(height: 15),
+            .spacer(height: TransactionAppearance.spacing),
             header,
-            .spacer(height: 15),
-            TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             .spacer(height: 10),
+            TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
+            .spacer(height: TransactionAppearance.spacing),
             TransactionAppearance.item(
                 title: detailsViewModel.paymentFromTitle,
                 subTitle: session.account.address.description
             ),
-            .spacer(height: 15),
+            .spacer(height: TransactionAppearance.spacing),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
-            .spacer(height: 15),
+            .spacer(height: TransactionAppearance.spacing),
             TransactionAppearance.item(
                 title: detailsViewModel.requesterTitle,
                 subTitle: detailsViewModel.requesterText
             ),
-            .spacer(height: 15),
+            .spacer(height: TransactionAppearance.spacing),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
-            .spacer(height: 15),
+            .spacer(height: TransactionAppearance.spacing),
             TransactionAppearance.oneLine(
                 title: detailsViewModel.estimatedFeeTitle,
-                subTitle: detailsViewModel.estimatedFeeText,
-                titleStyle: .paragraph
+                subTitle: detailsViewModel.estimatedFeeText
             ) { [unowned self] _, _, _ in
                 self.edit()
             },
-            .spacer(height: 15),
+            .spacer(height: TransactionAppearance.spacing),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.oneLine(
                 title: detailsViewModel.totalTitle,
                 subTitle: detailsViewModel.totalText,
+                titleStyle: .headingSemiBold,
                 subTitleStyle: .paragraph,
                 layoutMargins: UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15),
                 backgroundColor: UIColor(hex: "faf9f9")
