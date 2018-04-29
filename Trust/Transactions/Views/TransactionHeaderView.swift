@@ -10,6 +10,10 @@ struct TransactionHeaderAppereance {
 }
 
 struct TransactionHeaderViewViewModel {
+    let amountString: String
+    let amountTextColor: UIColor
+    let monetaryAmountString: String?
+    let statusImage: UIImage?
 }
 
 class TransactionHeaderView: UIView {
@@ -50,11 +54,20 @@ class TransactionHeaderView: UIView {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: StyleLayout.sideMargin),
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            stackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
+            stackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -StyleLayout.sideMargin),
         ])
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(for viewModel: TransactionHeaderViewViewModel) {
+        amountLabel.text = viewModel.amountString
+        amountLabel.textColor = viewModel.amountTextColor
+        monetaryAmountLabel.text = viewModel.monetaryAmountString
+        imageView.image = viewModel.statusImage
     }
 }

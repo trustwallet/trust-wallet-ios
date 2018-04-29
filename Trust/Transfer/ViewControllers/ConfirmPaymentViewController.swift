@@ -105,10 +105,7 @@ class ConfirmPaymentViewController: UIViewController {
 
         let header = TransactionHeaderView()
         header.translatesAutoresizingMaskIntoConstraints = false
-        header.amountLabel.text = detailsViewModel.amountString
-        header.amountLabel.textColor = detailsViewModel.amountTextColor
-        header.monetaryAmountLabel.text = detailsViewModel.monetaryAmountString
-        header.imageView.image = detailsViewModel.statusImage
+        header.configure(for: detailsViewModel.transactionHeaderViewModel)
 
         let items: [UIView] = [
             .spacer(height: 15),

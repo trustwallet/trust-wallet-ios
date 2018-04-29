@@ -174,7 +174,7 @@
 "transaction.from.label.title" = "From";
 "transaction.gasFee.label.title" = "Gas Fee";
 "transaction.id.label.title" = "Transaction #";
-"transaction.time.label.title" = "Transaction time";
+"transaction.time.label.title" = "Transaction Time";
 "transaction.to.label.title" = "To";
 "settings.allowPushNotifications.button.title" = "Allow Push Notifications";
 "settings.pushNotifications.airdrop.button.title" = "Airdrops from partners";
@@ -212,7 +212,7 @@
 "configureTransaction.error.gasFeeHigh" = "Gas Fee is too high. Max available: %1$@ %2$@";
 "sent.transaction.message" = "Wait for the transaction to be mined on the network to see details.";
 "sent.transaction.title" = "Transaction Sent!";
-"settings.network.test.warnning.dont.show.again" = "Don't Show Again";
+"settings.network.test.warnning.dont.show.again" = "Don't show again";
 "settings.network.test.warnning.message" = "You are switching to a test network where transactions are for testing purpose only";
 "settings.network.test.warnning.title" = "Warning";
 "Disable" = "Disable";
@@ -230,3 +230,19 @@
 "Nonce" = "Nonce";
 "transaction.recipient.label.title" = "Recipient";
 "transaction.sender.label.title" = "Sender";
+"Are you sure you would like to delete?" = "Are you sure you would like to delete?";
+"confirmPayment.amount.label.title" = "Amount";
+"confirmPayment.dapp.label.title" = "DApp";
+"confirmPayment.estimatedFees.label.title" = "Est. Network Fee";
+"confirmPayment.wallet.label.title" = "Wallet";
+"DuckDuckGo" = "DuckDuckGo";
+"Google" = "Google";
+"Incoming Transaction" = "Incoming Transaction";
+"Outgoing Transaction" = "Outgoing Transaction";
+"Pending Transaction" = "Pending Transaction";
+"settings.browser.clearCache.alert.message" = "This will clear cache, cookies, and other browsing data.";
+"settings.browser.clearCache.alert.title" = "Clear Browsing Data?";
+"settings.browser.clearCache.title" = "Clear Browser Cache";
+"settings.browser.searchEngine.title" = "Search Engine";
+"settings.browser.title" = "DApp Browser";
+"transaction.deployContract.label.title" = "Deploy smart contract";

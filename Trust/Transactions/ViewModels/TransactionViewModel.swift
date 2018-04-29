@@ -11,6 +11,7 @@ struct TransactionViewModel {
     private let chainState: ChainState
     private let currentWallet: Wallet
     private let shortFormatter = EtherNumberFormatter.short
+    private let balanceFormatter = EtherNumberFormatter.balance
     private let fullFormatter = EtherNumberFormatter.full
 
     init(
@@ -100,6 +101,11 @@ struct TransactionViewModel {
 
     var amountText: String {
         let value = shortValue
+        return amountWithSign(for: value.amount) + " " + value.symbol
+    }
+
+    var amountFullText: String {
+        let value = transactionValue(for: balanceFormatter)
         return amountWithSign(for: value.amount) + " " + value.symbol
     }
 }

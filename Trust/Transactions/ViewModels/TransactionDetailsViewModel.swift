@@ -156,7 +156,7 @@ struct TransactionDetailsViewModel {
     }
 
     var amountString: String {
-        return transactionViewModel.amountText
+        return transactionViewModel.amountFullText
     }
 
     var amountTextColor: UIColor {
@@ -173,5 +173,14 @@ struct TransactionDetailsViewModel {
 
     var statusImage: UIImage? {
         return transactionViewModel.statusImage
+    }
+
+    var transactionHeaderViewModel: TransactionHeaderViewViewModel {
+        return TransactionHeaderViewViewModel(
+            amountString: amountString,
+            amountTextColor: amountTextColor,
+            monetaryAmountString: monetaryAmountString,
+            statusImage: statusImage
+        )
     }
 }

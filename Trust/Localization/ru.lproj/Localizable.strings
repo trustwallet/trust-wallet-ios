@@ -120,7 +120,16 @@
 "transaction.cell.sent.title" = "Отправлено";
 "transaction.cell.tokenTransfer.title" = "Transfer %@";
 "Yesterday" = "Вчера";
+"Deleting" = "Удаление";
+"Ethereum Address" = "Адрес Ethereum";
 "transactions.receive.button.title" = "Получить";
+"settings.joinCommunity.label.title" = "Вступить в сообщество";
+"settings.support.title" = "Поддержка";
+"tokens.token.edit.navigation.title" = "Редактировать токен пользователя";
+"wallet.section.hdWallet.title" = "HD-кошелек";
+"wallets.export.alertSheet.title" = "Экспортировать приватный ключ";
+"collectibles.discover.label.title" = "Окрыть OpenSea.io";
+"configureTransaction.error.gasFeeHigh" = "Плата за газ слишком высока. Макс: [%1$ s] [%2$ s]";
 "sent.transaction.message" = "Подождите, пока транзакция будет подтверждена в сети, чтобы просмотреть детали.";
 "sent.transaction.title" = "Транзакция Отправлена!";
 "settings.network.test.warnning.dont.show.again" = "Не показывать снова";
@@ -132,3 +141,4 @@
 "History" = "История";
 "history.noHistory.label.title" = "История еще нет!";
 "New" = "Новые";
+"configureTransaction.dataField.label.title" = "Данные (необязательно). %@";

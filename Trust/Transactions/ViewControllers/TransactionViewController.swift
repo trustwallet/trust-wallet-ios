@@ -44,10 +44,7 @@ class TransactionViewController: UIViewController {
 
         let header = TransactionHeaderView()
         header.translatesAutoresizingMaskIntoConstraints = false
-        header.amountLabel.text = viewModel.amountString
-        header.amountLabel.textColor = viewModel.amountTextColor
-        header.monetaryAmountLabel.text = viewModel.monetaryAmountString
-        header.imageView.image = viewModel.statusImage
+        header.configure(for: viewModel.transactionHeaderViewModel)
 
         let dividerColor = Colors.whisper
         let dividerOffset = UIEdgeInsets(top: 0, left: 26, bottom: 0, right: 26)

@@ -131,7 +131,7 @@
 "welldone.navigation.title" = "ありがとうございます！";
 "welldone.share.label.text" = "シェアする";
 "welldone.viewmodel.sharing.text1" = "これは私がETHとERC20トークンを保存するために使用するアプリです。";
-"welldone.viewmodel.sharing.text2" = "Trustをチェックしてください。イーサリアムとERC20トークンを安全に保管できるウォレットです。";
+"welldone.viewmodel.sharing.text2" = "ぜひTrustを使ってみてください。イーサリアムとERC20トークンを安全に保管できるウォレットです。";
 "welldone.viewmodel.sharing.text3" = "イーサリアムとERC20トークンをTrust Walletに安全に保管します";
 "welldone.viewmodel.sharing.text4" = "私はTrust wallet で、イーサリアムとERC20トークンを保護します。";
 "browser.home.button.title" = "ホーム";
@@ -226,3 +226,7 @@
 "History" = "履歴";
 "history.noHistory.label.title" = "まだ履歴はありません！";
 "New" = "最新";
+"configureTransaction.dataField.label.title" = "データ(任意)。 %@";
+"Nonce" = "Nonce(ナンス)";
+"transaction.recipient.label.title" = "受信者";
+"transaction.sender.label.title" = "送信者";

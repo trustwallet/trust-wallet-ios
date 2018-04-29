@@ -10,6 +10,7 @@ struct ConfirmPaymentDetailsViewModel {
     let currencyRate: CurrencyRate?
     let config: Config
     private let fullFormatter = EtherNumberFormatter.full
+    private let balanceFormatter = EtherNumberFormatter.balance
     private var monetaryAmountViewModel: MonetaryAmountViewModel {
         return MonetaryAmountViewModel(
             amount: amount,
@@ -123,10 +124,19 @@ struct ConfirmPaymentDetailsViewModel {
     var amount: String {
         switch transaction.transferType {
         case .token(let token):
-            return fullFormatter.string(from: transaction.value, decimals: token.decimals)
+            return balanceFormatter.string(from: transaction.value, decimals: token.decimals)
         case .ether, .dapp:
-            return fullFormatter.string(from: transaction.value)
+            return balanceFormatter.string(from: transaction.value)
         }
+    }
+
+    var transactionHeaderViewModel: TransactionHeaderViewViewModel {
+        return TransactionHeaderViewViewModel(
+            amountString: amountString,
+            amountTextColor: amountTextColor,
+            monetaryAmountString: monetaryAmountString,
+            statusImage: statusImage
+        )
     }
 
     var amountString: String {
