@@ -121,25 +121,12 @@ class ExportPrivateKeyViewConroller: UIViewController {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let `self` = self else { return }
             let string = self.viewModel.privateKey
-            let image = self.generateQRCode(from: string)
+            let image = QRGenerator.generate(from: string)
             DispatchQueue.main.async {
                 self.imageView.image = image
                 self.hud.hide(animated: true)
             }
         }
-    }
-
-    func generateQRCode(from string: String) -> UIImage? {
-        let data = string.data(using: String.Encoding.ascii)
-
-        if let filter = CIFilter(name: "CIQRCodeGenerator") {
-            filter.setValue(data, forKey: "inputMessage")
-            let transform = CGAffineTransform(scaleX: 7, y: 7)
-            if let output = filter.outputImage?.transformed(by: transform) {
-                return UIImage(ciImage: output)
-            }
-        }
-        return nil
     }
 
     required init?(coder aDecoder: NSCoder) {

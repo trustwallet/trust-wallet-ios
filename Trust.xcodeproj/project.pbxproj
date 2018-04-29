@@ -412,6 +412,7 @@
 		A2B7ECAE2039001300828E7D /* ExportPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */; };
 		A2CC7DD620903C9C002276D1 /* HalfModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CC7DD420903C9C002276D1 /* HalfModalPresentationController.swift */; };
 		A2E43B4E20802879001FAD3D /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E43B4D20802879001FAD3D /* UINavigationController.swift */; };
+		A2E895D020953404003D5303 /* QRGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E895CF20953404003D5303 /* QRGenerator.swift */; };
 		BB03A86D20416AF600649DA0 /* BalanceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A86C20416AF600649DA0 /* BalanceStatus.swift */; };
 		BB03A8712042B01300649DA0 /* BalanceStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A8702042B01300649DA0 /* BalanceStatusTests.swift */; };
 		BB1CC266203BA4440042E56C /* SendMaxAmountTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1CC265203BA4440042E56C /* SendMaxAmountTest.swift */; };
@@ -903,6 +904,7 @@
 		A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPrivateKeyViewController.swift; sourceTree = "<group>"; };
 		A2CC7DD420903C9C002276D1 /* HalfModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HalfModalPresentationController.swift; sourceTree = "<group>"; };
 		A2E43B4D20802879001FAD3D /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
+		A2E895CF20953404003D5303 /* QRGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRGenerator.swift; sourceTree = "<group>"; };
 		A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B13A87D3BA5167741E5D0801 /* Pods-Trust.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trust.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trust/Pods-Trust.release.xcconfig"; sourceTree = "<group>"; };
@@ -1741,6 +1743,7 @@
 				73ED85A420349BE400593BF3 /* StringFormatter.swift */,
 				73200B6F20488C9300118A82 /* TrustNetworkProtocol.swift */,
 				73F2FF3B20557C020021976E /* TrustOperation.swift */,
+				A2E895CF20953404003D5303 /* QRGenerator.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -3166,6 +3169,7 @@
 				732C51462062B625007134C7 /* ScriptMessageProxy.swift in Sources */,
 				29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */,
 				29A13E331F6B1B7A00E432A2 /* Styles.swift in Sources */,
+				A2E895D020953404003D5303 /* QRGenerator.swift in Sources */,
 				737EEDDA201BE3A8009D9D5D /* Lock.swift in Sources */,
 				29FF12F81F747D6C00AFD326 /* Error.swift in Sources */,
 				73BAA8D1201B2FBC00D6DD75 /* LockCreatePasscodeViewController.swift in Sources */,

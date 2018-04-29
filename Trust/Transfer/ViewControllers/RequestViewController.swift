@@ -98,7 +98,7 @@ class RequestViewController: UIViewController {
         // let string = "ethereum:\(account.address.address)?value=\(value)"
 
         DispatchQueue.global(qos: .background).async {
-            let image = self.generateQRCode(from: string)
+            let image = QRGenerator.generate(from: string)
             DispatchQueue.main.async {
                 self.imageView.image = image
             }
@@ -113,20 +113,6 @@ class RequestViewController: UIViewController {
         hud.label.text = viewModel.addressCopiedText
         hud.hide(animated: true, afterDelay: 1.5)
     }
-
-    func generateQRCode(from string: String) -> UIImage? {
-        let data = string.data(using: String.Encoding.ascii)
-
-        if let filter = CIFilter(name: "CIQRCodeGenerator") {
-            filter.setValue(data, forKey: "inputMessage")
-            let transform = CGAffineTransform(scaleX: 7, y: 7)
-            if let output = filter.outputImage?.transformed(by: transform) {
-                return UIImage(ciImage: output)
-            }
-        }
-        return nil
-    }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
