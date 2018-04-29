@@ -35,7 +35,7 @@ struct InCoordinatorViewModel {
     var walletBarItem: UITabBarItem {
         return UITabBarItem(
             title: NSLocalizedString("wallet.navigation.title", value: "Wallet", comment: ""),
-            image: R.image.settingsWallet(),
+            image: R.image.settings_wallet(),
             selectedImage: nil
         )
     }

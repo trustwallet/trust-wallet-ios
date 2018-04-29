@@ -56,7 +56,7 @@ class TokenViewCell: UITableViewCell {
         let stackView = UIStackView(arrangedSubviews: [symbolImageView, leftStackView, rightStackView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
-        stackView.spacing = 12
+        stackView.spacing = 15
         stackView.alignment = .center
 
         symbolImageView.setContentHuggingPriority(.defaultLow, for: .horizontal)

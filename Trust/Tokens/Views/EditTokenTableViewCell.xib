@@ -20,7 +20,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="319" height="79.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="d5W-Lo-p3o">
+                    <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="d5W-Lo-p3o">
                         <rect key="frame" x="16" y="14" width="288" height="52"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tfc-cq-2hm" customClass="TokenImageView" customModule="Trust" customModuleProvider="target">
@@ -31,7 +31,7 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="spatial" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="fRy-j2-9ES" userLabel="Label Stack View">
-                                <rect key="frame" x="62" y="0.0" width="167" height="52"/>
+                                <rect key="frame" x="67" y="0.0" width="157" height="52"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Test lable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="gzC-hL-qRv">
                                         <rect key="frame" x="0.0" y="0.0" width="73" height="29"/>
