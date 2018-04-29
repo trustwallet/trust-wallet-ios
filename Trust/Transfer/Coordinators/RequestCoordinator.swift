@@ -44,7 +44,7 @@ class RequestCoordinator: Coordinator {
     }
 
     @objc func share(_ sender: UIBarButtonItem) {
-        guard let image = QRGenerator.generateQRCode(from: viewModel.myAddressText) else { return }
+        guard let image = QRGenerator.generate(from: viewModel.myAddressText) else { return }
         let activityViewController = UIActivityViewController.make(items: [viewModel.shareMyAddressText, image])
         activityViewController.popoverPresentationController?.barButtonItem = sender
         navigationController.present(activityViewController, animated: true, completion: nil)

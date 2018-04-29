@@ -3,7 +3,7 @@
 import UIKit
 
 class QRGenerator {
-    static func generateQRCode(from string: String) -> UIImage? {
+    static func generate(from string: String) -> UIImage? {
         let context = CIContext()
         let data = string.data(using: String.Encoding.ascii)
 

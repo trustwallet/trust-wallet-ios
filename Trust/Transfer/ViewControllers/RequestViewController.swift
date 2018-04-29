@@ -98,7 +98,7 @@ class RequestViewController: UIViewController {
         // let string = "ethereum:\(account.address.address)?value=\(value)"
 
         DispatchQueue.global(qos: .background).async {
-            let image = QRGenerator.generateQRCode(from: string)
+            let image = QRGenerator.generate(from: string)
             DispatchQueue.main.async {
                 self.imageView.image = image
             }

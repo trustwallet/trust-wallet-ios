@@ -121,7 +121,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let `self` = self else { return }
             let string = self.viewModel.privateKey
-            let image = QRGenerator.generateQRCode(from: string)
+            let image = QRGenerator.generate(from: string)
             DispatchQueue.main.async {
                 self.imageView.image = image
                 self.hud.hide(animated: true)
