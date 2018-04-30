@@ -73,7 +73,7 @@ class ImportWalletViewController: FormViewController {
         ]
 
         if UserDefaults.standard.bool(forKey: "FASTLANE_SNAPSHOT") {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                 self.demo()
             }
         }
