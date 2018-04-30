@@ -18,6 +18,8 @@ class Screenshots: XCTestCase {
 
         app.buttons["import-wallet"].tap()
 
+        sleep(1)
+
         snapshot("3ImportWallet")
 
         sleep(20)
