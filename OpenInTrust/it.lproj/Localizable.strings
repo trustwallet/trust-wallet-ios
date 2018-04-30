@@ -1,5 +1,0 @@
-"openintrust.error.context" = "Extension context is invalid";
-"openintrust.error.provider" = "Extension item provider is invalid";
-"openintrust.error.url" = "Can't find valid url";
-"openintrust.error.loadItem" = "Can't find valid url";
-"openintrust.error.cancel" = "Canceled by user";
