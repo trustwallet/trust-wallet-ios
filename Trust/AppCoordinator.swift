@@ -51,10 +51,8 @@ class AppCoordinator: NSObject, Coordinator {
         }
         pushNotificationRegistrar.reRegister()
 
-        navigator.branch.newEvent = { [weak self] event in
-            guard let coordinator = self?.inCoordinator else {
-                return false
-            }
+        navigator.branch.newEventClosure = { [weak self] event in
+            guard let coordinator = self?.inCoordinator else { return false }
             return coordinator.handleEvent(event)
         }
     }

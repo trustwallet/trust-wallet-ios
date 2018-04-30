@@ -11,7 +11,7 @@ class BranchCoordinator {
     }
 
     private var events = [BranchEvent]()
-    var newEvent: ((BranchEvent) -> (Bool))?
+    var newEventClosure: ((BranchEvent) -> (Bool))?
     var lastEvent: BranchEvent? {
         return events.last
     }
@@ -35,10 +35,10 @@ class BranchCoordinator {
     }
 
     func handleEvent(_ event: BranchEvent) {
-        guard let newEvent = newEvent else {
+        guard let newEventClosure = newEventClosure else {
             return events.append(event)
         }
-        if !newEvent(event) {
+        if !newEventClosure(event) {
             events.append(event)
         }
     }
