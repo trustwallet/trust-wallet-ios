@@ -12,7 +12,7 @@ class TokenViewController: UIViewController {
 
     private let refreshControl = UIRefreshControl()
 
-    private var tableView = UITableView()
+    private var tableView = TransactionsTableView()
 
     private lazy var header: TokenHeaderView = {
         let view = TokenHeaderView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 264))
@@ -30,15 +30,10 @@ class TokenViewController: UIViewController {
         navigationItem.title = viewModel.title
         view.backgroundColor = .white
 
-        tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.rowHeight = 68
         tableView.tableHeaderView = header
-
         tableView.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
         view.addSubview(tableView)
 

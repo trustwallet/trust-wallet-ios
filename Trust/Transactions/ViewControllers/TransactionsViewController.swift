@@ -19,7 +19,7 @@ class TransactionsViewController: UIViewController {
 
     var viewModel: TransactionsViewModel
     let account: Wallet
-    let tableView = UITableView(frame: .zero, style: .plain)
+    let tableView = TransactionsTableView()
     let refreshControl = UIRefreshControl()
     weak var delegate: TransactionsViewControllerDelegate?
     var timer: Timer?
@@ -41,12 +41,7 @@ class TransactionsViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = StyleLayout.TableView.separatorColor
-        tableView.backgroundColor = .white
-        tableView.rowHeight = TransactionsLayout.tableView.height
         view.addSubview(tableView)
-
         tableView.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
 
         NSLayoutConstraint.activate([

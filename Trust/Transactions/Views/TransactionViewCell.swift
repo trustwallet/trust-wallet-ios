@@ -38,7 +38,6 @@ class TransactionViewCell: UITableViewCell {
         let stackView = UIStackView(arrangedSubviews: [
             statusImageView,
             titlesStackView,
-            .spacerWidth(),
             rightStackView,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,6 +51,8 @@ class TransactionViewCell: UITableViewCell {
         titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         subTitleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
 
+        statusImageView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
+        amountLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         amountLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         stackView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
 
