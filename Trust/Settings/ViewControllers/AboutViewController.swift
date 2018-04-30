@@ -12,7 +12,7 @@ protocol AboutViewControllerDelegate: class {
 
 class AboutViewController: FormViewController {
 
-    let viewModel = SupportViewModel()
+    let viewModel = AboutViewModel()
     weak var delegate: AboutViewControllerDelegate?
 
     init() {
@@ -25,8 +25,6 @@ class AboutViewController: FormViewController {
         navigationItem.title = viewModel.title
 
         form +++ Section()
-
-            +++ Section(NSLocalizedString("settings.openSourceDevelopment.label.title", value: "Open Source Development", comment: ""))
 
             <<< link(
                 title: NSLocalizedString("settings.sourceCode.button.title", value: "Source Code", comment: ""),

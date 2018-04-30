@@ -2,9 +2,9 @@
 
 import Foundation
 
-struct AboutModel {
+struct AboutViewModel {
 
     var title: String {
-        return NSLocalizedString("settings.support.title", value: "Support", comment: "")
+        return NSLocalizedString("settings.about.title", value: "About", comment: "")
     }
 }

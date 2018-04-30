@@ -28,7 +28,6 @@ target 'Trust' do
   pod 'TrustCore', '~> 0.0.6'
   pod 'TrustKeystore', '~> 0.4.0'
   pod 'Branch'
-  # pod 'web3swift', :git=>'https://github.com/BANKEX/web3swift', :branch=>'master'
   pod 'SAMKeychain'
   pod 'TrustWeb3Provider', :git=>'https://github.com/TrustWallet/trust-web3-provider', :branch=>'master'
   pod 'JdenticonSwift'
@@ -45,11 +44,6 @@ target 'Trust' do
   end
 
 end
-
-# target 'OpenInTrust' do
-#   use_frameworks!
-#   pod 'Result'
-# end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
