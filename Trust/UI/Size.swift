@@ -8,6 +8,6 @@ struct Size {
         if UIScreen.main.scale == 3 {
             return size
         }
-        return size * 0.86
+        return size * 0.90
     }
 }
