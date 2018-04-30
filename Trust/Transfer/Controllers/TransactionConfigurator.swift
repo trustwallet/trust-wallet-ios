@@ -83,17 +83,23 @@ class TransactionConfigurator {
 
     func load(completion: @escaping (Result<Void, AnyError>) -> Void) {
         if requestEstimateGas {
-            estimateGasLimit()
+            estimateGasLimit { [weak self] result in
+                guard let `self` = self else { return }
+                switch result {
+                case .success(let gasLimit):
+                    self.refreshGasLimit(gasLimit)
+                case .failure: break
+                }
+            }
         }
         loadNonce(completion: completion)
     }
 
-    func estimateGasLimit() {
+    func estimateGasLimit(completion: @escaping (Result<BigInt, AnyError>) -> Void) {
         let request = EstimateGasRequest(
             transaction: signTransaction
         )
-        Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { [weak self] result in
-            guard let `self` = self else { return }
+        Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { result in
             switch result {
             case .success(let gasLimit):
                 let gasLimit: BigInt = {
@@ -103,9 +109,9 @@ class TransactionConfigurator {
                     }
                     return limit + (limit * 20 / 100)
                 }()
-                self.refreshGasLimit(gasLimit)
+                completion(.success(gasLimit))
             case .failure(let error):
-                NSLog("estimateGasLimit \(error)")
+                completion(.failure(AnyError(error)))
             }
         }
     }
