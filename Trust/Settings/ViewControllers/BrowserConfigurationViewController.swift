@@ -38,16 +38,11 @@ class BrowserConfigurationViewController: FormViewController {
             $0.selectorTitle = self.viewModel.searchEngineTitle
             $0.displayValueFor = { $0?.title }
         }.onChange { [weak self] row in
-                guard let value = row.value else { return }
-                self?.preferences.set(value: value.rawValue, for: .browserSearchEngine)
+            guard let value = row.value else { return }
+            self?.preferences.set(value: value.rawValue, for: .browserSearchEngine)
         }.onPresent { _, selectorController in
-                selectorController.enableDeselection = false
-        }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_server()
-        }.onPresent { _, selectorController in
-                selectorController.enableDeselection = false
-                selectorController.sectionKeyForValue = { option in
-                    return ""
+            selectorController.sectionKeyForValue = { _ in
+                return ""
             }
         }
 
@@ -71,8 +66,6 @@ class BrowserConfigurationViewController: FormViewController {
                     case .failure: break
                     }
             })
-        }.cellSetup { cell, _ in
-            cell.imageView?.image = R.image.trash()
         }.cellUpdate { cell, _ in
             cell.textLabel?.textAlignment = .left
             cell.textLabel?.textColor = .black

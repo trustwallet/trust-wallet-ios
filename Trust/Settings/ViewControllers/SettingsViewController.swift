@@ -85,7 +85,7 @@ class SettingsViewController: FormViewController, Coordinator {
                     }
                 }
             }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_server()
+                cell.imageView?.image = R.image.settings_colorful_networks()
             }
 
             <<< AppFormAppearance.button { [weak self] row in
@@ -96,7 +96,7 @@ class SettingsViewController: FormViewController, Coordinator {
                 }, onDismiss: nil)
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
-                cell.imageView?.image = R.image.settings_wallet()
+                cell.imageView?.image = R.image.settings_colorful_wallets()
                 cell.textLabel?.text = NSLocalizedString("settings.wallets.button.title", value: "Wallets", comment: "")
                 cell.detailTextLabel?.text = String(account.address.description.prefix(10)) + "..."
                 cell.accessoryType = .disclosureIndicator
@@ -117,7 +117,7 @@ class SettingsViewController: FormViewController, Coordinator {
                     self.lock.deletePasscode()
                 }
             }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_lock()
+                cell.imageView?.image = R.image.settings_colorful_security()
             }
 
             <<< AppFormAppearance.button { [weak self] row in
@@ -131,7 +131,7 @@ class SettingsViewController: FormViewController, Coordinator {
                 }, onDismiss: { _ in
             })
             }.cellUpdate { cell, _ in
-                cell.imageView?.image = R.image.settings_push_notifications()
+                cell.imageView?.image = R.image.settings_colorful_notifications()
                 cell.textLabel?.text = NSLocalizedString("settings.pushNotifications.title", value: "Push Notifications", comment: "")
                 cell.accessoryType = .disclosureIndicator
             }
@@ -169,7 +169,7 @@ class SettingsViewController: FormViewController, Coordinator {
                     }
                 }
             }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settingsCurrency()
+                cell.imageView?.image = R.image.settings_colorful_currency()
             }
 
             <<< AppFormAppearance.button { row in
@@ -181,7 +181,7 @@ class SettingsViewController: FormViewController, Coordinator {
                 }, onDismiss: nil)
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
-                cell.imageView?.image = R.image.dapps_icon()
+                cell.imageView?.image = R.image.settings_colorful_dappbrowser()
                 cell.textLabel?.text = NSLocalizedString("settings.browser.title", value: "DApp Browser", comment: "")
                 cell.accessoryType = .disclosureIndicator
             }
@@ -197,20 +197,26 @@ class SettingsViewController: FormViewController, Coordinator {
 
             <<< AppFormAppearance.button { button in
                 button.title = NSLocalizedString("settings.shareWithFriends.button.title", value: "Share With Friends", comment: "")
-                button.cell.imageView?.image = R.image.settingsShare()
+                button.cell.imageView?.image = R.image.settings_colorful_share()
             }.onCellSelection { [unowned self] cell, _  in
                 self.helpUsCoordinator.presentSharing(in: self, from: cell.contentView)
             }
 
-//            <<< AppFormAppearance.button { button in
-//                button.title = NSLocalizedString("settings.rateUsAppStore.button.title", value: "Rate Us on App Store", comment: "")
-//            }.onCellSelection { [weak self] _, _  in
-//                self?.helpUsCoordinator.rateUs()
-//            }.cellSetup { cell, _ in
-//                cell.imageView?.image = R.image.settings_rating()
-//            }
-
             +++ Section()
+
+            <<< AppFormAppearance.button { row in
+                row.cellStyle = .value1
+                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback { [weak self] in
+                    let controller = AboutViewController()
+                    controller.delegate = self
+                    return controller
+                }, onDismiss: { _ in })
+            }.cellUpdate { cell, _ in
+                cell.textLabel?.textColor = .black
+                cell.imageView?.image = R.image.settings_colorful_about()
+                cell.textLabel?.text = NSLocalizedString("settings.about.title", value: "About", comment: "")
+                cell.accessoryType = .disclosureIndicator
+            }
 
             <<< AppFormAppearance.button { row in
                 row.cellStyle = .value1
@@ -221,7 +227,7 @@ class SettingsViewController: FormViewController, Coordinator {
                 }, onDismiss: { _ in })
             }.cellUpdate { cell, _ in
                 cell.textLabel?.textColor = .black
-                cell.imageView?.image = R.image.settings_terms()
+                cell.imageView?.image = R.image.settings_colorful_support()
                 cell.textLabel?.text = NSLocalizedString("settings.support.title", value: "Support", comment: "")
                 cell.accessoryType = .disclosureIndicator
             }
@@ -300,6 +306,12 @@ extension SettingsViewController: LockCreatePasscodeCoordinatorDelegate {
 
 extension SettingsViewController: SupportViewControllerDelegate {
     func didPressURL(_ url: URL, in controller: SupportViewController) {
+        openURLInBrowser(url)
+    }
+}
+
+extension SettingsViewController: AboutViewControllerDelegate {
+    func didPressURL(_ url: URL, in controller: AboutViewController) {
         openURLInBrowser(url)
     }
 }

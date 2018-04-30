@@ -16,6 +16,10 @@ struct InCoordinatorViewModel {
         self.preferences = preferences
     }
 
+    var imageInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+    }
+
     var browserBarItem: UITabBarItem {
         return UITabBarItem(
             title: NSLocalizedString("browser.tabbar.item.title", value: "Browser", comment: ""),
@@ -35,7 +39,7 @@ struct InCoordinatorViewModel {
     var walletBarItem: UITabBarItem {
         return UITabBarItem(
             title: NSLocalizedString("wallet.navigation.title", value: "Wallet", comment: ""),
-            image: R.image.settings_wallet(),
+            image: R.image.wallet_tab_icon(),
             selectedImage: nil
         )
     }

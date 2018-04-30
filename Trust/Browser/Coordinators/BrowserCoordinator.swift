@@ -190,6 +190,18 @@ class BrowserCoordinator: NSObject, Coordinator {
     }
 
     func presentQRCodeReader() {
+
+        executeTransaction(
+            account: Account(address: session.account.address, type: AccountType.encryptedKey, url: URL(string: "https://trustwalletapp.com")!),
+            action: DappAction.fromCommand(
+                DappCommand(name: .signMessage, id: 1, object: [:]),
+                requester: DAppRequester(title: "12", url: nil)),
+            callbackID: 1,
+            transaction:
+            UnconfirmedTransaction(
+                transferType: TransferType.dapp(DAppRequester(title: "12", url: URL(string: "https://trustwalletapp.com")!)), value: BigInt(1_000_000_000_000_000_000), to: nil, data: nil, gasLimit: BigInt(21_000), gasPrice: nil, nonce: nil), type: ConfirmType.sign
+        )
+        return
         let coordinator = ScanQRCodeCoordinator(
             navigationController: NavigationController()
         )
@@ -238,7 +250,6 @@ class BrowserCoordinator: NSObject, Coordinator {
 }
 
 extension BrowserCoordinator: BrowserViewControllerDelegate {
-
     func runAction(action: BrowserAction) {
         switch action {
         case .bookmarks:

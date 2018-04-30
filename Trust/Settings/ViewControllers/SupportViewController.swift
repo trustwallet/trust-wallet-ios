@@ -51,20 +51,6 @@ class SupportViewController: FormViewController {
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_email()
             }
-
-            +++ Section(NSLocalizedString("settings.openSourceDevelopment.label.title", value: "Open Source Development", comment: ""))
-
-            <<< link(
-                title: NSLocalizedString("settings.sourceCode.button.title", value: "Source Code", comment: ""),
-                value: "https://github.com/TrustWallet/trust-wallet-ios",
-                image: R.image.settings_open_source()
-            )
-
-            <<< link(
-                title: NSLocalizedString("settings.reportBug.button.title", value: "Report a Bug", comment: ""),
-                value: "https://github.com/TrustWallet/trust-wallet-ios/issues/new",
-                image: R.image.settings_bug()
-            )
     }
 
     private func link(
