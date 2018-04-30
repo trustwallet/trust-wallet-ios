@@ -45,13 +45,14 @@ class AboutViewController: FormViewController {
             <<< link(
                 title: NSLocalizedString("Infura", value: "Infura", comment: ""),
                 value: "https://infura.io/",
-                image: .none //R.image.settings_open_source()
+                image: R.image.infura()
+
             )
 
             <<< link(
-                title: NSLocalizedString("Open Sea", value: "Open Sea", comment: ""),
+                title: NSLocalizedString("OpenSea", value: "OpenSea", comment: ""),
                 value: "https://opensea.io/",
-                image: .none //R.image.settings_open_source()
+                image: R.image.opensea()
             )
     }
 
@@ -63,11 +64,13 @@ class AboutViewController: FormViewController {
         return AppFormAppearance.button {
             $0.title = title
             $0.value = value
-            }.onCellSelection { [weak self] (_, row) in
-                guard let `self` = self, let value = row.value, let url = URL(string: value) else { return }
-                self.delegate?.didPressURL(url, in: self)
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = image
+        }.onCellSelection { [weak self] (_, row) in
+            guard let `self` = self, let value = row.value, let url = URL(string: value) else { return }
+            self.delegate?.didPressURL(url, in: self)
+        }.cellSetup { cell, _ in
+            cell.imageView?.image = image
+            cell.imageView?.layer.cornerRadius = 6
+            cell.imageView?.layer.masksToBounds = true
         }
     }
 
