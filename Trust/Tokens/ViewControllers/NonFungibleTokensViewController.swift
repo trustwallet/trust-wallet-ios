@@ -14,11 +14,6 @@ class NonFungibleTokensViewController: UIViewController {
     private var viewModel: NonFungibleTokenViewModel
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
-    lazy var footer: NFTFooterView = {
-        let footer = NFTFooterView()
-        footer.frame.size = footer.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
-        return footer
-    }()
 
     weak var delegate: NonFungibleTokensViewControllerDelegate?
 
@@ -33,7 +28,6 @@ class NonFungibleTokensViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
-        tableView.tableFooterView = footer
         view.addSubview(tableView)
         tableView.register(R.nib.nonFungibleTokenViewCell(), forCellReuseIdentifier: R.nib.nonFungibleTokenViewCell.name)
         NSLayoutConstraint.activate([

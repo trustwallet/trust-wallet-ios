@@ -383,7 +383,6 @@
 		778EAF7D1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778EAF7C1FF10AF400C8E2AB /* SettingsCoordinatorTests.swift */; };
 		77B1EAFF20639DEB007970AA /* NFTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B1EAFE20639DEB007970AA /* NFTokenViewController.swift */; };
 		77B1EB012063A198007970AA /* NFTDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B1EB002063A198007970AA /* NFTDetailsViewModel.swift */; };
-		77B1EB032063AC61007970AA /* NFTFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B1EB022063AC61007970AA /* NFTFooterView.swift */; };
 		77B3BF3C201908ED00EEC15A /* ConfirmCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */; };
 		77B3BF4A2019247200EEC15A /* BrowserNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */; };
 		77B64101209668FF00BEF3EB /* EtherNumberFormatter+Trust.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B64100209668FF00BEF3EB /* EtherNumberFormatter+Trust.swift */; };
@@ -866,7 +865,6 @@
 		779891EA207C10C7008890B8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		77B1EAFE20639DEB007970AA /* NFTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTokenViewController.swift; sourceTree = "<group>"; };
 		77B1EB002063A198007970AA /* NFTDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTDetailsViewModel.swift; sourceTree = "<group>"; };
-		77B1EB022063AC61007970AA /* NFTFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTFooterView.swift; sourceTree = "<group>"; };
 		77B3BF3B201908ED00EEC15A /* ConfirmCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCoordinator.swift; sourceTree = "<group>"; };
 		77B3BF492019247200EEC15A /* BrowserNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserNavigationBar.swift; sourceTree = "<group>"; };
 		77B64100209668FF00BEF3EB /* EtherNumberFormatter+Trust.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EtherNumberFormatter+Trust.swift"; sourceTree = "<group>"; };
@@ -1467,7 +1465,6 @@
 				775DF43C203E38D2009CD082 /* NonFungibleTokenViewCell.swift */,
 				775DF43D203E38D2009CD082 /* NonFungibleTokenViewCell.xib */,
 				776C1146205CF6DF00449539 /* TokenHeaderView.swift */,
-				77B1EB022063AC61007970AA /* NFTFooterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3214,7 +3211,6 @@
 				291F52A91F6B7BE100B369AB /* BlockNumber.swift in Sources */,
 				290B2B701F930AB90053C83E /* PushNotificationsRegistrar.swift in Sources */,
 				739533971FEFF5FD0084AFAB /* Currency.swift in Sources */,
-				77B1EB032063AC61007970AA /* NFTFooterView.swift in Sources */,
 				773B8DB620716EB000D05690 /* NonceProvider.swift in Sources */,
 				77B1EB012063A198007970AA /* NFTDetailsViewModel.swift in Sources */,
 				298542F31FBD594D00CB5081 /* SettingsViewModel.swift in Sources */,
