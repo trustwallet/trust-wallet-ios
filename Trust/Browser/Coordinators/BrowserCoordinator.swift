@@ -7,6 +7,7 @@ import TrustKeystore
 import RealmSwift
 import URLNavigator
 import WebKit
+import Branch
 
 protocol BrowserCoordinatorDelegate: class {
     func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator)
@@ -230,10 +231,26 @@ class BrowserCoordinator: NSObject, Coordinator {
 
     private func share() {
         guard let url = rootViewController.browserViewController.webView.url else { return }
+        navigationController.displayLoading()
+        Branch.getInstance().getShortURL(withParams: [:]) { [weak self] shortURLString, _ in
+            guard let `self` = self else { return }
+            let shareURL: URL = {
+                if let shortURLString = shortURLString, let shortURL = URL(string: shortURLString) {
+                    return shortURL
+                }
+                return url
+            }()
+            self.presentShareURL(for: shareURL) { [unowned self] in
+                self.navigationController.hideLoading()
+            }
+        }
+    }
+
+    private func presentShareURL(for url: URL, completion: (() -> Swift.Void)? = nil) {
         let activityViewController = UIActivityViewController.make(items: [url])
         activityViewController.popoverPresentationController?.sourceView = navigationController.view
         activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
-        navigationController.present(activityViewController, animated: true, completion: nil)
+        navigationController.present(activityViewController, animated: true, completion: completion)
     }
 }
 
