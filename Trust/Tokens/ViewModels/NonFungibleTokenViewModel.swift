@@ -57,12 +57,16 @@ class NonFungibleTokenViewModel {
         tokensObserver = tokens.observe(block)
     }
 
-    func token(for path: IndexPath) -> [NonFungibleTokenObject] {
+    func token(for path: IndexPath) -> NonFungibleTokenObject {
+        return tokens[path.section].items[path.row]
+    }
+
+    func tokens(for path: IndexPath) -> [NonFungibleTokenObject] {
         return Array(tokens[path.section].items)
     }
 
     func cellViewModel(for path: IndexPath) -> NonFungibleTokenCellViewModel {
-        return NonFungibleTokenCellViewModel(tokens: token(for: path))
+        return NonFungibleTokenCellViewModel(tokens: tokens(for: path))
     }
 
     func numberOfItems(in section: Int) -> Int {
@@ -70,7 +74,7 @@ class NonFungibleTokenViewModel {
     }
 
     func numberOfSections() -> Int {
-        return tokens.count
+        return Array(tokens).map { $0.name }.count
     }
 
     func title(for section: Int) -> String {

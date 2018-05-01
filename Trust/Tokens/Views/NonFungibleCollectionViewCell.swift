@@ -9,8 +9,17 @@ class NonFungibleCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var imageViewBackground: UIView!
     @IBOutlet private weak var imageView: UIImageView!
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        self.layer.shadowRadius = 2
+        self.layer.shadowOpacity = 0.5
+        self.layer.masksToBounds = false
+    }
+
     func config(with viewModel: NonFungibleCollectionViewCellModel) {
-        imageViewBackground.backgroundColor = UIColor.random()
+       // imageViewBackground.backgroundColor = UIColor.random()
         title.text = viewModel.name
         subTitle.text = viewModel.annotation
         imageView.kf.setImage(

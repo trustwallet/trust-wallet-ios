@@ -5,7 +5,6 @@ import StatefulViewController
 import RealmSwift
 
 protocol NonFungibleTokensViewControllerDelegate: class {
-    func didSelectToken(_ token: NonFungibleTokenObject)
     func didPressDiscover()
 }
 
@@ -117,12 +116,11 @@ extension NonFungibleTokensViewController: StatefulViewController {
 
 extension NonFungibleTokensViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 250
+        return 260
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //delegate?.didSelectToken(viewModel.token(for: indexPath))
-        tableView.deselectRow(at: indexPath, animated: true)
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.0
     }
 }
 
@@ -143,6 +141,10 @@ extension NonFungibleTokensViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return hederView(for: section)
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
