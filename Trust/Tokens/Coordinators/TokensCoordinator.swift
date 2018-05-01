@@ -128,6 +128,12 @@ class TokensCoordinator: Coordinator {
     private func openURL(_ url: URL) {
         delegate?.didPress(url: url, in: self)
     }
+
+    func addTokenContract(for contract: Address) {
+        let _ = network.search(token: contract.eip55String).done { [weak self] token in
+            self?.store.add(tokens: [token])
+        }
+    }
 }
 
 extension TokensCoordinator: TokensViewControllerDelegate {

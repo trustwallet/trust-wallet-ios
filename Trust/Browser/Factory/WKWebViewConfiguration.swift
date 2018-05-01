@@ -18,7 +18,6 @@ extension WKWebViewConfiguration {
         if let filepath = bundle.path(forResource: "trust-min", ofType: "js") {
             do {
                 js += try String(contentsOfFile: filepath)
-                NSLog("Loaded Trust in page provider")
             } catch {
                 NSLog("Failed to load Trust in page provider")
             }

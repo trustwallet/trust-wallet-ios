@@ -154,12 +154,12 @@ class InCoordinator: Coordinator {
         navigationController.setNavigationBarHidden(true, animated: false)
         addCoordinator(transactionCoordinator)
 
-        showTab(.wallet)
+        showTab(.wallet(.none))
 
         keystore.recentlyUsedWallet = account
 
         // activate all view controllers.
-        [Tabs.wallet, Tabs.transactions].forEach {
+        [Tabs.wallet(.none), Tabs.transactions].forEach {
             let _ = (tabBarController.viewControllers?[$0.index] as? NavigationController)?.viewControllers[0].view
         }
     }
@@ -173,7 +173,13 @@ class InCoordinator: Coordinator {
             if let url = url {
                 browserCoordinator?.openURL(url)
             }
-        case .settings, .wallet, .transactions:
+        case .wallet(let action):
+            switch action {
+            case .none: break
+            case .addToken(let address):
+                tokensCoordinator?.addTokenContract(for: address)
+            }
+        case .settings, .transactions:
             break
         }
 
@@ -236,6 +242,8 @@ class InCoordinator: Coordinator {
         switch event {
         case .openURL(let url):
             showTab(.browser(openURL: url))
+        case .newToken(let address):
+            showTab(.wallet(.addToken(address)))
         }
         return true
     }

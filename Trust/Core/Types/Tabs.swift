@@ -1,11 +1,17 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustCore
+
+enum WalletAction {
+    case none
+    case addToken(Address)
+}
 
 enum Tabs {
     case browser(openURL: URL?)
     case transactions
-    case wallet
+    case wallet(WalletAction)
     case settings
 
     var index: Int {
