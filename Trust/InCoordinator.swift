@@ -112,7 +112,6 @@ class InCoordinator: Coordinator {
         addCoordinator(transactionCoordinator)
 
         let tabBarController = TabBarController()
-
         tabBarController.tabBar.isTranslucent = false
 
         let browserCoordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator, sharedRealm: sharedRealm)

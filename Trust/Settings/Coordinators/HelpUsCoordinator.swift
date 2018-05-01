@@ -10,6 +10,14 @@ class HelpUsCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
 
     private let viewModel = HelpUsViewModel()
+    private lazy var wellDoneController: WellDoneViewController = {
+        let controller = WellDoneViewController()
+        controller.navigationItem.title = viewModel.title
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss))
+        controller.delegate = self
+        return controller
+    }()
+
     init(
         navigationController: NavigationController = NavigationController(),
         appTracker: AppTracker = AppTracker()
@@ -24,7 +32,7 @@ class HelpUsCoordinator: Coordinator {
         case 6 where !appTracker.completedRating:
             rateUs()
         case 12 where !appTracker.completedSharing:
-            wellDone()
+            presentWellDone()
         default: break
         }
     }
@@ -37,13 +45,8 @@ class HelpUsCoordinator: Coordinator {
         appTracker.completedRating = true
     }
 
-    private func wellDone() {
-        let controller = WellDoneViewController()
-        controller.navigationItem.title = viewModel.title
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismiss))
-        controller.delegate = self
-        let nav = NavigationController(rootViewController: controller)
-        navigationController.present(nav, animated: true, completion: nil)
+    private func presentWellDone() {
+        navigationController.present(NavigationController(rootViewController: wellDoneController), animated: true, completion: nil)
     }
 
     @objc private func dismiss() {
