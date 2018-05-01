@@ -5,16 +5,23 @@ import Kingfisher
 
 class NonFungibleTokenViewCell: UITableViewCell {
 
-    @IBOutlet weak var tokenImageView: UIImageView!
-    @IBOutlet weak var annotationTextLabel: UILabel!
-    @IBOutlet weak var nameTextLabel: UILabel!
+    fileprivate var viewModel: NonFungibleTokenCellViewModel?
 
     func configure(viewModel: NonFungibleTokenCellViewModel) {
-        tokenImageView.kf.setImage(
-            with: viewModel.imagePath,
-            placeholder: R.image.launch_screen_logo()
-        )
-        nameTextLabel.text = viewModel.name
-        annotationTextLabel.text = viewModel.annotation
+        self.viewModel = viewModel
     }
+}
+
+extension NonFungibleTokenViewCell: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel?.numberOfItemsInSection ?? 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
+}
+
+extension NonFungibleTokenViewCell: UICollectionViewDelegate {
+
 }

@@ -4,9 +4,12 @@ import UIKit
 
 class NonFungibleCollectionViewCell: UICollectionViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    @IBOutlet private weak var title: UILabel!
+    @IBOutlet private weak var subTitle: UILabel!
+    @IBOutlet private weak var imageViewBackground: UIView!
+    @IBOutlet private weak var imageView: UIImageView!
 
+    func config(with viewModel) {
+        imageViewBackground.backgroundColor = UIColor.random()
+    }
 }

@@ -3,17 +3,21 @@
 import UIKit
 
 struct NonFungibleTokenCellViewModel {
-    let token: NonFungibleTokenObject
-    init(token: NonFungibleTokenObject) {
-        self.token = token
+
+    let tokens: [NonFungibleTokenObject]
+
+    init(tokens: [NonFungibleTokenObject]) {
+        self.tokens = tokens
     }
-    var name: String {
-        return token.name
-    }
-    var annotation: String {
-        return token.annotation
-    }
+
+    /*
     var imagePath: URL? {
         return URL(string: token.imagePath)
     }
+    */
+
+    lazy var numberOfItemsInSection: Int = {
+        return tokens.count
+    }()
+
 }

@@ -121,7 +121,7 @@ extension NonFungibleTokensViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didSelectToken(viewModel.token(for: indexPath))
+        //delegate?.didSelectToken(viewModel.token(for: indexPath))
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
