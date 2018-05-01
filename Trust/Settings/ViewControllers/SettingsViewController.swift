@@ -3,6 +3,7 @@
 import UIKit
 import Eureka
 import StoreKit
+import TrustCore
 
 protocol SettingsViewControllerDelegate: class {
     func didAction(action: SettingsAction, in viewController: SettingsViewController)
@@ -60,47 +61,9 @@ class SettingsViewController: FormViewController, Coordinator {
 
         form = Section()
 
-            <<< PushRow<RPCServer> { [weak self] in
-                guard let strongSelf = self else {
-                    return
-                }
-                $0.title = strongSelf.viewModel.networkTitle
-                $0.options = strongSelf.viewModel.servers
-                $0.value = RPCServer(chainID: strongSelf.config.chainID)
-                $0.selectorTitle = strongSelf.viewModel.networkTitle
-                $0.displayValueFor = { value in
-                    return value?.displayName
-                }
-            }.onChange { [weak self] row in
-                let server = row.value ?? RPCServer.main
-                self?.run(action: .RPCServer(server: server))
-            }.onPresent { _, selectorController in
-                selectorController.enableDeselection = false
-                selectorController.sectionKeyForValue = { option in
-                    switch option {
-                    case .main, .classic, .callisto, .poa: return ""
-                    case .kovan, .ropsten, .rinkeby, .sokol: return NSLocalizedString("settings.network.test.label.title", value: "Test", comment: "")
-                    case .custom:
-                        return NSLocalizedString("settings.network.custom.label.title", value: "Custom", comment: "")
-                    }
-                }
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_colorful_networks()
-            }
+            <<< networkRow()
 
-            <<< AppFormAppearance.button { [weak self] row in
-                guard let strongSelf = self, let accountsViewController = strongSelf.accountsCoordinator?.accountsViewController else { return }
-                row.cellStyle = .value1
-                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
-                    return accountsViewController
-                }, onDismiss: nil)
-            }.cellUpdate { cell, _ in
-                cell.textLabel?.textColor = .black
-                cell.imageView?.image = R.image.settings_colorful_wallets()
-                cell.textLabel?.text = NSLocalizedString("settings.wallets.button.title", value: "Wallets", comment: "")
-                cell.detailTextLabel?.text = String(account.address.description.prefix(10)) + "..."
-                cell.accessoryType = .disclosureIndicator
-            }
+            <<< walletsRow(for: account.address)
 
             +++ Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))
 
@@ -138,53 +101,8 @@ class SettingsViewController: FormViewController, Coordinator {
 
             +++ Section()
 
-            <<< PushRow<Currency> { [weak self] in
-                $0.title = self?.viewModel.currencyTitle
-                $0.selectorTitle = self?.viewModel.currencyTitle
-                $0.options = self?.viewModel.currency
-                $0.value = self?.config.currency
-                $0.displayValueFor = { value in
-                    let currencyCode = value?.rawValue ?? ""
-                    return currencyCode + " - " + (NSLocale.current.localizedString(forCurrencyCode: currencyCode) ?? "")
-                }
-            }.onChange { [weak self]  row in
-                guard let value = row.value else { return }
-                self?.config.currency = value
-                self?.run(action: .currency)
-            }.onPresent { _, selectorController in
-                selectorController.enableDeselection = false
-                selectorController.sectionKeyForValue = { option in
-                    switch option {
-                    case .USD, .EUR, .GBP, .AUD, .RUB: return Values.currencyPopularKey
-                    default: return Values.currencyAllKey
-                    }
-                }
-                selectorController.sectionHeaderTitleForKey = { option in
-                    switch option {
-                    case Values.currencyPopularKey:
-                        return NSLocalizedString("settings.currency.popular.label.title", value: "Popular", comment: "")
-                    case Values.currencyAllKey:
-                        return NSLocalizedString("settings.currency.all.label.title", value: "All", comment: "")
-                    default: return ""
-                    }
-                }
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_colorful_currency()
-            }
-
-            <<< AppFormAppearance.button { row in
-                row.cellStyle = .value1
-                row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback { [weak self] in
-                    let controller = BrowserConfigurationViewController()
-                    controller.delegate = self
-                    return controller
-                }, onDismiss: nil)
-            }.cellUpdate { cell, _ in
-                cell.textLabel?.textColor = .black
-                cell.imageView?.image = R.image.settings_colorful_dappbrowser()
-                cell.textLabel?.text = NSLocalizedString("settings.browser.title", value: "DApp Browser", comment: "")
-                cell.accessoryType = .disclosureIndicator
-            }
+            <<< currencyRow()
+            <<< browserRow()
 
             +++ Section(NSLocalizedString("settings.joinCommunity.label.title", value: "Join Community", comment: ""))
 
@@ -204,33 +122,8 @@ class SettingsViewController: FormViewController, Coordinator {
 
             +++ Section()
 
-            <<< AppFormAppearance.button { row in
-                row.cellStyle = .value1
-                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback { [weak self] in
-                    let controller = AboutViewController()
-                    controller.delegate = self
-                    return controller
-                }, onDismiss: { _ in })
-            }.cellUpdate { cell, _ in
-                cell.textLabel?.textColor = .black
-                cell.imageView?.image = R.image.settings_colorful_about()
-                cell.textLabel?.text = NSLocalizedString("settings.about.title", value: "About", comment: "")
-                cell.accessoryType = .disclosureIndicator
-            }
-
-            <<< AppFormAppearance.button { row in
-                row.cellStyle = .value1
-                row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback { [weak self] in
-                    let controller = SupportViewController()
-                    controller.delegate = self
-                    return controller
-                }, onDismiss: { _ in })
-            }.cellUpdate { cell, _ in
-                cell.textLabel?.textColor = .black
-                cell.imageView?.image = R.image.settings_colorful_support()
-                cell.textLabel?.text = NSLocalizedString("settings.support.title", value: "Support", comment: "")
-                cell.accessoryType = .disclosureIndicator
-            }
+            <<< aboutRow()
+            <<< supportRow()
 
             +++ Section()
 
@@ -239,6 +132,136 @@ class SettingsViewController: FormViewController, Coordinator {
                 $0.value = Bundle.main.fullVersion
                 $0.disabled = true
             }
+    }
+
+    private func networkRow() -> PushRow<RPCServer> {
+        return PushRow<RPCServer> { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            $0.title = strongSelf.viewModel.networkTitle
+            $0.options = strongSelf.viewModel.servers
+            $0.value = RPCServer(chainID: strongSelf.config.chainID)
+            $0.selectorTitle = strongSelf.viewModel.networkTitle
+            $0.displayValueFor = { value in
+                return value?.displayName
+            }
+        }.onChange { [weak self] row in
+            let server = row.value ?? RPCServer.main
+            self?.run(action: .RPCServer(server: server))
+        }.onPresent { _, selectorController in
+            selectorController.enableDeselection = false
+            selectorController.sectionKeyForValue = { option in
+                switch option {
+                case .main, .classic, .callisto, .poa: return ""
+                case .kovan, .ropsten, .rinkeby, .sokol: return NSLocalizedString("settings.network.test.label.title", value: "Test", comment: "")
+                case .custom:
+                    return NSLocalizedString("settings.network.custom.label.title", value: "Custom", comment: "")
+                }
+            }
+        }.cellSetup { cell, _ in
+            cell.imageView?.image = R.image.settings_colorful_networks()
+        }
+    }
+
+    private func walletsRow(for address: Address) -> ButtonRow {
+        return AppFormAppearance.button { [weak self] row in
+            guard let strongSelf = self, let accountsViewController = strongSelf.accountsCoordinator?.accountsViewController else { return }
+            row.cellStyle = .value1
+            row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+                return accountsViewController
+            }, onDismiss: nil)
+        }.cellUpdate { cell, _ in
+            cell.textLabel?.textColor = .black
+            cell.imageView?.image = R.image.settings_colorful_wallets()
+            cell.textLabel?.text = NSLocalizedString("settings.wallets.button.title", value: "Wallets", comment: "")
+            cell.detailTextLabel?.text = String(address.description.prefix(10)) + "..."
+            cell.accessoryType = .disclosureIndicator
+        }
+    }
+
+    private func currencyRow() -> PushRow<Currency> {
+        return PushRow<Currency> { [weak self] in
+            $0.title = self?.viewModel.currencyTitle
+            $0.selectorTitle = self?.viewModel.currencyTitle
+            $0.options = self?.viewModel.currency
+            $0.value = self?.config.currency
+            $0.displayValueFor = { value in
+                let currencyCode = value?.rawValue ?? ""
+                return currencyCode + " - " + (NSLocale.current.localizedString(forCurrencyCode: currencyCode) ?? "")
+            }
+        }.onChange { [weak self]  row in
+            guard let value = row.value else { return }
+            self?.config.currency = value
+            self?.run(action: .currency)
+        }.onPresent { _, selectorController in
+            selectorController.enableDeselection = false
+            selectorController.sectionKeyForValue = { option in
+                switch option {
+                case .USD, .EUR, .GBP, .AUD, .RUB: return Values.currencyPopularKey
+                default: return Values.currencyAllKey
+                }
+            }
+            selectorController.sectionHeaderTitleForKey = { option in
+                switch option {
+                case Values.currencyPopularKey:
+                    return NSLocalizedString("settings.currency.popular.label.title", value: "Popular", comment: "")
+                case Values.currencyAllKey:
+                    return NSLocalizedString("settings.currency.all.label.title", value: "All", comment: "")
+                default: return ""
+                }
+            }
+        }.cellSetup { cell, _ in
+            cell.imageView?.image = R.image.settings_colorful_currency()
+        }
+    }
+
+    private func supportRow() -> ButtonRow {
+        return AppFormAppearance.button { row in
+            row.cellStyle = .value1
+            row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback { [weak self] in
+                let controller = SupportViewController()
+                controller.delegate = self
+                return controller
+            }, onDismiss: { _ in })
+        }.cellUpdate { cell, _ in
+            cell.textLabel?.textColor = .black
+            cell.imageView?.image = R.image.settings_colorful_support()
+            cell.textLabel?.text = NSLocalizedString("settings.support.title", value: "Support", comment: "")
+            cell.accessoryType = .disclosureIndicator
+        }
+    }
+
+    private func aboutRow() -> ButtonRow {
+        return AppFormAppearance.button { row in
+            row.cellStyle = .value1
+            row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback { [weak self] in
+                let controller = AboutViewController()
+                controller.delegate = self
+                return controller
+            }, onDismiss: { _ in })
+        }.cellUpdate { cell, _ in
+            cell.textLabel?.textColor = .black
+            cell.imageView?.image = R.image.settings_colorful_about()
+            cell.textLabel?.text = NSLocalizedString("settings.about.title", value: "About", comment: "")
+            cell.accessoryType = .disclosureIndicator
+        }
+    }
+
+    private func browserRow() -> ButtonRow {
+        return AppFormAppearance.button { row in
+            row.cellStyle = .value1
+            row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback { [weak self] in
+                let controller = BrowserConfigurationViewController()
+                controller.delegate = self
+                return controller
+            }, onDismiss: nil)
+        }.cellUpdate { cell, _ in
+            cell.textLabel?.textColor = .black
+            cell.imageView?.image = R.image.settings_colorful_dappbrowser()
+            cell.textLabel?.text = NSLocalizedString("settings.browser.title", value: "DApp Browser", comment: "")
+            cell.accessoryType = .disclosureIndicator
+        }
     }
 
     func setPasscode(completion: ((Bool) -> Void)? = .none) {

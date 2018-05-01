@@ -459,19 +459,6 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		BB3B869C204BB1C60061FCBA /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		290B2B551F8F50030053C83E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2507,7 +2494,6 @@
 				2909B06A324FDD6FB858F676 /* [CP] Copy Pods Resources */,
 				29282B511F7629DB0067F88D /* Run SwiftLint */,
 				294DFB961FDF8C6A004CEB56 /* ShellScript */,
-				BB3B869C204BB1C60061FCBA /* Embed App Extensions */,
 			);
 			buildRules = (
 			);

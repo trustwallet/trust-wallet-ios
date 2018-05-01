@@ -18,7 +18,7 @@ enum BranchEvent {
         case .openURL(let url):
             return [
                 "url": url.absoluteString,
-                "event": BranchEventName.openURL.rawValue
+                "event": BranchEventName.openURL.rawValue,
             ]
         }
     }
