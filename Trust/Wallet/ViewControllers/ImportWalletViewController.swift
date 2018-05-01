@@ -33,23 +33,18 @@ class ImportWalletViewController: FormViewController {
     var segmentRow: SegmentedRow<String>? {
         return form.rowBy(tag: Values.segment)
     }
-
     var keystoreRow: TextAreaRow? {
         return form.rowBy(tag: Values.keystore)
     }
-
     var mnemonicRow: TextAreaRow? {
         return form.rowBy(tag: Values.mnemonic)
     }
-
     var privateKeyRow: TextAreaRow? {
         return form.rowBy(tag: Values.privateKey)
     }
-
     var passwordRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.password)
     }
-
     var watchRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.watch)
     }
@@ -93,7 +88,7 @@ class ImportWalletViewController: FormViewController {
                         NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular),
                         NSAttributedStringKey.foregroundColor: UIColor(hex: "6e6e72"),
                         NSAttributedStringKey.paragraphStyle: strongSelf.pargraphStyle,
-                        ])
+                    ])
                     view.logoImageView.image = R.image.create_wallet_import()
                 }
                 $0.header = header
@@ -109,62 +104,67 @@ class ImportWalletViewController: FormViewController {
                 $0.value = ImportSelectionType.keystore.title
             }
 
-            <<< AppFormAppearance.textArea(tag: Values.mnemonic) {
-                $0.placeholder = NSLocalizedString("import.wallet.mnemonic.placeholder", value: "Words separated by a space. (Usually contains 12 words)", comment: "")
-                $0.textAreaHeight = .fixed(cellHeight: 140)
-                $0.add(rule: RuleRequired())
-                $0.cell.textView?.autocapitalizationType = .none
-
-                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
-                    return self?.segmentRow?.value != ImportSelectionType.mnemonic.title
-                })
-            }
-
-            <<< AppFormAppearance.textArea(tag: Values.keystore) {
-                $0.placeholder = NSLocalizedString("Keystore JSON", value: "Keystore JSON", comment: "")
-                $0.textAreaHeight = .fixed(cellHeight: 140)
-                $0.add(rule: RuleRequired())
-
+            // Keystore JSON
+            +++ Section {
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
                     return self?.segmentRow?.value != ImportSelectionType.keystore.title
                 })
             }
-
-            <<< AppFormAppearance.textArea(tag: Values.privateKey) {
-                $0.placeholder = NSLocalizedString("Private Key", value: "Private Key", comment: "")
+            <<< AppFormAppearance.textArea(tag: Values.keystore) { [weak self] in
+                $0.placeholder = self?.viewModel.keystorePlaceholder
                 $0.textAreaHeight = .fixed(cellHeight: 140)
                 $0.add(rule: RuleRequired())
-                $0.add(rule: PrivateKeyRule())
-                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
-                    return self?.segmentRow?.value != ImportSelectionType.privateKey.title
-                })
             }
-
-            <<< AppFormAppearance.textFieldFloat(tag: Values.watch) {
-                $0.add(rule: RuleRequired())
-                $0.add(rule: EthereumAddressRule())
-                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
-                 return self?.segmentRow?.value != ImportSelectionType.watch.title
-            })
-            }.cellUpdate { [weak self] cell, _ in
-                cell.textField.placeholder = self?.viewModel.watchAddressPlaceholder
-                cell.textField.rightView = recipientRightView
-                cell.textField.rightViewMode = .always
-            }
-
             <<< AppFormAppearance.textFieldFloat(tag: Values.password) {
                 $0.validationOptions = .validatesOnDemand
-                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
-                    return self?.segmentRow?.value != ImportSelectionType.keystore.title
-                })
             }.cellUpdate { cell, _ in
                 cell.textField.isSecureTextEntry = true
                 cell.textField.textAlignment = .left
                 cell.textField.placeholder = NSLocalizedString("Password", value: "Password", comment: "")
             }
 
-            +++ Section("")
+            // Private Key
+            +++ Section {
+                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
+                    return self?.segmentRow?.value != ImportSelectionType.privateKey.title
+                })
+            }
+            <<< AppFormAppearance.textArea(tag: Values.privateKey) { [weak self] in
+                $0.placeholder = self?.viewModel.privateKeyPlaceholder
+                $0.textAreaHeight = .fixed(cellHeight: 140)
+                $0.add(rule: RuleRequired())
+                $0.add(rule: PrivateKeyRule())
+            }
 
+            // Mnemonic
+            +++ Section {
+                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
+                    return self?.segmentRow?.value != ImportSelectionType.mnemonic.title
+                })
+            }
+            <<< AppFormAppearance.textArea(tag: Values.mnemonic) { [weak self] in
+                $0.placeholder = self?.viewModel.mnemonicPlaceholder
+                $0.textAreaHeight = .fixed(cellHeight: 140)
+                $0.add(rule: RuleRequired())
+                $0.cell.textView?.autocapitalizationType = .none
+            }
+
+            // Watch
+            +++ Section() {
+                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
+                    return self?.segmentRow?.value != ImportSelectionType.watch.title
+                })
+            }
+            <<< AppFormAppearance.textFieldFloat(tag: Values.watch) {
+                $0.add(rule: RuleRequired())
+                $0.add(rule: EthereumAddressRule())
+            }.cellUpdate { [weak self] cell, _ in
+                cell.textField.placeholder = self?.viewModel.watchAddressPlaceholder
+                cell.textField.rightView = recipientRightView
+                cell.textField.rightViewMode = .always
+            }
+
+            +++ Section()
             <<< ButtonRow(NSLocalizedString("importWallet.import.button.title", value: "Import", comment: "")) {
                 $0.title = $0.tag
             }.onCellSelection { [weak self] _, _ in
