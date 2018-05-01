@@ -47,36 +47,11 @@ class NonFungibleTokensViewController: UIViewController {
             onRetry: { [weak self] in
                 self?.delegate?.didPressDiscover()
         })
-    }
-
-    private func tokensObservation() {
-        viewModel.setTokenObservation { [weak self] (changes: RealmCollectionChange) in
-            guard let strongSelf = self else { return }
-            let tableView = strongSelf.tableView
-            switch changes {
-            case .initial:
-                tableView.reloadData()
-                self?.endLoading()
-            case .update:
-                tableView.reloadData()
-                self?.endLoading()
-            case .error(let error):
-                self?.endLoading(animated: true, error: error, completion: nil)
-            }
-            if strongSelf.refreshControl.isRefreshing {
-                strongSelf.refreshControl.endRefreshing()
-            }
-        }
+        fetch()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        tokensObservation()
-        fetch()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -96,10 +71,11 @@ class NonFungibleTokensViewController: UIViewController {
 
     func fetch() {
         startLoading()
-        viewModel.fetchAssets { state in
+        viewModel.fetchAssets { [weak self] state in
             if state {
-                self.endLoading()
+                self?.endLoading()
             }
+            self?.refreshControl.endRefreshing()
         }
     }
 

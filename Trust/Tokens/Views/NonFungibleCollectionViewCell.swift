@@ -16,10 +16,10 @@ class NonFungibleCollectionViewCell: UICollectionViewCell {
         self.layer.shadowRadius = 2
         self.layer.shadowOpacity = 0.5
         self.layer.masksToBounds = false
+        imageViewBackground.backgroundColor = UIColor.random()
     }
 
     func config(with viewModel: NonFungibleCollectionViewCellModel) {
-       // imageViewBackground.backgroundColor = UIColor.random()
         title.text = viewModel.name
         subTitle.text = viewModel.annotation
         imageView.kf.setImage(

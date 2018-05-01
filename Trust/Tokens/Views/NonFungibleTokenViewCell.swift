@@ -8,7 +8,7 @@ class NonFungibleTokenViewCell: UITableViewCell {
     @IBOutlet private weak var collectionView: UICollectionView!
 
     fileprivate var viewModel: NonFungibleTokenCellViewModel?
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         collectionView.dataSource = self
@@ -29,7 +29,7 @@ extension NonFungibleTokenViewCell: UICollectionViewDelegate {
             return
         }
 
-        let tokenDictionary:[String: NonFungibleTokenObject] = ["token": model.token(for: indexPath)]
+        let tokenDictionary: [String: NonFungibleTokenObject] = ["token": model.token(for: indexPath)]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ShowToken"), object: nil, userInfo: tokenDictionary)
     }
 }
