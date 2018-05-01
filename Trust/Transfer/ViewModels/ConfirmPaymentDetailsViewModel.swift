@@ -54,7 +54,7 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     var paymentFromTitle: String {
-        return NSLocalizedString("confirmPayment.wallet.label.title", value: "Wallet", comment: "")
+        return NSLocalizedString("transaction.sender.label.title", value: "Sender", comment: "")
     }
 
     var requesterTitle: String {
