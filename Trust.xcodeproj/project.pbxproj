@@ -351,7 +351,6 @@
 		773B8DBE2071859A00D05690 /* GetNonceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B8DBD2071859A00D05690 /* GetNonceProvider.swift */; };
 		773B8DBF2071874000D05690 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77CB83A1206EFF00006F34A8 /* GoogleService-Info.plist */; };
 		773B8DC02071874200D05690 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77CB83A1206EFF00006F34A8 /* GoogleService-Info.plist */; };
-		773B8DC12071874200D05690 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77CB83A1206EFF00006F34A8 /* GoogleService-Info.plist */; };
 		775C00B520195BFB001B5EBC /* BrowserAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775C00B420195BFB001B5EBC /* BrowserAction.swift */; };
 		775DF42B203693CD009CD082 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF42A203693CD009CD082 /* Preferences.swift */; };
 		775DF42D2037D338009CD082 /* BranchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DF42C2037D338009CD082 /* BranchCoordinator.swift */; };
@@ -893,7 +892,6 @@
 		BB1CC265203BA4440042E56C /* SendMaxAmountTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMaxAmountTest.swift; sourceTree = "<group>"; };
 		BB1CC279203D061B0042E56C /* TrustDocumentPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustDocumentPickerViewController.swift; sourceTree = "<group>"; };
 		BB3864A2208F1C8A00CBF773 /* testIsHexEncoded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testIsHexEncoded.swift; sourceTree = "<group>"; };
-		BB3B868E204BB1C60061FCBA /* OpenInTrust.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenInTrust.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB3B86BC204CE9730061FCBA /* URLNavigatorCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLNavigatorCoordinator.swift; sourceTree = "<group>"; };
 		BB3B86BE204CECBC0061FCBA /* URLNavigable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLNavigable.swift; sourceTree = "<group>"; };
 		BB3B86C4204D2EF10061FCBA /* InCoordinator+Navigable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InCoordinator+Navigable.swift"; sourceTree = "<group>"; };
@@ -939,13 +937,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BB3B868B204BB1C60061FCBA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -986,7 +977,6 @@
 				2912CCF51F6A830700C6CBE3 /* Trust.app */,
 				2912CD0B1F6A830700C6CBE3 /* TrustTests.xctest */,
 				2912CD161F6A830700C6CBE3 /* TrustUITests.xctest */,
-				BB3B868E204BB1C60061FCBA /* OpenInTrust.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2542,23 +2532,6 @@
 			productReference = 2912CD161F6A830700C6CBE3 /* TrustUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		BB3B868D204BB1C60061FCBA /* OpenInTrust */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BB3B869B204BB1C60061FCBA /* Build configuration list for PBXNativeTarget "OpenInTrust" */;
-			buildPhases = (
-				BB3B868A204BB1C60061FCBA /* Sources */,
-				BB3B868B204BB1C60061FCBA /* Frameworks */,
-				BB3B868C204BB1C60061FCBA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = OpenInTrust;
-			productName = OpenInTrust;
-			productReference = BB3B868E204BB1C60061FCBA /* OpenInTrust.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2600,15 +2573,6 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2912CCF41F6A830700C6CBE3;
 					};
-					BB3B868D204BB1C60061FCBA = {
-						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Manual;
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 0;
-							};
-						};
-					};
 				};
 			};
 			buildConfigurationList = 2912CCF01F6A830700C6CBE3 /* Build configuration list for PBXProject "Trust" */;
@@ -2637,7 +2601,6 @@
 				2912CCF41F6A830700C6CBE3 /* Trust */,
 				2912CD0A1F6A830700C6CBE3 /* TrustTests */,
 				2912CD151F6A830700C6CBE3 /* TrustUITests */,
-				BB3B868D204BB1C60061FCBA /* OpenInTrust */,
 			);
 		};
 /* End PBXProject section */
@@ -2674,14 +2637,6 @@
 			files = (
 				294DFBA61FE11CAE004CEB56 /* Localizable.strings in Resources */,
 				773B8DC02071874200D05690 /* GoogleService-Info.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BB3B868C204BB1C60061FCBA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				773B8DC12071874200D05690 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3313,13 +3268,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BB3B868A204BB1C60061FCBA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -3479,7 +3427,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 224;
+				CURRENT_PROJECT_VERSION = 227;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
@@ -3505,7 +3453,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 224;
+				CURRENT_PROJECT_VERSION = 227;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
@@ -3590,45 +3538,6 @@
 			};
 			name = Release;
 		};
-		BB3B8699204BB1C60061FCBA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = ExtensionIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = OpenInTrust/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sixdays.trust.OpenInTrust;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		BB3B869A204BB1C60061FCBA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = ExtensionIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = OpenInTrust/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sixdays.trust.OpenInTrust;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3664,15 +3573,6 @@
 			buildConfigurations = (
 				2912CD261F6A830700C6CBE3 /* Debug */,
 				2912CD271F6A830700C6CBE3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BB3B869B204BB1C60061FCBA /* Build configuration list for PBXNativeTarget "OpenInTrust" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BB3B8699204BB1C60061FCBA /* Debug */,
-				BB3B869A204BB1C60061FCBA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
