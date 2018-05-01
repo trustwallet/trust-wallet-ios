@@ -12,6 +12,16 @@ enum BranchEvent {
     var name: String {
         return "openURL"
     }
+
+    var params: [String: String] {
+        switch self {
+        case .openURL(let url):
+            return [
+                "url": url.absoluteString,
+                "event": BranchEventName.openURL.rawValue
+            ]
+        }
+    }
 }
 
 extension BranchEvent: Equatable {

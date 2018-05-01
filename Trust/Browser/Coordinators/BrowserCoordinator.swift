@@ -232,7 +232,8 @@ class BrowserCoordinator: NSObject, Coordinator {
     private func share() {
         guard let url = rootViewController.browserViewController.webView.url else { return }
         navigationController.displayLoading()
-        Branch.getInstance().getShortURL(withParams: [:]) { [weak self] shortURLString, _ in
+        let params = BranchEvent.openURL(url).params
+        Branch.getInstance().getShortURL(withParams: params) { [weak self] shortURLString, _ in
             guard let `self` = self else { return }
             let shareURL: URL = {
                 if let shortURLString = shortURLString, let shortURL = URL(string: shortURLString) {
