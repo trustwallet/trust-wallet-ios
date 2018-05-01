@@ -5,7 +5,17 @@ import Kingfisher
 
 class NonFungibleTokenViewCell: UITableViewCell {
 
+    @IBOutlet private weak var collectionView: UICollectionView!
+
     fileprivate var viewModel: NonFungibleTokenCellViewModel?
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(R.nib.nonFungibleCollectionViewCell(), forCellWithReuseIdentifier: R.nib.nonFungibleCollectionViewCell.name)
+        collectionView.backgroundColor = UIColor.clear
+    }
 
     func configure(viewModel: NonFungibleTokenCellViewModel) {
         self.viewModel = viewModel
@@ -18,7 +28,8 @@ extension NonFungibleTokenViewCell: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        let cell: UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.nonFungibleCollectionViewCell.name, for: indexPath) as! NonFungibleCollectionViewCell
+        return cell
     }
 }
 
