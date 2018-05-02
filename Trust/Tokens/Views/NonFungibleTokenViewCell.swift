@@ -14,7 +14,6 @@ class NonFungibleTokenViewCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(R.nib.nonFungibleCollectionViewCell(), forCellWithReuseIdentifier: R.nib.nonFungibleCollectionViewCell.name)
-        collectionView.backgroundColor = UIColor.clear
     }
 
     func configure(viewModel: NonFungibleTokenCellViewModel) {
@@ -43,7 +42,7 @@ extension NonFungibleTokenViewCell: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.nonFungibleCollectionViewCell.name, for: indexPath) as? NonFungibleCollectionViewCell, let model = viewModel else {
             return UICollectionViewCell()
         }
-        cell.config(with: model.collectionViewModel(for: indexPath))
+        cell.configure(with: model.collectionViewModel(for: indexPath))
         return cell
     }
 }

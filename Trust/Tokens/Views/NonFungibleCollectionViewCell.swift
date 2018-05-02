@@ -19,7 +19,7 @@ class NonFungibleCollectionViewCell: UICollectionViewCell {
         imageViewBackground.backgroundColor = UIColor.random()
     }
 
-    func config(with viewModel: NonFungibleCollectionViewCellModel) {
+    func configure(with viewModel: NonFungibleCollectionViewCellModel) {
         title.text = viewModel.name
         subTitle.text = viewModel.annotation
         imageView.kf.setImage(
