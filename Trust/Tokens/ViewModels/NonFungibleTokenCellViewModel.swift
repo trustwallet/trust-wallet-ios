@@ -3,17 +3,22 @@
 import UIKit
 
 struct NonFungibleTokenCellViewModel {
-    let token: NonFungibleTokenObject
-    init(token: NonFungibleTokenObject) {
-        self.token = token
+
+    private let tokens: [NonFungibleTokenObject]
+
+    init(tokens: [NonFungibleTokenObject]) {
+        self.tokens = tokens
     }
-    var name: String {
-        return token.name
+
+    lazy var numberOfItemsInSection: Int = {
+        return tokens.count
+    }()
+
+    func collectionViewModel(for index: IndexPath) -> NonFungibleCollectionViewCellModel {
+        return NonFungibleCollectionViewCellModel(token: tokens[index.row])
     }
-    var annotation: String {
-        return token.annotation
-    }
-    var imagePath: URL? {
-        return URL(string: token.imagePath)
+
+    func token(for index: IndexPath) -> NonFungibleTokenObject {
+        return tokens[index.row]
     }
 }

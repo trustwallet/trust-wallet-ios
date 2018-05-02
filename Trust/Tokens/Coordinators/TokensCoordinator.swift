@@ -60,6 +60,14 @@ class TokensCoordinator: Coordinator {
         self.store = tokensStorage
         self.network = network
         self.transactionsStore = transactionsStore
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheel(_:)), name: NSNotification.Name(rawValue: "ShowToken"), object: nil)
+    }
+
+    @objc func showSpinningWheel(_ notification: NSNotification) {
+        if let token = notification.userInfo?["token"] as? NonFungibleTokenObject {
+           didSelectToken(token)
+        }
     }
 
     func start() {
@@ -134,6 +142,16 @@ class TokensCoordinator: Coordinator {
             self?.store.add(tokens: [token])
         }
     }
+
+    private func didSelectToken(_ token: NonFungibleTokenObject) {
+        let controller = NFTokenViewController(token: token)
+        controller.delegate = self
+        navigationController.pushViewController(controller, animated: true)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension TokensCoordinator: TokensViewControllerDelegate {
@@ -171,14 +189,6 @@ extension TokensCoordinator: NewTokenViewControllerDelegate {
 }
 
 extension TokensCoordinator: NonFungibleTokensViewControllerDelegate {
-    func didSelectToken(_ token: NonFungibleTokenObject) {
-        //delegate?.didPress(on: token, in: self)
-
-        let controller = NFTokenViewController(token: token)
-        controller.delegate = self
-        navigationController.pushViewController(controller, animated: true)
-    }
-
     func didPressDiscover() {
         delegate?.didPressDiscover(in: self)
     }

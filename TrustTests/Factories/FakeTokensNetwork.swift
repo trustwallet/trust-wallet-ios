@@ -10,6 +10,10 @@ import Result
 import PromiseKit
 import enum Result.Result
 
+enum FakeTokensNetworkError: Error {
+    case notImplmented
+}
+
 class FakeTokensNetwork: NetworkProtocol {
 
     var provider: MoyaProvider<TrustService>
@@ -36,8 +40,10 @@ class FakeTokensNetwork: NetworkProtocol {
         completion([ticker])
     }
 
-    func assets(completion: @escaping (([NonFungibleTokenCategory]?)) -> Void) {
-        
+    func assets() -> Promise<[NonFungibleTokenCategory]> {
+        return Promise { seal in
+            seal.reject(FakeTokensNetworkError.notImplmented)
+        }
     }
 
     func tokensList(for address: Address, completion: @escaping (([TokenObject]?)) -> Void) {

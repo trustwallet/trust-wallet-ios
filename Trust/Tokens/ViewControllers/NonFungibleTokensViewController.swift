@@ -3,9 +3,9 @@
 import UIKit
 import StatefulViewController
 import RealmSwift
+import PromiseKit
 
 protocol NonFungibleTokensViewControllerDelegate: class {
-    func didSelectToken(_ token: NonFungibleTokenObject)
     func didPressDiscover()
 }
 
@@ -48,36 +48,11 @@ class NonFungibleTokensViewController: UIViewController {
             onRetry: { [weak self] in
                 self?.delegate?.didPressDiscover()
         })
-    }
-
-    private func tokensObservation() {
-        viewModel.setTokenObservation { [weak self] (changes: RealmCollectionChange) in
-            guard let strongSelf = self else { return }
-            let tableView = strongSelf.tableView
-            switch changes {
-            case .initial:
-                tableView.reloadData()
-                self?.endLoading()
-            case .update:
-                tableView.reloadData()
-                self?.endLoading()
-            case .error(let error):
-                self?.endLoading(animated: true, error: error, completion: nil)
-            }
-            if strongSelf.refreshControl.isRefreshing {
-                strongSelf.refreshControl.endRefreshing()
-            }
-        }
+        fetch()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        tokensObservation()
-        fetch()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -96,11 +71,15 @@ class NonFungibleTokensViewController: UIViewController {
     }
 
     func fetch() {
-        startLoading()
-        viewModel.fetchAssets { state in
-            if state {
-                self.endLoading()
-            }
+        firstly {
+            viewModel.fetchAssets()
+        }.done { [weak self] _ in
+            self?.endLoading()
+            self?.tableView.reloadData()
+        }.ensure { [weak self] in
+            self?.refreshControl.endRefreshing()
+        }.catch { [weak self] error in
+            self?.endLoading(animated: true, error: error, completion: nil)
         }
     }
 
@@ -117,12 +96,11 @@ extension NonFungibleTokensViewController: StatefulViewController {
 
 extension NonFungibleTokensViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 106
+        return 260
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didSelectToken(viewModel.token(for: indexPath))
-        tableView.deselectRow(at: indexPath, animated: true)
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.0
     }
 }
 
@@ -143,6 +121,10 @@ extension NonFungibleTokensViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return hederView(for: section)
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
