@@ -2,6 +2,8 @@
 
 import RealmSwift
 import TrustCore
+import PromiseKit
+import Crashlytics
 
 class NonFungibleTokenViewModel {
 
@@ -45,11 +47,17 @@ class NonFungibleTokenViewModel {
         self.tokens = storage.nonFungibleTokens
     }
 
-    func fetchAssets( completion: @escaping (_ result: Bool) -> Void) {
-        self.tokensNetwork.assets { assets in
-            guard let tokens = assets else { return }
-            completion(tokens.isEmpty)
-            self.storage.add(tokens: tokens)
+    func fetchAssets() -> Promise<[NonFungibleTokenCategory]> {
+        return Promise { seal in
+            firstly {
+                tokensNetwork.assets()
+            }.done { [weak self] tokens in
+                self?.storage.add(tokens: tokens)
+                seal.fulfill(tokens)
+            }.catch { error in
+                Answers.logCustomEvent(withName: "Token search request error: \(error)", customAttributes: nil)
+                seal.reject(error)
+            }
         }
     }
 

@@ -3,6 +3,7 @@
 import UIKit
 import StatefulViewController
 import RealmSwift
+import PromiseKit
 
 protocol NonFungibleTokensViewControllerDelegate: class {
     func didPressDiscover()
@@ -70,12 +71,15 @@ class NonFungibleTokensViewController: UIViewController {
     }
 
     func fetch() {
-        startLoading()
-        viewModel.fetchAssets { [weak self] state in
-            if state {
-                self?.endLoading()
-            }
+        firstly {
+            viewModel.fetchAssets()
+        }.done { [weak self] _ in
+            self?.endLoading()
+            self?.tableView.reloadData()
+        }.ensure { [weak self] in
             self?.refreshControl.endRefreshing()
+        }.catch { [weak self] error in
+            self?.endLoading(animated: true, error: error, completion: nil)
         }
     }
 

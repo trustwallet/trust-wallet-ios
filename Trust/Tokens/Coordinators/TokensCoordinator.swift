@@ -64,7 +64,6 @@ class TokensCoordinator: Coordinator {
         NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheel(_:)), name: NSNotification.Name(rawValue: "ShowToken"), object: nil)
     }
 
-
     @objc func showSpinningWheel(_ notification: NSNotification) {
         if let token = notification.userInfo?["token"] as? NonFungibleTokenObject {
            didSelectToken(token)

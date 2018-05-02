@@ -15,7 +15,7 @@ enum TrustNetworkProtocolError: LocalizedError {
 
 protocol NetworkProtocol: TrustNetworkProtocol {
     func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void)
-    func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void)
+    func assets() -> Promise<[NonFungibleTokenCategory]>
     func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]>
     func ethBalance() -> Promise<Balance>
     func tokensList(for address: Address) -> Promise<[TokenObject]>
@@ -26,6 +26,7 @@ protocol NetworkProtocol: TrustNetworkProtocol {
 }
 
 class TrustNetwork: NetworkProtocol {
+
     static let deleteMissingInternalSeconds: Double = 60.0
     static let deleyedTransactionInternalSeconds: Double = 60.0
     let provider: MoyaProvider<TrustService>
@@ -169,18 +170,20 @@ class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func assets(completion: @escaping (_ result: ([NonFungibleTokenCategory]?)) -> Void) {
-        provider.request(.assets(address: account.address.description)) { result in
-            switch result {
-            case .success(let response):
-                do {
-                    let tokens = try response.map(ArrayResponse<NonFungibleTokenCategory>.self).docs
-                    completion(tokens)
-                } catch {
-                    completion(nil)
+    func assets() -> Promise<[NonFungibleTokenCategory]> {
+        return Promise { seal in
+            provider.request(.assets(address: account.address.description)) { result in
+                switch result {
+                case .success(let response):
+                    do {
+                        let tokens = try response.map(ArrayResponse<NonFungibleTokenCategory>.self).docs
+                        seal.fulfill(tokens)
+                    } catch {
+                        seal.reject(error)
+                    }
+                case .failure(let error):
+                    seal.reject(error)
                 }
-            case .failure:
-                    completion(nil)
             }
         }
     }
