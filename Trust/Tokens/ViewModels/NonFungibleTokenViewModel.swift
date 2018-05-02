@@ -55,7 +55,7 @@ class NonFungibleTokenViewModel {
                 self?.storage.add(tokens: tokens)
                 seal.fulfill(tokens)
             }.catch { error in
-                Answers.logCustomEvent(withName: "Token search request error: \(error)", customAttributes: nil)
+                Answers.logCustomEvent(withName: "Assets request error: \(error)", customAttributes: nil)
                 seal.reject(error)
             }
         }
