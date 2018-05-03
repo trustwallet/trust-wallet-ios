@@ -105,7 +105,7 @@ class ImportWalletViewController: FormViewController {
             }
 
             // Keystore JSON
-            +++ Section {
+            +++ Section(footer: ImportSelectionType.keystore.footerTitle) {
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
                     return self?.segmentRow?.value != ImportSelectionType.keystore.title
                 })
@@ -124,7 +124,7 @@ class ImportWalletViewController: FormViewController {
             }
 
             // Private Key
-            +++ Section {
+            +++ Section(footer: ImportSelectionType.privateKey.footerTitle) {
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
                     return self?.segmentRow?.value != ImportSelectionType.privateKey.title
                 })
@@ -137,7 +137,7 @@ class ImportWalletViewController: FormViewController {
             }
 
             // Mnemonic
-            +++ Section {
+            +++ Section(footer: ImportSelectionType.mnemonic.footerTitle) {
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
                     return self?.segmentRow?.value != ImportSelectionType.mnemonic.title
                 })
@@ -150,7 +150,7 @@ class ImportWalletViewController: FormViewController {
             }
 
             // Watch
-            +++ Section() {
+            +++ Section(footer: ImportSelectionType.watch.footerTitle) {
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
                     return self?.segmentRow?.value != ImportSelectionType.watch.title
                 })
