@@ -23,7 +23,7 @@ enum AppStyle {
         case .largeAmount:
             return UIFont.systemFont(ofSize: 20, weight: .medium)
         case .error:
-            return UIFont.systemFont(ofSize: 20, weight: .semibold)
+            return UIFont.systemFont(ofSize: 16, weight: .light)
         }
     }
 
@@ -36,7 +36,7 @@ enum AppStyle {
         case .largeAmount:
             return UIColor.black // Usually colors based on the amount
         case .error:
-            return Colors.red
+            return Colors.lightRed
         }
     }
 }
