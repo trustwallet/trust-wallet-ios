@@ -23,7 +23,7 @@ enum AppStyle {
         case .largeAmount:
             return UIFont.systemFont(ofSize: 20, weight: .medium)
         case .error:
-            return UIFont.systemFont(ofSize: 16, weight: .light)
+            return UIFont.systemFont(ofSize: 14, weight: .light)
         }
     }
 
