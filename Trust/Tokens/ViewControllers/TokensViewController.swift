@@ -23,8 +23,10 @@ class TokensViewController: UIViewController {
         let header = TokensHeaderView(frame: .zero)
         header.amountLabel.text = viewModel.headerBalance
         header.amountLabel.textColor = viewModel.headerBalanceTextColor
+        header.walletAddressLabel.text = viewModel.headerWalletAddress
         header.backgroundColor = viewModel.headerBackgroundColor
         header.amountLabel.font = viewModel.headerBalanceFont
+        header.walletAddressLabel.font = viewModel.headerWalletAddressFont
         header.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
         return header
     }()

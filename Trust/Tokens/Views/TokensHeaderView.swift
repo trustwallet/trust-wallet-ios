@@ -12,15 +12,26 @@ class TokensHeaderView: UIView {
         return label
     }()
 
+    lazy var walletAddressLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.textColor = Colors.lightGray
+        label.lineBreakMode = .byTruncatingMiddle
+        label.textAlignment = .center
+        return label
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
+        walletAddressLabel.translatesAutoresizingMaskIntoConstraints = false
 
         let spacing = StyleLayout.sideMargin + 10
         let stackView = UIStackView(arrangedSubviews: [
             .spacer(height: spacing),
             amountLabel,
+            .spacer(height: 5),
+            walletAddressLabel,
             .spacer(height: spacing),
             .spacer(height: 0.5, backgroundColor: Colors.lightGray, alpha: 0.5),
         ])
