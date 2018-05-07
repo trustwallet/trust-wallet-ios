@@ -56,8 +56,8 @@ struct AppFormAppearance {
                     $0.title = validationMsg
                     $0.cell.height = { 40 }
                 }.cellUpdate { cell, _ in
-                        cell.textLabel?.font = AppStyle.error.font
-                        cell.textLabel?.textColor = AppStyle.error.textColor
+                    cell.textLabel?.font = AppStyle.error.font
+                    cell.textLabel?.textColor = AppStyle.error.textColor
                 }
                 row.section?.insert(labelRow, at: row.indexPath!.row + index + 1)
             }
