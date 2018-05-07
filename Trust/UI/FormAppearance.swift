@@ -48,7 +48,7 @@ struct AppFormAppearance {
         let footerView = footer as! FormFooterView
         if !row.isValid {
             for validationMsg in row.validationErrors.map({ $0.msg }) {
-                footerView.errorLabel.text = validationMsg
+                footerView.errorLabel.text = (footerView.errorLabel.text ?? "") + "\(validationMsg) \n"
                 footerView.errorLabel.textColor = AppStyle.error.textColor
                 footerView.errorLabel.font = AppStyle.error.font
                 rowSection.reload()

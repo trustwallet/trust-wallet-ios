@@ -14,7 +14,7 @@ class FormFooterView: UIView {
         titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.numberOfLines = 0
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
-        errorLabel.numberOfLines = 1
+        errorLabel.numberOfLines = 0
 
         addSubview(titleLabel)
         addSubview(errorLabel)
