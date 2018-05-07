@@ -44,8 +44,8 @@ struct AppFormAppearance {
     }
 
     static func onRowValidationChanged(baseCell: BaseCell, row: BaseRow) {
-        guard let rowSection = row.section else { return }
-        let footerView = rowSection.footer?.viewForSection(rowSection, type: .footer) as! FormFooterView
+        guard let rowSection = row.section, let footer = rowSection.footer?.viewForSection(rowSection, type: .footer) else { return }
+        let footerView = footer as! FormFooterView
         if !row.isValid {
             for validationMsg in row.validationErrors.map({ $0.msg }) {
                 footerView.errorLabel.text = validationMsg
