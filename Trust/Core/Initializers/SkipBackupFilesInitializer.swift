@@ -22,7 +22,7 @@ struct SkipBackupFilesInitializer: Initializer {
             try url.setResourceValue(false, forKey: .isUbiquitousItemKey)
             return true
         } catch let error {
-            NSLog("Failed to exclude datastore from backup \(error.localizedDescription)")
+            Analytics.track(.failedToExcludeFromBackup(error))
             return false
         }
     }

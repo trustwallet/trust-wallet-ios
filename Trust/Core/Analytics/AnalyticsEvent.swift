@@ -18,6 +18,14 @@ enum AnalyticsEvent {
     case failedTransactionFromWallet(Error)
     // Other  events
     case backedUpWallet
+    // Trust server events
+    case failedTrustRequest(Error)
+    // Realm databse events
+    case failedToExcludeFromBackup(Error)
+    // DAPP browser events
+    case failedToLoadTrustPageProvider
+    // Security
+    case dataProtectionDisabled
 
     var event: String {
         switch self {
@@ -43,6 +51,14 @@ enum AnalyticsEvent {
             return "failedTransactionFromWallet"
         case .backedUpWallet:
             return "backedUpWallet"
+        case .failedTrustRequest:
+            return "failedTrustRequest"
+        case .failedToExcludeFromBackup:
+            return "failedToExcludeFromBackup"
+        case .failedToLoadTrustPageProvider:
+            return "failedToLoadTrustPageProvider"
+        case .dataProtectionDisabled:
+            return "dataProtectionDisabled"
         }
     }
 
@@ -69,6 +85,14 @@ enum AnalyticsEvent {
         case .failedTransactionFromWallet(let error):
             return ["error": error.prettyError]
         case .backedUpWallet:
+            return [:]
+        case .failedTrustRequest(let error):
+            return ["error": error.prettyError]
+        case .failedToExcludeFromBackup(let error):
+            return ["error": error.prettyError]
+        case .failedToLoadTrustPageProvider:
+            return [:]
+        case .dataProtectionDisabled:
             return [:]
         }
     }

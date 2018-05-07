@@ -16,8 +16,6 @@ enum DappAction {
 
 extension DappAction {
     static func fromCommand(_ command: DappCommand, requester: DAppRequester) -> DappAction {
-        NSLog("command.name \(command.name)")
-        NSLog("command.object \(command.object)")
         switch command.name {
         case .signTransaction:
             return .signTransaction(DappAction.makeUnconfirmedTransaction(command.object, requester: requester))

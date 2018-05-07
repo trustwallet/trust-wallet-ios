@@ -19,10 +19,8 @@ extension WKWebViewConfiguration {
             do {
                 js += try String(contentsOfFile: filepath)
             } catch {
-                NSLog("Failed to load Trust in page provider")
+                Analytics.track(.failedToLoadTrustPageProvider)
             }
-        } else {
-            NSLog("Trust in page provider not found in bundle")
         }
 
         js +=

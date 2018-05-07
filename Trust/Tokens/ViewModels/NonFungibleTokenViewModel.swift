@@ -3,7 +3,6 @@
 import RealmSwift
 import TrustCore
 import PromiseKit
-import Crashlytics
 
 class NonFungibleTokenViewModel {
 
@@ -55,7 +54,7 @@ class NonFungibleTokenViewModel {
                 self?.storage.add(tokens: tokens)
                 seal.fulfill(tokens)
             }.catch { error in
-                Answers.logCustomEvent(withName: "Assets request error: \(error)", customAttributes: nil)
+                Analytics.track(.failedTrustRequest(error))
                 seal.reject(error)
             }
         }

@@ -48,7 +48,7 @@ struct NewTokenViewModel {
             }.done { token in
                 seal.fulfill(token)
             }.catch { error in
-                Answers.logCustomEvent(withName: "Token search request error: \(error)", customAttributes: nil)
+                Analytics.track(.failedTrustRequest(error))
                 seal.reject(error)
             }
         }
