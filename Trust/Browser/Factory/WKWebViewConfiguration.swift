@@ -21,8 +21,6 @@ extension WKWebViewConfiguration {
             } catch {
                 Analytics.track(.failedToLoadTrustPageProvider)
             }
-        } else {
-            Analytics.track(.failedToLoadTrustPageProviderFromBundle)
         }
 
         js +=

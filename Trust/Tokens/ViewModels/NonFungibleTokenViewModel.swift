@@ -54,7 +54,7 @@ class NonFungibleTokenViewModel {
                 self?.storage.add(tokens: tokens)
                 seal.fulfill(tokens)
             }.catch { error in
-                Analytics.track(.failedAssetsFetchRequest(error))
+                Analytics.track(.failedTrustRequest(error))
                 seal.reject(error)
             }
         }

@@ -48,7 +48,7 @@ struct NewTokenViewModel {
             }.done { token in
                 seal.fulfill(token)
             }.catch { error in
-                Analytics.track(.failedSearchRequest(error))
+                Analytics.track(.failedTrustRequest(error))
                 seal.reject(error)
             }
         }

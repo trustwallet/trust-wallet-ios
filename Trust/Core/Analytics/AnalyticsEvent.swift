@@ -19,18 +19,11 @@ enum AnalyticsEvent {
     // Other  events
     case backedUpWallet
     // Trust server events
-    case failedTokenFetchRequest(Error)
-    case failedTickersFetchRequest(Error)
-    case failedSearchRequest(Error)
-    case failedAssetsFetchRequest(Error)
-    case faileBalanceFetchRequest(Error)
+    case failedTrustRequest(Error)
     // Realm databse events
     case failedToExcludeFromBackup(Error)
     // DAPP browser events
-    case scriptRunning(String)
     case failedToLoadTrustPageProvider
-    case failedToLoadTrustPageProviderFromBundle
-    case command(String)
     // Security
     case dataProtectionDisabled
 
@@ -58,26 +51,12 @@ enum AnalyticsEvent {
             return "failedTransactionFromWallet"
         case .backedUpWallet:
             return "backedUpWallet"
-        case .failedTokenFetchRequest:
-            return "failedTokenFetchRequest"
-        case .failedTickersFetchRequest:
-            return "failedTickersFetchRequest"
-        case .failedSearchRequest:
-            return "failedSearchRequest"
-        case .failedAssetsFetchRequest:
-            return "failedAssetsFetchRequest"
-        case .faileBalanceFetchRequest:
-            return "faileBalanceFetchRequest"
+        case .failedTrustRequest:
+            return "failedTrustRequest"
         case .failedToExcludeFromBackup:
             return "failedToExcludeFromBackup"
-        case .scriptRunning:
-            return "scriptRunning"
         case .failedToLoadTrustPageProvider:
             return "failedToLoadTrustPageProvider"
-        case .failedToLoadTrustPageProviderFromBundle:
-            return "failedToLoadTrustPageProviderFromBundle"
-        case .command:
-            return "command"
         case .dataProtectionDisabled:
             return "dataProtectionDisabled"
         }
@@ -107,26 +86,12 @@ enum AnalyticsEvent {
             return ["error": error.prettyError]
         case .backedUpWallet:
             return [:]
-        case .failedTokenFetchRequest(let error):
-            return ["error": error.prettyError]
-        case .failedTickersFetchRequest(let error):
-            return ["error": error.prettyError]
-        case .failedSearchRequest(let error):
-            return ["error": error.prettyError]
-        case .failedAssetsFetchRequest(let error):
-            return ["error": error.prettyError]
-        case .faileBalanceFetchRequest(let error):
+        case .failedTrustRequest(let error):
             return ["error": error.prettyError]
         case .failedToExcludeFromBackup(let error):
             return ["error": error.prettyError]
-        case .scriptRunning(let script):
-            return ["script": script]
         case .failedToLoadTrustPageProvider:
             return [:]
-        case .failedToLoadTrustPageProviderFromBundle:
-            return [:]
-        case .command(let description):
-            return ["command": description]
         case .dataProtectionDisabled:
             return [:]
         }
