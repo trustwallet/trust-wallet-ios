@@ -9,7 +9,6 @@ enum AppStyle {
     case paragraphLight
     case largeAmount
     case error
-    case formFooter
     case formHeader
 
     var font: UIFont {
@@ -24,7 +23,7 @@ enum AppStyle {
             return UIFont.systemFont(ofSize: 15, weight: .light)
         case .largeAmount:
             return UIFont.systemFont(ofSize: 20, weight: .medium)
-        case .error, .formFooter:
+        case .error:
             return UIFont.systemFont(ofSize: 12, weight: .light)
         case .formHeader:
             return UIFont.systemFont(ofSize: 14, weight: .regular)
@@ -40,8 +39,8 @@ enum AppStyle {
         case .largeAmount:
             return UIColor.black // Usually colors based on the amount
         case .error:
-            return Colors.telegramRed
-        case .formFooter, .formHeader:
+            return Colors.red
+        case .formHeader:
             return Colors.doveGray
         }
     }

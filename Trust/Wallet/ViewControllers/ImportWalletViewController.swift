@@ -23,13 +23,6 @@ class ImportWalletViewController: FormViewController {
         static let mnemonic = "mnemonic"
     }
 
-    lazy var pargraphStyle: NSMutableParagraphStyle = {
-        let style = NSMutableParagraphStyle()
-        style.lineHeightMultiple = 1.25
-        style.alignment = .natural
-        return style
-    }()
-
     var segmentRow: SegmentedRow<String>? {
         return form.rowBy(tag: Values.segment)
     }
@@ -82,13 +75,10 @@ class ImportWalletViewController: FormViewController {
             +++ Section {
                 var header = HeaderFooterView<InfoHeaderView>(.class)
                 header.height = { 90 }
-                header.onSetupView = {[weak self] (view, section) -> Void in
-                    guard let strongSelf = self else { return }
-                    view.label.attributedText = NSAttributedString(string: "Importing wallet as easy as creating", attributes: [
-                        NSAttributedStringKey.font: AppStyle.formHeader.font,
-                        NSAttributedStringKey.foregroundColor: AppStyle.formHeader.textColor,
-                        NSAttributedStringKey.paragraphStyle: strongSelf.pargraphStyle,
-                    ])
+                header.onSetupView = { (view, section) -> Void in
+                    view.label.textColor = AppStyle.formHeader.textColor
+                    view.label.font = AppStyle.formHeader.font
+                    view.label.text = NSLocalizedString("importing.wallet.message", value: "Importing wallet as easy as creating", comment: "")
                     view.logoImageView.image = R.image.create_wallet_import()
                 }
                 $0.header = header
@@ -105,8 +95,7 @@ class ImportWalletViewController: FormViewController {
             }
 
             // Keystore JSON
-            +++ Section {
-                $0.footer = AppFormAppearance.setUpFooter(title: ImportSelectionType.keystore.footerTitle)
+            +++ Section(footer: ImportSelectionType.keystore.footerTitle) {
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
                     return self?.segmentRow?.value != ImportSelectionType.keystore.title
                 })
@@ -125,8 +114,7 @@ class ImportWalletViewController: FormViewController {
             }
 
             // Private Key
-            +++ Section {
-                $0.footer = AppFormAppearance.setUpFooter(title: ImportSelectionType.privateKey.footerTitle)
+            +++ Section(footer: ImportSelectionType.privateKey.footerTitle) {
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
                     return self?.segmentRow?.value != ImportSelectionType.privateKey.title
                 })
@@ -139,8 +127,7 @@ class ImportWalletViewController: FormViewController {
             }
 
             // Mnemonic
-            +++ Section {
-                $0.footer = AppFormAppearance.setUpFooter(title: ImportSelectionType.mnemonic.footerTitle)
+            +++ Section(footer: ImportSelectionType.mnemonic.footerTitle) {
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
                     return self?.segmentRow?.value != ImportSelectionType.mnemonic.title
                 })
@@ -153,8 +140,7 @@ class ImportWalletViewController: FormViewController {
             }
 
             // Watch
-            +++ Section {
-                $0.footer = AppFormAppearance.setUpFooter(title: ImportSelectionType.watch.footerTitle)
+            +++ Section(footer: ImportSelectionType.watch.footerTitle) {
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
                     return self?.segmentRow?.value != ImportSelectionType.watch.title
                 })

@@ -21,7 +21,7 @@ struct NetworkConditionViewModel {
     var color: UIColor {
         switch condition {
         case .good: return Colors.green
-        case .bad: return Colors.red
+        case .bad: return Colors.radicalRed
         }
     }
 

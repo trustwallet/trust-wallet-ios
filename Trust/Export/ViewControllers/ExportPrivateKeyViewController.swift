@@ -32,7 +32,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
         label.text = viewModel.headlineText
-        label.textColor = Colors.red
+        label.textColor = Colors.radicalRed
         return label
     }()
 
@@ -40,7 +40,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = viewModel.warningText
-        label.textColor = Colors.red
+        label.textColor = Colors.radicalRed
         label.textAlignment = .center
         label.numberOfLines = 0
         return label

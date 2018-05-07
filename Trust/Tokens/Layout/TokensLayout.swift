@@ -22,7 +22,7 @@ struct TokensLayout {
 
         static func percentChangeColor(for ticker: CoinTicker?) -> UIColor {
             guard let ticker = ticker else { return Colors.lightGray }
-            return ticker.percent_change_24h.starts(with: "-") ? Colors.red : Colors.green
+            return ticker.percent_change_24h.starts(with: "-") ? Colors.radicalRed : Colors.green
         }
 
         static func percentChange(for ticker: CoinTicker?) -> String? {
