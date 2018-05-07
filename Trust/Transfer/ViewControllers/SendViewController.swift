@@ -79,7 +79,18 @@ class SendViewController: FormViewController {
         amountRightView.spacing = 1
         amountRightView.axis = .horizontal
         form = Section()
-            +++ Section(header: "", footer: viewModel.isFiatViewHidden() ? "" : viewModel.pairRateRepresantetion())
+            +++ Section {
+                var footer = HeaderFooterView<FormFooterView>(.class)
+                footer.height = { 90 }
+                footer.onSetupView = {[weak self] (view, section) -> Void in
+                    guard let strongSelf = self else { return }
+                    view.titleLabel.attributedText = NSAttributedString(string: strongSelf.viewModel.isFiatViewHidden() ? "" : strongSelf.viewModel.pairRateRepresantetion(), attributes: [
+                        NSAttributedStringKey.font: AppStyle.formFooter.font,
+                        NSAttributedStringKey.foregroundColor: AppStyle.formFooter.textColor,
+                        ])
+                }
+                $0.footer = footer
+            }
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
