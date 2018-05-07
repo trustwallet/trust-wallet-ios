@@ -46,7 +46,7 @@ struct AppFormAppearance {
     static func setUpFooter(title: String) -> HeaderFooterView<FormFooterView> {
         // This is used to display validation Errors
         var footer = HeaderFooterView<FormFooterView>(.class)
-        footer.height = { 90 }
+        footer.height = { 90 } 
         footer.onSetupView = { (view, section) -> Void in
             view.titleLabel.attributedText = NSAttributedString(string: title, attributes: [
                 NSAttributedStringKey.font: AppStyle.formFooter.font,
@@ -57,17 +57,37 @@ struct AppFormAppearance {
     }
 
     static func onRowValidationChanged(baseCell: BaseCell, row: BaseRow) {
-        guard let rowSection = row.section, let footer = rowSection.footer?.viewForSection(rowSection, type: .footer) else { return }
-        let footerView = footer as! FormFooterView
-        if !row.isValid {
-            for validationMsg in row.validationErrors.map({ $0.msg }) {
-                footerView.errorLabel.text = (footerView.errorLabel.text ?? "") + "\(validationMsg) \n"
-                footerView.errorLabel.textColor = AppStyle.error.textColor
-                footerView.errorLabel.font = AppStyle.error.font
-                rowSection.reload()
+        guard let rowIndex = row.indexPath?.row, let rowSection = row.section else { return }
+
+        while rowSection.count > rowIndex + 1 && rowSection[rowIndex  + 1] is LabelRow {
+            rowSection.remove(at: rowIndex + 1)
+        }
+        if let footer = rowSection.footer?.viewForSection(rowSection, type: .footer) {
+            // Run this only id the footer is not nil
+            let footerView = footer as! FormFooterView
+            if !row.isValid {
+                for validationMsg in row.validationErrors.map({ $0.msg }) {
+                    footerView.errorLabel.text = (footerView.errorLabel.text ?? "") + "\(validationMsg) \n"
+                    footerView.errorLabel.textColor = AppStyle.error.textColor
+                    footerView.errorLabel.font = AppStyle.error.font
+                    rowSection.reload()
+                }
+            } else {
+                footerView.errorLabel.text = nil
             }
         } else {
-            footerView.errorLabel.text = nil
+            if !row.isValid {
+                for (index, validationMsg) in row.validationErrors.map({ $0.msg }).enumerated() {
+                    let labelRow = LabelRow {
+                        $0.title = validationMsg
+                        $0.cell.height = { 40 }
+                    }.cellUpdate { cell, _ in
+                            cell.textLabel?.font = AppStyle.error.font
+                            cell.textLabel?.textColor = AppStyle.error.textColor
+                    }
+                    row.section?.insert(labelRow, at: row.indexPath!.row + index + 1)
+                }
+            }
         }
     }
 

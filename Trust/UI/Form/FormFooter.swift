@@ -22,7 +22,7 @@ class FormFooterView: UIView {
         NSLayoutConstraint.activate([
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 25),
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
             errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
