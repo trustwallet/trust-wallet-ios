@@ -146,7 +146,7 @@ class BrowserViewController: UIViewController {
                 return "executeCallback(\(callbackID), \"\(error)\", null)"
             }
         }()
-        NSLog("script \(script)")
+        Analytics.track(.scriptRunning(script))
         webView.evaluateJavaScript(script, completionHandler: nil)
     }
 

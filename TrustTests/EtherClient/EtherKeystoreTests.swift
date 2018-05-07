@@ -328,7 +328,7 @@ class EtherKeystoreTests: XCTestCase {
         guard case let .success(data) = signResult else {
             return XCTFail()
         }
-        print("signResult ", data.hexEncoded)
+ 
         let expected = Data(hexString: "0xb6c1299463ba6f55545311032a6f6164ebcaf36c0d81f7b034a09d81a4a80b8d0cc3810c2433cb173c28593b7d964bea84b29f663fdeec5fb5c83381e5293fd71b")
         XCTAssertEqual(expected, data)
     }

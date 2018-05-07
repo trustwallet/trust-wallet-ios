@@ -15,13 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     let urlNavigatorCoordinator = URLNavigatorCoordinator()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        if !UIApplication.shared.isProtectedDataAvailable {
-            print("WARNING: data protection disabled")
-        }
 
         let keystore = EtherKeystore.shared
         coordinator = AppCoordinator(window: window!, keystore: keystore, navigator: urlNavigatorCoordinator)
         coordinator.start()
+
+        if !UIApplication.shared.isProtectedDataAvailable {
+            Analytics.track(.dataProtectionDisabled)
+        }
 
         protectionCoordinator.didFinishLaunchingWithOptions()
         urlNavigatorCoordinator.branch.didFinishLaunchingWithOptions(launchOptions: launchOptions)
