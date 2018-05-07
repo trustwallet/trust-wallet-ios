@@ -62,12 +62,10 @@ class ImportWalletViewController: FormViewController {
         // This is used to display validation Errors
         var footer = HeaderFooterView<FormFooterView>(.class)
         footer.height = { 90 }
-        footer.onSetupView = {[weak self] (view, section) -> Void in
-            guard let strongSelf = self else { return }
+        footer.onSetupView = { (view, section) -> Void in
             view.titleLabel.attributedText = NSAttributedString(string: title, attributes: [
-                NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular),
-                NSAttributedStringKey.foregroundColor: UIColor(hex: "6e6e72"),
-                NSAttributedStringKey.paragraphStyle: strongSelf.pargraphStyle,
+                NSAttributedStringKey.font: AppStyle.formFooter.font,
+                NSAttributedStringKey.foregroundColor: AppStyle.formFooter.textColor,
                 ])
         }
         return footer
@@ -100,8 +98,8 @@ class ImportWalletViewController: FormViewController {
                 header.onSetupView = {[weak self] (view, section) -> Void in
                     guard let strongSelf = self else { return }
                     view.label.attributedText = NSAttributedString(string: "Importing wallet as easy as creating", attributes: [
-                        NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular),
-                        NSAttributedStringKey.foregroundColor: UIColor(hex: "6e6e72"),
+                        NSAttributedStringKey.font: AppStyle.formHeader.font,
+                        NSAttributedStringKey.foregroundColor: AppStyle.formHeader.textColor,
                         NSAttributedStringKey.paragraphStyle: strongSelf.pargraphStyle,
                     ])
                     view.logoImageView.image = R.image.create_wallet_import()
