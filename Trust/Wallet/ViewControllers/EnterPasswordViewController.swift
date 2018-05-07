@@ -46,9 +46,7 @@ class EnterPasswordViewController: FormViewController {
         form
             +++ Section()
 
-            +++ Section {
-                $0.footer = AppFormAppearance.setUpFooter(title: viewModel.headerSectionText)
-            }
+            +++ Section(header: "", footer: viewModel.headerSectionText)
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.password) {
                 $0.add(rule: RuleRequired())

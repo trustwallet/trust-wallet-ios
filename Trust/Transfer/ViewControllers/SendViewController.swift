@@ -79,9 +79,7 @@ class SendViewController: FormViewController {
         amountRightView.spacing = 1
         amountRightView.axis = .horizontal
         form = Section()
-            +++ Section {
-                $0.footer = AppFormAppearance.setUpFooter(title: viewModel.isFiatViewHidden() ? "" : viewModel.pairRateRepresantetion())
-            }
+            +++ Section(header: "", footer: viewModel.isFiatViewHidden() ? "" : viewModel.pairRateRepresantetion())
             <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
