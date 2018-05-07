@@ -36,7 +36,7 @@ class TokensViewModel: NSObject {
         return Colors.veryVeryLightGray
     }
 
-    lazy var headerBalanceFont: UIFont =  {
+    lazy var headerBalanceFont: UIFont = {
         return UIFont.systemFont(ofSize: 28, weight: .medium)
     }()
 
