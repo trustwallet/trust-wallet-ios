@@ -47,17 +47,7 @@ class EnterPasswordViewController: FormViewController {
             +++ Section()
 
             +++ Section {
-                var footer = HeaderFooterView<FormFooterView>(.class)
-                footer.height = { 90 }
-                footer.onSetupView = {[weak self] (view, section) -> Void in
-                    guard let strongSelf = self else { return }
-                    view.titleLabel.attributedText = NSAttributedString(string: strongSelf.viewModel.headerSectionText, attributes: [
-                        NSAttributedStringKey.font: AppStyle.formFooter.font,
-                        NSAttributedStringKey.foregroundColor: AppStyle.formFooter.textColor,
-                        ])
-                }
-                $0.footer = footer
-
+                $0.footer = AppFormAppearance.setUpFooter(title: viewModel.headerSectionText)
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.password) {

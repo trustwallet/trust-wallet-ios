@@ -58,19 +58,6 @@ class ImportWalletViewController: FormViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    fileprivate func setUpFooter(title: String) -> HeaderFooterView<FormFooterView> {
-        // This is used to display validation Errors
-        var footer = HeaderFooterView<FormFooterView>(.class)
-        footer.height = { 90 }
-        footer.onSetupView = { (view, section) -> Void in
-            view.titleLabel.attributedText = NSAttributedString(string: title, attributes: [
-                NSAttributedStringKey.font: AppStyle.formFooter.font,
-                NSAttributedStringKey.foregroundColor: AppStyle.formFooter.textColor,
-                ])
-        }
-        return footer
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -119,7 +106,7 @@ class ImportWalletViewController: FormViewController {
 
             // Keystore JSON
             +++ Section {
-                $0.footer = setUpFooter(title: ImportSelectionType.keystore.footerTitle)
+                $0.footer = AppFormAppearance.setUpFooter(title: ImportSelectionType.keystore.footerTitle)
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
                     return self?.segmentRow?.value != ImportSelectionType.keystore.title
                 })
@@ -139,7 +126,7 @@ class ImportWalletViewController: FormViewController {
 
             // Private Key
             +++ Section {
-                $0.footer = setUpFooter(title: ImportSelectionType.privateKey.footerTitle)
+                $0.footer = AppFormAppearance.setUpFooter(title: ImportSelectionType.privateKey.footerTitle)
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
                     return self?.segmentRow?.value != ImportSelectionType.privateKey.title
                 })
@@ -153,7 +140,7 @@ class ImportWalletViewController: FormViewController {
 
             // Mnemonic
             +++ Section {
-                $0.footer = setUpFooter(title: ImportSelectionType.mnemonic.footerTitle)
+                $0.footer = AppFormAppearance.setUpFooter(title: ImportSelectionType.mnemonic.footerTitle)
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
                     return self?.segmentRow?.value != ImportSelectionType.mnemonic.title
                 })
@@ -167,7 +154,7 @@ class ImportWalletViewController: FormViewController {
 
             // Watch
             +++ Section {
-                $0.footer = setUpFooter(title: ImportSelectionType.watch.footerTitle)
+                $0.footer = AppFormAppearance.setUpFooter(title: ImportSelectionType.watch.footerTitle)
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
                     return self?.segmentRow?.value != ImportSelectionType.watch.title
                 })

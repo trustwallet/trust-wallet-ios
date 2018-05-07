@@ -43,6 +43,19 @@ struct AppFormAppearance {
         return textField
     }
 
+    static func setUpFooter(title: String) -> HeaderFooterView<FormFooterView> {
+        // This is used to display validation Errors
+        var footer = HeaderFooterView<FormFooterView>(.class)
+        footer.height = { 90 }
+        footer.onSetupView = { (view, section) -> Void in
+            view.titleLabel.attributedText = NSAttributedString(string: title, attributes: [
+                NSAttributedStringKey.font: AppStyle.formFooter.font,
+                NSAttributedStringKey.foregroundColor: AppStyle.formFooter.textColor,
+                ])
+        }
+        return footer
+    }
+
     static func onRowValidationChanged(baseCell: BaseCell, row: BaseRow) {
         guard let rowSection = row.section, let footer = rowSection.footer?.viewForSection(rowSection, type: .footer) else { return }
         let footerView = footer as! FormFooterView
