@@ -23,6 +23,10 @@ class TokensViewModel: NSObject {
         return amount ?? "0.00"
     }
 
+    lazy var headerWalletAddress: String = {
+        return address.description
+    }()
+
     var headerBalanceTextColor: UIColor {
         return Colors.black
     }
@@ -31,9 +35,13 @@ class TokensViewModel: NSObject {
         return Colors.veryVeryLightGray
     }
 
-    var headerBalanceFont: UIFont {
+    lazy var headerBalanceFont: UIFont = {
         return UIFont.systemFont(ofSize: 28, weight: .medium)
-    }
+    }()
+
+    lazy var headerWalletAddressFont: UIFont = {
+        return UIFont.systemFont(ofSize: 13, weight: .medium)
+    }()
 
     var title: String {
         return NSLocalizedString("wallet.navigation.title", value: "Wallet", comment: "")
