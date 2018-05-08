@@ -78,6 +78,7 @@ class NFTokenViewController: UIViewController {
         externalButton.addTarget(self, action: #selector(externalTap), for: .touchUpInside)
 
         view.backgroundColor = .white
+        title = viewModel.title
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(.spacer(height: 15))
         stackView.addArrangedSubview(titleLabel)
