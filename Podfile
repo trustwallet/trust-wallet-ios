@@ -33,6 +33,7 @@ target 'Trust' do
   pod 'JdenticonSwift'
   pod 'URLNavigator'
   pod 'RandomColorSwift'
+  pod 'Hero'
 
   target 'TrustTests' do
     inherit! :search_paths

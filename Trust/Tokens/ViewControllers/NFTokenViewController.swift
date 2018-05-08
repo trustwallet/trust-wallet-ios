@@ -4,6 +4,7 @@ import Foundation
 import UIKit
 import StackViewController
 import Kingfisher
+import Hero
 
 protocol NFTokenViewControllerDelegate: class {
     func didPressLink(url: URL, in viewController: NFTokenViewController)
@@ -28,6 +29,17 @@ class NFTokenViewController: UIViewController {
 
     let token: NonFungibleTokenObject
 
+    lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.kf.setImage(
+            with: viewModel.imageURL,
+            placeholder: .none
+        )
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
     lazy var viewModel: NFTDetailsViewModel = {
         return NFTDetailsViewModel(token: token)
     }()
@@ -37,16 +49,11 @@ class NFTokenViewController: UIViewController {
         self.token = token
         super.init(nibName: nil, bundle: nil)
 
+        self.hero.isEnabled = true
+        self.view.hero.id = token.uniqueID
+
         self.view.addSubview(scrollView)
         scrollView.addSubview(stackView)
-
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.kf.setImage(
-            with: viewModel.imageURL,
-            placeholder: .none
-        )
-        imageView.contentMode = .scaleAspectFit
 
         let descriptionLabel = UILabel()
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -76,7 +83,8 @@ class NFTokenViewController: UIViewController {
         stackView.addArrangedSubview(.spacer(height: 10))
 
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+           // scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

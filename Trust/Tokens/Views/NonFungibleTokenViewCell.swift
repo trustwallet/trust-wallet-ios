@@ -2,6 +2,7 @@
 
 import UIKit
 import Kingfisher
+import Hero
 
 class NonFungibleTokenViewCell: UITableViewCell {
 
@@ -25,11 +26,13 @@ class NonFungibleTokenViewCell: UITableViewCell {
 
 extension NonFungibleTokenViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let model = viewModel else {
+        guard let model = viewModel, let cell = collectionView.cellForItem(at: indexPath) as? NonFungibleCollectionViewCell else {
             return
         }
-
-        let tokenDictionary: [String: NonFungibleTokenObject] = ["token": model.token(for: indexPath)]
+        let token = model.token(for: indexPath)
+        let heroId = token.uniqueID
+        cell.hero.id = heroId
+        let tokenDictionary: [String: Any] = ["token": token, "color": cell.imageViewBackground.backgroundColor!]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ShowToken"), object: nil, userInfo: tokenDictionary)
     }
 }
