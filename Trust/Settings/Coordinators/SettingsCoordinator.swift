@@ -20,6 +20,7 @@ class SettingsCoordinator: Coordinator {
     let session: WalletSession
     let storage: TransactionsStorage
     let balanceCoordinator: TokensBalanceService
+    let ensManager: ENSManager
     weak var delegate: SettingsCoordinatorDelegate?
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
     var coordinators: [Coordinator] = []
@@ -29,7 +30,8 @@ class SettingsCoordinator: Coordinator {
             navigationController: navigationController,
             keystore: keystore,
             session: session,
-            balanceCoordinator: balanceCoordinator
+            balanceCoordinator: balanceCoordinator,
+            ensManager: ensManager
         )
         coordinator.delegate = self
         return coordinator
@@ -57,7 +59,8 @@ class SettingsCoordinator: Coordinator {
         session: WalletSession,
         storage: TransactionsStorage,
         balanceCoordinator: TokensBalanceService,
-        sharedRealm: Realm
+        sharedRealm: Realm,
+        ensManager: ENSManager
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
@@ -66,6 +69,7 @@ class SettingsCoordinator: Coordinator {
         self.storage = storage
         self.balanceCoordinator = balanceCoordinator
         self.sharedRealm = sharedRealm
+        self.ensManager = ensManager
 
         addCoordinator(accountsCoordinator)
     }

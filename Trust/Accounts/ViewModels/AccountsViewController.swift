@@ -2,6 +2,7 @@
 
 import TrustCore
 import UIKit
+import PromiseKit
 
 protocol AccountsViewControllerDelegate: class {
     func didSelectAccount(account: Wallet, in viewController: AccountsViewController)
@@ -10,6 +11,7 @@ protocol AccountsViewControllerDelegate: class {
 }
 
 class AccountsViewController: UITableViewController {
+    let ensManager: ENSManager
     weak var delegate: AccountsViewControllerDelegate?
     var headerTitle: String?
     var viewModel: AccountsViewModel {
@@ -33,10 +35,12 @@ class AccountsViewController: UITableViewController {
 
     init(
         keystore: Keystore,
-        balanceCoordinator: TokensBalanceService
+        balanceCoordinator: TokensBalanceService,
+        ensManager: ENSManager
     ) {
         self.keystore = keystore
         self.balanceCoordinator = balanceCoordinator
+        self.ensManager = ensManager
         super.init(style: .grouped)
         fetch()
     }

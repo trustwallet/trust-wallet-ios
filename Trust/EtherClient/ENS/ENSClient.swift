@@ -10,13 +10,13 @@ enum ENSError: LocalizedError {
     case decodeError
 }
 
-class ENSClient {
+struct ENSClient {
 
     static let ensContrct = Address(string: "0x314159265dd8dbb310642f98f50c066173c1259b")!
     static let reverseResolverContract = Address(string: "0x5fbb459c49bb06083c33109fa4f14810ec2cf358")!
     static let reverseSuffix = "addr.reverse"
 
-    static func resolve(name: String) -> Promise<Address> {
+    func resolve(name: String) -> Promise<Address> {
         let node = namehash(name)
         let encoded = ENSEncoder.encodeOwner(node: node)
         let request = EtherServiceRequest(
@@ -39,7 +39,7 @@ class ENSClient {
         }
     }
 
-    static func lookup(address: Address) -> Promise<String> {
+    func lookup(address: Address) -> Promise<String> {
         let addr = [address.data.hex, ENSClient.reverseSuffix].joined(separator: ".")
         let node = namehash(addr)
         let encoded = ReverseResolverEncoder.encodeName(node)
