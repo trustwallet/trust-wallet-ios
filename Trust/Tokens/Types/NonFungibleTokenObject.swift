@@ -3,6 +3,7 @@
 import RealmSwift
 import Realm
 import BigInt
+import TrustCore
 
 class NonFungibleTokenObject: Object, Decodable {
     @objc dynamic var id: String = ""
@@ -86,5 +87,9 @@ class NonFungibleTokenObject: Object, Decodable {
 
     var extentalURL: URL? {
         return URL(string: externalPath)
+    }
+
+    var contractAddress: Address {
+        return Address(string: contract)!
     }
 }

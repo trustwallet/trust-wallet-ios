@@ -27,6 +27,14 @@ class NFTDetailsViewModel {
         return token.imageURL
     }
 
+    var placeholder: UIImage? {
+        return R.image.launch_screen_logo()
+    }
+
+    var sendButtonTitle: String {
+        return NSLocalizedString("Send", value: "Send", comment: "")
+    }
+
     var internalButtonTitle: String {
         return String(format: NSLocalizedString("nft.details.internal.button.title", value: "Open on %@", comment: ""), token.category)
     }

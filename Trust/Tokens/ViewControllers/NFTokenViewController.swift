@@ -7,6 +7,7 @@ import Kingfisher
 import Hero
 
 protocol NFTokenViewControllerDelegate: class {
+    func didPressToken(token: NonFungibleTokenObject, in viewController: NFTokenViewController)
     func didPressLink(url: URL, in viewController: NFTokenViewController)
 }
 
@@ -25,6 +26,14 @@ class NFTokenViewController: UIViewController {
         stackView.alignment = .fill
         stackView.distribution = .equalSpacing
         return stackView
+    }()
+
+    lazy var sendButton: UIButton = {
+        let sendButton = Button(size: .normal, style: .border)
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+        sendButton.setTitle(viewModel.sendButtonTitle, for: .normal)
+        sendButton.addTarget(self, action: #selector(sendTap), for: .touchUpInside)
+        return sendButton
     }()
 
     let token: NonFungibleTokenObject
@@ -85,6 +94,8 @@ class NFTokenViewController: UIViewController {
         stackView.addArrangedSubview(.spacer(height: 15))
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(.spacer(height: 15))
+        stackView.addArrangedSubview(sendButton)
+        stackView.addArrangedSubview(.spacer(height: 15))
         stackView.addArrangedSubview(internalButton)
         stackView.addArrangedSubview(.spacer(height: 10))
         stackView.addArrangedSubview(externalButton)
@@ -103,6 +114,10 @@ class NFTokenViewController: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
         ])
+    }
+
+    @objc func sendTap() {
+        delegate?.didPressToken(token: token, in: self)
     }
 
     @objc func internalTap() {

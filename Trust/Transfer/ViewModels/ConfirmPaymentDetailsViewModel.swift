@@ -61,7 +61,7 @@ struct ConfirmPaymentDetailsViewModel {
         switch transaction.transferType {
         case .dapp:
             return NSLocalizedString("confirmPayment.dapp.label.title", value: "DApp", comment: "")
-        case .ether, .token:
+        case .ether, .token, .nft:
             return NSLocalizedString("confirmPayment.to.label.title", value: "To", comment: "")
         }
     }
@@ -70,7 +70,7 @@ struct ConfirmPaymentDetailsViewModel {
         switch transaction.transferType {
         case .dapp(let request):
             return request.url?.absoluteString ?? ""
-        case .ether, .token:
+        case .ether, .token, .nft:
             return transaction.address?.description ?? ""
         }
     }
@@ -125,7 +125,7 @@ struct ConfirmPaymentDetailsViewModel {
         switch transaction.transferType {
         case .token(let token):
             return balanceFormatter.string(from: transaction.value, decimals: token.decimals)
-        case .ether, .dapp:
+        case .ether, .dapp, .nft:
             return balanceFormatter.string(from: transaction.value)
         }
     }
