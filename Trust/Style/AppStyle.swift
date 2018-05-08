@@ -39,7 +39,7 @@ enum AppStyle {
         case .largeAmount:
             return UIColor.black // Usually colors based on the amount
         case .error:
-            return Colors.red
+            return Colors.errorRed
         case .formHeader:
             return Colors.doveGray
         }

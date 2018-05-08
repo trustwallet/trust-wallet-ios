@@ -103,7 +103,7 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     var amountTextColor: UIColor {
-        return Colors.radicalRed
+        return Colors.red
     }
 
     var totalTitle: String {
