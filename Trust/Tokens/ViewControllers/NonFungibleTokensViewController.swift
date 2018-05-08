@@ -27,7 +27,7 @@ class NonFungibleTokensViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = viewModel.tableViewBacgroundColor
         view.addSubview(tableView)
         tableView.register(R.nib.nonFungibleTokenViewCell(), forCellReuseIdentifier: R.nib.nonFungibleTokenViewCell.name)
         NSLayoutConstraint.activate([
@@ -84,7 +84,7 @@ class NonFungibleTokensViewController: UIViewController {
     }
 
     fileprivate func hederView(for section: Int) -> UIView {
-        return SectionHeader(fillColor: viewModel.headerBackgroundColor, borderColor: viewModel.headerBorderColor, title: viewModel.title(for: section), textColor: viewModel.headerTitleTextColor, textFont: viewModel.headerTitleFont)
+        return SectionHeader(fillColor: viewModel.tableViewBacgroundColor, borderColor: UIColor.clear, title: viewModel.title(for: section), textColor: viewModel.headerTitleTextColor, textFont: viewModel.headerTitleFont)
     }
 }
 

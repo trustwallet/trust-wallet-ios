@@ -13,11 +13,12 @@ class NonFungibleTokenViewCell: UITableViewCell {
         super.awakeFromNib()
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(R.nib.nonFungibleCollectionViewCell(), forCellWithReuseIdentifier: R.nib.nonFungibleCollectionViewCell.name)
+     collectionView.register(R.nib.nonFungibleCollectionViewCell(), forCellWithReuseIdentifier: R.nib.nonFungibleCollectionViewCell.name)
     }
 
     func configure(viewModel: NonFungibleTokenCellViewModel) {
         self.viewModel = viewModel
+        collectionView.backgroundColor = self.viewModel?.collectionViewBacgroundColor
         collectionView.reloadData()
     }
 }

@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import UIKit
+import RandomColorSwift
 
 class NonFungibleCollectionViewCell: UICollectionViewCell {
 
@@ -16,7 +17,7 @@ class NonFungibleCollectionViewCell: UICollectionViewCell {
         self.layer.shadowRadius = 2
         self.layer.shadowOpacity = 0.5
         self.layer.masksToBounds = false
-        imageViewBackground.backgroundColor = UIColor.random()
+        imageViewBackground.backgroundColor = randomColor(hue: .random, luminosity: .light)
     }
 
     func configure(with viewModel: NonFungibleCollectionViewCellModel) {
