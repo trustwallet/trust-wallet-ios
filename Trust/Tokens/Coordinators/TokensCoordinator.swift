@@ -225,6 +225,10 @@ extension TokensCoordinator: NFTokenViewControllerDelegate {
     func didPressLink(url: URL, in viewController: NFTokenViewController) {
         openURL(url)
     }
+
+    func didPressToken(token: NonFungibleTokenObject, in viewController: NFTokenViewController) {
+        delegate?.didPress(for: .send(type: .nft(token)), in: self)
+    }
 }
 
 extension TokensCoordinator: TransactionViewControllerDelegate {

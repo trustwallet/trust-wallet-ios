@@ -6,6 +6,7 @@ import StackViewController
 import Kingfisher
 
 protocol NFTokenViewControllerDelegate: class {
+    func didPressToken(token: NonFungibleTokenObject, in viewController: NFTokenViewController)
     func didPressLink(url: URL, in viewController: NFTokenViewController)
 }
 
@@ -26,6 +27,14 @@ class NFTokenViewController: UIViewController {
         return stackView
     }()
 
+    lazy var sendButton: UIButton = {
+        let sendButton = Button(size: .normal, style: .border)
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+        sendButton.setTitle(viewModel.sendButtonTitle, for: .normal)
+        sendButton.addTarget(self, action: #selector(sendTap), for: .touchUpInside)
+        return sendButton
+    }()
+
     let token: NonFungibleTokenObject
 
     lazy var viewModel: NFTDetailsViewModel = {
@@ -44,7 +53,7 @@ class NFTokenViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.kf.setImage(
             with: viewModel.imageURL,
-            placeholder: .none
+            placeholder: viewModel.placeholder
         )
         imageView.contentMode = .scaleAspectFit
 
@@ -70,6 +79,8 @@ class NFTokenViewController: UIViewController {
         stackView.addArrangedSubview(.spacer(height: 15))
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(.spacer(height: 15))
+        stackView.addArrangedSubview(sendButton)
+        stackView.addArrangedSubview(.spacer(height: 15))
         stackView.addArrangedSubview(internalButton)
         stackView.addArrangedSubview(.spacer(height: 10))
         stackView.addArrangedSubview(externalButton)
@@ -87,6 +98,10 @@ class NFTokenViewController: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
         ])
+    }
+
+    @objc func sendTap() {
+        delegate?.didPressToken(token: token, in: self)
     }
 
     @objc func internalTap() {

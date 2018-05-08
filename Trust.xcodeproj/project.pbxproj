@@ -336,6 +336,7 @@
 		771AA962200D5EC700D25403 /* PassphraseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA961200D5EC700D25403 /* PassphraseViewModel.swift */; };
 		771AA964200D5EDB00D25403 /* WordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771AA963200D5EDB00D25403 /* WordCollectionViewCell.swift */; };
 		771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */; };
+		771ACE0E20A15AC000FB03EE /* SendNFTRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771ACE0D20A15AC000FB03EE /* SendNFTRow.swift */; };
 		771D0641208AC30800016B72 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D0640208AC30800016B72 /* Analytics.swift */; };
 		771D0644208AC34D00016B72 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D0643208AC34D00016B72 /* AnalyticsEvent.swift */; };
 		771D0646208B3FAD00016B72 /* MonetaryAmountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D0645208B3FAD00016B72 /* MonetaryAmountViewModel.swift */; };
@@ -806,6 +807,7 @@
 		771AA961200D5EC700D25403 /* PassphraseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseViewModel.swift; sourceTree = "<group>"; };
 		771AA963200D5EDB00D25403 /* WordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCollectionViewCell.swift; sourceTree = "<group>"; };
 		771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WordCollectionViewCell.xib; sourceTree = "<group>"; };
+		771ACE0D20A15AC000FB03EE /* SendNFTRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendNFTRow.swift; sourceTree = "<group>"; };
 		771D0640208AC30800016B72 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		771D0643208AC34D00016B72 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
 		771D0645208B3FAD00016B72 /* MonetaryAmountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetaryAmountViewModel.swift; sourceTree = "<group>"; };
@@ -1139,6 +1141,7 @@
 		291ED0901F6FA5C800E7E93A /* Transfer */ = {
 			isa = PBXGroup;
 			children = (
+				771ACE0C20A15AB400FB03EE /* View */,
 				299B5E301FCBC2B90051361C /* Controllers */,
 				29B933F61F86073E009FCABB /* Coordinators */,
 				29B6AECE1F7C880700EC6DE3 /* Types */,
@@ -2235,6 +2238,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		771ACE0C20A15AB400FB03EE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				771ACE0D20A15AC000FB03EE /* SendNFTRow.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		771D0642208AC33700016B72 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
@@ -2880,6 +2891,7 @@
 				29FA00CE201CA64E002F7DC5 /* DappCommand.swift in Sources */,
 				29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */,
 				290B2B651F91A4880053C83E /* TransactionsFooterView.swift in Sources */,
+				771ACE0E20A15AC000FB03EE /* SendNFTRow.swift in Sources */,
 				293B8B431F70815900356286 /* BalanceTitleView.swift in Sources */,
 				29DBF2A11F9DA6EF00327C60 /* BackupViewController.swift in Sources */,
 				29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */,

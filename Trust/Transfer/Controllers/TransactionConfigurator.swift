@@ -45,7 +45,7 @@ class TransactionConfigurator {
         self.requestEstimateGas = transaction.gasLimit == .none
 
         let nonce = transaction.nonce ?? BigInt(session.nonceProvider.nextNonce ?? -1)
-        let data: Data = TransactionConfigurator.data(for: transaction)
+        let data: Data = TransactionConfigurator.data(for: transaction, from: account.address)
         let calculatedGasLimit = transaction.gasLimit ?? TransactionConfigurator.gasLimit(for: transaction.transferType)
         let calculatedGasPrice = min(max(transaction.gasPrice ?? session.chainState.gasPrice ?? GasPriceConfiguration.default, GasPriceConfiguration.min), GasPriceConfiguration.max)
 
@@ -57,12 +57,15 @@ class TransactionConfigurator {
         )
     }
 
-    private static func data(for transaction: UnconfirmedTransaction) -> Data {
+    private static func data(for transaction: UnconfirmedTransaction, from: Address) -> Data {
         switch transaction.transferType {
         case .ether, .dapp:
             return transaction.data ?? Data()
         case .token:
             return ERC20Encoder.encodeTransfer(to: transaction.to!, tokens: transaction.value.magnitude)
+        case .nft(let token):
+            let tokenID = BigUInt(token.id) ?? 0
+            return ERC721Encoder.encodeTransferFrom(from: from, to: transaction.to!, tokenId: tokenID)
         }
     }
 
@@ -72,7 +75,7 @@ class TransactionConfigurator {
             return GasLimitConfiguration.default
         case .token:
             return GasLimitConfiguration.tokenTransfer
-        case .dapp:
+        case .dapp, .nft:
             return GasLimitConfiguration.dappTransfer
         }
     }
@@ -178,18 +181,19 @@ class TransactionConfigurator {
         let value: BigInt = {
             switch transaction.transferType {
             case .ether, .dapp: return valueToSend()
-            case .token: return 0
+            case .token, .nft: return 0
             }
         }()
         let address: Address? = {
             switch transaction.transferType {
             case .ether, .dapp: return transaction.to
-            case .token(let token): return token.address
+            case .token(let token): return token.contractAddress
+            case .nft(let token): return token.contractAddress
             }
         }()
         let localizedObject: LocalizedOperationObject? = {
             switch transaction.transferType {
-            case .ether, .dapp: return .none
+            case .ether, .dapp, .nft: return .none
             case .token(let token):
                 return LocalizedOperationObject(
                     from: account.address.eip55String,
@@ -236,7 +240,7 @@ class TransactionConfigurator {
 
         //We check if it is ETH or token operation.
         switch transaction.transferType {
-        case .ether, .dapp:
+        case .ether, .dapp, .nft:
             if transaction.value > balance.value {
                 etherSufficient = false
                 gasSufficient = false

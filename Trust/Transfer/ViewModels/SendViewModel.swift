@@ -6,6 +6,12 @@ import BigInt
 import JSONRPCKit
 import APIKit
 
+enum SendViewType {
+    case address
+    case amount
+    case collectible(NonFungibleTokenObject)
+}
+
 struct SendViewModel {
     /// stringFormatter of a `SendViewModel` to represent string values with respect of the curent locale.
     lazy var stringFormatter: StringFormatter = {
@@ -18,7 +24,7 @@ struct SendViewModel {
     /// decimals of a `SendViewModel` to represent amount of digits after coma.
     lazy var decimals: Int = {
         switch self.transferType {
-        case .ether, .dapp:
+        case .ether, .dapp, .nft:
             return config.server.decimals
         case .token(let token):
             return token.decimals
@@ -67,6 +73,16 @@ struct SendViewModel {
     var backgroundColor: UIColor {
         return .white
     }
+
+    var views: [SendViewType] {
+        switch transferType {
+        case .ether, .dapp, .token:
+            return [.address, .amount]
+        case .nft(let token):
+            return [.address, .collectible(token)]
+        }
+    }
+
     /// Convert `pairRate` to localized human readebale string with respect of the current locale.
     ///
     /// - Returns: `String` that represent `pairRate` in curent locale.
@@ -92,7 +108,7 @@ struct SendViewModel {
     mutating func sendMaxAmount() -> String {
         var max: Decimal? = 0
         switch transferType {
-        case .ether, .dapp: max = EtherNumberFormatter.full.decimal(from: balance?.value ?? 0, decimals: decimals)
+        case .ether, .dapp, .nft: max = EtherNumberFormatter.full.decimal(from: balance?.value ?? 0, decimals: decimals)
         case .token(let token): max = EtherNumberFormatter.full.decimal(from: token.valueBigInt, decimals: decimals)
         }
         guard let maxAmount = max else {

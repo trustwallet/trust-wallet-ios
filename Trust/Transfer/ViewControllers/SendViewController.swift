@@ -25,6 +25,7 @@ class SendViewController: FormViewController {
     struct Values {
         static let address = "address"
         static let amount = "amount"
+        static let collectible = "collectible"
     }
     let session: WalletSession
     let account: Account
@@ -61,10 +62,53 @@ class SendViewController: FormViewController {
         super.init(nibName: nil, bundle: nil)
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
+
+        let section = Section(header: "", footer: viewModel.isFiatViewHidden() ? "" : viewModel.pairRateRepresantetion())
+        fields().forEach { cell in
+            section.append(cell)
+        }
+        form = Section()
+            +++ section
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.applyTintAdjustment()
+    }
+
+    private func fields() -> [BaseRow] {
+        return viewModel.views.map { field(for: $0) }
+    }
+
+    private func field(for type: SendViewType) -> BaseRow {
+        switch type {
+        case .address:
+            return addressField()
+        case .amount:
+            return amountField()
+        case .collectible(let token):
+            return collectibleField(with: token)
+        }
+    }
+
+    func addressField() -> TextFloatLabelRow {
         let recipientRightView = FieldAppereance.addressFieldRightView(
             pasteAction: { [unowned self] in self.pasteAction() },
             qrAction: { [unowned self] in self.openReader() }
         )
+        return AppFormAppearance.textFieldFloat(tag: Values.address) {
+            $0.add(rule: EthereumAddressRule())
+            $0.validationOptions = .validatesOnDemand
+        }.cellUpdate { cell, _ in
+            cell.textField.textAlignment = .left
+            cell.textField.placeholder = NSLocalizedString("send.recipientAddress.textField.placeholder", value: "Recipient Address", comment: "")
+            cell.textField.rightView = recipientRightView
+            cell.textField.rightViewMode = .always
+            cell.textField.accessibilityIdentifier = "amount-field"
+        }
+    }
+
+    func amountField() -> TextFloatLabelRow {
         let fiatButton = Button(size: .normal, style: .borderless)
         fiatButton.translatesAutoresizingMaskIntoConstraints = false
         fiatButton.setTitle(viewModel.currentPair.right, for: .normal)
@@ -78,35 +122,33 @@ class SendViewController: FormViewController {
         amountRightView.distribution = .equalSpacing
         amountRightView.spacing = 1
         amountRightView.axis = .horizontal
-        form = Section()
-            +++ Section(header: "", footer: viewModel.isFiatViewHidden() ? "" : viewModel.pairRateRepresantetion())
-            <<< AppFormAppearance.textFieldFloat(tag: Values.address) {
-                $0.add(rule: EthereumAddressRule())
-                $0.validationOptions = .validatesOnDemand
-            }.cellUpdate { cell, _ in
-                cell.textField.textAlignment = .left
-                cell.textField.placeholder = NSLocalizedString("send.recipientAddress.textField.placeholder", value: "Recipient Address", comment: "")
-                cell.textField.rightView = recipientRightView
-                cell.textField.rightViewMode = .always
-                cell.textField.accessibilityIdentifier = "amount-field"
-            }
-            <<< AppFormAppearance.textFieldFloat(tag: Values.amount) {
-                $0.add(rule: RuleRequired())
-                $0.validationOptions = .validatesOnDemand
-            }.cellUpdate {[weak self] cell, _ in
-                cell.textField.isCopyPasteDisabled = true
-                cell.textField.textAlignment = .left
-                cell.textField.delegate = self
-                cell.textField.placeholder = "\(self?.viewModel.currentPair.left ?? "") " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
-                cell.textField.keyboardType = .decimalPad
-                cell.textField.rightView = amountRightView
-                cell.textField.rightViewMode = .always
-            }
+        return AppFormAppearance.textFieldFloat(tag: Values.amount) {
+            $0.add(rule: RuleRequired())
+            $0.validationOptions = .validatesOnDemand
+        }.cellUpdate {[weak self] cell, _ in
+            cell.textField.isCopyPasteDisabled = true
+            cell.textField.textAlignment = .left
+            cell.textField.delegate = self
+            cell.textField.placeholder = "\(self?.viewModel.currentPair.left ?? "") " + NSLocalizedString("send.amount.textField.placeholder", value: "Amount", comment: "")
+            cell.textField.keyboardType = .decimalPad
+            cell.textField.rightView = amountRightView
+            cell.textField.rightViewMode = .always
+        }
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.applyTintAdjustment()
+
+    func collectibleField(with token: NonFungibleTokenObject) -> SendNFTRow {
+        let cell = SendNFTRow(tag: Values.collectible)
+        let viewModel = NFTDetailsViewModel(token: token)
+        cell.cellSetup { cell, _ in
+            cell.tokenImage.kf.setImage(
+                with: viewModel.imageURL,
+                placeholder: viewModel.placeholder
+            )
+            cell.label.text = viewModel.title
+        }
+        return cell
     }
+
     func clear() {
         let fields = [addressRow, amountRow]
         for field in fields {
@@ -124,7 +166,7 @@ class SendViewController: FormViewController {
         }
         let parsedValue: BigInt? = {
             switch transferType {
-            case .ether, .dapp:
+            case .ether, .dapp, .nft:
                 return EtherNumberFormatter.full.number(from: amountString, units: .ether)
             case .token(let token):
                 return EtherNumberFormatter.full.number(from: amountString, decimals: token.decimals)

@@ -114,4 +114,8 @@ class TokenObject: Object, Decodable {
     var displayName: String {
         return "\(self.name) (\(self.symbol))"
     }
+
+    var contractAddress: Address {
+        return Address(string: contract)!
+    }
 }
