@@ -11,7 +11,7 @@ struct NonFungibleTokenCellViewModel {
     }
 
     lazy var collectionViewBacgroundColor: UIColor = {
-        return UIColor(hex: "f6f6f6")
+        return UIColor.white
     }()
 
     lazy var numberOfItemsInSection: Int = {

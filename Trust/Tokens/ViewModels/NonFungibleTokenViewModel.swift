@@ -22,11 +22,11 @@ class NonFungibleTokenViewModel {
     }
 
     var tableViewBacgroundColor: UIColor {
-        return UIColor(hex: "f6f6f6")
+        return UIColor.white
     }
 
     var headerTitleFont: UIFont {
-        return UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
+        return UIFont.systemFont(ofSize: 21, weight: UIFont.Weight.regular)
     }
 
     var headerBorderColor: UIColor {

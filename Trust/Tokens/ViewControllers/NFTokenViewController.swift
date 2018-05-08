@@ -55,11 +55,17 @@ class NFTokenViewController: UIViewController {
         self.view.addSubview(scrollView)
         scrollView.addSubview(stackView)
 
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.numberOfLines = 0
+        titleLabel.text = viewModel.title
+        titleLabel.textColor = UIColor.black
+
         let descriptionLabel = UILabel()
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.numberOfLines = 0
         descriptionLabel.text = viewModel.descriptionText
-        descriptionLabel.textColor = viewModel.descriptionTextColor
+        descriptionLabel.textColor = UIColor.lightGray
 
         let internalButton = Button(size: .normal, style: .border)
         internalButton.translatesAutoresizingMaskIntoConstraints = false
@@ -72,8 +78,9 @@ class NFTokenViewController: UIViewController {
         externalButton.addTarget(self, action: #selector(externalTap), for: .touchUpInside)
 
         view.backgroundColor = .white
-        navigationItem.title = viewModel.title
         stackView.addArrangedSubview(imageView)
+        stackView.addArrangedSubview(.spacer(height: 15))
+        stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(.spacer(height: 15))
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(.spacer(height: 15))
