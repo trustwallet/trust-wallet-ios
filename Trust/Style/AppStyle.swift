@@ -8,6 +8,8 @@ enum AppStyle {
     case paragraph
     case paragraphLight
     case largeAmount
+    case error
+    case formHeader
 
     var font: UIFont {
         switch self {
@@ -21,6 +23,10 @@ enum AppStyle {
             return UIFont.systemFont(ofSize: 15, weight: .light)
         case .largeAmount:
             return UIFont.systemFont(ofSize: 20, weight: .medium)
+        case .error:
+            return UIFont.systemFont(ofSize: 12, weight: .light)
+        case .formHeader:
+            return UIFont.systemFont(ofSize: 14, weight: .regular)
         }
     }
 
@@ -32,6 +38,10 @@ enum AppStyle {
             return Colors.charcoal
         case .largeAmount:
             return UIColor.black // Usually colors based on the amount
+        case .error:
+            return Colors.errorRed
+        case .formHeader:
+            return Colors.doveGray
         }
     }
 }

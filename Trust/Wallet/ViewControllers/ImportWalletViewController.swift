@@ -23,13 +23,6 @@ class ImportWalletViewController: FormViewController {
         static let mnemonic = "mnemonic"
     }
 
-    lazy var pargraphStyle: NSMutableParagraphStyle = {
-        let style = NSMutableParagraphStyle()
-        style.lineHeightMultiple = 1.25
-        style.alignment = .natural
-        return style
-    }()
-
     var segmentRow: SegmentedRow<String>? {
         return form.rowBy(tag: Values.segment)
     }
@@ -82,13 +75,10 @@ class ImportWalletViewController: FormViewController {
             +++ Section {
                 var header = HeaderFooterView<InfoHeaderView>(.class)
                 header.height = { 90 }
-                header.onSetupView = {[weak self] (view, section) -> Void in
-                    guard let strongSelf = self else { return }
-                    view.label.attributedText = NSAttributedString(string: "Importing wallet as easy as creating", attributes: [
-                        NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular),
-                        NSAttributedStringKey.foregroundColor: UIColor(hex: "6e6e72"),
-                        NSAttributedStringKey.paragraphStyle: strongSelf.pargraphStyle,
-                    ])
+                header.onSetupView = { (view, section) -> Void in
+                    view.label.textColor = AppStyle.formHeader.textColor
+                    view.label.font = AppStyle.formHeader.font
+                    view.label.text = NSLocalizedString("importing.wallet.message", value: "Importing wallet as easy as creating", comment: "")
                     view.logoImageView.image = R.image.create_wallet_import()
                 }
                 $0.header = header
