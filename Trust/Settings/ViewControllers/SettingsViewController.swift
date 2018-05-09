@@ -150,6 +150,8 @@ class SettingsViewController: FormViewController, Coordinator {
             }
             }.onPresent { _, selectorController in
                 selectorController.enableDeselection = false
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_colorful_auto()
             }
     }
 
