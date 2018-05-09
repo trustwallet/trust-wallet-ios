@@ -18,7 +18,7 @@ class NonFungibleTokenViewModel {
     }
 
     var headerTitleTextColor: UIColor {
-        return UIColor(hex: "333333")
+        return AppStyle.collactablesHeader.textColor
     }
 
     var tableViewBacgroundColor: UIColor {
@@ -26,7 +26,7 @@ class NonFungibleTokenViewModel {
     }
 
     var headerTitleFont: UIFont {
-        return UIFont.systemFont(ofSize: 21, weight: UIFont.Weight.regular)
+        return AppStyle.collactablesHeader.font
     }
 
     var headerBorderColor: UIColor {
