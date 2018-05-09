@@ -30,6 +30,7 @@ struct ENSClient {
                     guard data.count == 32 else {
                         return seal.reject(ENSError.decodeError)
                     }
+                    //take the last 20 bytes for Address
                     let sub = data.suffix(20)
                     seal.fulfill(Address(data: sub))
                 case .failure(let error):
