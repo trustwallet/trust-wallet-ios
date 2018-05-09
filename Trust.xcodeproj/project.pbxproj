@@ -431,7 +431,7 @@
 		BB3B86C5204D2EF10061FCBA /* InCoordinator+Navigable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86C4204D2EF10061FCBA /* InCoordinator+Navigable.swift */; };
 		BB3E2A0B20A03D22000F8B76 /* ENSStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3E2A0A20A03D22000F8B76 /* ENSStore.swift */; };
 		BB3E2A0E20A04F4B000F8B76 /* ENSRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3E2A0D20A04F4B000F8B76 /* ENSRecord.swift */; };
-		BB3E2A1020A12592000F8B76 /* ENSCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3E2A0F20A12592000F8B76 /* ENSCoordinator.swift */; };
+		BB3E2A1020A12592000F8B76 /* ENSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3E2A0F20A12592000F8B76 /* ENSManager.swift */; };
 		BB58B92D206F70E800A70A3C /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB58B92C206F70E800A70A3C /* HistoryStore.swift */; };
 		BB58B92F206F70FE00A70A3C /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB58B92E206F70FE00A70A3C /* History.swift */; };
 		BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */; };
@@ -910,7 +910,7 @@
 		BB3B86C4204D2EF10061FCBA /* InCoordinator+Navigable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InCoordinator+Navigable.swift"; sourceTree = "<group>"; };
 		BB3E2A0A20A03D22000F8B76 /* ENSStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSStore.swift; sourceTree = "<group>"; };
 		BB3E2A0D20A04F4B000F8B76 /* ENSRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSRecord.swift; sourceTree = "<group>"; };
-		BB3E2A0F20A12592000F8B76 /* ENSCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSCoordinator.swift; sourceTree = "<group>"; };
+		BB3E2A0F20A12592000F8B76 /* ENSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSManager.swift; sourceTree = "<group>"; };
 		BB58B92C206F70E800A70A3C /* HistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStore.swift; sourceTree = "<group>"; };
 		BB58B92E206F70FE00A70A3C /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrencyRate+Fee.swift"; sourceTree = "<group>"; };
@@ -2446,7 +2446,7 @@
 				BB3395E8209C4F8100ACED2C /* ENSClient.swift */,
 				BB3E2A0A20A03D22000F8B76 /* ENSStore.swift */,
 				BB3E2A0D20A04F4B000F8B76 /* ENSRecord.swift */,
-				BB3E2A0F20A12592000F8B76 /* ENSCoordinator.swift */,
+				BB3E2A0F20A12592000F8B76 /* ENSManager.swift */,
 			);
 			path = ENS;
 			sourceTree = "<group>";
@@ -3176,7 +3176,7 @@
 				29C70C712016C7780072E454 /* SentTransaction.swift in Sources */,
 				29E9CFD21FE737FE00017744 /* TrustRealmConfiguration.swift in Sources */,
 				BB3395E9209C4F8100ACED2C /* ENSClient.swift in Sources */,
-				BB3E2A1020A12592000F8B76 /* ENSCoordinator.swift in Sources */,
+				BB3E2A1020A12592000F8B76 /* ENSManager.swift in Sources */,
 				2959961C1FAE3EDF00DB66A8 /* TrustClient.swift in Sources */,
 				29AD8A0C1F93FBBF008E10E7 /* Subscribable.swift in Sources */,
 				777871382085D7A600CF7303 /* BranchEvent.swift in Sources */,
