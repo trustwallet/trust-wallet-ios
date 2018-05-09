@@ -43,7 +43,7 @@ class NFTokenViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.kf.setImage(
             with: viewModel.imageURL,
-            placeholder: .none
+            placeholder: viewModel.placeholder
         )
         imageView.contentMode = .scaleAspectFit
         return imageView
