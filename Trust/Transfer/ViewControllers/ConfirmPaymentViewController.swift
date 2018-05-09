@@ -67,6 +67,7 @@ class ConfirmPaymentViewController: UIViewController {
         errorView = ErrorView(onRetry: { [weak self] in
             self?.fetch()
         })
+        loadingView = LoadingView()
 
         view.addSubview(stackView)
         view.addSubview(submitButton)
