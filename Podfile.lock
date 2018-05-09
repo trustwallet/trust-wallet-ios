@@ -27,6 +27,7 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.3)
   - "GoogleToolboxForMac/NSData+zlib (2.1.3)":
     - GoogleToolboxForMac/Defines (= 2.1.3)
+  - Hero (1.2.0)
   - JdenticonSwift (0.0.1)
   - JSONRPCKit (2.0.0):
     - Result (~> 3.0)
@@ -57,6 +58,7 @@ PODS:
   - R.swift (4.0.0):
     - R.swift.Library (~> 4.0.0)
   - R.swift.Library (4.0.0)
+  - RandomColorSwift (1.0.0)
   - Realm (3.0.2):
     - Realm/Headers (= 3.0.2)
   - Realm/Headers (3.0.2)
@@ -89,6 +91,7 @@ DEPENDENCIES:
   - Eureka (~> 4.1.1)
   - Fabric
   - Firebase/Core
+  - Hero
   - JdenticonSwift
   - JSONRPCKit (from `https://github.com/bricklife/JSONRPCKit.git`)
   - KeychainSwift
@@ -99,6 +102,7 @@ DEPENDENCIES:
   - PromiseKit (~> 6.0)
   - QRCodeReaderViewController (from `https://github.com/yannickl/QRCodeReaderViewController.git`, branch `master`)
   - R.swift
+  - RandomColorSwift
   - RealmSwift
   - SAMKeychain
   - SeedStackViewController
@@ -123,6 +127,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseInstanceID
     - GoogleToolboxForMac
+    - Hero
     - JdenticonSwift
     - KeychainSwift
     - Kingfisher
@@ -133,6 +138,7 @@ SPEC REPOS:
     - PromiseKit
     - R.swift
     - R.swift.Library
+    - RandomColorSwift
     - Realm
     - RealmSwift
     - Result
@@ -187,6 +193,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
   FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
+  Hero: 33dadf2cd1c98af71e213dcbc2902e6e03622a4e
   JdenticonSwift: bc532f2761566eb29f26b085e5f72de25bc065ce
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
@@ -199,6 +206,7 @@ SPEC CHECKSUMS:
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
+  RandomColorSwift: 9f85058b721665d52d239ca166a913e083506444
   Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
   RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
@@ -213,6 +221,6 @@ SPEC CHECKSUMS:
   TrustWeb3Provider: 50fa391bdf170feb43dd4419992931510a5751d8
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
-PODFILE CHECKSUM: dfb3c3461a3ae60b1be1a52500244ab4ce28dba9
+PODFILE CHECKSUM: 3b620237d88f5d669715d49a9b654c9f029bc7a0
 
 COCOAPODS: 1.5.0

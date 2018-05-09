@@ -32,6 +32,8 @@ target 'Trust' do
   pod 'TrustWeb3Provider', :git=>'https://github.com/TrustWallet/trust-web3-provider', :branch=>'master'
   pod 'JdenticonSwift'
   pod 'URLNavigator'
+  pod 'RandomColorSwift'
+  pod 'Hero'
 
   target 'TrustTests' do
     inherit! :search_paths

@@ -4,6 +4,7 @@ import Foundation
 import UIKit
 import StackViewController
 import Kingfisher
+import Hero
 
 protocol NFTokenViewControllerDelegate: class {
     func didPressToken(token: NonFungibleTokenObject, in viewController: NFTokenViewController)
@@ -37,6 +38,17 @@ class NFTokenViewController: UIViewController {
 
     let token: NonFungibleTokenObject
 
+    lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.kf.setImage(
+            with: viewModel.imageURL,
+            placeholder: viewModel.placeholder
+        )
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
     lazy var viewModel: NFTDetailsViewModel = {
         return NFTDetailsViewModel(token: token)
     }()
@@ -46,22 +58,23 @@ class NFTokenViewController: UIViewController {
         self.token = token
         super.init(nibName: nil, bundle: nil)
 
+        self.hero.isEnabled = true
+        self.view.hero.id = token.uniqueID
+
         self.view.addSubview(scrollView)
         scrollView.addSubview(stackView)
 
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.kf.setImage(
-            with: viewModel.imageURL,
-            placeholder: viewModel.placeholder
-        )
-        imageView.contentMode = .scaleAspectFit
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.numberOfLines = 0
+        titleLabel.text = viewModel.title
+        titleLabel.textColor = UIColor.black
 
         let descriptionLabel = UILabel()
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.numberOfLines = 0
         descriptionLabel.text = viewModel.descriptionText
-        descriptionLabel.textColor = viewModel.descriptionTextColor
+        descriptionLabel.textColor = UIColor.lightGray
 
         let internalButton = Button(size: .normal, style: .border)
         internalButton.translatesAutoresizingMaskIntoConstraints = false
@@ -74,8 +87,10 @@ class NFTokenViewController: UIViewController {
         externalButton.addTarget(self, action: #selector(externalTap), for: .touchUpInside)
 
         view.backgroundColor = .white
-        navigationItem.title = viewModel.title
+        title = viewModel.title
         stackView.addArrangedSubview(imageView)
+        stackView.addArrangedSubview(.spacer(height: 15))
+        stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(.spacer(height: 15))
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(.spacer(height: 15))
@@ -87,7 +102,8 @@ class NFTokenViewController: UIViewController {
         stackView.addArrangedSubview(.spacer(height: 10))
 
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+           // scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

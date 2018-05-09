@@ -10,6 +10,10 @@ struct NonFungibleTokenCellViewModel {
         self.tokens = tokens
     }
 
+    lazy var collectionViewBacgroundColor: UIColor = {
+        return UIColor.white
+    }()
+
     lazy var numberOfItemsInSection: Int = {
         return tokens.count
     }()

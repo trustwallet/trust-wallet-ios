@@ -65,8 +65,8 @@ class TokensCoordinator: Coordinator {
     }
 
     @objc func showSpinningWheel(_ notification: NSNotification) {
-        if let token = notification.userInfo?["token"] as? NonFungibleTokenObject {
-           didSelectToken(token)
+        if let token = notification.userInfo?["token"] as? NonFungibleTokenObject, let backgroundColor =  notification.userInfo?["color"] as? UIColor {
+            didSelectToken(token, with: backgroundColor)
         }
     }
 
@@ -143,9 +143,12 @@ class TokensCoordinator: Coordinator {
         }
     }
 
-    private func didSelectToken(_ token: NonFungibleTokenObject) {
+    private func didSelectToken(_ token: NonFungibleTokenObject, with backgroundColor: UIColor) {
         let controller = NFTokenViewController(token: token)
         controller.delegate = self
+        controller.imageView.backgroundColor = backgroundColor
+        navigationController.hero.isEnabled = true
+        navigationController.hero.navigationAnimationType = .none
         navigationController.pushViewController(controller, animated: true)
     }
 

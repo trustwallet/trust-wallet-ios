@@ -10,6 +10,7 @@ enum AppStyle {
     case largeAmount
     case error
     case formHeader
+    case collactablesHeader
 
     var font: UIFont {
         switch self {
@@ -27,6 +28,8 @@ enum AppStyle {
             return UIFont.systemFont(ofSize: 12, weight: .light)
         case .formHeader:
             return UIFont.systemFont(ofSize: 14, weight: .regular)
+        case .collactablesHeader:
+            return UIFont.systemFont(ofSize: 21, weight: UIFont.Weight.regular)
         }
     }
 
@@ -42,6 +45,8 @@ enum AppStyle {
             return Colors.errorRed
         case .formHeader:
             return Colors.doveGray
+        case .collactablesHeader:
+            return Colors.lightDark
         }
     }
 }

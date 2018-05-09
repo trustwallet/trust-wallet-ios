@@ -18,11 +18,15 @@ class NonFungibleTokenViewModel {
     }
 
     var headerTitleTextColor: UIColor {
-        return UIColor(hex: "555357")
+        return AppStyle.collactablesHeader.textColor
+    }
+
+    var tableViewBacgroundColor: UIColor {
+        return UIColor.white
     }
 
     var headerTitleFont: UIFont {
-        return UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
+        return AppStyle.collactablesHeader.font
     }
 
     var headerBorderColor: UIColor {
