@@ -83,6 +83,8 @@ class SettingsViewController: FormViewController, Coordinator {
                 cell.imageView?.image = R.image.settings_colorful_security()
             }
 
+            <<< autoLockRow()
+
             <<< AppFormAppearance.button { [weak self] row in
                 row.cellStyle = .value1
                 row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
@@ -131,6 +133,23 @@ class SettingsViewController: FormViewController, Coordinator {
                 $0.title = NSLocalizedString("settings.version.label.title", value: "Version", comment: "")
                 $0.value = Bundle.main.fullVersion
                 $0.disabled = true
+            }
+    }
+
+    private func autoLockRow() -> PushRow<AutoLock> {
+        return PushRow<AutoLock> { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            $0.title = strongSelf.viewModel.autoLockTitle
+            $0.options = strongSelf.viewModel.autoLockOptions
+            $0.value = strongSelf.config.autoLockOption
+            $0.selectorTitle = strongSelf.viewModel.autoLockTitle
+            $0.displayValueFor = { value in
+                return value?.displayName
+            }
+            }.onPresent { _, selectorController in
+                selectorController.enableDeselection = false
             }
     }
 
