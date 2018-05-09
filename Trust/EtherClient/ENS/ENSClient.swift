@@ -30,7 +30,7 @@ struct ENSClient {
                     guard data.count == 32 else {
                         return seal.reject(ENSError.decodeError)
                     }
-                    let sub = Data(bytes: data.bytes[12...])
+                    let sub = data.suffix(20)
                     seal.fulfill(Address(data: sub))
                 case .failure(let error):
                     seal.reject(error)
