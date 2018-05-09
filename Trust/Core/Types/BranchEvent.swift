@@ -15,8 +15,10 @@ enum BranchEvent {
     var params: [String: String] {
         switch self {
         case .openURL(let url):
+            let urlString = url.absoluteString
             return [
-                "url": url.absoluteString,
+                "url": urlString,
+                "$canonical_url": urlString,
                 "event": BranchEventName.openURL.rawValue,
             ]
         case .newToken(let address):
