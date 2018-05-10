@@ -21,23 +21,23 @@ struct ENSManager {
         if ignoreCache == false, let record = filtered.first, now.timeIntervalSince(record.updatedAt) <= localInterval {
             return Promise { $0.resolve(Address(string: record.owner), nil) }
         }
-        return client.resolve(name: name).map { address -> Address in
-            if address != Address.zero {
-                self.store.add(record: ENSRecord(name: name, owner: address.description))
+        return client.resolve(name: name).map { result -> Address in
+            if result.address != Address.zero {
+                self.store.add(record: ENSRecord(name: name, address: result.address.description, resolver: result.resolver.description))
             }
-            return address
+            return result.address
         }
     }
 
     func lookup(address: Address, ignoreCache: Bool = false) -> Promise<String> {
         let now = Date()
-        let filtered = store.records.filter("owner == %@", address.description)
+        let filtered = store.records.filter("address == %@", address.description)
         if ignoreCache == false, let record = filtered.first, now.timeIntervalSince(record.updatedAt) <= localInterval {
             return Promise { $0.resolve(record.name, nil) }
         }
         return client.lookup(address: address).map { name -> String in
             if !name.isEmpty {
-                self.store.add(record: ENSRecord(name: name, owner: address.description, isReverse: true))
+                self.store.add(record: ENSRecord(name: name, address: address.description, isReverse: true))
             }
             return name
         }
