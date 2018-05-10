@@ -247,6 +247,27 @@ class InCoordinator: Coordinator {
         }
         return true
     }
+
+    func handleTrustSDK() {
+        guard let session = tokensCoordinator?.session else {
+            return
+        }
+        let coordinator = LocalSchemeCoordinator(
+            navigationController: navigationController,
+            keystore: keystore,
+            session: session
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
+    }
+}
+
+extension InCoordinator: LocalSchemeCoordinatorDelegate {
+    func didCancel(in coordinator: LocalSchemeCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
+    }
 }
 
 extension InCoordinator: TransactionCoordinatorDelegate {

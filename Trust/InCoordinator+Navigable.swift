@@ -13,5 +13,17 @@ extension InCoordinator: URLNavigable {
             self.showTab(.browser(openURL: targetUrl))
             return true
         }
+
+        navigator.handle(URLSchemes.signTransaction) { url, _, _ in
+            //parse url
+            self.handleTrustSDK()
+            return true
+        }
+
+        navigator.handle(URLSchemes.signMessage) { url, _, _ in
+            //parse url
+            self.handleTrustSDK()
+            return true
+        }
     }
 }

@@ -349,6 +349,7 @@
 		7721A6CC202EFBC5004DB16C /* AddCustomNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6CB202EFBC5004DB16C /* AddCustomNetworkViewController.swift */; };
 		7721A6CE202EFC21004DB16C /* AddCustomNetworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6CD202EFC21004DB16C /* AddCustomNetworkViewModel.swift */; };
 		7721A6D0202EFD07004DB16C /* AddCustomNetworkCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6CF202EFD07004DB16C /* AddCustomNetworkCoordinator.swift */; };
+		7722CEDD20A4F757004DFDBA /* LocalSchemeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CEDC20A4F757004DFDBA /* LocalSchemeCoordinator.swift */; };
 		773B8DB620716EB000D05690 /* NonceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B8DB520716EAF00D05690 /* NonceProvider.swift */; };
 		773B8DB920716EFF00D05690 /* GetNonceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B8DB820716EFF00D05690 /* GetNonceProvider.swift */; };
 		773B8DBC207184CD00D05690 /* GetNonceProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B8DBB207184CD00D05690 /* GetNonceProviderTests.swift */; };
@@ -823,6 +824,7 @@
 		7721A6CB202EFBC5004DB16C /* AddCustomNetworkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCustomNetworkViewController.swift; sourceTree = "<group>"; };
 		7721A6CD202EFC21004DB16C /* AddCustomNetworkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCustomNetworkViewModel.swift; sourceTree = "<group>"; };
 		7721A6CF202EFD07004DB16C /* AddCustomNetworkCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCustomNetworkCoordinator.swift; sourceTree = "<group>"; };
+		7722CEDC20A4F757004DFDBA /* LocalSchemeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSchemeCoordinator.swift; sourceTree = "<group>"; };
 		773B8DB520716EAF00D05690 /* NonceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonceProvider.swift; sourceTree = "<group>"; };
 		773B8DB820716EFF00D05690 /* GetNonceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNonceProvider.swift; sourceTree = "<group>"; };
 		773B8DBB207184CD00D05690 /* GetNonceProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNonceProviderTests.swift; sourceTree = "<group>"; };
@@ -2473,6 +2475,7 @@
 				CCCD74FC1FD2D38D004A087D /* CheckDeviceCoordinator.swift */,
 				775DF42C2037D338009CD082 /* BranchCoordinator.swift */,
 				BB3B86BC204CE9730061FCBA /* URLNavigatorCoordinator.swift */,
+				7722CEDC20A4F757004DFDBA /* LocalSchemeCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -2881,6 +2884,7 @@
 				77872D25202505B70032D687 /* EnterPasswordViewController.swift in Sources */,
 				77B806AD20776BFD005FDCBE /* HistoriesViewModel.swift in Sources */,
 				29C80D511FB67A110037B1E0 /* ArrayResponse.swift in Sources */,
+				7722CEDD20A4F757004DFDBA /* LocalSchemeCoordinator.swift in Sources */,
 				290B2B5F1F9177860053C83E /* UIImage.swift in Sources */,
 				291ED08F1F6F613200E7E93A /* GetTransactionRequest.swift in Sources */,
 				294EC1DA1FD8E4E60065EB20 /* GasPriceRequest.swift in Sources */,
