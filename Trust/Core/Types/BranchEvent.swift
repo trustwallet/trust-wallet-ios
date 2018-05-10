@@ -19,6 +19,8 @@ enum BranchEvent {
             return [
                 "url": urlString,
                 "$canonical_url": urlString,
+                "~campaign": "trust-ios-browser-sharing",
+                "~channel": "trust-ios-browser-sharing",
                 "event": BranchEventName.openURL.rawValue,
             ]
         case .newToken(let address):
