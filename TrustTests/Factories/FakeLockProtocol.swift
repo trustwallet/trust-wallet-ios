@@ -14,6 +14,6 @@ class FakeLockProtocol: LockInterface {
     }
 
     func shouldShowProtection() -> Bool {
-        return showProtection
+        return isPasscodeSet() && showProtection
     }
 }

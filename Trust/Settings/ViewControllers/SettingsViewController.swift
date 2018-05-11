@@ -51,6 +51,9 @@ class SettingsViewController: FormViewController, Coordinator {
             $0.displayValueFor = { value in
                 return value?.displayName
             }
+            $0.hidden = Condition.function(["PasscodeRow"], { form in
+                return !((form.rowBy(tag: "PasscodeRow") as? SwitchRow)?.value ?? false)
+            })
         }.onChange { [weak self] row in
             let autoLockType = row.value ?? AutoLock.disabled
             self?.lock.setAutoLockType(type: autoLockType)
@@ -99,7 +102,7 @@ class SettingsViewController: FormViewController, Coordinator {
 
             +++ Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))
 
-            <<< SwitchRow { [weak self] in
+            <<< SwitchRow("PasscodeRow") { [weak self] in
                 $0.title = self?.viewModel.passcodeTitle
                 $0.value = self?.isPasscodeEnabled
             }.onChange { [unowned self] row in
