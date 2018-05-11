@@ -11,7 +11,6 @@ struct Config {
         static let currencyID = "currencyID"
         static let dAppBrowser = "dAppBrowser"
         static let testNetworkWarningOff = "testNetworkWarningOff"
-        static let autoLockOption = "autoLock"
     }
 
     static let current: Config = Config()
@@ -41,17 +40,6 @@ struct Config {
             return Currency.USD
         }
         set { defaults.set(newValue.rawValue, forKey: Keys.currencyID) }
-    }
-
-    var autoLockOption: AutoLock {
-        get {
-            let id = defaults.integer(forKey: Keys.autoLockOption)
-            guard let autoLock = AutoLock(rawValue: id) else {
-                return .disabled
-            }
-            return autoLock
-        }
-        set { defaults.set(newValue.rawValue, forKey: Keys.autoLockOption) }
     }
 
     var chainID: Int {
