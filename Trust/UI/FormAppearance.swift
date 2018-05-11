@@ -54,7 +54,7 @@ struct AppFormAppearance {
             for (index, validationMsg) in row.validationErrors.map({ $0.msg }).enumerated() {
                 let labelRow = LabelRow {
                     $0.title = validationMsg
-                    $0.cell.height = { 40 }
+                    $0.cell.height = { 36 }
                 }.cellUpdate { cell, _ in
                     cell.textLabel?.font = AppStyle.error.font
                     cell.textLabel?.textColor = AppStyle.error.textColor

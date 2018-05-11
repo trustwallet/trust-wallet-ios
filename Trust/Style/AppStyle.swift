@@ -25,7 +25,7 @@ enum AppStyle {
         case .largeAmount:
             return UIFont.systemFont(ofSize: 20, weight: .medium)
         case .error:
-            return UIFont.systemFont(ofSize: 12, weight: .light)
+            return UIFont.systemFont(ofSize: 13, weight: .light)
         case .formHeader:
             return UIFont.systemFont(ofSize: 14, weight: .regular)
         case .collactablesHeader:
