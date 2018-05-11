@@ -73,6 +73,7 @@ class TransactionViewController: UIViewController {
             ]),
             TransactionAppearance.divider(color: dividerColor, alpha: 1, layoutInsets: dividerOffset),
             item(title: viewModel.nonceTitle, value: viewModel.nonce),
+            TransactionAppearance.divider(color: dividerColor, alpha: 1, layoutInsets: dividerOffset),
         ]
 
         if viewModel.detailsAvailable {
