@@ -95,9 +95,7 @@ class ConfigureTransactionViewController: FormViewController {
 
         let gasPriceGwei = EtherNumberFormatter.full.string(from: configuration.gasPrice, units: UnitConfiguration.gasPriceUnit)
 
-        form = Section()
-
-        +++ Section(
+        form = Section(
             footer: viewModel.gasPriceFooterText
         )
 
