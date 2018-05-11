@@ -140,9 +140,6 @@ class Lock: LockInterface {
     private func timeOutInterval(for type: AutoLock) -> Bool {
         let elapsed = Date().timeIntervalSince(getAutoLockTime())
         let intervalPassed = Int(elapsed) >= type.interval
-        if !intervalPassed {
-            removeAutoLockTime()
-        }
         return intervalPassed
     }
 
