@@ -60,7 +60,7 @@ class ConfirmPaymentViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.settings_icon(), style: .plain, target: self, action: #selector(edit))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.transactionSlider(), style: .done, target: self, action: #selector(edit))
         view.backgroundColor = viewModel.backgroundColor
         navigationItem.title = viewModel.title
 
