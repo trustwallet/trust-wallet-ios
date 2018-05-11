@@ -22,10 +22,12 @@ class Lock: LockInterface {
 
     private let autoLockType = "autoLockType"
 
+    private let autoLockTime = "autoLockTime"
+
     private let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
 
     func shouldShowProtection() -> Bool {
-        return true
+        return isPasscodeSet() && autoLockTriggered()
     }
 
     func isPasscodeSet() -> Bool {
@@ -50,6 +52,19 @@ class Lock: LockInterface {
             return .disabled
         }
         return autoLock
+    }
+
+    func setAutoLockTime() {
+        guard isPasscodeSet() else { return }
+        let timeString = dateFormatter().string(from: Date())
+        keychain.set(timeString, forKey: autoLockTime)
+    }
+
+    func getAutoLockTime() -> Date {
+        guard let timeString = keychain.get(autoLockTime), let time = dateFormatter().date(from: timeString) else {
+            return Date()
+        }
+        return time
     }
 
     func setPasscode(passcode: String) {
@@ -101,6 +116,10 @@ class Lock: LockInterface {
         keychain.delete(maxAttemptTime)
     }
 
+    func removeAutoLockTime() {
+        keychain.delete(autoLockTime)
+    }
+
     private func dateFormatter() -> DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = DateFormatter.Style.short
@@ -108,9 +127,29 @@ class Lock: LockInterface {
         return dateFormatter
     }
 
+    private func autoLockTriggered() -> Bool {
+        let type = getAutoLockType()
+        switch type {
+        case .disabled:
+            return true
+        default:
+            return timeOutInterval(for: type)
+        }
+    }
+
+    private func timeOutInterval(for type: AutoLock) -> Bool {
+        let elapsed = Date().timeIntervalSince(getAutoLockTime())
+        let intervalPassed = Int(elapsed) >= type.interval
+        if !intervalPassed {
+            removeAutoLockTime()
+        }
+        return intervalPassed
+    }
+
     func clear() {
         deletePasscode()
         resetPasscodeAttemptHistory()
         removeIncorrectMaxAttemptTime()
+        removeAutoLockTime()
     }
 }
