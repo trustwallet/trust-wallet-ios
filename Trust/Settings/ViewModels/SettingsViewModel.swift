@@ -27,7 +27,7 @@ struct SettingsViewModel {
 
     var autoLockOptions: [AutoLock] {
         return [
-            AutoLock.disabled,
+            AutoLock.immediate,
             AutoLock.oneMinute,
             AutoLock.fiveMinutes,
             AutoLock.oneHour,

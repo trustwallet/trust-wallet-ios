@@ -55,7 +55,7 @@ class SettingsViewController: FormViewController, Coordinator {
                 return !((form.rowBy(tag: "PasscodeRow") as? SwitchRow)?.value ?? false)
             })
         }.onChange { [weak self] row in
-            let autoLockType = row.value ?? AutoLock.disabled
+            let autoLockType = row.value ?? AutoLock.immediate
             self?.lock.setAutoLockType(type: autoLockType)
         }.onPresent { _, selectorController in
             selectorController.enableDeselection = false
@@ -113,7 +113,7 @@ class SettingsViewController: FormViewController, Coordinator {
                     }
                 } else {
                     self.lock.deletePasscode()
-                    self.updateAutoLockRow(with: AutoLock.disabled)
+                    self.updateAutoLockRow(with: AutoLock.immediate)
                 }
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_colorful_security()

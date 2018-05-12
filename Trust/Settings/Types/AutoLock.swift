@@ -3,7 +3,7 @@
 import UIKit
 
 enum AutoLock: Int {
-    case disabled
+    case immediate
     case oneMinute
     case fiveMinutes
     case oneHour
@@ -11,7 +11,7 @@ enum AutoLock: Int {
 
     var name: String {
         switch self {
-        case .disabled: return NSLocalizedString("wallets.navigation.title.autolock.disabled", value: "Disabled", comment: "")
+        case .immediate: return NSLocalizedString("wallets.navigation.title.autolock.immediate", value: "Immediate", comment: "")
         case .oneMinute: return NSLocalizedString("wallets.navigation.title.autolock.one.minute", value: "If away for 1 minute", comment: "")
         case .fiveMinutes: return NSLocalizedString("wallets.navigation.title.autolock.five.minutes", value: "If away for 5 minutes", comment: "")
         case .oneHour: return NSLocalizedString("wallets.navigation.title.autolock.one.hour", value: "If away for 1 hour", comment: "")
@@ -25,7 +25,7 @@ enum AutoLock: Int {
 
     var interval: Int {
         switch self {
-        case .disabled: return 0
+        case .immediate: return 0
         case .oneMinute: return 60
         case .fiveMinutes: return 300
         case .oneHour: return 3600

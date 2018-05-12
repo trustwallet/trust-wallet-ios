@@ -49,7 +49,7 @@ class Lock: LockInterface {
     func getAutoLockType() -> AutoLock {
         let id = keychain.get(autoLockType)
         guard let type = id, let intType = Int(type), let autoLock = AutoLock(rawValue: intType) else {
-            return .disabled
+            return .immediate
         }
         return autoLock
     }
@@ -74,7 +74,7 @@ class Lock: LockInterface {
     func deletePasscode() {
         SAMKeychain.deletePassword(forService: Keys.service, account: Keys.account)
         resetPasscodeAttemptHistory()
-        setAutoLockType(type: AutoLock.disabled)
+        setAutoLockType(type: AutoLock.immediate)
     }
 
     func numberOfAttempts() -> Int {
@@ -130,7 +130,7 @@ class Lock: LockInterface {
     private func autoLockTriggered() -> Bool {
         let type = getAutoLockType()
         switch type {
-        case .disabled:
+        case .immediate:
             return true
         default:
             return timeOutInterval(for: type)
