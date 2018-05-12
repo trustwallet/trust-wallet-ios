@@ -40,7 +40,7 @@ struct AccountViewModel {
         if ensName.isEmpty {
             return wallet.address.description
         }
-        return ensName
+        return "\(ensName) (\(wallet.address.description))"
     }
 
     var isActive: Bool {
