@@ -37,10 +37,11 @@ struct AccountViewModel {
     }
 
     var title: String {
+        let address = wallet.address.description
         if ensName.isEmpty {
-            return wallet.address.description
+            return address
         }
-        return "\(ensName) (\(wallet.address.description))"
+        return String(format: "%@ (%@...%@)", ensName, String(address.prefix(6)), String(address.suffix(6)))
     }
 
     var isActive: Bool {
