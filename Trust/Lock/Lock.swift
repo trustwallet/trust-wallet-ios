@@ -17,13 +17,9 @@ class Lock: LockInterface {
     }
 
     private let passcodeAttempts = "passcodeAttempts"
-
     private let maxAttemptTime = "maxAttemptTime"
-
     private let autoLockType = "autoLockType"
-
     private let autoLockTime = "autoLockTime"
-
     private let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
 
     func shouldShowProtection() -> Bool {
