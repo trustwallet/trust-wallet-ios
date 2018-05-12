@@ -15,6 +15,7 @@ class SettingsViewController: FormViewController, Coordinator {
     struct Values {
         static let currencyPopularKey = "0"
         static let currencyAllKey = "1"
+        static let passcodeRow = "PasscodeRow"
     }
 
     private var config = Config()
@@ -51,8 +52,8 @@ class SettingsViewController: FormViewController, Coordinator {
             $0.displayValueFor = { value in
                 return value?.displayName
             }
-            $0.hidden = Condition.function(["PasscodeRow"], { form in
-                return !((form.rowBy(tag: "PasscodeRow") as? SwitchRow)?.value ?? false)
+            $0.hidden = Condition.function([Values.passcodeRow], { form in
+                return !((form.rowBy(tag: Values.passcodeRow) as? SwitchRow)?.value ?? false)
             })
         }.onChange { [weak self] row in
             let autoLockType = row.value ?? AutoLock.immediate
@@ -102,7 +103,7 @@ class SettingsViewController: FormViewController, Coordinator {
 
             +++ Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))
 
-            <<< SwitchRow("PasscodeRow") { [weak self] in
+            <<< SwitchRow(Values.passcodeRow) { [weak self] in
                 $0.title = self?.viewModel.passcodeTitle
                 $0.value = self?.isPasscodeEnabled
             }.onChange { [unowned self] row in
@@ -310,7 +311,7 @@ class SettingsViewController: FormViewController, Coordinator {
         coordinator.start()
         coordinator.lockViewController.willFinishWithResult = { [weak self] result in
             if result {
-                let type = AutoLock.oneMinute
+                let type = AutoLock.immediate
                 self?.lock.setAutoLockType(type: type)
                 self?.updateAutoLockRow(with: type)
             }

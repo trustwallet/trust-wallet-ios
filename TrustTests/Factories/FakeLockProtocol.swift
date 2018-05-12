@@ -6,7 +6,6 @@ import UIKit
 class FakeLockProtocol: LockInterface {
 
     var passcodeSet = true
-
     var showProtection = true
 
     func isPasscodeSet() -> Bool {
