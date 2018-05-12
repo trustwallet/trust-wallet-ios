@@ -12,8 +12,8 @@ class AccountViewCell: UITableViewCell {
     @IBOutlet weak var activeView: UIView!
     @IBOutlet weak var glassesImageView: UIImageView!
     @IBOutlet weak var walletTypeImageView: UIImageView!
-    @IBOutlet weak var addressLable: UILabel!
     @IBOutlet weak var balanceLable: UILabel!
+    @IBOutlet weak var addressLable: UILabel!
     @IBOutlet weak var identiconImageView: UIImageView!
     weak var delegate: AccountViewCellDelegate?
     var viewModel: AccountViewModel? {
