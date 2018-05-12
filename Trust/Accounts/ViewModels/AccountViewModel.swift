@@ -41,7 +41,7 @@ struct AccountViewModel {
         if ensName.isEmpty {
             return address
         }
-        return String(format: "%@ (%@...%@)", ensName, String(address.prefix(6)), String(address.suffix(6)))
+        return String(format: "%@ (%@...%@)", ensName, String(address.prefix(6)), String(address.suffix(4)))
     }
 
     var isActive: Bool {
