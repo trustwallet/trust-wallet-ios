@@ -31,7 +31,7 @@ struct SettingsViewModel {
             AutoLock.oneMinute,
             AutoLock.fiveMinutes,
             AutoLock.oneHour,
-            AutoLock.fiveHours
+            AutoLock.fiveHours,
         ]
     }
 

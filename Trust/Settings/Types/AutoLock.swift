@@ -32,5 +32,4 @@ enum AutoLock: Int {
         case .fiveHours: return 18000
         }
     }
-  
 }
