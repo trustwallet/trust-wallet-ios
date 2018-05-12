@@ -19,9 +19,7 @@ class SettingsViewController: FormViewController, Coordinator {
     }
 
     private var config = Config()
-
     private var lock = Lock()
-
     private let helpUsCoordinator = HelpUsCoordinator()
 
     weak var delegate: SettingsViewControllerDelegate?
