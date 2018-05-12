@@ -12,8 +12,8 @@ class AccountViewCell: UITableViewCell {
     @IBOutlet weak var activeView: UIView!
     @IBOutlet weak var glassesImageView: UIImageView!
     @IBOutlet weak var walletTypeImageView: UIImageView!
-    @IBOutlet weak var addressLable: UILabel!
-    @IBOutlet weak var balanceLable: UILabel!
+    @IBOutlet weak var balanceLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var identiconImageView: UIImageView!
     weak var delegate: AccountViewCellDelegate?
     var viewModel: AccountViewModel? {
@@ -21,10 +21,10 @@ class AccountViewCell: UITableViewCell {
             guard let model = viewModel else {
                 return
             }
-            balanceLable.text = model.balanceText
+            balanceLabel.text = model.balanceText
             glassesImageView.isHidden = !model.isWatch
             activeView.isHidden = !model.isActive
-            addressLable.text = model.title
+            addressLabel.text = model.title
             infoButton.tintColor = Colors.lightBlue
             identiconImageView.image = model.identicon
         }

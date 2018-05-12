@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,8 +23,9 @@
                         <rect key="frame" x="36" y="0.0" width="298" height="58"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BUP-CU-bxN">
-                                <rect key="frame" x="0.0" y="12" width="37" height="34"/>
+                                <rect key="frame" x="0.0" y="12" width="30" height="34"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="b0v-3X-CxK"/>
                                     <constraint firstAttribute="height" constant="34" id="hic-Fd-JLF"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -33,17 +34,17 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2t2-qW-Lcu">
-                                <rect key="frame" x="47" y="10.5" width="192" height="36.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2t2-qW-Lcu">
+                                <rect key="frame" x="40" y="10.5" width="199" height="36.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-- ETH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scJ-RY-qk3">
-                                        <rect key="frame" x="0.0" y="0.0" width="47" height="18"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0xdDFFF2b78463AB1cA781e853BB888FDfd06083d3" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scJ-RY-qk3" userLabel="Address Lable">
+                                        <rect key="frame" x="0.0" y="0.0" width="199" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0xdDFFF2b78463AB1cA781e853BB888FDfd06083d3" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWW-wY-XEU">
-                                        <rect key="frame" x="0.0" y="23" width="192" height="13.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-- ETH" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWW-wY-XEU" userLabel="Balance Lable">
+                                        <rect key="frame" x="0.0" y="23" width="36" height="13.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -82,7 +83,7 @@
                         </constraints>
                     </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sdn-a4-wyz">
-                        <rect key="frame" x="16" y="25" width="8" height="8"/>
+                        <rect key="frame" x="16" y="24" width="8" height="8"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="8" id="B3m-hl-1c2"/>
@@ -111,8 +112,8 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="activeView" destination="Sdn-a4-wyz" id="fvc-Uv-B9b"/>
-                <outlet property="addressLable" destination="ZWW-wY-XEU" id="9Ad-PM-eKg"/>
-                <outlet property="balanceLable" destination="scJ-RY-qk3" id="TD3-qL-Mpo"/>
+                <outlet property="addressLabel" destination="scJ-RY-qk3" id="kt5-0t-HAx"/>
+                <outlet property="balanceLabel" destination="ZWW-wY-XEU" id="r1E-4g-ZMc"/>
                 <outlet property="glassesImageView" destination="mbU-gV-kxo" id="Ry7-WR-mb2"/>
                 <outlet property="identiconImageView" destination="BUP-CU-bxN" id="j77-1f-TUd"/>
                 <outlet property="infoButton" destination="0Io-0E-DkX" id="FjW-Cs-BT6"/>

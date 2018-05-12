@@ -2,6 +2,7 @@
 
 import TrustCore
 import UIKit
+import PromiseKit
 
 protocol AccountsViewControllerDelegate: class {
     func didSelectAccount(account: Wallet, in viewController: AccountsViewController)
@@ -10,6 +11,7 @@ protocol AccountsViewControllerDelegate: class {
 }
 
 class AccountsViewController: UITableViewController {
+    let ensManager: ENSManager
     weak var delegate: AccountsViewControllerDelegate?
     var headerTitle: String?
     var viewModel: AccountsViewModel {
@@ -27,16 +29,19 @@ class AccountsViewController: UITableViewController {
         }
     }
     private var balances: [Address: Balance?] = [:]
+    private var addrNames: [Address: String] = [:]
     private let keystore: Keystore
     private let balanceCoordinator: TokensBalanceService
     private let config = Config()
 
     init(
         keystore: Keystore,
-        balanceCoordinator: TokensBalanceService
+        balanceCoordinator: TokensBalanceService,
+        ensManager: ENSManager
     ) {
         self.keystore = keystore
         self.balanceCoordinator = balanceCoordinator
+        self.ensManager = ensManager
         super.init(style: .grouped)
         fetch()
     }
@@ -52,6 +57,7 @@ class AccountsViewController: UITableViewController {
         super.viewWillAppear(animated)
         fetch()
         refreshWalletBalances()
+        refreshENSNames()
     }
 
     func fetch() {
@@ -153,10 +159,24 @@ class AccountsViewController: UITableViewController {
         }
     }
 
+    private func refreshENSNames() {
+        let addresses = wallets.compactMap { $0.address }
+        let promises =  addresses.map { ensManager.lookup(address: $0) }
+        _ = when(fulfilled: promises).done { [weak self] names in
+            for (index, name) in names.enumerated() {
+                self?.addrNames[addresses[index]] = name
+            }
+            self?.tableView.reloadData()
+        }.catch { error in
+            print(error)
+        }
+    }
+
     private func getAccountViewModels(for path: IndexPath) -> AccountViewModel {
         let account = self.wallet(for: path)! // Avoid force unwrap
         let balance = self.balances[account.address].flatMap { $0 }
-        let model = AccountViewModel(server: config.server, wallet: account, current: EtherKeystore.current, walletBalance: balance)
+        let ensName = self.addrNames[account.address] ?? ""
+        let model = AccountViewModel(server: config.server, wallet: account, current: EtherKeystore.current, walletBalance: balance, ensName: ensName)
         return model
     }
 

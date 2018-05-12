@@ -11,17 +11,20 @@ struct AccountViewModel {
     let current: Wallet?
     let walletBalance: Balance?
     let server: RPCServer
+    let ensName: String
 
     init(
         server: RPCServer,
         wallet: Wallet,
         current: Wallet?,
-        walletBalance: Balance?
+        walletBalance: Balance?,
+        ensName: String = ""
     ) {
         self.server = server
         self.wallet = wallet
         self.current = current
         self.walletBalance = walletBalance
+        self.ensName = ensName
     }
 
     var isWatch: Bool {
@@ -34,7 +37,11 @@ struct AccountViewModel {
     }
 
     var title: String {
-        return wallet.address.description
+        let address = wallet.address.description
+        if ensName.isEmpty {
+            return address
+        }
+        return String(format: "%@ (%@...%@)", ensName, String(address.prefix(6)), String(address.suffix(4)))
     }
 
     var isActive: Bool {

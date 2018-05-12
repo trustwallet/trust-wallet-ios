@@ -423,12 +423,16 @@
 		BB03A8712042B01300649DA0 /* BalanceStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A8702042B01300649DA0 /* BalanceStatusTests.swift */; };
 		BB1CC266203BA4440042E56C /* SendMaxAmountTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1CC265203BA4440042E56C /* SendMaxAmountTest.swift */; };
 		BB1CC27A203D061B0042E56C /* TrustDocumentPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1CC279203D061B0042E56C /* TrustDocumentPickerViewController.swift */; };
+		BB3395E9209C4F8100ACED2C /* ENSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3395E8209C4F8100ACED2C /* ENSClient.swift */; };
 		BB3864A3208F1C8A00CBF773 /* testIsHexEncoded.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3864A2208F1C8A00CBF773 /* testIsHexEncoded.swift */; };
 		BB3864A4208F1C9C00CBF773 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A0E1841F706B8C00BAAAED /* String.swift */; };
 		BB3864A5208F1D2600CBF773 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2963B6C01F9AE0E4003063C1 /* Data.swift */; };
 		BB3B86BD204CE9730061FCBA /* URLNavigatorCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86BC204CE9730061FCBA /* URLNavigatorCoordinator.swift */; };
 		BB3B86BF204CECBC0061FCBA /* URLNavigable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86BE204CECBC0061FCBA /* URLNavigable.swift */; };
 		BB3B86C5204D2EF10061FCBA /* InCoordinator+Navigable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B86C4204D2EF10061FCBA /* InCoordinator+Navigable.swift */; };
+		BB3E2A0B20A03D22000F8B76 /* ENSStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3E2A0A20A03D22000F8B76 /* ENSStore.swift */; };
+		BB3E2A0E20A04F4B000F8B76 /* ENSRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3E2A0D20A04F4B000F8B76 /* ENSRecord.swift */; };
+		BB3E2A1020A12592000F8B76 /* ENSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3E2A0F20A12592000F8B76 /* ENSManager.swift */; };
 		BB58B92D206F70E800A70A3C /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB58B92C206F70E800A70A3C /* HistoryStore.swift */; };
 		BB58B92F206F70FE00A70A3C /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB58B92E206F70FE00A70A3C /* History.swift */; };
 		BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */; };
@@ -901,10 +905,14 @@
 		BB03A8702042B01300649DA0 /* BalanceStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceStatusTests.swift; sourceTree = "<group>"; };
 		BB1CC265203BA4440042E56C /* SendMaxAmountTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMaxAmountTest.swift; sourceTree = "<group>"; };
 		BB1CC279203D061B0042E56C /* TrustDocumentPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustDocumentPickerViewController.swift; sourceTree = "<group>"; };
+		BB3395E8209C4F8100ACED2C /* ENSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSClient.swift; sourceTree = "<group>"; };
 		BB3864A2208F1C8A00CBF773 /* testIsHexEncoded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testIsHexEncoded.swift; sourceTree = "<group>"; };
 		BB3B86BC204CE9730061FCBA /* URLNavigatorCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLNavigatorCoordinator.swift; sourceTree = "<group>"; };
 		BB3B86BE204CECBC0061FCBA /* URLNavigable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLNavigable.swift; sourceTree = "<group>"; };
 		BB3B86C4204D2EF10061FCBA /* InCoordinator+Navigable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InCoordinator+Navigable.swift"; sourceTree = "<group>"; };
+		BB3E2A0A20A03D22000F8B76 /* ENSStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSStore.swift; sourceTree = "<group>"; };
+		BB3E2A0D20A04F4B000F8B76 /* ENSRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSRecord.swift; sourceTree = "<group>"; };
+		BB3E2A0F20A12592000F8B76 /* ENSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSManager.swift; sourceTree = "<group>"; };
 		BB58B92C206F70E800A70A3C /* HistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStore.swift; sourceTree = "<group>"; };
 		BB58B92E206F70FE00A70A3C /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrencyRate+Fee.swift"; sourceTree = "<group>"; };
@@ -1171,6 +1179,7 @@
 				2923D9B41FDA4E07000CF3F8 /* PasswordGenerator.swift */,
 				61C359DF2002AA590097B04D /* TransactionSigning.swift */,
 				29F1C862200375D2003780D8 /* Wallet.swift */,
+				BB3E2A0C20A04F2C000F8B76 /* ENS */,
 			);
 			path = EtherClient;
 			sourceTree = "<group>";
@@ -2433,6 +2442,17 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		BB3E2A0C20A04F2C000F8B76 /* ENS */ = {
+			isa = PBXGroup;
+			children = (
+				BB3395E8209C4F8100ACED2C /* ENSClient.swift */,
+				BB3E2A0A20A03D22000F8B76 /* ENSStore.swift */,
+				BB3E2A0D20A04F4B000F8B76 /* ENSRecord.swift */,
+				BB3E2A0F20A12592000F8B76 /* ENSManager.swift */,
+			);
+			path = ENS;
+			sourceTree = "<group>";
+		};
 		BB767E2C205E102700263658 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -2874,6 +2894,7 @@
 				A2E43B4E20802879001FAD3D /* UINavigationController.swift in Sources */,
 				2963B6B11F9891F5003063C1 /* UIButton.swift in Sources */,
 				29F114F21FA7966300114A29 /* PrivateKeyRule.swift in Sources */,
+				BB3E2A0E20A04F4B000F8B76 /* ENSRecord.swift in Sources */,
 				77E81D962036883B00534C99 /* NotificationsViewModel.swift in Sources */,
 				7778713E2086F93700CF7303 /* Colors.swift in Sources */,
 				296106C41F7640C50006164B /* TokenViewCellViewModel.swift in Sources */,
@@ -2898,6 +2919,7 @@
 				BB767E2E205E10FD00263658 /* Debounce.swift in Sources */,
 				77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */,
 				776C1147205CF6DF00449539 /* TokenHeaderView.swift in Sources */,
+				BB3E2A0B20A03D22000F8B76 /* ENSStore.swift in Sources */,
 				29FA00CE201CA64E002F7DC5 /* DappCommand.swift in Sources */,
 				29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */,
 				290B2B651F91A4880053C83E /* TransactionsFooterView.swift in Sources */,
@@ -3157,6 +3179,8 @@
 				29BB94951F6FC54C009B09CC /* EthereumUnit.swift in Sources */,
 				29C70C712016C7780072E454 /* SentTransaction.swift in Sources */,
 				29E9CFD21FE737FE00017744 /* TrustRealmConfiguration.swift in Sources */,
+				BB3395E9209C4F8100ACED2C /* ENSClient.swift in Sources */,
+				BB3E2A1020A12592000F8B76 /* ENSManager.swift in Sources */,
 				2959961C1FAE3EDF00DB66A8 /* TrustClient.swift in Sources */,
 				29AD8A0C1F93FBBF008E10E7 /* Subscribable.swift in Sources */,
 				777871382085D7A600CF7303 /* BranchEvent.swift in Sources */,

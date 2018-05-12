@@ -13,7 +13,8 @@ class SettingsCoordinatorTests: XCTestCase {
             session: .make(),
             storage: storage,
             balanceCoordinator: FakeGetBalanceCoordinator(),
-            sharedRealm: .make()
+            sharedRealm: .make(),
+            ensManager: ENSManager(realm: .make())
         )
         storage.add([.make()])
         storage.updateTransactionSection()
@@ -24,7 +25,8 @@ class SettingsCoordinatorTests: XCTestCase {
             navigationController: FakeNavigationController(),
             keystore: FakeEtherKeystore(),
             session: .make(),
-            balanceCoordinator: FakeGetBalanceCoordinator()
+            balanceCoordinator: FakeGetBalanceCoordinator(),
+            ensManager: ENSManager(realm: .make())
         )
         
         coordinator.didDeleteAccount(account: .make(), in: accountCoordinator)

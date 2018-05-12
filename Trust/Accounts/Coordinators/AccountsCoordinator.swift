@@ -18,10 +18,11 @@ class AccountsCoordinator: Coordinator {
     let keystore: Keystore
     let session: WalletSession
     let balanceCoordinator: TokensBalanceService
+    let ensManager: ENSManager
     var coordinators: [Coordinator] = []
 
     lazy var accountsViewController: AccountsViewController = {
-        let controller = AccountsViewController(keystore: keystore, balanceCoordinator: balanceCoordinator)
+        let controller = AccountsViewController(keystore: keystore, balanceCoordinator: balanceCoordinator, ensManager: ensManager)
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add))
         controller.delegate = self
         return controller
@@ -33,13 +34,15 @@ class AccountsCoordinator: Coordinator {
         navigationController: NavigationController,
         keystore: Keystore,
         session: WalletSession,
-        balanceCoordinator: TokensBalanceService
+        balanceCoordinator: TokensBalanceService,
+        ensManager: ENSManager
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
         self.session = session
         self.balanceCoordinator = balanceCoordinator
+        self.ensManager = ensManager
     }
 
     func start() {

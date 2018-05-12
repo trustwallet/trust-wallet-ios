@@ -25,7 +25,7 @@ target 'Trust' do
   pod 'Crashlytics', '~> 3.10'
   pod 'Firebase/Core'
   pod 'Kingfisher', '~> 4.0'
-  pod 'TrustCore', '~> 0.0.6'
+  pod 'TrustCore', '~> 0.0.7'
   pod 'TrustKeystore', '~> 0.4.0'
   pod 'Branch'
   pod 'SAMKeychain'
