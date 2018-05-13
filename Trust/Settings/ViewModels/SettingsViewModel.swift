@@ -25,6 +25,16 @@ struct SettingsViewModel {
         ]
     }
 
+    var autoLockOptions: [AutoLock] {
+        return [
+            AutoLock.immediate,
+            AutoLock.oneMinute,
+            AutoLock.fiveMinutes,
+            AutoLock.oneHour,
+            AutoLock.fiveHours,
+        ]
+    }
+
     var currency: [Currency] {
         return Currency.allValues.map { $0 }
     }
@@ -43,6 +53,10 @@ struct SettingsViewModel {
 
     var networkTitle: String {
         return NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
+    }
+
+    var autoLockTitle: String {
+        return NSLocalizedString("settings.autoLock.button.title", value: "Auto-Lock", comment: "")
     }
 
     var currencyTitle: String {

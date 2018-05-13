@@ -22,14 +22,14 @@ class LockEnterPasscodeCoordinator: Coordinator {
     }
 
     func start() {
-        guard lock.isPasscodeSet() else { return }
+        guard lock.shouldShowProtection() else { return }
 
         window.rootViewController = lockEnterPasscodeViewController
         window.makeKeyAndVisible()
     }
-
+    //This method should be refactored!!!
     func showAuthentication() {
-        guard lock.isPasscodeSet() else { return }
+        guard window.rootViewController == lockEnterPasscodeViewController else { return }
 
         lockEnterPasscodeViewController.showKeyboard()
         lockEnterPasscodeViewController.showBioMerickAuth()

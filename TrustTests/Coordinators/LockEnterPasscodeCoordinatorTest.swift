@@ -32,4 +32,15 @@ class LockEnterPasscodeCoordinatorTest: XCTestCase {
         coordinator.start()
         XCTAssertTrue(coordinator.window.isHidden)
     }
+
+    func testDisabledAutoLock() {
+        let viewModel = LockEnterPasscodeViewModel()
+        let fakeLock = FakeLockProtocol()
+        fakeLock.passcodeSet = true
+        fakeLock.showProtection = false
+        let coordinator = LockEnterPasscodeCoordinator(model: viewModel, lock: fakeLock)
+        XCTAssertTrue(coordinator.window.isHidden)
+        coordinator.start()
+        XCTAssertTrue(coordinator.window.isHidden)
+    }
 }

@@ -11,17 +11,23 @@ protocol SettingsViewControllerDelegate: class {
 
 class SettingsViewController: FormViewController, Coordinator {
     var coordinators: [Coordinator] = []
+
     struct Values {
         static let currencyPopularKey = "0"
         static let currencyAllKey = "1"
+        static let passcodeRow = "PasscodeRow"
     }
+
     private var config = Config()
     private var lock = Lock()
     private let helpUsCoordinator = HelpUsCoordinator()
+
     weak var delegate: SettingsViewControllerDelegate?
+
     var isPasscodeEnabled: Bool {
         return lock.isPasscodeSet()
     }
+
     lazy var viewModel: SettingsViewModel = {
         return SettingsViewModel(isDebug: isDebug)
     }()
@@ -32,9 +38,37 @@ class SettingsViewController: FormViewController, Coordinator {
         return view
     }()
 
+    lazy var autoLockRow: PushRow<AutoLock> = {
+        return PushRow<AutoLock> { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            $0.title = strongSelf.viewModel.autoLockTitle
+            $0.options = strongSelf.viewModel.autoLockOptions
+            $0.value = strongSelf.lock.getAutoLockType()
+            $0.selectorTitle = strongSelf.viewModel.autoLockTitle
+            $0.displayValueFor = { value in
+                return value?.displayName
+            }
+            $0.hidden = Condition.function([Values.passcodeRow], { form in
+                return !((form.rowBy(tag: Values.passcodeRow) as? SwitchRow)?.value ?? false)
+            })
+        }.onChange { [weak self] row in
+            let autoLockType = row.value ?? AutoLock.immediate
+            self?.lock.setAutoLockType(type: autoLockType)
+        }.onPresent { _, selectorController in
+            selectorController.enableDeselection = false
+        }.cellSetup { cell, _ in
+            cell.imageView?.image = R.image.settings_colorful_auto()
+        }
+    }()
+
     let session: WalletSession
+
     let keystore: Keystore
+
     let balanceCoordinator: TokensBalanceService
+
     weak var accountsCoordinator: AccountsCoordinator?
 
     init(
@@ -67,7 +101,7 @@ class SettingsViewController: FormViewController, Coordinator {
 
             +++ Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))
 
-            <<< SwitchRow { [weak self] in
+            <<< SwitchRow(Values.passcodeRow) { [weak self] in
                 $0.title = self?.viewModel.passcodeTitle
                 $0.value = self?.isPasscodeEnabled
             }.onChange { [unowned self] row in
@@ -78,10 +112,13 @@ class SettingsViewController: FormViewController, Coordinator {
                     }
                 } else {
                     self.lock.deletePasscode()
+                    self.updateAutoLockRow(with: AutoLock.immediate)
                 }
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_colorful_security()
             }
+
+            <<< autoLockRow
 
             <<< AppFormAppearance.button { [weak self] row in
                 row.cellStyle = .value1
@@ -271,6 +308,11 @@ class SettingsViewController: FormViewController, Coordinator {
         coordinator.delegate = self
         coordinator.start()
         coordinator.lockViewController.willFinishWithResult = { [weak self] result in
+            if result {
+                let type = AutoLock.immediate
+                self?.lock.setAutoLockType(type: type)
+                self?.updateAutoLockRow(with: type)
+            }
             completion?(result)
             self?.navigationController?.dismiss(animated: true, completion: nil)
         }
@@ -304,6 +346,11 @@ class SettingsViewController: FormViewController, Coordinator {
             let condition = NetworkCondition.from(state, block)
             self?.networkStateView?.viewModel = NetworkConditionViewModel(condition: condition)
         }
+    }
+
+    private func updateAutoLockRow(with type: AutoLock) {
+        self.autoLockRow.value = type
+        self.autoLockRow.reload()
     }
 
     func run(action: SettingsAction) {

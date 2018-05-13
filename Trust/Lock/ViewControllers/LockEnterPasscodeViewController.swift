@@ -65,9 +65,13 @@ class LockEnterPasscodeViewController: LockPasscodeViewController {
     }
     private func unlock(withResult success: Bool, bioUnlock: Bool) {
         self.view.endEditing(true)
+        if success {
+            lock.removeAutoLockTime()
+        }
         if let unlock = unlockWithResult {
             unlock(success, bioUnlock)
         }
+
     }
     private func canEvaluatePolicy() -> Bool {
         return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
