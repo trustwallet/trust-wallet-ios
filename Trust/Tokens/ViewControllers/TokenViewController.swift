@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import UIKit
+import StatefulViewController
 
 protocol TokenViewControllerDelegate: class {
     func didPressRequest(for token: TokenObject, in controller: UIViewController)
@@ -18,6 +19,8 @@ class TokenViewController: UIViewController {
         let view = TokenHeaderView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 264))
         return view
     }()
+
+    private let insets = UIEdgeInsets(top: 348, left: 0, bottom: 0, right: 0)
 
     private var viewModel: TokenViewModel
 
@@ -56,10 +59,12 @@ class TokenViewController: UIViewController {
         super.viewDidLoad()
         observToken()
         observTransactions()
+        configTableViewStates()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupInitialViewState()
         viewModel.fetch()
     }
 
@@ -119,6 +124,14 @@ class TokenViewController: UIViewController {
     deinit {
         viewModel.invalidateObservers()
     }
+
+    private func configTableViewStates() {
+        errorView = ErrorView(insets: insets, onRetry: { [weak self] in
+            self?.viewModel.fetch()
+        })
+        loadingView = LoadingView(insets: insets)
+        emptyView = TransactionsEmptyView(insets: insets)
+    }
 }
 
 extension TokenViewController: UITableViewDataSource, UITableViewDelegate {
@@ -147,5 +160,11 @@ extension TokenViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.didPress(transaction: viewModel.item(for: indexPath.row, section: indexPath.section), in: self)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension TokenViewController: StatefulViewController {
+    func hasContent() -> Bool {
+        return viewModel.hasContent()
     }
 }
