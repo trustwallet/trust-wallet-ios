@@ -10,7 +10,6 @@ class CoinTicker: Object, Decodable {
     @objc dynamic var price: String = ""
     @objc dynamic var percent_change_24h: String = ""
     @objc dynamic var contract: String = ""
-    @objc dynamic var image: String = ""
     @objc dynamic var tickersKey: String = ""
     @objc dynamic var key: String = ""
 
@@ -20,15 +19,14 @@ class CoinTicker: Object, Decodable {
         price: String = "",
         percent_change_24h: String = "",
         contract: String = "",
-        image: String = "",
-        tickersKey: String = "") {
+        tickersKey: String = ""
+    ) {
         self.init()
         self.id = id
         self.symbol = symbol
         self.price = price
         self.percent_change_24h = percent_change_24h
         self.contract = contract
-        self.image = image
         self.tickersKey = tickersKey
         self.key = "\(self.id)_\(symbol)_\(contract)_\(tickersKey)"
     }
@@ -55,15 +53,10 @@ class CoinTicker: Object, Decodable {
         case price
         case percent_change_24h
         case contract
-        case image
     }
 }
 
 extension CoinTicker {
-    var imageURL: URL? {
-        return URL(string: image)
-    }
-
     func rate() -> CurrencyRate {
         return CurrencyRate(
             rates: [
@@ -72,7 +65,7 @@ extension CoinTicker {
                     price: Double(price) ?? 0,
                     contract: contract
                 ),
-                ]
+            ]
         )
     }
 }
