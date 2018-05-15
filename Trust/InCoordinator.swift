@@ -5,6 +5,7 @@ import TrustCore
 import UIKit
 import RealmSwift
 import URLNavigator
+import TrustSDK
 
 protocol InCoordinatorDelegate: class {
     func didCancel(in coordinator: InCoordinator)
@@ -250,14 +251,15 @@ class InCoordinator: Coordinator {
         return true
     }
 
-    func handleTrustSDK() {
+    func handleTrustURL(_ url: URL) {
         guard let session = tokensCoordinator?.session else {
             return
         }
         let coordinator = LocalSchemeCoordinator(
             navigationController: navigationController,
             keystore: keystore,
-            session: session
+            session: session,
+            url: url
         )
         coordinator.delegate = self
         coordinator.start()

@@ -2,6 +2,7 @@
 
 import Foundation
 import URLNavigator
+import TrustSDK
 
 struct URLNavigatorCoordinator {
     let branch = BranchCoordinator()
