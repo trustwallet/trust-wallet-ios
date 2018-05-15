@@ -154,6 +154,7 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
             delegate?.didPressURL(url, in: self)
         case .clearBrowserCache:
             cleadCache()
+            CookiesStore.delete()
         }
     }
 }

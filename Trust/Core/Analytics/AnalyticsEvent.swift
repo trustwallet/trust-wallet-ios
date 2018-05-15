@@ -24,7 +24,6 @@ enum AnalyticsEvent {
     case failedToExcludeFromBackup(Error)
     // DAPP browser events
     case failedToLoadTrustPageProvider
-    case failedToLoadCookies
     // Security
     case dataProtectionDisabled
 
@@ -58,8 +57,6 @@ enum AnalyticsEvent {
             return "failedToExcludeFromBackup"
         case .failedToLoadTrustPageProvider:
             return "failedToLoadTrustPageProvider"
-        case .failedToLoadCookies:
-            return "failedToLoadCookies"
         case .dataProtectionDisabled:
             return "dataProtectionDisabled"
         }
@@ -94,8 +91,6 @@ enum AnalyticsEvent {
         case .failedToExcludeFromBackup(let error):
             return ["error": error.prettyError]
         case .failedToLoadTrustPageProvider:
-            return [:]
-        case .failedToLoadCookies:
             return [:]
         case .dataProtectionDisabled:
             return [:]

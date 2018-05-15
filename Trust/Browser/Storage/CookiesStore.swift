@@ -22,8 +22,6 @@ class CookiesStore {
             fetchCookies()
         }.done { cookies in
             save(cookies: cookies)
-        }.catch { _ in
-            Analytics.track(.failedToLoadCookies)
         }
     }
 
