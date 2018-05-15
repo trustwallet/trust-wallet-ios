@@ -79,7 +79,8 @@ PODS:
     - CryptoSwift
     - TrezorCrypto
     - TrustCore
-  - TrustSDK (0.1.0)
+  - TrustSDK (0.0.1):
+    - TrustCore
   - TrustWeb3Provider (0.1.7)
   - URLNavigator (2.0.4)
 
@@ -116,7 +117,7 @@ DEPENDENCIES:
   - URLNavigator
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Alamofire
     - APIKit
     - BigInt
@@ -181,7 +182,7 @@ CHECKOUT OPTIONS:
     :commit: 80bd79cbeede842949b229f81bc6328f53701c5a
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
   TrustSDK:
-    :commit: 76729e9e8684438255e0744a19dd0357b5f940b8
+    :commit: d1acb1d63a53ce3dc90175acbe04375d74b32791
     :git: https://github.com/TrustWallet/TrustSDK-iOS
   TrustWeb3Provider:
     :commit: f4e0ebb1b8fa4812637babe85ef975d116543dfd
@@ -226,10 +227,10 @@ SPEC CHECKSUMS:
   TrezorCrypto: ecef681446bf02af6248d3b5e394026d7e766e56
   TrustCore: 688df9a241008cf9cfa3842ec8ef28777a8b7534
   TrustKeystore: 1bd016c67de7314e84b79dba2c22ef64b86bb63e
-  TrustSDK: fe6aac90d0ae5ca0be5b6ccd09f0008d1e223f1d
+  TrustSDK: 012021ae4ee21492741559160e8438ff2d514021
   TrustWeb3Provider: 50fa391bdf170feb43dd4419992931510a5751d8
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
 PODFILE CHECKSUM: 407574053cad2a6d49a5e6356743e399229e35b6
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.2
