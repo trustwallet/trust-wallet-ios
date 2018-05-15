@@ -65,10 +65,10 @@ class TrustNetwork: NetworkProtocol {
 
     private func getTickerFrom(rawTicker: CoinTicker, withKey tickersKey: String) -> CoinTicker {
         return CoinTicker(
-            id: "0",
+            id: rawTicker.id,
             symbol: rawTicker.symbol,
-            price: "",
-            percent_change_24h: "0",
+            price: rawTicker.price,
+            percent_change_24h: rawTicker.percent_change_24h,
             contract: rawTicker.contract,
             tickersKey: tickersKey
         )
