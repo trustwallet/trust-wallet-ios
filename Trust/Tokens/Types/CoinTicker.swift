@@ -5,7 +5,6 @@ import Realm
 import RealmSwift
 
 class CoinTicker: Object, Decodable {
-    @objc dynamic var id: String = ""
     @objc dynamic var symbol: String = ""
     @objc dynamic var price: String = ""
     @objc dynamic var percent_change_24h: String = ""
@@ -14,7 +13,6 @@ class CoinTicker: Object, Decodable {
     @objc dynamic var key: String = ""
 
     convenience init(
-        id: String = "",
         symbol: String = "",
         price: String = "",
         percent_change_24h: String = "",
@@ -22,13 +20,12 @@ class CoinTicker: Object, Decodable {
         tickersKey: String = ""
     ) {
         self.init()
-        self.id = id
         self.symbol = symbol
         self.price = price
         self.percent_change_24h = percent_change_24h
         self.contract = contract
         self.tickersKey = tickersKey
-        self.key = "\(self.id)_\(symbol)_\(contract)_\(tickersKey)"
+        self.key = "\(symbol)_\(contract)_\(tickersKey)"
     }
 
     required init() {
@@ -48,7 +45,6 @@ class CoinTicker: Object, Decodable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case id
         case symbol
         case price
         case percent_change_24h
