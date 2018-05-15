@@ -138,5 +138,6 @@ extension TransactionCoordinator: TransactionsViewControllerDelegate {
 extension TransactionCoordinator: TransactionViewControllerDelegate {
     func didPressURL(_ url: URL) {
         delegate?.didPressURL(url)
+        navigationController.dismiss(animated: true, completion: nil)
     }
 }

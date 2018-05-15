@@ -237,5 +237,6 @@ extension TokensCoordinator: NFTokenViewControllerDelegate {
 extension TokensCoordinator: TransactionViewControllerDelegate {
     func didPressURL(_ url: URL) {
         openURL(url)
+        navigationController.dismiss(animated: true, completion: nil)
     }
 }
