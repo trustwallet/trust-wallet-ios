@@ -75,7 +75,9 @@ class BrowserViewController: UIViewController {
 
     //Take a look at this issue : https://stackoverflow.com/questions/26383031/wkwebview-causes-my-view-controller-to-leak
     lazy var config: WKWebViewConfiguration = {
-        return WKWebViewConfiguration.make(for: account, with: sessionConfig, in: ScriptMessageProxy(delegate: self))
+        let config = WKWebViewConfiguration.make(for: account, with: sessionConfig, in: ScriptMessageProxy(delegate: self))
+        config.websiteDataStore = WKWebsiteDataStore.default()
+        return config
     }()
 
     init(
