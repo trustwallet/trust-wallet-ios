@@ -273,6 +273,7 @@
 		61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */; };
 		664D11A12007D59F0041A0B0 /* EstimateGasRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */; };
 		7301BA9220A3117000E1AFE5 /* AutoLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7301BA9120A3117000E1AFE5 /* AutoLock.swift */; };
+		7301BA9620AB1E5600E1AFE5 /* CookiesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7301BA9520AB1E5600E1AFE5 /* CookiesStore.swift */; };
 		7302405C204C65DF00B327DF /* NonFungibleTokenCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7302405B204C65DF00B327DF /* NonFungibleTokenCategory.swift */; };
 		73200B642040B9D700118A82 /* CryptoAddressValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B632040B9D700118A82 /* CryptoAddressValidatorTest.swift */; };
 		73200B672044B22600118A82 /* TokensDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B662044B22600118A82 /* TokensDataStore.swift */; };
@@ -750,6 +751,7 @@
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateGasRequest.swift; sourceTree = "<group>"; };
 		7301BA9120A3117000E1AFE5 /* AutoLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLock.swift; sourceTree = "<group>"; };
+		7301BA9520AB1E5600E1AFE5 /* CookiesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookiesStore.swift; sourceTree = "<group>"; };
 		7302405B204C65DF00B327DF /* NonFungibleTokenCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenCategory.swift; sourceTree = "<group>"; };
 		73200B632040B9D700118A82 /* CryptoAddressValidatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoAddressValidatorTest.swift; sourceTree = "<group>"; };
 		73200B662044B22600118A82 /* TokensDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensDataStore.swift; sourceTree = "<group>"; };
@@ -2412,6 +2414,7 @@
 			children = (
 				903682F3204A714C00013479 /* BookmarksStore.swift */,
 				BB58B92C206F70E800A70A3C /* HistoryStore.swift */,
+				7301BA9520AB1E5600E1AFE5 /* CookiesStore.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -3068,6 +3071,7 @@
 				29E6E0701FEA12910079265A /* TransactionConfigurator.swift in Sources */,
 				299B5E3B1FD141B70051361C /* BackupViewModel.swift in Sources */,
 				775DF43E203E38D2009CD082 /* NonFungibleTokenViewCell.swift in Sources */,
+				7301BA9620AB1E5600E1AFE5 /* CookiesStore.swift in Sources */,
 				29CA4B791F6FBFD50032313D /* Balance.swift in Sources */,
 				73DE7B35209884AB00AE04E6 /* NonFungibleCollectionViewCellModel.swift in Sources */,
 				903682F6204A71B000013479 /* Bookmark.swift in Sources */,

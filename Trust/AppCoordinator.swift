@@ -105,6 +105,7 @@ class AppCoordinator: NSObject, Coordinator {
         lock.deletePasscode()
         pushNotificationRegistrar.unregister()
         coordinators.removeAll()
+        CookiesStore.delete()
         navigationController.dismiss(animated: true, completion: nil)
         resetToWelcomeScreen()
     }
