@@ -30,12 +30,10 @@ class FakeTokensNetwork: NetworkProtocol {
     
     func tickers(for tokens: [TokenObject], completion: @escaping ([CoinTicker]?) -> Void) {
         let ticker = CoinTicker(
-            id: "ethereum",
             symbol: "ETH",
             price: "100",
             percent_change_24h: "-2.39",
             contract: config.server.address,
-            image: "https://files.coinmarketcap.com/static/img/coins/128x128/ethereum.png",
             tickersKey: "tickersKey")
         completion([ticker])
     }
@@ -72,7 +70,7 @@ class FakeTokensNetwork: NetworkProtocol {
 
     func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]> {
         return Promise { seal in
-            let ticker = CoinTicker(id: "ethereum", symbol: "ETH", price: "100", percent_change_24h: "-2.39", contract: config.server.address, image: "https://files.coinmarketcap.com/static/img/coins/128x128/ethereum.png")
+            let ticker = CoinTicker(symbol: "ETH", price: "100", percent_change_24h: "-2.39", contract: config.server.address)
             seal.fulfill([ticker])
         }
     }

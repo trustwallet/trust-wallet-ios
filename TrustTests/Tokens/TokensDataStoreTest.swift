@@ -16,9 +16,9 @@ class TokensDataStoreTest: XCTestCase {
         tokensDataStore = TokensDataStore(realm: .make(), config: config)
 
         coinTickers = [
-            CoinTicker(id: "id1", symbol: "symbol1", price: "10", percent_change_24h: "percent_change_24h_1", contract: "contract1", image: "image1", tickersKey: tickersKey),
-            CoinTicker(id: "id2", symbol: "symbol2", price: "20", percent_change_24h: "percent_change_24h_2", contract: "contract2", image: "image2", tickersKey: tickersKey),
-            CoinTicker(id: "id3", symbol: "symbol3", price: "30", percent_change_24h: "percent_change_24h_3", contract: "contract3", image: "image3", tickersKey: tickersKey),
+            CoinTicker(symbol: "symbol1", price: "10", percent_change_24h: "percent_change_24h_1", contract: "contract1", tickersKey: tickersKey),
+            CoinTicker(symbol: "symbol2", price: "20", percent_change_24h: "percent_change_24h_2", contract: "contract2", tickersKey: tickersKey),
+            CoinTicker(symbol: "symbol3", price: "30", percent_change_24h: "percent_change_24h_3", contract: "contract3", tickersKey: tickersKey),
         ]
     }
 
@@ -30,9 +30,6 @@ class TokensDataStoreTest: XCTestCase {
         let returnedCoinTickers = tokensDataStore.tickers()
         
         XCTAssertEqual(3, returnedCoinTickers.count)
-        XCTAssertEqual("id1", returnedCoinTickers[0].id)
-        XCTAssertEqual("id2", returnedCoinTickers[1].id)
-        XCTAssertEqual("id3", returnedCoinTickers[2].id)
     }
     
     func testDeleteTickers() {
@@ -41,12 +38,10 @@ class TokensDataStoreTest: XCTestCase {
 
         do {
             let coinTicker = CoinTicker(
-                id: "",
                 symbol: "",
                 price: "",
                 percent_change_24h: "",
                 contract: "",
-                image: "",
                 tickersKey: "This is a tickers key that does not match anyone"
             )
             try tokensDataStore.realm.write {
@@ -60,7 +55,7 @@ class TokensDataStoreTest: XCTestCase {
         XCTAssertEqual(0, tokensDataStore.tickers().count)
 
         let coinTickers = [
-            CoinTicker(id: "id1", symbol: "", price: "", percent_change_24h: "", contract: "", image: "", tickersKey: tokensDataStore.config.tickersKey)
+            CoinTicker(symbol: "", price: "", percent_change_24h: "", contract: "", tickersKey: tokensDataStore.config.tickersKey)
         ]
 
         tokensDataStore.saveTickers(tickers: coinTickers)
