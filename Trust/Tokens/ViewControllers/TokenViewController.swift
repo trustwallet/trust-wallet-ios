@@ -21,7 +21,7 @@ class TokenViewController: UIViewController {
     }()
 
     private var insets: UIEdgeInsets {
-        return UIEdgeInsets(top: header.frame.height + 66, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets(top: header.frame.height + 100, left: 0, bottom: 60, right: 0)
     }
 
     private var viewModel: TokenViewModel
