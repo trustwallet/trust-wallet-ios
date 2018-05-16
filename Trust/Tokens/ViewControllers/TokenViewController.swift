@@ -65,11 +65,16 @@ class TokenViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupInitialViewState()
-        viewModel.fetch()
+        fetch()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func fetch() {
+        startLoading()
+        viewModel.fetch()
     }
 
     private func observToken() {
@@ -83,6 +88,7 @@ class TokenViewController: UIViewController {
         viewModel.transactionObservation { [weak self] in
             self?.refreshControl.endRefreshing()
             self?.tableView.reloadData()
+            self?.endLoading()
         }
     }
 
@@ -110,7 +116,7 @@ class TokenViewController: UIViewController {
 
     @objc func pullToRefresh() {
         refreshControl.beginRefreshing()
-        viewModel.fetch()
+        fetch()
     }
 
     @objc func send() {
@@ -127,7 +133,7 @@ class TokenViewController: UIViewController {
 
     private func configTableViewStates() {
         errorView = ErrorView(insets: insets, onRetry: { [weak self] in
-            self?.viewModel.fetch()
+            self?.fetch()
         })
         loadingView = LoadingView(insets: insets)
         emptyView = TransactionsEmptyView(insets: insets)
