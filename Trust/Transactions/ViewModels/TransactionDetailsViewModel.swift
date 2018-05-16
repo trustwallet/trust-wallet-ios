@@ -141,7 +141,7 @@ struct TransactionDetailsViewModel {
     }
 
     var gasFeeLabelTitle: String {
-        return NSLocalizedString("transaction.gasFee.label.title", value: "Gas Fee", comment: "")
+        return NSLocalizedString("Network Fee", value: "Network Fee", comment: "")
     }
 
     var confirmation: String {
