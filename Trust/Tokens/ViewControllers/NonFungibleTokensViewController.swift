@@ -128,6 +128,6 @@ extension NonFungibleTokensViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return StyleLayout.TableView.heightForHeaderInSection
+        return StyleLayout.CollectibleView.heightForHeaderInSection
     }
 }

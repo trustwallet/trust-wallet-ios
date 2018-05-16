@@ -37,7 +37,11 @@ struct StyleLayout {
     static let sideMargin: CGFloat = 15
 
     struct TableView {
-        static let heightForHeaderInSection: CGFloat = 40
+        static let heightForHeaderInSection: CGFloat = 30
         static let separatorColor = UIColor(hex: "d7d7d7")
+    }
+
+    struct CollectibleView {
+        static let heightForHeaderInSection: CGFloat = 40
     }
 }

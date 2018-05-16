@@ -16,7 +16,7 @@ class TokenViewController: UIViewController {
     private var tableView = TransactionsTableView()
 
     private lazy var header: TokenHeaderView = {
-        let view = TokenHeaderView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 264))
+        let view = TokenHeaderView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 224))
         return view
     }()
 
@@ -81,6 +81,7 @@ class TokenViewController: UIViewController {
         viewModel.tokenObservation { [weak self] in
             self?.refreshControl.endRefreshing()
             self?.updateHeader()
+            self?.endLoading()
         }
     }
 

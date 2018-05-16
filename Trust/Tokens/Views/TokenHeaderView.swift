@@ -4,6 +4,10 @@ import UIKit
 
 class TokenHeaderView: UIView {
 
+    private struct Layout {
+        static let imageSize: CGFloat = 70
+    }
+
     lazy var amountLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textColor = Colors.black
@@ -46,7 +50,6 @@ class TokenHeaderView: UIView {
         return stackView
     }()
 
-//    let currencyAmountLabel = UILabel()
     let percentChange = UILabel()
 
     override init(frame: CGRect) {
@@ -58,9 +61,6 @@ class TokenHeaderView: UIView {
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
         amountLabel.textAlignment = .right
 
-//        currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
-//        currencyAmountLabel.textAlignment = .right
-//
         percentChange.translatesAutoresizingMaskIntoConstraints = false
         percentChange.textAlignment = .right
 
@@ -74,19 +74,13 @@ class TokenHeaderView: UIView {
         marketPriceStack.axis = .horizontal
         marketPriceStack.spacing = 5
 
-//
-//        let rightStackView = UIStackView(arrangedSubviews: [marketPriceStack])
-//        rightStackView.translatesAutoresizingMaskIntoConstraints = false
-//        rightStackView.axis = .vertical
-//        rightStackView.alignment = .center
-//        rightStackView.spacing =  5
-
         container.addArrangedSubview(.spacer(height: StyleLayout.sideMargin * 2))
         container.addArrangedSubview(imageView)
-        container.addArrangedSubview(.spacer(height: 12))
+        container.addArrangedSubview(.spacer(height: 6))
         container.addArrangedSubview(amountLabel)
+        container.addArrangedSubview(.spacer(height: 6))
         container.addArrangedSubview(marketPriceStack)
-        container.addArrangedSubview(.spacer(height: 10))
+        container.addArrangedSubview(.spacer(height: 6))
         container.addArrangedSubview(buttonsView)
 
         addSubview(container)
@@ -100,8 +94,8 @@ class TokenHeaderView: UIView {
             buttonsView.leadingAnchor.constraint(equalTo: leadingAnchor),
             buttonsView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            imageView.heightAnchor.constraint(equalToConstant: 84),
-            imageView.widthAnchor.constraint(equalToConstant: 84),
+            imageView.heightAnchor.constraint(equalToConstant: Layout.imageSize),
+            imageView.widthAnchor.constraint(equalToConstant: Layout.imageSize),
         ])
 
         backgroundColor = Colors.veryVeryLightGray
