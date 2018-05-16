@@ -140,12 +140,7 @@ class ConfirmPaymentViewController: UIViewController {
             .spacer(height: TransactionAppearance.spacing),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             .spacer(height: TransactionAppearance.spacing),
-            TransactionAppearance.oneLine(
-                title: detailsViewModel.estimatedFeeTitle,
-                subTitle: detailsViewModel.estimatedFeeText
-            ) { [unowned self] _, _, _ in
-                self.edit()
-            },
+
             .spacer(height: TransactionAppearance.spacing),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.oneLine(
@@ -164,6 +159,15 @@ class ConfirmPaymentViewController: UIViewController {
         }
 
         updateSubmitButton()
+    }
+
+    private func networkFeeView(_ viewModel: ConfirmPaymentDetailsViewModel) -> UIView {
+        return TransactionAppearance.oneLine(
+            title: viewModel.estimatedFeeTitle,
+            subTitle: viewModel.estimatedFeeText
+        ) { [unowned self] _, _, _ in
+            self.edit()
+        }
     }
 
     private func updateSubmitButton() {
