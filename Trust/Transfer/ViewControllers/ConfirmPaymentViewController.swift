@@ -47,6 +47,14 @@ class ConfirmPaymentViewController: UIViewController {
         return stackView
     }()
 
+    lazy var footerStack: UIStackView = {
+        let footerStack = UIStackView(arrangedSubviews: [
+            submitButton,
+        ])
+        footerStack.translatesAutoresizingMaskIntoConstraints = false
+        return footerStack
+    }()
+
     init(
         session: WalletSession,
         keystore: Keystore,
@@ -70,7 +78,7 @@ class ConfirmPaymentViewController: UIViewController {
         loadingView = LoadingView()
 
         view.addSubview(stackView)
-        view.addSubview(submitButton)
+        view.addSubview(footerStack)
         fetch()
     }
 
@@ -99,9 +107,13 @@ class ConfirmPaymentViewController: UIViewController {
             stackView.topAnchor.constraint(equalTo: view.layoutGuide.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
-            submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            submitButton.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor, constant: -15),
+
+            footerStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -StyleLayout.sideMargin),
+            footerStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: StyleLayout.sideMargin),
+            footerStack.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor, constant: -StyleLayout.sideMargin),
+
+            submitButton.leadingAnchor.constraint(equalTo: footerStack.leadingAnchor),
+            submitButton.trailingAnchor.constraint(equalTo: footerStack.leadingAnchor),
         ])
 
         let header = TransactionHeaderView()
