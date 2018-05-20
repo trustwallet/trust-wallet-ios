@@ -46,9 +46,6 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="Su7-1W-bDk" firstAttribute="top" secondItem="gzC-hL-qRv" secondAttribute="bottom" constant="4" id="PQc-8k-3ip"/>
-                                </constraints>
                             </stackView>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uf5-TC-p3g">
                                 <rect key="frame" x="239" y="10.5" width="51" height="31"/>
@@ -62,10 +59,20 @@
                             <constraint firstAttribute="bottom" secondItem="fRy-j2-9ES" secondAttribute="bottom" id="sQQ-18-ZYL"/>
                         </constraints>
                     </stackView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PFP-IJ-Dn3">
+                        <rect key="frame" x="83" y="79" width="236" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="mJt-Lw-6BA"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="d5W-Lo-p3o" secondAttribute="trailing" constant="15" id="0eN-uy-pSI"/>
+                    <constraint firstItem="PFP-IJ-Dn3" firstAttribute="leading" secondItem="fRy-j2-9ES" secondAttribute="leading" id="JYz-Od-oxu"/>
                     <constraint firstItem="d5W-Lo-p3o" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Tdu-SU-ud4"/>
+                    <constraint firstAttribute="trailing" secondItem="PFP-IJ-Dn3" secondAttribute="trailing" id="aHR-aW-AjX"/>
+                    <constraint firstAttribute="bottom" secondItem="PFP-IJ-Dn3" secondAttribute="bottom" id="iPM-NN-4Wg"/>
                     <constraint firstItem="d5W-Lo-p3o" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="vlf-YR-icm"/>
                 </constraints>
             </tableViewCellContentView>
@@ -77,7 +84,7 @@
                 <outlet property="tokenImageView" destination="Tfc-cq-2hm" id="QtY-sC-dhw"/>
                 <outlet property="tokenLabel" destination="gzC-hL-qRv" id="cHh-cJ-bga"/>
             </connections>
-            <point key="canvasLocation" x="33.5" y="72"/>
+            <point key="canvasLocation" x="-204.5" y="95"/>
         </tableViewCell>
     </objects>
 </document>
