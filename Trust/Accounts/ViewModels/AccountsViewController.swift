@@ -160,6 +160,9 @@ class AccountsViewController: UITableViewController {
     }
 
     private func refreshENSNames() {
+        guard case RPCServer.main = config.server else {
+            return
+        }
         let addresses = wallets.compactMap { $0.address }
         let promises =  addresses.map { ensManager.lookup(address: $0) }
         _ = when(fulfilled: promises).done { [weak self] names in
