@@ -112,14 +112,14 @@ enum RPCServer {
             case .rinkeby: return "https://rinkeby.trustwalletapp.com"
             case .poa: return "https://poa.trustwalletapp.com"
             case .sokol: return "https://trust-sokol.herokuapp.com"
-            case .custom(let custom):
+            case .custom:
                 return "" // Enable? make optional
             }
         }()
         return URL(string: urlString)!
     }
 
-    var ensContract: String? {
+    var ensContract: String {
         // https://docs.ens.domains/en/latest/introduction.html#ens-on-ethereum
         switch self {
         case .main:
@@ -128,8 +128,8 @@ enum RPCServer {
             return "0x112234455c3a32fd11230c42e7bccd4a84e02010"
         case .rinkeby:
             return "0xe7410170f87102df0055eb195163a03b7f2bff4a"
-        default:
-            return .none
+        case .classic, .poa, .kovan, .callisto, .sokol, .custom:
+            return "0x0000000000000000000000000000000000000000"
         }
     }
 

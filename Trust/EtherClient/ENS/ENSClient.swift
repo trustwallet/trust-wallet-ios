@@ -28,7 +28,11 @@ struct ENSClient {
     static let reverseSuffix = "addr.reverse"
 
     let server: RPCServer
-    
+
+    var ensAvailable: Bool {
+        return server.ensContract != Address.zero.description
+    }
+
     init(server: RPCServer) {
         self.server = server
     }
@@ -51,25 +55,19 @@ struct ENSClient {
     }
 
     func resolverOf(name: String) -> Promise<Address> {
-        guard let contract = server.ensContract else {
-            return Promise { $0.reject(ENSError.contractNotFound) }
-        }
         let node = namehash(name)
         let encoded = ENSEncoder.encodeResolver(node: node)
         let request = EtherServiceRequest(
-            batch: BatchFactory().create(CallRequest(to: contract, data: encoded.hexEncoded))
+            batch: BatchFactory().create(CallRequest(to: server.ensContract, data: encoded.hexEncoded))
         )
         return self.sendAddr(request: request)
     }
 
     func ownerOf(name: String) -> Promise<Address> {
-        guard let contract = server.ensContract else {
-            return Promise { $0.reject(ENSError.contractNotFound) }
-        }
         let node = namehash(name)
         let encoded = ENSEncoder.encodeOwner(node: node)
         let request = EtherServiceRequest(
-            batch: BatchFactory().create(CallRequest(to: contract, data: encoded.hexEncoded))
+            batch: BatchFactory().create(CallRequest(to: server.ensContract, data: encoded.hexEncoded))
         )
         return self.sendAddr(request: request)
     }

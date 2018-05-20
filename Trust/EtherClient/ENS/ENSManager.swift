@@ -17,6 +17,9 @@ struct ENSManager {
     }
 
     func resolve(name: String, ignoreCache: Bool = false) -> Promise<Address> {
+        guard client.ensAvailable == true else {
+            return Promise { $0.reject(ENSError.contractNotFound) }
+        }
         let now = Date()
         let filtered = store.records.filter("name == %@", name)
         if ignoreCache == false, let record = filtered.first, now.timeIntervalSince(record.updatedAt) <= localInterval {
@@ -31,6 +34,9 @@ struct ENSManager {
     }
 
     func lookup(address: Address, ignoreCache: Bool = false) -> Promise<String> {
+        guard client.ensAvailable == true else {
+            return Promise { $0.reject(ENSError.contractNotFound) }
+        }
         let now = Date()
         let filtered = store.records.filter("address == %@", address.description)
         if ignoreCache == false, let record = filtered.first, now.timeIntervalSince(record.updatedAt) <= localInterval {
