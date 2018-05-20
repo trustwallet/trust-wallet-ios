@@ -40,6 +40,7 @@ class TransactionsViewController: UIViewController {
         view.backgroundColor = TransactionsViewModel.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
+        tableView.separatorStyle = .none
         tableView.dataSource = self
         view.addSubview(tableView)
         tableView.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
@@ -149,6 +150,11 @@ class TransactionsViewController: UIViewController {
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
 
+    private func showSeparator(for index: IndexPath) -> Bool {
+        let numberOfRows = tableView.numberOfRows(inSection: index.section)
+        return index.row == numberOfRows - 1
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
         viewModel.invalidateTransactionsObservation()
@@ -175,7 +181,7 @@ extension TransactionsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TransactionViewCell.identifier, for: indexPath) as! TransactionViewCell
-        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
+        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath), and: showSeparator(for: indexPath))
         return cell
     }
 
