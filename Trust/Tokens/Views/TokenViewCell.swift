@@ -13,6 +13,7 @@ class TokenViewCell: UITableViewCell {
     let currencyAmountLabel = UILabel()
     let symbolImageView = TokenImageView()
     let percentChange = UILabel()
+    let separatorView = UIView()
 
     private struct Layout {
         static let stackVericalOffset: CGFloat = 10
@@ -37,6 +38,9 @@ class TokenViewCell: UITableViewCell {
 
         currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         currencyAmountLabel.textAlignment = .right
+
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
+        separatorView.backgroundColor = StyleLayout.TableView.separatorColor
 
         let leftStackView = UIStackView(arrangedSubviews: [titleLabel])
         leftStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -67,6 +71,7 @@ class TokenViewCell: UITableViewCell {
         stackView.setContentHuggingPriority(.required, for: .horizontal)
 
         contentView.addSubview(stackView)
+        contentView.addSubview(separatorView)
 
         NSLayoutConstraint.activate([
             symbolImageView.widthAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
@@ -75,6 +80,10 @@ class TokenViewCell: UITableViewCell {
             stackView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Layout.stackVericalOffset),
             stackView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            separatorView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            separatorView.heightAnchor.constraint(equalToConstant: StyleLayout.TableView.separatorHeigh),
+            separatorView.leftAnchor.constraint(equalTo: symbolImageView.rightAnchor),
         ])
 
         separatorInset = UIEdgeInsets(

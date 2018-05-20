@@ -66,8 +66,7 @@ class TokensViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = StyleLayout.TableView.separatorColor
+        tableView.separatorStyle = .none
         tableView.backgroundColor = .white
         view.addSubview(tableView)
         view.addSubview(footerView)
