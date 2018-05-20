@@ -11,7 +11,7 @@ struct ENSManager {
     let localInterval: Double = 24 * 60 * 60 // 1 day
     let client: ENSClient
 
-    init(realm: Realm, config: Config) {
+    init(realm: Realm, config: Config = Config()) {
         self.store = ENSStore(realm: realm)
         self.client = ENSClient(server: config.server)
     }
