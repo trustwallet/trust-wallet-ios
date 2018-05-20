@@ -66,8 +66,6 @@ struct Config {
     }
 
     var tickersKey: String {
-        get {
-            return "tickers-" + self.currency.rawValue + "-" + String(self.chainID)
-        }
+        return "tickers-" + self.currency.rawValue + "-" + String(self.chainID)
     }
 }
