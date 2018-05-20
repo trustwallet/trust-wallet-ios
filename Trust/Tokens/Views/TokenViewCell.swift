@@ -83,14 +83,8 @@ class TokenViewCell: UITableViewCell {
             separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             separatorView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
             separatorView.heightAnchor.constraint(equalToConstant: StyleLayout.TableView.separatorHeigh),
-            separatorView.leftAnchor.constraint(equalTo: symbolImageView.rightAnchor),
+            separatorView.leftAnchor.constraint(equalTo: leftStackView.leftAnchor),
         ])
-
-        separatorInset = UIEdgeInsets(
-            top: 0,
-            left: TokensLayout.tableView.layoutInsets.left - contentView.layoutInsets.left - layoutInsets.left,
-            bottom: 0, right: 0
-        )
     }
 
     required init?(coder aDecoder: NSCoder) {
