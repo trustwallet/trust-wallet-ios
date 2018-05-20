@@ -2,7 +2,7 @@
 
 import Foundation
 import URLNavigator
-import TrustSDK
+import TrustWalletSDK
 
 extension InCoordinator: URLNavigable {
 
@@ -15,33 +15,13 @@ extension InCoordinator: URLNavigable {
             self.showTab(.browser(openURL: targetUrl))
             return true
         }
-        let trustSDK = TrustSDK(callbackScheme: "trust")
 
-        
-
-//        navigator.handle("trust://sign-transaction") { url, _, _ in
-//            if let command = parse(url: url as! URL) {
-//                self.handleCommand(command)
-//            }
-//            return true
-//        }
+        navigator.handle("trust://sign-transaction") { url, _, _ in
+            return self.localSchemeCoordinator.trustWalletSDK.handleOpen(url: url as! URL)
+        }
 
         navigator.handle("trust://sign-message") { url, _, _ in
-            let url: URL = url as! URL
-            //if trustSDK.handleCallback(url: url as! URL) {
-                self.handleTrustURL(url)
-            //}
-            return true
+            return self.localSchemeCoordinator.trustWalletSDK.handleOpen(url: url as! URL)
         }
     }
-}
-
-extension String {
-    var data:          Data  { return Data(utf8) }
-    var base64Encoded: Data  { return data.base64EncodedData() }
-    var base64Decoded: Data? { return Data(base64Encoded: self) }
-}
-
-extension Data {
-    var string: String? { return String(data: self, encoding: .utf8) }
 }

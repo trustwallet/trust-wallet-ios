@@ -5,7 +5,7 @@ import TrustCore
 import UIKit
 import RealmSwift
 import URLNavigator
-import TrustSDK
+import TrustWalletSDK
 
 protocol InCoordinatorDelegate: class {
     func didCancel(in coordinator: InCoordinator)
@@ -37,6 +37,16 @@ class InCoordinator: Coordinator {
     var tabBarController: UITabBarController? {
         return self.navigationController.viewControllers.first as? UITabBarController
     }
+    
+    lazy var localSchemeCoordinator: LocalSchemeCoordinator = {
+        let coordinator = LocalSchemeCoordinator(
+            navigationController: navigationController,
+            keystore: keystore,
+            session: tokensCoordinator!.session
+        )
+        coordinator.delegate = self
+        return coordinator
+    }()
 
     lazy var helpUsCoordinator: HelpUsCoordinator = {
         return HelpUsCoordinator(
@@ -70,6 +80,9 @@ class InCoordinator: Coordinator {
 
         helpUsCoordinator.start()
         addCoordinator(helpUsCoordinator)
+
+        localSchemeCoordinator.start()
+        addCoordinator(localSchemeCoordinator)
     }
 
     func showTabBar(for account: Wallet) {
@@ -249,21 +262,6 @@ class InCoordinator: Coordinator {
             showTab(.wallet(.addToken(address)))
         }
         return true
-    }
-
-    func handleTrustURL(_ url: URL) {
-        guard let session = tokensCoordinator?.session else {
-            return
-        }
-        let coordinator = LocalSchemeCoordinator(
-            navigationController: navigationController,
-            keystore: keystore,
-            session: session,
-            url: url
-        )
-        coordinator.delegate = self
-        coordinator.start()
-        addCoordinator(coordinator)
     }
 }
 

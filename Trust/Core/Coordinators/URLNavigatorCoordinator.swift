@@ -2,7 +2,7 @@
 
 import Foundation
 import URLNavigator
-import TrustSDK
+import TrustWalletSDK
 
 struct URLNavigatorCoordinator {
     let branch = BranchCoordinator()
@@ -10,6 +10,7 @@ struct URLNavigatorCoordinator {
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
         var handled = branch.application(app, open: url, options: options)
+
         if !handled {
             handled = navigator.open(url)
         }
