@@ -29,7 +29,7 @@ class LockEnterPasscodeCoordinator: Coordinator {
     }
     //This method should be refactored!!!
     func showAuthentication() {
-        guard window.rootViewController == lockEnterPasscodeViewController else { return }
+        guard window.rootViewController == lockEnterPasscodeViewController, lock.isPasscodeSet() else { return }
 
         lockEnterPasscodeViewController.showKeyboard()
         lockEnterPasscodeViewController.showBioMerickAuth()
