@@ -9,10 +9,11 @@ struct ENSManager {
 
     var store: ENSStore
     let localInterval: Double = 24 * 60 * 60 // 1 day
-    let client = ENSClient()
+    let client: ENSClient
 
-    init(realm: Realm) {
+    init(realm: Realm, config: Config) {
         self.store = ENSStore(realm: realm)
+        self.client = ENSClient(server: config.server)
     }
 
     func resolve(name: String, ignoreCache: Bool = false) -> Promise<Address> {

@@ -138,7 +138,7 @@ class InCoordinator: Coordinator {
             storage: transactionsStorage,
             balanceCoordinator: balanceCoordinator,
             sharedRealm: sharedRealm,
-            ensManager: ENSManager(realm: realm)
+            ensManager: ENSManager(realm: realm, config: config)
         )
         settingsCoordinator.rootViewController.tabBarItem = viewModel.settingsBarItem
         settingsCoordinator.delegate = self

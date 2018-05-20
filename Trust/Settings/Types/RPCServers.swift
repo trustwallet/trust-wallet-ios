@@ -119,6 +119,20 @@ enum RPCServer {
         return URL(string: urlString)!
     }
 
+    var ensContract: String? {
+        // https://docs.ens.domains/en/latest/introduction.html#ens-on-ethereum
+        switch self {
+        case .main:
+            return "0x314159265dd8dbb310642f98f50c066173c1259b"
+        case .ropsten:
+            return "0x112234455c3a32fd11230c42e7bccd4a84e02010"
+        case .rinkeby:
+            return "0xe7410170f87102df0055eb195163a03b7f2bff4a"
+        default:
+            return .none
+        }
+    }
+
     init(name: String) {
         self = {
             switch name {

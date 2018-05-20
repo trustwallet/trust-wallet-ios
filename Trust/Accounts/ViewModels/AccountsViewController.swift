@@ -160,7 +160,7 @@ class AccountsViewController: UITableViewController {
     }
 
     private func refreshENSNames() {
-        guard case RPCServer.main = config.server else {
+        guard config.server.ensContract != .none else {
             return
         }
         let addresses = wallets.compactMap { $0.address }
