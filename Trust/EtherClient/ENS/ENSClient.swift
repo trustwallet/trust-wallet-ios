@@ -30,7 +30,7 @@ struct ENSClient {
     let server: RPCServer
 
     var ensAvailable: Bool {
-        return server.ensContract != Address.zero.description
+        return server.ensContract != Address.zero
     }
 
     init(server: RPCServer) {
@@ -58,7 +58,7 @@ struct ENSClient {
         let node = namehash(name)
         let encoded = ENSEncoder.encodeResolver(node: node)
         let request = EtherServiceRequest(
-            batch: BatchFactory().create(CallRequest(to: server.ensContract, data: encoded.hexEncoded))
+            batch: BatchFactory().create(CallRequest(to: server.ensContract.description, data: encoded.hexEncoded))
         )
         return self.sendAddr(request: request)
     }
@@ -67,7 +67,7 @@ struct ENSClient {
         let node = namehash(name)
         let encoded = ENSEncoder.encodeOwner(node: node)
         let request = EtherServiceRequest(
-            batch: BatchFactory().create(CallRequest(to: server.ensContract, data: encoded.hexEncoded))
+            batch: BatchFactory().create(CallRequest(to: server.ensContract.description, data: encoded.hexEncoded))
         )
         return self.sendAddr(request: request)
     }

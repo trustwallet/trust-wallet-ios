@@ -17,7 +17,7 @@ struct ENSManager {
     }
 
     func resolve(name: String, ignoreCache: Bool = false) -> Promise<Address> {
-        guard client.ensAvailable == true else {
+        guard client.ensAvailable else {
             return Promise { $0.reject(ENSError.contractNotFound) }
         }
         let now = Date()
@@ -34,7 +34,7 @@ struct ENSManager {
     }
 
     func lookup(address: Address, ignoreCache: Bool = false) -> Promise<String> {
-        guard client.ensAvailable == true else {
+        guard client.ensAvailable else {
             return Promise { $0.reject(ENSError.contractNotFound) }
         }
         let now = Date()

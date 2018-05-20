@@ -1,6 +1,7 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustCore
 
 enum NetworkType {
     case main
@@ -119,17 +120,17 @@ enum RPCServer {
         return URL(string: urlString)!
     }
 
-    var ensContract: String {
+    var ensContract: Address {
         // https://docs.ens.domains/en/latest/introduction.html#ens-on-ethereum
         switch self {
         case .main:
-            return "0x314159265dd8dbb310642f98f50c066173c1259b"
+            return Address(string: "0x314159265dd8dbb310642f98f50c066173c1259b")!
         case .ropsten:
-            return "0x112234455c3a32fd11230c42e7bccd4a84e02010"
+            return Address(string: "0x112234455c3a32fd11230c42e7bccd4a84e02010")!
         case .rinkeby:
-            return "0xe7410170f87102df0055eb195163a03b7f2bff4a"
+            return Address(string: "0xe7410170f87102df0055eb195163a03b7f2bff4a")!
         case .classic, .poa, .kovan, .callisto, .sokol, .custom:
-            return "0x0000000000000000000000000000000000000000"
+            return Address.zero
         }
     }
 
