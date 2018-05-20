@@ -25,7 +25,11 @@ class CoinTicker: Object, Decodable {
         self.percent_change_24h = percent_change_24h
         self.contract = contract
         self.tickersKey = tickersKey
-        self.key = "\(symbol)_\(contract)_\(tickersKey)"
+        self.key = CoinTicker.getKey(symbol: symbol, contract: contract, tickersKey: tickersKey)
+    }
+
+    static func getKey(symbol: String, contract: String, tickersKey: String) -> String {
+        return "\(symbol)_\(contract)_\(tickersKey)"
     }
 
     required init() {

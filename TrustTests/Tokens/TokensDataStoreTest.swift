@@ -4,14 +4,17 @@ import XCTest
 @testable import Trust
 
 class TokensDataStoreTest: XCTestCase {
+    var config: Config!
+    var tickersKey: String!
+
     var tokensDataStore: TokensDataStore!
     var coinTickers: [CoinTicker]!
 
     override func setUp() {
         super.setUp()
 
-        let config = Config.make()
-        let tickersKey = config.tickersKey
+        config = Config.make()
+        tickersKey = config.tickersKey
 
         tokensDataStore = TokensDataStore(realm: .make(), config: config)
 
@@ -96,5 +99,32 @@ class TokensDataStoreTest: XCTestCase {
         )
 
         XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject, with: coinTickers))
+    }
+
+    func testGetCoinTickerForAParticularToken() {
+        // This test checks that even the key generation algorithm changes, coinTicker(for:) still can pick up the correct CoinTicker object without needing to delete the old CoinTicker records since they have old key.
+        let coinTickersThatHaveSameFieldsButDifferentKey: [CoinTicker] = [
+            {
+                let coinTicker = CoinTicker(symbol: "same-symbol", price: "", percent_change_24h: "", contract: "same-contract-address", tickersKey: tickersKey)
+                coinTicker.key = "old-key"
+                return coinTicker
+            }(),
+            {
+                let coinTicker = CoinTicker(symbol: "same-symbol", price: "", percent_change_24h: "", contract: "same-contract-address", tickersKey: tickersKey)
+                return coinTicker
+            }()
+        ]
+
+        tokensDataStore.saveTickers(tickers: coinTickersThatHaveSameFieldsButDifferentKey)
+
+        let token: TokenObject = {
+            let token = TokenObject()
+            token.contract = "same-contract-address"
+            return token
+        }()
+
+        let coinTicker = tokensDataStore.coinTicker(for: token)
+
+        XCTAssertEqual("same-symbol_same-contract-address_tickers-USD-1", coinTicker?.key)
     }
 }

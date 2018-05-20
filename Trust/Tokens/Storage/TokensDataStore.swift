@@ -54,7 +54,9 @@ class TokensDataStore {
     }
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
-        return tickers().first(where: { $0.contract == token.contract })
+        return tickers().first(where: {
+            return $0.key == CoinTicker.getKey(symbol: $0.symbol, contract: token.contract, tickersKey: $0.tickersKey)
+        })
     }
 
     func addCustom(token: ERC20Token) {
