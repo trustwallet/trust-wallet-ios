@@ -19,9 +19,6 @@ class LockPasscodeViewController: UIViewController {
         self.view.backgroundColor = UIColor.white
         self.configureInvisiblePasscodeField()
         self.configureLockView()
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         if !invisiblePasscodeField.isFirstResponder && !lock.incorrectMaxAttemptTimeIsSet() {
             invisiblePasscodeField.becomeFirstResponder()
         }
