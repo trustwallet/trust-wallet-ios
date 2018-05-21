@@ -71,7 +71,7 @@ class TransactionViewCell: UITableViewCell {
             stackView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
             separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             separatorView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            separatorView.heightAnchor.constraint(equalToConstant: StyleLayout.TableView.separatorHeigh),
+            separatorView.heightAnchor.constraint(equalToConstant: StyleLayout.TableView.separatorHeight),
             separatorView.leftAnchor.constraint(equalTo: titlesStackView.leftAnchor),
         ])
     }

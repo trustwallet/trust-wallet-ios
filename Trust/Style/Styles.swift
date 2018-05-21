@@ -39,7 +39,7 @@ struct StyleLayout {
     struct TableView {
         static let heightForHeaderInSection: CGFloat = 30
         static let separatorColor = UIColor(hex: "d7d7d7")
-        static let separatorHeigh: CGFloat = 0.5
+        static let separatorHeight: CGFloat = 0.5
     }
 
     struct CollectibleView {
