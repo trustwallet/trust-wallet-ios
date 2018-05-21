@@ -39,7 +39,7 @@ class TokensDataStoreTest: XCTestCase {
         XCTAssertEqual(0, tokensDataStore.tickers().count)
 
         let coinTickers = [
-            CoinTicker(symbol: "", price: "", percent_change_24h: "", contract: "", tickersKey: CoinTickerKeyFactory.makeCurrencyKey(for: Config.make()))
+            CoinTicker(symbol: "", price: "", percent_change_24h: "", contract: "", tickersKey: CoinTickerKeyMaker.makeCurrencyKey(for: Config.make()))
         ]
 
         tokensDataStore.saveTickers(tickers: coinTickers)

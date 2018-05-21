@@ -23,7 +23,7 @@ class FakeTokensDataStore: TokensDataStore {
 }
 
 class FakeCoinTickerFactory {
-    static let currencyKey = CoinTickerKeyFactory.makeCurrencyKey(for: Config.make())
+    static let currencyKey = CoinTickerKeyMaker.makeCurrencyKey(for: Config.make())
 
     class func make3UniqueCionTickers() -> [CoinTicker] {
         return [
