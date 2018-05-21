@@ -81,7 +81,6 @@ class InCoordinator: Coordinator {
         helpUsCoordinator.start()
         addCoordinator(helpUsCoordinator)
 
-        localSchemeCoordinator.start()
         addCoordinator(localSchemeCoordinator)
     }
 
