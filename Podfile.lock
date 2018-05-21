@@ -182,7 +182,7 @@ CHECKOUT OPTIONS:
     :commit: 80bd79cbeede842949b229f81bc6328f53701c5a
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
   TrustWalletSDK:
-    :commit: 797bab6285a0a14f82deae758fd786cc99556567
+    :commit: 5e99ef1b8878e2d2e9e553d440cf464880efc372
     :git: https://github.com/TrustWallet/TrustSDK-iOS
   TrustWeb3Provider:
     :commit: f4e0ebb1b8fa4812637babe85ef975d116543dfd
@@ -227,7 +227,7 @@ SPEC CHECKSUMS:
   TrezorCrypto: ecef681446bf02af6248d3b5e394026d7e766e56
   TrustCore: 688df9a241008cf9cfa3842ec8ef28777a8b7534
   TrustKeystore: 1bd016c67de7314e84b79dba2c22ef64b86bb63e
-  TrustWalletSDK: 75f14cdc3baa3e1c7921897ceff1c7c52a243dfd
+  TrustWalletSDK: 8f42c49399e3bba86e7fa85501b9f7fb68c5969d
   TrustWeb3Provider: 50fa391bdf170feb43dd4419992931510a5751d8
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
