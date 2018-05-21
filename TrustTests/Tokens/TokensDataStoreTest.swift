@@ -4,27 +4,12 @@ import XCTest
 @testable import Trust
 
 class TokensDataStoreTest: XCTestCase {
-    var tokensDataStore: TokensDataStore!
-    var coinTickers: [CoinTicker]!
-
-    override func setUp() {
-        super.setUp()
-
-        let config = Config.make()
-        let currencyKey = CoinTickerKeyFactory.makeCurrencyKey(for: config)
-        tokensDataStore = TokensDataStore(realm: .make(), config: config)
-
-        coinTickers = [
-            CoinTicker(symbol: "symbol1", price: "10", percent_change_24h: "percent_change_24h_1", contract: "contract1", tickersKey: currencyKey),
-            CoinTicker(symbol: "symbol2", price: "20", percent_change_24h: "percent_change_24h_2", contract: "contract2", tickersKey: currencyKey),
-            CoinTicker(symbol: "symbol3", price: "30", percent_change_24h: "percent_change_24h_3", contract: "contract3", tickersKey: currencyKey),
-        ]
-    }
+    var tokensDataStore = TokensDataStore(realm: .make(), config: .make())
 
     func testGetAndSetTickers() {
         XCTAssertEqual(0, tokensDataStore.tickers().count)
 
-        tokensDataStore.saveTickers(tickers: coinTickers)
+        tokensDataStore.saveTickers(tickers: FakeCoinTickerFactory.make3UniqueCionTickers())
         
         let returnedCoinTickers = tokensDataStore.tickers()
         
@@ -75,6 +60,8 @@ class TokensDataStoreTest: XCTestCase {
             value: "10000"
         )
 
+        let coinTickers = FakeCoinTickerFactory.make3UniqueCionTickers()
+
         XCTAssertEqual(1000.00, tokensDataStore.getBalance(for: tokenObject, with: coinTickers))
 
         XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject, with: [CoinTicker(price: "", contract: "contract1")]))
@@ -99,21 +86,7 @@ class TokensDataStoreTest: XCTestCase {
 
     // This test checks that even the key generation algorithm changes, coinTicker(for:) still can pick up the correct CoinTicker object without needing to delete the old CoinTicker records since they have old key.
     func testGetCoinTickerForAParticularToken() {
-        let currencyKey = CoinTickerKeyFactory.makeCurrencyKey(for: Config.make())
-
-        let coinTickersThatHaveSameFieldsButDifferentKey: [CoinTicker] = [
-            {
-                let coinTicker = CoinTicker(symbol: "same-symbol", price: "", percent_change_24h: "", contract: "same-contract-address", tickersKey: currencyKey)
-                coinTicker.key = "old-key"
-                return coinTicker
-            }(),
-            {
-                let coinTicker = CoinTicker(symbol: "same-symbol", price: "", percent_change_24h: "", contract: "same-contract-address", tickersKey: currencyKey)
-                return coinTicker
-            }()
-        ]
-
-        tokensDataStore.saveTickers(tickers: coinTickersThatHaveSameFieldsButDifferentKey)
+        tokensDataStore.saveTickers(tickers: FakeCoinTickerFactory.make2DuplicateCionTickersWithDifferentKey())
 
         let token: TokenObject = {
             let token = TokenObject()
