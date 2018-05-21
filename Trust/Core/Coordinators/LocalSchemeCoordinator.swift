@@ -31,11 +31,7 @@ class LocalSchemeCoordinator: Coordinator {
         self.session = session
     }
 
-    func start() {
-
-    }
-
-    func signMessage(for account: Account, message: Data, completion: @escaping (Data?) -> Void) {
+    private func signMessage(for account: Account, message: Data, completion: @escaping (Data?) -> Void) {
         let coordinator = SignMessageCoordinator(
             navigationController: navigationController,
             keystore: keystore,
@@ -77,28 +73,11 @@ class LocalSchemeCoordinator: Coordinator {
                 switch type {
                 case .signedTransaction(let transaction): break
                     //completion(transaction)
-                    // on signing we pass signed hex of the transaction
-//                    let callback = DappCallback(id: callbackID, value: .signTransaction(transaction.data))
-//                    self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
-//                    self.delegate?.didSentTransaction(transaction: transaction, in: self)
                 case .sentTransaction(let transaction): break
                     //completion(transaction)
-                    // on send transaction we pass transaction ID only.
-//                    let data = Data(hex: transaction.id)
-//                    let callback = DappCallback(id: callbackID, value: .sentTransaction(data))
-//                    self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
-//                    self.delegate?.didSentTransaction(transaction: transaction, in: self)
                 }
-                // analytics event for successfully completed transaction
-                // can we track by type without separate events for each case above?
-                Analytics.track(.completedTransactionFromBrowser)
-            case .failure: break
-//                self.rootViewController.browserViewController.notifyFinish(
-//                    callbackID: callbackID,
-//                    value: .failure(DAppError.cancelled)
-//                )
-                // analytics event for failed transaction
-                // Analytics.track(.failedTransactionFromBrowser)
+            case .failure:
+                completion(.none)
             }
             self.removeCoordinator(coordinator)
             self.navigationController.dismiss(animated: true, completion: nil)
@@ -110,7 +89,8 @@ class LocalSchemeCoordinator: Coordinator {
 
 extension LocalSchemeCoordinator: SignMessageCoordinatorDelegate {
     func didCancel(in coordinator: SignMessageCoordinator) {
-        //coordinator.navigationController.dismiss(animated: true, completion: nil)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        delegate?.didCancel(in: self)
     }
 }
 
