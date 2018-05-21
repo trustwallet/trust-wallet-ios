@@ -140,7 +140,7 @@ class ConfirmPaymentViewController: UIViewController {
             .spacer(height: TransactionAppearance.spacing),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             .spacer(height: TransactionAppearance.spacing),
-
+            networkFeeView(detailsViewModel),
             .spacer(height: TransactionAppearance.spacing),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             TransactionAppearance.oneLine(

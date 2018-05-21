@@ -76,11 +76,11 @@ class TokenHeaderView: UIView {
 
         container.addArrangedSubview(.spacer(height: StyleLayout.sideMargin * 2))
         container.addArrangedSubview(imageView)
-        container.addArrangedSubview(.spacer(height: 6))
+        container.addArrangedSubview(.spacer(height: 12))
         container.addArrangedSubview(amountLabel)
-        container.addArrangedSubview(.spacer(height: 6))
+        container.addArrangedSubview(.spacer(height: 12))
         container.addArrangedSubview(marketPriceStack)
-        container.addArrangedSubview(.spacer(height: 6))
+        container.addArrangedSubview(.spacer(height: 12))
         container.addArrangedSubview(buttonsView)
 
         addSubview(container)

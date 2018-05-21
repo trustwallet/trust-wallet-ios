@@ -16,7 +16,7 @@ class TokenViewController: UIViewController {
     private var tableView = TransactionsTableView()
 
     private lazy var header: TokenHeaderView = {
-        let view = TokenHeaderView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 224))
+        let view = TokenHeaderView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 242))
         return view
     }()
 
