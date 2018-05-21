@@ -142,11 +142,6 @@ class TokenViewController: UIViewController {
         loadingView = LoadingView(insets: insets)
         emptyView = TransactionsEmptyView(insets: insets)
     }
-
-    private func showSeparator(for index: IndexPath) -> Bool {
-        let numberOfRows = tableView.numberOfRows(inSection: index.section)
-        return index.row == numberOfRows - 1
-    }
 }
 
 extension TokenViewController: UITableViewDataSource, UITableViewDelegate {
@@ -156,7 +151,7 @@ extension TokenViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TransactionViewCell.identifier, for: indexPath) as! TransactionViewCell
-        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath), and: showSeparator(for: indexPath))
+        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath), and: StyleLayout.TableView.showSeparator(for: tableView, and: indexPath))
         return cell
     }
 
