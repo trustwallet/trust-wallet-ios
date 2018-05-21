@@ -22,7 +22,7 @@ class TokensDataStoreTest: XCTestCase {
 
         do {
             try tokensDataStore.realm.write {
-                tokensDataStore.realm.add(CoinTicker.make(tickersKey: "This is a ticker currency key that does not match anyone"), update: true)
+                tokensDataStore.realm.add(CoinTicker.make(currencyKey: "This is a ticker currency key that does not match anyone"), update: true)
             }
         } catch let error {
             print(error.localizedDescription)
@@ -32,7 +32,7 @@ class TokensDataStoreTest: XCTestCase {
         XCTAssertEqual(0, tokensDataStore.tickers().count)
 
         let coinTickers = [
-            CoinTicker.make(tickersKey: CoinTickerKeyMaker.makeCurrencyKey(for: Config.make()))
+            CoinTicker.make(currencyKey: CoinTickerKeyMaker.makeCurrencyKey(for: Config.make()))
         ]
 
         tokensDataStore.saveTickers(tickers: coinTickers)
