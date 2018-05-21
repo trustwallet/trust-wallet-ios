@@ -13,7 +13,7 @@ class FakeTokensDataStore: TokensDataStore {
 
     func makeFakeTicker() -> [CoinTicker]  {
         let price = 947.102
-        let coinTiekcer = CoinTicker(symbol: "ETH", price: "\(price)", percent_change_24h: "-2.39", contract: config.server.address, tickersKey: "tickersKey")
+        let coinTiekcer = CoinTicker.make(symbol: "ETH", price: "\(price)", percent_change_24h: "-2.39", contract: config.server.address)
         return [coinTiekcer]
     }
 
@@ -27,23 +27,16 @@ class FakeCoinTickerFactory {
 
     class func make3UniqueCionTickers() -> [CoinTicker] {
         return [
-            CoinTicker(symbol: "symbol1", price: "10", percent_change_24h: "percent_change_24h_1", contract: "contract1", tickersKey: currencyKey),
-            CoinTicker(symbol: "symbol2", price: "20", percent_change_24h: "percent_change_24h_2", contract: "contract2", tickersKey: currencyKey),
-            CoinTicker(symbol: "symbol3", price: "30", percent_change_24h: "percent_change_24h_3", contract: "contract3", tickersKey: currencyKey),
+            CoinTicker.make(symbol: "symbol1", price: "10", contract: "contract1", tickersKey: currencyKey),
+            CoinTicker.make(symbol: "symbol2", price: "20", contract: "contract2", tickersKey: currencyKey),
+            CoinTicker.make(symbol: "symbol3", price: "30", contract: "contract3", tickersKey: currencyKey),
         ]
     }
 
     class func make2DuplicateCionTickersWithDifferentKey() -> [CoinTicker] {
         return [
-            {
-                let coinTicker = CoinTicker(symbol: "same-symbol", price: "", percent_change_24h: "", contract: "same-contract-address", tickersKey: currencyKey)
-                coinTicker.key = "old-key"
-                return coinTicker
-            }(),
-            {
-                let coinTicker = CoinTicker(symbol: "same-symbol", price: "", percent_change_24h: "", contract: "same-contract-address", tickersKey: currencyKey)
-                return coinTicker
-            }()
+            CoinTicker.make(symbol: "same-symbol", contract: "same-contract-address", tickersKey: currencyKey, key: "old-key"),
+            CoinTicker.make(symbol: "same-symbol", contract: "same-contract-address", tickersKey: currencyKey),
         ]
     }
 }
