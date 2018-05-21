@@ -54,7 +54,7 @@ class TrustNetwork: NetworkProtocol {
             do {
                 let rawTickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
                 let tickers = rawTickers.map {rawTicker in
-                    return self.getTickerFrom(rawTicker: rawTicker, withKey: self.config.tickersKey)
+                    return self.getTickerFrom(rawTicker: rawTicker, withKey: CoinTickerKeyMaker.makeCurrencyKey(for: self.config))
                 }
                 completion(tickers)
             } catch {
@@ -141,7 +141,7 @@ class TrustNetwork: NetworkProtocol {
                 do {
                     let rawTickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
                     let tickers = rawTickers.map {rawTicker in
-                        return self.getTickerFrom(rawTicker: rawTicker, withKey: self.config.tickersKey)
+                        return self.getTickerFrom(rawTicker: rawTicker, withKey: CoinTickerKeyMaker.makeCurrencyKey(for: self.config))
                     }
                     seal.fulfill(tickers)
                 } catch {

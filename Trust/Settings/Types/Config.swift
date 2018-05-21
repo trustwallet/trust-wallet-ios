@@ -64,10 +64,4 @@ struct Config {
         get { return defaults.bool(forKey: Keys.testNetworkWarningOff) }
         set { defaults.set(newValue, forKey: Keys.testNetworkWarningOff) }
     }
-
-    var tickersKey: String {
-        get {
-            return "tickers-" + self.currency.rawValue + "-" + String(self.chainID)
-        }
-    }
 }

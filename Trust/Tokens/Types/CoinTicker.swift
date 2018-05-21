@@ -25,7 +25,7 @@ class CoinTicker: Object, Decodable {
         self.percent_change_24h = percent_change_24h
         self.contract = contract
         self.tickersKey = tickersKey
-        self.key = "\(symbol)_\(contract)_\(tickersKey)"
+        self.key = CoinTickerKeyMaker.makePrimaryKey(symbol: symbol, contract: contract, currencyKey: tickersKey)
     }
 
     required init() {
@@ -63,5 +63,15 @@ extension CoinTicker {
                 ),
             ]
         )
+    }
+}
+
+struct CoinTickerKeyMaker {
+    static func makePrimaryKey(symbol: String, contract: String, currencyKey: String) -> String {
+        return "\(symbol)_\(contract)_\(currencyKey)"
+    }
+
+    static func makeCurrencyKey(for config: Config) -> String {
+        return "tickers-" + config.currency.rawValue + "-" + String(config.chainID)
     }
 }

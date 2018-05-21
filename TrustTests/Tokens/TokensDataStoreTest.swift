@@ -4,28 +4,12 @@ import XCTest
 @testable import Trust
 
 class TokensDataStoreTest: XCTestCase {
-    var tokensDataStore: TokensDataStore!
-    var coinTickers: [CoinTicker]!
-
-    override func setUp() {
-        super.setUp()
-
-        let config = Config.make()
-        let tickersKey = config.tickersKey
-
-        tokensDataStore = TokensDataStore(realm: .make(), config: config)
-
-        coinTickers = [
-            CoinTicker(symbol: "symbol1", price: "10", percent_change_24h: "percent_change_24h_1", contract: "contract1", tickersKey: tickersKey),
-            CoinTicker(symbol: "symbol2", price: "20", percent_change_24h: "percent_change_24h_2", contract: "contract2", tickersKey: tickersKey),
-            CoinTicker(symbol: "symbol3", price: "30", percent_change_24h: "percent_change_24h_3", contract: "contract3", tickersKey: tickersKey),
-        ]
-    }
+    var tokensDataStore = TokensDataStore(realm: .make(), config: .make())
 
     func testGetAndSetTickers() {
         XCTAssertEqual(0, tokensDataStore.tickers().count)
 
-        tokensDataStore.saveTickers(tickers: coinTickers)
+        tokensDataStore.saveTickers(tickers: FakeCoinTickerFactory.make3UniqueCionTickers())
         
         let returnedCoinTickers = tokensDataStore.tickers()
         
@@ -37,15 +21,8 @@ class TokensDataStoreTest: XCTestCase {
         XCTAssertEqual(0, tokensDataStore.tickers().count)
 
         do {
-            let coinTicker = CoinTicker(
-                symbol: "",
-                price: "",
-                percent_change_24h: "",
-                contract: "",
-                tickersKey: "This is a tickers key that does not match anyone"
-            )
             try tokensDataStore.realm.write {
-                tokensDataStore.realm.add(coinTicker, update: true)
+                tokensDataStore.realm.add(CoinTicker.make(currencyKey: "This is a ticker currency key that does not match anyone"), update: true)
             }
         } catch let error {
             print(error.localizedDescription)
@@ -55,7 +32,7 @@ class TokensDataStoreTest: XCTestCase {
         XCTAssertEqual(0, tokensDataStore.tickers().count)
 
         let coinTickers = [
-            CoinTicker(symbol: "", price: "", percent_change_24h: "", contract: "", tickersKey: tokensDataStore.config.tickersKey)
+            CoinTicker.make(currencyKey: CoinTickerKeyMaker.makeCurrencyKey(for: Config.make()))
         ]
 
         tokensDataStore.saveTickers(tickers: coinTickers)
@@ -75,6 +52,8 @@ class TokensDataStoreTest: XCTestCase {
             decimals: 2,
             value: "10000"
         )
+
+        let coinTickers = FakeCoinTickerFactory.make3UniqueCionTickers()
 
         XCTAssertEqual(1000.00, tokensDataStore.getBalance(for: tokenObject, with: coinTickers))
 
@@ -96,5 +75,20 @@ class TokensDataStoreTest: XCTestCase {
         )
 
         XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject, with: coinTickers))
+    }
+
+    // This test checks that even the key generation algorithm changes, coinTicker(for:) still can pick up the correct CoinTicker object without needing to delete the old CoinTicker records since they have old key.
+    func testGetCoinTickerForAParticularToken() {
+        tokensDataStore.saveTickers(tickers: FakeCoinTickerFactory.make2DuplicateCionTickersWithDifferentKey())
+
+        let token: TokenObject = {
+            let token = TokenObject()
+            token.contract = "same-contract-address"
+            return token
+        }()
+
+        let coinTicker = tokensDataStore.coinTicker(for: token)
+
+        XCTAssertEqual("same-symbol_same-contract-address_tickers-USD-1", coinTicker?.key)
     }
 }

@@ -54,7 +54,9 @@ class TokensDataStore {
     }
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
-        return tickers().first(where: { $0.contract == token.contract })
+        return tickers().first(where: {
+            return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: token.contract, currencyKey: $0.tickersKey)
+        })
     }
 
     func addCustom(token: ERC20Token) {
@@ -170,7 +172,7 @@ class TokensDataStore {
     }
 
     private var tickerResultsByTickersKey: Results<CoinTicker> {
-        return realm.objects(CoinTicker.self).filter("tickersKey == %@", config.tickersKey)
+        return realm.objects(CoinTicker.self).filter("tickersKey == %@", CoinTickerKeyMaker.makeCurrencyKey(for: config))
     }
 
     func deleteAllExistingTickers() {
