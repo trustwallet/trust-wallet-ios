@@ -9,7 +9,7 @@ class CoinTicker: Object, Decodable {
     @objc dynamic var price: String = ""
     @objc dynamic var percent_change_24h: String = ""
     @objc dynamic var contract: String = ""
-    @objc dynamic var tickersKey: String = ""
+    @objc dynamic var currencyKey: String = ""
     @objc dynamic var key: String = ""
 
     convenience init(
@@ -17,15 +17,15 @@ class CoinTicker: Object, Decodable {
         price: String = "",
         percent_change_24h: String = "",
         contract: String = "",
-        tickersKey: String = ""
+        currencyKey: String = ""
     ) {
         self.init()
         self.symbol = symbol
         self.price = price
         self.percent_change_24h = percent_change_24h
         self.contract = contract
-        self.tickersKey = tickersKey
-        self.key = CoinTickerKeyMaker.makePrimaryKey(symbol: symbol, contract: contract, currencyKey: tickersKey)
+        self.currencyKey = currencyKey
+        self.key = CoinTickerKeyMaker.makePrimaryKey(symbol: symbol, contract: contract, currencyKey: currencyKey)
     }
 
     required init() {
@@ -72,6 +72,6 @@ struct CoinTickerKeyMaker {
     }
 
     static func makeCurrencyKey(for config: Config) -> String {
-        return "tickers-" + config.currency.rawValue + "-" + String(config.chainID)
+        return "currency-" + config.currency.rawValue + "-" + String(config.chainID)
     }
 }

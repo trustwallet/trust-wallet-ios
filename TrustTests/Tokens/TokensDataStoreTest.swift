@@ -14,6 +14,9 @@ class TokensDataStoreTest: XCTestCase {
         let returnedCoinTickers = tokensDataStore.tickers()
         
         XCTAssertEqual(3, returnedCoinTickers.count)
+
+        XCTAssertEqual("symbol1_contract1_currency-USD-1", returnedCoinTickers[0].key)
+        XCTAssertEqual("currency-USD-1", returnedCoinTickers[0].currencyKey)
     }
     
     func testDeleteTickers() {
@@ -89,6 +92,6 @@ class TokensDataStoreTest: XCTestCase {
 
         let coinTicker = tokensDataStore.coinTicker(for: token)
 
-        XCTAssertEqual("same-symbol_same-contract-address_tickers-USD-1", coinTicker?.key)
+        XCTAssertEqual("same-symbol_same-contract-address_currency-USD-1", coinTicker?.key)
     }
 }
