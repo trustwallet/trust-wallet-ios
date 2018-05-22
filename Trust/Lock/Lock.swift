@@ -51,7 +51,7 @@ class Lock: LockInterface {
     }
 
     func setAutoLockTime() {
-        guard isPasscodeSet() else { return }
+        guard isPasscodeSet(), keychain.get(autoLockTime) == nil else { return }
         let timeString = dateFormatter().string(from: Date())
         keychain.set(timeString, forKey: autoLockTime)
     }
