@@ -250,6 +250,9 @@ class TrustNetwork: NetworkProtocol {
     }
 
     func search(token: String, completion: @escaping (([TokenObject]) -> Void)) {
+        guard !token.isEmpty else {
+            return completion([])
+        }
         provider.request(.search(token: token)) { result in
             switch result {
             case .success(let response):

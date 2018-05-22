@@ -3,7 +3,8 @@
 import Foundation
 import TrustCore
 import TrustKeystore
-import TrustSDK
+import TrustWalletSDK
+import BigInt
 
 protocol LocalSchemeCoordinatorDelegate: class {
     func didCancel(in coordinator: LocalSchemeCoordinator)
@@ -14,51 +15,23 @@ class LocalSchemeCoordinator: Coordinator {
     let navigationController: NavigationController
     let keystore: Keystore
     let session: WalletSession
-    let url: URL
     var coordinators: [Coordinator] = []
     weak var delegate: LocalSchemeCoordinatorDelegate?
+    lazy var trustWalletSDK: TrustWalletSDK = {
+        return TrustWalletSDK(delegate: self)
+    }()
 
     init(
         navigationController: NavigationController = NavigationController(),
         keystore: Keystore,
-        session: WalletSession,
-        url: URL
+        session: WalletSession
     ) {
         self.navigationController = navigationController
         self.keystore = keystore
         self.session = session
-        self.url = url
     }
 
-    func start() {
-        parse(url: url as! URL)
-    }
-
-    func parse(url: URL) {
-        let component = URLComponents(url: url, resolvingAgainstBaseURL: true)
-        switch component?.host {
-        case "sign-message":
-            let messageBase64 = component?.queryItems?.filter { $0.name == "message" }.first!.value
-            let callbackBase64 = component?.queryItems?.filter { $0.name == "callback" }.first!.value
-            let message = messageBase64!.base64Decoded!
-            let callback: String = callbackBase64!
-
-            switch session.account.type {
-            case .privateKey(let account), .hd(let account):
-                let command = SignMessageCommand(
-                    message: message,
-                    callbackScheme: "trustexample",
-                    completion: { data in }
-                )
-                signMessage(for: account, command: command)
-            case .address:
-                break
-            }
-        default: break
-        }
-    }
-
-    func signMessage(for account: Account, command: SignMessageCommand) {
+    private func signMessage(for account: Account, message: Data, completion: @escaping (Data?) -> Void) {
         let coordinator = SignMessageCoordinator(
             navigationController: navigationController,
             keystore: keystore,
@@ -68,35 +41,85 @@ class LocalSchemeCoordinator: Coordinator {
             guard let `self` = self else { return }
             switch result {
             case .success(let data):
-                // analytics event for succesfully signed message
-                // can we track by type without separate events for each case above?
-                //Analytics.track(.signedMessageFromBrowser)
-
-                NSLog("data \(data)")
-                NSLog("command \(command)")
-
-                let res = command.callback
-                NSLog("res \(res)")
-                UIApplication.shared.open(res, options: [:]) { res in
-                    NSLog("res \(res)")
-                }
+                completion(data)
             case .failure:
-                break
-                //self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
-
-                // analytics event for failed message signing
-                //Analytics.track(.failedSignedMessageFromBrowser)
+                completion(nil)
             }
             self.removeCoordinator(coordinator)
         }
         coordinator.delegate = self
         addCoordinator(coordinator)
-        coordinator.start(with: .message(command.message))
+        coordinator.start(with: .message(message))
+    }
+
+    private func signTransaction(account: Account, transaction: UnconfirmedTransaction, type: ConfirmType, completion: @escaping (TrustCore.Transaction?) -> Void) {
+        let configurator = TransactionConfigurator(
+            session: session,
+            account: account,
+            transaction: transaction
+        )
+        let coordinator = ConfirmCoordinator(
+            navigationController: NavigationController(),
+            session: session,
+            configurator: configurator,
+            keystore: keystore,
+            account: account,
+            type: type
+        )
+        addCoordinator(coordinator)
+        coordinator.didCompleted = { [unowned self] result in
+            switch result {
+            case .success(let type):
+                switch type {
+                case .signedTransaction(let transaction): break
+                    //completion(transaction)
+                case .sentTransaction(let transaction): break
+                    //completion(transaction)
+                }
+            case .failure:
+                completion(.none)
+            }
+            self.removeCoordinator(coordinator)
+            self.navigationController.dismiss(animated: true, completion: nil)
+        }
+        coordinator.start()
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 }
 
 extension LocalSchemeCoordinator: SignMessageCoordinatorDelegate {
     func didCancel(in coordinator: SignMessageCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        delegate?.didCancel(in: self)
+    }
+}
+
+extension LocalSchemeCoordinator: WalletDelegate {
+    func signMessage(_ message: Data, address: Address?, completion: @escaping (Data?) -> Void) {
+        switch session.account.type {
+        case .privateKey(let account), .hd(let account):
+            signMessage(for: account, message: message, completion: completion)
+        case .address:
+            break
+        }
+    }
+
+    func signTransaction(_ transaction: TrustCore.Transaction, completion: @escaping (TrustCore.Transaction?) -> Void) {
+        let transaction = UnconfirmedTransaction(
+            transferType: .ether(destination: .none),
+            value: transaction.amount,
+            to: transaction.to,
+            data: transaction.payload,
+            gasLimit: BigInt(transaction.gasLimit),
+            gasPrice: transaction.gasPrice,
+            nonce: BigInt(transaction.nonce)
+        )
+
+        switch session.account.type {
+        case .privateKey(let account), .hd(let account):
+            signTransaction(account: account, transaction: transaction, type: .sign, completion: completion)
+        case .address:
+            break
+        }
     }
 }

@@ -7,6 +7,7 @@ import PromiseKit
 import APIKit
 
 enum ENSError: LocalizedError {
+    case contractNotFound
     case decodeError
 }
 
@@ -24,8 +25,17 @@ typealias ENSResolveResult = (resolver: Address, address: Address)
 
 struct ENSClient {
 
-    static let ensContract = Address(string: "0x314159265dd8dbb310642f98f50c066173c1259b")!
     static let reverseSuffix = "addr.reverse"
+
+    let server: RPCServer
+
+    var ensAvailable: Bool {
+        return server.ensContract != Address.zero
+    }
+
+    init(server: RPCServer) {
+        self.server = server
+    }
 
     func resolve(name: String) -> Promise<ENSResolveResult> {
         return firstly {
@@ -48,7 +58,7 @@ struct ENSClient {
         let node = namehash(name)
         let encoded = ENSEncoder.encodeResolver(node: node)
         let request = EtherServiceRequest(
-            batch: BatchFactory().create(CallRequest(to: ENSClient.ensContract.description, data: encoded.hexEncoded))
+            batch: BatchFactory().create(CallRequest(to: server.ensContract.description, data: encoded.hexEncoded))
         )
         return self.sendAddr(request: request)
     }
@@ -57,7 +67,7 @@ struct ENSClient {
         let node = namehash(name)
         let encoded = ENSEncoder.encodeOwner(node: node)
         let request = EtherServiceRequest(
-            batch: BatchFactory().create(CallRequest(to: ENSClient.ensContract.description, data: encoded.hexEncoded))
+            batch: BatchFactory().create(CallRequest(to: server.ensContract.description, data: encoded.hexEncoded))
         )
         return self.sendAddr(request: request)
     }

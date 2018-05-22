@@ -34,7 +34,7 @@ target 'Trust' do
   pod 'URLNavigator'
   pod 'RandomColorSwift'
   pod 'Hero'
-  pod 'TrustSDK', :git=>'https://github.com/TrustWallet/TrustSDK-iOS', :branch=>'master'
+  pod 'TrustWalletSDK', :git=>'https://github.com/TrustWallet/TrustSDK-iOS', :branch=>'master'
 
   target 'TrustTests' do
     inherit! :search_paths

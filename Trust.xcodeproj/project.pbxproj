@@ -2826,7 +2826,7 @@
 				"${BUILT_PRODUCTS_DIR}/TrezorCrypto/TrezorCrypto.framework",
 				"${BUILT_PRODUCTS_DIR}/TrustCore/TrustCore.framework",
 				"${BUILT_PRODUCTS_DIR}/TrustKeystore/TrustKeystore.framework",
-				"${BUILT_PRODUCTS_DIR}/TrustSDK/TrustSDK.framework",
+				"${BUILT_PRODUCTS_DIR}/TrustWalletSDK/TrustWalletSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/URLNavigator/URLNavigator.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -2860,7 +2860,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrezorCrypto.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustKeystore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustWalletSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/URLNavigator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -3497,7 +3497,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 229;
+				CURRENT_PROJECT_VERSION = 231;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
@@ -3523,7 +3523,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 229;
+				CURRENT_PROJECT_VERSION = 231;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
