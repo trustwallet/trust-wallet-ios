@@ -34,7 +34,7 @@ class FakeTokensNetwork: NetworkProtocol {
             price: "100",
             percent_change_24h: "-2.39",
             contract: config.server.address,
-            tickersKey: "tickersKey")
+            currencyKey: "currencyKey")
         completion([ticker])
     }
 

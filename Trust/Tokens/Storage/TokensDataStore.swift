@@ -55,7 +55,7 @@ class TokensDataStore {
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
         return tickers().first(where: {
-            return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: token.contract, currencyKey: $0.tickersKey)
+            return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: token.contract, currencyKey: $0.currencyKey)
         })
     }
 
@@ -162,7 +162,7 @@ class TokensDataStore {
     }
 
     func tickers() -> [CoinTicker] {
-        let coinTickers: [CoinTicker] = tickerResultsByTickersKey.map { $0 }
+        let coinTickers: [CoinTicker] = tickerResultsByCurrencyKey.map { $0 }
 
         guard !coinTickers.isEmpty else {
             return [CoinTicker]()
@@ -171,13 +171,13 @@ class TokensDataStore {
         return coinTickers
     }
 
-    private var tickerResultsByTickersKey: Results<CoinTicker> {
-        return realm.objects(CoinTicker.self).filter("tickersKey == %@", CoinTickerKeyMaker.makeCurrencyKey(for: config))
+    private var tickerResultsByCurrencyKey: Results<CoinTicker> {
+        return realm.objects(CoinTicker.self).filter("currencyKey == %@", CoinTickerKeyMaker.makeCurrencyKey(for: config))
     }
 
     func deleteAllExistingTickers() {
         try? realm.write {
-            realm.delete(tickerResultsByTickersKey)
+            realm.delete(tickerResultsByCurrencyKey)
         }
     }
 

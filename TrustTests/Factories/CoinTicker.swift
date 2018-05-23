@@ -17,7 +17,7 @@ extension CoinTicker {
             price: price,
             percent_change_24h: percent_change_24h,
             contract: contract,
-            tickersKey: currencyKey
+            currencyKey: currencyKey
         )
         if let keyValue = key {
             coinTicker.key = keyValue
