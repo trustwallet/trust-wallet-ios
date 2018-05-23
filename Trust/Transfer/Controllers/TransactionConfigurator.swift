@@ -25,6 +25,7 @@ class TransactionConfigurator {
     let session: WalletSession
     let account: Account
     let transaction: UnconfirmedTransaction
+    let forceFetchNonce: Bool
     var configuration: TransactionConfiguration {
         didSet {
             configurationUpdate.value = configuration
@@ -37,11 +38,13 @@ class TransactionConfigurator {
     init(
         session: WalletSession,
         account: Account,
-        transaction: UnconfirmedTransaction
+        transaction: UnconfirmedTransaction,
+        forceFetchNonce: Bool = false
     ) {
         self.session = session
         self.account = account
         self.transaction = transaction
+        self.forceFetchNonce = forceFetchNonce
         self.requestEstimateGas = transaction.gasLimit == .none
 
         let nonce = transaction.nonce ?? BigInt(session.nonceProvider.nextNonce ?? -1)
@@ -140,7 +143,7 @@ class TransactionConfigurator {
     }
 
     func loadNonce(completion: @escaping (Result<Void, AnyError>) -> Void) {
-        session.nonceProvider.getNextNonce(force: false) { [weak self] result in
+        session.nonceProvider.getNextNonce(force: forceFetchNonce) { [weak self] result in
             switch result {
             case .success(let nonce):
                 self?.refreshNonce(nonce)

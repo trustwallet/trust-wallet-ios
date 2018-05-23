@@ -56,7 +56,8 @@ class LocalSchemeCoordinator: Coordinator {
         let configurator = TransactionConfigurator(
             session: session,
             account: account,
-            transaction: transaction
+            transaction: transaction,
+            forceFetchNonce: true
         )
         let coordinator = ConfirmCoordinator(
             navigationController: NavigationController(),
