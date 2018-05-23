@@ -52,7 +52,7 @@ class LocalSchemeCoordinator: Coordinator {
         coordinator.start(with: .message(message))
     }
 
-    private func signTransaction(account: Account, transaction: UnconfirmedTransaction, type: ConfirmType, completion: @escaping (TrustCore.Transaction?) -> Void) {
+    private func signTransaction(account: Account, transaction: UnconfirmedTransaction, type: ConfirmType, completion: @escaping (Data?) -> Void) {
         let configurator = TransactionConfigurator(
             session: session,
             account: account,
@@ -71,10 +71,10 @@ class LocalSchemeCoordinator: Coordinator {
             switch result {
             case .success(let type):
                 switch type {
-                case .signedTransaction(let transaction): break
-                    //completion(transaction)
-                case .sentTransaction(let transaction): break
-                    //completion(transaction)
+                case .signedTransaction(let transaction):
+                    completion(transaction.data)
+                case .sentTransaction(let transaction):
+                    completion(transaction.data)
                 }
             case .failure:
                 completion(.none)
@@ -104,7 +104,7 @@ extension LocalSchemeCoordinator: WalletDelegate {
         }
     }
 
-    func signTransaction(_ transaction: TrustCore.Transaction, completion: @escaping (TrustCore.Transaction?) -> Void) {
+    func signTransaction(_ transaction: TrustCore.Transaction, completion: @escaping (Data?) -> Void) {
         let transaction = UnconfirmedTransaction(
             transferType: .ether(destination: .none),
             value: transaction.amount,

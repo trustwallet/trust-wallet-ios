@@ -73,30 +73,32 @@ class SendTransactionCoordinator {
 
         switch signedTransaction {
         case .success(let data):
-            switch confirmType {
-            case .sign:
-                approve(transaction: transaction, data: data, completion: completion)
-            case .signThenSend:
-                approve(transaction: transaction, data: data, completion: completion)
-            }
+            approve(confirmType: confirmType, transaction: transaction, data: data, completion: completion)
         case .failure(let error):
             completion(.failure(AnyError(error)))
         }
     }
 
-    private func approve(transaction: SignTransaction, data: Data, completion: @escaping (Result<ConfirmResult, AnyError>) -> Void) {
-        let transaction = SentTransaction(
-            id: data.sha3(.keccak256).hexEncoded,
+    private func approve(confirmType: ConfirmType, transaction: SignTransaction, data: Data, completion: @escaping (Result<ConfirmResult, AnyError>) -> Void) {
+        let id = data.sha3(.keccak256).hexEncoded
+        let sentTransaction = SentTransaction(
+            id: id,
             original: transaction,
             data: data
         )
-        let request = EtherServiceRequest(batch: BatchFactory().create(SendRawTransactionRequest(signedTransaction: data.hexEncoded)))
-        Session.send(request) { result in
-            switch result {
-            case .success:
-                completion(.success(.sentTransaction(transaction)))
-            case .failure(let error):
-                completion(.failure(AnyError(error)))
+        let dataHex = data.hexEncoded
+        switch confirmType {
+        case .sign:
+            completion(.success(.sentTransaction(sentTransaction)))
+        case .signThenSend:
+            let request = EtherServiceRequest(batch: BatchFactory().create(SendRawTransactionRequest(signedTransaction: dataHex)))
+            Session.send(request) { result in
+                switch result {
+                case .success:
+                    completion(.success(.sentTransaction(sentTransaction)))
+                case .failure(let error):
+                    completion(.failure(AnyError(error)))
+                }
             }
         }
     }

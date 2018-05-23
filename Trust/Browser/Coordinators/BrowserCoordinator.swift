@@ -291,7 +291,7 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
         case .privateKey(let account), .hd(let account) :
             switch action {
             case .signTransaction(let unconfirmedTransaction):
-                executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .sign)
+                executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .signThenSend)
             case .sendTransaction(let unconfirmedTransaction):
                 executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .signThenSend)
             case .signMessage(let hexMessage):
