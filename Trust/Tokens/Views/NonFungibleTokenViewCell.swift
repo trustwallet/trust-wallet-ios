@@ -2,7 +2,6 @@
 
 import UIKit
 import Kingfisher
-import Hero
 
 class NonFungibleTokenViewCell: UITableViewCell {
 
@@ -30,8 +29,6 @@ extension NonFungibleTokenViewCell: UICollectionViewDelegate {
             return
         }
         let token = model.token(for: indexPath)
-        let heroId = token.uniqueID
-        cell.hero.id = heroId
         let tokenDictionary: [String: Any] = ["token": token, "color": cell.imageViewBackground.backgroundColor!]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ShowToken"), object: nil, userInfo: tokenDictionary)
     }

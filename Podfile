@@ -33,7 +33,6 @@ target 'Trust' do
   pod 'JdenticonSwift'
   pod 'URLNavigator'
   pod 'RandomColorSwift'
-  pod 'Hero'
   pod 'TrustWalletSDK', :git=>'https://github.com/TrustWallet/TrustSDK-iOS', :branch=>'master'
 
   target 'TrustTests' do

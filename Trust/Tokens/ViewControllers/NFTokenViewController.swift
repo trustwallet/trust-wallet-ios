@@ -4,7 +4,6 @@ import Foundation
 import UIKit
 import StackViewController
 import Kingfisher
-import Hero
 
 protocol NFTokenViewControllerDelegate: class {
     func didPressToken(token: NonFungibleTokenObject, in viewController: NFTokenViewController)
@@ -57,9 +56,6 @@ class NFTokenViewController: UIViewController {
     init(token: NonFungibleTokenObject) {
         self.token = token
         super.init(nibName: nil, bundle: nil)
-
-        self.hero.isEnabled = true
-        self.view.hero.id = token.uniqueID
 
         self.view.addSubview(scrollView)
         scrollView.addSubview(stackView)

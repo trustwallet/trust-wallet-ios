@@ -147,8 +147,6 @@ class TokensCoordinator: Coordinator {
         let controller = NFTokenViewController(token: token)
         controller.delegate = self
         controller.imageView.backgroundColor = backgroundColor
-        navigationController.hero.isEnabled = true
-        navigationController.hero.navigationAnimationType = .none
         navigationController.pushViewController(controller, animated: true)
     }
 
