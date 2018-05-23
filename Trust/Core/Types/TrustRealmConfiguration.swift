@@ -12,14 +12,15 @@ struct RealmConfiguration {
     private static let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
 
     static func sharedConfiguration() -> Realm.Configuration {
-        var config = Realm.Configuration()
+        var config = realmSecureConfiguration()
         let directory = config.fileURL!.deletingLastPathComponent()
         let url = directory.appendingPathComponent("shared.realm")
-        return Realm.Configuration(fileURL: url)
+        config.fileURL = url
+        return config
     }
 
     static func configuration(for account: Wallet, chainID: Int) -> Realm.Configuration {
-        var config = Realm.Configuration()
+        var config = realmSecureConfiguration()
         let directory = config.fileURL!.deletingLastPathComponent()
         let oldURL = directory.appendingPathComponent("\(account.address.description.lowercased())-\(chainID).realm")
         let newURL = directory.appendingPathComponent("\(account.description)-\(chainID).realm")
