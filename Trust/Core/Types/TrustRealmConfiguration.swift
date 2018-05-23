@@ -3,8 +3,13 @@
 import Foundation
 import RealmSwift
 import TrustCore
+import KeychainSwift
 
 struct RealmConfiguration {
+
+    private static let realmKey = "realmKey"
+
+    private static let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
 
     static func sharedConfiguration() -> Realm.Configuration {
         var config = Realm.Configuration()
@@ -30,5 +35,26 @@ struct RealmConfiguration {
         }
         config.fileURL = newURL
         return config
+    }
+
+    private static func saveKey(key: String) {
+        keychain.set(key, forKey: realmKey)
+    }
+
+    private static func getKey() -> String? {
+        return keychain.get(realmKey)
+    }
+
+    private static func generateKey() -> String? {
+        var keyData = Data(count: 64)
+        var key = keyData
+        let result = key.withUnsafeMutableBytes {
+            SecRandomCopyBytes(kSecRandomDefault, keyData.count, $0)
+        }
+        if result == errSecSuccess {
+            return key.base64EncodedString()
+        } else {
+            return nil
+        }
     }
 }
