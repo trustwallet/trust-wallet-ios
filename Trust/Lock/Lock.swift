@@ -119,7 +119,7 @@ class Lock: LockInterface {
     private func dateFormatter() -> DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = DateFormatter.Style.short
-        dateFormatter.timeStyle = DateFormatter.Style.short
+        dateFormatter.timeStyle = DateFormatter.Style.medium
         return dateFormatter
     }
 

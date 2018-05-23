@@ -56,6 +56,7 @@ class SettingsViewController: FormViewController, Coordinator {
         }.onChange { [weak self] row in
             let autoLockType = row.value ?? AutoLock.immediate
             self?.lock.setAutoLockType(type: autoLockType)
+            self?.lock.removeAutoLockTime()
         }.onPresent { _, selectorController in
             selectorController.enableDeselection = false
         }.cellSetup { cell, _ in
