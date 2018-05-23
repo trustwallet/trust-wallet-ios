@@ -37,24 +37,29 @@ struct RealmConfiguration {
         return config
     }
 
-    private static func saveKey(key: String) {
+    private static func realmSecureConfiguration() -> Realm.Configuration {
+        guard let key = getKey() else {
+            let newKey = generateKey()
+            saveKey(key: newKey)
+            return  Realm.Configuration(encryptionKey: newKey)
+        }
+        return Realm.Configuration(encryptionKey: key)
+    }
+
+    private static func saveKey(key: Data) {
         keychain.set(key, forKey: realmKey)
     }
 
-    private static func getKey() -> String? {
-        return keychain.get(realmKey)
+    private static func getKey() -> Data? {
+        return keychain.getData(realmKey)
     }
 
-    private static func generateKey() -> String? {
+    private static func generateKey() -> Data {
         var keyData = Data(count: 64)
         var key = keyData
-        let result = key.withUnsafeMutableBytes {
+        _ = key.withUnsafeMutableBytes {
             SecRandomCopyBytes(kSecRandomDefault, keyData.count, $0)
         }
-        if result == errSecSuccess {
-            return key.base64EncodedString()
-        } else {
-            return nil
-        }
+        return key
     }
 }
