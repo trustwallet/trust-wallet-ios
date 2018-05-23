@@ -17,11 +17,11 @@ extension InCoordinator: URLNavigable {
         }
 
         navigator.handle("trust://sign-transaction") { url, _, _ in
-            return self.localSchemeCoordinator.trustWalletSDK.handleOpen(url: url as! URL)
+            return self.localSchemeCoordinator?.trustWalletSDK.handleOpen(url: url as! URL) ?? false
         }
 
         navigator.handle("trust://sign-message") { url, _, _ in
-            return self.localSchemeCoordinator.trustWalletSDK.handleOpen(url: url as! URL)
+            return self.localSchemeCoordinator?.trustWalletSDK.handleOpen(url: url as! URL) ?? false
         }
     }
 }

@@ -37,16 +37,7 @@ class InCoordinator: Coordinator {
     var tabBarController: UITabBarController? {
         return self.navigationController.viewControllers.first as? UITabBarController
     }
-    
-    lazy var localSchemeCoordinator: LocalSchemeCoordinator = {
-        let coordinator = LocalSchemeCoordinator(
-            navigationController: navigationController,
-            keystore: keystore,
-            session: tokensCoordinator!.session
-        )
-        coordinator.delegate = self
-        return coordinator
-    }()
+    var localSchemeCoordinator: LocalSchemeCoordinator?
 
     lazy var helpUsCoordinator: HelpUsCoordinator = {
         return HelpUsCoordinator(
@@ -80,8 +71,6 @@ class InCoordinator: Coordinator {
 
         helpUsCoordinator.start()
         addCoordinator(helpUsCoordinator)
-
-        addCoordinator(localSchemeCoordinator)
     }
 
     func showTabBar(for account: Wallet) {
@@ -176,6 +165,15 @@ class InCoordinator: Coordinator {
         [Tabs.wallet(.none), Tabs.transactions].forEach {
             let _ = (tabBarController.viewControllers?[$0.index] as? NavigationController)?.viewControllers[0].view
         }
+
+        let localSchemeCoordinator = LocalSchemeCoordinator(
+            navigationController: navigationController,
+            keystore: keystore,
+            session: session
+        )
+        localSchemeCoordinator.delegate = self
+        addCoordinator(localSchemeCoordinator)
+        self.localSchemeCoordinator = localSchemeCoordinator
     }
 
     func showTab(_ selectTab: Tabs) {
@@ -203,6 +201,8 @@ class InCoordinator: Coordinator {
     func restart(for account: Wallet, in coordinator: TransactionCoordinator) {
         settingsCoordinator?.rootViewController.navigationItem.leftBarButtonItem = nil
         settingsCoordinator?.rootViewController.networkStateView = nil
+        localSchemeCoordinator?.delegate = nil
+        localSchemeCoordinator = nil
         navigationController.dismiss(animated: false, completion: nil)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         coordinator.stop()
