@@ -42,6 +42,7 @@ struct RealmConfiguration {
         guard let key = getKey() else {
             let newKey = generateKey()
             saveKey(key: newKey)
+            encryptExistingDatabases(with: newKey)
             return  Realm.Configuration(encryptionKey: newKey)
         }
         return Realm.Configuration(encryptionKey: key)
@@ -62,5 +63,28 @@ struct RealmConfiguration {
             SecRandomCopyBytes(kSecRandomDefault, keyData.count, $0)
         }
         return key
+    }
+
+    private static func encryptExistingDatabases(with encryptionKey: Data) {
+        guard let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        do {
+            let directoryContents = try FileManager.default.contentsOfDirectory(at: documentsUrl, includingPropertiesForKeys: nil, options: [])
+            let realmDatabases = directoryContents.filter { $0.pathExtension == "realm" }
+            _ = realmDatabases.map { encryptDatabase(with: $0, and: encryptionKey) }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
+    private static func encryptDatabase(with path: URL, and encryptionKey: Data) {
+        _ = Realm.Configuration(fileURL: path)
+        let tempPath = path.appendingPathExtension("temp")
+        do {
+            try Realm().writeCopy(toFile: tempPath, encryptionKey: encryptionKey)
+            try FileManager.default.removeItem(at: path)
+            try FileManager.default.moveItem(at: tempPath, to: path)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }
