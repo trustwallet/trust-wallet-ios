@@ -256,7 +256,6 @@ open class EtherKeystore: Keystore {
         } catch {
             return .failure(KeystoreError.failedToExportPrivateKey)
         }
-
     }
 
     func delete(wallet: Wallet) -> Result<Void, KeystoreError> {

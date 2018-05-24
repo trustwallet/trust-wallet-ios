@@ -89,7 +89,21 @@ class AccountsCoordinator: Coordinator {
             }
             controller.addAction(backupKeystoreAction)
             controller.addAction(exportPrivateKeyAction)
-        case .hd, .address:
+        case .hd(let account):
+            let actionTitle = NSLocalizedString("wallets.backupPhrase.alertSheet.title", value: "Export Recovery Phrase", comment: "")
+            let action = UIAlertAction(title: actionTitle, style: .default) { [unowned self] _ in
+                let coordinator = ExportPhraseCoordinator(
+                    keystore: self.keystore,
+                    account: account
+                )
+                coordinator.delegate = self
+                coordinator.start()
+                self.navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+                self.addCoordinator(coordinator)
+            }
+            // TODO: Add action when export seed phrase is available
+            //controller.addAction(action)
+        case .address:
             break
         }
 
@@ -157,6 +171,13 @@ extension AccountsCoordinator: BackupCoordinatorDelegate {
     }
 
     func didFinish(wallet: Wallet, in coordinator: BackupCoordinator) {
+        removeCoordinator(coordinator)
+    }
+}
+
+extension AccountsCoordinator: ExportPhraseCoordinatorDelegate {
+    func didCancel(in coordinator: ExportPhraseCoordinator) {
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
     }
 }

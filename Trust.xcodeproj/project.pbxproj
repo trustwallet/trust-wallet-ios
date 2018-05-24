@@ -123,6 +123,8 @@
 		296AF9A71F736EC70058AF78 /* RPCServers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9A61F736EC70058AF78 /* RPCServers.swift */; };
 		296AF9A91F737F6F0058AF78 /* SendRawTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9A81F737F6F0058AF78 /* SendRawTransactionRequest.swift */; };
 		296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */; };
+		296FC59920B6874800B923EF /* ExportPhraseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296FC59820B6874800B923EF /* ExportPhraseCoordinator.swift */; };
+		296FC59B20B68FF600B923EF /* ExportPhraseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296FC59A20B68FF500B923EF /* ExportPhraseViewModel.swift */; };
 		2977CAE01F7DEEB0009682A0 /* FakeEtherKeystore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2977CADF1F7DEEB0009682A0 /* FakeEtherKeystore.swift */; };
 		297800521F71FDCF003185C1 /* FormAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297800511F71FDCF003185C1 /* FormAppearance.swift */; };
 		2981C29C1FC18F7700537E43 /* ChangellyBuyWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981C29B1FC18F7700537E43 /* ChangellyBuyWidget.swift */; };
@@ -593,6 +595,8 @@
 		296AF9A61F736EC70058AF78 /* RPCServers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCServers.swift; sourceTree = "<group>"; };
 		296AF9A81F737F6F0058AF78 /* SendRawTransactionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRawTransactionRequest.swift; sourceTree = "<group>"; };
 		296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionCountRequest.swift; sourceTree = "<group>"; };
+		296FC59820B6874800B923EF /* ExportPhraseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPhraseCoordinator.swift; sourceTree = "<group>"; };
+		296FC59A20B68FF500B923EF /* ExportPhraseViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportPhraseViewModel.swift; sourceTree = "<group>"; };
 		2977CADF1F7DEEB0009682A0 /* FakeEtherKeystore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeEtherKeystore.swift; sourceTree = "<group>"; };
 		297800511F71FDCF003185C1 /* FormAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormAppearance.swift; sourceTree = "<group>"; };
 		2981C29B1FC18F7700537E43 /* ChangellyBuyWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangellyBuyWidget.swift; sourceTree = "<group>"; };
@@ -1329,6 +1333,7 @@
 			children = (
 				29DBF2A21F9DBFF400327C60 /* BackupCoordinator.swift */,
 				A2B7ECA92038122200828E7D /* ExportPrivateKeyCoordinator.swift */,
+				296FC59820B6874800B923EF /* ExportPhraseCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -1663,6 +1668,7 @@
 			children = (
 				299B5E3A1FD141B70051361C /* BackupViewModel.swift */,
 				A2B7ECAB2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift */,
+				296FC59A20B68FF500B923EF /* ExportPhraseViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2946,6 +2952,7 @@
 				296106C81F7646590006164B /* TokensViewModel.swift in Sources */,
 				299B5E471FD2C87F0051361C /* ConfigureTransactionError.swift in Sources */,
 				77E81D94203687FB00534C99 /* NotificationsViewController.swift in Sources */,
+				296FC59920B6874800B923EF /* ExportPhraseCoordinator.swift in Sources */,
 				615F10561FCBEF2E008A45AF /* OnboardingPageViewModel.swift in Sources */,
 				29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */,
 				73200B752048B67E00118A82 /* NonFungibleTokenObject.swift in Sources */,
@@ -3130,6 +3137,7 @@
 				BB3B86BF204CECBC0061FCBA /* URLNavigable.swift in Sources */,
 				735AB03D2073BF2100EEEDDD /* TokenBalanceOperation.swift in Sources */,
 				2912CD2B1F6A833E00C6CBE3 /* TransactionsViewController.swift in Sources */,
+				296FC59B20B68FF600B923EF /* ExportPhraseViewModel.swift in Sources */,
 				775C00B520195BFB001B5EBC /* BrowserAction.swift in Sources */,
 				BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */,
 				77E0E773201FAD06009B4B31 /* BrowserURLParser.swift in Sources */,
