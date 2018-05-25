@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         window = UIWindow(frame: UIScreen.main.bounds)
 
         let keystore = EtherKeystore.shared
-        RealmConfiguration.secureRealmConfiguration()
         coordinator = AppCoordinator(window: window!, keystore: keystore, navigator: urlNavigatorCoordinator)
         coordinator.start()
 
