@@ -68,11 +68,10 @@ struct RealmConfiguration {
     }
 
     private static func encryptDatabase(with path: URL, and encryptionKey: Data) {
-        _ = Realm.Configuration(fileURL: path)
         let documentsPath = path.deletingLastPathComponent()
         let tempPath = documentsPath.appendingPathExtension("/temp.realm")
         do {
-            try Realm().writeCopy(toFile: tempPath, encryptionKey: encryptionKey)
+            try Realm(fileURL: path).writeCopy(toFile: tempPath, encryptionKey: encryptionKey)
             try FileManager.default.removeItem(at: path)
             try FileManager.default.moveItem(at: tempPath, to: path)
         } catch {
