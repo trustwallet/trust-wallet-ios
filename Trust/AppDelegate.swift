@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         coordinator.start()
 
         if !UIApplication.shared.isProtectedDataAvailable {
-            Analytics.track(.dataProtectionDisabled)
+            fatalError()
         }
 
         protectionCoordinator.didFinishLaunchingWithOptions()

@@ -40,12 +40,8 @@ class SendTransactionCoordinator {
                 case .success(let count):
                     let transaction = self.appendNonce(to: transaction, currentNonce: count)
                     self.signAndSend(transaction: transaction, completion: completion)
-                    // analytics event for succesfully sent transaction from wallet
-                    Analytics.track(.sentTransactionFromWallet)
                 case .failure(let error):
                     completion(.failure(AnyError(error)))
-                    // analytics event for failed sent transaction from wallet
-                    Analytics.track(.failedTransactionFromWallet(error))
                 }
             }
         }

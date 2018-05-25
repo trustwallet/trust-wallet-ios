@@ -57,8 +57,6 @@ class WalletCoordinator: Coordinator {
         keystore.createAccount(with: password) { result in
             switch result {
             case .success(let account):
-                // analytics event for wallet successfully created
-                Analytics.track(.createdWallet)
                 self.pushBackup(for: account)
             case .failure(let error):
                 self.navigationController.displayError(error: error)

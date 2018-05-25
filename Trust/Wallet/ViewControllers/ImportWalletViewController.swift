@@ -199,12 +199,8 @@ class ImportWalletViewController: FormViewController {
             switch result {
             case .success(let account):
                 self.didImport(account: account)
-                // analytics event for succesfully imported wallet
-                Analytics.track(.importedWallet(type))
             case .failure(let error):
                 self.displayError(error: error)
-                // analytics event for failed wallet import
-                Analytics.track(.failedImportWallet(type, error))
             }
         }
     }
