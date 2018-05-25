@@ -14,4 +14,13 @@ struct PasswordGenerator {
         let _ = SecRandomCopyBytes(kSecRandomDefault, bytesCount, &randomBytes)
         return randomBytes.map({ String(format: "%02hhx", $0) }).joined(separator: "")
     }
+
+    static func generateRandomData(bytesCount: Int) -> Data {
+        var keyData = Data(count: bytesCount)
+        var key = keyData
+        _ = key.withUnsafeMutableBytes {
+            SecRandomCopyBytes(kSecRandomDefault, keyData.count, $0)
+        }
+        return key
+    }
 }

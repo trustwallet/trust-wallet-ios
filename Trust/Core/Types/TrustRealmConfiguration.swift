@@ -40,7 +40,7 @@ struct RealmConfiguration {
 
     private static func realmSecureConfiguration() -> Realm.Configuration {
         guard let key = getKey() else {
-            let newKey = generateKey()
+            let newKey = PasswordGenerator.generateRandomData(bytesCount: 64)
             saveKey(key: newKey)
             encryptExistingDatabases(with: newKey)
             return  Realm.Configuration(encryptionKey: newKey)
@@ -56,15 +56,6 @@ struct RealmConfiguration {
         return keychain.getData(realmKey)
     }
 
-    private static func generateKey() -> Data {
-        var keyData = Data(count: 64)
-        var key = keyData
-        _ = key.withUnsafeMutableBytes {
-            SecRandomCopyBytes(kSecRandomDefault, keyData.count, $0)
-        }
-        return key
-    }
-
     private static func encryptExistingDatabases(with encryptionKey: Data) {
         guard let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
         do {
@@ -78,7 +69,8 @@ struct RealmConfiguration {
 
     private static func encryptDatabase(with path: URL, and encryptionKey: Data) {
         _ = Realm.Configuration(fileURL: path)
-        let tempPath = path.appendingPathExtension("temp")
+        let documentsPath = path.deletingLastPathComponent()
+        let tempPath = documentsPath.appendingPathExtension("/temp.realm")
         do {
             try Realm().writeCopy(toFile: tempPath, encryptionKey: encryptionKey)
             try FileManager.default.removeItem(at: path)
