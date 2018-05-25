@@ -8,8 +8,9 @@ class MigrationInitializer: Initializer {
 
     let account: Wallet
     let chainID: Int
+    private let schemaVersion: UInt64 = 52
     lazy var config: Realm.Configuration = {
-        return RealmConfiguration.configuration(for: account, chainID: chainID)
+        return RealmConfiguration.configuration(for: account, chainID: chainID, with: schemaVersion)
     }()
 
     init(
@@ -20,7 +21,7 @@ class MigrationInitializer: Initializer {
     }
 
     func perform() {
-        config.schemaVersion = 52
+        config.schemaVersion = schemaVersion
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
             case 0...32:
