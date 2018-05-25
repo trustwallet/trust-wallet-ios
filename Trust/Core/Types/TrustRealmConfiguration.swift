@@ -38,14 +38,15 @@ struct RealmConfiguration {
         return config
     }
 
+    static func secureRealmConfiguration() {
+        guard getKey() == nil else { return }
+        let newKey = PasswordGenerator.generateRandomData(bytesCount: 64)
+        saveKey(key: newKey)
+        encryptExistingDatabases(with: newKey)
+    }
+
     private static func realmSecureConfiguration() -> Realm.Configuration {
-        guard let key = getKey() else {
-            let newKey = PasswordGenerator.generateRandomData(bytesCount: 64)
-            saveKey(key: newKey)
-            encryptExistingDatabases(with: newKey)
-            return  Realm.Configuration(encryptionKey: newKey)
-        }
-        return Realm.Configuration(encryptionKey: key)
+        return Realm.Configuration(encryptionKey: getKey())
     }
 
     private static func saveKey(key: Data) {
@@ -69,11 +70,17 @@ struct RealmConfiguration {
 
     private static func encryptDatabase(with path: URL, and encryptionKey: Data) {
         let documentsPath = path.deletingLastPathComponent()
-        let tempPath = documentsPath.appendingPathExtension("/temp.realm")
+        let databaseUrls = [path,
+            path.appendingPathExtension("lock"),
+            path.appendingPathExtension("note"),
+            path.appendingPathExtension("management"),
+        ]
+        let tempPath = documentsPath.appendingPathComponent("temp.realm")
         do {
-            try Realm(fileURL: path).writeCopy(toFile: tempPath, encryptionKey: encryptionKey)
-            try FileManager.default.removeItem(at: path)
+            try Realm(configuration: Realm.Configuration(fileURL: path, schemaVersion: 52)).writeCopy(toFile: tempPath, encryptionKey: encryptionKey)
+            try _ = databaseUrls.map { try FileManager.default.removeItem(at: $0) }
             try FileManager.default.moveItem(at: tempPath, to: path)
+            try FileManager.default.removeItem(at: tempPath)
         } catch {
             print(error.localizedDescription)
         }
