@@ -80,7 +80,6 @@ struct RealmConfiguration {
             try Realm(configuration: Realm.Configuration(fileURL: path, schemaVersion: 52)).writeCopy(toFile: tempPath, encryptionKey: encryptionKey)
             try _ = databaseUrls.map { try FileManager.default.removeItem(at: $0) }
             try FileManager.default.moveItem(at: tempPath, to: path)
-            try FileManager.default.removeItem(at: tempPath)
         } catch {
             print(error.localizedDescription)
         }
