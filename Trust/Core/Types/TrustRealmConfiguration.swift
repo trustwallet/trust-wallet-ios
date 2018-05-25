@@ -77,9 +77,11 @@ struct RealmConfiguration {
         ]
         let tempPath = documentsPath.appendingPathComponent("temp.realm")
         do {
-            try Realm(configuration: Realm.Configuration(fileURL: path, schemaVersion: 52)).writeCopy(toFile: tempPath, encryptionKey: encryptionKey)
-            try _ = databaseUrls.map { try FileManager.default.removeItem(at: $0) }
-            try FileManager.default.moveItem(at: tempPath, to: path)
+            try autoreleasepool {
+                try Realm(configuration: Realm.Configuration(fileURL: path)).writeCopy(toFile: tempPath, encryptionKey: encryptionKey)
+                try _ = databaseUrls.map { try FileManager.default.removeItem(at: $0) }
+                try FileManager.default.moveItem(at: tempPath, to: path)
+            }
         } catch {
             print(error.localizedDescription)
         }
