@@ -12,9 +12,11 @@ class SharedMigrationInitializer: Initializer {
     init() { }
 
     func perform() {
-        config.schemaVersion = 6
+        config.schemaVersion = 7
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
+            case 4...6:
+                migration.deleteData(forType: CoinTicker.className)
             default:
                 break
             }
