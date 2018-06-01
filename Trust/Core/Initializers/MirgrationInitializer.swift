@@ -20,7 +20,7 @@ class MigrationInitializer: Initializer {
     }
 
     func perform() {
-        config.schemaVersion = 52
+        config.schemaVersion = Config.dbMigrationSchemaVersion
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
             case 0...32:
@@ -36,6 +36,9 @@ class MigrationInitializer: Initializer {
                 fallthrough
             case 33...49:
                 migration.deleteData(forType: Transaction.className)
+                fallthrough
+            case 50...52:
+                migration.deleteData(forType: CoinTicker.className)
             default:
                 break
             }
