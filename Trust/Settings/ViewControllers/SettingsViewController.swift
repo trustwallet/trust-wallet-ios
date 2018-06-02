@@ -392,3 +392,9 @@ extension SettingsViewController: BrowserConfigurationViewControllerDelegate {
         delegate?.didAction(action: .clearBrowserCache, in: self)
     }
 }
+
+extension SettingsViewController: Scrollable {
+    func scrollOnTop() {
+        tableView.scrollOnTop()
+    }
+}

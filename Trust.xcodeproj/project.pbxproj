@@ -125,6 +125,8 @@
 		296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */; };
 		296FC59920B6874800B923EF /* ExportPhraseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296FC59820B6874800B923EF /* ExportPhraseCoordinator.swift */; };
 		296FC59B20B68FF600B923EF /* ExportPhraseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296FC59A20B68FF500B923EF /* ExportPhraseViewModel.swift */; };
+		296FC5A420C2766B00B923EF /* Scrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296FC5A320C2766B00B923EF /* Scrollable.swift */; };
+		296FC5A620C2773B00B923EF /* UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296FC5A520C2773B00B923EF /* UIScrollView.swift */; };
 		2977CAE01F7DEEB0009682A0 /* FakeEtherKeystore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2977CADF1F7DEEB0009682A0 /* FakeEtherKeystore.swift */; };
 		297800521F71FDCF003185C1 /* FormAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297800511F71FDCF003185C1 /* FormAppearance.swift */; };
 		2981C29C1FC18F7700537E43 /* ChangellyBuyWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2981C29B1FC18F7700537E43 /* ChangellyBuyWidget.swift */; };
@@ -594,6 +596,8 @@
 		296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionCountRequest.swift; sourceTree = "<group>"; };
 		296FC59820B6874800B923EF /* ExportPhraseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPhraseCoordinator.swift; sourceTree = "<group>"; };
 		296FC59A20B68FF500B923EF /* ExportPhraseViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportPhraseViewModel.swift; sourceTree = "<group>"; };
+		296FC5A320C2766B00B923EF /* Scrollable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scrollable.swift; sourceTree = "<group>"; };
+		296FC5A520C2773B00B923EF /* UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView.swift; sourceTree = "<group>"; };
 		2977CADF1F7DEEB0009682A0 /* FakeEtherKeystore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeEtherKeystore.swift; sourceTree = "<group>"; };
 		297800511F71FDCF003185C1 /* FormAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormAppearance.swift; sourceTree = "<group>"; };
 		2981C29B1FC18F7700537E43 /* ChangellyBuyWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangellyBuyWidget.swift; sourceTree = "<group>"; };
@@ -1148,6 +1152,7 @@
 				771D53722059337100C79485 /* TokenImageView.swift */,
 				7374ED2D2059A6A3004A8BC2 /* SectionHeader.swift */,
 				77CB8399206CEED7006F34A8 /* Size.swift */,
+				296FC5A320C2766B00B923EF /* Scrollable.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1616,6 +1621,7 @@
 				73B81C712087E16F00623E04 /* Realm+Extensions.swift */,
 				7778713B2086AD9900CF7303 /* BigInt.swift */,
 				77B64100209668FF00BEF3EB /* EtherNumberFormatter+Trust.swift */,
+				296FC5A520C2773B00B923EF /* UIScrollView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3021,6 +3027,7 @@
 				291F52C11F6C8A1F00B369AB /* AccountsViewModel.swift in Sources */,
 				7778713C2086AD9900CF7303 /* BigInt.swift in Sources */,
 				7721A6CC202EFBC5004DB16C /* AddCustomNetworkViewController.swift in Sources */,
+				296FC5A620C2773B00B923EF /* UIScrollView.swift in Sources */,
 				77872D322027AA4A0032D687 /* SliderTextFieldRow.swift in Sources */,
 				298542E31FBA722F00CB5081 /* ContainerView.swift in Sources */,
 				2923D9B11FDA49D8000CF3F8 /* Initializer.swift in Sources */,
@@ -3049,6 +3056,7 @@
 				2928500A208E9A5F00EC5AFB /* SearchEngine.swift in Sources */,
 				771D536F2058BB0D00C79485 /* BrowserCoordinator.swift in Sources */,
 				29FF12FB1F74CC8200AFD326 /* EthereumAddressRule.swift in Sources */,
+				296FC5A420C2766B00B923EF /* Scrollable.swift in Sources */,
 				294EC1D81FD7FBAB0065EB20 /* BiometryAuthenticationType.swift in Sources */,
 				771D53632050AFC700C79485 /* WalletType.swift in Sources */,
 				29E6E0721FEA200D0079265A /* ConfirmPaymentDetailsViewModel.swift in Sources */,

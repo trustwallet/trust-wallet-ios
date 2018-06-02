@@ -38,7 +38,6 @@ class InCoordinator: Coordinator {
         return self.navigationController.viewControllers.first as? UITabBarController
     }
     var localSchemeCoordinator: LocalSchemeCoordinator?
-
     lazy var helpUsCoordinator: HelpUsCoordinator = {
         return HelpUsCoordinator(
             navigationController: navigationController,

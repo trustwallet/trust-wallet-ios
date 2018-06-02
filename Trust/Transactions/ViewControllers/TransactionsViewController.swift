@@ -191,3 +191,9 @@ extension TransactionsViewController: UITableViewDataSource {
         return StyleLayout.TableView.heightForHeaderInSection
     }
 }
+
+extension TransactionsViewController: Scrollable {
+    func scrollOnTop() {
+        tableView.scrollOnTop()
+    }
+}
