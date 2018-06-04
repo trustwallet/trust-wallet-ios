@@ -26,16 +26,23 @@ protocol NetworkProtocol: TrustNetworkProtocol {
 }
 
 class TrustNetwork: NetworkProtocol {
-
     static let deleteMissingInternalSeconds: Double = 60.0
     static let deleyedTransactionInternalSeconds: Double = 60.0
     let provider: MoyaProvider<TrustService>
+    let APIProvider: MoyaProvider<TrustAPI>
     let config: Config
     let balanceService: TokensBalanceService
     let account: Wallet
 
-    required init(provider: MoyaProvider<TrustService>, balanceService: TokensBalanceService, account: Wallet, config: Config) {
+    required init(
+        provider: MoyaProvider<TrustService>,
+        APIProvider: MoyaProvider<TrustAPI>,
+        balanceService: TokensBalanceService,
+        account: Wallet,
+        config: Config
+    ) {
         self.provider = provider
+        self.APIProvider = APIProvider
         self.balanceService = balanceService
         self.account = account
         self.config = config
@@ -46,7 +53,7 @@ class TrustNetwork: NetworkProtocol {
             currency: config.currency.rawValue,
             tokens: tokenPrices
         )
-        provider.request(.prices(tokensPriceToFetch)) { result in
+        APIProvider.request(.prices(tokensPriceToFetch)) { result in
             guard case .success(let response) = result else {
                 completion(nil)
                 return
@@ -133,7 +140,7 @@ class TrustNetwork: NetworkProtocol {
                 currency: config.currency.rawValue,
                 tokens: tokenPrices
             )
-            provider.request(.prices(tokensPriceToFetch)) { result in
+            APIProvider.request(.prices(tokensPriceToFetch)) { result in
                 guard case .success(let response) = result else {
                     seal.reject(TrustNetworkProtocolError.missingPrices)
                     return

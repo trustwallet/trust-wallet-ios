@@ -5,7 +5,7 @@ import XCTest
 import BigInt
 
 class TokensViewModelTest: XCTestCase {
-    let model = TokensViewModel(address: .make(), store: FakeTokensDataStore(), tokensNetwork: FakeTokensNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: FakeGetBalanceCoordinator(), account: .make(), config: .make()))
+    let model = TokensViewModel(address: .make(), store: FakeTokensDataStore(), tokensNetwork: FakeTokensNetwork(provider: TrustProviderFactory.makeProvider(), APIProvider: TrustProviderFactory.makeAPIProvider(), balanceService: FakeGetBalanceCoordinator(), account: .make(), config: .make()))
     let firstItem = IndexPath(row: 0, section: 0)
 
     func testNumberOfTokens() {

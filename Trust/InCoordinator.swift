@@ -85,7 +85,13 @@ class InCoordinator: Coordinator {
         let tokensStorage = TokensDataStore(realm: realm, config: config)
         let balanceCoordinator =  TokensBalanceService()
         let viewModel = InCoordinatorViewModel(config: config)
-        let trustNetwork = TrustNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
+        let trustNetwork = TrustNetwork(
+            provider: TrustProviderFactory.makeProvider(),
+            APIProvider: TrustProviderFactory.makeAPIProvider(),
+            balanceService: balanceCoordinator,
+            account: account,
+            config: config
+        )
         let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
         let transactionsStorage = TransactionsStorage(
             realm: realm,
