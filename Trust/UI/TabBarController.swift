@@ -19,7 +19,11 @@ class TabBarController: UITabBarController {
 
 extension TabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if self.previousController == viewController || self.previousController == nil {
+        if self.previousController == nil {
+            self.previousController = viewController
+        }
+
+        if self.previousController == viewController {
             if let nav = viewController as? NavigationController,
                 nav.viewControllers.count < 2,
                 let controller = nav.viewControllers.first as? Scrollable {

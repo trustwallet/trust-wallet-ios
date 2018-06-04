@@ -395,6 +395,7 @@ extension SettingsViewController: BrowserConfigurationViewControllerDelegate {
 
 extension SettingsViewController: Scrollable {
     func scrollOnTop() {
+        guard isViewLoaded else { return }
         tableView.scrollOnTop()
     }
 }
