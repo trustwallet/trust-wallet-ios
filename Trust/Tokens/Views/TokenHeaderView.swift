@@ -11,7 +11,7 @@ class TokenHeaderView: UIView {
     lazy var amountLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textColor = Colors.black
-        label.textAlignment = .center
+        label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -19,7 +19,7 @@ class TokenHeaderView: UIView {
     lazy var fiatAmountLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textColor = Colors.black
-        label.textAlignment = .center
+        label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -55,24 +55,15 @@ class TokenHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        fiatAmountLabel.translatesAutoresizingMaskIntoConstraints = false
-        fiatAmountLabel.textAlignment = .right
-
-        amountLabel.translatesAutoresizingMaskIntoConstraints = false
-        amountLabel.textAlignment = .right
-
-        percentChange.translatesAutoresizingMaskIntoConstraints = false
-        percentChange.textAlignment = .right
-
         let amountStack = UIStackView(arrangedSubviews: [amountLabel])
         amountStack.translatesAutoresizingMaskIntoConstraints = false
         amountStack.axis = .horizontal
-        amountStack.spacing = 5
 
-        let marketPriceStack = UIStackView(arrangedSubviews: [fiatAmountLabel, percentChange])
+        let marketPriceStack = UIStackView(arrangedSubviews: [fiatAmountLabel, .spacerWidth(5, backgroundColor: UIColor.clear, alpha: 0), percentChange])
         marketPriceStack.translatesAutoresizingMaskIntoConstraints = false
         marketPriceStack.axis = .horizontal
-        marketPriceStack.spacing = 5
+        marketPriceStack.distribution = .equalSpacing
+        marketPriceStack.spacing = 0
 
         container.addArrangedSubview(.spacer(height: StyleLayout.sideMargin * 2))
         container.addArrangedSubview(imageView)
@@ -82,20 +73,19 @@ class TokenHeaderView: UIView {
         container.addArrangedSubview(marketPriceStack)
         container.addArrangedSubview(.spacer(height: 12))
         container.addArrangedSubview(buttonsView)
-
         addSubview(container)
 
         NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: topAnchor),
-            container.leadingAnchor.constraint(equalTo: leadingAnchor),
-            container.trailingAnchor.constraint(equalTo: trailingAnchor),
-            container.bottomAnchor.constraint(equalTo: bottomAnchor),
+            container.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+            container.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
+            container.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+
+            imageView.heightAnchor.constraint(lessThanOrEqualToConstant: Layout.imageSize),
+            imageView.widthAnchor.constraint(lessThanOrEqualToConstant: Layout.imageSize),
 
             buttonsView.leadingAnchor.constraint(equalTo: leadingAnchor),
             buttonsView.trailingAnchor.constraint(equalTo: trailingAnchor),
-
-            imageView.heightAnchor.constraint(equalToConstant: Layout.imageSize),
-            imageView.widthAnchor.constraint(equalToConstant: Layout.imageSize),
         ])
 
         backgroundColor = Colors.veryVeryLightGray
