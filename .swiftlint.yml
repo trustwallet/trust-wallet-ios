@@ -10,6 +10,7 @@ disabled_rules:
   - type_name
   - unused_optional_binding
   - xctfail_message
+  - fallthrough
 opt_in_rules:
   - closure_end_indentation
   - closure_spacing
