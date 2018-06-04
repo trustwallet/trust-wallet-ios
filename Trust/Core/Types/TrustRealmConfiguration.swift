@@ -10,7 +10,7 @@ struct RealmConfiguration {
     private static let fileManager = FileManager.default
 
     private static let sharedRealmKey = "sharedRealmKey"
-    private static let waletsRealmKey = "waletsRealmKey"
+    private static let walletsRealmKey = "walletsRealmKey"
 
     private static let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
 
@@ -47,10 +47,10 @@ struct RealmConfiguration {
             }
         }
 
-        guard let key = getKey(with: waletsRealmKey) else {
+        guard let key = getKey(with: walletsRealmKey) else {
             let newKey = PasswordGenerator.generateRandomData(bytesCount: 64)
             encryptWalletsDatabase(with: newKey, and: schemaVersion)
-            saveKey(key: newKey, for: waletsRealmKey)
+            saveKey(key: newKey, for: walletsRealmKey)
             return Realm.Configuration(fileURL: newURL, encryptionKey: newKey)
         }
 
