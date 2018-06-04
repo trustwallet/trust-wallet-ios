@@ -5,6 +5,7 @@ import TrustCore
 import TrustKeystore
 import TrustWalletSDK
 import BigInt
+import Result
 
 protocol LocalSchemeCoordinatorDelegate: class {
     func didCancel(in coordinator: LocalSchemeCoordinator)
@@ -31,7 +32,7 @@ class LocalSchemeCoordinator: Coordinator {
         self.session = session
     }
 
-    private func signMessage(for account: Account, message: Data, completion: @escaping (Data?) -> Void) {
+    private func signMessage(for account: Account, signMessage: SignMesageType, completion: @escaping (Result<Data, WalletError>) -> Void) {
         let coordinator = SignMessageCoordinator(
             navigationController: navigationController,
             keystore: keystore,
@@ -41,18 +42,18 @@ class LocalSchemeCoordinator: Coordinator {
             guard let `self` = self else { return }
             switch result {
             case .success(let data):
-                completion(data)
+                completion(.success(data))
             case .failure:
-                completion(nil)
+                completion(.failure(WalletError.cancelled))
             }
             self.removeCoordinator(coordinator)
         }
         coordinator.delegate = self
         addCoordinator(coordinator)
-        coordinator.start(with: .message(message))
+        coordinator.start(with: signMessage)
     }
 
-    private func signTransaction(account: Account, transaction: UnconfirmedTransaction, type: ConfirmType, completion: @escaping (Data?) -> Void) {
+    private func signTransaction(account: Account, transaction: UnconfirmedTransaction, type: ConfirmType, completion: @escaping (Result<Data, WalletError>) -> Void) {
         let configurator = TransactionConfigurator(
             session: session,
             account: account,
@@ -73,18 +74,25 @@ class LocalSchemeCoordinator: Coordinator {
             case .success(let type):
                 switch type {
                 case .signedTransaction(let transaction):
-                    completion(transaction.data)
+                    completion(.success(transaction.data))
                 case .sentTransaction(let transaction):
-                    completion(transaction.data)
+                    completion(.success(transaction.data))
                 }
             case .failure:
-                completion(.none)
+                completion(.failure(WalletError.cancelled))
             }
             self.removeCoordinator(coordinator)
             self.navigationController.dismiss(animated: true, completion: nil)
         }
         coordinator.start()
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+    }
+
+    private func account(for session: WalletSession) -> Account? {
+        switch session.account.type {
+        case .privateKey(let account), .hd(let account): return account
+        case .address: return .none
+        }
     }
 }
 
@@ -96,16 +104,21 @@ extension LocalSchemeCoordinator: SignMessageCoordinatorDelegate {
 }
 
 extension LocalSchemeCoordinator: WalletDelegate {
-    func signMessage(_ message: Data, address: Address?, completion: @escaping (Data?) -> Void) {
-        switch session.account.type {
-        case .privateKey(let account), .hd(let account):
-            signMessage(for: account, message: message, completion: completion)
-        case .address:
-            break
+    func signMessage(_ message: Data, address: Address?, completion: @escaping (Result<Data, WalletError>) -> Void) {
+        guard let account = account(for: session) else {
+            return completion(.failure(WalletError.cancelled))
         }
+        signMessage(for: account, signMessage: .message(message), completion: completion)
     }
 
-    func signTransaction(_ transaction: TrustCore.Transaction, completion: @escaping (Data?) -> Void) {
+    func signPersonalMessage(_ message: Data, address: Address?, completion: @escaping (Result<Data, WalletError>) -> Void) {
+        guard let account = account(for: session) else {
+            return completion(.failure(WalletError.cancelled))
+        }
+        signMessage(for: account, signMessage: .personalMessage(message), completion: completion)
+    }
+
+    func signTransaction(_ transaction: TrustCore.Transaction, completion: @escaping (Result<Data, WalletError>) -> Void) {
         let transaction = UnconfirmedTransaction(
             transferType: .ether(destination: .none),
             value: transaction.amount,
@@ -116,11 +129,9 @@ extension LocalSchemeCoordinator: WalletDelegate {
             nonce: BigInt(transaction.nonce)
         )
 
-        switch session.account.type {
-        case .privateKey(let account), .hd(let account):
-            signTransaction(account: account, transaction: transaction, type: .sign, completion: completion)
-        case .address:
-            break
+        guard let account = account(for: session) else {
+            return completion(.failure(WalletError.cancelled))
         }
+        signTransaction(account: account, transaction: transaction, type: .sign, completion: completion)
     }
 }
