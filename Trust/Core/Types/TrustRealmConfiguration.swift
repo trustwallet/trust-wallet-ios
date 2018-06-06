@@ -3,7 +3,7 @@
 import Foundation
 import RealmSwift
 import TrustCore
-import KeychainSwift
+import SAMKeychain
 
 struct RealmConfiguration {
 
@@ -12,17 +12,21 @@ struct RealmConfiguration {
     private static let sharedRealmKey = "sharedRealmKey"
     private static let walletsRealmKey = "walletsRealmKey"
 
-    private static let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
+    private struct Keys {
+        static let shared = "trust.lock.shared"
+        static let wallets = "trust.lock.wallets"
+        static let account = "trust.realm"
+    }
 
     static func sharedConfiguration() -> Realm.Configuration {
 
         let realmDefaultFolder = Realm.Configuration.defaultConfiguration.fileURL!.deletingLastPathComponent()
         let url = realmDefaultFolder.appendingPathComponent("shared.realm")
 
-        guard let key = getKey(with: sharedRealmKey) else {
+        guard let key = getKey(for: Keys.shared) else {
             let newKey = PasswordGenerator.generateRandomData(bytesCount: 64)
-            encryptDatabase(with: url, and: newKey, and:  Config.dbMigrationSchemaVersion)
-            saveKey(key: newKey, for: sharedRealmKey)
+            encryptDatabase(with: url, and: newKey, and: Config.dbMigrationSchemaVersion)
+            saveKey(key: newKey, for: Keys.account)
             return Realm.Configuration(fileURL: url, encryptionKey: newKey)
         }
 
@@ -47,22 +51,27 @@ struct RealmConfiguration {
             }
         }
 
-        guard let key = getKey(with: walletsRealmKey) else {
+        guard let key = getKey(for: Keys.wallets) else {
             let newKey = PasswordGenerator.generateRandomData(bytesCount: 64)
             encryptWalletsDatabase(with: newKey)
-            saveKey(key: newKey, for: walletsRealmKey)
+            saveKey(key: newKey, for: Keys.wallets)
             return Realm.Configuration(fileURL: newURL, encryptionKey: newKey)
         }
 
         return Realm.Configuration(fileURL: newURL, encryptionKey: key)
     }
 
-    private static func saveKey(key: Data, for id: String) {
-        keychain.set(key, forKey: id)
+    private static func saveKey(key: Data, for type: String) {
+        SAMKeychain.setPasswordData(key, forService: type, account: Keys.account)
     }
 
-    private static func getKey(with id: String) -> Data? {
-        return keychain.getData(id)
+    private static func getKey(for type: String) -> Data? {
+        return SAMKeychain.passwordData(forService: type, account: Keys.account)
+    }
+
+    static func cleanKeys() {
+        SAMKeychain.deletePassword(forService: Keys.shared, account: Keys.account)
+        SAMKeychain.deletePassword(forService: Keys.wallets, account: Keys.account)
     }
 
     private static func encryptWalletsDatabase(with encryptionKey: Data) {
