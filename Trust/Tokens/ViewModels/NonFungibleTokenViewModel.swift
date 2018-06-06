@@ -37,6 +37,10 @@ class NonFungibleTokenViewModel {
         return !tokens.isEmpty
     }
 
+    var cellHeight: CGFloat {
+        return 240
+    }
+
     init(
         address: Address,
         config: Config = Config(),

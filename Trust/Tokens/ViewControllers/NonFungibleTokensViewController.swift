@@ -96,7 +96,7 @@ extension NonFungibleTokensViewController: StatefulViewController {
 
 extension NonFungibleTokensViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 250
+        return viewModel.cellHeight
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

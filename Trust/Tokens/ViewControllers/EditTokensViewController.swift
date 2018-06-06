@@ -21,12 +21,12 @@ class EditTokensViewController: UITableViewController {
         let searchController = UISearchController(searchResultsController: self.searchResultsController)
         searchController.delegate = self
         searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = true
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = viewModel.searchPlaceholder
         searchController.searchBar.sizeToFit()
         searchController.searchBar.barTintColor = Colors.lightGray
         searchController.searchBar.delegate = self
-        searchController.searchResultsUpdater = self
         definesPresentationContext = true
         return searchController
     }()
