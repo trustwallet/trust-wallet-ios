@@ -122,7 +122,7 @@ class TokensViewModel: NSObject {
         }.done { [weak self] balance in
             self?.store.update(balances: [TokensDataStore.etherToken().address: balance.value])
         }.catch { error in
-           Analytics.track(.failedTrustRequest(error))
+           NSLog("updateEthBalance \(error)")
         }
     }
 
@@ -132,7 +132,7 @@ class TokensViewModel: NSObject {
         }.done { [weak self] tokens in
              self?.store.update(tokens: tokens, action: .updateInfo)
         }.catch { error in
-            Analytics.track(.failedTrustRequest(error))
+            NSLog("tokensInfo \(error)")
         }.finally { [weak self] in
             guard let strongSelf = self else { return }
             let tokens = strongSelf.store.objects
@@ -149,7 +149,7 @@ class TokensViewModel: NSObject {
         }.done { [weak self] tickers in
             self?.store.saveTickers(tickers: tickers)
         }.catch { error in
-            Analytics.track(.failedTrustRequest(error))
+            NSLog("prices \(error)")
         }.finally { [weak self] in
             self?.delegate?.refresh()
         }

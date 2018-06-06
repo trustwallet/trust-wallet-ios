@@ -11,7 +11,7 @@ class TokenHeaderView: UIView {
     lazy var amountLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textColor = Colors.black
-        label.textAlignment = .center
+        label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -19,7 +19,7 @@ class TokenHeaderView: UIView {
     lazy var fiatAmountLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textColor = Colors.black
-        label.textAlignment = .center
+        label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -55,24 +55,19 @@ class TokenHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        fiatAmountLabel.translatesAutoresizingMaskIntoConstraints = false
-        fiatAmountLabel.textAlignment = .right
-
-        amountLabel.translatesAutoresizingMaskIntoConstraints = false
-        amountLabel.textAlignment = .right
-
-        percentChange.translatesAutoresizingMaskIntoConstraints = false
-        percentChange.textAlignment = .right
-
         let amountStack = UIStackView(arrangedSubviews: [amountLabel])
         amountStack.translatesAutoresizingMaskIntoConstraints = false
         amountStack.axis = .horizontal
-        amountStack.spacing = 5
 
-        let marketPriceStack = UIStackView(arrangedSubviews: [fiatAmountLabel, percentChange])
+        let marketPriceStack = UIStackView(arrangedSubviews: [fiatAmountLabel, .spacerWidth(5, backgroundColor: UIColor.clear, alpha: 0), percentChange])
         marketPriceStack.translatesAutoresizingMaskIntoConstraints = false
         marketPriceStack.axis = .horizontal
-        marketPriceStack.spacing = 5
+        marketPriceStack.distribution = .equalSpacing
+        marketPriceStack.spacing = 0
+
+        let buttonsContainer = UIView()
+        buttonsContainer.translatesAutoresizingMaskIntoConstraints = false
+        buttonsContainer.addSubview(buttonsView)
 
         container.addArrangedSubview(.spacer(height: StyleLayout.sideMargin * 2))
         container.addArrangedSubview(imageView)
@@ -81,22 +76,31 @@ class TokenHeaderView: UIView {
         container.addArrangedSubview(.spacer(height: 12))
         container.addArrangedSubview(marketPriceStack)
         container.addArrangedSubview(.spacer(height: 12))
-        container.addArrangedSubview(buttonsView)
-
+        addSubview(buttonsContainer)
         addSubview(container)
 
+        let buttonsViewLeading = buttonsView.leadingAnchor.constraint(equalTo: buttonsContainer.leadingAnchor)
+
         NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: topAnchor),
-            container.leadingAnchor.constraint(equalTo: leadingAnchor),
-            container.trailingAnchor.constraint(equalTo: trailingAnchor),
-            container.bottomAnchor.constraint(equalTo: bottomAnchor),
+            container.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+            container.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
+            container.bottomAnchor.constraint(equalTo: buttonsContainer.topAnchor),
 
-            buttonsView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            buttonsView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            buttonsContainer.topAnchor.constraint(equalTo: container.bottomAnchor),
+            buttonsContainer.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+            buttonsContainer.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+            buttonsContainer.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
 
-            imageView.heightAnchor.constraint(equalToConstant: Layout.imageSize),
-            imageView.widthAnchor.constraint(equalToConstant: Layout.imageSize),
+            buttonsView.bottomAnchor.constraint(equalTo: buttonsContainer.bottomAnchor),
+            buttonsView.trailingAnchor.constraint(equalTo: buttonsContainer.trailingAnchor),
+
+            imageView.heightAnchor.constraint(lessThanOrEqualToConstant: Layout.imageSize),
+            imageView.widthAnchor.constraint(lessThanOrEqualToConstant: Layout.imageSize),
         ])
+
+        buttonsViewLeading.priority = UILayoutPriority(rawValue: 999)
+        buttonsViewLeading.isActive = true
 
         backgroundColor = Colors.veryVeryLightGray
         buttonsView.backgroundColor = Colors.veryVeryLightGray

@@ -38,7 +38,6 @@ class InCoordinator: Coordinator {
         return self.navigationController.viewControllers.first as? UITabBarController
     }
     var localSchemeCoordinator: LocalSchemeCoordinator?
-
     lazy var helpUsCoordinator: HelpUsCoordinator = {
         return HelpUsCoordinator(
             navigationController: navigationController,
@@ -86,7 +85,13 @@ class InCoordinator: Coordinator {
         let tokensStorage = TokensDataStore(realm: realm, config: config)
         let balanceCoordinator =  TokensBalanceService()
         let viewModel = InCoordinatorViewModel(config: config)
-        let trustNetwork = TrustNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: balanceCoordinator, account: account, config: config)
+        let trustNetwork = TrustNetwork(
+            provider: TrustProviderFactory.makeProvider(),
+            APIProvider: TrustProviderFactory.makeAPIProvider(),
+            balanceService: balanceCoordinator,
+            account: account,
+            config: config
+        )
         let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
         let transactionsStorage = TransactionsStorage(
             realm: realm,

@@ -11,7 +11,13 @@ class TokensCoordinatorTests: XCTestCase {
             session: .make(),
             keystore: FakeKeystore(),
             tokensStorage: FakeTokensDataStore(),
-            network: FakeTokensNetwork(provider: TrustProviderFactory.makeProvider(), balanceService: FakeGetBalanceCoordinator(), account: .make(), config: .make()), transactionsStore: FakeTransactionsStorage()
+            network: FakeTokensNetwork(
+                provider: TrustProviderFactory.makeProvider(),
+                APIProvider: TrustProviderFactory.makeAPIProvider(),
+                balanceService: FakeGetBalanceCoordinator(),
+                account: .make(),
+                config: .make()
+            ), transactionsStore: FakeTransactionsStorage()
         )
         
         coordinator.start()

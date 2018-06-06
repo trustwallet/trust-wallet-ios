@@ -8,6 +8,7 @@ protocol AccountViewCellDelegate: class {
 }
 
 class AccountViewCell: UITableViewCell {
+
     @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var activeView: UIView!
     @IBOutlet weak var glassesImageView: UIImageView!
@@ -15,7 +16,9 @@ class AccountViewCell: UITableViewCell {
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var identiconImageView: UIImageView!
+
     weak var delegate: AccountViewCellDelegate?
+
     var viewModel: AccountViewModel? {
         didSet {
             guard let model = viewModel else {
@@ -29,10 +32,12 @@ class AccountViewCell: UITableViewCell {
             identiconImageView.image = model.identicon
         }
     }
+
     override func prepareForReuse() {
         super.prepareForReuse()
         self.viewModel = nil
     }
+
     @IBAction func infoAction(_ sender: Any) {
         guard let account = viewModel?.wallet else {
             return

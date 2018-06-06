@@ -183,9 +183,16 @@
 "settings.pushNotifications.allowPushNotifications.footer" = "你將收到已發送和已接收交易的通知。";
 "settings.pushNotifications.payment.button.title" = "發送和接收";
 "settings.pushNotifications.title" = "推送通知";
+"export.warningTwo.private.key" = "任何擁有私鑰的人都可以完全訪問您的錢包";
 "sent.transaction.title" = "交易已发送";
 "settings.network.test.warnning.dont.show.again" = "不再显示";
 "settings.network.test.warnning.message" = "您正在切换到一个测试网络, 其中事务仅用于测试目的";
 "settings.network.test.warnning.title" = "警告";
 "Disable" = "禁用";
 "wallets.navigation.title" = "钱包";
+"confirmPayment.wallet.label.title" = "錢包";
+"settings.browser.clearCache.alert.title" = "清除瀏覽數據？";
+"settings.browser.clearCache.title" = "清除瀏覽器緩存";
+"settings.browser.searchEngine.title" = "搜索引擎";
+"settings.browser.title" = "DApp 瀏覽器";
+"transaction.deployContract.label.title" = "部署智能合約";

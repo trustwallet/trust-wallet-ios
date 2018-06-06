@@ -8,7 +8,7 @@ class MigrationInitializer: Initializer {
 
     let account: Wallet
     let chainID: Int
-    private let schemaVersion: UInt64 = 52
+    private let schemaVersion = Config.dbMigrationSchemaVersion
     lazy var config: Realm.Configuration = {
         return RealmConfiguration.configuration(for: account, chainID: chainID, with: schemaVersion)
     }()
@@ -37,6 +37,9 @@ class MigrationInitializer: Initializer {
                 fallthrough
             case 33...49:
                 migration.deleteData(forType: Transaction.className)
+                fallthrough
+            case 50...52:
+                migration.deleteData(forType: CoinTicker.className)
             default:
                 break
             }

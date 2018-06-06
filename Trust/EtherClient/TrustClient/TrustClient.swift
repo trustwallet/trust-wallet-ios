@@ -4,7 +4,6 @@ import Foundation
 import Moya
 
 enum TrustService {
-    case prices(TokensPrice)
     case getTransactions(address: String, startBlock: Int, page: Int, contract: String?)
     case getTokens(address: String, showBalance: Bool)
     case getTransaction(ID: String)
@@ -13,16 +12,6 @@ enum TrustService {
     case marketplace(chainID: Int)
     case assets(address: String)
     case search(token: String)
-}
-
-struct TokensPrice: Encodable {
-    let currency: String
-    let tokens: [TokenPrice]
-}
-
-struct TokenPrice: Encodable {
-    let contract: String
-    let symbol: String
 }
 
 extension TrustService: TargetType {
@@ -41,8 +30,6 @@ extension TrustService: TargetType {
             return "/push/register"
         case .unregister:
             return "/push/unregister"
-        case .prices:
-            return "/tokenPrices"
         case .marketplace:
             return "/marketplace"
         case .assets:
@@ -59,7 +46,6 @@ extension TrustService: TargetType {
         case .getTransaction: return .get
         case .register: return .post
         case .unregister: return .delete
-        case .prices: return .post
         case .marketplace: return .get
         case .assets: return .get
         case .search: return .get
@@ -85,8 +71,6 @@ extension TrustService: TargetType {
             return .requestJSONEncodable(device)
         case .unregister(let device):
             return .requestJSONEncodable(device)
-        case .prices(let tokensPrice):
-            return .requestJSONEncodable(tokensPrice)
         case .marketplace(let chainID):
             return .requestParameters(parameters: ["chainID": chainID], encoding: URLEncoding())
         case .assets(let address):

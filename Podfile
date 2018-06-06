@@ -23,7 +23,6 @@ target 'Trust' do
   pod 'CryptoSwift', :git=>'https://github.com/krzyzanowskim/CryptoSwift', :branch=>'master'
   pod 'Fabric'
   pod 'Crashlytics', '~> 3.10'
-  pod 'Firebase/Core'
   pod 'Kingfisher', '~> 4.0'
   pod 'TrustCore', '~> 0.0.7'
   pod 'TrustKeystore', '~> 0.4.0'

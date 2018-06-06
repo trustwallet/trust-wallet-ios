@@ -117,3 +117,9 @@ class MasterBrowserViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension MasterBrowserViewController: Scrollable {
+    func scrollOnTop() {
+        browserViewController.goHome()
+    }
+}

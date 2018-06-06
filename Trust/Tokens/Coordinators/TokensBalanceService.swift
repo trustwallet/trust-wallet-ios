@@ -24,7 +24,6 @@ class TokensBalanceService {
                 let biguint = BigUInt(Data(hex: balance))
                 completion(.success(BigInt(sign: .plus, magnitude: biguint)))
             case .failure(let error):
-                Analytics.track(.failedTrustRequest(error))
                 completion(.failure(AnyError(error)))
             }
         }
@@ -40,7 +39,6 @@ class TokensBalanceService {
             case .success(let balance):
                 completion(.success(balance))
             case .failure(let error):
-                Analytics.track(.failedTrustRequest(error))
                 completion(.failure(AnyError(error)))
             }
         }

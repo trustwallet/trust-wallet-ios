@@ -18,9 +18,7 @@ extension WKWebViewConfiguration {
         if let filepath = bundle.path(forResource: "trust-min", ofType: "js") {
             do {
                 js += try String(contentsOfFile: filepath)
-            } catch {
-                Analytics.track(.failedToLoadTrustPageProvider)
-            }
+            } catch { }
         }
 
         js +=

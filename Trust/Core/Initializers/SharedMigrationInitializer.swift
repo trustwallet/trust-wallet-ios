@@ -5,7 +5,7 @@ import RealmSwift
 
 class SharedMigrationInitializer: Initializer {
 
-    private let schemaVersion: UInt64 = 6
+    private let schemaVersion = Config.dbMigrationSchemaVersion
 
     lazy var config: Realm.Configuration = {
         return RealmConfiguration.sharedConfiguration(with: schemaVersion)
@@ -17,6 +17,8 @@ class SharedMigrationInitializer: Initializer {
         config.schemaVersion = schemaVersion
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
+            case 0...52:
+                migration.deleteData(forType: CoinTicker.className)
             default:
                 break
             }

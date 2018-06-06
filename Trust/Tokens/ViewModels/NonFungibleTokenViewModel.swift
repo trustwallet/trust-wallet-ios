@@ -37,6 +37,10 @@ class NonFungibleTokenViewModel {
         return !tokens.isEmpty
     }
 
+    var cellHeight: CGFloat {
+        return 240
+    }
+
     init(
         address: Address,
         config: Config = Config(),
@@ -58,7 +62,6 @@ class NonFungibleTokenViewModel {
                 self?.storage.add(tokens: tokens)
                 seal.fulfill(tokens)
             }.catch { error in
-                Analytics.track(.failedTrustRequest(error))
                 seal.reject(error)
             }
         }

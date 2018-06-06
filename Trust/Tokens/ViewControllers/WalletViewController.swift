@@ -2,7 +2,7 @@
 
 import UIKit
 
-enum DeteilsViewType: Int {
+enum DetailsViewType: Int {
     case tokens
     case nonFungibleTokens
 }
@@ -14,7 +14,7 @@ class WalletViewController: UIViewController {
             NSLocalizedString("Collectibles", value: "Collectibles", comment: ""),
         ]
         let segmentedControl = UISegmentedControl(items: items)
-        segmentedControl.selectedSegmentIndex = DeteilsViewType.tokens.rawValue
+        segmentedControl.selectedSegmentIndex = DetailsViewType.tokens.rawValue
         segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         let selectedTextAttributes = [NSAttributedStringKey.foregroundColor: Colors.blue]
@@ -26,9 +26,7 @@ class WalletViewController: UIViewController {
         }
         return segmentedControl
     }()
-
     var tokensViewController: TokensViewController
-
     var nonFungibleTokensViewController: NonFungibleTokensViewController
 
     init(
@@ -51,7 +49,7 @@ class WalletViewController: UIViewController {
     }
 
     private func updateView() {
-        if segmentController.selectedSegmentIndex == DeteilsViewType.tokens.rawValue {
+        if segmentController.selectedSegmentIndex == DetailsViewType.tokens.rawValue {
             showBarButtonItems()
             remove(asChildViewController: nonFungibleTokensViewController)
             add(asChildViewController: tokensViewController)
@@ -82,5 +80,18 @@ class WalletViewController: UIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension WalletViewController: Scrollable {
+    func scrollOnTop() {
+        switch segmentController.selectedSegmentIndex {
+        case DetailsViewType.tokens.rawValue:
+            tokensViewController.tableView.scrollOnTop()
+        case DetailsViewType.nonFungibleTokens.rawValue:
+            nonFungibleTokensViewController.tableView.scrollOnTop()
+        default:
+            break
+        }
     }
 }

@@ -98,13 +98,11 @@ class NFTokenViewController: UIViewController {
         stackView.addArrangedSubview(.spacer(height: 10))
 
         NSLayoutConstraint.activate([
-           // scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             imageView.heightAnchor.constraint(equalToConstant: 260),
-            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),

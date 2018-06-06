@@ -46,9 +46,9 @@ extension UIView {
         view.backgroundColor = backgroundColor
         view.alpha = alpha
 
-        NSLayoutConstraint.activate([
-            view.widthAnchor.constraint(equalToConstant: width),
-        ])
+        let width = view.widthAnchor.constraint(equalToConstant: width)
+        width.isActive = true
+        width.priority = UILayoutPriority(rawValue: 999)
 
         return view
     }
