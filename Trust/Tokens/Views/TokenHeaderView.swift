@@ -65,6 +65,10 @@ class TokenHeaderView: UIView {
         marketPriceStack.distribution = .equalSpacing
         marketPriceStack.spacing = 0
 
+        let buttonsContainer = UIView()
+        buttonsContainer.translatesAutoresizingMaskIntoConstraints = false
+        buttonsContainer.addSubview(buttonsView)
+
         container.addArrangedSubview(.spacer(height: StyleLayout.sideMargin * 2))
         container.addArrangedSubview(imageView)
         container.addArrangedSubview(.spacer(height: 12))
@@ -72,21 +76,31 @@ class TokenHeaderView: UIView {
         container.addArrangedSubview(.spacer(height: 12))
         container.addArrangedSubview(marketPriceStack)
         container.addArrangedSubview(.spacer(height: 12))
-        container.addArrangedSubview(buttonsView)
+        addSubview(buttonsContainer)
         addSubview(container)
+
+        let buttonsViewLeading = buttonsView.leadingAnchor.constraint(equalTo: buttonsContainer.leadingAnchor)
 
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
             container.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
             container.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
-            container.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+            container.bottomAnchor.constraint(equalTo: buttonsContainer.topAnchor),
+
+            buttonsContainer.topAnchor.constraint(equalTo: container.bottomAnchor),
+            buttonsContainer.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+            buttonsContainer.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+            buttonsContainer.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
+
+            buttonsView.bottomAnchor.constraint(equalTo: buttonsContainer.bottomAnchor),
+            buttonsView.trailingAnchor.constraint(equalTo: buttonsContainer.trailingAnchor),
 
             imageView.heightAnchor.constraint(lessThanOrEqualToConstant: Layout.imageSize),
             imageView.widthAnchor.constraint(lessThanOrEqualToConstant: Layout.imageSize),
-
-            buttonsView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            buttonsView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
+
+        buttonsViewLeading.priority = UILayoutPriority(rawValue: 999)
+        buttonsViewLeading.isActive = true
 
         backgroundColor = Colors.veryVeryLightGray
         buttonsView.backgroundColor = Colors.veryVeryLightGray
