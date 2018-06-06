@@ -8,7 +8,7 @@ protocol AccountViewCellDelegate: class {
 }
 
 class AccountViewCell: UITableViewCell {
-    
+
     @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var activeView: UIView!
     @IBOutlet weak var glassesImageView: UIImageView!
