@@ -5,16 +5,14 @@ import RealmSwift
 
 class SharedMigrationInitializer: Initializer {
 
-    private let schemaVersion = Config.dbMigrationSchemaVersion
-
     lazy var config: Realm.Configuration = {
-        return RealmConfiguration.sharedConfiguration(with: schemaVersion)
+        return RealmConfiguration.sharedConfiguration()
     }()
 
     init() { }
 
     func perform() {
-        config.schemaVersion = schemaVersion
+        config.schemaVersion = Config.dbMigrationSchemaVersion
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
             case 0...52:

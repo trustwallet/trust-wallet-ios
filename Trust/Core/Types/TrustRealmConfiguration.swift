@@ -14,14 +14,14 @@ struct RealmConfiguration {
 
     private static let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
 
-    static func sharedConfiguration(with schemaVersion: UInt64) -> Realm.Configuration {
+    static func sharedConfiguration() -> Realm.Configuration {
 
         let realmDefaultFolder = Realm.Configuration.defaultConfiguration.fileURL!.deletingLastPathComponent()
         let url = realmDefaultFolder.appendingPathComponent("shared.realm")
 
         guard let key = getKey(with: sharedRealmKey) else {
             let newKey = PasswordGenerator.generateRandomData(bytesCount: 64)
-            encryptDatabase(with: url, and: newKey, and: schemaVersion)
+            encryptDatabase(with: url, and: newKey, and:  Config.dbMigrationSchemaVersion)
             saveKey(key: newKey, for: sharedRealmKey)
             return Realm.Configuration(fileURL: url, encryptionKey: newKey)
         }
@@ -31,7 +31,7 @@ struct RealmConfiguration {
         return config
     }
 
-    static func configuration(for account: Wallet, chainID: Int, with schemaVersion: UInt64) -> Realm.Configuration {
+    static func configuration(for account: Wallet, chainID: Int) -> Realm.Configuration {
 
         let realmDefaultFolder = Realm.Configuration.defaultConfiguration.fileURL!.deletingLastPathComponent()
 
@@ -49,7 +49,7 @@ struct RealmConfiguration {
 
         guard let key = getKey(with: walletsRealmKey) else {
             let newKey = PasswordGenerator.generateRandomData(bytesCount: 64)
-            encryptWalletsDatabase(with: newKey, and: schemaVersion)
+            encryptWalletsDatabase(with: newKey)
             saveKey(key: newKey, for: walletsRealmKey)
             return Realm.Configuration(fileURL: newURL, encryptionKey: newKey)
         }
@@ -65,8 +65,9 @@ struct RealmConfiguration {
         return keychain.getData(id)
     }
 
-    private static func encryptWalletsDatabase(with encryptionKey: Data, and schemaVersion: UInt64) {
+    private static func encryptWalletsDatabase(with encryptionKey: Data) {
         guard let documentsUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        let schemaVersion = Config.dbMigrationSchemaVersion
         do {
             let directoryContents = try fileManager.contentsOfDirectory(at: documentsUrl, includingPropertiesForKeys: nil, options: [])
             let realmDatabases = directoryContents.filter { $0.pathExtension == "realm" && $0.lastPathComponent != "shared.realm" && $0.lastPathComponent != "default.realm" }
