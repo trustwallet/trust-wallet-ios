@@ -38,7 +38,7 @@ class NonFungibleTokenViewModel {
     }
 
     var cellHeight: CGFloat {
-        return 263
+        return 240
     }
 
     init(
