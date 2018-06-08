@@ -320,7 +320,7 @@ extension InCoordinator: TokensCoordinatorDelegate {
     }
 
     func didPressDiscover(in coordinator: TokensCoordinator) {
-        guard let url = URL.opensea() else { return }
+        guard let url = Config().opensea() else { return }
         showTab(.browser(openURL: url))
     }
 

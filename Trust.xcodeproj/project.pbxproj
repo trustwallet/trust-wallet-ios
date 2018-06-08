@@ -324,7 +324,6 @@
 		73DE7B3220987D8F00AE04E6 /* NonFungibleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DE7B3020987D8F00AE04E6 /* NonFungibleCollectionViewCell.swift */; };
 		73DE7B3320987D8F00AE04E6 /* NonFungibleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73DE7B3120987D8F00AE04E6 /* NonFungibleCollectionViewCell.xib */; };
 		73DE7B35209884AB00AE04E6 /* NonFungibleCollectionViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DE7B34209884AB00AE04E6 /* NonFungibleCollectionViewCellModel.swift */; };
-		73ED60CC20C9D44F00F5E8C7 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED60CB20C9D44F00F5E8C7 /* URL.swift */; };
 		73ED85A520349BE400593BF3 /* StringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED85A420349BE400593BF3 /* StringFormatter.swift */; };
 		73ED85A72034BFEF00593BF3 /* UITextFieldAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */; };
 		73ED85A92034C42D00593BF3 /* StringFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED85A82034C42D00593BF3 /* StringFormatterTest.swift */; };
@@ -806,7 +805,6 @@
 		73DE7B3020987D8F00AE04E6 /* NonFungibleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleCollectionViewCell.swift; sourceTree = "<group>"; };
 		73DE7B3120987D8F00AE04E6 /* NonFungibleCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NonFungibleCollectionViewCell.xib; sourceTree = "<group>"; };
 		73DE7B34209884AB00AE04E6 /* NonFungibleCollectionViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleCollectionViewCellModel.swift; sourceTree = "<group>"; };
-		73ED60CB20C9D44F00F5E8C7 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		73ED85A420349BE400593BF3 /* StringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFormatter.swift; sourceTree = "<group>"; };
 		73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldAdditions.swift; sourceTree = "<group>"; };
 		73ED85A82034C42D00593BF3 /* StringFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFormatterTest.swift; sourceTree = "<group>"; };
@@ -1627,7 +1625,6 @@
 				7778713B2086AD9900CF7303 /* BigInt.swift */,
 				77B64100209668FF00BEF3EB /* EtherNumberFormatter+Trust.swift */,
 				296FC5A520C2773B00B923EF /* UIScrollView.swift */,
-				73ED60CB20C9D44F00F5E8C7 /* URL.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2993,7 +2990,6 @@
 				2961BD071FB146EB00C4B840 /* ChainState.swift in Sources */,
 				A2B7ECAC2038FFBC00828E7D /* ExportPrivateKeyViewModel.swift in Sources */,
 				73D26837202E827E009777A1 /* DecimalFormatter.swift in Sources */,
-				73ED60CC20C9D44F00F5E8C7 /* URL.swift in Sources */,
 				29285B421F6FB3E60044CF29 /* SendViewController.swift in Sources */,
 				2996F14D1F6CA743005C33AE /* UIViewController.swift in Sources */,
 				73ACEEFF20163E08003DD71D /* PasscodeCharacterView.swift in Sources */,

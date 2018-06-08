@@ -134,6 +134,15 @@ enum RPCServer {
         }
     }
 
+    var openseaPath: String {
+        switch self {
+        case .rinkeby:
+            return "https://rinkeby.opensea.io"
+        default:
+            return Constants.dappsOpenSea
+        }
+    }
+
     init(name: String) {
         self = {
             switch name {

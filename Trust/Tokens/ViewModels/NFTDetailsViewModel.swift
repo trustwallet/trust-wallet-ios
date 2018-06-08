@@ -48,6 +48,6 @@ class NFTDetailsViewModel {
     }
 
     var externalURL: URL? {
-        return URL.opensea(with: token.contract, and: token.id)
+        return Config().opensea(with: token.contract, and: token.id)
     }
 }
