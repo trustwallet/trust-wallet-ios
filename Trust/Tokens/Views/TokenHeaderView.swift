@@ -59,7 +59,7 @@ class TokenHeaderView: UIView {
         amountStack.translatesAutoresizingMaskIntoConstraints = false
         amountStack.axis = .horizontal
 
-        let marketPriceStack = UIStackView(arrangedSubviews: [fiatAmountLabel, .spacerWidth(5, backgroundColor: UIColor.clear, alpha: 0), percentChange])
+        let marketPriceStack = UIStackView(arrangedSubviews: [fiatAmountLabel, .spacerWidth(5, backgroundColor: UIColor.clear, alpha: 0, priority: UILayoutPriority(rawValue: 999)), percentChange])
         marketPriceStack.translatesAutoresizingMaskIntoConstraints = false
         marketPriceStack.axis = .horizontal
         marketPriceStack.distribution = .equalSpacing

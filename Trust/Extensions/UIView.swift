@@ -40,7 +40,7 @@ extension UIView {
         return view
     }
 
-    static func spacerWidth(_ width: CGFloat = 1, backgroundColor: UIColor = .clear, alpha: CGFloat = 1) -> UIView {
+    static func spacerWidth(_ width: CGFloat = 1, backgroundColor: UIColor = .clear, alpha: CGFloat = 1, priority: UILayoutPriority = UILayoutPriority(rawValue: 1000)) -> UIView {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = backgroundColor
@@ -48,7 +48,7 @@ extension UIView {
 
         let width = view.widthAnchor.constraint(equalToConstant: width)
         width.isActive = true
-        width.priority = UILayoutPriority(rawValue: 999)
+        width.priority = priority
 
         return view
     }
