@@ -67,11 +67,11 @@ struct Config {
         set { defaults.set(newValue, forKey: Keys.testNetworkWarningOff) }
     }
 
-    func opensea() -> URL? {
+    var openseaURL: URL? {
         return URL(string: server.openseaPath)
     }
 
     func opensea(with contract: String, and id: String) -> URL? {
-        return URL(string: (server.openseaPath + "/assets/\(contract)/\(id)"))
+        return URL(string: (server.openseaURL + "/assets/\(contract)/\(id)"))
     }
 }
