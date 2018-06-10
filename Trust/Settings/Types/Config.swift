@@ -72,6 +72,6 @@ struct Config {
     }
 
     func opensea(with contract: String, and id: String) -> URL? {
-        return URL(string: (server.openseaURL + "/assets/\(contract)/\(id)"))
+        return URL(string: (server.openseaPath + "/assets/\(contract)/\(id)"))
     }
 }
