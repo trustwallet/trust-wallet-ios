@@ -81,6 +81,7 @@ class LocalSchemeCoordinator: Coordinator {
             case .failure:
                 completion(.failure(WalletError.cancelled))
             }
+            coordinator.didCompleted = nil
             self.removeCoordinator(coordinator)
             self.navigationController.dismiss(animated: true, completion: nil)
         }

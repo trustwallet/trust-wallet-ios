@@ -100,7 +100,7 @@ class ConfirmPaymentViewController: UIViewController {
         }
     }
 
-    func configure(for detailsViewModel: ConfirmPaymentDetailsViewModel) {
+    private func configure(for detailsViewModel: ConfirmPaymentDetailsViewModel) {
         stackView.removeAllArrangedSubviews()
 
         NSLayoutConstraint.activate([
