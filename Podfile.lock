@@ -38,11 +38,11 @@ PODS:
     - R.swift.Library (~> 4.0.0)
   - R.swift.Library (4.0.0)
   - RandomColorSwift (1.0.0)
-  - Realm (3.0.2):
-    - Realm/Headers (= 3.0.2)
-  - Realm/Headers (3.0.2)
-  - RealmSwift (3.0.2):
-    - Realm (= 3.0.2)
+  - Realm (3.7.1):
+    - Realm/Headers (= 3.7.1)
+  - Realm/Headers (3.7.1)
+  - RealmSwift (3.7.1):
+    - Realm (= 3.7.1)
   - Result (3.2.4)
   - SAMKeychain (1.5.3)
   - SeedStackViewController (0.4.0)
@@ -153,7 +153,7 @@ CHECKOUT OPTIONS:
     :commit: 80bd79cbeede842949b229f81bc6328f53701c5a
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
   TrustWalletSDK:
-    :commit: c789da4fe096d69fb66834b9285af0592f0682ca
+    :commit: 57de048f020f27907b3896417589252e43b931a6
     :git: https://github.com/TrustWallet/TrustSDK-iOS
   TrustWeb3Provider:
     :commit: f4e0ebb1b8fa4812637babe85ef975d116543dfd
@@ -180,8 +180,8 @@ SPEC CHECKSUMS:
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
   RandomColorSwift: 9f85058b721665d52d239ca166a913e083506444
-  Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
-  RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
+  Realm: 906be37d52f17f25484ac01643a7f26a9d3bfbd5
+  RealmSwift: 1c2b6bae3dc55bb87e080ffa96537d71442f6dce
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SeedStackViewController: 45e88ca1493a610e74d661d3feced7098f72dbd3
@@ -197,4 +197,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: b6ed29b92790ccd93215436a07191d9d287ef870
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.5.3
