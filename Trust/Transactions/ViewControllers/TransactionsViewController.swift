@@ -16,6 +16,7 @@ protocol TransactionsViewControllerDelegate: class {
 }
 
 class TransactionsViewController: UIViewController {
+
     var viewModel: TransactionsViewModel
     let account: Wallet
     let tableView = TransactionsTableView()
@@ -35,25 +36,25 @@ class TransactionsViewController: UIViewController {
         self.session = session
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
+
         view.backgroundColor = TransactionsViewModel.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
         tableView.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
-        
+
         NSLayoutConstraint.activate([
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             ])
-        
+
         refreshControl.backgroundColor = TransactionsViewModel.backgroundColor
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
-        
+
         errorView = ErrorView(insets: insets, onRetry: { [weak self] in
             self?.startLoading()
             self?.viewModel.fetch()
@@ -62,30 +63,28 @@ class TransactionsViewController: UIViewController {
         emptyView = {
             let view = TransactionsEmptyView(
                 insets: insets,
-                onRetry: { [unowned self] in
-                    self.pullToRefresh()
-                }, onDeposit: { [unowned self] sender in
+                onDeposit: { [unowned self] sender in
                     self.showDeposit(sender)
                 }
             )
             view.isDepositAvailable = viewModel.isBuyActionAvailable
             return view
         }()
-        
+
         navigationItem.title = viewModel.title
         runScheduledTimers()
         NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.stopTimers), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
-        
+
         transactionsObservation()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         refreshControl.endRefreshing()
         fetch()
     }
-    
+
     private func transactionsObservation() {
         viewModel.transactionsUpdateObservation { [weak self] in
             guard let `self` = self else { return }
@@ -95,12 +94,12 @@ class TransactionsViewController: UIViewController {
             self.tabBarItem.badgeValue = self.viewModel.badgeValue
         }
     }
-    
+
     @objc func pullToRefresh() {
         refreshControl.beginRefreshing()
         fetch()
     }
-    
+
     func fetch() {
         startLoading()
         viewModel.fetch { [weak self] in
@@ -108,23 +107,23 @@ class TransactionsViewController: UIViewController {
             self?.refreshControl.endRefreshing()
         }
     }
-    
+
     @objc func send() {
         delegate?.didPressSend(in: self)
     }
-    
+
     @objc func request() {
         delegate?.didPressRequest(in: self)
     }
-    
+
     func showDeposit(_ sender: UIButton) {
         delegate?.didPressDeposit(for: account, sender: sender, in: self)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     @objc func stopTimers() {
         timer?.invalidate()
         timer = nil
@@ -132,12 +131,12 @@ class TransactionsViewController: UIViewController {
         updateTransactionsTimer = nil
         viewModel.invalidateTransactionsObservation()
     }
-    
+
     @objc func restartTimers() {
         runScheduledTimers()
         transactionsObservation()
     }
-    
+
     private func runScheduledTimers() {
         guard timer == nil, updateTransactionsTimer == nil else {
             return
@@ -149,7 +148,7 @@ class TransactionsViewController: UIViewController {
             self?.viewModel.fetchTransactions()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
         viewModel.invalidateTransactionsObservation()
@@ -173,21 +172,21 @@ extension TransactionsViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.numberOfSections
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TransactionViewCell.identifier, for: indexPath) as! TransactionViewCell
         cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfItems(for: section)
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return viewModel.hederView(for: section)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return StyleLayout.TableView.heightForHeaderInSection
     }
