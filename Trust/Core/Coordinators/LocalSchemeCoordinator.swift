@@ -46,6 +46,7 @@ class LocalSchemeCoordinator: Coordinator {
             case .failure:
                 completion(.failure(WalletError.cancelled))
             }
+            coordinator.didComplete = nil
             self.removeCoordinator(coordinator)
         }
         coordinator.delegate = self
@@ -100,6 +101,7 @@ class LocalSchemeCoordinator: Coordinator {
 extension LocalSchemeCoordinator: SignMessageCoordinatorDelegate {
     func didCancel(in coordinator: SignMessageCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
+        coordinator.didComplete = nil
         delegate?.didCancel(in: self)
     }
 }

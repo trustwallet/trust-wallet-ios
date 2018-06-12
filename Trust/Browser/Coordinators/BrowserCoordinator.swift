@@ -174,6 +174,7 @@ class BrowserCoordinator: NSObject, Coordinator {
             case .failure:
                 self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
             }
+            coordinator.didComplete = nil
             self.removeCoordinator(coordinator)
         }
         coordinator.delegate = self
@@ -307,6 +308,7 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
 
 extension BrowserCoordinator: SignMessageCoordinatorDelegate {
     func didCancel(in coordinator: SignMessageCoordinator) {
+        coordinator.didComplete = nil
         removeCoordinator(coordinator)
     }
 }
