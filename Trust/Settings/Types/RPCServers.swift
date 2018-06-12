@@ -134,6 +134,13 @@ enum RPCServer {
         }
     }
 
+    var openseaPath: String {
+        switch self {
+        case .main, .classic, .poa, .kovan, .callisto, .sokol, .custom, .ropsten: return  Constants.dappsOpenSea
+        case .rinkeby: return Constants.dappsRinkebyOpenSea
+        }
+    }
+
     init(name: String) {
         self = {
             switch name {
