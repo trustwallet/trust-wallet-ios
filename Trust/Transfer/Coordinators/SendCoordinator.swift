@@ -101,7 +101,8 @@ extension SendCoordinator: SendViewControllerDelegate {
             configurator: configurator,
             confirmType: .signThenSend
         )
-        controller.didCompleted = { result in
+        controller.didCompleted = { [weak self] result in
+            guard let `self` = self else { return }
             switch result {
             case .success(let type):
                 self.delegate?.didFinish(type, in: self)

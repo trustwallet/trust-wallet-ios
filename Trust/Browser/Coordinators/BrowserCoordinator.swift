@@ -129,6 +129,7 @@ class BrowserCoordinator: NSObject, Coordinator {
                     value: .failure(DAppError.cancelled)
                 )
             }
+            coordinator.didCompleted = nil
             self.removeCoordinator(coordinator)
             self.navigationController.dismiss(animated: true, completion: nil)
         }
@@ -313,6 +314,7 @@ extension BrowserCoordinator: SignMessageCoordinatorDelegate {
 extension BrowserCoordinator: ConfirmCoordinatorDelegate {
     func didCancel(in coordinator: ConfirmCoordinator) {
         navigationController.dismiss(animated: true, completion: nil)
+        coordinator.didCompleted = nil
         removeCoordinator(coordinator)
     }
 }

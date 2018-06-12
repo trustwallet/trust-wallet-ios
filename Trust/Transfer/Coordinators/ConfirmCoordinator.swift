@@ -49,12 +49,12 @@ class ConfirmCoordinator: Coordinator {
             confirmType: type
         )
         //navigationController.transitioningDelegate = controller as UIViewControllerTransitioningDelegate
-        controller.didCompleted = { result in
+        controller.didCompleted = { [weak self] result in
             switch result {
             case .success(let data):
-                self.didCompleted?(.success(data))
+                self?.didCompleted?(.success(data))
             case .failure(let error):
-                self.navigationController.displayError(error: error)
+                self?.navigationController.displayError(error: error)
             }
         }
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
