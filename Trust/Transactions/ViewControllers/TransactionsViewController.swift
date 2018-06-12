@@ -31,7 +31,7 @@ class TransactionsViewController: UIViewController {
         account: Wallet,
         session: WalletSession,
         viewModel: TransactionsViewModel
-        ) {
+    ) {
         self.account = account
         self.session = session
         self.viewModel = viewModel
@@ -49,7 +49,7 @@ class TransactionsViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            ])
+        ])
 
         refreshControl.backgroundColor = TransactionsViewModel.backgroundColor
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
@@ -63,6 +63,9 @@ class TransactionsViewController: UIViewController {
         emptyView = {
             let view = TransactionsEmptyView(
                 insets: insets,
+                onRetry: { [unowned self] in
+                    self.pullToRefresh()
+                },
                 onDeposit: { [unowned self] sender in
                     self.showDeposit(sender)
                 }
