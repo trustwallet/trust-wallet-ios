@@ -101,6 +101,19 @@ enum RPCServer {
         }()
         return URL(string: urlString)!
     }
+    
+    var wssURL: URL {
+        let urlString: String = {
+            switch self {
+            case .ropsten: return "wss://ropsten.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
+            case .rinkeby: return "wss://rinkeby.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
+            case .custom(let custom): return custom.endpoint
+            // '.main' is the default
+            default: return "wss://mainnet.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
+            }
+        }()
+        return URL(string: urlString)!
+    }
 
     var remoteURL: URL {
         let urlString: String = {
