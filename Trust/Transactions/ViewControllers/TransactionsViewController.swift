@@ -16,7 +16,6 @@ protocol TransactionsViewControllerDelegate: class {
 }
 
 class TransactionsViewController: UIViewController {
-    
     var viewModel: TransactionsViewModel
     let account: Wallet
     let tableView = TransactionsTableView()
@@ -26,7 +25,7 @@ class TransactionsViewController: UIViewController {
     var updateTransactionsTimer: Timer?
     let session: WalletSession
     let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    
+
     init(
         account: Wallet,
         session: WalletSession,
