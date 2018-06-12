@@ -101,7 +101,7 @@ enum RPCServer {
         }()
         return URL(string: urlString)!
     }
-    
+ 
     var wssURL: URL {
         let urlString: String = {
             switch self {
