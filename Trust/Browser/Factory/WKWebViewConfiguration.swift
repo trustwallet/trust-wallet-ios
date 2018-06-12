@@ -25,13 +25,16 @@ extension WKWebViewConfiguration {
         """
         const addressHex = "\(address)"
         const rpcURL = "\(sessionConfig.server.rpcURL.absoluteString)"
+        const wssURL = "\(sessionConfig.server.wssURL.absoluteString)"
         const chainID = "\(sessionConfig.chainID)"
 
         function executeCallback (id, error, value) {
           Trust.executeCallback(id, error, value)
         }
 
-        Trust.init(rpcURL, {
+        Trust.init({
+          rpcURL,
+          wssURL,
           getAccounts: function (cb) { cb(null, [addressHex]) },
           processTransaction: function (tx, cb){
             console.log('signing a transaction', tx)
