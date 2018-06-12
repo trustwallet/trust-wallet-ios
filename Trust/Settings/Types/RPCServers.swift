@@ -136,15 +136,8 @@ enum RPCServer {
 
     var openseaPath: String {
         switch self {
-        case .main: return  Constants.dappsOpenSea
-        case .kovan: return  Constants.dappsOpenSea
-        case .ropsten: return  Constants.dappsOpenSea
+        case .main, .classic, .poa, .kovan, .callisto, .sokol, .custom, .ropsten: return  Constants.dappsOpenSea
         case .rinkeby: return Constants.dappsRinkebyOpenSea
-        case .poa: return  Constants.dappsOpenSea
-        case .sokol: return  Constants.dappsOpenSea
-        case .classic: return  Constants.dappsOpenSea
-        case .callisto: return  Constants.dappsOpenSea
-        case .custom: return Constants.dappsOpenSea
         }
     }
 
