@@ -43,8 +43,12 @@ class LocalSchemeCoordinator: Coordinator {
             switch result {
             case .success(let data):
                 completion(.success(data))
-            case .failure:
-                completion(.failure(WalletError.cancelled))
+            case .failure(let error):
+                if let dappError = error.error as? DAppError, dappError == .cancelled {
+                    completion(.failure(WalletError.cancelled))
+                } else {
+                    completion(.failure(WalletError.unknown))
+                }
             }
             coordinator.didComplete = nil
             self.removeCoordinator(coordinator)
@@ -79,8 +83,12 @@ class LocalSchemeCoordinator: Coordinator {
                 case .sentTransaction(let transaction):
                     completion(.success(transaction.data))
                 }
-            case .failure:
-                completion(.failure(WalletError.cancelled))
+            case .failure(let error):
+                if let dappError = error.error as? DAppError, dappError == .cancelled {
+                    completion(.failure(WalletError.cancelled))
+                } else {
+                    completion(.failure(WalletError.unknown))
+                }
             }
             coordinator.didCompleted = nil
             self.removeCoordinator(coordinator)
@@ -109,14 +117,14 @@ extension LocalSchemeCoordinator: SignMessageCoordinatorDelegate {
 extension LocalSchemeCoordinator: WalletDelegate {
     func signMessage(_ message: Data, address: Address?, completion: @escaping (Result<Data, WalletError>) -> Void) {
         guard let account = account(for: session) else {
-            return completion(.failure(WalletError.cancelled))
+            return completion(.failure(WalletError.watchOnly))
         }
         signMessage(for: account, signMessage: .message(message), completion: completion)
     }
 
     func signPersonalMessage(_ message: Data, address: Address?, completion: @escaping (Result<Data, WalletError>) -> Void) {
         guard let account = account(for: session) else {
-            return completion(.failure(WalletError.cancelled))
+            return completion(.failure(WalletError.watchOnly))
         }
         signMessage(for: account, signMessage: .personalMessage(message), completion: completion)
     }
@@ -133,7 +141,7 @@ extension LocalSchemeCoordinator: WalletDelegate {
         )
 
         guard let account = account(for: session) else {
-            return completion(.failure(WalletError.cancelled))
+            return completion(.failure(WalletError.watchOnly))
         }
         signTransaction(account: account, transaction: transaction, type: .sign, completion: completion)
     }
