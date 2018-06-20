@@ -178,7 +178,7 @@ open class EtherKeystore: Keystore {
     }
 
     func createAccout(password: String) -> Account {
-        let account = try! keyStore.createAccount(password: password, type: .encryptedKey)
+        let account = try! keyStore.createAccount(password: password, type: .hierarchicalDeterministicWallet)
         let _ = setPassword(password, for: account)
         return account
     }
