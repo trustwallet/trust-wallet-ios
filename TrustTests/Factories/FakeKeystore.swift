@@ -68,6 +68,11 @@ struct FakeKeystore: Keystore {
         return .failure(KeystoreError.failedToSignTransaction)
     }
 
+    func exportMnemonic(account: Account, completion: @escaping (Result<String, KeystoreError>) -> Void) {
+        //TODO: Implement
+        return completion(.failure(KeystoreError.failedToSignTransaction))
+    }
+
     func delete(wallet: Trust.Wallet) -> Result<Void, KeystoreError> {
         //TODO: Implement
         return .failure(KeystoreError.failedToSignTransaction)
