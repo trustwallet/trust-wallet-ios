@@ -24,17 +24,15 @@ extension WKWebViewConfiguration {
         js +=
         """
         const addressHex = "\(address)"
-        const rpcURL = "\(sessionConfig.server.rpcURL.absoluteString)"
-        const wssURL = "\(sessionConfig.server.wssURL.absoluteString)"
+        const rpcUrl = "\(sessionConfig.server.rpcURL.absoluteString)"
+        const wssUrl = "\(sessionConfig.server.wssURL.absoluteString)"
         const chainID = "\(sessionConfig.chainID)"
 
-        function executeCallback (id, error, value) {
-          Trust.executeCallback(id, error, value)
-        }
-
         Trust.init({
-          rpcURL,
-          wssURL,
+          rpcUrl,
+          wssUrl,
+          address: addressHex,
+          networkVersion: chainID,
           getAccounts: function (cb) { cb(null, [addressHex]) },
           processTransaction: function (tx, cb){
             console.log('signing a transaction', tx)
@@ -63,9 +61,6 @@ extension WKWebViewConfiguration {
             Trust.addCallback(id, cb)
             webkit.messageHandlers.signTypedMessage.postMessage({"name": "signTypedMessage", "object": { data }, id: id})
             }
-        }, {
-            address: addressHex,
-            networkVersion: chainID
         })
 
         web3.setProvider = function () {
