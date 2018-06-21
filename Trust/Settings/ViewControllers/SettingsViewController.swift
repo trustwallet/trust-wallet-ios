@@ -141,6 +141,7 @@ class SettingsViewController: FormViewController, Coordinator {
 
             <<< currencyRow()
             <<< browserRow()
+            <<< analiticsRow()
 
             +++ Section(NSLocalizedString("settings.joinCommunity.label.title", value: "Join Community", comment: ""))
 
@@ -298,6 +299,19 @@ class SettingsViewController: FormViewController, Coordinator {
             cell.textLabel?.textColor = .black
             cell.imageView?.image = R.image.settings_colorful_dappbrowser()
             cell.textLabel?.text = NSLocalizedString("settings.browser.title", value: "DApp Browser", comment: "")
+            cell.accessoryType = .disclosureIndicator
+        }
+    }
+
+    private func analiticsRow() -> ButtonRow {
+        return AppFormAppearance.button { row in
+            row.cellStyle = .value1
+            row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback {
+                return AnaliticsViewController()
+            }, onDismiss: nil)
+        }.cellUpdate { cell, _ in
+            cell.imageView?.image = R.image.settings_colorful_analitics()
+            cell.textLabel?.text = self.viewModel.analiticsTitle
             cell.accessoryType = .disclosureIndicator
         }
     }
