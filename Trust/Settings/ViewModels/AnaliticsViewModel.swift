@@ -13,4 +13,20 @@ struct AnaliticsViewModel {
     var title: String {
         return NSLocalizedString("settings.analytics.title", value: "Analytics", comment: "")
     }
+
+    var alertTitleEnable: String {
+        return String(format: NSLocalizedString("analitics.restart.alert.message", value: "To enable %@ please restart the application", comment: ""), Analitics.answer.name)
+    }
+
+    var alertTitleDisable: String {
+        return String(format: NSLocalizedString("analitics.restart.alert.message", value: "To disable %@ please restart the application", comment: ""), Analitics.answer.name)
+    }
+
+    var alertCancel: String {
+        return NSLocalizedString("analitics.restart.alert.cancel", value: "Cancel", comment: "")
+    }
+
+    var alertRestart: String {
+        return NSLocalizedString("analitics.restart.alert.restart", value: "Restart", comment: "")
+    }
 }
