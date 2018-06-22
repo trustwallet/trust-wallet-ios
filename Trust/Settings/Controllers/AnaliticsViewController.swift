@@ -49,16 +49,10 @@ class AnaliticsViewController: FormViewController {
         let state = viewModel.answer.isEnabled
         let title = state ? viewModel.alertTitleDisable :  viewModel.alertTitleEnable
         let alert = UIAlertController(title: "Trust", message: title, preferredStyle: .alert)
-        let restart = UIAlertAction(title: viewModel.alertRestart, style: .destructive, handler: { [weak self] (_ action: UIAlertAction) -> Void in
+        let ok = UIAlertAction(title: viewModel.alertOK, style: .default, handler: { [weak self] (_ action: UIAlertAction) -> Void in
             self?.viewModel.answer.update(with: !state)
-            Crashlytics.sharedInstance().crash()
         })
-        let cancel = UIAlertAction(title: viewModel.alertCancel, style: .default, handler: { [weak self] (_ action: UIAlertAction) -> Void in
-            self?.amountRow?.value = state
-            self?.amountRow?.reload()
-        })
-        alert.addAction(restart)
-        alert.addAction(cancel)
+        alert.addAction(ok)
         self.present(alert, animated: true, completion: nil)
     }
 }
