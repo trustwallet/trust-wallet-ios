@@ -3,6 +3,7 @@
 import Foundation
 import UIKit
 import TrustCore
+import QRCodeReaderViewController
 
 protocol TokensCoordinatorDelegate: class {
     func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator)
@@ -10,7 +11,7 @@ protocol TokensCoordinatorDelegate: class {
     func didPressDiscover(in coordinator: TokensCoordinator)
 }
 
-class TokensCoordinator: Coordinator {
+class TokensCoordinator: NSObject, Coordinator {
 
     let navigationController: NavigationController
     let session: WalletSession
@@ -28,22 +29,36 @@ class TokensCoordinator: Coordinator {
         controller.delegate = self
         return controller
     }()
+
     lazy var nonFungibleTokensViewController: NonFungibleTokensViewController = {
         let nonFungibleTokenViewModel = NonFungibleTokenViewModel(address: session.account.address, storage: store, tokensNetwork: network)
         let controller = NonFungibleTokensViewController(viewModel: nonFungibleTokenViewModel)
         controller.delegate = self
         return controller
     }()
+
     lazy var masterViewController: WalletViewController = {
         let masterViewController = WalletViewController(tokensViewController: self.tokensViewController, nonFungibleTokensViewController: self.nonFungibleTokensViewController)
         masterViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(edit))
         return masterViewController
     }()
-    weak var delegate: TokensCoordinatorDelegate?
+
+    lazy var editTokensViewController: EditTokensViewController = {
+        let controller = EditTokensViewController(
+            session: session,
+            storage: store,
+            network: network
+        )
+        controller.footerView.addButton.addTarget(self, action: #selector(addToken), for: .touchUpInside)
+        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.qr_code_icon(), style: .done, target: self, action: #selector(openReader))
+        return controller
+    }()
 
     lazy var rootViewController: WalletViewController = {
         return self.masterViewController
     }()
+
+    weak var delegate: TokensCoordinatorDelegate?
 
     init(
         navigationController: NavigationController = NavigationController(),
@@ -60,6 +75,8 @@ class TokensCoordinator: Coordinator {
         self.store = tokensStorage
         self.network = network
         self.transactionsStore = transactionsStore
+
+        super.init()
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheel(_:)), name: NSNotification.Name(rawValue: "ShowToken"), object: nil)
     }
@@ -96,7 +113,11 @@ class TokensCoordinator: Coordinator {
     }
 
     @objc func addToken() {
-        let controller = newTokenViewController(token: .none)
+       show(add: .none)
+    }
+
+    private func show(add token: ERC20Token?) {
+        let controller = newTokenViewController(token: token)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         let nav = NavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .formSheet
@@ -116,14 +137,7 @@ class TokensCoordinator: Coordinator {
     }
 
     @objc func edit() {
-        let controller = EditTokensViewController(
-            session: session,
-            storage: store,
-            network: network
-        )
-        controller.footerView.addButton.addTarget(self, action: #selector(addToken), for: .touchUpInside)
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.qr_code_icon(), style: .done, target: self, action: #selector(openReader))
-        navigationController.pushViewController(controller, animated: true)
+        navigationController.pushViewController(editTokensViewController, animated: true)
     }
 
     @objc func request() {
@@ -135,7 +149,9 @@ class TokensCoordinator: Coordinator {
     }
 
     @objc func openReader() {
-
+        let controller = QRCodeReaderViewController()
+        controller.delegate = self
+        editTokensViewController.present(controller, animated: true, completion: nil)
     }
 
     private func openURL(_ url: URL) {
@@ -241,5 +257,19 @@ extension TokensCoordinator: TransactionViewControllerDelegate {
     func didPressURL(_ url: URL) {
         openURL(url)
         navigationController.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension TokensCoordinator: QRCodeReaderDelegate {
+    func readerDidCancel(_ reader: QRCodeReaderViewController!) {
+        reader.stopScanning()
+        reader.dismiss(animated: true, completion: nil)
+    }
+
+    func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
+        reader.stopScanning()
+        reader.dismiss(animated: true)
+        guard let result = QRURLParser.from(string: result), let address = Address(string: result.address) else { return }
+        show(add: ERC20Token(contract: address, name: "", symbol: "", decimals: 0))
     }
 }

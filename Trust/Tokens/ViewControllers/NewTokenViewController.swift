@@ -93,6 +93,10 @@ class NewTokenViewController: FormViewController {
             }
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(finish))
+
+        guard let contract = token?.contract else { return }
+
+        fetchInfo(for: contract.description)
     }
 
     @objc func finish() {
