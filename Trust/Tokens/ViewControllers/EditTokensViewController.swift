@@ -43,6 +43,15 @@ class EditTokensViewController: UITableViewController {
         })
     }()
 
+    lazy var footerView: EditTokenFooterView = {
+        let footerView = EditTokenFooterView(
+            frame: .zero
+        )
+        footerView.translatesAutoresizingMaskIntoConstraints = false
+        footerView.setTopBorder()
+        return footerView
+    }()
+
     let feedbackGenerator = UINotificationFeedbackGenerator()
 
     init(
@@ -58,6 +67,13 @@ class EditTokensViewController: UITableViewController {
 
         navigationItem.title = viewModel.title
         configureTableView()
+
+        view.addSubview(footerView)
+
+        NSLayoutConstraint.activate([
+            footerView.widthAnchor.constraint(equalTo: view.layoutGuide.widthAnchor),
+            footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
+        ])
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -70,7 +86,6 @@ class EditTokensViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         tableView.reloadData()
     }
 

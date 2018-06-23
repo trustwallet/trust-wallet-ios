@@ -121,7 +121,8 @@ class TokensCoordinator: Coordinator {
             storage: store,
             network: network
         )
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
+        controller.footerView.addButton.addTarget(self, action: #selector(addToken), for: .touchUpInside)
+        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.qr_code_icon(), style: .done, target: self, action: #selector(openReader))
         navigationController.pushViewController(controller, animated: true)
     }
 
@@ -131,6 +132,10 @@ class TokensCoordinator: Coordinator {
 
     @objc func send() {
         delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
+    }
+
+    @objc func openReader() {
+
     }
 
     private func openURL(_ url: URL) {

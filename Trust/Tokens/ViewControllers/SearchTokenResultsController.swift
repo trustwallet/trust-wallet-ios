@@ -15,6 +15,7 @@ protocol SearchTokenResultsControllerDelegate: class {
 
 class SearchTokenResultsController: UITableViewController {
     weak var delegate: SearchTokenResultsControllerDelegate?
+
     var localResults: [TokenObject] {
         get {
             return results[ResultSection.local.rawValue]
