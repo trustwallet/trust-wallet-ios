@@ -24,8 +24,8 @@ class AnaliticsViewController: FormViewController {
                 $0.title = viewModel.answer.name
                 $0.value = viewModel.answer.isEnabled
             }.onChange { [weak self] row in
-                guard let enabled = row.value, enabled != self?.viewModel.answer.isEnabled else { return }
-                self?.showAnswerAlert()
+                guard let enabled = row.value else { return }
+                self?.viewModel.answer.update(with: enabled)
             }
 
             <<< SwitchRow {
@@ -44,15 +44,4 @@ class AnaliticsViewController: FormViewController {
                  self?.viewModel.crashlytics.update(with: row.value ?? false)
             }
         }
-
-    private func showAnswerAlert() {
-        let state = viewModel.answer.isEnabled
-        let title = state ? viewModel.alertTitleDisable :  viewModel.alertTitleEnable
-        let alert = UIAlertController(title: "Trust", message: title, preferredStyle: .alert)
-        let ok = UIAlertAction(title: viewModel.alertOK, style: .default, handler: { [weak self] (_ action: UIAlertAction) -> Void in
-            self?.viewModel.answer.update(with: !state)
-        })
-        alert.addAction(ok)
-        self.present(alert, animated: true, completion: nil)
-    }
 }
