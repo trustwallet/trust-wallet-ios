@@ -8,16 +8,16 @@ enum Analitics: String {
     case answer
 
     var isEnabled: Bool {
-        let userDefaults: UserDefaults = .standard
-        guard let object = userDefaults.value(forKey: self.rawValue), let number = object as? NSNumber else {
-            userDefaults.setValue(NSNumber(booleanLiteral: true), forKey: self.rawValue)
+        let preferencesController = PreferencesController()
+        guard let object = preferencesController.get(for: self.rawValue), let number = object as? NSNumber else {
+            preferencesController.set(value: NSNumber(booleanLiteral: true), for: self.rawValue)
             return true
         }
         return number.boolValue
     }
 
     func update(with state: Bool) {
-        let userDefaults: UserDefaults = .standard
-        userDefaults.setValue(NSNumber(booleanLiteral: state), forKey: self.rawValue)
+        let preferencesController = PreferencesController()
+        preferencesController.set(value: NSNumber(booleanLiteral: state), for: self.rawValue)
     }
 }
