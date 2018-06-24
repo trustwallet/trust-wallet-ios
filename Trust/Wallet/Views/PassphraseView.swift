@@ -28,6 +28,8 @@ class PassphraseView: UIView {
             collectionView.reloadData()
         }
     }
+    var isEditable: Bool = false
+    var didDeleteItem: ((String) -> ())?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,6 +38,7 @@ class PassphraseView: UIView {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.register(R.nib.wordCollectionViewCell)
 
         NSLayoutConstraint.activate([
@@ -44,10 +47,6 @@ class PassphraseView: UIView {
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
-    }
-
-    private func index(for indexPath: IndexPath) -> Int {
-        return indexPath.row
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -75,5 +74,16 @@ extension PassphraseView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.wordCollectionViewCell.identifier, for: indexPath) as! WordCollectionViewCell
         cell.wordLabel.text = words[indexPath.row]
         return cell
+    }
+}
+
+extension PassphraseView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        guard isEditable else { return }
+        let item = words[indexPath.row]
+        words.remove(at: indexPath.row)
+        collectionView.reloadData()
+        didDeleteItem?(item)
     }
 }

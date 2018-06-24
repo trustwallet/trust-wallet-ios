@@ -17,9 +17,16 @@ enum PassphraseMode {
 
 class PassphraseViewController: UIViewController {
 
-    let passphraseView = PassphraseView()
+    let contentView = PassphraseContentView()
     let viewModel = PassphraseViewModel()
     let account: Account
+    let words: [String]
+    lazy var button: UIButton = {
+        let button = Button(size: .large, style: .solid)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(NSLocalizedString("Verify", value: "Verify", comment: ""), for: .normal)
+        return button
+    }()
     weak var delegate: PassphraseViewControllerDelegate?
 
     init(
@@ -28,57 +35,45 @@ class PassphraseViewController: UIViewController {
         mode: PassphraseMode = .showOnly
     ) {
         self.account = account
+        self.words = words
 
         super.init(nibName: nil, bundle: nil)
 
         navigationItem.title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
-        passphraseView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.copyButton.addTarget(self, action: #selector(copyAction(_:)), for: .touchUpInside)
+        contentView.passphraseView.words = words
+        view.addSubview(contentView)
+        view.addSubview(button)
 
-        let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.text = viewModel.rememberPassphraseText
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-
-        let copyButton = Button(size: .small, style: .borderless)
-        copyButton.translatesAutoresizingMaskIntoConstraints = false
-        copyButton.setTitle(NSLocalizedString("Copy", value: "Copy", comment: ""), for: .normal)
-        copyButton.translatesAutoresizingMaskIntoConstraints = false
-        copyButton.setBackgroundColor(.clear, forState: .normal)
-        copyButton.setBackgroundColor(.clear, forState: .highlighted)
-        copyButton.addTarget(self, action: #selector(copyAction(_:)), for: .touchUpInside)
-
-        let stackView = UIStackView(arrangedSubviews: [
-            .spacer(height: 10),
-            passphraseView,
-            copyButton,
-            label,
-        ])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = 10
-
-        // if showAndVerify then add verify button
-
-        view.addSubview(stackView)
+        switch mode {
+        case .showOnly:
+            button.isHidden = true
+        case .showAndVerify:
+            button.isHidden = false
+        }
+        button.addTarget(self, action: #selector(nextAction(_:)), for: .touchUpInside)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
-            stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor),
+            contentView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
+            contentView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
+            contentView.bottomAnchor.constraint(lessThanOrEqualTo: button.topAnchor),
 
-            passphraseView.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
+            button.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
+            button.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
+            button.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor),
         ])
-
-        passphraseView.words = words
     }
 
     @objc private func copyAction(_ sender: UIButton) {
-        delegate?.didPressShare(in: self, sender: sender, account: account, words: passphraseView.words)
+        delegate?.didPressShare(in: self, sender: sender, account: account, words: words)
+    }
+
+    @objc private func nextAction(_ sender: UIButton) {
+        delegate?.didPressVerify(in: self, with: account, words: words)
     }
 
     required init?(coder aDecoder: NSCoder) {

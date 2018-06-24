@@ -76,7 +76,8 @@ class WalletCoordinator: Coordinator {
     func pushBackup(for account: Account, words: [String]) {
         let controller = PassphraseViewController(
             account: account,
-            words: words
+            words: words,
+            mode: .showAndVerify
         )
         controller.delegate = self
         controller.navigationItem.backBarButtonItem = nil
@@ -109,8 +110,17 @@ class WalletCoordinator: Coordinator {
     }
 
     func verify(account: Account, words: [String]) {
-        let controller = VerifyPassphraseViewController()
+        let controller = VerifyPassphraseViewController(account: account, words: words)
+        controller.delegate = self
         navigationController.pushViewController(controller, animated: true)
+    }
+
+    private func shareMnemonic(in sender: UIView, words: [String]) {
+        let copyValue = words.joined(separator: " ")
+        let activityViewController = UIActivityViewController.make(items: [copyValue])
+        activityViewController.popoverPresentationController?.sourceView = sender
+        activityViewController.popoverPresentationController?.sourceRect = sender.centerRect
+        navigationController.present(activityViewController, animated: true)
     }
 }
 
@@ -147,11 +157,17 @@ extension WalletCoordinator: PassphraseViewControllerDelegate {
     }
 
     func didPressShare(in controller: PassphraseViewController, sender: UIView, account: Account, words: [String]) {
-        let copyValue = words.joined(separator: " ")
-        let activityViewController = UIActivityViewController.make(items: [copyValue])
-        activityViewController.popoverPresentationController?.sourceView = sender
-        activityViewController.popoverPresentationController?.sourceRect = sender.centerRect
-        navigationController.present(activityViewController, animated: true)
+        shareMnemonic(in: sender, words: words)
+    }
+}
+
+extension WalletCoordinator: VerifyPassphraseViewControllerDelegate {
+    func didFinish(in controller: VerifyPassphraseViewController, with account: Account) {
+        done()
+    }
+
+    func didPressShare(in controller: VerifyPassphraseViewController, sender: UIView, account: Account, words: [String]) {
+        shareMnemonic(in: sender, words: words)
     }
 }
 
