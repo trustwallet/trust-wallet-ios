@@ -50,8 +50,7 @@ class TokensCoordinator: NSObject, Coordinator {
             storage: store,
             network: network
         )
-        controller.footerView.addButton.addTarget(self, action: #selector(addToken), for: .touchUpInside)
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.qr_code_icon(), style: .done, target: self, action: #selector(openReader))
+        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
         return controller
     }()
 
