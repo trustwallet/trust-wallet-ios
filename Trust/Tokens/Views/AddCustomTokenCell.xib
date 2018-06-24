@@ -48,10 +48,10 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="r9X-A8-fs4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Gnw-YM-2k6"/>
+                    <constraint firstItem="r9X-A8-fs4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" priority="999" id="Gnw-YM-2k6"/>
                     <constraint firstItem="r9X-A8-fs4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="O9D-fX-zVy"/>
                     <constraint firstAttribute="trailing" secondItem="r9X-A8-fs4" secondAttribute="trailing" constant="15" id="QOm-J8-XL3"/>
-                    <constraint firstItem="r9X-A8-fs4" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="rin-xX-f9i"/>
+                    <constraint firstItem="r9X-A8-fs4" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" priority="999" id="rin-xX-f9i"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -62,6 +62,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="add_custom_token" width="50" height="50"/>
+        <image name="add_custom_token" width="33" height="33"/>
     </resources>
 </document>

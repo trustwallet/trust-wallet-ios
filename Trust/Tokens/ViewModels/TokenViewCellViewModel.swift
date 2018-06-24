@@ -4,8 +4,9 @@ import Foundation
 import UIKit
 import BigInt
 
-struct TokenViewCellViewModel {
+class TokenViewCellViewModel: TokensViewModelItem {
 
+    var type: TokensViewModelItemType = .token
     private let shortFormatter = EtherNumberFormatter.short
 
     let token: TokenObject

@@ -2,7 +2,7 @@
 
 import UIKit
 
-struct AddCustomTokenCellViewModel {
-
+class AddCustomTokenCellViewModel: TokensViewModelItem {
+    var type: TokensViewModelItemType = .addCustomToken
     var title = NSLocalizedString("add.custom.token.title", value: "Add custom token", comment: "")
 }

@@ -6,7 +6,7 @@ class AddCustomTokenCell: UITableViewCell {
 
     @IBOutlet var label: UILabel!
 
-    func config(with model: AddCustomTokenCellViewModel = AddCustomTokenCellViewModel()) {
+    func config(with model: AddCustomTokenCellViewModel) {
         label.text = model.title
     }
 }

@@ -10,6 +10,15 @@ protocol TokensViewModelDelegate: class {
     func refresh()
 }
 
+enum TokensViewModelItemType {
+    case token
+    case addCustomToken
+}
+
+protocol TokensViewModelItem {
+    var type: TokensViewModelItemType { get }
+}
+
 class TokensViewModel: NSObject {
     let config: Config
 
@@ -18,6 +27,7 @@ class TokensViewModel: NSObject {
     let tokens: Results<TokenObject>
     var tokensObserver: NotificationToken?
     let address: Address
+    var items = [TokensViewModelItem]()
 
     var headerBalance: String {
         return amount ?? "0.00"
@@ -73,6 +83,7 @@ class TokensViewModel: NSObject {
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
         super.init()
+        prepareItems()
     }
 
     func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<TokenObject>>) -> Void) {
@@ -111,9 +122,8 @@ class TokensViewModel: NSObject {
         return item(for: path) != TokensDataStore.etherToken()
     }
 
-    func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
-        let token = tokens[path.row]
-        return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token))
+    func cellViewModel(for path: IndexPath) -> TokensViewModelItem {
+        return items[path.row]
     }
 
     func updateEthBalance() {
@@ -124,6 +134,11 @@ class TokensViewModel: NSObject {
         }.catch { error in
            NSLog("updateEthBalance \(error)")
         }
+    }
+
+    func prepareItems() {
+        items = tokens.map { TokenViewCellViewModel(token: $0, ticker: store.coinTicker(for: $0)) }
+        items.append(AddCustomTokenCellViewModel())
     }
 
     private func tokensInfo() {
@@ -171,10 +186,6 @@ class TokensViewModel: NSObject {
     func invalidateTokensObservation() {
         tokensObserver?.invalidate()
         tokensObserver = nil
-    }
-
-    func count() -> Int {
-        return tokens.count + 1
     }
 }
 
