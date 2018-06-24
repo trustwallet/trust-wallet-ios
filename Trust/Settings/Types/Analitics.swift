@@ -7,14 +7,6 @@ enum Analitics: String {
     case branch
     case answer
 
-    var name: String {
-        switch self {
-        case .crashlytics: return "Crashlytics"
-        case .branch: return "Branch"
-        case .answer: return "Answer"
-        }
-    }
-
     var isEnabled: Bool {
         let userDefaults: UserDefaults = .standard
         guard let object = userDefaults.value(forKey: self.rawValue), let number = object as? NSNumber else {
