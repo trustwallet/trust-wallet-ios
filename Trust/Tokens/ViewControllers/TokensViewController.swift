@@ -82,6 +82,7 @@ class TokensViewController: UIViewController {
             footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
         tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
+        tableView.register(R.nib.addCustomTokenCell(), forCellReuseIdentifier: R.nib.addCustomTokenCell.name)
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
         errorView = ErrorView(onRetry: { [weak self] in
@@ -94,7 +95,7 @@ class TokensViewController: UIViewController {
             onRetry: { [weak self] in
                 self?.startLoading()
                 self?.fetch()
-        })
+            })
         tableView.tableHeaderView = header
         tableView.tableFooterView = footer
         sheduleBalanceUpdate()
@@ -221,6 +222,11 @@ extension TokensViewController: UITableViewDelegate {
 }
 extension TokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard tableView.lastIndexpath() != indexPath else {
+           let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.addCustomTokenCell.name, for: indexPath) as! AddCustomTokenCell
+           cell.config()
+           return cell
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: TokenViewCell.identifier, for: indexPath) as! TokenViewCell
         cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
         cell.contentView.isExclusiveTouch = true
@@ -228,7 +234,7 @@ extension TokensViewController: UITableViewDataSource {
         return cell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.tokens.count
+        return viewModel.count()
     }
 }
 extension TokensViewController: TokensViewModelDelegate {

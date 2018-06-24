@@ -291,6 +291,10 @@
 		732E0F502022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */; };
 		732E0F522022754600B39C1F /* FakeLockProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F512022754600B39C1F /* FakeLockProtocol.swift */; };
 		732E0F542022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */; };
+		7330469C20DFA51C001BAB01 /* AddCustomTokenCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330469B20DFA51C001BAB01 /* AddCustomTokenCellViewModel.swift */; };
+		7330469F20DFAA8E001BAB01 /* AddCustomTokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330469D20DFAA8E001BAB01 /* AddCustomTokenCell.swift */; };
+		733046A020DFAA8E001BAB01 /* AddCustomTokenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7330469E20DFAA8E001BAB01 /* AddCustomTokenCell.xib */; };
+		735A553920DFA0EE00004EB6 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735A553820DFA0EE00004EB6 /* UITableView.swift */; };
 		735AB03D2073BF2100EEEDDD /* TokenBalanceOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735AB03C2073BF2100EEEDDD /* TokenBalanceOperation.swift */; };
 		736D6ED720DEE611008C2CC4 /* EditTokenFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736D6ED620DEE611008C2CC4 /* EditTokenFooterView.swift */; };
 		7374ED2E2059A6A3004A8BC2 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374ED2D2059A6A3004A8BC2 /* SectionHeader.swift */; };
@@ -773,6 +777,10 @@
 		732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
 		732E0F512022754600B39C1F /* FakeLockProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeLockProtocol.swift; sourceTree = "<group>"; };
 		732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockCreatePasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
+		7330469B20DFA51C001BAB01 /* AddCustomTokenCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCustomTokenCellViewModel.swift; sourceTree = "<group>"; };
+		7330469D20DFAA8E001BAB01 /* AddCustomTokenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCustomTokenCell.swift; sourceTree = "<group>"; };
+		7330469E20DFAA8E001BAB01 /* AddCustomTokenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCustomTokenCell.xib; sourceTree = "<group>"; };
+		735A553820DFA0EE00004EB6 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		735AB03C2073BF2100EEEDDD /* TokenBalanceOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBalanceOperation.swift; sourceTree = "<group>"; };
 		736D6ED620DEE611008C2CC4 /* EditTokenFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTokenFooterView.swift; sourceTree = "<group>"; };
 		7374ED2D2059A6A3004A8BC2 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
@@ -1480,6 +1488,8 @@
 				73DE7B3020987D8F00AE04E6 /* NonFungibleCollectionViewCell.swift */,
 				73DE7B3120987D8F00AE04E6 /* NonFungibleCollectionViewCell.xib */,
 				736D6ED620DEE611008C2CC4 /* EditTokenFooterView.swift */,
+				7330469D20DFAA8E001BAB01 /* AddCustomTokenCell.swift */,
+				7330469E20DFAA8E001BAB01 /* AddCustomTokenCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1512,6 +1522,7 @@
 				776C1148205D02E800449539 /* TokenViewModel.swift */,
 				77B1EB002063A198007970AA /* NFTDetailsViewModel.swift */,
 				73DE7B34209884AB00AE04E6 /* NonFungibleCollectionViewCellModel.swift */,
+				7330469B20DFA51C001BAB01 /* AddCustomTokenCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1628,6 +1639,7 @@
 				7778713B2086AD9900CF7303 /* BigInt.swift */,
 				77B64100209668FF00BEF3EB /* EtherNumberFormatter+Trust.swift */,
 				296FC5A520C2773B00B923EF /* UIScrollView.swift */,
+				735A553820DFA0EE00004EB6 /* UITableView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2663,6 +2675,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				733046A020DFAA8E001BAB01 /* AddCustomTokenCell.xib in Resources */,
 				613D04891FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer in Resources */,
 				902CAB592051818B00F96FFE /* BookmarkViewCell.xib in Resources */,
 				771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */,
@@ -2945,6 +2958,7 @@
 				77E81D94203687FB00534C99 /* NotificationsViewController.swift in Sources */,
 				296FC59920B6874800B923EF /* ExportPhraseCoordinator.swift in Sources */,
 				615F10561FCBEF2E008A45AF /* OnboardingPageViewModel.swift in Sources */,
+				7330469F20DFAA8E001BAB01 /* AddCustomTokenCell.swift in Sources */,
 				29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */,
 				73200B752048B67E00118A82 /* NonFungibleTokenObject.swift in Sources */,
 				77872D27202505C00032D687 /* EnterPasswordViewModel.swift in Sources */,
@@ -3151,6 +3165,7 @@
 				2996F1461F6C98B3005C33AE /* SettingsViewController.swift in Sources */,
 				73F2FF3C20557C020021976E /* TrustOperation.swift in Sources */,
 				2963B6AD1F981A96003063C1 /* TransactionAppearance.swift in Sources */,
+				7330469C20DFA51C001BAB01 /* AddCustomTokenCellViewModel.swift in Sources */,
 				77B1EAFF20639DEB007970AA /* NFTokenViewController.swift in Sources */,
 				29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */,
 				73B1A6BC204B4FB6001F546C /* NonFungibleTokenViewModel.swift in Sources */,
@@ -3179,6 +3194,7 @@
 				73DE7B3220987D8F00AE04E6 /* NonFungibleCollectionViewCell.swift in Sources */,
 				77B806A52075C33D005FDCBE /* SharedMigrationInitializer.swift in Sources */,
 				29F114F41FA8117C00114A29 /* SendCoordinator.swift in Sources */,
+				735A553920DFA0EE00004EB6 /* UITableView.swift in Sources */,
 				293B8B411F707F4600356286 /* TransactionViewModel.swift in Sources */,
 				77787134208462EF00CF7303 /* TransactionsLayout.swift in Sources */,
 				771A847D2032409000528D28 /* PreferenceOption.swift in Sources */,

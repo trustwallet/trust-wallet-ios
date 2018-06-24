@@ -172,6 +172,10 @@ class TokensViewModel: NSObject {
         tokensObserver?.invalidate()
         tokensObserver = nil
     }
+
+    func count() -> Int {
+        return tokens.count + 1
+    }
 }
 
 extension Array where Element: Operation {
