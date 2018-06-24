@@ -6,15 +6,12 @@ import UIKit
 struct PassphraseViewModel {
 
     var title: String {
-        return NSLocalizedString(
-            "recoveryPhrase.navigation.title",
-            value: "Recovery Phrase",
-            comment: ""
-        )
+        return NSLocalizedString("Recovery Phrase", value: "Recovery Phrase", comment: "")
+
     }
 
     var backgroundColor: UIColor {
-        return .white
+        return Colors.groupTable
     }
 
     var rememberPassphraseText: String {

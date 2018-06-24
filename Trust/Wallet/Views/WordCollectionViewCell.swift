@@ -4,7 +4,6 @@ import UIKit
 
 class WordCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var wordLabel: UILabel!
 
     override func awakeFromNib() {

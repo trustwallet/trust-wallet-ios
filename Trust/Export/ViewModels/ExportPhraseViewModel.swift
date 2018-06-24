@@ -24,10 +24,6 @@ struct ExportPhraseViewModel {
         return NSLocalizedString("export.warning.private.key", value: "Export at your own risk!", comment: "")
     }
 
-    var words: [String] {
-        return []
-    }
-
     var warningText: String {
         return NSLocalizedString("export.warningTwo.private.key", value: "Anyone with your recovery phrase will have FULL access to your wallet!", comment: "")
     }

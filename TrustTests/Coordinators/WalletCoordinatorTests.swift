@@ -38,7 +38,7 @@ class WalletCoordinatorTests: XCTestCase {
 
         coordinator.start(.createInstantWallet)
 
-        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is BackupViewController)
+        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is PassphraseViewController)
     }
 
     func testPushImportWallet() {

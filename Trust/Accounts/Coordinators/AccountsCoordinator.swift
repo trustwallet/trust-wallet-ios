@@ -74,14 +74,7 @@ class AccountsCoordinator: Coordinator {
         case .privateKey(let account):
             let actionTitle = NSLocalizedString("wallets.backup.alertSheet.title", value: "Backup Keystore", comment: "The title of the backup button in the wallet's action sheet")
             let backupKeystoreAction = UIAlertAction(title: actionTitle, style: .default) { [unowned self] _ in
-                let coordinator = BackupCoordinator(
-                    navigationController: self.navigationController,
-                    keystore: self.keystore,
-                    account: account
-                )
-                coordinator.delegate = self
-                coordinator.start()
-                self.addCoordinator(coordinator)
+                self.exportKeystore(for: account)
             }
             let exportTitle = NSLocalizedString("wallets.export.alertSheet.title", value: "Export Private Key", comment: "The title of the export button in the wallet's action sheet")
             let exportPrivateKeyAction = UIAlertAction(title: exportTitle, style: .default) { [unowned self] _ in
@@ -92,17 +85,9 @@ class AccountsCoordinator: Coordinator {
         case .hd(let account):
             let actionTitle = NSLocalizedString("wallets.backupPhrase.alertSheet.title", value: "Export Recovery Phrase", comment: "")
             let action = UIAlertAction(title: actionTitle, style: .default) { [unowned self] _ in
-                let coordinator = ExportPhraseCoordinator(
-                    keystore: self.keystore,
-                    account: account
-                )
-                coordinator.delegate = self
-                coordinator.start()
-                self.navigationController.present(coordinator.navigationController, animated: true, completion: nil)
-                self.addCoordinator(coordinator)
+                self.exportMnemonic(for: account)
             }
-            // TODO: Add action when export seed phrase is available
-            //controller.addAction(action)
+            controller.addAction(action)
         case .address:
             break
         }
@@ -118,6 +103,42 @@ class AccountsCoordinator: Coordinator {
         controller.addAction(copyAction)
         controller.addAction(cancelAction)
         navigationController.present(controller, animated: true, completion: nil)
+    }
+
+    func exportMnemonic(for account: Account) {
+        navigationController.displayLoading()
+        keystore.exportMnemonic(account: account) { [weak self] result in
+            self?.navigationController.hideLoading()
+            switch result {
+            case .success(let words):
+                self?.exportMnemonicCoordinator(for: account, words: words)
+            case .failure(let error):
+                self?.navigationController.displayError(error: error)
+            }
+        }
+    }
+
+    func exportMnemonicCoordinator(for account: Account, words: [String]) {
+        let coordinator = ExportPhraseCoordinator(
+            keystore: keystore,
+            account: account,
+            words: words
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+        addCoordinator(coordinator)
+    }
+
+    func exportKeystore(for account: Account) {
+        let coordinator = BackupCoordinator(
+            navigationController: navigationController,
+            keystore: keystore,
+            account: account
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
     }
 
     func exportPrivateKey(for account: Account) {

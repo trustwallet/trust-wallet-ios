@@ -9,6 +9,7 @@ class PassphraseView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
+        layout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         return layout
     }()
@@ -19,7 +20,7 @@ class PassphraseView: UIView {
     }()
 
     private struct Layout {
-        static let cellHeight: CGFloat = 40
+        static let height: CGFloat = 120
     }
 
     var words: [String] = [] {
@@ -34,7 +35,6 @@ class PassphraseView: UIView {
         addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
-        collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(R.nib.wordCollectionViewCell)
 
@@ -47,7 +47,7 @@ class PassphraseView: UIView {
     }
 
     private func index(for indexPath: IndexPath) -> Int {
-        return (indexPath.section * 2) + indexPath.row
+        return indexPath.row
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -57,33 +57,23 @@ class PassphraseView: UIView {
     override var intrinsicContentSize: CGSize {
         return CGSize(
             width: collectionView.frame.width,
-            height: Layout.cellHeight * CGFloat(numberOfSections(in: collectionView))
+            height: Layout.height
         )
     }
 }
 
 extension PassphraseView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return words.count
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return self.words.count / 2
+        return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.nib.wordCollectionViewCell.identifier, for: indexPath) as! WordCollectionViewCell
-        let index = self.index(for: indexPath)
-        cell.numberLabel.text = "\((index + 1))"
-        cell.wordLabel.text = words[index]
+        cell.wordLabel.text = words[indexPath.row]
         return cell
-    }
-}
-
-extension PassphraseView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width/2, height: Layout.cellHeight)
     }
 }

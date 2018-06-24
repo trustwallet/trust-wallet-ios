@@ -14,11 +14,14 @@ class ExportPhraseCoordinator: Coordinator {
     weak var delegate: ExportPhraseCoordinatorDelegate?
     let keystore: Keystore
     let account: Account
+    let words: [String]
     var coordinators: [Coordinator] = []
     lazy var rootViewController: PassphraseViewController = {
         let controller = PassphraseViewController(
-            words: viewModel.words
+            account: account,
+            words: words
         )
+        controller.delegate = self
         controller.title = viewModel.title
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel,
@@ -34,12 +37,14 @@ class ExportPhraseCoordinator: Coordinator {
     init(
         navigationController: NavigationController = NavigationController(),
         keystore: Keystore,
-        account: Account
+        account: Account,
+        words: [String]
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
         self.account = account
+        self.words = words
     }
 
     func start() {
@@ -48,5 +53,23 @@ class ExportPhraseCoordinator: Coordinator {
 
     @objc func dismiss() {
         delegate?.didCancel(in: self)
+    }
+}
+
+extension ExportPhraseCoordinator: PassphraseViewControllerDelegate {
+    func didFinish(in controller: PassphraseViewController, with account: Account) {
+        delegate?.didCancel(in: self)
+    }
+
+    func didPressVerify(in controller: PassphraseViewController, with account: Account, words: [String]) {
+        // Missing functionality
+    }
+
+    func didPressShare(in controller: PassphraseViewController, sender: UIView, account: Account, words: [String]) {
+        let copyValue = words.joined(separator: " ")
+        let activityViewController = UIActivityViewController.make(items: [copyValue])
+        activityViewController.popoverPresentationController?.sourceView = sender
+        activityViewController.popoverPresentationController?.sourceRect = sender.centerRect
+        navigationController.present(activityViewController, animated: true)
     }
 }
