@@ -39,7 +39,7 @@ class TokensCoordinator: NSObject, Coordinator {
 
     lazy var masterViewController: WalletViewController = {
         let masterViewController = WalletViewController(tokensViewController: self.tokensViewController, nonFungibleTokensViewController: self.nonFungibleTokensViewController)
-        masterViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(edit))
+        masterViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit))
         masterViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(image: R.image.qr_code_icon(), style: .done, target: self, action: #selector(openReader))
         return masterViewController
     }()
@@ -145,13 +145,17 @@ class TokensCoordinator: NSObject, Coordinator {
     }
 
     @objc func send() {
-        delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
+        showSend(with: .none)
     }
 
     @objc func openReader() {
         let controller = QRCodeReaderViewController()
         controller.delegate = self
-        editTokensViewController.present(controller, animated: true, completion: nil)
+        tokensViewController.present(controller, animated: true, completion: nil)
+    }
+
+    private func showSend(with address: Address?) {
+        delegate?.didPress(for: .send(type: .ether(destination: address)), in: self)
     }
 
     private func openURL(_ url: URL) {
@@ -270,6 +274,6 @@ extension TokensCoordinator: QRCodeReaderDelegate {
         reader.stopScanning()
         reader.dismiss(animated: true)
         guard let result = QRURLParser.from(string: result), let address = Address(string: result.address) else { return }
-        show(add: ERC20Token(contract: address, name: "", symbol: "", decimals: 0))
+        showSend(with: address)
     }
 }
