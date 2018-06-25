@@ -13,19 +13,16 @@ class PassphraseView: UIView {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         return layout
     }()
-    lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
+    lazy var collectionView: DynamicCollectionView = {
+        let collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: self.layout)
         collectionView.isScrollEnabled = false
         return collectionView
     }()
 
-    private struct Layout {
-        static let height: CGFloat = 140
-    }
-
     var words: [String] = [] {
         didSet {
             collectionView.reloadData()
+            collectionView.invalidateIntrinsicContentSize()
         }
     }
     var isEditable: Bool = false
@@ -51,13 +48,6 @@ class PassphraseView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override var intrinsicContentSize: CGSize {
-        return CGSize(
-            width: collectionView.frame.width,
-            height: Layout.height
-        )
     }
 }
 
@@ -87,3 +77,4 @@ extension PassphraseView: UICollectionViewDelegate {
         didDeleteItem?(item)
     }
 }
+
