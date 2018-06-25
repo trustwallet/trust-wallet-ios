@@ -89,7 +89,7 @@ DEPENDENCIES:
   - StatefulViewController
   - SwiftLint
   - TrustCore (~> 0.0.7)
-  - TrustKeystore (~> 0.4.0)
+  - TrustKeystore (from `https://github.com/TrustWallet/trust-keystore`, branch `master`)
   - TrustWalletSDK (from `https://github.com/TrustWallet/TrustSDK-iOS`, branch `master`)
   - TrustWeb3Provider (from `https://github.com/TrustWallet/trust-web3-provider`, branch `master`)
   - URLNavigator
@@ -123,7 +123,6 @@ SPEC REPOS:
     - SwiftLint
     - TrezorCrypto
     - TrustCore
-    - TrustKeystore
     - URLNavigator
 
 EXTERNAL SOURCES:
@@ -135,6 +134,9 @@ EXTERNAL SOURCES:
   QRCodeReaderViewController:
     :branch: master
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
+  TrustKeystore:
+    :branch: master
+    :git: https://github.com/TrustWallet/trust-keystore
   TrustWalletSDK:
     :branch: master
     :git: https://github.com/TrustWallet/TrustSDK-iOS
@@ -152,6 +154,9 @@ CHECKOUT OPTIONS:
   QRCodeReaderViewController:
     :commit: 80bd79cbeede842949b229f81bc6328f53701c5a
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
+  TrustKeystore:
+    :commit: 4706040d242f0e1974feee05ad39c1d1c6130274
+    :git: https://github.com/TrustWallet/trust-keystore
   TrustWalletSDK:
     :commit: 82c06558df5e6a75bd9c195a4e76536618e76a9a
     :git: https://github.com/TrustWallet/TrustSDK-iOS
@@ -195,6 +200,6 @@ SPEC CHECKSUMS:
   TrustWeb3Provider: 50fa391bdf170feb43dd4419992931510a5751d8
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
-PODFILE CHECKSUM: b6ed29b92790ccd93215436a07191d9d287ef870
+PODFILE CHECKSUM: 1f675233e6ee8324bfaddfb097267b2d24c3965e
 
 COCOAPODS: 1.5.3

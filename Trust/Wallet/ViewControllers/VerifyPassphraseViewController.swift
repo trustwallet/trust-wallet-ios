@@ -36,7 +36,7 @@ class VerifyPassphraseViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         navigationItem.title = NSLocalizedString("Verify Phrase", value: "Verify Phrase", comment: "")
-        view.backgroundColor = Colors.groupTable
+        view.backgroundColor = .white
 
         contentView.isEditable = true
         contentView.words = []

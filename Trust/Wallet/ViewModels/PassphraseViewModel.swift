@@ -11,7 +11,7 @@ struct PassphraseViewModel {
     }
 
     var backgroundColor: UIColor {
-        return Colors.groupTable
+        return .white
     }
 
     var phraseFont: UIFont {

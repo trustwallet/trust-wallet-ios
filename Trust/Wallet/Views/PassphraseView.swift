@@ -7,8 +7,8 @@ class PassphraseView: UIView {
 
     lazy var layout: UICollectionViewLayout = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
         layout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         return layout
@@ -20,7 +20,7 @@ class PassphraseView: UIView {
     }()
 
     private struct Layout {
-        static let height: CGFloat = 120
+        static let height: CGFloat = 140
     }
 
     var words: [String] = [] {
@@ -29,7 +29,7 @@ class PassphraseView: UIView {
         }
     }
     var isEditable: Bool = false
-    var didDeleteItem: ((String) -> ())?
+    var didDeleteItem: ((String) -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
