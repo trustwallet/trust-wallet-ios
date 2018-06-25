@@ -7,8 +7,8 @@ class PassphraseView: UIView {
 
     lazy var layout: UICollectionViewLayout = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 8
+        layout.minimumInteritemSpacing = 8
         layout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         return layout
@@ -22,7 +22,6 @@ class PassphraseView: UIView {
     var words: [String] = [] {
         didSet {
             collectionView.reloadData()
-            collectionView.invalidateIntrinsicContentSize()
         }
     }
     var isEditable: Bool = false
@@ -71,10 +70,10 @@ extension PassphraseView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         guard isEditable else { return }
+
         let item = words[indexPath.row]
         words.remove(at: indexPath.row)
         collectionView.reloadData()
         didDeleteItem?(item)
     }
 }
-

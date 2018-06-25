@@ -8,6 +8,35 @@ protocol VerifyPassphraseViewControllerDelegate: class {
     func didFinish(in controller: VerifyPassphraseViewController, with account: Account)
 }
 
+enum VerifyStatus {
+    case empty
+    case progress
+    case invalid
+    case correct
+
+    var text: String {
+        switch self {
+        case .empty, .progress: return ""
+        case .invalid: return NSLocalizedString("Invalid order ❌", value: "Invalid order ❌", comment: "")
+        case .correct: return NSLocalizedString("Good job! Verified ✅", value: "Good job! Verified ✅", comment: "")
+        }
+    }
+
+    static func from(initialWords: [String], progressWords: [String]) -> VerifyStatus {
+        guard !progressWords.isEmpty else { return .empty }
+
+        if initialWords == progressWords && initialWords.count == progressWords.count {
+            return .correct
+        }
+
+        if progressWords == Array(initialWords.prefix(progressWords.count)) {
+            return .progress
+        }
+
+        return .invalid
+    }
+}
+
 class VerifyPassphraseViewController: UIViewController {
 
     let contentView = PassphraseView()
@@ -25,6 +54,23 @@ class VerifyPassphraseViewController: UIViewController {
         return button
     }()
 
+    lazy var label: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textColor = Colors.black
+        label.font = AppStyle.paragraphSmall.font
+        label.text = NSLocalizedString("verifyPassphrase.label.title", value: "Tap the words to put them next to each other in the correct order.", comment: "")
+        return label
+    }()
+
+    lazy var statusLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        return label
+    }()
+
     init(
         account: Account,
         words: [String]
@@ -35,7 +81,7 @@ class VerifyPassphraseViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        navigationItem.title = NSLocalizedString("Verify Phrase", value: "Verify Phrase", comment: "")
+        navigationItem.title = NSLocalizedString("Verify Recovery Phrase", value: "Verify Recovery Phrase", comment: "")
         view.backgroundColor = .white
 
         contentView.isEditable = true
@@ -44,6 +90,9 @@ class VerifyPassphraseViewController: UIViewController {
             self.proposalView.words.append(item)
             self.refresh()
         }
+        contentView.backgroundColor = Colors.veryVeryLightGray
+        contentView.collectionView.backgroundColor = Colors.veryVeryLightGray
+
         proposalView.isEditable = true
         proposalView.words = shuffledWords
         proposalView.didDeleteItem = { item in
@@ -52,35 +101,42 @@ class VerifyPassphraseViewController: UIViewController {
         }
 
         let stackView = UIStackView(arrangedSubviews: [
+            label,
             contentView,
             proposalView,
+            statusLabel,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 10
+        stackView.spacing = 15
         stackView.backgroundColor = .clear
 
         view.addSubview(stackView)
         view.addSubview(doneButton)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.readableContentGuide.topAnchor),
+            stackView.topAnchor.constraint(equalTo: view.readableContentGuide.topAnchor, constant: StyleLayout.sideMargin),
             stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: doneButton.bottomAnchor),
 
+            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 140),
+            proposalView.heightAnchor.constraint(greaterThanOrEqualToConstant: 140),
+
             doneButton.topAnchor.constraint(greaterThanOrEqualTo: stackView.bottomAnchor),
             doneButton.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             doneButton.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
-            doneButton.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor),
+            doneButton.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor, constant: -StyleLayout.sideMargin),
         ])
 
         refresh()
     }
 
     func refresh() {
-        let isComplete = (words == contentView.words && words.count == contentView.words.count)
-        self.doneButton.isEnabled = isComplete
+        let status = VerifyStatus.from(initialWords: words, progressWords: contentView.words)
+
+        doneButton.isEnabled = status == .correct
+        statusLabel.text = status.text
     }
 
     @objc private func doneAction(_ sender: UIButton) {

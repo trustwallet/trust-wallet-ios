@@ -57,14 +57,14 @@ class PassphraseViewController: UIViewController {
         button.addTarget(self, action: #selector(nextAction(_:)), for: .touchUpInside)
 
         NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
+            contentView.topAnchor.constraint(equalTo: view.readableContentGuide.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
             contentView.bottomAnchor.constraint(lessThanOrEqualTo: button.topAnchor),
 
             button.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             button.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
-            button.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor),
+            button.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor, constant: -StyleLayout.sideMargin),
         ])
     }
 
