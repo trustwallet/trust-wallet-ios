@@ -61,7 +61,7 @@ PODS:
   - TrustWalletSDK (0.0.1):
     - Result
     - TrustCore
-  - TrustWeb3Provider (0.1.7)
+  - TrustWeb3Provider (0.2.1)
   - URLNavigator (2.0.4)
 
 DEPENDENCIES:
@@ -161,7 +161,7 @@ CHECKOUT OPTIONS:
     :commit: 82c06558df5e6a75bd9c195a4e76536618e76a9a
     :git: https://github.com/TrustWallet/TrustSDK-iOS
   TrustWeb3Provider:
-    :commit: f4e0ebb1b8fa4812637babe85ef975d116543dfd
+    :commit: 84946dc9d98611120246385363e0474d104eabd7
     :git: https://github.com/TrustWallet/trust-web3-provider
 
 SPEC CHECKSUMS:
@@ -197,7 +197,7 @@ SPEC CHECKSUMS:
   TrustCore: 688df9a241008cf9cfa3842ec8ef28777a8b7534
   TrustKeystore: fdd5936098af80b9478122bbd3a89477a5389298
   TrustWalletSDK: 12451433bda69bc07e5a27408449b1f4692879e4
-  TrustWeb3Provider: 50fa391bdf170feb43dd4419992931510a5751d8
+  TrustWeb3Provider: c29f035089b51f12a2ef63aecf4b9f455443d4fe
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
 PODFILE CHECKSUM: 1f675233e6ee8324bfaddfb097267b2d24c3965e
