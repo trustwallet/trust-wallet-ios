@@ -24,7 +24,7 @@ class ExportPhraseCoordinator: Coordinator {
         controller.delegate = self
         controller.title = viewModel.title
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel,
+            barButtonSystemItem: .done,
             target: self,
             action: #selector(dismiss)
         )

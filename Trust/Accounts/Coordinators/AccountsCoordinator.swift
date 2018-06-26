@@ -65,6 +65,12 @@ class AccountsCoordinator: Coordinator {
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
+    func showWalletInfo(for wallet: Wallet, sender: UIView) {
+        let controller = WalletInfoViewController(wallet: wallet)
+        controller.delegate = self
+        navigationController.pushViewController(controller, animated: true)
+    }
+
     func showInfoSheet(for account: Wallet, sender: UIView) {
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         controller.popoverPresentationController?.sourceView = sender
@@ -163,7 +169,8 @@ extension AccountsCoordinator: AccountsViewControllerDelegate {
     }
 
     func didSelectInfoForAccount(account: Wallet, sender: UIView, in viewController: AccountsViewController) {
-        showInfoSheet(for: account, sender: sender)
+        //showInfoSheet(for: account, sender: sender)
+        showWalletInfo(for: account, sender: sender)
     }
 }
 
@@ -207,5 +214,18 @@ extension AccountsCoordinator: ExportPrivateKeyCoordinatorDelegate {
     func didCancel(in coordinator: ExportPrivateKeyCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
+    }
+}
+
+extension AccountsCoordinator: WalletInfoViewControllerDelegate {
+    func didPress(item: WalletInfoType, in controller: WalletInfoViewController) {
+        switch item {
+        case .exportKeystore(let account):
+            exportKeystore(for: account)
+        case .exportPrivateKey(let account):
+            exportPrivateKey(for: account)
+        case .exportRecoveryPhrase(let account):
+            exportMnemonic(for: account)
+        }
     }
 }
