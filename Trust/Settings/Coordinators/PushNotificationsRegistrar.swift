@@ -33,7 +33,20 @@ class PushNotificationsRegistrar {
             preferences: NotificationsViewController.getPreferences()
         )
 
-        trustProvider.request(.unregister(device: device)) { _ in }
+        trustProvider.request(.unregister(device: device)) { response in
+            guard response.error == nil else {
+                return
+            }
+            if let statusCode = response.value?.statusCode {
+                switch statusCode {
+                case 200:
+                    break
+                default:
+                    print("Error - device unregister - Status Code \(statusCode). Operation could not be completed.")
+                }
+            }
+        }
+
         UIApplication.shared.unregisterForRemoteNotifications()
     }
 

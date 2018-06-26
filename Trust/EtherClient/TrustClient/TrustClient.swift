@@ -45,7 +45,7 @@ extension TrustService: TargetType {
         case .getTokens: return .get
         case .getTransaction: return .get
         case .register: return .post
-        case .unregister: return .delete
+        case .unregister: return .post
         case .marketplace: return .get
         case .assets: return .get
         case .search: return .get
