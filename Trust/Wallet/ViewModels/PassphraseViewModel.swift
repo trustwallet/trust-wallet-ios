@@ -6,7 +6,7 @@ import UIKit
 struct PassphraseViewModel {
 
     var title: String {
-        return NSLocalizedString("Recovery Phrase", value: "Recovery Phrase", comment: "")
+        return NSLocalizedString("Backup Recovery Phrase", value: "Backup Recovery Phrase", comment: "")
 
     }
 

@@ -10,11 +10,11 @@ class PassphraseView: UIView {
         layout.minimumLineSpacing = 8
         layout.minimumInteritemSpacing = 8
         layout.estimatedItemSize = UICollectionViewFlowLayoutAutomaticSize
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         return layout
     }()
     lazy var collectionView: DynamicCollectionView = {
-        let collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: self.layout)
+        let collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isScrollEnabled = false
         return collectionView
     }()

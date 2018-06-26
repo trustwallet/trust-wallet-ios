@@ -71,6 +71,10 @@ class VerifyPassphraseViewController: UIViewController {
         return label
     }()
 
+    private struct Layout {
+        static let contentSize: CGFloat = 140
+    }
+
     init(
         account: Account,
         words: [String]
@@ -90,8 +94,8 @@ class VerifyPassphraseViewController: UIViewController {
             self.proposalView.words.append(item)
             self.refresh()
         }
-        contentView.backgroundColor = Colors.veryVeryLightGray
-        contentView.collectionView.backgroundColor = Colors.veryVeryLightGray
+        contentView.backgroundColor = .clear
+        contentView.collectionView.backgroundColor = .clear
 
         proposalView.isEditable = true
         proposalView.words = shuffledWords
@@ -111,6 +115,11 @@ class VerifyPassphraseViewController: UIViewController {
         stackView.spacing = 15
         stackView.backgroundColor = .clear
 
+        let wordBackgroundView = UIView()
+        wordBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        wordBackgroundView.backgroundColor = Colors.veryVeryLightGray
+        view.addSubview(wordBackgroundView)
+
         view.addSubview(stackView)
         view.addSubview(doneButton)
 
@@ -120,8 +129,13 @@ class VerifyPassphraseViewController: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: doneButton.bottomAnchor),
 
-            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 140),
-            proposalView.heightAnchor.constraint(greaterThanOrEqualToConstant: 140),
+            wordBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            wordBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            wordBackgroundView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            wordBackgroundView.heightAnchor.constraint(equalToConstant: Layout.contentSize),
+
+            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: Layout.contentSize),
+            proposalView.heightAnchor.constraint(greaterThanOrEqualToConstant: Layout.contentSize),
 
             doneButton.topAnchor.constraint(greaterThanOrEqualTo: stackView.bottomAnchor),
             doneButton.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),

@@ -27,7 +27,7 @@ class PassphraseViewController: UIViewController {
         return button
     }()
     let subTitleLabel = UILabel()
-    let copyButton = Button(size: .small, style: .clear)
+    let copyButton = Button(size: .extraLarge, style: .clear)
     weak var delegate: PassphraseViewControllerDelegate?
 
     init(
