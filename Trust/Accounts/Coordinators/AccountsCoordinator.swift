@@ -71,46 +71,6 @@ class AccountsCoordinator: Coordinator {
         navigationController.pushViewController(controller, animated: true)
     }
 
-    func showInfoSheet(for account: Wallet, sender: UIView) {
-        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        controller.popoverPresentationController?.sourceView = sender
-        controller.popoverPresentationController?.sourceRect = sender.centerRect
-
-        switch account.type {
-        case .privateKey(let account):
-            let actionTitle = NSLocalizedString("wallets.backup.alertSheet.title", value: "Backup Keystore", comment: "The title of the backup button in the wallet's action sheet")
-            let backupKeystoreAction = UIAlertAction(title: actionTitle, style: .default) { [unowned self] _ in
-                self.exportKeystore(for: account)
-            }
-            let exportTitle = NSLocalizedString("wallets.export.alertSheet.title", value: "Export Private Key", comment: "The title of the export button in the wallet's action sheet")
-            let exportPrivateKeyAction = UIAlertAction(title: exportTitle, style: .default) { [unowned self] _ in
-                self.exportPrivateKey(for: account)
-            }
-            controller.addAction(backupKeystoreAction)
-            controller.addAction(exportPrivateKeyAction)
-        case .hd(let account):
-            let actionTitle = NSLocalizedString("wallets.backupPhrase.alertSheet.title", value: "Export Recovery Phrase", comment: "")
-            let action = UIAlertAction(title: actionTitle, style: .default) { [unowned self] _ in
-                self.exportMnemonic(for: account)
-            }
-            controller.addAction(action)
-        case .address:
-            break
-        }
-
-        let copyAction = UIAlertAction(
-            title: NSLocalizedString("Copy Address", value: "Copy Address", comment: ""),
-            style: .default
-        ) { _ in
-            UIPasteboard.general.string = account.address.description
-        }
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
-
-        controller.addAction(copyAction)
-        controller.addAction(cancelAction)
-        navigationController.present(controller, animated: true, completion: nil)
-    }
-
     func exportMnemonic(for account: Account) {
         navigationController.displayLoading()
         keystore.exportMnemonic(account: account) { [weak self] result in
@@ -121,6 +81,19 @@ class AccountsCoordinator: Coordinator {
             case .failure(let error):
                 self?.navigationController.displayError(error: error)
             }
+        }
+    }
+
+    func exportPrivateKeyView(for account: Account) {
+        navigationController.displayLoading()
+        keystore.exportPrivateKey(account: account) { [weak self] result in
+            switch result {
+            case .success(let privateKey):
+                self?.exportPrivateKey(with: privateKey)
+            case .failure(let error):
+                self?.navigationController.displayError(error: error)
+            }
+            self?.navigationController.hideLoading()
         }
     }
 
@@ -147,10 +120,9 @@ class AccountsCoordinator: Coordinator {
         addCoordinator(coordinator)
     }
 
-    func exportPrivateKey(for account: Account) {
+    func exportPrivateKey(with privateKey: Data) {
         let coordinator = ExportPrivateKeyCoordinator(
-            keystore: keystore,
-            account: account
+            privateKey: privateKey
         )
         coordinator.delegate = self
         coordinator.start()
@@ -223,7 +195,7 @@ extension AccountsCoordinator: WalletInfoViewControllerDelegate {
         case .exportKeystore(let account):
             exportKeystore(for: account)
         case .exportPrivateKey(let account):
-            exportPrivateKey(for: account)
+            exportPrivateKeyView(for: account)
         case .exportRecoveryPhrase(let account):
             exportMnemonic(for: account)
         }

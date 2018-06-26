@@ -118,7 +118,7 @@ struct FakeKeystore: Keystore {
         return .failure(KeystoreError.failedToSignTransaction)
     }
 
-    func exportPrivateKey(account: Account) -> Result<Data, KeystoreError> {
+    func exportPrivateKey(account: Account, completion: @escaping (Result<Data, KeystoreError>) -> Void) {
         //TODO: Implement
         return .failure(KeystoreError.failedToExportPrivateKey)
     }
