@@ -33,6 +33,6 @@ class PreferencesController {
     }
 
     func get(for option: String) -> Any? {
-        return userDefaults.value(forKey:option)
+        return userDefaults.value(forKey: option)
     }
 }
