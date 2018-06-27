@@ -26,7 +26,7 @@ struct MonetaryAmountViewModel {
         guard let address = address else {
             return .none
         }
-        return currencyRate?.estimate(fee: amount, with: address.eip55String)
+        return currencyRate?.estimate(fee: amount, with: address)
     }
 
     var amountText: String? {

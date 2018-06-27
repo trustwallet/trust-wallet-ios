@@ -76,8 +76,8 @@ enum RPCServer {
         }
     }
 
-    var address: String {
-        return "0x0000000000000000000000000000000000000000"
+    var address: Address {
+        return Address(string: "0x0000000000000000000000000000000000000000")!
     }
 
     var decimals: Int {

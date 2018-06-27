@@ -27,16 +27,16 @@ class FakeCoinTickerFactory {
 
     class func make3UniqueCionTickers() -> [CoinTicker] {
         return [
-            CoinTicker.make(symbol: "symbol1", price: "10", contract: "contract1", currencyKey: currencyKey),
-            CoinTicker.make(symbol: "symbol2", price: "20", contract: "contract2", currencyKey: currencyKey),
-            CoinTicker.make(symbol: "symbol3", price: "30", contract: "contract3", currencyKey: currencyKey),
+            CoinTicker.make(symbol: "symbol1", price: "10", contract: .make(address: "0x0000000000000000000000000000000000000001"), currencyKey: currencyKey),
+            CoinTicker.make(symbol: "symbol2", price: "20", contract: .make(address: "0x0000000000000000000000000000000000000002"), currencyKey: currencyKey),
+            CoinTicker.make(symbol: "symbol3", price: "30", contract: .make(address: "0x0000000000000000000000000000000000000003"), currencyKey: currencyKey),
         ]
     }
 
     class func make2DuplicateCionTickersWithDifferentKey() -> [CoinTicker] {
         return [
-            CoinTicker.make(symbol: "same-symbol", contract: "same-contract-address", currencyKey: currencyKey, key: "old-key"),
-            CoinTicker.make(symbol: "same-symbol", contract: "same-contract-address", currencyKey: currencyKey),
+            CoinTicker.make(symbol: "symbol1", contract: .make(), currencyKey: currencyKey, key: "old-key"),
+            CoinTicker.make(symbol: "symbol1", contract: .make(), currencyKey: currencyKey),
         ]
     }
 }
