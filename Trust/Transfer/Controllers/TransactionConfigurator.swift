@@ -199,8 +199,8 @@ class TransactionConfigurator {
             case .ether, .dapp, .nft: return .none
             case .token(let token):
                 return LocalizedOperationObject(
-                    from: account.address.eip55String,
-                    to: transaction.to?.eip55String ?? "",
+                    from: account.address.description,
+                    to: transaction.to?.description ?? "",
                     contract: token.contract,
                     type: OperationType.tokenTransfer.rawValue,
                     value: BigInt(transaction.value.magnitude).description,

@@ -25,7 +25,7 @@ enum BranchEvent {
             ]
         case .newToken(let address):
             return [
-                "contract": address.eip55String,
+                "contract": address.description,
                 "event": BranchEventName.newToken.rawValue,
             ]
         }
