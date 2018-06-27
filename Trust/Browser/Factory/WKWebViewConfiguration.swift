@@ -34,7 +34,6 @@ extension WKWebViewConfiguration {
 
         const trust = new Trust({
           rpcUrl,
-          wssUrl,
           address: addressHex,
           networkVersion: chainID,
           getAccounts: function (cb) { cb(null, [addressHex]) },
