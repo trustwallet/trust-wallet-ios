@@ -28,20 +28,19 @@ class WalletCoordinatorTests: XCTestCase {
         XCTAssertTrue(coordinator.navigationController.viewControllers[0] is ImportWalletViewController)
     }
 
-//    TODO. Fix this test. There is async call for mnemonic causing this issue.
-//    func testCreateInstantWallet() {
-//
-//        let delegate = FakeWalletCoordinatorDelegate()
-//        let coordinator = WalletCoordinator(
-//            navigationController: FakeNavigationController(),
-//            keystore: FakeEtherKeystore()
-//        )
-//        coordinator.delegate = delegate
-//
-//        coordinator.start(.createInstantWallet)
-//
-//        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is PassphraseViewController)
-//    }
+    func testCreateInstantWallet() {
+
+        let delegate = FakeWalletCoordinatorDelegate()
+        let coordinator = WalletCoordinator(
+            navigationController: FakeNavigationController(),
+            keystore: FakeEtherKeystore()
+        )
+        coordinator.delegate = delegate
+
+        coordinator.pushBackup(for: .make(), words: [])
+
+        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is PassphraseViewController)
+    }
 
     func testPushImportWallet() {
         let coordinator = WalletCoordinator(
