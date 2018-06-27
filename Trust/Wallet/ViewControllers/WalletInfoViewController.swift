@@ -27,7 +27,7 @@ class WalletInfoViewController: FormViewController {
         navigationItem.title = viewModel.title
 
         let types = viewModel.types
-        let section = Section()
+        let section = Section(footer: viewModel.wallet.address.description)
         for type in types {
             section.append(link(item: type))
         }

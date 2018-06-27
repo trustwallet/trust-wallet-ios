@@ -17,8 +17,9 @@ enum VerifyStatus {
     var text: String {
         switch self {
         case .empty, .progress: return ""
-        case .invalid: return NSLocalizedString("Invalid order ❌", value: "Invalid order ❌", comment: "")
-        case .correct: return NSLocalizedString("Good job! Verified ✅", value: "Good job! Verified ✅", comment: "")
+        case .invalid: return NSLocalizedString("verify.passphrase.invalidOrder.title", value: "Invalid order. Try again!", comment: "")
+        case .correct:
+            return String(format: NSLocalizedString("verify.passphrase.welldone.title", value: "Well done! %@", comment: ""), "✅")
         }
     }
 
@@ -115,9 +116,8 @@ class VerifyPassphraseViewController: UIViewController {
         stackView.spacing = 15
         stackView.backgroundColor = .clear
 
-        let wordBackgroundView = UIView()
+        let wordBackgroundView = PassphraseBackgroundShadow()
         wordBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        wordBackgroundView.backgroundColor = Colors.veryVeryLightGray
         view.addSubview(wordBackgroundView)
 
         view.addSubview(stackView)
