@@ -20,7 +20,7 @@ target 'Trust' do
   pod 'RealmSwift'
   pod 'Lokalise'
   pod 'Moya', '~> 10.0.1'
-  pod 'CryptoSwift', :git=>'https://github.com/krzyzanowskim/CryptoSwift', :branch=>'master'
+  pod 'CryptoSwift', '~> 0.10.0'
   pod 'Fabric'
   pod 'Crashlytics', '~> 3.10'
   pod 'Kingfisher', '~> 4.0'

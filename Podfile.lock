@@ -9,7 +9,7 @@ PODS:
   - Branch/Core (0.24.1)
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
-  - CryptoSwift (0.8.0)
+  - CryptoSwift (0.10.0)
   - Eureka (4.1.1)
   - Fabric (1.7.6)
   - JdenticonSwift (0.0.1)
@@ -146,7 +146,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CryptoSwift:
-    :commit: 46cfb548f83b89a13ce99f452223933c31fac5ba
+    :commit: 9284485ecd681b04d17e71383d903b5de33516db
     :git: https://github.com/krzyzanowskim/CryptoSwift
   JSONRPCKit:
     :commit: 50d19a4f7ec593ac5e07cffa1e11c17f1fbe347d
@@ -170,7 +170,7 @@ SPEC CHECKSUMS:
   BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
   Branch: 8b59411a12867bde4fe8c9d3c0f107c5811e303e
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
-  CryptoSwift: 475ae2a25439f52412686d68b854c0ca724c8dfd
+  CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
   Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
   JdenticonSwift: bc532f2761566eb29f26b085e5f72de25bc065ce
