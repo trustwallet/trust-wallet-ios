@@ -39,15 +39,19 @@ class WalletInfoViewController: FormViewController {
             return [
                 .exportKeystore(account),
                 .exportPrivateKey(account),
+                .copyAddress(account.address),
             ]
         case .hd(let account):
             return [
                 .exportRecoveryPhrase(account),
                 .exportPrivateKey(account),
                 .exportKeystore(account),
+                .copyAddress(account.address),
             ]
-        case .address:
-            return []
+        case .address(let address):
+            return [
+                .copyAddress(address),
+            ]
         }
     }
 
@@ -62,8 +66,6 @@ class WalletInfoViewController: FormViewController {
             self.delegate?.didPress(item: item, in: self)
         }.cellSetup { cell, _ in
             cell.imageView?.image = item.image
-            cell.imageView?.layer.cornerRadius = 6
-            cell.imageView?.layer.masksToBounds = true
         }.cellUpdate { cell, _ in
             cell.textLabel?.textAlignment = .left
             cell.textLabel?.textColor = .black
@@ -77,4 +79,3 @@ class WalletInfoViewController: FormViewController {
 }
 
 typealias ButtonRowRow = ButtonRowOf<WalletInfoType>
-

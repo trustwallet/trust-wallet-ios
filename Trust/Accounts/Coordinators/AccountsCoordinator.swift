@@ -198,6 +198,8 @@ extension AccountsCoordinator: WalletInfoViewControllerDelegate {
             exportPrivateKeyView(for: account)
         case .exportRecoveryPhrase(let account):
             exportMnemonic(for: account)
+        case .copyAddress(let address):
+            UIPasteboard.general.string = address.description
         }
     }
 }

@@ -70,7 +70,7 @@ struct FakeKeystore: Keystore {
 
     func exportMnemonic(account: Account, completion: @escaping (Result<[String], KeystoreError>) -> Void) {
         //TODO: Implement
-        return completion(.failure(KeystoreError.failedToSignTransaction))
+        return completion(.success([]))
     }
 
     func delete(wallet: Trust.Wallet) -> Result<Void, KeystoreError> {
@@ -120,7 +120,7 @@ struct FakeKeystore: Keystore {
 
     func exportPrivateKey(account: Account, completion: @escaping (Result<Data, KeystoreError>) -> Void) {
         //TODO: Implement
-        return .failure(KeystoreError.failedToExportPrivateKey)
+        return completion(.failure(KeystoreError.failedToExportPrivateKey))
     }
 }
 
