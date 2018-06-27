@@ -10,6 +10,9 @@ protocol WalletInfoViewControllerDelegate: class {
 
 class WalletInfoViewController: FormViewController {
 
+    lazy var viewModel: WalletInfoViewModel = {
+        return WalletInfoViewModel(wallet: wallet)
+    }()
     let wallet: Wallet
     weak var delegate: WalletInfoViewControllerDelegate?
 
@@ -21,38 +24,15 @@ class WalletInfoViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //navigationItem.title = viewModel.title
-        let types = fieldTypes(for: wallet)
+        navigationItem.title = viewModel.title
 
+        let types = viewModel.types
         let section = Section()
-
         for type in types {
             section.append(link(item: type))
         }
 
         form +++ section
-    }
-
-    func fieldTypes(for wallet: Wallet) -> [WalletInfoType] {
-        switch wallet.type {
-        case .privateKey(let account):
-            return [
-                .exportKeystore(account),
-                .exportPrivateKey(account),
-                .copyAddress(account.address),
-            ]
-        case .hd(let account):
-            return [
-                .exportRecoveryPhrase(account),
-                .exportPrivateKey(account),
-                .exportKeystore(account),
-                .copyAddress(account.address),
-            ]
-        case .address(let address):
-            return [
-                .copyAddress(address),
-            ]
-        }
     }
 
     private func link(
@@ -69,6 +49,7 @@ class WalletInfoViewController: FormViewController {
         }.cellUpdate { cell, _ in
             cell.textLabel?.textAlignment = .left
             cell.textLabel?.textColor = .black
+            cell.accessoryType = .disclosureIndicator
         }
         return button
     }
