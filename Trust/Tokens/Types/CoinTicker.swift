@@ -3,6 +3,7 @@
 import Foundation
 import Realm
 import RealmSwift
+import TrustCore
 
 class CoinTicker: Object, Decodable {
     @objc dynamic var symbol: String = ""
@@ -68,6 +69,9 @@ extension CoinTicker {
 
 struct CoinTickerKeyMaker {
     static func makePrimaryKey(symbol: String, contract: String, currencyKey: String) -> String {
+        if let contractAddress = Address(string: contract) {
+            return "\(symbol)_\(contractAddress.eip55String)_\(currencyKey)"
+        }
         return "\(symbol)_\(contract)_\(currencyKey)"
     }
 

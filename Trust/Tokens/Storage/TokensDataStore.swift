@@ -54,12 +54,9 @@ class TokensDataStore {
     }
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
-        func ticker(with contractAddress: String) -> CoinTicker? {
-            return tickers().first(where: {
-                return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: contractAddress, currencyKey: $0.tickersKey)
-            })
-        }
-        return ticker(with: token.contract) ?? ticker(with: token.contract.lowercased())
+        return tickers().first(where: {
+            return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: token.address.eip55String, currencyKey: $0.tickersKey)
+        })
     }
 
     func addCustom(token: ERC20Token) {
