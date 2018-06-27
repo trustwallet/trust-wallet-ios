@@ -118,10 +118,7 @@ class WalletCoordinator: Coordinator {
 
     private func shareMnemonic(in sender: UIView, words: [String]) {
         let copyValue = words.joined(separator: " ")
-        let activityViewController = UIActivityViewController.make(items: [copyValue])
-        activityViewController.popoverPresentationController?.sourceView = sender
-        activityViewController.popoverPresentationController?.sourceRect = sender.centerRect
-        navigationController.present(activityViewController, animated: true)
+        navigationController.showShareActivity(from: sender, with: [copyValue])
     }
 }
 

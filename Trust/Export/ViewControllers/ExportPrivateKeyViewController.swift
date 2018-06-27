@@ -36,6 +36,15 @@ class ExportPrivateKeyViewConroller: UIViewController {
         return label
     }()
 
+    lazy var copyButton: UIButton = {
+        let button = Button(size: .extraLarge, style: .clear)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(copyAction(_:)), for: .touchUpInside)
+        button.setTitle(NSLocalizedString("Copy", value: "Copy", comment: ""), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     let viewModel: ExportPrivateKeyViewModel
 
     init(
@@ -52,6 +61,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
             hintLabel,
             imageView,
             warningKeyLabel,
+            copyButton,
         ])
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -86,6 +96,10 @@ class ExportPrivateKeyViewConroller: UIViewController {
                 self.hideLoading()
             }
         }
+    }
+
+    @objc private func copyAction(_ sender: UIButton) {
+        showShareActivity(from: sender, with: [viewModel.privateKeyString])
     }
 
     required init?(coder aDecoder: NSCoder) {

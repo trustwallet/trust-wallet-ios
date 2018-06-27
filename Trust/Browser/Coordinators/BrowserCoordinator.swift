@@ -233,17 +233,10 @@ class BrowserCoordinator: NSObject, Coordinator {
                 }
                 return url
             }()
-            self.presentShareURL(for: shareURL) { [unowned self] in
-                self.navigationController.hideLoading()
+            self.navigationController.showShareActivity(from: UIView(), with: [shareURL]) { [weak self] in
+                self?.navigationController.hideLoading()
             }
         }
-    }
-
-    private func presentShareURL(for url: URL, completion: (() -> Swift.Void)? = nil) {
-        let activityViewController = UIActivityViewController.make(items: [url])
-        activityViewController.popoverPresentationController?.sourceView = navigationController.view
-        activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
-        navigationController.present(activityViewController, animated: true, completion: completion)
     }
 }
 
