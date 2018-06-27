@@ -34,6 +34,7 @@ class PushNotificationsRegistrar {
         )
 
         trustProvider.request(.unregister(device: device)) { _ in }
+
         UIApplication.shared.unregisterForRemoteNotifications()
     }
 
