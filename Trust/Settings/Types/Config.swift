@@ -13,7 +13,7 @@ struct Config {
         static let testNetworkWarningOff = "testNetworkWarningOff"
     }
 
-    static let dbMigrationSchemaVersion: UInt64 = 53
+    static let dbMigrationSchemaVersion: UInt64 = 54
 
     static let current: Config = Config()
 
@@ -65,5 +65,13 @@ struct Config {
     var testNetworkWarningOff: Bool {
         get { return defaults.bool(forKey: Keys.testNetworkWarningOff) }
         set { defaults.set(newValue, forKey: Keys.testNetworkWarningOff) }
+    }
+
+    var openseaURL: URL? {
+        return URL(string: server.openseaPath)
+    }
+
+    func opensea(with contract: String, and id: String) -> URL? {
+        return URL(string: (server.openseaPath + "/assets/\(contract)/\(id)"))
     }
 }

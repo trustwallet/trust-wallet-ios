@@ -49,7 +49,7 @@ class AboutViewController: FormViewController {
 
             <<< link(
                 title: NSLocalizedString("OpenSea", value: "OpenSea", comment: ""),
-                value: "https://opensea.io/",
+                value: Constants.dappsOpenSea,
                 image: R.image.opensea()
             )
     }

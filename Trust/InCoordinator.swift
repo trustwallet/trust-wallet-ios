@@ -320,7 +320,7 @@ extension InCoordinator: TokensCoordinatorDelegate {
     }
 
     func didPressDiscover(in coordinator: TokensCoordinator) {
-        guard let url = URL(string: Constants.dappsOpenSea) else { return }
+        guard let url = Config().openseaURL else { return }
         showTab(.browser(openURL: url))
     }
 

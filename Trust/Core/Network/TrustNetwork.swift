@@ -75,7 +75,7 @@ class TrustNetwork: NetworkProtocol {
             symbol: rawTicker.symbol,
             price: rawTicker.price,
             percent_change_24h: rawTicker.percent_change_24h,
-            contract: rawTicker.contract,
+            contract: Address(string: rawTicker.contract) ?? Address.zero, // This should not happen
             tickersKey: tickersKey
         )
     }

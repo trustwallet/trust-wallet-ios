@@ -48,7 +48,7 @@ class TokensDataStoreTest: XCTestCase {
 
     func testGetBalance() {
         var tokenObject = TokenObject(
-            contract: "contract1",
+            contract: "0x0000000000000000000000000000000000000001",
             decimals: 2,
             value: "10000"
         )
@@ -57,11 +57,11 @@ class TokensDataStoreTest: XCTestCase {
 
         XCTAssertEqual(1000.00, tokensDataStore.getBalance(for: tokenObject, with: coinTickers))
 
-        XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject, with: [CoinTicker(price: "", contract: "contract1")]))
+        XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject, with: [CoinTicker(price: "", contract: .make())]))
         XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject, with: [CoinTicker]()))
 
         tokenObject = TokenObject(
-            contract: "contract2",
+            contract: "0x0000000000000000000000000000000000000002",
             decimals: 3,
             value: "20000"
         )
@@ -81,14 +81,10 @@ class TokensDataStoreTest: XCTestCase {
     func testGetCoinTickerForAParticularToken() {
         tokensDataStore.saveTickers(tickers: FakeCoinTickerFactory.make2DuplicateCionTickersWithDifferentKey())
 
-        let token: TokenObject = {
-            let token = TokenObject()
-            token.contract = "same-contract-address"
-            return token
-        }()
+        let token = TokenObject(contract: "0x0000000000000000000000000000000000000001", name: "", symbol: "symbol1", decimals: 18, value: "", isCustom: false, isDisabled: false)
 
         let coinTicker = tokensDataStore.coinTicker(for: token)
 
-        XCTAssertEqual("same-symbol_same-contract-address_tickers-USD-1", coinTicker?.key)
+        XCTAssertEqual("symbol1_0x0000000000000000000000000000000000000001_tickers-USD-1", coinTicker?.key)
     }
 }

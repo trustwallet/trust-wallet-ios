@@ -174,6 +174,7 @@ class BrowserCoordinator: NSObject, Coordinator {
             case .failure:
                 self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
             }
+            coordinator.didComplete = nil
             self.removeCoordinator(coordinator)
         }
         coordinator.delegate = self
@@ -232,17 +233,10 @@ class BrowserCoordinator: NSObject, Coordinator {
                 }
                 return url
             }()
-            self.presentShareURL(for: shareURL) { [unowned self] in
-                self.navigationController.hideLoading()
+            self.navigationController.showShareActivity(from: UIView(), with: [shareURL]) { [weak self] in
+                self?.navigationController.hideLoading()
             }
         }
-    }
-
-    private func presentShareURL(for url: URL, completion: (() -> Swift.Void)? = nil) {
-        let activityViewController = UIActivityViewController.make(items: [url])
-        activityViewController.popoverPresentationController?.sourceView = navigationController.view
-        activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
-        navigationController.present(activityViewController, animated: true, completion: completion)
     }
 }
 
@@ -307,6 +301,7 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
 
 extension BrowserCoordinator: SignMessageCoordinatorDelegate {
     func didCancel(in coordinator: SignMessageCoordinator) {
+        coordinator.didComplete = nil
         removeCoordinator(coordinator)
     }
 }

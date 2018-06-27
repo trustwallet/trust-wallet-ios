@@ -76,8 +76,8 @@ enum RPCServer {
         }
     }
 
-    var address: String {
-        return "0x0000000000000000000000000000000000000000"
+    var address: Address {
+        return Address(string: "0x0000000000000000000000000000000000000000")!
     }
 
     var decimals: Int {
@@ -97,6 +97,21 @@ enum RPCServer {
             case .sokol: return "https://sokol.poa.network"
             case .custom(let custom):
                 return custom.endpoint
+            }
+        }()
+        return URL(string: urlString)!
+    }
+ 
+    var wssURL: URL {
+        let urlString: String = {
+            switch self {
+            case .main: return "wss://mainnet.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
+            case .ropsten: return "wss://ropsten.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
+            case .rinkeby: return "wss://rinkeby.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
+            case .kovan: return "wss://kovan.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
+            case .poa, .sokol: return ""
+            case .classic, .callisto: return ""
+            case .custom(let custom): return custom.wssEndpoint
             }
         }()
         return URL(string: urlString)!
@@ -131,6 +146,13 @@ enum RPCServer {
             return Address(string: "0xe7410170f87102df0055eb195163a03b7f2bff4a")!
         case .classic, .poa, .kovan, .callisto, .sokol, .custom:
             return Address.zero
+        }
+    }
+
+    var openseaPath: String {
+        switch self {
+        case .main, .classic, .poa, .kovan, .callisto, .sokol, .custom, .ropsten: return  Constants.dappsOpenSea
+        case .rinkeby: return Constants.dappsRinkebyOpenSea
         }
     }
 

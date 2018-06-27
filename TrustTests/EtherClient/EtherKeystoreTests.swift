@@ -156,7 +156,7 @@ class EtherKeystoreTests: XCTestCase {
 
         XCTAssertNil(keystore.recentlyUsedWallet)
 
-        let account = Wallet(type: .privateKey(keystore.createAccout(password: password)))
+        let account = Wallet(type: .hd(keystore.createAccout(password: password)))
 
         keystore.recentlyUsedWallet = account
 

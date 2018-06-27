@@ -7,8 +7,7 @@ class ExportPrivateKeyCoordinatorTests: XCTestCase {
     
     func testStart() {
         let coordinator = ExportPrivateKeyCoordinator(
-            keystore: FakeEtherKeystore(),
-            account: .make()
+            privateKey: Data()
         )
 
         coordinator.start()

@@ -23,5 +23,9 @@ extension InCoordinator: URLNavigable {
         navigator.handle("trust://sign-message") { url, _, _ in
             return self.localSchemeCoordinator?.trustWalletSDK.handleOpen(url: url as! URL) ?? false
         }
+
+        navigator.handle("trust://sign-personal-message") { url, _, _ in
+            return self.localSchemeCoordinator?.trustWalletSDK.handleOpen(url: url as! URL) ?? false
+        }
     }
 }
