@@ -16,6 +16,10 @@ struct WalletInfoViewModel {
         return NSLocalizedString("Manage", value: "Manage", comment: "")
     }
 
+    var nameTitle: String {
+        return NSLocalizedString("Name", value: "Name", comment: "")
+    }
+
     var types: [WalletInfoType] {
         switch wallet.type {
         case .privateKey(let account):

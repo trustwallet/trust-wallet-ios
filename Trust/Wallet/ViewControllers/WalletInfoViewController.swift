@@ -16,6 +16,10 @@ class WalletInfoViewController: FormViewController {
     let wallet: Wallet
     weak var delegate: WalletInfoViewControllerDelegate?
 
+    private struct Values {
+        static let name = "name"
+    }
+
     init(wallet: Wallet) {
         self.wallet = wallet
         super.init(nibName: nil, bundle: nil)
@@ -32,7 +36,16 @@ class WalletInfoViewController: FormViewController {
             section.append(link(item: type))
         }
 
-        form +++ section
+        form +++ Section()
+// TODO: Enable name field
+//            <<< AppFormAppearance.textFieldFloat(tag: Values.name) {
+//                $0.add(rule: RuleRequired())
+//            }.cellUpdate { [weak self] cell, _ in
+//                cell.textField.placeholder = self?.viewModel.nameTitle
+//                cell.textField.rightViewMode = .always
+//            }
+
+            +++ section
     }
 
     private func link(
