@@ -5,28 +5,20 @@ import TrustKeystore
 
 struct ExportPrivateKeyViewModel {
 
-    let keystore: Keystore
-    let account: Account
+    let privateKey: Data
 
     init(
-        keystore: Keystore,
-        account: Account
+        privateKey: Data
     ) {
-        self.keystore = keystore
-        self.account = account
+        self.privateKey = privateKey
     }
 
     var headlineText: String {
         return NSLocalizedString("export.warning.private.key", value: "Export at your own risk!", comment: "")
     }
 
-    var privateKey: String {
-        do {
-            let key = try keystore.exportPrivateKey(account: account).dematerialize()
-            return key.hexString
-        } catch {
-            return NSLocalizedString("export.noKPrivateKey.label.title", value: "No Private Key for wallet", comment: "")
-        }
+    var privateKeyString: String {
+        return privateKey.hexString
     }
 
     var revealButtonTitle: String {

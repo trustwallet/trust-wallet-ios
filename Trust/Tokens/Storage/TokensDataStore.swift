@@ -54,8 +54,9 @@ class TokensDataStore {
     }
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
+        guard let contract = Address(string: token.contract) else { return .none }
         return tickers().first(where: {
-            return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: token.contract, currencyKey: $0.tickersKey)
+            return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: contract, currencyKey: $0.tickersKey)
         })
     }
 
@@ -183,7 +184,7 @@ class TokensDataStore {
 
     static func etherToken(for config: Config = .current) -> TokenObject {
         return TokenObject(
-            contract: config.server.address,
+            contract: config.server.address.description,
             name: config.server.name,
             symbol: config.server.symbol,
             decimals: config.server.decimals,

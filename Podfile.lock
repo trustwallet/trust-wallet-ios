@@ -9,7 +9,7 @@ PODS:
   - Branch/Core (0.24.1)
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
-  - CryptoSwift (0.8.0)
+  - CryptoSwift (0.10.0)
   - Eureka (4.1.1)
   - Fabric (1.7.6)
   - JdenticonSwift (0.0.1)
@@ -61,7 +61,7 @@ PODS:
   - TrustWalletSDK (0.0.1):
     - Result
     - TrustCore
-  - TrustWeb3Provider (0.1.7)
+  - TrustWeb3Provider (0.2.1)
   - URLNavigator (2.0.4)
 
 DEPENDENCIES:
@@ -69,7 +69,7 @@ DEPENDENCIES:
   - BigInt (~> 3.0)
   - Branch
   - Crashlytics (~> 3.10)
-  - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift`, branch `master`)
+  - CryptoSwift (~> 0.10.0)
   - Eureka (~> 4.1.1)
   - Fabric
   - JdenticonSwift
@@ -89,7 +89,7 @@ DEPENDENCIES:
   - StatefulViewController
   - SwiftLint
   - TrustCore (~> 0.0.7)
-  - TrustKeystore (~> 0.4.0)
+  - TrustKeystore (from `https://github.com/TrustWallet/trust-keystore`, branch `master`)
   - TrustWalletSDK (from `https://github.com/TrustWallet/TrustSDK-iOS`, branch `master`)
   - TrustWeb3Provider (from `https://github.com/TrustWallet/trust-web3-provider`, branch `master`)
   - URLNavigator
@@ -101,6 +101,7 @@ SPEC REPOS:
     - BigInt
     - Branch
     - Crashlytics
+    - CryptoSwift
     - Eureka
     - Fabric
     - JdenticonSwift
@@ -123,18 +124,17 @@ SPEC REPOS:
     - SwiftLint
     - TrezorCrypto
     - TrustCore
-    - TrustKeystore
     - URLNavigator
 
 EXTERNAL SOURCES:
-  CryptoSwift:
-    :branch: master
-    :git: https://github.com/krzyzanowskim/CryptoSwift
   JSONRPCKit:
     :git: https://github.com/bricklife/JSONRPCKit.git
   QRCodeReaderViewController:
     :branch: master
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
+  TrustKeystore:
+    :branch: master
+    :git: https://github.com/TrustWallet/trust-keystore
   TrustWalletSDK:
     :branch: master
     :git: https://github.com/TrustWallet/TrustSDK-iOS
@@ -143,20 +143,20 @@ EXTERNAL SOURCES:
     :git: https://github.com/TrustWallet/trust-web3-provider
 
 CHECKOUT OPTIONS:
-  CryptoSwift:
-    :commit: 46cfb548f83b89a13ce99f452223933c31fac5ba
-    :git: https://github.com/krzyzanowskim/CryptoSwift
   JSONRPCKit:
     :commit: 50d19a4f7ec593ac5e07cffa1e11c17f1fbe347d
     :git: https://github.com/bricklife/JSONRPCKit.git
   QRCodeReaderViewController:
     :commit: 80bd79cbeede842949b229f81bc6328f53701c5a
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
+  TrustKeystore:
+    :commit: 9efdccfcace4d42874838243cb2b4710636fd563
+    :git: https://github.com/TrustWallet/trust-keystore
   TrustWalletSDK:
     :commit: 82c06558df5e6a75bd9c195a4e76536618e76a9a
     :git: https://github.com/TrustWallet/TrustSDK-iOS
   TrustWeb3Provider:
-    :commit: f4e0ebb1b8fa4812637babe85ef975d116543dfd
+    :commit: e639e6d0da4e8ba31d1a18b8487cc5c0cdf60722
     :git: https://github.com/TrustWallet/trust-web3-provider
 
 SPEC CHECKSUMS:
@@ -165,7 +165,7 @@ SPEC CHECKSUMS:
   BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
   Branch: 8b59411a12867bde4fe8c9d3c0f107c5811e303e
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
-  CryptoSwift: 475ae2a25439f52412686d68b854c0ca724c8dfd
+  CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
   Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
   JdenticonSwift: bc532f2761566eb29f26b085e5f72de25bc065ce
@@ -192,9 +192,9 @@ SPEC CHECKSUMS:
   TrustCore: 688df9a241008cf9cfa3842ec8ef28777a8b7534
   TrustKeystore: fdd5936098af80b9478122bbd3a89477a5389298
   TrustWalletSDK: 12451433bda69bc07e5a27408449b1f4692879e4
-  TrustWeb3Provider: 50fa391bdf170feb43dd4419992931510a5751d8
+  TrustWeb3Provider: efa138f22b8072661875b9875ecd8948a51e58f8
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
-PODFILE CHECKSUM: b6ed29b92790ccd93215436a07191d9d287ef870
+PODFILE CHECKSUM: daab7efc2cb820c656e4861ba35d5a812962f154
 
 COCOAPODS: 1.5.3

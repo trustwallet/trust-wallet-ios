@@ -12,26 +12,22 @@ class ExportPrivateKeyCoordinator: Coordinator {
 
     let navigationController: NavigationController
     weak var delegate: ExportPrivateKeyCoordinatorDelegate?
-    let keystore: Keystore
-    let account: Account
+    let privateKey: Data
     var coordinators: [Coordinator] = []
     lazy var exportViewController: ExportPrivateKeyViewConroller = {
         return self.makeExportViewController()
     }()
     private lazy var viewModel: ExportPrivateKeyViewModel = {
-        return .init(keystore: keystore,
-                     account: account)
+        return .init(privateKey: privateKey)
     }()
 
     init(
         navigationController: NavigationController = NavigationController(),
-        keystore: Keystore,
-        account: Account
+        privateKey: Data
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
-        self.keystore = keystore
-        self.account = account
+        self.privateKey = privateKey
     }
 
     func start() {

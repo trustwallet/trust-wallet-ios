@@ -65,65 +65,64 @@ class AccountsCoordinator: Coordinator {
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
-    func showInfoSheet(for account: Wallet, sender: UIView) {
-        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        controller.popoverPresentationController?.sourceView = sender
-        controller.popoverPresentationController?.sourceRect = sender.centerRect
-
-        switch account.type {
-        case .privateKey(let account):
-            let actionTitle = NSLocalizedString("wallets.backup.alertSheet.title", value: "Backup Keystore", comment: "The title of the backup button in the wallet's action sheet")
-            let backupKeystoreAction = UIAlertAction(title: actionTitle, style: .default) { [unowned self] _ in
-                let coordinator = BackupCoordinator(
-                    navigationController: self.navigationController,
-                    keystore: self.keystore,
-                    account: account
-                )
-                coordinator.delegate = self
-                coordinator.start()
-                self.addCoordinator(coordinator)
-            }
-            let exportTitle = NSLocalizedString("wallets.export.alertSheet.title", value: "Export Private Key", comment: "The title of the export button in the wallet's action sheet")
-            let exportPrivateKeyAction = UIAlertAction(title: exportTitle, style: .default) { [unowned self] _ in
-                self.exportPrivateKey(for: account)
-            }
-            controller.addAction(backupKeystoreAction)
-            controller.addAction(exportPrivateKeyAction)
-        case .hd(let account):
-            let actionTitle = NSLocalizedString("wallets.backupPhrase.alertSheet.title", value: "Export Recovery Phrase", comment: "")
-            let action = UIAlertAction(title: actionTitle, style: .default) { [unowned self] _ in
-                let coordinator = ExportPhraseCoordinator(
-                    keystore: self.keystore,
-                    account: account
-                )
-                coordinator.delegate = self
-                coordinator.start()
-                self.navigationController.present(coordinator.navigationController, animated: true, completion: nil)
-                self.addCoordinator(coordinator)
-            }
-            // TODO: Add action when export seed phrase is available
-            //controller.addAction(action)
-        case .address:
-            break
-        }
-
-        let copyAction = UIAlertAction(
-            title: NSLocalizedString("Copy Address", value: "Copy Address", comment: ""),
-            style: .default
-        ) { _ in
-            UIPasteboard.general.string = account.address.description
-        }
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
-
-        controller.addAction(copyAction)
-        controller.addAction(cancelAction)
-        navigationController.present(controller, animated: true, completion: nil)
+    func showWalletInfo(for wallet: Wallet, sender: UIView) {
+        let controller = WalletInfoViewController(wallet: wallet)
+        controller.delegate = self
+        navigationController.pushViewController(controller, animated: true)
     }
 
-    func exportPrivateKey(for account: Account) {
-        let coordinator = ExportPrivateKeyCoordinator(
+    func exportMnemonic(for account: Account) {
+        navigationController.displayLoading()
+        keystore.exportMnemonic(account: account) { [weak self] result in
+            self?.navigationController.hideLoading()
+            switch result {
+            case .success(let words):
+                self?.exportMnemonicCoordinator(for: account, words: words)
+            case .failure(let error):
+                self?.navigationController.displayError(error: error)
+            }
+        }
+    }
+
+    func exportPrivateKeyView(for account: Account) {
+        navigationController.displayLoading()
+        keystore.exportPrivateKey(account: account) { [weak self] result in
+            switch result {
+            case .success(let privateKey):
+                self?.exportPrivateKey(with: privateKey)
+            case .failure(let error):
+                self?.navigationController.displayError(error: error)
+            }
+            self?.navigationController.hideLoading()
+        }
+    }
+
+    func exportMnemonicCoordinator(for account: Account, words: [String]) {
+        let coordinator = ExportPhraseCoordinator(
+            keystore: keystore,
+            account: account,
+            words: words
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+        addCoordinator(coordinator)
+    }
+
+    func exportKeystore(for account: Account) {
+        let coordinator = BackupCoordinator(
+            navigationController: navigationController,
             keystore: keystore,
             account: account
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
+    }
+
+    func exportPrivateKey(with privateKey: Data) {
+        let coordinator = ExportPrivateKeyCoordinator(
+            privateKey: privateKey
         )
         coordinator.delegate = self
         coordinator.start()
@@ -142,7 +141,8 @@ extension AccountsCoordinator: AccountsViewControllerDelegate {
     }
 
     func didSelectInfoForAccount(account: Wallet, sender: UIView, in viewController: AccountsViewController) {
-        showInfoSheet(for: account, sender: sender)
+        //showInfoSheet(for: account, sender: sender)
+        showWalletInfo(for: account, sender: sender)
     }
 }
 
@@ -186,5 +186,20 @@ extension AccountsCoordinator: ExportPrivateKeyCoordinatorDelegate {
     func didCancel(in coordinator: ExportPrivateKeyCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
+    }
+}
+
+extension AccountsCoordinator: WalletInfoViewControllerDelegate {
+    func didPress(item: WalletInfoType, in controller: WalletInfoViewController) {
+        switch item {
+        case .exportKeystore(let account):
+            exportKeystore(for: account)
+        case .exportPrivateKey(let account):
+            exportPrivateKeyView(for: account)
+        case .exportRecoveryPhrase(let account):
+            exportMnemonic(for: account)
+        case .copyAddress(let address):
+            UIPasteboard.general.string = address.description
+        }
     }
 }

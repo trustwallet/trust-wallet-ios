@@ -75,7 +75,7 @@ class TrustNetwork: NetworkProtocol {
             symbol: rawTicker.symbol,
             price: rawTicker.price,
             percent_change_24h: rawTicker.percent_change_24h,
-            contract: rawTicker.contract,
+            contract: Address(string: rawTicker.contract) ?? Address.zero, // This should not happen
             tickersKey: tickersKey
         )
     }
@@ -281,7 +281,7 @@ class TrustNetwork: NetworkProtocol {
                 case .success(let response):
                     do {
                         let tokens = try response.map([TokenObject].self)
-                        guard let token = tokens.first(where: { $0.address.eip55String == Address(string: token)?.eip55String }) else {
+                        guard let token = tokens.first(where: { $0.address == Address(string: token) }) else {
                              return seal.reject(TrustNetworkProtocolError.missingContractInfo)
                         }
                         seal.fulfill(token)

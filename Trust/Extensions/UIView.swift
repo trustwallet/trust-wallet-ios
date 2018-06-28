@@ -54,6 +54,6 @@ extension UIView {
     }
 
     var centerRect: CGRect {
-        return CGRect(x: self.bounds.midX, y: self.bounds.midY, width: 0, height: 0)
+        return CGRect(x: bounds.midX, y: bounds.midY, width: 0, height: 0)
     }
 }

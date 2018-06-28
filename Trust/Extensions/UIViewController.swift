@@ -75,4 +75,11 @@ extension UIViewController {
         viewController.view.removeFromSuperview()
         viewController.removeFromParentViewController()
     }
+
+    func showShareActivity(from sender: UIView, with items: [Any], completion: (() -> Swift.Void)? = nil) {
+        let activityViewController = UIActivityViewController.make(items: items)
+        activityViewController.popoverPresentationController?.sourceView = sender
+        activityViewController.popoverPresentationController?.sourceRect = sender.centerRect
+        present(activityViewController, animated: true, completion: completion)
+    }
 }

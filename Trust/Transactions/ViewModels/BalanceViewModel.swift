@@ -33,7 +33,7 @@ struct BalanceViewModel: BalanceBaseViewModel {
     var currencyAmount: String? {
         guard let rate = rate else { return nil }
         guard
-            let currentRate = (rate.rates.filter { $0.contract == config.server.address }.first),
+            let currentRate = (rate.rates.filter { $0.contract == config.server.address.description }.first),
             currentRate.price > 0,
             amount > 0
         else { return nil }

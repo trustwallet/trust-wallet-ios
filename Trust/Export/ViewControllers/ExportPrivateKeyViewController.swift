@@ -14,17 +14,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        blur(image: imageView)
         return imageView
-    }()
-
-    lazy var revalQRCodeButton: UIButton = {
-        let button = Button(size: .normal, style: .border)
-        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(unBlur))
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(viewModel.revealButtonTitle, for: .normal)
-        button.addGestureRecognizer(longGesture)
-        return button
     }()
 
     lazy var hintLabel: UILabel = {
@@ -46,11 +36,13 @@ class ExportPrivateKeyViewConroller: UIViewController {
         return label
     }()
 
-    lazy var hud: MBProgressHUD = {
-        let hud = MBProgressHUD.showAdded(to: imageView, animated: true)
-        hud.mode = .text
-        hud.label.text = NSLocalizedString("export.qrCode.loading.label", value: "Generating QR Code", comment: "")
-        return hud
+    lazy var copyButton: UIButton = {
+        let button = Button(size: .extraLarge, style: .clear)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(copyAction(_:)), for: .touchUpInside)
+        button.setTitle(NSLocalizedString("Copy", value: "Copy", comment: ""), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
 
     let viewModel: ExportPrivateKeyViewModel
@@ -58,7 +50,6 @@ class ExportPrivateKeyViewConroller: UIViewController {
     init(
         viewModel: ExportPrivateKeyViewModel
     ) {
-
         self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
@@ -70,7 +61,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
             hintLabel,
             imageView,
             warningKeyLabel,
-            revalQRCodeButton,
+            copyButton,
         ])
         stackView.axis = .vertical
         stackView.spacing = 20
@@ -87,46 +78,28 @@ class ExportPrivateKeyViewConroller: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: view.layoutGuide.trailingAnchor, constant: -StyleLayout.sideMargin),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.layoutGuide.bottomAnchor, constant: -StyleLayout.sideMargin),
 
-            revalQRCodeButton.trailingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.trailingAnchor),
-            revalQRCodeButton.leadingAnchor.constraint(equalTo: stackView.layoutMarginsGuide.leadingAnchor),
-
             imageView.heightAnchor.constraint(equalToConstant: Layout.widthAndHeight),
             imageView.trailingAnchor.constraint(lessThanOrEqualTo: stackView.layoutMarginsGuide.trailingAnchor, constant: StyleLayout.sideMargin * 2.5),
             imageView.leadingAnchor.constraint(lessThanOrEqualTo: stackView.layoutMarginsGuide.leadingAnchor, constant: StyleLayout.sideMargin * 2.5),
-
         ])
-    }
 
-    func blur(image: UIImageView) {
-        let blur = UIBlurEffect(style: .dark)
-        let view = UIVisualEffectView(effect: blur)
-
-        view.frame = image.bounds
-        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.alpha = CGFloat(0.95)
-
-        image.addSubview(view)
-    }
-
-    @objc func unBlur() {
         createQRCode()
-        for view in imageView.subviews {
-            guard let view = view as? UIVisualEffectView else { return }
-            view.removeFromSuperview()
-        }
     }
 
     func createQRCode() {
-        hud.show(animated: true)
+        displayLoading()
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let `self` = self else { return }
-            let string = self.viewModel.privateKey
-            let image = QRGenerator.generate(from: string)
+            let image = QRGenerator.generate(from: self.viewModel.privateKeyString)
             DispatchQueue.main.async {
                 self.imageView.image = image
-                self.hud.hide(animated: true)
+                self.hideLoading()
             }
         }
+    }
+
+    @objc private func copyAction(_ sender: UIButton) {
+        showShareActivity(from: sender, with: [viewModel.privateKeyString])
     }
 
     required init?(coder aDecoder: NSCoder) {

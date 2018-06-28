@@ -13,21 +13,27 @@ protocol AccountsViewControllerDelegate: class {
 class AccountsViewController: UITableViewController {
     let ensManager: ENSManager
     weak var delegate: AccountsViewControllerDelegate?
-    var headerTitle: String?
     var viewModel: AccountsViewModel {
         return AccountsViewModel(
-            wallets: wallets
+            wallets: accounts
         )
     }
     var hasWallets: Bool {
-        return !keystore.wallets.isEmpty
+        return !accounts.isEmpty
     }
+
     var wallets: [Wallet] = [] {
         didSet {
             tableView.reloadData()
-            configure(viewModel: viewModel)
         }
     }
+
+    var accounts: [WalletInfo] {
+        return wallets.map {
+            return WalletInfo(wallet: $0, info: WalletObject.from($0))
+        }
+    }
+
     private var balances: [Address: Balance?] = [:]
     private var addrNames: [Address: String] = [:]
     private let keystore: Keystore
@@ -51,6 +57,7 @@ class AccountsViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 60
         tableView.register(R.nib.accountViewCell(), forCellReuseIdentifier: R.nib.accountViewCell.name)
+        configure(viewModel: viewModel)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -65,10 +72,10 @@ class AccountsViewController: UITableViewController {
     }
 
     func configure(viewModel: AccountsViewModel) {
-        title = headerTitle ?? viewModel.title
+        title = viewModel.title
     }
 
-    func wallet(for indexPath: IndexPath) -> Wallet? {
+    func wallet(for indexPath: IndexPath) -> WalletInfo? {
         return viewModel.wallet(for: indexPath)
     }
 
@@ -88,12 +95,12 @@ class AccountsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return (EtherKeystore.current != viewModel.wallet(for: indexPath) || viewModel.isLastWallet)
+        return viewModel.canEditRowAt(for: indexPath)
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete, let wallet = self.wallet(for: indexPath) {
-            confirmDelete(wallet: wallet)
+            confirmDelete(wallet: wallet.wallet)
         }
     }
 
@@ -111,7 +118,7 @@ class AccountsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let wallet = self.wallet(for: indexPath) else { return }
+        guard let wallet = self.wallet(for: indexPath)?.wallet else { return }
         delegate?.didSelectAccount(account: wallet, in: self)
     }
 
@@ -146,7 +153,7 @@ class AccountsViewController: UITableViewController {
     }
 
     private func refreshWalletBalances() {
-       let addresses = wallets.compactMap { $0.address }
+       let addresses = accounts.compactMap { $0.wallet.address }
        var counter = 0
        for address in addresses {
             balanceCoordinator.getEthBalance(for: address, completion: { [weak self] (result) in
@@ -160,7 +167,7 @@ class AccountsViewController: UITableViewController {
     }
 
     private func refreshENSNames() {
-        let addresses = wallets.compactMap { $0.address }
+        let addresses = accounts.compactMap { $0.wallet.address }
         let promises =  addresses.map { ensManager.lookup(address: $0) }
         _ = when(fulfilled: promises).done { [weak self] names in
             for (index, name) in names.enumerated() {
@@ -174,8 +181,8 @@ class AccountsViewController: UITableViewController {
 
     private func getAccountViewModels(for path: IndexPath) -> AccountViewModel {
         let account = self.wallet(for: path)! // Avoid force unwrap
-        let balance = self.balances[account.address].flatMap { $0 }
-        let ensName = self.addrNames[account.address] ?? ""
+        let balance = self.balances[account.wallet.address].flatMap { $0 }
+        let ensName = self.addrNames[account.wallet.address] ?? ""
         let model = AccountViewModel(server: config.server, wallet: account, current: EtherKeystore.current, walletBalance: balance, ensName: ensName)
         return model
     }

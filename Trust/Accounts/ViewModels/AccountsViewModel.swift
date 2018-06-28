@@ -5,12 +5,12 @@ import TrustCore
 
 struct AccountsViewModel {
 
-    private var walletsTypes = [[Wallet]]()
+    private var walletsTypes = [[WalletInfo]]()
     private var shouldShowHdWalletsTitle = false
 
-    init(wallets: [Wallet]) {
+    init(wallets: [WalletInfo]) {
         let hdWallets = wallets.filter { wallet in
-            switch wallet.type {
+            switch wallet.wallet.type {
             case .hd: return true
             case .privateKey, .address: return false
             }
@@ -22,7 +22,7 @@ struct AccountsViewModel {
         }
 
         let regularWallets = wallets.filter { wallet in
-            switch wallet.type {
+            switch wallet.wallet.type {
             case .privateKey, .address:
                 return true
             case .hd: return false
@@ -42,8 +42,12 @@ struct AccountsViewModel {
         return walletsTypes.count
     }
 
-    func wallet(for indexPath: IndexPath) -> Wallet? {
+    func wallet(for indexPath: IndexPath) -> WalletInfo? {
         return walletsTypes[indexPath.section][indexPath.row]
+    }
+
+    func canEditRowAt(for indexPath: IndexPath) -> Bool {
+        return (EtherKeystore.current != wallet(for: indexPath)?.wallet || isLastWallet)
     }
 
     func numberOfRows(in section: Int) -> Int {

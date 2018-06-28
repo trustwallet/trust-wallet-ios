@@ -6,7 +6,7 @@ import TrustCore
 
 extension Address {
     static func make(
-        address: String = "0x1000000000000000000000000000000000000000"
+        address: String = "0x0000000000000000000000000000000000000001"
     ) -> Address {
         return Address(
             string: address
