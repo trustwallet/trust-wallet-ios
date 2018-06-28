@@ -311,7 +311,7 @@ class SettingsViewController: FormViewController, Coordinator {
             }, onDismiss: nil)
         }.cellUpdate { cell, _ in
             cell.imageView?.image = R.image.settings_colorful_privacy()
-            cell.textLabel?.text = self.viewModel.analiticsTitle
+            cell.textLabel?.text = NSLocalizedString("settings.privacy.title", value: "Privacy", comment: "")
             cell.accessoryType = .disclosureIndicator
         }
     }
