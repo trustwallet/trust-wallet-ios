@@ -39,7 +39,7 @@ class AccountViewCell: UITableViewCell {
     }
 
     @IBAction func infoAction(_ sender: Any) {
-        guard let account = viewModel?.wallet else {
+        guard let account = viewModel?.wallet.wallet else {
             return
         }
         delegate?.accountViewCell(self, didTapInfoViewForAccount: account)

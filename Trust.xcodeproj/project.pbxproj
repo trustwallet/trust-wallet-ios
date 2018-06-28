@@ -418,6 +418,8 @@
 		77EAD88620E1C00C00D14AA2 /* WalletInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD88520E1C00C00D14AA2 /* WalletInfoType.swift */; };
 		77EAD88820E1C02200D14AA2 /* WalletInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD88720E1C02200D14AA2 /* WalletInfoViewModel.swift */; };
 		77EAD88A20E4803D00D14AA2 /* PassphraseBackgroundShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD88920E4803D00D14AA2 /* PassphraseBackgroundShadow.swift */; };
+		77EAD88C20E4B16A00D14AA2 /* WalletInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD88B20E4B16A00D14AA2 /* WalletInfo.swift */; };
+		77EAD88E20E4BF1B00D14AA2 /* WalletObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD88D20E4BF1B00D14AA2 /* WalletObject.swift */; };
 		902CAB592051818B00F96FFE /* BookmarkViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 902CAB582051818A00F96FFE /* BookmarkViewCell.xib */; };
 		902CAB5B2051835E00F96FFE /* BookmarkViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902CAB5A2051835E00F96FFE /* BookmarkViewCell.swift */; };
 		903682F1204A6DB800013479 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682F0204A6DB800013479 /* BookmarkViewController.swift */; };
@@ -909,6 +911,8 @@
 		77EAD88520E1C00C00D14AA2 /* WalletInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoType.swift; sourceTree = "<group>"; };
 		77EAD88720E1C02200D14AA2 /* WalletInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoViewModel.swift; sourceTree = "<group>"; };
 		77EAD88920E4803D00D14AA2 /* PassphraseBackgroundShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseBackgroundShadow.swift; sourceTree = "<group>"; };
+		77EAD88B20E4B16A00D14AA2 /* WalletInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfo.swift; sourceTree = "<group>"; };
+		77EAD88D20E4BF1B00D14AA2 /* WalletObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletObject.swift; sourceTree = "<group>"; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
 		902CAB582051818A00F96FFE /* BookmarkViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkViewCell.xib; sourceTree = "<group>"; };
 		902CAB5A2051835E00F96FFE /* BookmarkViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewCell.swift; sourceTree = "<group>"; };
@@ -1276,6 +1280,8 @@
 				291A1B641F974E8600ADEC80 /* WalletEntryPoint.swift */,
 				29F114EF1FA6D53700114A29 /* ImportSelectionType.swift */,
 				77EAD88520E1C00C00D14AA2 /* WalletInfoType.swift */,
+				77EAD88B20E4B16A00D14AA2 /* WalletInfo.swift */,
+				77EAD88D20E4BF1B00D14AA2 /* WalletObject.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -3079,6 +3085,7 @@
 				29BDF1981FEE4DB00023A45F /* GasPriceConfiguration.swift in Sources */,
 				BB3B86C5204D2EF10061FCBA /* InCoordinator+Navigable.swift in Sources */,
 				29FA00CC201CA63C002F7DC5 /* Method.swift in Sources */,
+				77EAD88C20E4B16A00D14AA2 /* WalletInfo.swift in Sources */,
 				2963A28A1FC402940095447D /* LocalizedOperationObject.swift in Sources */,
 				73B1A6BE204B55FA001F546C /* NonFungibleTokenCellViewModel.swift in Sources */,
 				771D53732059337100C79485 /* TokenImageView.swift in Sources */,
@@ -3197,6 +3204,7 @@
 				73C41C73201B5EFF00243C6C /* LockCreatePasscodeViewModel.swift in Sources */,
 				2959961A1FADB79300DB66A8 /* TokenTransfer.swift in Sources */,
 				295247E71F835BA0007FDC31 /* InfoHeaderView.swift in Sources */,
+				77EAD88E20E4BF1B00D14AA2 /* WalletObject.swift in Sources */,
 				A207B8212080779200A0CD89 /* UIActivityViewController.swift in Sources */,
 				29B6AED61F7CA4A700EC6DE3 /* TransactionConfiguration.swift in Sources */,
 				73B81C722087E16F00623E04 /* Realm+Extensions.swift in Sources */,

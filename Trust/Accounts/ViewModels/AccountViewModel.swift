@@ -7,7 +7,7 @@ import UIKit
 
 struct AccountViewModel {
     let identiconSize = 60 as CGFloat
-    let wallet: Wallet
+    let wallet: WalletInfo
     let current: Wallet?
     let walletBalance: Balance?
     let server: RPCServer
@@ -15,7 +15,7 @@ struct AccountViewModel {
 
     init(
         server: RPCServer,
-        wallet: Wallet,
+        wallet: WalletInfo,
         current: Wallet?,
         walletBalance: Balance?,
         ensName: String = ""
@@ -28,7 +28,7 @@ struct AccountViewModel {
     }
 
     var isWatch: Bool {
-        return wallet.type == .address(wallet.address)
+        return wallet.wallet.type == .address(wallet.wallet.address)
     }
 
     var balanceText: String {
@@ -37,7 +37,7 @@ struct AccountViewModel {
     }
 
     var title: String {
-        let address = wallet.address.description
+        let address = wallet.wallet.address.description
         if ensName.isEmpty {
             return address
         }
@@ -45,11 +45,11 @@ struct AccountViewModel {
     }
 
     var isActive: Bool {
-        return wallet == current
+        return wallet.wallet == current
     }
 
     var identicon: UIImage? {
-        guard let cgImage = IconGenerator(size: identiconSize, hash: wallet.address.data).render() else {
+        guard let cgImage = IconGenerator(size: identiconSize, hash: wallet.wallet.address.data).render() else {
             return nil
         }
         return UIImage(cgImage: cgImage)
