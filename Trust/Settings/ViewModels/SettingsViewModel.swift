@@ -59,6 +59,10 @@ struct SettingsViewModel {
         return NSLocalizedString("settings.autoLock.button.title", value: "Auto-Lock", comment: "")
     }
 
+    var analiticsTitle: String {
+        return NSLocalizedString("settings.analytics.title", value: "Analytics", comment: "")
+    }
+
     var currencyTitle: String {
         return NSLocalizedString("settings.currency.button.title", value: "Currency", comment: "")
     }
