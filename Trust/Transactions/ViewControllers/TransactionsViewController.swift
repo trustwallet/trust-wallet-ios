@@ -25,7 +25,7 @@ class TransactionsViewController: UIViewController {
     var timer: Timer?
     var updateTransactionsTimer: Timer?
     let session: WalletSession
-    let insets = UIEdgeInsets(top: 130, left: 0, bottom: ButtonSize.extraLarge.height + 84, right: 0)
+    let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
     init(
         account: Wallet,
@@ -63,6 +63,9 @@ class TransactionsViewController: UIViewController {
         emptyView = {
             let view = TransactionsEmptyView(
                 insets: insets,
+                onRetry: { [unowned self] in
+                    self.pullToRefresh()
+                },
                 onDeposit: { [unowned self] sender in
                     self.showDeposit(sender)
                 }
