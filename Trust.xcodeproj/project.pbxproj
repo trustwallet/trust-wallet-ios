@@ -329,7 +329,6 @@
 		73F2FF3C20557C020021976E /* TrustOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F2FF3B20557C020021976E /* TrustOperation.swift */; };
 		73F2FF3E20557C440021976E /* TransactionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F2FF3D20557C440021976E /* TransactionOperation.swift */; };
 		7716EDC320DFB86100773010 /* VerifyPassphraseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7716EDC220DFB86100773010 /* VerifyPassphraseViewController.swift */; };
-		7716EDC520DFBBC900773010 /* PassphraseContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7716EDC420DFBBC900773010 /* PassphraseContentView.swift */; };
 		771A8471202F067D00528D28 /* NetworksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A8470202F067D00528D28 /* NetworksViewController.swift */; };
 		771A847320322F2500528D28 /* BrowserConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A847220322F2500528D28 /* BrowserConfigurationViewController.swift */; };
 		771A847520322FD700528D28 /* BrowserConfigurationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A847420322FD700528D28 /* BrowserConfigurationViewModel.swift */; };
@@ -415,6 +414,7 @@
 		77EAD88420E1B82300D14AA2 /* WalletInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD88320E1B82300D14AA2 /* WalletInfoViewController.swift */; };
 		77EAD88620E1C00C00D14AA2 /* WalletInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD88520E1C00C00D14AA2 /* WalletInfoType.swift */; };
 		77EAD88820E1C02200D14AA2 /* WalletInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD88720E1C02200D14AA2 /* WalletInfoViewModel.swift */; };
+		77EAD88A20E4803D00D14AA2 /* PassphraseBackgroundShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD88920E4803D00D14AA2 /* PassphraseBackgroundShadow.swift */; };
 		902CAB592051818B00F96FFE /* BookmarkViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 902CAB582051818A00F96FFE /* BookmarkViewCell.xib */; };
 		902CAB5B2051835E00F96FFE /* BookmarkViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902CAB5A2051835E00F96FFE /* BookmarkViewCell.swift */; };
 		903682F1204A6DB800013479 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682F0204A6DB800013479 /* BookmarkViewController.swift */; };
@@ -815,7 +815,6 @@
 		73F2FF3B20557C020021976E /* TrustOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustOperation.swift; sourceTree = "<group>"; };
 		73F2FF3D20557C440021976E /* TransactionOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionOperation.swift; sourceTree = "<group>"; };
 		7716EDC220DFB86100773010 /* VerifyPassphraseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPassphraseViewController.swift; sourceTree = "<group>"; };
-		7716EDC420DFBBC900773010 /* PassphraseContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseContentView.swift; sourceTree = "<group>"; };
 		771A8470202F067D00528D28 /* NetworksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksViewController.swift; sourceTree = "<group>"; };
 		771A847220322F2500528D28 /* BrowserConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserConfigurationViewController.swift; sourceTree = "<group>"; };
 		771A847420322FD700528D28 /* BrowserConfigurationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserConfigurationViewModel.swift; sourceTree = "<group>"; };
@@ -903,6 +902,7 @@
 		77EAD88320E1B82300D14AA2 /* WalletInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoViewController.swift; sourceTree = "<group>"; };
 		77EAD88520E1C00C00D14AA2 /* WalletInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoType.swift; sourceTree = "<group>"; };
 		77EAD88720E1C02200D14AA2 /* WalletInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoViewModel.swift; sourceTree = "<group>"; };
+		77EAD88920E4803D00D14AA2 /* PassphraseBackgroundShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseBackgroundShadow.swift; sourceTree = "<group>"; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
 		902CAB582051818A00F96FFE /* BookmarkViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkViewCell.xib; sourceTree = "<group>"; };
 		902CAB5A2051835E00F96FFE /* BookmarkViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewCell.swift; sourceTree = "<group>"; };
@@ -2274,7 +2274,7 @@
 				771AA95F200D5E8800D25403 /* PassphraseView.swift */,
 				771AA963200D5EDB00D25403 /* WordCollectionViewCell.swift */,
 				771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */,
-				7716EDC420DFBBC900773010 /* PassphraseContentView.swift */,
+				77EAD88920E4803D00D14AA2 /* PassphraseBackgroundShadow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2960,7 +2960,6 @@
 				73200B752048B67E00118A82 /* NonFungibleTokenObject.swift in Sources */,
 				77872D27202505C00032D687 /* EnterPasswordViewModel.swift in Sources */,
 				29F1C85F200369BA003780D8 /* HelpUsViewModel.swift in Sources */,
-				7716EDC520DFBBC900773010 /* PassphraseContentView.swift in Sources */,
 				290B2B5B1F8F551E0053C83E /* LokaliseInitializer.swift in Sources */,
 				293112371FC9A24600966EEA /* UIGestureRecognizer+Closure.swift in Sources */,
 				29B6AECB1F7C5FA900EC6DE3 /* PaymentCoordinator.swift in Sources */,
@@ -3095,6 +3094,7 @@
 				29D72A2A1F6A8D1500CE9209 /* AppCoordinator.swift in Sources */,
 				290B2B671F9266630053C83E /* SettingsAction.swift in Sources */,
 				293E626F1FA2ED1400CB0A66 /* InCoordinator.swift in Sources */,
+				77EAD88A20E4803D00D14AA2 /* PassphraseBackgroundShadow.swift in Sources */,
 				BBD4E416205654E4005545E9 /* EthTypedData.swift in Sources */,
 				29E9CFCB1FE70D5B00017744 /* TokensBalanceService.swift in Sources */,
 				2963A2881FC401490095447D /* ERC20Contract.swift in Sources */,

@@ -36,7 +36,7 @@ class WalletInfoViewController: FormViewController {
             section.append(link(item: type))
         }
 
-        form +++ Section()
+        form +++ section
 // TODO: Enable name field
 //            <<< AppFormAppearance.textFieldFloat(tag: Values.name) {
 //                $0.add(rule: RuleRequired())
@@ -44,8 +44,6 @@ class WalletInfoViewController: FormViewController {
 //                cell.textField.placeholder = self?.viewModel.nameTitle
 //                cell.textField.rightViewMode = .always
 //            }
-
-            +++ section
     }
 
     private func link(

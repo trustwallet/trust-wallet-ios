@@ -15,26 +15,12 @@ enum PassphraseMode {
     case showAndVerify
 }
 
-class PassphraseBackgroundShadow: UIView {
-    init() {
-        super.init(frame: .zero)
-        backgroundColor = Colors.veryVeryLightGray
-        layer.borderColor = Colors.veryLightGray.cgColor
-        layer.borderWidth = 1
-        layer.masksToBounds = true
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 class PassphraseViewController: UIViewController {
 
     let viewModel = PassphraseViewModel()
     let account: Account
     let words: [String]
-    lazy var button: UIButton = {
+    lazy var actionButton: UIButton = {
         let button = Button(size: .large, style: .solid)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(NSLocalizedString("Verify", value: "Verify", comment: ""), for: .normal)
@@ -88,8 +74,14 @@ class PassphraseViewController: UIViewController {
         let wordBackgroundView = PassphraseBackgroundShadow()
         wordBackgroundView.translatesAutoresizingMaskIntoConstraints = false
 
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFit
+        image.image = R.image.write_passphrase()
+
         let stackView = UIStackView(arrangedSubviews: [
-            .spacer(height: 10),
+            image,
+            .spacer(),
             subTitleLabel,
             .spacer(height: 30),
             wordsLabel,
@@ -103,22 +95,24 @@ class PassphraseViewController: UIViewController {
 
         view.addSubview(wordBackgroundView)
         view.addSubview(stackView)
-        view.addSubview(button)
+        view.addSubview(actionButton)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(greaterThanOrEqualTo: view.readableContentGuide.topAnchor),
-            stackView.centerYAnchor.constraint(equalTo: view.readableContentGuide.centerYAnchor, constant: -80),
+            //stackView.topAnchor.constraint(greaterThanOrEqualTo: view.readableContentGuide.topAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.readableContentGuide.centerYAnchor, constant: -40),
             stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
 
-            button.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
-            button.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
-            button.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor, constant: -StyleLayout.sideMargin),
+            actionButton.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
+            actionButton.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
+            actionButton.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor, constant: -StyleLayout.sideMargin),
 
             wordBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             wordBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             wordBackgroundView.centerYAnchor.constraint(equalTo: wordsLabel.centerYAnchor),
             wordBackgroundView.heightAnchor.constraint(equalToConstant: 110),
+
+            image.heightAnchor.constraint(equalToConstant: 44),
 
             stackView.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
         ])
@@ -127,11 +121,11 @@ class PassphraseViewController: UIViewController {
 
         switch mode {
         case .showOnly:
-            button.isHidden = true
+            actionButton.isHidden = true
         case .showAndVerify:
-            button.isHidden = false
+            actionButton.isHidden = false
         }
-        button.addTarget(self, action: #selector(nextAction(_:)), for: .touchUpInside)
+        actionButton.addTarget(self, action: #selector(nextAction(_:)), for: .touchUpInside)
     }
 
     @objc private func copyAction(_ sender: UIButton) {

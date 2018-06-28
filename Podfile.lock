@@ -156,7 +156,7 @@ CHECKOUT OPTIONS:
     :commit: 82c06558df5e6a75bd9c195a4e76536618e76a9a
     :git: https://github.com/TrustWallet/TrustSDK-iOS
   TrustWeb3Provider:
-    :commit: 84946dc9d98611120246385363e0474d104eabd7
+    :commit: e639e6d0da4e8ba31d1a18b8487cc5c0cdf60722
     :git: https://github.com/TrustWallet/trust-web3-provider
 
 SPEC CHECKSUMS:
@@ -192,7 +192,7 @@ SPEC CHECKSUMS:
   TrustCore: 688df9a241008cf9cfa3842ec8ef28777a8b7534
   TrustKeystore: fdd5936098af80b9478122bbd3a89477a5389298
   TrustWalletSDK: 12451433bda69bc07e5a27408449b1f4692879e4
-  TrustWeb3Provider: c29f035089b51f12a2ef63aecf4b9f455443d4fe
+  TrustWeb3Provider: efa138f22b8072661875b9875ecd8948a51e58f8
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
 PODFILE CHECKSUM: daab7efc2cb820c656e4861ba35d5a812962f154

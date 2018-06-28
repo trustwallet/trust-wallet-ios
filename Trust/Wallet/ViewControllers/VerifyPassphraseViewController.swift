@@ -105,7 +105,14 @@ class VerifyPassphraseViewController: UIViewController {
             self.refresh()
         }
 
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFit
+        image.image = R.image.verify_passphrase()
+
         let stackView = UIStackView(arrangedSubviews: [
+            image,
+            .spacer(),
             label,
             contentView,
             proposalView,
@@ -124,10 +131,10 @@ class VerifyPassphraseViewController: UIViewController {
         view.addSubview(doneButton)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.readableContentGuide.topAnchor, constant: StyleLayout.sideMargin),
+            //stackView.topAnchor.constraint(greaterThanOrEqualTo: view.readableContentGuide.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: doneButton.bottomAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.readableContentGuide.centerYAnchor, constant: -80),
 
             wordBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             wordBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -137,7 +144,9 @@ class VerifyPassphraseViewController: UIViewController {
             contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: Layout.contentSize),
             proposalView.heightAnchor.constraint(greaterThanOrEqualToConstant: Layout.contentSize),
 
-            doneButton.topAnchor.constraint(greaterThanOrEqualTo: stackView.bottomAnchor),
+            image.heightAnchor.constraint(equalToConstant: 44),
+            statusLabel.heightAnchor.constraint(equalToConstant: 40),
+
             doneButton.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             doneButton.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
             doneButton.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor, constant: -StyleLayout.sideMargin),
