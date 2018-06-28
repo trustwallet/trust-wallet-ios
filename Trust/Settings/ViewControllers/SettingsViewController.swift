@@ -310,7 +310,7 @@ class SettingsViewController: FormViewController, Coordinator {
                 return AnaliticsViewController()
             }, onDismiss: nil)
         }.cellUpdate { cell, _ in
-            cell.imageView?.image = R.image.settings_colorful_analitics()
+            cell.imageView?.image = R.image.settings_colorful_privacy()
             cell.textLabel?.text = self.viewModel.analiticsTitle
             cell.accessoryType = .disclosureIndicator
         }

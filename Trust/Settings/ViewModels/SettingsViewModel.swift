@@ -60,7 +60,7 @@ struct SettingsViewModel {
     }
 
     var analiticsTitle: String {
-        return NSLocalizedString("settings.analytics.title", value: "Analytics", comment: "")
+        return NSLocalizedString("settings.privacy.title", value: "Privacy", comment: "")
     }
 
     var currencyTitle: String {
