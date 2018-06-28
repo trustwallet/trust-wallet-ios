@@ -65,10 +65,6 @@ extension String {
     var add0x: String {
         return "0x" + self
     }
-
-    func capitalizingFirstLetter() -> String {
-        return prefix(1).capitalized + dropFirst()
-    }
 }
 
 extension String {

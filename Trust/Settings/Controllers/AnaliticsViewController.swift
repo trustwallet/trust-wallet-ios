@@ -17,29 +17,32 @@ class AnaliticsViewController: FormViewController {
         super.viewDidLoad()
 
         navigationItem.title = viewModel.title
-           form +++ Section(footer: viewModel.answer.description)
-            <<< SwitchRow(viewModel.answer.rawValue) {
-                $0.title = viewModel.answer.rawValue.capitalizingFirstLetter()
-                $0.value = viewModel.answer.isEnabled
-            }.onChange { [weak self] row in
-                guard let enabled = row.value else { return }
-                self?.viewModel.answer.update(with: enabled)
-            }
-            form +++ Section(footer: viewModel.branch.description)
-            <<< SwitchRow {
-                $0.title = viewModel.branch.rawValue.capitalizingFirstLetter()
-                $0.value = viewModel.branch.isEnabled
-            }.onChange { [weak self] row in
-                 guard let enabled = row.value else { return }
-                 self?.viewModel.branch.update(with: enabled)
-                 Branch.setTrackingDisabled(!enabled)
-            }
-            form +++ Section(footer: viewModel.crashlytics.description)
-            <<< SwitchRow {
-                $0.title = viewModel.crashlytics.rawValue.capitalizingFirstLetter()
-                $0.value = viewModel.crashlytics.isEnabled
-            }.onChange { [weak self] row in
-                 self?.viewModel.crashlytics.update(with: row.value ?? false)
-            }
+
+        form +++ Section(footer: viewModel.answer.description)
+
+        <<< SwitchRow(viewModel.answer.rawValue) {
+            $0.title = viewModel.answer.title
+            $0.value = viewModel.answer.isEnabled
+        }.onChange { [weak self] row in
+            guard let enabled = row.value else { return }
+            self?.viewModel.answer.update(with: enabled)
         }
+        form +++ Section(footer: viewModel.branch.description)
+        <<< SwitchRow {
+            $0.title = viewModel.branch.title
+            $0.value = viewModel.branch.isEnabled
+        }.onChange { [weak self] row in
+             guard let enabled = row.value else { return }
+             self?.viewModel.branch.update(with: enabled)
+             Branch.setTrackingDisabled(!enabled)
+        }
+        form +++ Section(footer: viewModel.crashlytics.description)
+
+        <<< SwitchRow {
+            $0.title = viewModel.crashlytics.title
+            $0.value = viewModel.crashlytics.isEnabled
+        }.onChange { [weak self] row in
+             self?.viewModel.crashlytics.update(with: row.value ?? false)
+        }
+    }
 }
