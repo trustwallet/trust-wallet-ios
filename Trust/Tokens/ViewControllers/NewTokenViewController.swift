@@ -3,7 +3,6 @@
 import Foundation
 import Eureka
 import TrustCore
-import QRCodeReaderViewController
 import PromiseKit
 
 protocol NewTokenViewControllerDelegate: class {
@@ -13,6 +12,7 @@ protocol NewTokenViewControllerDelegate: class {
 class NewTokenViewController: FormViewController {
 
     private var viewModel: NewTokenViewModel
+    private var qrCodeCoordinator: ScanQRCodeCoordinator!
 
     private struct Values {
         static let contract = "contract"
@@ -119,9 +119,12 @@ class NewTokenViewController: FormViewController {
     }
 
     @objc func openReader() {
-        let controller = QRCodeReaderViewController()
-        controller.delegate = self
-        present(controller, animated: true, completion: nil)
+        qrCodeCoordinator = ScanQRCodeCoordinator(
+            navigationController: NavigationController()
+        )
+        qrCodeCoordinator.delegate = self
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.pushViewController(qrCodeCoordinator.qrcodeController, animated: true)
     }
 
     @objc func pasteAction() {
@@ -166,16 +169,14 @@ class NewTokenViewController: FormViewController {
     }
 }
 
-extension NewTokenViewController: QRCodeReaderDelegate {
-    func readerDidCancel(_ reader: QRCodeReaderViewController!) {
-        reader.stopScanning()
-        reader.dismiss(animated: true, completion: nil)
+extension NewTokenViewController: ScanQRCodeCoordinatorDelegate {
+    func didCancel(in coordinator: ScanQRCodeCoordinator) {
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.popViewController(animated: true)
     }
-
-    func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
-        reader.stopScanning()
-        reader.dismiss(animated: true, completion: nil)
-
+    func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.popViewController(animated: true)
         guard let result = QRURLParser.from(string: result) else { return }
         updateContractValue(value: result.address)
     }
