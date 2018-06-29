@@ -184,10 +184,11 @@ class BrowserCoordinator: NSObject, Coordinator {
 
     func presentQRCodeReader() {
         let coordinator = ScanQRCodeCoordinator(
-            navigationController: navigationController
+            navigationController: NavigationController()
         )
         coordinator.delegate = self
         addCoordinator(coordinator)
+        navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.pushViewController(coordinator.qrcodeController, animated: true)
     }
 
@@ -316,12 +317,13 @@ extension BrowserCoordinator: ConfirmCoordinatorDelegate {
 
 extension BrowserCoordinator: ScanQRCodeCoordinatorDelegate {
     func didCancel(in coordinator: ScanQRCodeCoordinator) {
-        coordinator.navigationController.popViewController(animated: true)
+        navigationController.setNavigationBarHidden(true, animated: false)
+        navigationController.popViewController(animated: true)
         removeCoordinator(coordinator)
     }
 
     func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
-        coordinator.navigationController.popViewController(animated: true)
+        navigationController.popViewController(animated: true)
         removeCoordinator(coordinator)
         guard let url = URL(string: result) else {
             return

@@ -3,7 +3,6 @@
 import UIKit
 import Eureka
 import TrustCore
-import QRCodeReaderViewController
 
 protocol ImportWalletViewControllerDelegate: class {
     func didImportAccount(account: Wallet, in viewController: ImportWalletViewController)
@@ -13,6 +12,7 @@ class ImportWalletViewController: FormViewController {
 
     let keystore: Keystore
     private let viewModel = ImportWalletViewModel()
+    private var qrCodeCoordinator: ScanQRCodeCoordinator!
 
     struct Values {
         static let segment = "segment"
@@ -237,9 +237,12 @@ class ImportWalletViewController: FormViewController {
     }
 
     @objc func openReader() {
-        let controller = QRCodeReaderViewController()
-        controller.delegate = self
-        present(controller, animated: true, completion: nil)
+        qrCodeCoordinator = ScanQRCodeCoordinator(
+            navigationController: NavigationController()
+        )
+        qrCodeCoordinator.delegate = self
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.pushViewController(qrCodeCoordinator.qrcodeController, animated: true)
     }
 
     func setValueForCurrentField(string: String) {
@@ -282,14 +285,14 @@ extension ImportWalletViewController: UIDocumentPickerDelegate {
     }
 }
 
-extension ImportWalletViewController: QRCodeReaderDelegate {
-    func readerDidCancel(_ reader: QRCodeReaderViewController!) {
-        reader.stopScanning()
-        reader.dismiss(animated: true, completion: nil)
+extension ImportWalletViewController: ScanQRCodeCoordinatorDelegate {
+    func didCancel(in coordinator: ScanQRCodeCoordinator) {
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.popViewController(animated: true)
     }
-    func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
-        reader.stopScanning()
+    func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.popViewController(animated: true)
         setValueForCurrentField(string: result)
-        reader.dismiss(animated: true)
     }
 }
