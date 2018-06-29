@@ -6,7 +6,6 @@ import Eureka
 import JSONRPCKit
 import APIKit
 import BigInt
-import QRCodeReaderViewController
 import TrustCore
 import TrustKeystore
 
@@ -248,17 +247,14 @@ class SendViewController: FormViewController {
     }
     public func updateScreenInfo(with result: String) {
         self.activateAmountView()
-        
         guard let result = QRURLParser.from(string: result) else { return }
         addressRow?.value = result.address
         addressRow?.reload()
-        
         if let dataString = result.params["data"] {
             data = Data(hex: dataString.drop0x)
         } else {
             data = Data()
         }
-        
         if let value = result.params["amount"] {
             amountRow?.value = EtherNumberFormatter.full.string(from: BigInt(value) ?? BigInt(), units: .ether)
         } else {
