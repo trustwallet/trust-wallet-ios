@@ -110,5 +110,7 @@
 	</dict>
 	<key>com.apple.security.get-task-allow</key>
 	<true/>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<string>true</string>
 </dict>
 </plist>
