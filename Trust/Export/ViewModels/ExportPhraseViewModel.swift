@@ -17,7 +17,7 @@ struct ExportPhraseViewModel {
     }
 
     var title: String {
-        return NSLocalizedString("Recovery Phrase", value: "Recovery Phrase", comment: "")
+        return NSLocalizedString("Backup Phrase", value: "Backup Phrase", comment: "")
     }
 
     var headlineText: String {

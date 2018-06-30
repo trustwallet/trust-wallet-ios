@@ -14,7 +14,7 @@ enum WalletInfoType {
     var title: String {
         switch self {
         case .exportRecoveryPhrase:
-            return NSLocalizedString("wallet.info.exportRecoveryPhrase", value: "Export Recovery Phrase", comment: "")
+            return NSLocalizedString("wallet.info.exportBackupPhrase", value: "Show Backup Phrase", comment: "")
         case .exportKeystore:
             return NSLocalizedString("wallets.backup.alertSheet.title", value: "Backup Keystore", comment: "")
         case .exportPrivateKey:
