@@ -6,6 +6,7 @@ import TrustKeystore
 
 protocol VerifyPassphraseViewControllerDelegate: class {
     func didFinish(in controller: VerifyPassphraseViewController, with account: Account)
+    func didSkip(in controller: VerifyPassphraseViewController, with account: Account)
 }
 
 enum VerifyStatus {
@@ -87,6 +88,8 @@ class VerifyPassphraseViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         navigationItem.title = NSLocalizedString("Verify Recovery Phrase", value: "Verify Recovery Phrase", comment: "")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Skip", style: .plain, target: self, action:#selector(skipAction))
+
         view.backgroundColor = .white
 
         contentView.isEditable = true
@@ -153,6 +156,11 @@ class VerifyPassphraseViewController: UIViewController {
         ])
 
         refresh()
+    }
+
+    @objc func skipAction() {
+        // TODO: Add confirm warning
+        delegate?.didSkip(in: self, with: account)
     }
 
     func refresh() {

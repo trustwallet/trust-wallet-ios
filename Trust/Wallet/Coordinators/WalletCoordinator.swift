@@ -164,6 +164,10 @@ extension WalletCoordinator: VerifyPassphraseViewControllerDelegate {
         done()
     }
 
+    func didSkip(in controller: VerifyPassphraseViewController, with account: Account) {
+        done()
+    }
+
     func didPressShare(in controller: VerifyPassphraseViewController, sender: UIView, account: Account, words: [String]) {
         shareMnemonic(in: sender, words: words)
     }
