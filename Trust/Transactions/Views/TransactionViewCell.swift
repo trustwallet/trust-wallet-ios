@@ -6,10 +6,11 @@ class TransactionViewCell: UITableViewCell {
 
     static let identifier = "TransactionTableViewCell"
 
-    let statusImageView = UIImageView()
-    let titleLabel = UILabel()
-    let amountLabel = UILabel()
-    let subTitleLabel = UILabel()
+    private let statusImageView = UIImageView()
+    private let titleLabel = UILabel()
+    private let amountLabel = UILabel()
+    private let subTitleLabel = UILabel()
+    private let separatorView = UIView()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,6 +25,9 @@ class TransactionViewCell: UITableViewCell {
 
         amountLabel.textAlignment = .right
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
+        separatorView.backgroundColor = StyleLayout.TableView.separatorColor
 
         let titlesStackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
         titlesStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,6 +61,7 @@ class TransactionViewCell: UITableViewCell {
         stackView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
 
         contentView.addSubview(stackView)
+        contentView.addSubview(separatorView)
 
         NSLayoutConstraint.activate([
             statusImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 26),
@@ -64,20 +69,18 @@ class TransactionViewCell: UITableViewCell {
             stackView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -StyleLayout.sideMargin),
             stackView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            separatorView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            separatorView.heightAnchor.constraint(equalToConstant: StyleLayout.TableView.separatorHeight),
+            separatorView.leftAnchor.constraint(equalTo: titlesStackView.leftAnchor),
         ])
-
-        separatorInset = UIEdgeInsets(
-            top: 0,
-            left: TransactionsLayout.tableView.layoutInsets.left - contentView.layoutInsets.left - layoutInsets.left,
-            bottom: 0, right: 0
-        )
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(viewModel: TransactionCellViewModel) {
+    func configure(viewModel: TransactionCellViewModel, and separatorNeeded: Bool) {
 
         statusImageView.image = viewModel.statusImage
 
@@ -92,5 +95,6 @@ class TransactionViewCell: UITableViewCell {
         amountLabel.textColor = viewModel.amountTextColor
 
         backgroundColor = viewModel.backgroundColor
+        separatorView.isHidden = separatorNeeded
     }
 }

@@ -40,6 +40,7 @@ class TransactionsViewController: UIViewController {
         view.backgroundColor = TransactionsViewModel.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
+        tableView.separatorStyle = .none
         tableView.dataSource = self
         view.addSubview(tableView)
         tableView.register(TransactionViewCell.self, forCellReuseIdentifier: TransactionViewCell.identifier)
@@ -178,7 +179,7 @@ extension TransactionsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TransactionViewCell.identifier, for: indexPath) as! TransactionViewCell
-        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
+        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath), and: StyleLayout.TableView.showSeparator(for: tableView, and: indexPath))
         return cell
     }
 

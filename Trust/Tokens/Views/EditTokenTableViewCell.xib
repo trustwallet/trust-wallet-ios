@@ -59,10 +59,20 @@
                             <constraint firstAttribute="bottom" secondItem="fRy-j2-9ES" secondAttribute="bottom" id="sQQ-18-ZYL"/>
                         </constraints>
                     </stackView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PFP-IJ-Dn3">
+                        <rect key="frame" x="83" y="79" width="236" height="1"/>
+                        <color key="backgroundColor" red="0.84313725490196079" green="0.84313725490196079" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="mJt-Lw-6BA"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="d5W-Lo-p3o" secondAttribute="trailing" constant="15" id="0eN-uy-pSI"/>
+                    <constraint firstItem="PFP-IJ-Dn3" firstAttribute="leading" secondItem="fRy-j2-9ES" secondAttribute="leading" id="JYz-Od-oxu"/>
                     <constraint firstItem="d5W-Lo-p3o" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Tdu-SU-ud4"/>
+                    <constraint firstAttribute="trailing" secondItem="PFP-IJ-Dn3" secondAttribute="trailing" id="aHR-aW-AjX"/>
+                    <constraint firstAttribute="bottom" secondItem="PFP-IJ-Dn3" secondAttribute="bottom" id="iPM-NN-4Wg"/>
                     <constraint firstItem="d5W-Lo-p3o" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="vlf-YR-icm"/>
                 </constraints>
             </tableViewCellContentView>
@@ -74,7 +84,7 @@
                 <outlet property="tokenImageView" destination="Tfc-cq-2hm" id="QtY-sC-dhw"/>
                 <outlet property="tokenLabel" destination="gzC-hL-qRv" id="cHh-cJ-bga"/>
             </connections>
-            <point key="canvasLocation" x="33.5" y="72"/>
+            <point key="canvasLocation" x="-204.5" y="95"/>
         </tableViewCell>
     </objects>
 </document>

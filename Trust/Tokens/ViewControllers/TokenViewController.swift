@@ -36,6 +36,7 @@ class TokenViewController: UIViewController {
         view.backgroundColor = .white
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableHeaderView = header
@@ -150,7 +151,7 @@ extension TokenViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TransactionViewCell.identifier, for: indexPath) as! TransactionViewCell
-        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
+        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath), and: StyleLayout.TableView.showSeparator(for: tableView, and: indexPath))
         return cell
     }
 

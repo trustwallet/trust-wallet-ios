@@ -39,6 +39,12 @@ struct StyleLayout {
     struct TableView {
         static let heightForHeaderInSection: CGFloat = 30
         static let separatorColor = UIColor(hex: "d7d7d7")
+        static let separatorHeight: CGFloat = 0.5
+
+        static func showSeparator(for tableView: UITableView, and index: IndexPath) -> Bool {
+            let numberOfRows = tableView.numberOfRows(inSection: index.section)
+            return index.row == numberOfRows - 1
+        }
     }
 
     struct CollectibleView {
