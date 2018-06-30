@@ -15,6 +15,10 @@ enum PassphraseMode {
     case showAndVerify
 }
 
+class DarkPassphraseViewController: PassphraseViewController {
+
+}
+
 class PassphraseViewController: UIViewController {
 
     let viewModel = PassphraseViewModel()
@@ -26,7 +30,16 @@ class PassphraseViewController: UIViewController {
         button.setTitle(NSLocalizedString("Verify", value: "Verify", comment: ""), for: .normal)
         return button
     }()
-    let subTitleLabel = UILabel()
+    let subTitleLabel: SubtitleBackupLabel = {
+        let label = SubtitleBackupLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = NSLocalizedString(
+            "passphrase.seed.label.title",
+            value: "These 12 words are the only way to restore your Trust accounts. Save them somewhere safe and secret.",
+            comment: ""
+        )
+        return label
+    }()
     let copyButton = Button(size: .extraLarge, style: .clear)
     weak var delegate: PassphraseViewControllerDelegate?
 
@@ -40,23 +53,22 @@ class PassphraseViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        navigationItem.title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
         setupViews(for: mode)
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+
     func setupViews(for mode: PassphraseMode) {
-        subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subTitleLabel.textAlignment = .center
-        subTitleLabel.numberOfLines = 0
-        subTitleLabel.text = NSLocalizedString(
-            "passphrase.seed.label.title",
-            value: "These 12 words are the only way to restore your Trust accounts. Save them somewhere safe and secret.",
-            comment: ""
-        )
-        subTitleLabel.font = AppStyle.heading.font
-        subTitleLabel.textColor = AppStyle.heading.textColor
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.text = viewModel.title
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        titleLabel.textAlignment = .center
 
         copyButton.translatesAutoresizingMaskIntoConstraints = false
         copyButton.setTitle(NSLocalizedString("Copy", value: "Copy", comment: ""), for: .normal)
@@ -65,11 +77,12 @@ class PassphraseViewController: UIViewController {
         let wordsLabel = UILabel()
         wordsLabel.translatesAutoresizingMaskIntoConstraints = false
         wordsLabel.numberOfLines = 0
-        wordsLabel.text = words.joined(separator: ", ")
+        wordsLabel.text = words.joined(separator: "  ")
         wordsLabel.backgroundColor = .clear
-        wordsLabel.font = UIFont.systemFont(ofSize: 22, weight: .regular)
+        wordsLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         wordsLabel.textColor = Colors.black
         wordsLabel.textAlignment = .center
+        wordsLabel.numberOfLines = 3
 
         let wordBackgroundView = PassphraseBackgroundShadow()
         wordBackgroundView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,16 +94,17 @@ class PassphraseViewController: UIViewController {
 
         let stackView = UIStackView(arrangedSubviews: [
             image,
+            titleLabel,
             .spacer(),
             subTitleLabel,
-            .spacer(height: 30),
+            .spacer(height: 15),
             wordsLabel,
-            .spacer(height: 30),
+            .spacer(),
             copyButton,
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 15
+        stackView.spacing = 12
         stackView.backgroundColor = .clear
 
         view.addSubview(wordBackgroundView)
@@ -98,7 +112,7 @@ class PassphraseViewController: UIViewController {
         view.addSubview(actionButton)
 
         NSLayoutConstraint.activate([
-            //stackView.topAnchor.constraint(greaterThanOrEqualTo: view.readableContentGuide.topAnchor),
+            stackView.topAnchor.constraint(greaterThanOrEqualTo: view.readableContentGuide.topAnchor, constant: StyleLayout.sideMargin),
             stackView.centerYAnchor.constraint(equalTo: view.readableContentGuide.centerYAnchor, constant: -40),
             stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
@@ -109,10 +123,10 @@ class PassphraseViewController: UIViewController {
 
             wordBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             wordBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            wordBackgroundView.centerYAnchor.constraint(equalTo: wordsLabel.centerYAnchor),
-            wordBackgroundView.heightAnchor.constraint(equalToConstant: 110),
+            wordBackgroundView.topAnchor.constraint(equalTo: wordsLabel.topAnchor, constant: -StyleLayout.sideMargin),
+            wordBackgroundView.bottomAnchor.constraint(equalTo: wordsLabel.bottomAnchor, constant: StyleLayout.sideMargin),
 
-            image.heightAnchor.constraint(equalToConstant: 44),
+            image.heightAnchor.constraint(equalToConstant: 32),
 
             stackView.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
         ])
