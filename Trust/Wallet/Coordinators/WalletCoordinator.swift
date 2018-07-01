@@ -25,9 +25,6 @@ class WalletCoordinator: Coordinator {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
-        self.navigationController.navigationBar.tintColor = Colors.blue
-        self.navigationController.navigationBar.barTintColor = .white
-        self.navigationController.navigationBar.setValue(true, forKey: "hidesShadow")
     }
 
     func start(_ entryPoint: WalletEntryPoint) {
@@ -77,7 +74,15 @@ class WalletCoordinator: Coordinator {
         }
     }
 
+    func configureWhiteNavigation() {
+        navigationController.navigationBar.tintColor = Colors.blue
+        navigationController.navigationBar.barTintColor = .white
+        navigationController.navigationBar.setBackgroundImage(UIImage(), for:. default)
+        navigationController.navigationBar.shadowImage = UIImage()
+    }
+
     func pushBackup(for account: Account, words: [String]) {
+        configureWhiteNavigation()
         let controller = DarkPassphraseViewController(
             account: account,
             words: words,
