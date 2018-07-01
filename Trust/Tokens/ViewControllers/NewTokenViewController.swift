@@ -12,7 +12,6 @@ protocol NewTokenViewControllerDelegate: class {
 class NewTokenViewController: FormViewController {
 
     private var viewModel: NewTokenViewModel
-    private var qrCodeCoordinator: ScanQRCodeCoordinator!
 
     private struct Values {
         static let contract = "contract"
@@ -119,12 +118,12 @@ class NewTokenViewController: FormViewController {
     }
 
     @objc func openReader() {
-        qrCodeCoordinator = ScanQRCodeCoordinator(
+        let coordinator = ScanQRCodeCoordinator(
             navigationController: NavigationController()
         )
-        qrCodeCoordinator.delegate = self
+        coordinator.delegate = self
         navigationController?.setNavigationBarHidden(true, animated: false)
-        navigationController?.pushViewController(qrCodeCoordinator.qrcodeController, animated: true)
+        (navigationController as? NavigationController)?.pushCoordinator(coordinator)
     }
 
     @objc func pasteAction() {
@@ -172,11 +171,11 @@ class NewTokenViewController: FormViewController {
 extension NewTokenViewController: ScanQRCodeCoordinatorDelegate {
     func didCancel(in coordinator: ScanQRCodeCoordinator) {
         navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.popViewController(animated: true)
+        (navigationController as? NavigationController)?.popCoordinator(coordinator)
     }
     func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
         navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.popViewController(animated: true)
+        (navigationController as? NavigationController)?.popCoordinator(coordinator)
         guard let result = QRURLParser.from(string: result) else { return }
         updateContractValue(value: result.address)
     }

@@ -119,19 +119,19 @@ extension SendCoordinator: SendViewControllerDelegate {
         coordinator.delegate = self
         addCoordinator(coordinator)
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.pushViewController(coordinator.qrcodeController, animated: true)
+        navigationController.pushCoordinator(coordinator)
     }
 }
 
 extension SendCoordinator: ScanQRCodeCoordinatorDelegate {
     func didCancel(in coordinator: ScanQRCodeCoordinator) {
         navigationController.setNavigationBarHidden(false, animated: false)
-        navigationController.popViewController(animated: true)
+        navigationController.popCoordinator(coordinator)
         removeCoordinator(coordinator)
     }
     func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
         navigationController.setNavigationBarHidden(false, animated: false)
-        navigationController.popViewController(animated: true)
+        navigationController.popCoordinator(coordinator)
         removeCoordinator(coordinator)
         sendViewController.updateScreenInfo(with: result)
     }

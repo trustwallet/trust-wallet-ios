@@ -189,7 +189,7 @@ class BrowserCoordinator: NSObject, Coordinator {
         coordinator.delegate = self
         addCoordinator(coordinator)
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.pushViewController(coordinator.qrcodeController, animated: true)
+        navigationController.pushCoordinator(coordinator)
     }
 
     private func presentMoreOptions(sender: UIView) {
@@ -318,12 +318,12 @@ extension BrowserCoordinator: ConfirmCoordinatorDelegate {
 extension BrowserCoordinator: ScanQRCodeCoordinatorDelegate {
     func didCancel(in coordinator: ScanQRCodeCoordinator) {
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.popViewController(animated: true)
+        navigationController.popCoordinator(coordinator)
         removeCoordinator(coordinator)
     }
 
     func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
-        navigationController.popViewController(animated: true)
+        navigationController.popCoordinator(coordinator)
         removeCoordinator(coordinator)
         guard let url = URL(string: result) else {
             return

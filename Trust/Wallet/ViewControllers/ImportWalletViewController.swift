@@ -12,7 +12,6 @@ class ImportWalletViewController: FormViewController {
 
     let keystore: Keystore
     private let viewModel = ImportWalletViewModel()
-    private var qrCodeCoordinator: ScanQRCodeCoordinator!
 
     struct Values {
         static let segment = "segment"
@@ -238,12 +237,12 @@ class ImportWalletViewController: FormViewController {
     }
 
     @objc func openReader() {
-        qrCodeCoordinator = ScanQRCodeCoordinator(
+        let coordinator = ScanQRCodeCoordinator(
             navigationController: NavigationController()
         )
-        qrCodeCoordinator.delegate = self
+        coordinator.delegate = self
         navigationController?.setNavigationBarHidden(true, animated: false)
-        navigationController?.pushViewController(qrCodeCoordinator.qrcodeController, animated: true)
+        (navigationController as? NavigationController)?.pushCoordinator(coordinator)
     }
 
     func setValueForCurrentField(string: String) {
@@ -289,11 +288,11 @@ extension ImportWalletViewController: UIDocumentPickerDelegate {
 extension ImportWalletViewController: ScanQRCodeCoordinatorDelegate {
     func didCancel(in coordinator: ScanQRCodeCoordinator) {
         navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.popViewController(animated: true)
+        (navigationController as? NavigationController)?.popCoordinator(coordinator)
     }
     func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
         navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.popViewController(animated: true)
+        (navigationController as? NavigationController)?.popCoordinator(coordinator)
         setValueForCurrentField(string: result)
     }
 }
