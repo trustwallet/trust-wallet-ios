@@ -83,9 +83,12 @@ class PassphraseViewController: UIViewController {
         wordsLabel.textColor = Colors.black
         wordsLabel.textAlignment = .center
         wordsLabel.numberOfLines = 3
+        wordsLabel.isUserInteractionEnabled = true
+        wordsLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(copyGesture)))
 
         let wordBackgroundView = PassphraseBackgroundShadow()
         wordBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        wordBackgroundView.isUserInteractionEnabled = true
 
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -144,6 +147,10 @@ class PassphraseViewController: UIViewController {
 
     @objc private func copyAction(_ sender: UIButton) {
         delegate?.didPressShare(in: self, sender: sender, account: account, words: words)
+    }
+
+    @objc private func copyGesture(_ sender: UIGestureRecognizer) {
+        delegate?.didPressShare(in: self, sender: sender.view!, account: account, words: words)
     }
 
     @objc private func nextAction(_ sender: UIButton) {
