@@ -48,14 +48,3 @@ extension NavigationController: PushableCoordinator {
         popViewController(animated: true)
     }
 }
-
-protocol RootViewControllerProvider: class {
-    var rootViewController: UIViewController { get }
-}
-
-typealias RootCoordinator = Coordinator & RootViewControllerProvider
-
-protocol PushableCoordinator {
-    func pushCoordinator(_ coordinator: RootCoordinator)
-    func popCoordinator(_ coordinator: RootCoordinator)
-}
