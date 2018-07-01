@@ -27,7 +27,7 @@ class PassphraseViewController: UIViewController {
     lazy var actionButton: UIButton = {
         let button = Button(size: .large, style: .solid)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(NSLocalizedString("Verify", value: "Verify", comment: ""), for: .normal)
+        button.setTitle(NSLocalizedString("Next", value: "Next", comment: ""), for: .normal)
         return button
     }()
     let subTitleLabel: SubtitleBackupLabel = {
