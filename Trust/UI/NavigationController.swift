@@ -59,4 +59,3 @@ protocol PushableCoordinator {
     func pushCoordinator(_ coordinator: RootCoordinator)
     func popCoordinator(_ coordinator: RootCoordinator)
 }
-
