@@ -166,8 +166,6 @@
 "send.error.invalidAmount" = "無効な数量";
 "settings.customNetwork.navigation.title" = "カスタムネットワーク";
 "settings.network.custom.label.title" = "カスタム";
-"settings.preferences.button.title" = "起動時にトークンを表示する";
-"settings.preferences.title" = "Preferences";
 "transaction.blockNumber.label.title" = "ブロック #";
 "transaction.confirmation.label.title" = "承認";
 "transaction.from.label.title" = "From";
@@ -175,8 +173,6 @@
 "transaction.time.label.title" = "トランザクション時間";
 "transaction.to.label.title" = "To";
 "settings.allowPushNotifications.button.title" = "プッシュ通知を許可する";
-"settings.pushNotifications.airdrop.button.title" = "パートナーからのエアドロップ";
-"settings.pushNotifications.airdrop.footer" = "時折、公式パートナーからエアドロップに参加するオファーを受け取ります。";
 "settings.pushNotifications.allowPushNotifications.footer" = "トランザクションの送受信が通知されます。";
 "settings.pushNotifications.payment.button.title" = "送信と受信";
 "settings.pushNotifications.title" = "プッシュ通知";
@@ -217,8 +213,6 @@
 "browser.qrCode.button.title" = "QRリーダー";
 "nft.details.external.button.title" = "OpenSea.ioで開く";
 "nft.details.internal.button.title" = "%@で開く";
-"nft.poweredBy.label.text" = "Powered by OpenSea";
-"configureTransaction.nonce.label.title" = "Nonce";
 "Bookmarks" = "ブックマーク";
 "History" = "履歴";
 "history.noHistory.label.title" = "まだ履歴はありません！";

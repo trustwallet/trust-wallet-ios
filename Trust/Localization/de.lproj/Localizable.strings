@@ -166,8 +166,6 @@
 "send.error.invalidAmount" = "Ungültige Menge";
 "settings.customNetwork.navigation.title" = "Benutzerdefiniertes Netzwerk";
 "settings.network.custom.label.title" = "Benutzerdefiniert";
-"settings.preferences.button.title" = "Zeige Tokens beim Start der App";
-"settings.preferences.title" = "Einstellungen";
 "transaction.blockNumber.label.title" = "Block #";
 "transaction.confirmation.label.title" = "Bestätigung";
 "transaction.from.label.title" = "Von";
@@ -175,8 +173,6 @@
 "transaction.time.label.title" = "Transaktionszeit";
 "transaction.to.label.title" = "An";
 "settings.allowPushNotifications.button.title" = "Push-Benachrichtigungen zulassen";
-"settings.pushNotifications.airdrop.button.title" = "Airdrops von Partnern";
-"settings.pushNotifications.airdrop.footer" = "Gelegentlich erhalten Sie von unseren offiziellen Partnern Angebote zur Teilnahme an Airdrops.";
 "settings.pushNotifications.allowPushNotifications.footer" = "Sie werden über gesendete und empfangene Transaktionen benachrichtigt.";
 "settings.pushNotifications.payment.button.title" = "Gesendet und empfangen";
 "settings.pushNotifications.title" = "Push-Benachrichtigungen";
@@ -217,8 +213,6 @@
 "browser.qrCode.button.title" = "QR-Code-Leser";
 "nft.details.external.button.title" = "Bei OpenSea.io anzeigen";
 "nft.details.internal.button.title" = "Bei %@ anzeigen";
-"nft.poweredBy.label.text" = "ermöglicht durch OpenSea";
-"configureTransaction.nonce.label.title" = "Nonce";
 "Bookmarks" = "Lesezeichen";
 "History" = "Verlauf";
 "history.noHistory.label.title" = "Noch keine Transaktionen!";

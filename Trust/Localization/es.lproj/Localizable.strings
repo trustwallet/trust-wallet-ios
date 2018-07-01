@@ -130,8 +130,6 @@
 "browser.qrCode.button.title" = "Lector QR";
 "nft.details.external.button.title" = "Abrir en OpenSea.io";
 "nft.details.internal.button.title" = "Abierto en %@";
-"nft.poweredBy.label.text" = "Desarrollado por OpenSea";
-"configureTransaction.nonce.label.title" = "Mientras tanto";
 "Bookmarks" = "Marcadores";
 "History" = "Historial";
 "history.noHistory.label.title" = "¡Sin transacciones aún!";

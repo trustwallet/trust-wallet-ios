@@ -166,8 +166,6 @@
 "send.error.invalidAmount" = "无效的数量";
 "settings.customNetwork.navigation.title" = "自定义网络";
 "settings.network.custom.label.title" = "自定义";
-"settings.preferences.button.title" = "启动时显示通证 Tab";
-"settings.preferences.title" = "偏好设置";
 "transaction.blockNumber.label.title" = "区块高度";
 "transaction.confirmation.label.title" = "确认";
 "transaction.from.label.title" = "From";
@@ -175,8 +173,6 @@
 "transaction.time.label.title" = "交易时间";
 "transaction.to.label.title" = "To";
 "settings.allowPushNotifications.button.title" = "允许推送通知";
-"settings.pushNotifications.airdrop.button.title" = "合作方的空投";
-"settings.pushNotifications.airdrop.footer" = "偶尔你会收到来自我们官方合作方空投的邀请。";
 "settings.pushNotifications.allowPushNotifications.footer" = "你将收到已发送和已接收交易的通知。";
 "settings.pushNotifications.payment.button.title" = "发送和接收";
 "settings.pushNotifications.title" = "推送通知";
@@ -217,8 +213,6 @@
 "browser.qrCode.button.title" = "扫一扫";
 "nft.details.external.button.title" = "在 OpenSea.io 里打开";
 "nft.details.internal.button.title" = "在 %@ 里打开";
-"nft.poweredBy.label.text" = "由 OpenSea 提供支持";
-"configureTransaction.nonce.label.title" = "Nonce";
 "Bookmarks" = "书签";
 "History" = "历史记录";
 "history.noHistory.label.title" = "暂时还没有历史记录";

@@ -166,8 +166,6 @@
 "send.error.invalidAmount" = "Invalid Amount";
 "settings.customNetwork.navigation.title" = "Custom Network";
 "settings.network.custom.label.title" = "Custom";
-"settings.preferences.button.title" = "Show Tokens on Launch";
-"settings.preferences.title" = "Preferences";
 "transaction.blockNumber.label.title" = "Block #";
 "transaction.confirmation.label.title" = "Confirmation";
 "transaction.from.label.title" = "From";
@@ -175,8 +173,6 @@
 "transaction.time.label.title" = "Transaction Time";
 "transaction.to.label.title" = "To";
 "settings.allowPushNotifications.button.title" = "Allow Push Notifications";
-"settings.pushNotifications.airdrop.button.title" = "Airdrops from partners";
-"settings.pushNotifications.airdrop.footer" = "Occasionally you will receive offers to participate in airdrops from our official partners.";
 "settings.pushNotifications.allowPushNotifications.footer" = "You will be notified for sent and received transactions.";
 "settings.pushNotifications.payment.button.title" = "Sent and Receive";
 "settings.pushNotifications.title" = "Push Notifications";
@@ -197,7 +193,7 @@
 "export.privateKey.navigation.title" = "Export Private Key";
 "export.qrCode.loading.label" = "Generating QR Code";
 "export.warning.private.key" = "Export at your own risk!";
-"export.warningTwo.private.key" = "Anyone with your recovery phrase will have FULL access to your wallet!";
+"export.warningTwo.private.key" = "Anyone with your backup phrase will have FULL access to your wallet!";
 "import.wallet.mnemonic.placeholder" = "Words separated by a space. (Usually contains 12 words)";
 "import.wallet.watch.placeholder" = "%@ Address";
 "settings.joinCommunity.label.title" = "Join Community";
@@ -217,8 +213,6 @@
 "browser.qrCode.button.title" = "QR Reader";
 "nft.details.external.button.title" = "Open on OpenSea.io";
 "nft.details.internal.button.title" = "Open on %@";
-"nft.poweredBy.label.text" = "Powered by OpenSea";
-"configureTransaction.nonce.label.title" = "Nonce";
 "Bookmarks" = "Bookmarks";
 "History" = "History";
 "history.noHistory.label.title" = "No history yet!";

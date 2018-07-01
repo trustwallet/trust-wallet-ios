@@ -167,8 +167,6 @@
 "send.error.invalidAmount" = "無效的數量";
 "settings.customNetwork.navigation.title" = "自定義網絡";
 "settings.network.custom.label.title" = "自定義";
-"settings.preferences.button.title" = "啟動時顯示通證 Tab";
-"settings.preferences.title" = "偏好設置";
 "transaction.blockNumber.label.title" = "區塊高度";
 "transaction.confirmation.label.title" = "確認";
 "transaction.from.label.title" = "From";
@@ -176,8 +174,6 @@
 "transaction.time.label.title" = "交易時間";
 "transaction.to.label.title" = "To";
 "settings.allowPushNotifications.button.title" = "允許推送通知";
-"settings.pushNotifications.airdrop.button.title" = "合作方的空投";
-"settings.pushNotifications.airdrop.footer" = "偶爾你會收到來自我們官方合作方空投的邀請。";
 "settings.pushNotifications.allowPushNotifications.footer" = "你將收到已發送和已接收交易的通知。";
 "settings.pushNotifications.payment.button.title" = "發送和接收";
 "settings.pushNotifications.title" = "推送通知";

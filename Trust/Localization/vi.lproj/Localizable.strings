@@ -166,8 +166,6 @@
 "send.error.invalidAmount" = "Số lượng không hợp lệ";
 "settings.customNetwork.navigation.title" = "Tuỳ chỉnh về Mạng lưới";
 "settings.network.custom.label.title" = "Tuỳ chỉnh";
-"settings.preferences.button.title" = "Hiển thị Tiền mã hóa khi khởi động";
-"settings.preferences.title" = "Các sở thích";
 "transaction.blockNumber.label.title" = "Khối #";
 "transaction.confirmation.label.title" = "Xác nhận";
 "transaction.from.label.title" = "Từ";
@@ -175,8 +173,6 @@
 "transaction.time.label.title" = "Thời gian giao dịch";
 "transaction.to.label.title" = "Đến";
 "settings.allowPushNotifications.button.title" = "Cho phép gửi các thông báo";
-"settings.pushNotifications.airdrop.button.title" = "Airdrops từ các đối tác";
-"settings.pushNotifications.airdrop.footer" = "Thỉnh thoảng bạn sẽ nhận được đề nghị tham gia airdrops từ các đối tác chính thức của chúng tôi.";
 "settings.pushNotifications.allowPushNotifications.footer" = "Bạn sẽ được thông báo khi có các giao dịch Gửi hoặc Nhận.";
 "settings.pushNotifications.payment.button.title" = "Gửi và nhận";
 "settings.pushNotifications.title" = "Các thông báo";
@@ -217,8 +213,6 @@
 "browser.qrCode.button.title" = "Trình đọc QR";
 "nft.details.external.button.title" = "Mở tại địa chỉ OpenSea.io";
 "nft.details.internal.button.title" = "Mở %@";
-"nft.poweredBy.label.text" = "Được hỗ trợ bởi OpenSea";
-"configureTransaction.nonce.label.title" = "Mã giao dịch";
 "Bookmarks" = "Các dấu trang";
 "History" = "Lịch sử";
 "history.noHistory.label.title" = "Chưa có lịch sử nào!";

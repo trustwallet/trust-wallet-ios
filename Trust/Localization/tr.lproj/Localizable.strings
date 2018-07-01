@@ -166,8 +166,6 @@
 "send.error.invalidAmount" = "Geçersiz Miktar";
 "settings.customNetwork.navigation.title" = "Özel Ağ";
 "settings.network.custom.label.title" = "Özel";
-"settings.preferences.button.title" = "Başlangıçta Tokenleri göster";
-"settings.preferences.title" = "Tercihler";
 "transaction.blockNumber.label.title" = "Blok #";
 "transaction.confirmation.label.title" = "Doğrulama";
 "transaction.from.label.title" = "Kaynak";
@@ -175,8 +173,6 @@
 "transaction.time.label.title" = "İşlem Zamanı";
 "transaction.to.label.title" = "Hedef";
 "settings.allowPushNotifications.button.title" = "Bildirimlere İzin Ver";
-"settings.pushNotifications.airdrop.button.title" = "Ortaklardan Airdroplar";
-"settings.pushNotifications.airdrop.footer" = "Bazen resmi iş ortaklarımızdan airdrop'lara katılmak için teklifler alacaksınız.";
 "settings.pushNotifications.allowPushNotifications.footer" = "Tarafınıza gönderilen ve alınan işlemler hakkında haberdar edileceksiniz.";
 "settings.pushNotifications.payment.button.title" = "Gönderildi ve Alındı";
 "settings.pushNotifications.title" = "Bildirimler";
@@ -217,8 +213,6 @@
 "browser.qrCode.button.title" = "QR Okuyucu";
 "nft.details.external.button.title" = "OpenSea.io'da keşfedin";
 "nft.details.internal.button.title" = "%@ üzerinde Açın";
-"nft.poweredBy.label.text" = "OpenSea";
-"configureTransaction.nonce.label.title" = "Sonuç";
 "Bookmarks" = "Yer imleri";
 "History" = "Geçmiş";
 "history.noHistory.label.title" = "Henüz geçmiş yok!";
