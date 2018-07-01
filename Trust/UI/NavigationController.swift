@@ -23,7 +23,11 @@ class NavigationController: UINavigationController {
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         var preferredStyle: UIStatusBarStyle
-        if topViewController is MasterBrowserViewController {
+        if
+            topViewController is MasterBrowserViewController ||
+            topViewController is DarkPassphraseViewController ||
+            topViewController is DarkVerifyPassphraseViewController
+        {
             preferredStyle = .default
         } else {
             preferredStyle = .lightContent

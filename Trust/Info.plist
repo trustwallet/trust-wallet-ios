@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.56.0</string>
+	<string>1.62.0</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -28,7 +28,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>241</string>
+	<string>247</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -110,5 +110,7 @@
 	</dict>
 	<key>com.apple.security.get-task-allow</key>
 	<true/>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<string>true</string>
 </dict>
 </plist>

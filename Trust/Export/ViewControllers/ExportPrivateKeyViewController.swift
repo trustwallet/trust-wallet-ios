@@ -79,8 +79,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: view.layoutGuide.bottomAnchor, constant: -StyleLayout.sideMargin),
 
             imageView.heightAnchor.constraint(equalToConstant: Layout.widthAndHeight),
-            imageView.trailingAnchor.constraint(lessThanOrEqualTo: stackView.layoutMarginsGuide.trailingAnchor, constant: StyleLayout.sideMargin * 2.5),
-            imageView.leadingAnchor.constraint(lessThanOrEqualTo: stackView.layoutMarginsGuide.leadingAnchor, constant: StyleLayout.sideMargin * 2.5),
+            imageView.widthAnchor.constraint(equalToConstant: Layout.widthAndHeight),
         ])
 
         createQRCode()

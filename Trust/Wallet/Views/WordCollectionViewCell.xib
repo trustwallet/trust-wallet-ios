@@ -20,16 +20,16 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zyd-jQ-RgL">
-                        <rect key="frame" x="6" y="4" width="148" height="36"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <rect key="frame" x="5" y="4" width="150" height="36"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="Zyd-jQ-RgL" secondAttribute="trailing" constant="6" id="6BG-vP-7rs"/>
-                <constraint firstItem="Zyd-jQ-RgL" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="6" id="Tm2-EY-JBm"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="Zyd-jQ-RgL" secondAttribute="trailing" constant="5" id="6BG-vP-7rs"/>
+                <constraint firstItem="Zyd-jQ-RgL" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" constant="5" id="Tm2-EY-JBm"/>
                 <constraint firstItem="Zyd-jQ-RgL" firstAttribute="top" secondItem="ZTg-uK-7eu" secondAttribute="top" constant="4" id="sfm-uO-5MD"/>
                 <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" secondItem="Zyd-jQ-RgL" secondAttribute="bottom" constant="4" id="u81-lB-fin"/>
             </constraints>

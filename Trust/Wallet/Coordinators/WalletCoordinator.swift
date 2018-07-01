@@ -74,8 +74,16 @@ class WalletCoordinator: Coordinator {
         }
     }
 
+    func configureWhiteNavigation() {
+        navigationController.navigationBar.tintColor = Colors.blue
+        navigationController.navigationBar.barTintColor = .white
+        navigationController.navigationBar.setBackgroundImage(UIImage(), for:. default)
+        navigationController.navigationBar.shadowImage = UIImage()
+    }
+
     func pushBackup(for account: Account, words: [String]) {
-        let controller = PassphraseViewController(
+        configureWhiteNavigation()
+        let controller = DarkPassphraseViewController(
             account: account,
             words: words,
             mode: .showAndVerify
@@ -83,7 +91,7 @@ class WalletCoordinator: Coordinator {
         controller.delegate = self
         controller.navigationItem.backBarButtonItem = nil
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        navigationController.setNavigationBarHidden(false, animated: false)
+        navigationController.setNavigationBarHidden(false, animated: true)
         navigationController.pushViewController(controller, animated: true)
     }
 
@@ -111,14 +119,19 @@ class WalletCoordinator: Coordinator {
     }
 
     func verify(account: Account, words: [String]) {
-        let controller = VerifyPassphraseViewController(account: account, words: words)
+        let controller = DarkVerifyPassphraseViewController(account: account, words: words)
         controller.delegate = self
+        navigationController.setNavigationBarHidden(false, animated: true)
         navigationController.pushViewController(controller, animated: true)
     }
 
     private func shareMnemonic(in sender: UIView, words: [String]) {
         let copyValue = words.joined(separator: " ")
         navigationController.showShareActivity(from: sender, with: [copyValue])
+    }
+
+    func done(for account: Account) {
+        didCreateAccount(account: Wallet(type: .hd(account)))
     }
 }
 
@@ -161,7 +174,21 @@ extension WalletCoordinator: PassphraseViewControllerDelegate {
 
 extension WalletCoordinator: VerifyPassphraseViewControllerDelegate {
     func didFinish(in controller: VerifyPassphraseViewController, with account: Account) {
-        done()
+        done(for: account)
+    }
+
+    func didSkip(in controller: VerifyPassphraseViewController, with account: Account) {
+        controller.confirm(
+            title: NSLocalizedString("verifyPassphrase.skip.confirm.title", value: "Are you sure you want to skip this step?", comment: ""),
+            message: NSLocalizedString("verifyPassphrase.skip.confirm.message", value: "Loss of backup phrase can put your wallet at risk!", comment: ""),
+            okTitle: NSLocalizedString("Skip", value: "Skip", comment: ""),
+            okStyle: .destructive
+        ) { [weak self] result in
+            switch result {
+            case .success: self?.done(for: account)
+            case .failure: break
+            }
+        }
     }
 
     func didPressShare(in controller: VerifyPassphraseViewController, sender: UIView, account: Account, words: [String]) {
