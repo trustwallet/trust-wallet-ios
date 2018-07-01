@@ -16,6 +16,12 @@ class TokenHeaderView: UIView {
         return label
     }()
 
+    lazy var marketPriceLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     lazy var fiatAmountLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textColor = Colors.black
@@ -59,7 +65,11 @@ class TokenHeaderView: UIView {
         amountStack.translatesAutoresizingMaskIntoConstraints = false
         amountStack.axis = .horizontal
 
-        let marketPriceStack = UIStackView(arrangedSubviews: [fiatAmountLabel, .spacerWidth(5, backgroundColor: UIColor.clear, alpha: 0, priority: UILayoutPriority(rawValue: 999)), percentChange])
+        let marketPriceStack = UIStackView(arrangedSubviews: [
+            marketPriceLabel,
+            .spacerWidth(5, backgroundColor: UIColor.clear, alpha: 0, priority: UILayoutPriority(rawValue: 999)),
+            percentChange
+        ])
         marketPriceStack.translatesAutoresizingMaskIntoConstraints = false
         marketPriceStack.axis = .horizontal
         marketPriceStack.distribution = .equalSpacing

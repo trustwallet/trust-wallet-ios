@@ -12,11 +12,22 @@ class TokenViewCell: UITableViewCell {
     let amountLabel = UILabel()
     let currencyAmountLabel = UILabel()
     let symbolImageView = TokenImageView()
-    let percentChange = UILabel()
 
     private struct Layout {
         static let stackVericalOffset: CGFloat = 10
     }
+
+    lazy var marketPrice: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    lazy var marketPercentageChange: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -29,29 +40,31 @@ class TokenViewCell: UITableViewCell {
         symbolImageView.translatesAutoresizingMaskIntoConstraints = false
         symbolImageView.contentMode = .scaleAspectFit
 
-        percentChange.translatesAutoresizingMaskIntoConstraints = false
-        percentChange.textAlignment = .right
-
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
         amountLabel.textAlignment = .right
 
         currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         currencyAmountLabel.textAlignment = .right
 
-        let leftStackView = UIStackView(arrangedSubviews: [titleLabel])
+        let marketPriceStackView = UIStackView(arrangedSubviews: [
+            marketPrice,
+            marketPercentageChange,
+        ])
+        marketPriceStackView.translatesAutoresizingMaskIntoConstraints = false
+        marketPriceStackView.alignment = .firstBaseline
+        marketPriceStackView.distribution = .equalSpacing
+        marketPriceStackView.spacing = 4
+
+        let leftStackView = UIStackView(arrangedSubviews: [titleLabel, marketPriceStackView])
         leftStackView.translatesAutoresizingMaskIntoConstraints = false
         leftStackView.axis = .vertical
-        leftStackView.spacing = 12
+        leftStackView.spacing = 6
+        leftStackView.alignment = .leading
 
-        let rightBottomStackView = UIStackView(arrangedSubviews: [currencyAmountLabel, percentChange])
-        rightBottomStackView.translatesAutoresizingMaskIntoConstraints = false
-        rightBottomStackView.axis = .horizontal
-        rightBottomStackView.spacing = 5
-
-        let rightStackView = UIStackView(arrangedSubviews: [amountLabel, rightBottomStackView])
+        let rightStackView = UIStackView(arrangedSubviews: [amountLabel, currencyAmountLabel])
         rightStackView.translatesAutoresizingMaskIntoConstraints = false
         rightStackView.axis = .vertical
-        rightStackView.spacing =  5
+        rightStackView.spacing =  4
 
         let stackView = UIStackView(arrangedSubviews: [symbolImageView, leftStackView, rightStackView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -98,13 +111,17 @@ class TokenViewCell: UITableViewCell {
         amountLabel.textColor = TokensLayout.cell.amountTextColor
         amountLabel.font = viewModel.amountFont
 
+        marketPrice.text = viewModel.marketPrice
+        marketPrice.textColor = viewModel.marketPriceTextColor
+        marketPrice.font = viewModel.marketPriceFont
+
+        marketPercentageChange.text = viewModel.percentChange
+        marketPercentageChange.textColor = viewModel.percentChangeColor
+        marketPercentageChange.font = viewModel.percentChangeFont
+
         currencyAmountLabel.text = viewModel.currencyAmount
         currencyAmountLabel.textColor = TokensLayout.cell.currencyAmountTextColor
         currencyAmountLabel.font = viewModel.currencyAmountFont
-
-        percentChange.text = viewModel.percentChange
-        percentChange.textColor = viewModel.percentChangeColor
-        percentChange.font = viewModel.percentChangeFont
 
         symbolImageView.kf.setImage(
             with: viewModel.imageUrl,

@@ -38,12 +38,17 @@ class NonFungibleTokensViewController: UIViewController {
         ])
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
-        errorView = ErrorView(onRetry: { [weak self] in
-            self?.fetch()
-        })
+        errorView = ErrorView(
+            onRetry: { [weak self] in
+                self?.fetch()
+            }
+        )
         loadingView = LoadingView()
         emptyView = EmptyView(
-            title: NSLocalizedString("emptyView.noNonTokens.label.title", value: "No Collectibles Found", comment: "")
+            title: NSLocalizedString("emptyView.noNonTokens.label.title", value: "No Collectibles Found", comment: ""),
+            onRetry: { [weak self] in
+                self?.fetch()
+            }
         )
     }
 
