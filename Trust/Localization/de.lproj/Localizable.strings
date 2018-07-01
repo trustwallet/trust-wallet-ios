@@ -123,7 +123,6 @@
 "Ethereum Address" = "Ethereum-Adresse";
 "InCoordinatorError.onlyWatchAccount" = "Nur öffentliche Informationen dieses Wallets einsehbar. Importieren Sie den privaten Schlüssel / Keystore, um Transaktionen zu signieren";
 "Mnemonic" = "Mnemonisch";
-"passphrase.remember.label.title" = "Schreiben Sie diesen Satz auf und bewahren Sie es privat und sicher auf. Sie können Ihre Wallet nicht wiederherstellen, wenn Sie diesen verlieren!";
 "recoveryPhrase.navigation.title" = "Wiederherstellungs-Satz";
 "settings.shareWithFriends.button.title" = "Mit Freunden teilen";
 "transaction.cell.unknown.title" = "Unbekannt";
@@ -172,7 +171,6 @@
 "transaction.blockNumber.label.title" = "Block #";
 "transaction.confirmation.label.title" = "Bestätigung";
 "transaction.from.label.title" = "Von";
-"transaction.gasFee.label.title" = "Gaspreis (Gwei)";
 "transaction.id.label.title" = "Transaktion #";
 "transaction.time.label.title" = "Transaktionszeit";
 "transaction.to.label.title" = "An";
@@ -198,7 +196,6 @@
 "export.noKPrivateKey.label.title" = "Kein privater Schlüssel für die Wallet";
 "export.privateKey.navigation.title" = "Privaten Schlüssel exportieren";
 "export.qrCode.loading.label" = "QR-Code generieren";
-"export.reveal.button.title" = "Zum anzeigen gedrückt halten";
 "export.warning.private.key" = "Export auf eigene Gefahr!";
 "export.warningTwo.private.key" = "Jeder mit Ihrem privaten Schlüssel hat vollen Zugriff auf Ihre Wallet";
 "import.wallet.mnemonic.placeholder" = "Wörter getrennt durch ein Leerzeichen. (Enthält normalerweise 12 Wörter)";
@@ -233,8 +230,6 @@
 "Are you sure you would like to delete?" = "Sind Sie sicher, dass Sie löschen möchten?";
 "confirmPayment.amount.label.title" = "Betrag";
 "confirmPayment.dapp.label.title" = "DApp";
-"confirmPayment.estimatedFees.label.title" = "Est. Network Fee";
-"confirmPayment.wallet.label.title" = "Wallet";
 "DuckDuckGo" = "DuckDuckGo";
 "Google" = "Google";
 "Incoming Transaction" = "Eingehende Transaktion";

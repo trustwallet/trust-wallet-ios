@@ -143,8 +143,6 @@
 "Are you sure you would like to delete?" = "¿Está seguro que desea borrar?";
 "confirmPayment.amount.label.title" = "Cantidad";
 "confirmPayment.dapp.label.title" = "DApp";
-"confirmPayment.estimatedFees.label.title" = "Tarifa de Red Establecida";
-"confirmPayment.wallet.label.title" = "Billetera";
 "DuckDuckGo" = "DuckDuckGo";
 "Google" = "Google";
 "Incoming Transaction" = "Transacción entrante";

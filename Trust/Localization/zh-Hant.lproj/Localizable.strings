@@ -124,7 +124,6 @@
 "Ethereum Address" = "以太坊地址";
 "InCoordinatorError.onlyWatchAccount" = "這個錢包只能觀察，請導入私鑰 / Keystore 來簽署交易";
 "Mnemonic" = "助記詞";
-"passphrase.remember.label.title" = "把這個寫下來，並保持隱私和安全。如果你弄丟了它，你將不可能恢復你的錢包！";
 "recoveryPhrase.navigation.title" = "恢復短語";
 "settings.shareWithFriends.button.title" = "與朋友分享";
 "transaction.cell.unknown.title" = "未知";
@@ -173,7 +172,6 @@
 "transaction.blockNumber.label.title" = "區塊高度";
 "transaction.confirmation.label.title" = "確認";
 "transaction.from.label.title" = "From";
-"transaction.gasFee.label.title" = "Gas 價格";
 "transaction.id.label.title" = "交易 ID";
 "transaction.time.label.title" = "交易時間";
 "transaction.to.label.title" = "To";
@@ -190,7 +188,6 @@
 "settings.network.test.warnning.title" = "警告";
 "Disable" = "禁用";
 "wallets.navigation.title" = "钱包";
-"confirmPayment.wallet.label.title" = "錢包";
 "settings.browser.clearCache.alert.title" = "清除瀏覽數據？";
 "settings.browser.clearCache.title" = "清除瀏覽器緩存";
 "settings.browser.searchEngine.title" = "搜索引擎";

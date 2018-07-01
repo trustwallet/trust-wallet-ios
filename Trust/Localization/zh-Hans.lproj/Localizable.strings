@@ -123,7 +123,6 @@
 "Ethereum Address" = "以太坊地址";
 "InCoordinatorError.onlyWatchAccount" = "这个钱包只能观察，请导入私钥 / Keystore 来签署交易";
 "Mnemonic" = "助记词";
-"passphrase.remember.label.title" = "把这个写下来，并保持隐私和安全。如果你弄丢了它，你将不可能恢复你的钱包！";
 "recoveryPhrase.navigation.title" = "恢复短语";
 "settings.shareWithFriends.button.title" = "与朋友分享";
 "transaction.cell.unknown.title" = "未知";
@@ -172,7 +171,6 @@
 "transaction.blockNumber.label.title" = "区块高度";
 "transaction.confirmation.label.title" = "确认";
 "transaction.from.label.title" = "From";
-"transaction.gasFee.label.title" = "Gas 价格";
 "transaction.id.label.title" = "交易 ID";
 "transaction.time.label.title" = "交易时间";
 "transaction.to.label.title" = "To";
@@ -198,7 +196,6 @@
 "export.noKPrivateKey.label.title" = "没有这个钱包的私钥";
 "export.privateKey.navigation.title" = "导出私钥";
 "export.qrCode.loading.label" = "生成二维码";
-"export.reveal.button.title" = "长按显示";
 "export.warning.private.key" = "导出风险自负！";
 "export.warningTwo.private.key" = "任何拥有私钥的人都可以完全访问你的钱包";
 "import.wallet.mnemonic.placeholder" = "用空格隔开的单词 (通常包含12个单词)";
@@ -233,8 +230,6 @@
 "Are you sure you would like to delete?" = "你确定要删除吗？";
 "confirmPayment.amount.label.title" = "数量";
 "confirmPayment.dapp.label.title" = "DApp";
-"confirmPayment.estimatedFees.label.title" = "估计网络费用";
-"confirmPayment.wallet.label.title" = "钱包";
 "DuckDuckGo" = "DuckDuckGo";
 "Google" = "谷歌";
 "Incoming Transaction" = "传入交易";
