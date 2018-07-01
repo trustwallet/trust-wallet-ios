@@ -97,7 +97,7 @@ class RequestViewController: UIViewController {
         // EIP67 format not being used much yet, use hex value for now
         // let string = "ethereum:\(account.address.address)?value=\(value)"
 
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             let image = QRGenerator.generate(from: string)
             DispatchQueue.main.async {
                 self.imageView.image = image

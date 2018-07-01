@@ -87,7 +87,7 @@ class ExportPrivateKeyViewConroller: UIViewController {
 
     func createQRCode() {
         displayLoading()
-        DispatchQueue.global(qos: .background).async { [weak self] in
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let `self` = self else { return }
             let image = QRGenerator.generate(from: self.viewModel.privateKeyString)
             DispatchQueue.main.async {
