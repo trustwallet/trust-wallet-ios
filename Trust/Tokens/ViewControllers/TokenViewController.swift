@@ -108,10 +108,10 @@ class TokenViewController: UIViewController {
         header.fiatAmountLabel.font = viewModel.fiatAmountFont
         header.fiatAmountLabel.textColor = viewModel.fiatAmountTextColor
 
-//        header.currencyAmountLabel.text = viewModel.currencyAmount
-//        header.currencyAmountLabel.textColor = viewModel.currencyAmountTextColor
-//        header.currencyAmountLabel.font = viewModel.currencyAmountFont
-//
+        header.marketPriceLabel.text = viewModel.marketPrice
+        header.marketPriceLabel.textColor = viewModel.marketPriceTextColor
+        header.marketPriceLabel.font = viewModel.marketPriceFont
+
         header.percentChange.text = viewModel.percentChange
         header.percentChange.textColor = viewModel.percentChangeColor
         header.percentChange.font = viewModel.percentChangeFont

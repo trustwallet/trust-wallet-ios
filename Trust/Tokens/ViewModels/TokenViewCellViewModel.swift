@@ -24,7 +24,7 @@ struct TokenViewCellViewModel {
     }
 
     var titleFont: UIFont {
-        return UIFont.systemFont(ofSize: 16, weight: .medium)
+        return UIFont.systemFont(ofSize: 17, weight: .medium)
     }
 
     var titleTextColor: UIColor {
@@ -44,7 +44,7 @@ struct TokenViewCellViewModel {
     }
 
     var currencyAmountFont: UIFont {
-        return UIFont.systemFont(ofSize: 12, weight: .regular)
+        return UIFont.systemFont(ofSize: 13, weight: .regular)
     }
 
     var backgroundColor: UIColor {
@@ -59,10 +59,9 @@ struct TokenViewCellViewModel {
         return Colors.lightGray
     }
 
+    // Percent change
+
     var percentChange: String? {
-        guard let _ = currencyAmount else {
-            return .none
-        }
         return TokensLayout.cell.percentChange(for: ticker)
     }
 
@@ -76,6 +75,20 @@ struct TokenViewCellViewModel {
 
     var placeholderImage: UIImage? {
         return R.image.ethereum_logo_256()
+    }
+
+    // Market Price
+
+    var marketPriceFont: UIFont {
+        return UIFont.systemFont(ofSize: 12, weight: .regular)
+    }
+
+    var marketPriceTextColor: UIColor {
+        return Colors.lightGray
+    }
+
+    var marketPrice: String? {
+        return TokensLayout.cell.marketPrice(for: ticker)
     }
 
     var imageUrl: URL? {

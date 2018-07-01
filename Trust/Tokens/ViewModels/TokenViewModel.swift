@@ -78,6 +78,20 @@ class TokenViewModel {
         return store.coinTicker(for: token)
     }
 
+    // Market Price
+
+    var marketPrice: String? {
+        return TokensLayout.cell.marketPrice(for: ticker)
+    }
+
+    var marketPriceFont: UIFont {
+        return UIFont.systemFont(ofSize: 14, weight: .regular)
+    }
+
+    var marketPriceTextColor: UIColor {
+        return TokensLayout.cell.fiatAmountTextColor
+    }
+
     var totalFiatAmount: String? {
         return TokensLayout.cell.totalFiatAmount(for: ticker, token: token)
     }
