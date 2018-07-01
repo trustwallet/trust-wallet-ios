@@ -74,6 +74,7 @@ class NonFungibleTokensViewController: UIViewController {
     }
 
     func fetch() {
+        startLoading()
         firstly {
             viewModel.fetchAssets()
         }.done { [weak self] _ in
