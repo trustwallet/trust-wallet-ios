@@ -18,7 +18,6 @@ target 'Trust' do
   pod 'SwiftLint'
   pod 'SeedStackViewController'
   pod 'RealmSwift'
-  pod 'Lokalise'
   pod 'Moya', '~> 10.0.1'
   pod 'CryptoSwift', '~> 0.10.0'
   pod 'Fabric'

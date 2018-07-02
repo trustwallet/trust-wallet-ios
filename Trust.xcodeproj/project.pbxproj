@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1D2831CD94641E5166E3A798 /* Pods_TrustUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */; };
 		290B2B541F8F50030053C83E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 290B2B561F8F50030053C83E /* Localizable.strings */; };
-		290B2B5B1F8F551E0053C83E /* LokaliseInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B5A1F8F551E0053C83E /* LokaliseInitializer.swift */; };
 		290B2B5F1F9177860053C83E /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B5E1F9177860053C83E /* UIImage.swift */; };
 		290B2B611F9179880053C83E /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B601F9179880053C83E /* AccountViewModel.swift */; };
 		290B2B651F91A4880053C83E /* TransactionsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B641F91A4880053C83E /* TransactionsFooterView.swift */; };
@@ -485,7 +484,6 @@
 /* Begin PBXFileReference section */
 		0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		290B2B551F8F50030053C83E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		290B2B5A1F8F551E0053C83E /* LokaliseInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LokaliseInitializer.swift; sourceTree = "<group>"; };
 		290B2B5E1F9177860053C83E /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		290B2B601F9179880053C83E /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		290B2B641F91A4880053C83E /* TransactionsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsFooterView.swift; sourceTree = "<group>"; };
@@ -1973,7 +1971,6 @@
 			isa = PBXGroup;
 			children = (
 				29FC9BC51F830880000209CD /* MirgrationInitializer.swift */,
-				290B2B5A1F8F551E0053C83E /* LokaliseInitializer.swift */,
 				2923D9B01FDA49D8000CF3F8 /* Initializer.swift */,
 				2923D9B21FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift */,
 				294DFB971FDF8CBB004CEB56 /* CrashReportInitializer.swift */,
@@ -2975,7 +2972,6 @@
 				73200B752048B67E00118A82 /* NonFungibleTokenObject.swift in Sources */,
 				77872D27202505C00032D687 /* EnterPasswordViewModel.swift in Sources */,
 				29F1C85F200369BA003780D8 /* HelpUsViewModel.swift in Sources */,
-				290B2B5B1F8F551E0053C83E /* LokaliseInitializer.swift in Sources */,
 				293112371FC9A24600966EEA /* UIGestureRecognizer+Closure.swift in Sources */,
 				29B6AECB1F7C5FA900EC6DE3 /* PaymentCoordinator.swift in Sources */,
 				29BDF1A11FEE51A80023A45F /* GasLimitConfiguration.swift in Sources */,

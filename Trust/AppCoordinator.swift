@@ -81,7 +81,6 @@ class AppCoordinator: NSObject, Coordinator {
 
         let initializers: [Initializer] = [
             CrashReportInitializer(),
-            LokaliseInitializer(),
             SkipBackupFilesInitializer(paths: paths),
         ]
         initializers.forEach { $0.perform() }
