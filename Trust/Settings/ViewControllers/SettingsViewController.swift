@@ -153,7 +153,7 @@ class SettingsViewController: FormViewController, Coordinator {
             +++ Section(NSLocalizedString("settings.support.label.title", value: "Support", comment: ""))
 
             <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("settings.shareWithFriends.button.title", value: "Share With Friends", comment: "")
+                button.title = R.string.localizable.shareWithFriends()
                 button.cell.imageView?.image = R.image.settings_colorful_share()
             }.onCellSelection { [unowned self] cell, _  in
                 self.helpUsCoordinator.presentSharing(in: self, from: cell.contentView)

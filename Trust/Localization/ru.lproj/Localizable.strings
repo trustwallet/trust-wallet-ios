@@ -123,9 +123,8 @@
 "Deleting" = "Удаление";
 "Ethereum Address" = "Адрес Ethereum";
 "InCoordinatorError.onlyWatchAccount" = "Этот кошелек можно использовать только для просмотра. Импортируйте приватный ключ / Keystore для подписания транзакций / сообщений";
-"settings.shareWithFriends.button.title" = "Поделиться с друзьями";
+"Share With Friends" = "Поделиться с друзьями";
 "welldone.navigation.title" = "Спасибо!";
-"welldone.share.label.text" = "Поделиться";
 "browser.home.button.title" = "Главная";
 "browser.reload.button.title" = "Перезагрузить";
 "configureTransaction.gasPriceGwei.label.title" = "Цена газа (Gwei)";

@@ -124,11 +124,10 @@
 "InCoordinatorError.onlyWatchAccount" = "Bu cüzdan sadece izlemek için kullanılabilir. Gizli Anahtarı veya Anahtar dosyasının aktararak işlemleri ve mesajları daha detaylı görüntüleyebilirsiniz";
 "Mnemonic" = "Hafıza";
 "recoveryPhrase.navigation.title" = "Kurtarma Cümlesi";
-"settings.shareWithFriends.button.title" = "Arkadaşlarınızla Paylaşın";
+"Share With Friends" = "Arkadaşlarınızla Paylaşın";
 "transaction.cell.unknown.title" = "Bilinmeyen";
 "welldone.description.label.text" = "Bu uygulamayı arkadaşlarınızla paylaşarak büyümemize yardımcı olun!";
 "welldone.navigation.title" = "Teşekkürler!";
-"welldone.share.label.text" = "Paylaş";
 "welldone.viewmodel.sharing.text1" = "İşte Ethereum ve ERC20 tokenlerimi saklamak için kullandığım uygulama.";
 "welldone.viewmodel.sharing.text2" = "Trust'a bakın - Ethereum ve ERC20 tokenlerimi güvenli bir şekilde saklamamı sağlayan cüzdan.";
 "welldone.viewmodel.sharing.text3" = "Trust cüzdan uygulamasında Ethereum ve ERC20 tokenlerimi güvenle saklıyorum";

@@ -125,11 +125,10 @@
 "InCoordinatorError.onlyWatchAccount" = "這個錢包只能觀察，請導入私鑰 / Keystore 來簽署交易";
 "Mnemonic" = "助記詞";
 "recoveryPhrase.navigation.title" = "恢復短語";
-"settings.shareWithFriends.button.title" = "與朋友分享";
+"Share With Friends" = "與朋友分享";
 "transaction.cell.unknown.title" = "未知";
 "welldone.description.label.text" = "通過與你的朋友分享這個應用來幫助我們成長！";
 "welldone.navigation.title" = "謝謝！";
-"welldone.share.label.text" = "分享";
 "welldone.viewmodel.sharing.text1" = "這個是我用來存儲以太幣和 ERC20 通證應用。";
 "welldone.viewmodel.sharing.text2" = "請看 Trust - 讓我安全地存儲以太幣和 ERC20 通證的錢包。";
 "welldone.viewmodel.sharing.text3" = "我安全地將以太幣和 ERC20 通證存儲在 Trust 錢包裡。";

@@ -124,11 +124,10 @@
 "InCoordinatorError.onlyWatchAccount" = "このウォレットは監視にのみ利用できます。トランザクション／メッセージに署名するため秘密鍵/Keystoreをインポートしてください";
 "Mnemonic" = "ニーモニック";
 "recoveryPhrase.navigation.title" = "リカバリーフレーズ";
-"settings.shareWithFriends.button.title" = "友だちにシェアする";
+"Share With Friends" = "友だちにシェアする";
 "transaction.cell.unknown.title" = "Unknown";
 "welldone.description.label.text" = "このアプリの発展のため、お友達にシェアしていただけませんか？";
 "welldone.navigation.title" = "ありがとうございます！";
-"welldone.share.label.text" = "シェアする";
 "welldone.viewmodel.sharing.text1" = "これは私がETHとERC20トークンを保存するために使用するアプリです。";
 "welldone.viewmodel.sharing.text2" = "ぜひTrustを使ってみてください。イーサリアムとERC20トークンを安全に保管できるウォレットです。";
 "welldone.viewmodel.sharing.text3" = "イーサリアムとERC20トークンをTrust Walletに安全に保管します";

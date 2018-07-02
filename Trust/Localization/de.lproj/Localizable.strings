@@ -124,11 +124,10 @@
 "InCoordinatorError.onlyWatchAccount" = "Nur öffentliche Informationen dieses Wallets einsehbar. Importieren Sie den privaten Schlüssel / Keystore, um Transaktionen zu signieren";
 "Mnemonic" = "Mnemonisch";
 "recoveryPhrase.navigation.title" = "Wiederherstellungs-Satz";
-"settings.shareWithFriends.button.title" = "Mit Freunden teilen";
+"Share With Friends" = "Mit Freunden teilen";
 "transaction.cell.unknown.title" = "Unbekannt";
 "welldone.description.label.text" = "Helfen Sie uns, indem Sie diese App mit Ihren Freunden teilen!";
 "welldone.navigation.title" = "Vielen Dank!";
-"welldone.share.label.text" = "Teilen";
 "welldone.viewmodel.sharing.text1" = "Hier ist die App, die ich zum aufbewahren von ETH und ERC20-Token benutze.";
 "welldone.viewmodel.sharing.text2" = "Probieren Sie Trust aus - die Wallet, in der ich meine Ethereum und ERC20-Token sicher aufbewahren kann.";
 "welldone.viewmodel.sharing.text3" = "Ich bewahre meine Ethereum und ERC20-Tokens in der Trust-Wallet sicher auf.";

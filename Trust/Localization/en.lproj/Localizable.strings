@@ -124,11 +124,10 @@
 "InCoordinatorError.onlyWatchAccount" = "This wallet can be only used for watching. Import Private Key/Keystore to sign transactions/messages";
 "Mnemonic" = "Mnemonic";
 "recoveryPhrase.navigation.title" = "Recovery Phrase";
-"settings.shareWithFriends.button.title" = "Share With Friends";
+"Share With Friends" = "Share With Friends";
 "transaction.cell.unknown.title" = "Unknown";
 "welldone.description.label.text" = "Help us grow by sharing this app with your friends!";
 "welldone.navigation.title" = "Thank you!";
-"welldone.share.label.text" = "Share";
 "welldone.viewmodel.sharing.text1" = "Here is the app I use to store my ETH and ERC20 tokens.";
 "welldone.viewmodel.sharing.text2" = "Check out Trust - the wallet that lets me securely store my Ethereum and ERC20 tokens.";
 "welldone.viewmodel.sharing.text3" = "I securely store Ethereum and ERC20 tokens in the Trust wallet";
@@ -276,3 +275,4 @@
 "wallet.info.exportBackupPhrase" = "Show Backup Phrase";
 "export.reveal.button.title" = "Hold to Reveal";
 "Reload" = "Reload";
+"settings.shareWithFriends.button.title" = "Share With Friends";

@@ -124,11 +124,10 @@
 "InCoordinatorError.onlyWatchAccount" = "Ví này có thể chỉ được sử dụng để xem. Nhập Private Key/Keystore để xác nhận thực hiện các giao dịch.";
 "Mnemonic" = "Ghi nhớ.";
 "recoveryPhrase.navigation.title" = "Cụm từ để phục hồi";
-"settings.shareWithFriends.button.title" = "Chia sẻ với bạn bè.";
+"Share With Friends" = "Chia sẻ với bạn bè.";
 "transaction.cell.unknown.title" = "Không xác định";
 "welldone.description.label.text" = "Giúp chúng tôi lớn mạnh bằng cách chia sẻ ứng dụng này với bạn bè của bạn.";
 "welldone.navigation.title" = "Cám ơn!";
-"welldone.share.label.text" = "Chia sẻ";
 "welldone.viewmodel.sharing.text1" = "Đây là ứng dụng tôi dùng để quản lý ETH và các loại tiền mã hóa tương thích chuẩn ERC20";
 "welldone.viewmodel.sharing.text2" = "Khám phá Trust - Một ví cho phép lưu trữ an toàn Ethereum và các loại tiền tương thích với ERC20.";
 "welldone.viewmodel.sharing.text3" = "Ethereum và các loại tiền mã hóa tương thích ERC20 của tôi được quản lý an toàn bởi ví Trust.";

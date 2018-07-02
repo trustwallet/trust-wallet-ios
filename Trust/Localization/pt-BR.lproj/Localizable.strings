@@ -124,11 +124,10 @@
 "InCoordinatorError.onlyWatchAccount" = "Esta carteira só pode ser usada para visualização. Importe a Chave Privada de armazenamento para assinar transações";
 "Mnemonic" = "Mnemônica";
 "recoveryPhrase.navigation.title" = "Frase de Recuperação";
-"settings.shareWithFriends.button.title" = "Compartilhe com os seus amigos";
+"Share With Friends" = "Compartilhe com os seus amigos";
 "transaction.cell.unknown.title" = "Desconhecido";
 "welldone.description.label.text" = "Ajude-nos a crescer compartilhando este aplicativo com seus amigos!";
 "welldone.navigation.title" = "Obrigado!";
-"welldone.share.label.text" = "Compartilhar";
 "welldone.viewmodel.sharing.text1" = "Aqui está o aplicativo que eu uso para armazenar meus tokens ETH e ERC20.";
 "welldone.viewmodel.sharing.text2" = "Dê uma olhada no Trust - a carteira que me permite armazenar de forma segura meus tokens Ethereum e ERC20.";
 "welldone.viewmodel.sharing.text3" = "Eu armazeno de forma segura tokens Ethereum e ERC20 na carteira Trust.";
