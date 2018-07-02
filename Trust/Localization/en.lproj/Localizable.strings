@@ -181,7 +181,6 @@
 "browser.bookmarks.button.title" = "Bookmarks";
 "browser.bookmarks.confirm.delete.title" = "Are you sure you would like to delete this bookmark?";
 "browser.bookmarks.title" = "Bookmarks";
-"browser.share.button.title" = "Share";
 "browser.url.textfield.placeholder" = "Search or enter website url";
 "Collectibles" = "Collectibles";
 "confirmPayment.maxTotal.label.title" = "Max Total";
@@ -201,6 +200,7 @@
 "tokens.token.edit.navigation.title" = "Edit Custom Token";
 "wallet.section.hdWallet.title" = "HD Wallet";
 "wallets.export.alertSheet.title" = "Export Private Key";
+"Share" = "Share";
 "collectibles.discover.label.title" = "Explore on OpenSea.io";
 "configureTransaction.error.gasFeeHigh" = "Gas Fee is too high. Max available: %1$@ %2$@";
 "sent.transaction.message" = "Wait for the transaction to be mined on the network to see details.";
@@ -275,3 +275,4 @@
 "verifyPassphrase.skip.confirm.title" = "Are you sure you want to skip this step?";
 "wallet.info.exportBackupPhrase" = "Show Backup Phrase";
 "export.reveal.button.title" = "Hold to Reveal";
+"Reload" = "Reload";

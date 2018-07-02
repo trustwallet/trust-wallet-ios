@@ -181,7 +181,6 @@
 "browser.bookmarks.button.title" = "书签";
 "browser.bookmarks.confirm.delete.title" = "你确定要删除这个书签吗？";
 "browser.bookmarks.title" = "书签";
-"browser.share.button.title" = "分享";
 "browser.url.textfield.placeholder" = "搜索或输入网址";
 "Collectibles" = "藏品";
 "confirmPayment.maxTotal.label.title" = "最大总计";
@@ -201,6 +200,7 @@
 "tokens.token.edit.navigation.title" = "编辑自定义通证";
 "wallet.section.hdWallet.title" = "HD 钱包";
 "wallets.export.alertSheet.title" = "导出私钥";
+"Share" = "分享";
 "collectibles.discover.label.title" = "发现";
 "configureTransaction.error.gasFeeHigh" = "Gas 费用太高，最大可用：%1$@ %2$@";
 "sent.transaction.message" = "等待交易在网络上被挖掘以查看详细信息。";

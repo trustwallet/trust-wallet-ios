@@ -44,7 +44,7 @@ class DepositCoordinator: Coordinator {
         let changellyAction = UIAlertAction(title: NSLocalizedString("deposit.buy.button.changelly.title", value: "via Changelly", comment: ""), style: .default) { _ in
             self.showChangelly()
         }
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
+        let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel) { _ in }
 
         alertController.addAction(coinbaseAction)
         alertController.addAction(shapeShiftAction)

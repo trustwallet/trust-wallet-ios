@@ -225,7 +225,7 @@ class ImportWalletViewController: FormViewController {
         ) { _ in
             self.showDocumentPicker()
         })
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in })
+        alertController.addAction(UIAlertAction(title: R.string.localizable.cancel(), style: .cancel) { _ in })
         present(alertController, animated: true)
     }
 

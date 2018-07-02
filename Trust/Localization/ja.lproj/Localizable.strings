@@ -181,7 +181,6 @@
 "browser.bookmarks.button.title" = "ブックマーク";
 "browser.bookmarks.confirm.delete.title" = "このブックマークを削除しますか？";
 "browser.bookmarks.title" = "ブックマーク";
-"browser.share.button.title" = "シェアする";
 "browser.url.textfield.placeholder" = "検索またはウェブサイトのURLを入力する";
 "Collectibles" = "コレクション";
 "confirmPayment.maxTotal.label.title" = "最大合計";
@@ -201,6 +200,7 @@
 "tokens.token.edit.navigation.title" = "カスタムトークンの編集";
 "wallet.section.hdWallet.title" = "HDウォレット";
 "wallets.export.alertSheet.title" = "秘密鍵のエクスポート";
+"Share" = "シェアする";
 "collectibles.discover.label.title" = "OpenSea.ioで探す";
 "configureTransaction.error.gasFeeHigh" = "ガス手数料が高すぎます。利用可能な最大値%1$@ %2$@";
 "sent.transaction.message" = "ネットワーク上でトランザクションが承認されるまで、詳細の表示をお待ちください。";

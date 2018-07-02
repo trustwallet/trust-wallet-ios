@@ -181,7 +181,6 @@
 "browser.bookmarks.button.title" = "Yer imleri";
 "browser.bookmarks.confirm.delete.title" = "Bu yer imini silmek istediğinizden emin misiniz?";
 "browser.bookmarks.title" = "Yer imleri";
-"browser.share.button.title" = "Paylaş";
 "browser.url.textfield.placeholder" = "Web sitesini arayın veya bağlantıyı girin";
 "Collectibles" = "Toplanabilirler";
 "confirmPayment.maxTotal.label.title" = "Maksimum Toplam";
@@ -201,6 +200,7 @@
 "tokens.token.edit.navigation.title" = "Özel Tokeni Düzenle";
 "wallet.section.hdWallet.title" = "HD Cüzdan";
 "wallets.export.alertSheet.title" = "Gizli Anahtarı Dışa Aktar";
+"Share" = "Paylaş";
 "collectibles.discover.label.title" = "OpenSea.io'da keşfedin";
 "configureTransaction.error.gasFeeHigh" = "Gaz Ücreti çok yüksek. Maksimum kullanılabilir: %1$@ %2$@";
 "sent.transaction.message" = "Ayrıntıları görmek için ağda işlem yapılmasını bekleyin.";

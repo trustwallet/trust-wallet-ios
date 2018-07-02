@@ -144,7 +144,6 @@
 "browser.bookmarks.button.title" = "Закладки";
 "browser.bookmarks.confirm.delete.title" = "Вы уверены, что хотите удалить эту закладку?";
 "browser.bookmarks.title" = "Закладки";
-"browser.share.button.title" = "Поделиться";
 "browser.url.textfield.placeholder" = "Поиск или введите URL веб-сайта";
 "confirmPayment.maxTotal.label.title" = "Макс Тотал";
 "Delete" = "Удалить";
@@ -159,6 +158,7 @@
 "tokens.token.edit.navigation.title" = "Редактировать токен пользователя";
 "wallet.section.hdWallet.title" = "HD-кошелек";
 "wallets.export.alertSheet.title" = "Экспортировать приватный ключ";
+"Share" = "Поделиться";
 "collectibles.discover.label.title" = "Окрыть OpenSea.io";
 "configureTransaction.error.gasFeeHigh" = "Плата за газ слишком высока. Макс: [%1$ s] [%2$ s]";
 "sent.transaction.message" = "Подождите, пока транзакция будет подтверждена в сети, чтобы просмотреть детали.";

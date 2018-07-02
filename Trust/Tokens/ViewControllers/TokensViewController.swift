@@ -197,13 +197,13 @@ extension TokensViewController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let token = viewModel.item(for: indexPath)
-        let delete = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Delete", value: "Delete", comment: "")) {[unowned self] (_, _) in
+        let delete = UITableViewRowAction(style: .destructive, title: R.string.localizable.delete()) {[unowned self] (_, _) in
             self.delegate?.didDelete(token: token, in: self)
         }
-        let edit = UITableViewRowAction(style: .normal, title: NSLocalizedString("Edit", value: "Edit", comment: "")) {[unowned self] (_, _) in
+        let edit = UITableViewRowAction(style: .normal, title: R.string.localizable.edit()) {[unowned self] (_, _) in
             self.delegate?.didEdit(token: token, in: self)
         }
-        let disable = UITableViewRowAction(style: .normal, title: NSLocalizedString("Disable", value: "Disable", comment: "")) {[unowned self] (_, _) in
+        let disable = UITableViewRowAction(style: .normal, title: R.string.localizable.disable()) {[unowned self] (_, _) in
             self.delegate?.didDisable(token: token, in: self)
         }
 

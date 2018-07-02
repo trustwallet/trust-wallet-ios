@@ -13,11 +13,11 @@ struct WalletInfoViewModel {
     }
 
     var title: String {
-        return NSLocalizedString("Manage", value: "Manage", comment: "")
+        return R.string.localizable.manage()
     }
 
     var nameTitle: String {
-        return NSLocalizedString("Name", value: "Name", comment: "")
+        return R.string.localizable.name()
     }
 
     var types: [WalletInfoType] {

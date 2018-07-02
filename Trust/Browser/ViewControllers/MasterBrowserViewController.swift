@@ -22,9 +22,9 @@ class MasterBrowserViewController: UIViewController {
 
     private lazy var segmentController: UISegmentedControl = {
         let items = [
-            NSLocalizedString("New", value: "New", comment: ""),
-            NSLocalizedString("Bookmarks", value: "Bookmarks", comment: ""),
-            NSLocalizedString("History", value: "History", comment: ""),
+            R.string.localizable.new(),
+            R.string.localizable.bookmarks(),
+            R.string.localizable.history(),
         ]
         let segmentedControl = UISegmentedControl(items: items)
         segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)

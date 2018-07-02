@@ -56,7 +56,7 @@ class SendCoordinator: Coordinator {
         controller.navigationItem.titleView = BalanceTitleView.make(from: self.session, transferType)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: NSLocalizedString("Next", value: "Next", comment: ""),
+            title: R.string.localizable.next(),
             style: .done,
             target: controller,
             action: #selector(SendViewController.send)

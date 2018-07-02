@@ -181,7 +181,6 @@
 "browser.bookmarks.button.title" = "Lesezeichen";
 "browser.bookmarks.confirm.delete.title" = "Sind Sie sicher, dass Sie dieses Lesezeichen löschen möchten?";
 "browser.bookmarks.title" = "Lesezeichen";
-"browser.share.button.title" = "Teilen";
 "browser.url.textfield.placeholder" = "Suchen oder geben Sie die URL der Website ein";
 "Collectibles" = "Sammlerstücke";
 "confirmPayment.maxTotal.label.title" = "Max. Gesamt";
@@ -201,6 +200,7 @@
 "tokens.token.edit.navigation.title" = "Ein benutzerdefiniertes Token bearbeiten";
 "wallet.section.hdWallet.title" = "HD Wallet";
 "wallets.export.alertSheet.title" = "Privaten Schlüssel exportieren";
+"Share" = "Teilen";
 "collectibles.discover.label.title" = "Bei OpenSea.io stöbern";
 "configureTransaction.error.gasFeeHigh" = "Gasgebühr zu hoch. Max verfügbar: %@";
 "sent.transaction.message" = "Bitte warten Sie bis die Transaktion in die Blockchain aufgenommen wurde. Details werden dann angezeigt.";

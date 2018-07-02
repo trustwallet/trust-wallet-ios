@@ -181,7 +181,6 @@
 "browser.bookmarks.button.title" = "Dấu trang";
 "browser.bookmarks.confirm.delete.title" = "Bạn có chắc chắn muốn xóa dấu trang này?";
 "browser.bookmarks.title" = "Đánh dấu";
-"browser.share.button.title" = "Chia sẻ";
 "browser.url.textfield.placeholder" = "Tìm kiếm hoặc nhập vào địa chỉ trang web";
 "Collectibles" = "Bộ sưu tập";
 "confirmPayment.maxTotal.label.title" = "Tổng số tối đa";
@@ -201,6 +200,7 @@
 "tokens.token.edit.navigation.title" = "Thêm đồng tiền mã hóa tùy chỉnh.";
 "wallet.section.hdWallet.title" = "Ví HD";
 "wallets.export.alertSheet.title" = "Xuất khóa cá nhân";
+"Share" = "Chia sẻ";
 "collectibles.discover.label.title" = "Mở bằng OpenSea.io";
 "configureTransaction.error.gasFeeHigh" = "Phí Gas quá cao. Giới hạn tối đa: %1$@ %2$@";
 "sent.transaction.message" = "Chờ giao dịch được khai thác trên mạng để xem chi tiết.";

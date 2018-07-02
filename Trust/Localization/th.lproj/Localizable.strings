@@ -30,6 +30,7 @@
 "Delete" = "ลบ";
 "Edit" = "แก้ไข";
 "settings.support.title" = "สนับสนุน";
+"Share" = "แบ่งปัน";
 "collectibles.discover.label.title" = "สำรวจ OpenSea.io";
 "configureTransaction.error.gasFeeHigh" = "ค่าธรรมเนียมแก๊สเกินไป มี: %1$@%2$@";
 "sent.transaction.message" = "รอการทำธุรกรรมที่จะขุดบนเครือข่ายเพื่อดูรายละเอียด";

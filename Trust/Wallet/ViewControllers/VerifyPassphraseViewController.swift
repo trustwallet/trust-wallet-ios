@@ -78,7 +78,7 @@ class VerifyPassphraseViewController: UIViewController {
     lazy var doneButton: UIButton = {
         let button = Button(size: .large, style: .solid)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(NSLocalizedString("Done", value: "Done", comment: ""), for: .normal)
+        button.setTitle(R.string.localizable.done(), for: .normal)
         button.addTarget(self, action: #selector(doneAction(_:)), for: .touchUpInside)
         return button
     }()
