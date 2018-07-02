@@ -39,16 +39,17 @@ class NavigationController: UINavigationController {
 }
 
 extension NavigationController: PushableCoordinator {
-    var providedRootController: UIViewController {
-        return UIViewController()
-    }
-    
-    func pushCoordinator(_ coordinator: RootCoordinator) {
+    func pushCoordinator(_ coordinator: RootCoordinator, navigationBarHidden: Bool = true) {
         viewControllersToChildCoordinators[coordinator.providedRootController] = coordinator
         pushViewController(coordinator.providedRootController, animated: true)
     }
-    func popCoordinator(_ coordinator: RootCoordinator) {
+    
+    func popCoordinator(_ coordinator: RootCoordinator, navigationBarHidden: Bool = true) {
         viewControllersToChildCoordinators.removeValue(forKey: coordinator.providedRootController)
         popViewController(animated: true)
+    }
+    
+    var providedRootController: UIViewController {
+        return UIViewController()
     }
 }

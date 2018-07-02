@@ -190,7 +190,7 @@ class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
             navigationController: NavigationController()
         )
         coordinator.delegate = self
-        navigationController.setNavigationBarHidden(true, animated: false)
+        
         pushCoordinator(coordinator)
     }
 
@@ -319,12 +319,10 @@ extension BrowserCoordinator: ConfirmCoordinatorDelegate {
 
 extension BrowserCoordinator: ScanQRCodeCoordinatorDelegate {
     func didCancel(in coordinator: ScanQRCodeCoordinator) {
-        navigationController.setNavigationBarHidden(false, animated: false)
         popCoordinator(coordinator)
     }
 
     func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
-        navigationController.setNavigationBarHidden(false, animated: false)
         popCoordinator(coordinator)
         guard let url = URL(string: result) else {
             return

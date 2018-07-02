@@ -7,6 +7,7 @@ import PromiseKit
 
 protocol NewTokenViewControllerDelegate: class {
     func didAddToken(token: ERC20Token, in viewController: NewTokenViewController)
+    func didPressOpenQrCodeScanner()
 }
 
 class NewTokenViewController: FormViewController {
@@ -118,12 +119,7 @@ class NewTokenViewController: FormViewController {
     }
 
     @objc func openReader() {
-        let coordinator = ScanQRCodeCoordinator(
-            navigationController: NavigationController()
-        )
-        coordinator.delegate = self
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        (navigationController as? NavigationController)?.pushCoordinator(coordinator)
+        delegate?.didPressOpenQrCodeScanner()
     }
 
     @objc func pasteAction() {
@@ -138,7 +134,7 @@ class NewTokenViewController: FormViewController {
         updateContractValue(value: value)
     }
 
-    private func updateContractValue(value: String) {
+    public func updateContractValue(value: String) {
         contractRow?.value = value
         contractRow?.reload()
         fetchInfo(for: value)
@@ -165,18 +161,5 @@ class NewTokenViewController: FormViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension NewTokenViewController: ScanQRCodeCoordinatorDelegate {
-    func didCancel(in coordinator: ScanQRCodeCoordinator) {
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        (navigationController as? NavigationController)?.popCoordinator(coordinator)
-    }
-    func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        (navigationController as? NavigationController)?.popCoordinator(coordinator)
-        guard let result = QRURLParser.from(string: result) else { return }
-        updateContractValue(value: result.address)
     }
 }
