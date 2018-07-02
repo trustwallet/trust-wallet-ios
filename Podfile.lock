@@ -10,7 +10,7 @@ PODS:
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
   - CryptoSwift (0.10.0)
-  - Eureka (4.1.1)
+  - Eureka (4.2.0)
   - Fabric (1.7.6)
   - JdenticonSwift (0.0.1)
   - JSONRPCKit (2.0.0):
@@ -69,7 +69,7 @@ DEPENDENCIES:
   - Branch
   - Crashlytics (~> 3.10)
   - CryptoSwift (~> 0.10.0)
-  - Eureka (~> 4.1.1)
+  - Eureka
   - Fabric
   - JdenticonSwift
   - JSONRPCKit (from `https://github.com/bricklife/JSONRPCKit.git`)
@@ -163,7 +163,7 @@ SPEC CHECKSUMS:
   Branch: 8b59411a12867bde4fe8c9d3c0f107c5811e303e
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
-  Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
+  Eureka: 0748c7bbb2560130e43c7bfa83e99c98854a1f42
   Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
   JdenticonSwift: bc532f2761566eb29f26b085e5f72de25bc065ce
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
@@ -191,6 +191,6 @@ SPEC CHECKSUMS:
   TrustWeb3Provider: 50fa391bdf170feb43dd4419992931510a5751d8
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
-PODFILE CHECKSUM: 90ab6ceeea09c923e8f415b970c5cfd60ebc0415
+PODFILE CHECKSUM: 4d3ed305480a5d9506ceacb198b001d9e0a6d000
 
 COCOAPODS: 1.5.3
