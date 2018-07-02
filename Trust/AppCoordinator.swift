@@ -143,10 +143,10 @@ extension AppCoordinator: InitialWalletCreationCoordinatorDelegate {
         removeCoordinator(coordinator)
     }
 
-    func didAddAccount(_ account: Wallet, in coordinator: InitialWalletCreationCoordinator) {
+    func didAddAccount(_ account: WalletInfo, in coordinator: InitialWalletCreationCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
-        showTransactions(for: account)
+        showTransactions(for: account.wallet)
     }
 }
 

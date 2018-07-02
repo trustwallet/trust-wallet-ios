@@ -4,10 +4,10 @@ import Foundation
 
 struct WalletInfoViewModel {
 
-    let wallet: Wallet
+    let wallet: WalletInfo
 
     init(
-        wallet: Wallet
+        wallet: WalletInfo
     ) {
         self.wallet = wallet
     }
@@ -21,7 +21,7 @@ struct WalletInfoViewModel {
     }
 
     var types: [WalletInfoType] {
-        switch wallet.type {
+        switch wallet.wallet.type {
         case .privateKey(let account):
             return [
                 .exportKeystore(account),

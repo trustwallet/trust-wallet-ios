@@ -6,7 +6,7 @@ import TrustCore
 import QRCodeReaderViewController
 
 protocol ImportWalletViewControllerDelegate: class {
-    func didImportAccount(account: Wallet, in viewController: ImportWalletViewController)
+    func didImportAccount(account: WalletInfo, in viewController: ImportWalletViewController)
 }
 
 class ImportWalletViewController: FormViewController {
@@ -152,7 +152,8 @@ class ImportWalletViewController: FormViewController {
     }
 
     func didImport(account: Wallet) {
-        delegate?.didImportAccount(account: account, in: self)
+        let walletInfo = WalletInfo(wallet: account, info: WalletObject.from(account))
+        delegate?.didImportAccount(account: walletInfo, in: self)
     }
 
     func importWallet() {
@@ -197,7 +198,8 @@ class ImportWalletViewController: FormViewController {
     @objc func demo() {
         //Used for taking screenshots to the App Store by snapshot
         let demoWallet = Wallet(type: .address(Address(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")!))
-        delegate?.didImportAccount(account: demoWallet, in: self)
+        let walletInfo = WalletInfo(wallet: demoWallet, info: WalletObject.from(demoWallet))
+        delegate?.didImportAccount(account: walletInfo, in: self)
     }
 
     @objc func importOptions(sender: UIBarButtonItem) {

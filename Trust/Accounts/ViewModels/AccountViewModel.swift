@@ -37,6 +37,7 @@ struct AccountViewModel {
     }
 
     var title: String {
+        guard wallet.info.name.isEmpty else { return wallet.info.name }
         let address = wallet.wallet.address.description
         if ensName.isEmpty {
             return address

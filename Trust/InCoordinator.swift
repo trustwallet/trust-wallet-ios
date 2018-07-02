@@ -138,10 +138,14 @@ class InCoordinator: Coordinator {
         walletCoordinator.delegate = self
         walletCoordinator.start()
         addCoordinator(walletCoordinator)
+
+        let walletStorage = WalletStorage(realm: realm)
+
         let settingsCoordinator = SettingsCoordinator(
             keystore: keystore,
             session: session,
             storage: transactionsStorage,
+            walletStorage: walletStorage,
             balanceCoordinator: balanceCoordinator,
             sharedRealm: sharedRealm,
             ensManager: ENSManager(realm: realm, config: config)

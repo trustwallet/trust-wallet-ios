@@ -7,6 +7,7 @@ import Realm
 class WalletObject: Object {
 
     @objc dynamic var id: String = ""
+    @objc dynamic var name: String = ""
 
     override static func primaryKey() -> String? {
         return "id"
@@ -14,7 +15,13 @@ class WalletObject: Object {
 
     static func from(_ wallet: Wallet) -> WalletObject {
         let info = WalletObject()
-        info.id = wallet.description
+        info.id = wallet.primaryKey
         return info
+    }
+}
+
+extension Wallet {
+    var primaryKey: String {
+        return description
     }
 }

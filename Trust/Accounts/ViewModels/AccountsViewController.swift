@@ -5,9 +5,9 @@ import UIKit
 import PromiseKit
 
 protocol AccountsViewControllerDelegate: class {
-    func didSelectAccount(account: Wallet, in viewController: AccountsViewController)
-    func didDeleteAccount(account: Wallet, in viewController: AccountsViewController)
-    func didSelectInfoForAccount(account: Wallet, sender: UIView, in viewController: AccountsViewController)
+    func didSelectAccount(account: WalletInfo, in viewController: AccountsViewController)
+    func didDeleteAccount(account: WalletInfo, in viewController: AccountsViewController)
+    func didSelectInfoForAccount(account: WalletInfo, sender: UIView, in viewController: AccountsViewController)
 }
 
 class AccountsViewController: UITableViewController {
@@ -30,22 +30,25 @@ class AccountsViewController: UITableViewController {
 
     var accounts: [WalletInfo] {
         return wallets.map {
-            return WalletInfo(wallet: $0, info: WalletObject.from($0))
+            return WalletInfo(wallet: $0, info: walletStorage.get(for: $0))
         }
     }
 
     private var balances: [Address: Balance?] = [:]
     private var addrNames: [Address: String] = [:]
     private let keystore: Keystore
+    private let walletStorage: WalletStorage
     private let balanceCoordinator: TokensBalanceService
     private let config = Config()
 
     init(
         keystore: Keystore,
+        walletStorage: WalletStorage,
         balanceCoordinator: TokensBalanceService,
         ensManager: ENSManager
     ) {
         self.keystore = keystore
+        self.walletStorage = walletStorage
         self.balanceCoordinator = balanceCoordinator
         self.ensManager = ensManager
         super.init(style: .grouped)
@@ -100,7 +103,7 @@ class AccountsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete, let wallet = self.wallet(for: indexPath) {
-            confirmDelete(wallet: wallet.wallet)
+            confirmDelete(wallet: wallet)
         }
     }
 
@@ -118,11 +121,11 @@ class AccountsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let wallet = self.wallet(for: indexPath)?.wallet else { return }
+        guard let wallet = self.wallet(for: indexPath) else { return }
         delegate?.didSelectAccount(account: wallet, in: self)
     }
 
-    func confirmDelete(wallet: Wallet) {
+    func confirmDelete(wallet: WalletInfo) {
         confirm(
             title: NSLocalizedString("accounts.confirm.delete.title", value: "Are you sure you would like to delete this wallet?", comment: ""),
             message: NSLocalizedString("accounts.confirm.delete.message", value: "Make sure you have backup of your wallet.", comment: ""),
@@ -137,9 +140,9 @@ class AccountsViewController: UITableViewController {
         }
     }
 
-    func delete(wallet: Wallet) {
+    func delete(wallet: WalletInfo) {
         navigationController?.displayLoading(text: NSLocalizedString("Deleting", value: "Deleting", comment: ""))
-        keystore.delete(wallet: wallet) { [weak self] result in
+        keystore.delete(wallet: wallet.wallet) { [weak self] result in
             guard let `self` = self else { return }
             self.navigationController?.hideLoading()
             switch result {
@@ -193,7 +196,7 @@ class AccountsViewController: UITableViewController {
 }
 
 extension AccountsViewController: AccountViewCellDelegate {
-    func accountViewCell(_ cell: AccountViewCell, didTapInfoViewForAccount account: Wallet) {
+    func accountViewCell(_ cell: AccountViewCell, didTapInfoViewForAccount account: WalletInfo) {
         self.delegate?.didSelectInfoForAccount(account: account, sender: cell.infoButton, in: self)
     }
 }
