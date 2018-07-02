@@ -56,8 +56,7 @@ class ImportWalletViewController: FormViewController {
 
         title = viewModel.title
         navigationItem.rightBarButtonItems = [
-            // Disabled, since iCloud entitlment is missing. Required for the transfer to the new entity
-            // UIBarButtonItem(image: R.image.import_options(), style: .done, target: self, action: #selector(importOptions)),
+            UIBarButtonItem(image: R.image.import_options(), style: .done, target: self, action: #selector(importOptions)),
             UIBarButtonItem(image: R.image.qr_code_icon(), style: .done, target: self, action: #selector(openReader)),
         ]
 
