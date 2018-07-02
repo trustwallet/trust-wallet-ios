@@ -35,7 +35,7 @@ class ScanQRCodeCoordinator: NSObject, Coordinator, RootViewControllerProvider {
         delegate?.didCancel(in: self)
     }
 
-    var rootViewController: UIViewController {
+    var providedRootController: UIViewController {
         return qrcodeController
     }
 }

@@ -4,5 +4,5 @@ import Foundation
 import UIKit
 
 protocol RootViewControllerProvider: class {
-    var rootViewController: UIViewController { get }
+    var providedRootController: UIViewController { get }
 }

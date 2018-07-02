@@ -13,7 +13,7 @@ protocol BrowserCoordinatorDelegate: class {
     func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator)
 }
 
-class BrowserCoordinator: NSObject, Coordinator {
+class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
     var coordinators: [Coordinator] = []
     let session: WalletSession
     let keystore: Keystore
@@ -41,6 +41,9 @@ class BrowserCoordinator: NSObject, Coordinator {
         controller.delegate = self
         return controller
     }()
+    var providedRootController: UIViewController {
+        return rootViewController
+    }
 
     lazy var browserViewController: BrowserViewController = {
         let controller = BrowserViewController(account: session.account, config: session.config)
@@ -187,9 +190,8 @@ class BrowserCoordinator: NSObject, Coordinator {
             navigationController: NavigationController()
         )
         coordinator.delegate = self
-        addCoordinator(coordinator)
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.pushCoordinator(coordinator)
+        pushCoordinator(coordinator)
     }
 
     private func presentMoreOptions(sender: UIView) {
@@ -317,14 +319,13 @@ extension BrowserCoordinator: ConfirmCoordinatorDelegate {
 
 extension BrowserCoordinator: ScanQRCodeCoordinatorDelegate {
     func didCancel(in coordinator: ScanQRCodeCoordinator) {
-        navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.popCoordinator(coordinator)
-        removeCoordinator(coordinator)
+        navigationController.setNavigationBarHidden(false, animated: false)
+        popCoordinator(coordinator)
     }
 
     func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
-        navigationController.popCoordinator(coordinator)
-        removeCoordinator(coordinator)
+        navigationController.setNavigationBarHidden(false, animated: false)
+        popCoordinator(coordinator)
         guard let url = URL(string: result) else {
             return
         }

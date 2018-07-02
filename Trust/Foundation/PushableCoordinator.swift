@@ -12,23 +12,23 @@ protocol PushableCoordinator: RootViewControllerProvider {
 
 extension PushableCoordinator where Self: RootCoordinator {
     func pushCoordinator(_ coordinator: RootCoordinator) {
-        if let presentedNVC = rootViewController.presentedViewController as? UINavigationController {
+        if let presentedNVC = providedRootController.presentedViewController as? UINavigationController {
             addCoordinator(coordinator)
-            presentedNVC.pushViewController(coordinator.rootViewController, animated: true)
+            presentedNVC.pushViewController(coordinator.providedRootController, animated: true)
         } else {
-            guard let nvc = rootViewController.navigationController else {
+            guard let nvc = providedRootController.navigationController else {
                 return
             }
             addCoordinator(coordinator)
-            nvc.pushViewController(coordinator.rootViewController, animated: true)
+            nvc.pushViewController(coordinator.providedRootController, animated: true)
         }
     }
     func popCoordinator(_ coordinator: RootCoordinator) {
-        if let presentedNVC = rootViewController.presentedViewController as? UINavigationController {
-            presentedNVC.popToViewController(coordinator.rootViewController, animated: true)
+        if let presentedNVC = providedRootController.presentedViewController as? UINavigationController {
+            presentedNVC.popToViewController(coordinator.providedRootController, animated: true)
             removeCoordinator(coordinator)
         } else {
-            guard let nvc = rootViewController.navigationController else {
+            guard let nvc = providedRootController.navigationController else {
                 return
             }
             nvc.popViewController(animated: true)
