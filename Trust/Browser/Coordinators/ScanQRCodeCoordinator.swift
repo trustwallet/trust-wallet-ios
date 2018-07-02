@@ -14,7 +14,7 @@ class ScanQRCodeCoordinator: NSObject, Coordinator {
 
     let navigationController: NavigationController
     lazy var qrcodeController: QRCodeReaderViewController = {
-        let controller = QRCodeReaderViewController(cancelButtonTitle: "Cancel")
+        let controller = QRCodeReaderViewController(cancelButtonTitle: R.string.localizable.cancel())
         controller.delegate = self
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         controller.delegate = self

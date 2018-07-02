@@ -363,7 +363,7 @@ extension BrowserCoordinator: WKUIDelegate {
             style: .alert,
             in: navigationController
         )
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
+        alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
             completionHandler()
         }))
         navigationController.present(alertController, animated: true, completion: nil)
@@ -376,7 +376,7 @@ extension BrowserCoordinator: WKUIDelegate {
             style: .alert,
             in: navigationController
         )
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
+        alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
             completionHandler(true)
         }))
         alertController.addAction(UIAlertAction(title: R.string.localizable.cancel(), style: .default, handler: { _ in
@@ -395,7 +395,7 @@ extension BrowserCoordinator: WKUIDelegate {
         alertController.addTextField { (textField) in
             textField.text = defaultText
         }
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
+        alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
             if let text = alertController.textFields?.first?.text {
                 completionHandler(text)
             } else {
