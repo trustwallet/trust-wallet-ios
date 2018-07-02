@@ -39,4 +39,4 @@
 "settings.network.test.warnning.message" = "คุณกำลังเปลี่ยนไปใช้เครือข่ายทดสอบที่ทำธุรกรรมเพื่อการทดสอบเท่านั้น";
 "settings.network.test.warnning.title" = "การเตือน";
 "Disable" = "ปิดการใช้งาน";
-"wallets.navigation.title" = "กระเป๋าสตางค์";
+"Wallets" = "กระเป๋าสตางค์";

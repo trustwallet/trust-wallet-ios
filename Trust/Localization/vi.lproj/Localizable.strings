@@ -106,7 +106,6 @@
 "settings.currency.button.title" = "Tiền tệ";
 "settings.currency.popular.label.title" = "Phổ biến";
 "settings.network.test.label.title" = "Kiểm tra";
-"settings.wallets.button.title" = "Các ví";
 "Symbol" = "Ký hiệu";
 "Today" = "Hôm nay";
 "Tokens" = "Các đồng tiền mã hóa";
@@ -208,7 +207,7 @@
 "settings.network.test.warnning.message" = "Bạn đang chuyển sang mạng thử nghiệm, nơi các giao dịch chỉ dành cho mục đích thử nghiệm";
 "settings.network.test.warnning.title" = "Cảnh báo";
 "Disable" = "Vô hiệu hóa";
-"wallets.navigation.title" = "Ví";
+"Wallets" = "Ví";
 "browser.qrCode.button.title" = "Trình đọc QR";
 "nft.details.external.button.title" = "Mở tại địa chỉ OpenSea.io";
 "nft.details.internal.button.title" = "Mở %@";

@@ -106,7 +106,6 @@
 "settings.currency.button.title" = "货币";
 "settings.currency.popular.label.title" = "热门";
 "settings.network.test.label.title" = "测试网络";
-"settings.wallets.button.title" = "钱包";
 "Symbol" = "符号";
 "Today" = "今天";
 "Tokens" = "通证";
@@ -208,7 +207,7 @@
 "settings.network.test.warnning.message" = "您正在切换到测试网络，交易仅用于测试目的";
 "settings.network.test.warnning.title" = "警告";
 "Disable" = "禁用";
-"wallets.navigation.title" = "钱包";
+"Wallets" = "钱包";
 "browser.qrCode.button.title" = "扫一扫";
 "nft.details.external.button.title" = "在 OpenSea.io 里打开";
 "nft.details.internal.button.title" = "在 %@ 里打开";

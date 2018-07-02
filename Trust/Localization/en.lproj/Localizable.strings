@@ -106,7 +106,6 @@
 "settings.currency.button.title" = "Currency";
 "settings.currency.popular.label.title" = "Popular";
 "settings.network.test.label.title" = "Test";
-"settings.wallets.button.title" = "Wallets";
 "Symbol" = "Symbol";
 "Today" = "Today";
 "Tokens" = "Tokens";
@@ -208,7 +207,7 @@
 "settings.network.test.warnning.message" = "You are switching to a test network where transactions are for testing purpose only";
 "settings.network.test.warnning.title" = "Warning";
 "Disable" = "Disable";
-"wallets.navigation.title" = "Wallets";
+"Wallets" = "Wallets";
 "browser.qrCode.button.title" = "QR Reader";
 "nft.details.external.button.title" = "Open on OpenSea.io";
 "nft.details.internal.button.title" = "Open on %@";
@@ -275,4 +274,3 @@
 "wallet.info.exportBackupPhrase" = "Show Backup Phrase";
 "export.reveal.button.title" = "Hold to Reveal";
 "Reload" = "Reload";
-"settings.shareWithFriends.button.title" = "Share With Friends";

@@ -107,7 +107,6 @@
 "settings.currency.button.title" = "貨幣";
 "settings.currency.popular.label.title" = "熱門";
 "settings.network.test.label.title" = "測試網絡";
-"settings.wallets.button.title" = "錢包";
 "Symbol" = "符號";
 "Today" = "今天";
 "Tokens" = "通證";
@@ -182,7 +181,7 @@
 "settings.network.test.warnning.message" = "您正在切换到一个测试网络, 其中事务仅用于测试目的";
 "settings.network.test.warnning.title" = "警告";
 "Disable" = "禁用";
-"wallets.navigation.title" = "钱包";
+"Wallets" = "钱包";
 "settings.browser.clearCache.alert.title" = "清除瀏覽數據？";
 "settings.browser.clearCache.title" = "清除瀏覽器緩存";
 "settings.browser.searchEngine.title" = "搜索引擎";

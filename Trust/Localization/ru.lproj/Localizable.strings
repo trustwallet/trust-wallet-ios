@@ -107,7 +107,6 @@
 "settings.currency.button.title" = "Валюта";
 "settings.currency.popular.label.title" = "Популярные";
 "settings.network.test.label.title" = "Тест";
-"settings.wallets.button.title" = "Кошельки";
 "Symbol" = "Символ";
 "Today" = "Cегодня";
 "Tokens" = "Токены";
@@ -166,7 +165,7 @@
 "settings.network.test.warnning.message" = "Переключении на тестовую сеть, где транзакции являются для тестирования целей только";
 "settings.network.test.warnning.title" = "Предупреждение";
 "Disable" = "Отключить";
-"wallets.navigation.title" = "Кошельки";
+"Wallets" = "Кошельки";
 "Bookmarks" = "Закладки";
 "History" = "История";
 "history.noHistory.label.title" = "История еще нет!";
@@ -207,3 +206,4 @@
 "verifyPassphrase.label.title" = "Нажмите слова, чтобы поместить их рядом друг с другом в правильном порядке.";
 "verifyPassphrase.skip.confirm.message" = "Потеря резервной фразы может поставить ваш кошелек под угрозу!";
 "verifyPassphrase.skip.confirm.title" = "Вы уверены, что хотите пропустить этот шаг?";
+"Reload" = "Перезагрузить";

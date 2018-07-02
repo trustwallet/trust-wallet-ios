@@ -106,7 +106,6 @@
 "settings.currency.button.title" = "通貨";
 "settings.currency.popular.label.title" = "人気";
 "settings.network.test.label.title" = "テスト";
-"settings.wallets.button.title" = "ウォレット";
 "Symbol" = "シンボル";
 "Today" = "本日";
 "Tokens" = "トークン";
@@ -208,7 +207,7 @@
 "settings.network.test.warnning.message" = "トランザクションがテスト目的のみのテストネットワークに切り替えようとしています。";
 "settings.network.test.warnning.title" = "警告";
 "Disable" = "非表示";
-"wallets.navigation.title" = "ウォレット";
+"Wallets" = "ウォレット";
 "browser.qrCode.button.title" = "QRリーダー";
 "nft.details.external.button.title" = "OpenSea.ioで開く";
 "nft.details.internal.button.title" = "%@で開く";

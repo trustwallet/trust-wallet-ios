@@ -133,7 +133,7 @@ class SettingsViewController: FormViewController, Coordinator {
             })
             }.cellUpdate { cell, _ in
                 cell.imageView?.image = R.image.settings_colorful_notifications()
-                cell.textLabel?.text = NSLocalizedString("settings.pushNotifications.title", value: "Push Notifications", comment: "")
+                cell.textLabel?.text = R.string.localizable.settingsPushNotificationsTitle()
                 cell.accessoryType = .disclosureIndicator
             }
 
@@ -143,14 +143,14 @@ class SettingsViewController: FormViewController, Coordinator {
             <<< browserRow()
             <<< analiticsRow()
 
-            +++ Section(NSLocalizedString("settings.joinCommunity.label.title", value: "Join Community", comment: ""))
+            +++ Section(R.string.localizable.settingsJoinCommunityLabelTitle())
 
             <<< linkProvider(type: .twitter)
             <<< linkProvider(type: .telegram)
             <<< linkProvider(type: .facebook)
             <<< linkProvider(type: .discord)
 
-            +++ Section(NSLocalizedString("settings.support.label.title", value: "Support", comment: ""))
+            +++ Section(R.string.localizable.settingsSupportTitle())
 
             <<< AppFormAppearance.button { button in
                 button.title = R.string.localizable.shareWithFriends()
@@ -167,7 +167,7 @@ class SettingsViewController: FormViewController, Coordinator {
             +++ Section()
 
             <<< TextRow {
-                $0.title = NSLocalizedString("settings.version.label.title", value: "Version", comment: "")
+                $0.title = R.string.localizable.settingsVersionLabelTitle()
                 $0.value = Bundle.main.fullVersion
                 $0.disabled = true
             }
@@ -192,10 +192,12 @@ class SettingsViewController: FormViewController, Coordinator {
             selectorController.enableDeselection = false
             selectorController.sectionKeyForValue = { option in
                 switch option {
-                case .main, .classic, .callisto, .poa: return ""
-                case .kovan, .ropsten, .rinkeby, .sokol: return NSLocalizedString("settings.network.test.label.title", value: "Test", comment: "")
+                case .main, .classic, .callisto, .poa:
+                    return ""
+                case .kovan, .ropsten, .rinkeby, .sokol:
+                    return R.string.localizable.settingsNetworkTestLabelTitle()
                 case .custom:
-                    return NSLocalizedString("settings.network.custom.label.title", value: "Custom", comment: "")
+                    return R.string.localizable.settingsNetworkCustomLabelTitle()
                 }
             }
         }.cellSetup { cell, _ in
@@ -213,7 +215,7 @@ class SettingsViewController: FormViewController, Coordinator {
         }.cellUpdate { cell, _ in
             cell.textLabel?.textColor = .black
             cell.imageView?.image = R.image.settings_colorful_wallets()
-            cell.textLabel?.text = NSLocalizedString("settings.wallets.button.title", value: "Wallets", comment: "")
+            cell.textLabel?.text = R.string.localizable.wallets()
             cell.detailTextLabel?.text = String(address.description.prefix(10)) + "..."
             cell.accessoryType = .disclosureIndicator
         }
