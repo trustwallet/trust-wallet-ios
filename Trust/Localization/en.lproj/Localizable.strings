@@ -121,7 +121,6 @@
 "Deleting" = "Deleting";
 "Ethereum Address" = "Ethereum Address";
 "InCoordinatorError.onlyWatchAccount" = "This wallet can be only used for watching. Import Private Key/Keystore to sign transactions/messages";
-"Mnemonic" = "Mnemonic";
 "recoveryPhrase.navigation.title" = "Recovery Phrase";
 "Share With Friends" = "Share With Friends";
 "transaction.cell.unknown.title" = "Unknown";
@@ -190,7 +189,7 @@
 "export.privateKey.navigation.title" = "Export Private Key";
 "export.qrCode.loading.label" = "Generating QR Code";
 "export.warning.private.key" = "Export at your own risk!";
-"export.warningTwo.private.key" = "Anyone with your backup phrase will have FULL access to your wallet!";
+"export.warningTwo.private.key" = "Anyone with your Private Key will have FULL access to your wallet!";
 "import.wallet.mnemonic.placeholder" = "Words separated by a space. (Usually contains 12 words)";
 "import.wallet.watch.placeholder" = "%@ Address";
 "settings.joinCommunity.label.title" = "Join Community";
@@ -273,3 +272,4 @@
 "wallet.info.exportBackupPhrase" = "Show Backup Phrase";
 "Reload" = "Reload";
 "export.reveal.button.title" = "Hold to Reveal";
+"Phrase" = "Phrase";

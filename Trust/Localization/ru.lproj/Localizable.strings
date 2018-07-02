@@ -207,3 +207,4 @@
 "verifyPassphrase.skip.confirm.message" = "Потеря резервной фразы может поставить ваш кошелек под угрозу!";
 "verifyPassphrase.skip.confirm.title" = "Вы уверены, что хотите пропустить этот шаг?";
 "Reload" = "Перезагрузить";
+"Phrase" = "Фраза";
