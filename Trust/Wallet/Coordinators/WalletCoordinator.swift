@@ -10,13 +10,17 @@ protocol WalletCoordinatorDelegate: class {
     func didCancel(in coordinator: WalletCoordinator)
 }
 
-class WalletCoordinator: Coordinator {
+class WalletCoordinator: Coordinator, PushableCoordinator {
 
     let navigationController: NavigationController
     weak var delegate: WalletCoordinatorDelegate?
     var entryPoint: WalletEntryPoint?
     let keystore: Keystore
     var coordinators: [Coordinator] = []
+    var importWalletController: ImportWalletViewController!
+    var providedRootController: UIViewController {
+        return importWalletController
+    }
 
     init(
         navigationController: NavigationController = NavigationController(),
@@ -36,19 +40,19 @@ class WalletCoordinator: Coordinator {
             controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
             navigationController.viewControllers = [controller]
         case .importWallet:
-            let controller = ImportWalletViewController(keystore: keystore)
-            controller.delegate = self
-            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-            navigationController.viewControllers = [controller]
+            importWalletController = ImportWalletViewController(keystore: keystore)
+            importWalletController.delegate = self
+            importWalletController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+            navigationController.viewControllers = [importWalletController]
         case .createInstantWallet:
             createInstantWallet()
         }
     }
 
     func pushImportWallet() {
-        let controller = ImportWalletViewController(keystore: keystore)
-        controller.delegate = self
-        navigationController.pushViewController(controller, animated: true)
+        importWalletController = ImportWalletViewController(keystore: keystore)
+        importWalletController.delegate = self
+        navigationController.pushViewController(importWalletController, animated: true)
     }
 
     func createInstantWallet() {
@@ -148,6 +152,23 @@ extension WalletCoordinator: WelcomeViewControllerDelegate {
 extension WalletCoordinator: ImportWalletViewControllerDelegate {
     func didImportAccount(account: Wallet, in viewController: ImportWalletViewController) {
         didCreateAccount(account: account)
+    }
+    func didPressOpenQrCodeScanner() {
+        let coordinator = ScanQRCodeCoordinator(
+            navigationController: NavigationController()
+        )
+        coordinator.delegate = self
+        pushCoordinator(coordinator)
+    }
+}
+
+extension WalletCoordinator: ScanQRCodeCoordinatorDelegate {
+    func didCancel(in coordinator: ScanQRCodeCoordinator) {
+        popCoordinator(coordinator)
+    }
+    func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
+        popCoordinator(coordinator)
+        importWalletController.setValueForCurrentField(string: result)
     }
 }
 

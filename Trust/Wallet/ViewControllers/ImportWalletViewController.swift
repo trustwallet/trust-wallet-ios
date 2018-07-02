@@ -6,6 +6,7 @@ import TrustCore
 
 protocol ImportWalletViewControllerDelegate: class {
     func didImportAccount(account: Wallet, in viewController: ImportWalletViewController)
+    func didPressOpenQrCodeScanner()
 }
 
 class ImportWalletViewController: FormViewController {
@@ -237,15 +238,10 @@ class ImportWalletViewController: FormViewController {
     }
 
     @objc func openReader() {
-        let coordinator = ScanQRCodeCoordinator(
-            navigationController: NavigationController()
-        )
-        coordinator.delegate = self
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        (navigationController as? NavigationController)?.pushCoordinator(coordinator)
+        delegate?.didPressOpenQrCodeScanner()
     }
 
-    func setValueForCurrentField(string: String) {
+    public func setValueForCurrentField(string: String) {
         let type = ImportSelectionType(title: segmentRow?.value)
         switch type {
         case .keystore:
@@ -282,17 +278,5 @@ extension ImportWalletViewController: UIDocumentPickerDelegate {
             keystoreRow?.value = text
             keystoreRow?.reload()
         }
-    }
-}
-
-extension ImportWalletViewController: ScanQRCodeCoordinatorDelegate {
-    func didCancel(in coordinator: ScanQRCodeCoordinator) {
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        (navigationController as? NavigationController)?.popCoordinator(coordinator)
-    }
-    func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        (navigationController as? NavigationController)?.popCoordinator(coordinator)
-        setValueForCurrentField(string: result)
     }
 }

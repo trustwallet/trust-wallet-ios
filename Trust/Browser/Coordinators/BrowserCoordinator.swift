@@ -190,7 +190,6 @@ class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
             navigationController: NavigationController()
         )
         coordinator.delegate = self
-        
         pushCoordinator(coordinator)
     }
 
