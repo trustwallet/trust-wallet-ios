@@ -6,14 +6,15 @@ import UIKit
 typealias RootCoordinator = Coordinator & RootViewControllerProvider
 
 protocol PushableCoordinator: RootViewControllerProvider {
-    func pushCoordinator(_ coordinator: RootCoordinator, navigationBarHidden: Bool)
+    func pushCoordinator(_ coordinator: RootCoordinator, navigationBarHidden: Bool, tabBarHidden: Bool)
     func popCoordinator(_ coordinator: RootCoordinator, navigationBarHidden: Bool)
 }
 
 extension PushableCoordinator where Self: RootCoordinator {
-    func pushCoordinator(_ coordinator: RootCoordinator, navigationBarHidden: Bool = true) {
+    func pushCoordinator(_ coordinator: RootCoordinator, navigationBarHidden: Bool = true, tabBarHidden: Bool = false) {
         if let presentedNVC = providedRootController.presentedViewController as? UINavigationController {
             addCoordinator(coordinator)
+            coordinator.providedRootController.hidesBottomBarWhenPushed = tabBarHidden
             presentedNVC.setNavigationBarHidden(navigationBarHidden, animated: false)
             presentedNVC.pushViewController(coordinator.providedRootController, animated: true)
         } else {
@@ -21,6 +22,7 @@ extension PushableCoordinator where Self: RootCoordinator {
                 return
             }
             addCoordinator(coordinator)
+            coordinator.providedRootController.hidesBottomBarWhenPushed = tabBarHidden
             nvc.setNavigationBarHidden(navigationBarHidden, animated: false)
             nvc.pushViewController(coordinator.providedRootController, animated: true)
         }
