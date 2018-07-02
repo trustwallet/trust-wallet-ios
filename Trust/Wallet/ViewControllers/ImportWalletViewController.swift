@@ -73,18 +73,7 @@ class ImportWalletViewController: FormViewController {
         )
 
         form
-            +++ Section {
-                var header = HeaderFooterView<InfoHeaderView>(.class)
-                header.height = { 90 }
-                header.onSetupView = { (view, section) -> Void in
-                    view.label.textColor = AppStyle.formHeader.textColor
-                    view.label.font = AppStyle.formHeader.font
-                    view.label.text = NSLocalizedString("importing.wallet.message", value: "Importing wallet as easy as creating", comment: "")
-                    view.logoImageView.image = R.image.create_wallet_import()
-                }
-                $0.header = header
-            }
-
+            +++ Section()
             <<< SegmentedRow<String>(Values.segment) {
                 $0.options = [
                     ImportSelectionType.keystore.title,

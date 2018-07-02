@@ -237,7 +237,6 @@
 "import.mnemonic.footer" = "通常、単一のスペースで区切られた12（時には24）個の単語";
 "import.privateKey.footer" = "通常64文字の英数字";
 "import.watch.footer" = "「ウォッチ」では、秘密鍵を入力することなく任意のパブリックアドレスを閲覧することが出来ます。これは残高や取引履歴の確認のみ可能であり、送金等はできません。";
-"importing.wallet.message" = "ウォレットのインポートは作成するのと同じくらい簡単です";
 "Infura" = "Infura";
 "Keystore" = "Keystore";
 "Network Fee" = "ネットワーク手数料";

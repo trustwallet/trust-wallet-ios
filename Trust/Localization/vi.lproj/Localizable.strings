@@ -237,7 +237,6 @@
 "import.mnemonic.footer" = "Thường có 12 (đôi khi 24) từ đơn được phân tách bằng dấu cách";
 "import.privateKey.footer" = "Thường có 64 ký tự chữ và số";
 "import.watch.footer" = "Bạn có thể \"xem\" bất kỳ địa chỉ công cộng nào mà không tiết lộ khóa riêng của mình. Điều này cho phép bạn xem số dư và giao dịch, nhưng không thể gửi giao dịch.";
-"importing.wallet.message" = "Nhập ví dễ dàng như tạo ví";
 "Infura" = "Infura";
 "Keystore" = "Keystore";
 "Network Fee" = "Chi phí cho mạng lưới";

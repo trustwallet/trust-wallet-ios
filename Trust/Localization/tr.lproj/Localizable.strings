@@ -237,7 +237,6 @@
 "import.mnemonic.footer" = "Boşlukla ayrılmış genellikle 12 (bazen 24) kelime";
 "import.privateKey.footer" = "Genellikle 64 alfasayısal karakter";
 "import.watch.footer" = "Özel anahtarınızı açıklamadan herhangi bir genel adresi \"izleyebilirsiniz\". Bu, bakiyeyi ve işlemleri görmenize izin verir, ancak işlemler oluşturamaz.";
-"importing.wallet.message" = "Cüzdanı içe aktarmak, oluşturmak kadar kolay";
 "Infura" = "Infura";
 "Keystore" = "Anahtar dosyası";
 "Network Fee" = "Ağ Ücreti";

@@ -237,7 +237,6 @@
 "import.mnemonic.footer" = "Typically 12 (sometimes 24) words separated by single spaces";
 "import.privateKey.footer" = "Typically 64 alphanumeric characters";
 "import.watch.footer" = "You can “watch” any public address without divulging your private key. This let’s you view balances and transactions, but not send transactions.";
-"importing.wallet.message" = "Importing wallet as easy as creating";
 "Infura" = "Infura";
 "Keystore" = "Keystore";
 "Network Fee" = "Network Fee";
@@ -272,5 +271,5 @@
 "verifyPassphrase.skip.confirm.message" = "Loss of backup phrase can put your wallet at risk!";
 "verifyPassphrase.skip.confirm.title" = "Are you sure you want to skip this step?";
 "wallet.info.exportBackupPhrase" = "Show Backup Phrase";
-"export.reveal.button.title" = "Hold to Reveal";
 "Reload" = "Reload";
+"export.reveal.button.title" = "Hold to Reveal";
