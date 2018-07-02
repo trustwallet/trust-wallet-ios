@@ -18,6 +18,7 @@ enum RPCServer {
     case sokol
     case classic
     case callisto
+    case gochain
     case custom(CustomRPC)
 
     var chainID: Int {
@@ -30,6 +31,7 @@ enum RPCServer {
         case .sokol: return 77
         case .classic: return 61
         case .callisto: return 820
+        case .gochain: return 60
         case .custom(let custom):
             return custom.chainID
         }
@@ -45,6 +47,7 @@ enum RPCServer {
         case .sokol: return "Sokol"
         case .classic: return "Ethereum Classic"
         case .callisto: return "Callisto"
+        case .gochain: return "GoChain"
         case .custom(let custom):
             return custom.name
         }
@@ -56,7 +59,7 @@ enum RPCServer {
 
     var networkType: NetworkType {
         switch self {
-        case .main, .poa, .classic, .callisto: return .main
+        case .main, .poa, .classic, .callisto, .gochain: return .main
         case .kovan, .ropsten, .rinkeby, .sokol: return .test
         case .custom: return .custom
         }
@@ -71,6 +74,7 @@ enum RPCServer {
         case .kovan: return "KETH"
         case .poa: return "POA"
         case .sokol: return "SPOA"
+        case .gochain: return "GO"
         case .custom(let custom):
             return custom.symbol
         }
@@ -95,6 +99,7 @@ enum RPCServer {
             case .rinkeby: return "https://rinkeby.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .poa: return "https://core.poa.network"
             case .sokol: return "https://sokol.poa.network"
+            case .gochain: return "https://rpc.gochain.io"
             case .custom(let custom):
                 return custom.endpoint
             }
@@ -110,7 +115,7 @@ enum RPCServer {
             case .rinkeby: return "wss://rinkeby.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
             case .kovan: return "wss://kovan.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
             case .poa, .sokol: return "wss://localhost"
-            case .classic, .callisto: return "wss://localhost"
+            case .classic, .callisto, .gochain: return "wss://localhost"
             case .custom(let custom): return custom.wssEndpoint
             }
         }()
@@ -128,6 +133,7 @@ enum RPCServer {
             case .rinkeby: return "https://rinkeby.trustwalletapp.com"
             case .poa: return "https://poa.trustwalletapp.com"
             case .sokol: return "https://trust-sokol.herokuapp.com"
+            case .gochain: return "https://gochain.trustwalletapp.com"
             case .custom:
                 return "" // Enable? make optional
             }
@@ -144,14 +150,14 @@ enum RPCServer {
             return Address(string: "0x112234455c3a32fd11230c42e7bccd4a84e02010")!
         case .rinkeby:
             return Address(string: "0xe7410170f87102df0055eb195163a03b7f2bff4a")!
-        case .classic, .poa, .kovan, .callisto, .sokol, .custom:
+        case .classic, .poa, .kovan, .callisto, .sokol, .custom, .gochain:
             return Address.zero
         }
     }
 
     var openseaPath: String {
         switch self {
-        case .main, .classic, .poa, .kovan, .callisto, .sokol, .custom, .ropsten: return  Constants.dappsOpenSea
+        case .main, .classic, .poa, .kovan, .callisto, .sokol, .custom, .ropsten, .gochain: return  Constants.dappsOpenSea
         case .rinkeby: return Constants.dappsRinkebyOpenSea
         }
     }
@@ -183,6 +189,7 @@ enum RPCServer {
             case RPCServer.rinkeby.chainID: return .rinkeby
             case RPCServer.poa.chainID: return .poa
             case RPCServer.sokol.chainID: return .sokol
+            case RPCServer.gochain.chainID: return .gochain
             default: return .main
             }
         }()

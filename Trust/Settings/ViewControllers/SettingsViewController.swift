@@ -192,7 +192,7 @@ class SettingsViewController: FormViewController, Coordinator {
             selectorController.enableDeselection = false
             selectorController.sectionKeyForValue = { option in
                 switch option {
-                case .main, .classic, .callisto, .poa:
+                case .main, .classic, .callisto, .poa, .gochain:
                     return ""
                 case .kovan, .ropsten, .rinkeby, .sokol:
                     return R.string.localizable.settingsNetworkTestLabelTitle()
