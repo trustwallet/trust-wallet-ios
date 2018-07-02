@@ -417,6 +417,8 @@
 		77EAD88C20E4B16A00D14AA2 /* WalletInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD88B20E4B16A00D14AA2 /* WalletInfo.swift */; };
 		77EAD88E20E4BF1B00D14AA2 /* WalletObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD88D20E4BF1B00D14AA2 /* WalletObject.swift */; };
 		77EAD89220EAC0B800D14AA2 /* WalletStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD89120EAC0B800D14AA2 /* WalletStorage.swift */; };
+		77EAD89520EAF19F00D14AA2 /* WalletInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD89420EAF19F00D14AA2 /* WalletInfo.swift */; };
+		77EAD89720EAF1FD00D14AA2 /* WalletObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EAD89620EAF1FD00D14AA2 /* WalletObject.swift */; };
 		902CAB592051818B00F96FFE /* BookmarkViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 902CAB582051818A00F96FFE /* BookmarkViewCell.xib */; };
 		902CAB5B2051835E00F96FFE /* BookmarkViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902CAB5A2051835E00F96FFE /* BookmarkViewCell.swift */; };
 		903682F1204A6DB800013479 /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903682F0204A6DB800013479 /* BookmarkViewController.swift */; };
@@ -909,6 +911,8 @@
 		77EAD88B20E4B16A00D14AA2 /* WalletInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfo.swift; sourceTree = "<group>"; };
 		77EAD88D20E4BF1B00D14AA2 /* WalletObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletObject.swift; sourceTree = "<group>"; };
 		77EAD89120EAC0B800D14AA2 /* WalletStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletStorage.swift; sourceTree = "<group>"; };
+		77EAD89420EAF19F00D14AA2 /* WalletInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfo.swift; sourceTree = "<group>"; };
+		77EAD89620EAF1FD00D14AA2 /* WalletObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletObject.swift; sourceTree = "<group>"; };
 		87FA1153388F27F599C430B8 /* Pods-TrustTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrustTests/Pods-TrustTests.debug.xcconfig"; sourceTree = "<group>"; };
 		902CAB582051818A00F96FFE /* BookmarkViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkViewCell.xib; sourceTree = "<group>"; };
 		902CAB5A2051835E00F96FFE /* BookmarkViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewCell.swift; sourceTree = "<group>"; };
@@ -2065,6 +2069,8 @@
 				776C114D2060E61500449539 /* TokenObject.swift */,
 				773B8DBD2071859A00D05690 /* GetNonceProvider.swift */,
 				4E9A9D0720B2C52500180054 /* CoinTicker.swift */,
+				77EAD89420EAF19F00D14AA2 /* WalletInfo.swift */,
+				77EAD89620EAF1FD00D14AA2 /* WalletObject.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -3294,6 +3300,7 @@
 				776C1142205BAFA800449539 /* ExportPrivateKeyCoordinatorTests.swift in Sources */,
 				2923D9B71FDA5E51000CF3F8 /* PasswordGeneratorTests.swift in Sources */,
 				BBAA2A3B2058155100B0878C /* TypedMessageEncodingTests.swift in Sources */,
+				77EAD89720EAF1FD00D14AA2 /* WalletObject.swift in Sources */,
 				29F1C865200384FE003780D8 /* Wallet.swift in Sources */,
 				73D2683B202E8411009777A1 /* DecimalNumberFormatterTest.swift in Sources */,
 				BB3864A3208F1C8A00CBF773 /* testIsHexEncoded.swift in Sources */,
@@ -3317,6 +3324,7 @@
 				7391DC962038C135002C5ADE /* SendViewModelTest.swift in Sources */,
 				291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */,
 				732E0F542022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift in Sources */,
+				77EAD89520EAF19F00D14AA2 /* WalletInfo.swift in Sources */,
 				73200B6C20477FF900118A82 /* FakeTokensNetwork.swift in Sources */,
 				298543001FBEAE2F00CB5081 /* ChainState.swift in Sources */,
 				299B5E3F1FD143400051361C /* BackupViewModelTests.swift in Sources */,
