@@ -18,7 +18,7 @@ class WalletCoordinator: Coordinator, PushableCoordinator {
     let keystore: Keystore
     var coordinators: [Coordinator] = []
     var importWalletController: ImportWalletViewController!
-    var providedRootController: UIViewController {
+    var rootViewController: UIViewController {
         return importWalletController
     }
 

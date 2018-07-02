@@ -24,7 +24,7 @@ class SendCoordinator: Coordinator, PushableCoordinator {
     lazy var sendViewController: SendViewController = {
         return self.makeSendViewController()
     }()
-    var providedRootController: UIViewController {
+    var rootViewController: UIViewController {
         return sendViewController
     }
 

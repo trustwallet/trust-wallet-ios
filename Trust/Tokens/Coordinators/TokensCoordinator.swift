@@ -41,12 +41,12 @@ class TokensCoordinator: Coordinator, PushableCoordinator {
     }()
     weak var delegate: TokensCoordinatorDelegate?
 
-    lazy var rootViewController: WalletViewController = {
+    lazy var walletViewContoller: WalletViewController = {
         return self.masterViewController
     }()
     var newTokenController: NewTokenViewController!
-    var providedRootController: UIViewController {
-        return rootViewController
+    var rootViewController: UIViewController {
+        return walletViewContoller
     }
 
     init(

@@ -12,28 +12,28 @@ protocol PushableCoordinator: RootViewControllerProvider {
 
 extension PushableCoordinator where Self: RootCoordinator {
     func pushCoordinator(_ coordinator: RootCoordinator, navigationBarHidden: Bool = true, tabBarHidden: Bool = false) {
-        if let presentedNVC = providedRootController.presentedViewController as? UINavigationController {
+        if let presentedNVC = rootViewController.presentedViewController as? UINavigationController {
             addCoordinator(coordinator)
-            coordinator.providedRootController.hidesBottomBarWhenPushed = tabBarHidden
+            coordinator.rootViewController.hidesBottomBarWhenPushed = tabBarHidden
             presentedNVC.setNavigationBarHidden(navigationBarHidden, animated: false)
-            presentedNVC.pushViewController(coordinator.providedRootController, animated: true)
+            presentedNVC.pushViewController(coordinator.rootViewController, animated: true)
         } else {
-            guard let nvc = providedRootController.navigationController else {
+            guard let nvc = rootViewController.navigationController else {
                 return
             }
             addCoordinator(coordinator)
-            coordinator.providedRootController.hidesBottomBarWhenPushed = tabBarHidden
+            coordinator.rootViewController.hidesBottomBarWhenPushed = tabBarHidden
             nvc.setNavigationBarHidden(navigationBarHidden, animated: false)
-            nvc.pushViewController(coordinator.providedRootController, animated: true)
+            nvc.pushViewController(coordinator.rootViewController, animated: true)
         }
     }
     func popCoordinator(_ coordinator: RootCoordinator, navigationBarHidden: Bool = false) {
-        if let presentedNVC = providedRootController.presentedViewController as? UINavigationController {
+        if let presentedNVC = rootViewController.presentedViewController as? UINavigationController {
             presentedNVC.setNavigationBarHidden(navigationBarHidden, animated: false)
             presentedNVC.popViewController(animated: true)
             removeCoordinator(coordinator)
         } else {
-            guard let nvc = providedRootController.navigationController else {
+            guard let nvc = rootViewController.navigationController else {
                 return
             }
             nvc.setNavigationBarHidden(navigationBarHidden, animated: false)
