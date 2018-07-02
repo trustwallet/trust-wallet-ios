@@ -11,7 +11,7 @@ protocol SendCoordinatorDelegate: class {
     func didCancel(in coordinator: SendCoordinator)
 }
 
-class SendCoordinator: Coordinator {
+class SendCoordinator: Coordinator, PushableCoordinator {
 
     let transferType: TransferType
     let session: WalletSession
@@ -24,6 +24,9 @@ class SendCoordinator: Coordinator {
     lazy var sendViewController: SendViewController = {
         return self.makeSendViewController()
     }()
+    var rootViewController: UIViewController {
+        return sendViewController
+    }
 
     init(
         transferType: TransferType,
@@ -117,22 +120,19 @@ extension SendCoordinator: SendViewControllerDelegate {
             navigationController: NavigationController()
         )
         coordinator.delegate = self
-        addCoordinator(coordinator)
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.pushCoordinator(coordinator)
+        pushCoordinator(coordinator)
     }
 }
 
 extension SendCoordinator: ScanQRCodeCoordinatorDelegate {
     func didCancel(in coordinator: ScanQRCodeCoordinator) {
         navigationController.setNavigationBarHidden(false, animated: false)
-        navigationController.popCoordinator(coordinator)
-        removeCoordinator(coordinator)
+        popCoordinator(coordinator)
     }
     func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
         navigationController.setNavigationBarHidden(false, animated: false)
-        navigationController.popCoordinator(coordinator)
-        removeCoordinator(coordinator)
+        popCoordinator(coordinator)
         sendViewController.updateScreenInfo(with: result)
     }
 }

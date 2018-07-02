@@ -39,6 +39,10 @@ class NavigationController: UINavigationController {
 }
 
 extension NavigationController: PushableCoordinator {
+    var rootViewController: UIViewController {
+        return UIViewController()
+    }
+    
     func pushCoordinator(_ coordinator: RootCoordinator) {
         viewControllersToChildCoordinators[coordinator.rootViewController] = coordinator
         pushViewController(coordinator.rootViewController, animated: true)
