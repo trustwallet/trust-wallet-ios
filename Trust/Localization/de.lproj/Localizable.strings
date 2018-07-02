@@ -121,7 +121,6 @@
 "Deleting" = "Löschen";
 "Ethereum Address" = "Ethereum-Adresse";
 "InCoordinatorError.onlyWatchAccount" = "Nur öffentliche Informationen dieses Wallets einsehbar. Importieren Sie den privaten Schlüssel / Keystore, um Transaktionen zu signieren";
-"Mnemonic" = "Mnemonisch";
 "recoveryPhrase.navigation.title" = "Wiederherstellungs-Satz";
 "Share With Friends" = "Mit Freunden teilen";
 "transaction.cell.unknown.title" = "Unbekannt";

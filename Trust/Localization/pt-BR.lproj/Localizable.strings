@@ -121,7 +121,6 @@
 "Deleting" = "Apagar";
 "Ethereum Address" = "Endereço Ethereum";
 "InCoordinatorError.onlyWatchAccount" = "Esta carteira só pode ser usada para visualização. Importe a Chave Privada de armazenamento para assinar transações";
-"Mnemonic" = "Mnemônica";
 "recoveryPhrase.navigation.title" = "Frase de Recuperação";
 "Share With Friends" = "Compartilhe com os seus amigos";
 "transaction.cell.unknown.title" = "Desconhecido";

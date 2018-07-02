@@ -121,7 +121,6 @@
 "Deleting" = "删除";
 "Ethereum Address" = "以太坊地址";
 "InCoordinatorError.onlyWatchAccount" = "这个钱包只能观察，请导入私钥 / Keystore 来签署交易";
-"Mnemonic" = "助记词";
 "recoveryPhrase.navigation.title" = "恢复短语";
 "Share With Friends" = "与朋友分享";
 "transaction.cell.unknown.title" = "未知";

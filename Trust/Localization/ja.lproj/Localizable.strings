@@ -121,7 +121,6 @@
 "Deleting" = "削除";
 "Ethereum Address" = "イーサリアムアドレス";
 "InCoordinatorError.onlyWatchAccount" = "このウォレットは監視にのみ利用できます。トランザクション／メッセージに署名するため秘密鍵/Keystoreをインポートしてください";
-"Mnemonic" = "ニーモニック";
 "recoveryPhrase.navigation.title" = "リカバリーフレーズ";
 "Share With Friends" = "友だちにシェアする";
 "transaction.cell.unknown.title" = "Unknown";

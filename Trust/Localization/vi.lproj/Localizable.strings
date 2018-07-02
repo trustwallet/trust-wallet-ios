@@ -121,7 +121,6 @@
 "Deleting" = "Đang xóa";
 "Ethereum Address" = "Địa chỉ Ethereum";
 "InCoordinatorError.onlyWatchAccount" = "Ví này có thể chỉ được sử dụng để xem. Nhập Private Key/Keystore để xác nhận thực hiện các giao dịch.";
-"Mnemonic" = "Ghi nhớ.";
 "recoveryPhrase.navigation.title" = "Cụm từ để phục hồi";
 "Share With Friends" = "Chia sẻ với bạn bè.";
 "transaction.cell.unknown.title" = "Không xác định";

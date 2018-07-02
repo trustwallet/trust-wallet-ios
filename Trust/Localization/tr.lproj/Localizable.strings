@@ -121,7 +121,6 @@
 "Deleting" = "Siliniyor";
 "Ethereum Address" = "Ethereum Adresi";
 "InCoordinatorError.onlyWatchAccount" = "Bu cüzdan sadece izlemek için kullanılabilir. Gizli Anahtarı veya Anahtar dosyasının aktararak işlemleri ve mesajları daha detaylı görüntüleyebilirsiniz";
-"Mnemonic" = "Hafıza";
 "recoveryPhrase.navigation.title" = "Kurtarma Cümlesi";
 "Share With Friends" = "Arkadaşlarınızla Paylaşın";
 "transaction.cell.unknown.title" = "Bilinmeyen";
