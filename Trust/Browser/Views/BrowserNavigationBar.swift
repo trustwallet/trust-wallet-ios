@@ -67,16 +67,29 @@ class BrowserNavigationBar: UINavigationBar {
 
         addSubview(stackView)
 
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
+        if #available(iOS 11.0, *) {
+            NSLayoutConstraint.activate([
+                stackView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+                stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10),
+                stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10),
+                stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
 
-            homeButton.widthAnchor.constraint(equalToConstant: Layout.width),
-            backButton.widthAnchor.constraint(equalToConstant: Layout.width),
-            moreButton.widthAnchor.constraint(equalToConstant: Layout.moreButtonWidth),
-        ])
+                homeButton.widthAnchor.constraint(equalToConstant: Layout.width),
+                backButton.widthAnchor.constraint(equalToConstant: Layout.width),
+                moreButton.widthAnchor.constraint(equalToConstant: Layout.moreButtonWidth),
+                ])
+        } else {
+            NSLayoutConstraint.activate([
+                stackView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+                stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+                stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+                stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
+
+                homeButton.widthAnchor.constraint(equalToConstant: Layout.width),
+                backButton.widthAnchor.constraint(equalToConstant: Layout.width),
+                moreButton.widthAnchor.constraint(equalToConstant: Layout.moreButtonWidth),
+                ])
+        }
     }
 
     @objc private func goBackAction() {
