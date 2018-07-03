@@ -79,10 +79,10 @@ class WalletCoordinator: Coordinator, PushableCoordinator {
     }
 
     func configureWhiteNavigation() {
-        navigationController.navigationBar.tintColor = Colors.blue
-        navigationController.navigationBar.barTintColor = .white
-        navigationController.navigationBar.setBackgroundImage(UIImage(), for:. default)
-        navigationController.navigationBar.shadowImage = UIImage()
+//        navigationController.navigationBar.tintColor = Colors.blue
+//        navigationController.navigationBar.barTintColor = .white
+//        navigationController.navigationBar.setBackgroundImage(UIImage(), for:. default)
+//        navigationController.navigationBar.shadowImage = UIImage()
     }
 
     func pushBackup(for account: Account, words: [String]) {

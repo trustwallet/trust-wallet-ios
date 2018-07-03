@@ -3,12 +3,23 @@
 import Foundation
 import UIKit
 
-class NavigationController: UINavigationController {
+class NavigationController: UIViewController {
 
     // MARK: - Inputs
 
     private let rootViewController: UIViewController
+    public var viewControllers: [UIViewController] = [] {
+        didSet{
+            childNavigationController.viewControllers = viewControllers
+        }
+    }
+    
+    var isToolbarHidden: Bool = true
 
+    func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
+        childNavigationController.viewControllers = viewControllers
+    }
+    
     // MARK: - Mutable state
 
     private var viewControllersToChildCoordinators: [UIViewController: Coordinator] = [:]
@@ -20,9 +31,20 @@ class NavigationController: UINavigationController {
 
     // MARK: - Initialization
 
-    override init(rootViewController: UIViewController) {
+    init(navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
+        self.rootViewController = UIViewController()
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    init(_ rootViewController: UIViewController = UIViewController()) {
         self.rootViewController = rootViewController
 
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(rootViewController: UIViewController = UIViewController()) {
+        self.rootViewController = rootViewController
+        
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -48,21 +70,28 @@ class NavigationController: UINavigationController {
             childNavigationController.view.topAnchor.constraint(equalTo: view.topAnchor),
             childNavigationController.view.leftAnchor.constraint(equalTo: view.leftAnchor),
             childNavigationController.view.rightAnchor.constraint(equalTo: view.rightAnchor),
-            childNavigationController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            childNavigationController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             ])
     }
-    
+
     // MARK: - Public
 
-    func pushCoordinator(coordinator: RootCoordinator, animated: Bool) {
+    func pushCoordinator(_ coordinator: RootCoordinator, animated: Bool) {
         viewControllersToChildCoordinators[coordinator.rootViewController] = coordinator
 
         pushViewController(coordinator.rootViewController, animated: animated)
     }
 
+    func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        childNavigationController.pushViewController(viewController, animated: animated)
+    }
+    
     func pushViewController(viewController: UIViewController, animated: Bool) {
         childNavigationController.pushViewController(viewController, animated: animated)
     }
+    
+    func setNavigationBarHidden(_ asdfas: Bool, animated: Bool) {}
+    func setToolbarHidden(_ asdfas: Bool, animated: Bool) {}
 
     // MARK: - UIGestureRecognizerDelegate
 
@@ -74,28 +103,28 @@ class NavigationController: UINavigationController {
         ) -> UIViewController {
         if UIDevice.current.userInterfaceIdiom == .pad {
             controller.navigationItem.leftBarButtonItem = barItem
-            let nav = NavigationController(rootViewController: controller)
+            let nav = NavigationController(controller)
             nav.modalPresentationStyle = .formSheet
             navigationController.present(nav, animated: true, completion: nil)
         } else {
-            navigationController.pushViewController(controller, animated: true)
+            navigationController.pushViewController(viewController: controller, animated: true)
         }
         return controller
     }
 
-    open override var preferredStatusBarStyle: UIStatusBarStyle {
-        var preferredStyle: UIStatusBarStyle
-        if
-            topViewController is MasterBrowserViewController ||
-                topViewController is DarkPassphraseViewController ||
-                topViewController is DarkVerifyPassphraseViewController
-        {
-            preferredStyle = .default
-        } else {
-            preferredStyle = .lightContent
-        }
-        return preferredStyle
-    }
+//    open override var preferredStatusBarStyle: UIStatusBarStyle {
+//        var preferredStyle: UIStatusBarStyle
+//        if
+//            topViewController is MasterBrowserViewController ||
+//                topViewController is DarkPassphraseViewController ||
+//                topViewController is DarkVerifyPassphraseViewController
+//        {
+//            preferredStyle = .default
+//        } else {
+//            preferredStyle = .lightContent
+//        }
+//        return preferredStyle
+//    }
 }
 
 extension NavigationController: UIGestureRecognizerDelegate {
@@ -109,8 +138,10 @@ extension NavigationController: UIGestureRecognizerDelegate {
 // MARK: - UINavigationControllerDelegate
 
 extension NavigationController: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController,
-                              didShow viewController: UIViewController, animated: Bool) {
+    func navigationController(
+        _ navigationController: UINavigationController,
+        didShow viewController: UIViewController,
+        animated: Bool) {
         cleanUpChildCoordinators()
     }
 
