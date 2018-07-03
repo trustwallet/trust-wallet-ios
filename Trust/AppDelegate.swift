@@ -1,7 +1,6 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import UIKit
-import Lokalise
 import Branch
 
 @UIApplicationMain
@@ -40,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        Lokalise.shared.checkForUpdates { _, _ in }
         protectionCoordinator.applicationDidBecomeActive()
         CookiesStore.load()
     }

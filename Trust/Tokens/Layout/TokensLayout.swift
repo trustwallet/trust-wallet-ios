@@ -26,24 +26,21 @@ struct TokensLayout {
         }
 
         static func percentChange(for ticker: CoinTicker?) -> String? {
-            guard let ticker = ticker, let price = Double(ticker.price) else { return nil }
-            guard price > 0 else { return nil }
+            guard let ticker = ticker, let price = Double(ticker.price), price > 0 else { return nil }
             let percent_change_24h = ticker.percent_change_24h
             guard !percent_change_24h.isEmpty else { return nil }
-            return "(" + percent_change_24h + "%)"
+            return "" + percent_change_24h + "%"
         }
 
         static func marketPrice(for ticker: CoinTicker?) -> String? {
-            guard let ticker = ticker, let price = Double(ticker.price) else { return nil }
-            guard price > 0 else { return nil }
+            guard let ticker = ticker, let price = Double(ticker.price), price > 0 else { return nil }
             return CurrencyFormatter.formatter.string(from: NSNumber(value: price))
         }
 
         static func totalFiatAmount(for ticker: CoinTicker?, token: TokenObject) -> String? {
-            guard let ticker = ticker else { return nil }
+            guard let ticker = ticker, let price = Double(ticker.price), price > 0 else { return nil }
             let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
-            let priceInUsd = Double(ticker.price) ?? 0
-            let amount = tokenValue * priceInUsd
+            let amount = tokenValue * price
             guard amount > 0 else { return nil }
             return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
         }

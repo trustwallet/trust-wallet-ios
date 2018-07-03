@@ -13,7 +13,7 @@ protocol BrowserCoordinatorDelegate: class {
     func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator)
 }
 
-class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
+class BrowserCoordinator: NSObject, Coordinator {
     var coordinators: [Coordinator] = []
     let session: WalletSession
     let keystore: Keystore
@@ -31,7 +31,7 @@ class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
         return controller
     }()
 
-    lazy var masterBrowserViewController: MasterBrowserViewController = {
+    lazy var rootViewController: MasterBrowserViewController = {
         let controller = MasterBrowserViewController(
             bookmarksViewController: bookmarksViewController,
             historyViewController: historyViewController,
@@ -41,9 +41,6 @@ class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
         controller.delegate = self
         return controller
     }()
-    var rootViewController: UIViewController {
-        return masterBrowserViewController
-    }
 
     lazy var browserViewController: BrowserViewController = {
         let controller = BrowserViewController(account: session.account, config: session.config)
@@ -88,7 +85,7 @@ class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
 
     func start() {
         navigationController.viewControllers = [rootViewController]
-        masterBrowserViewController.browserViewController.goHome()
+        rootViewController.browserViewController.goHome()
     }
 
     @objc func dismiss() {
@@ -117,17 +114,17 @@ class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
                 case .signedTransaction(let transaction):
                     // on signing we pass signed hex of the transaction
                     let callback = DappCallback(id: callbackID, value: .signTransaction(transaction.data))
-                    self.masterBrowserViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+                    self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
                     self.delegate?.didSentTransaction(transaction: transaction, in: self)
                 case .sentTransaction(let transaction):
                     // on send transaction we pass transaction ID only.
                     let data = Data(hex: transaction.id)
                     let callback = DappCallback(id: callbackID, value: .sentTransaction(data))
-                    self.masterBrowserViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+                    self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
                     self.delegate?.didSentTransaction(transaction: transaction, in: self)
                 }
             case .failure:
-                self.masterBrowserViewController.browserViewController.notifyFinish(
+                self.rootViewController.browserViewController.notifyFinish(
                     callbackID: callbackID,
                     value: .failure(DAppError.cancelled)
                 )
@@ -141,7 +138,7 @@ class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
     }
 
     func openURL(_ url: URL) {
-        masterBrowserViewController.browserViewController.goTo(url: url)
+        rootViewController.browserViewController.goTo(url: url)
         handleToolbar(for: url)
     }
 
@@ -150,7 +147,7 @@ class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
         navigationController.isToolbarHidden = isToolbarHidden
 
         if isToolbarHidden {
-            masterBrowserViewController.select(viewType: .browser)
+            rootViewController.select(viewType: .browser)
         }
     }
 
@@ -173,9 +170,9 @@ class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
                 case .typedMessage:
                     callback = DappCallback(id: callbackID, value: .signTypedMessage(data))
                 }
-                self.masterBrowserViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
+                self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
             case .failure:
-                self.masterBrowserViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
+                self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
             }
             coordinator.didComplete = nil
             self.removeCoordinator(coordinator)
@@ -190,8 +187,8 @@ class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
             navigationController: NavigationController()
         )
         coordinator.delegate = self
-        navigationController.setToolbarHidden(true, animated: false)
-        pushCoordinator(coordinator, navigationBarHidden: true, tabBarHidden: true)
+        addCoordinator(coordinator)
+        navigationController.present(coordinator.qrcodeController, animated: true, completion: nil)
     }
 
     private func presentMoreOptions(sender: UIView) {
@@ -207,15 +204,15 @@ class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
         )
         alertController.popoverPresentationController?.sourceView = sender
         alertController.popoverPresentationController?.sourceRect = sender.centerRect
-        let reloadAction = UIAlertAction(title: NSLocalizedString("browser.reload.button.title", value: "Reload", comment: ""), style: .default) { [unowned self] _ in
-            self.masterBrowserViewController.browserViewController.reload()
+        let reloadAction = UIAlertAction(title: R.string.localizable.reload(), style: .default) { [unowned self] _ in
+            self.rootViewController.browserViewController.reload()
         }
-        let shareAction = UIAlertAction(title: NSLocalizedString("browser.share.button.title", value: "Share", comment: ""), style: .default) { [unowned self] _ in
+        let shareAction = UIAlertAction(title: R.string.localizable.share(), style: .default) { [unowned self] _ in
             self.share()
         }
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel) { _ in }
-        let addBookmarkAction = UIAlertAction(title: NSLocalizedString("browser.addbookmark.button.title", value: "Add Bookmark", comment: ""), style: .default) { [unowned self] _ in
-            self.masterBrowserViewController.browserViewController.addBookmark()
+        let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel) { _ in }
+        let addBookmarkAction = UIAlertAction(title: R.string.localizable.browserAddbookmarkButtonTitle(), style: .default) { [unowned self] _ in
+            self.rootViewController.browserViewController.addBookmark()
         }
         alertController.addAction(reloadAction)
         alertController.addAction(shareAction)
@@ -225,7 +222,7 @@ class BrowserCoordinator: NSObject, Coordinator, PushableCoordinator {
     }
 
     private func share() {
-        guard let url = masterBrowserViewController.browserViewController.webView.url else { return }
+        guard let url = rootViewController.browserViewController.webView.url else { return }
         navigationController.displayLoading()
         let params = BranchEvent.openURL(url).params
         Branch.getInstance().getShortURL(withParams: params) { [weak self] shortURLString, _ in
@@ -247,26 +244,26 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
     func runAction(action: BrowserAction) {
         switch action {
         case .bookmarks:
-            masterBrowserViewController.select(viewType: .bookmarks)
+            rootViewController.select(viewType: .bookmarks)
         case .addBookmark(let bookmark):
             bookmarksStore.add(bookmarks: [bookmark])
         case .qrCode:
             presentQRCodeReader()
         case .history:
-            masterBrowserViewController.select(viewType: .history)
+            rootViewController.select(viewType: .history)
         case .navigationAction(let navAction):
             switch navAction {
             case .home:
                 enableToolbar = true
-                masterBrowserViewController.select(viewType: .browser)
-                masterBrowserViewController.browserViewController.goHome()
+                rootViewController.select(viewType: .browser)
+                rootViewController.browserViewController.goHome()
             case .more(let sender):
                 presentMoreOptions(sender: sender)
             case .enter(let string):
                 guard let url = urlParser.url(from: string) else { return }
                 openURL(url)
             case .goBack:
-                masterBrowserViewController.browserViewController.webView.goBack()
+                rootViewController.browserViewController.webView.goBack()
             default: break
             }
         case .changeURL(let url):
@@ -292,7 +289,7 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
                 break
             }
         case .address:
-            self.masterBrowserViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
+            self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
             self.navigationController.displayError(error: InCoordinatorError.onlyWatchAccount)
         }
     }
@@ -319,13 +316,13 @@ extension BrowserCoordinator: ConfirmCoordinatorDelegate {
 
 extension BrowserCoordinator: ScanQRCodeCoordinatorDelegate {
     func didCancel(in coordinator: ScanQRCodeCoordinator) {
-        navigationController.setToolbarHidden(false, animated: false)
-        popCoordinator(coordinator)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
     }
 
     func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
-        navigationController.setToolbarHidden(false, animated: false)
-        popCoordinator(coordinator)
+        coordinator.navigationController.dismiss(animated: true, completion: nil)
+        removeCoordinator(coordinator)
         guard let url = URL(string: result) else {
             return
         }
@@ -366,7 +363,7 @@ extension BrowserCoordinator: WKUIDelegate {
             style: .alert,
             in: navigationController
         )
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
+        alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
             completionHandler()
         }))
         navigationController.present(alertController, animated: true, completion: nil)
@@ -379,10 +376,10 @@ extension BrowserCoordinator: WKUIDelegate {
             style: .alert,
             in: navigationController
         )
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
+        alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
             completionHandler(true)
         }))
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .default, handler: { _ in
+        alertController.addAction(UIAlertAction(title: R.string.localizable.cancel(), style: .default, handler: { _ in
             completionHandler(false)
         }))
         navigationController.present(alertController, animated: true, completion: nil)
@@ -398,14 +395,14 @@ extension BrowserCoordinator: WKUIDelegate {
         alertController.addTextField { (textField) in
             textField.text = defaultText
         }
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default, handler: { _ in
+        alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
             if let text = alertController.textFields?.first?.text {
                 completionHandler(text)
             } else {
                 completionHandler(defaultText)
             }
         }))
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .default, handler: { _ in
+        alertController.addAction(UIAlertAction(title: R.string.localizable.cancel(), style: .default, handler: { _ in
             completionHandler(nil)
         }))
         navigationController.present(alertController, animated: true, completion: nil)

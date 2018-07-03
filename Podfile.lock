@@ -10,14 +10,13 @@ PODS:
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
   - CryptoSwift (0.10.0)
-  - Eureka (4.1.1)
+  - Eureka (4.2.0)
   - Fabric (1.7.6)
   - JdenticonSwift (0.0.1)
   - JSONRPCKit (2.0.0):
     - Result (~> 3.0)
   - KeychainSwift (10.0.0)
   - Kingfisher (4.6.1)
-  - Lokalise (0.8.1)
   - MBProgressHUD (1.1.0)
   - Moya (10.0.1):
     - Moya/Core (= 10.0.1)
@@ -70,13 +69,12 @@ DEPENDENCIES:
   - Branch
   - Crashlytics (~> 3.10)
   - CryptoSwift (~> 0.10.0)
-  - Eureka (~> 4.1.1)
+  - Eureka
   - Fabric
   - JdenticonSwift
   - JSONRPCKit (from `https://github.com/bricklife/JSONRPCKit.git`)
   - KeychainSwift
   - Kingfisher (~> 4.0)
-  - Lokalise
   - MBProgressHUD
   - Moya (~> 10.0.1)
   - PromiseKit (~> 6.0)
@@ -107,7 +105,6 @@ SPEC REPOS:
     - JdenticonSwift
     - KeychainSwift
     - Kingfisher
-    - Lokalise
     - MBProgressHUD
     - Moya
     - PromiseKit
@@ -166,13 +163,12 @@ SPEC CHECKSUMS:
   Branch: 8b59411a12867bde4fe8c9d3c0f107c5811e303e
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
-  Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
+  Eureka: 0748c7bbb2560130e43c7bfa83e99c98854a1f42
   Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
   JdenticonSwift: bc532f2761566eb29f26b085e5f72de25bc065ce
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
   Kingfisher: 1f9157d9c02b380cbd0b7cc890161195164eb634
-  Lokalise: d81f4ccce8cd2c1589bf73bb39fab7781d4f7cbc
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Moya: 9e621707ff754eeb51ff3ec51a3d54e517c0733a
   PromiseKit: 625b1fc69944fc839503748101c5968cf54b527b
@@ -195,6 +191,6 @@ SPEC CHECKSUMS:
   TrustWeb3Provider: 50fa391bdf170feb43dd4419992931510a5751d8
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
-PODFILE CHECKSUM: e671d780440825d6b27cb3d47692dd411c0f74f8
+PODFILE CHECKSUM: 4d3ed305480a5d9506ceacb198b001d9e0a6d000
 
 COCOAPODS: 1.5.3

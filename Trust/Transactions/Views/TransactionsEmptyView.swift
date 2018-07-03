@@ -44,7 +44,7 @@ class TransactionsEmptyView: UIView {
         imageView.image = image
 
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(NSLocalizedString("Refresh", value: "Refresh", comment: ""), for: .normal)
+        button.setTitle(R.string.localizable.refresh(), for: .normal)
         button.addTarget(self, action: #selector(retry), for: .touchUpInside)
 
         depositButton.translatesAutoresizingMaskIntoConstraints = false

@@ -30,6 +30,7 @@
 "Delete" = "ลบ";
 "Edit" = "แก้ไข";
 "settings.support.title" = "สนับสนุน";
+"Share" = "แบ่งปัน";
 "collectibles.discover.label.title" = "สำรวจ OpenSea.io";
 "configureTransaction.error.gasFeeHigh" = "ค่าธรรมเนียมแก๊สเกินไป มี: %1$@%2$@";
 "sent.transaction.message" = "รอการทำธุรกรรมที่จะขุดบนเครือข่ายเพื่อดูรายละเอียด";
@@ -38,4 +39,4 @@
 "settings.network.test.warnning.message" = "คุณกำลังเปลี่ยนไปใช้เครือข่ายทดสอบที่ทำธุรกรรมเพื่อการทดสอบเท่านั้น";
 "settings.network.test.warnning.title" = "การเตือน";
 "Disable" = "ปิดการใช้งาน";
-"wallets.navigation.title" = "กระเป๋าสตางค์";
+"Wallets" = "กระเป๋าสตางค์";

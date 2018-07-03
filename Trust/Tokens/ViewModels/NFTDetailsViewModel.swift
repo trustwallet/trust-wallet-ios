@@ -32,7 +32,7 @@ class NFTDetailsViewModel {
     }
 
     var sendButtonTitle: String {
-        return NSLocalizedString("Send", value: "Send", comment: "")
+        return R.string.localizable.send()
     }
 
     var internalButtonTitle: String {

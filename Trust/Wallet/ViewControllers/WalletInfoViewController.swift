@@ -13,15 +13,21 @@ class WalletInfoViewController: FormViewController {
     lazy var viewModel: WalletInfoViewModel = {
         return WalletInfoViewModel(wallet: wallet)
     }()
-    let wallet: Wallet
+    let wallet: WalletInfo
+    let storage: WalletStorage
+
     weak var delegate: WalletInfoViewControllerDelegate?
 
     private struct Values {
         static let name = "name"
     }
 
-    init(wallet: Wallet) {
+    init(
+        wallet: WalletInfo,
+        storage: WalletStorage
+    ) {
         self.wallet = wallet
+        self.storage = storage
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -31,7 +37,7 @@ class WalletInfoViewController: FormViewController {
         navigationItem.title = viewModel.title
 
         let types = viewModel.types
-        let section = Section(footer: viewModel.wallet.address.description)
+        let section = Section(footer: viewModel.wallet.wallet.address.description)
         for type in types {
             section.append(link(item: type))
         }
@@ -63,6 +69,11 @@ class WalletInfoViewController: FormViewController {
             cell.accessoryType = .disclosureIndicator
         }
         return button
+    }
+
+    func save() {
+        //wallet.info.name = "Hello"
+        //storage.store(objects: [wallet.info])
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -7,9 +7,9 @@ import UIKit
 
 protocol AccountsCoordinatorDelegate: class {
     func didCancel(in coordinator: AccountsCoordinator)
-    func didSelectAccount(account: Wallet, in coordinator: AccountsCoordinator)
-    func didAddAccount(account: Wallet, in coordinator: AccountsCoordinator)
-    func didDeleteAccount(account: Wallet, in coordinator: AccountsCoordinator)
+    func didSelectAccount(account: WalletInfo, in coordinator: AccountsCoordinator)
+    func didAddAccount(account: WalletInfo, in coordinator: AccountsCoordinator)
+    func didDeleteAccount(account: WalletInfo, in coordinator: AccountsCoordinator)
 }
 
 class AccountsCoordinator: Coordinator {
@@ -17,12 +17,18 @@ class AccountsCoordinator: Coordinator {
     let navigationController: NavigationController
     let keystore: Keystore
     let session: WalletSession
+    let walletStorage: WalletStorage
     let balanceCoordinator: TokensBalanceService
     let ensManager: ENSManager
     var coordinators: [Coordinator] = []
 
     lazy var accountsViewController: AccountsViewController = {
-        let controller = AccountsViewController(keystore: keystore, balanceCoordinator: balanceCoordinator, ensManager: ensManager)
+        let controller = AccountsViewController(
+            keystore: keystore,
+            walletStorage: walletStorage,
+            balanceCoordinator: balanceCoordinator,
+            ensManager: ensManager
+        )
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add))
         controller.delegate = self
         return controller
@@ -34,6 +40,7 @@ class AccountsCoordinator: Coordinator {
         navigationController: NavigationController,
         keystore: Keystore,
         session: WalletSession,
+        walletStorage: WalletStorage,
         balanceCoordinator: TokensBalanceService,
         ensManager: ENSManager
     ) {
@@ -41,6 +48,7 @@ class AccountsCoordinator: Coordinator {
         self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
         self.session = session
+        self.walletStorage = walletStorage
         self.balanceCoordinator = balanceCoordinator
         self.ensManager = ensManager
     }
@@ -65,8 +73,11 @@ class AccountsCoordinator: Coordinator {
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
-    func showWalletInfo(for wallet: Wallet, sender: UIView) {
-        let controller = WalletInfoViewController(wallet: wallet)
+    func showWalletInfo(for wallet: WalletInfo, sender: UIView) {
+        let controller = WalletInfoViewController(
+            wallet: wallet,
+            storage: walletStorage
+        )
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)
     }
@@ -132,22 +143,21 @@ class AccountsCoordinator: Coordinator {
 }
 
 extension AccountsCoordinator: AccountsViewControllerDelegate {
-    func didSelectAccount(account: Wallet, in viewController: AccountsViewController) {
+    func didSelectAccount(account: WalletInfo, in viewController: AccountsViewController) {
         delegate?.didSelectAccount(account: account, in: self)
     }
 
-    func didDeleteAccount(account: Wallet, in viewController: AccountsViewController) {
+    func didDeleteAccount(account: WalletInfo, in viewController: AccountsViewController) {
         delegate?.didDeleteAccount(account: account, in: self)
     }
 
-    func didSelectInfoForAccount(account: Wallet, sender: UIView, in viewController: AccountsViewController) {
-        //showInfoSheet(for: account, sender: sender)
+    func didSelectInfoForAccount(account: WalletInfo, sender: UIView, in viewController: AccountsViewController) {
         showWalletInfo(for: account, sender: sender)
     }
 }
 
 extension AccountsCoordinator: WalletCoordinatorDelegate {
-    func didFinish(with account: Wallet, in coordinator: WalletCoordinator) {
+    func didFinish(with account: WalletInfo, in coordinator: WalletCoordinator) {
         delegate?.didAddAccount(account: account, in: self)
         accountsViewController.fetch()
         coordinator.navigationController.dismiss(animated: true, completion: nil)

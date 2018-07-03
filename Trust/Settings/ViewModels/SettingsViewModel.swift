@@ -22,6 +22,7 @@ struct SettingsViewModel {
             RPCServer.ropsten,
             RPCServer.rinkeby,
             RPCServer.sokol,
+            RPCServer.gochain,
         ]
     }
 
