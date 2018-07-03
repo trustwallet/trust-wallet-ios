@@ -13,11 +13,6 @@ class TokenViewCell: UITableViewCell {
     let currencyAmountLabel = UILabel()
     let symbolImageView = TokenImageView()
 
-    private struct Layout {
-        static let stackVericalOffset: CGFloat = 10
-        static let arrangedSubviewsOffset: CGFloat = 4
-    }
-
     lazy var marketPrice: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +49,7 @@ class TokenViewCell: UITableViewCell {
         marketPriceStackView.translatesAutoresizingMaskIntoConstraints = false
         marketPriceStackView.alignment = .firstBaseline
         marketPriceStackView.distribution = .equalSpacing
-        marketPriceStackView.spacing = Layout.arrangedSubviewsOffset
+        marketPriceStackView.spacing = TokensLayout.cell.arrangedSubviewsOffset
 
         let leftStackView = UIStackView(arrangedSubviews: [titleLabel, marketPriceStackView])
         leftStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +60,7 @@ class TokenViewCell: UITableViewCell {
         let rightStackView = UIStackView(arrangedSubviews: [amountLabel, currencyAmountLabel])
         rightStackView.translatesAutoresizingMaskIntoConstraints = false
         rightStackView.axis = .vertical
-        rightStackView.spacing = Layout.arrangedSubviewsOffset
+        rightStackView.spacing = TokensLayout.cell.arrangedSubviewsOffset
 
         let stackView = UIStackView(arrangedSubviews: [symbolImageView, leftStackView, rightStackView])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -83,12 +78,12 @@ class TokenViewCell: UITableViewCell {
         contentView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            symbolImageView.leadingAnchor.constraint(equalTo: self.layoutGuide.leadingAnchor, constant: Layout.stackVericalOffset),
+            symbolImageView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: TokensLayout.cell.stackVericalOffset),
             symbolImageView.widthAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
             symbolImageView.heightAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
-            stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: Layout.stackVericalOffset),
-            stackView.trailingAnchor.constraint(equalTo: self.layoutGuide.trailingAnchor, constant: -Layout.stackVericalOffset),
-            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Layout.stackVericalOffset),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: TokensLayout.cell.stackVericalOffset),
+            stackView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -TokensLayout.cell.stackVericalOffset),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -TokensLayout.cell.stackVericalOffset),
             stackView.leadingAnchor.constraint(equalTo: symbolImageView.leadingAnchor),
         ])
     }
@@ -135,7 +130,7 @@ class TokenViewCell: UITableViewCell {
     private func updateSeparatorInset() {
         separatorInset = UIEdgeInsets(
             top: 0,
-            left: self.layoutInsets.left + Layout.stackVericalOffset + TokensLayout.cell.imageSize + Layout.stackVericalOffset + Layout.arrangedSubviewsOffset,
+            left: layoutInsets.left + TokensLayout.cell.stackVericalOffset + TokensLayout.cell.imageSize +  TokensLayout.cell.stackVericalOffset +  TokensLayout.cell.arrangedSubviewsOffset,
             bottom: 0, right: 0
         )
     }
