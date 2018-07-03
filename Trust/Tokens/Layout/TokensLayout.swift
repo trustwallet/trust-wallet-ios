@@ -10,6 +10,8 @@ struct TokensLayout {
     }
 
     struct cell {
+        static let stackVericalOffset: CGFloat = 10
+        static let arrangedSubviewsOffset: CGFloat = 4
         static var imageSize: CGFloat {
             return 52
             // TODO: return 44 for 2 scale, same for xib file.

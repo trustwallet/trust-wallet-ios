@@ -21,7 +21,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="d5W-Lo-p3o">
-                        <rect key="frame" x="16" y="14" width="288" height="52"/>
+                        <rect key="frame" x="15" y="14" width="289" height="52"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tfc-cq-2hm" customClass="TokenImageView" customModule="Trust" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="52" height="52"/>
@@ -31,7 +31,7 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" semanticContentAttribute="spatial" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="fRy-j2-9ES" userLabel="Label Stack View">
-                                <rect key="frame" x="67" y="0.0" width="157" height="52"/>
+                                <rect key="frame" x="67" y="0.0" width="158" height="52"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Test lable" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="gzC-hL-qRv">
                                         <rect key="frame" x="0.0" y="0.0" width="73" height="29"/>
@@ -48,7 +48,7 @@
                                 </subviews>
                             </stackView>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uf5-TC-p3g">
-                                <rect key="frame" x="239" y="10.5" width="51" height="31"/>
+                                <rect key="frame" x="240" y="10.5" width="51" height="31"/>
                                 <connections>
                                     <action selector="didChangeSwitch:" destination="KGk-i7-Jjw" eventType="valueChanged" id="RNY-kW-3Zh"/>
                                 </connections>
@@ -63,7 +63,8 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="d5W-Lo-p3o" secondAttribute="trailing" constant="15" id="0eN-uy-pSI"/>
                     <constraint firstItem="d5W-Lo-p3o" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Tdu-SU-ud4"/>
-                    <constraint firstItem="d5W-Lo-p3o" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="vlf-YR-icm"/>
+                    <constraint firstItem="d5W-Lo-p3o" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="dhA-JC-A2y"/>
+                    <constraint firstItem="d5W-Lo-p3o" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-1" id="vlf-YR-icm"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

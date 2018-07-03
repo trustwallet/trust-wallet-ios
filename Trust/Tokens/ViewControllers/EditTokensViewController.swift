@@ -99,7 +99,6 @@ class EditTokensViewController: UITableViewController {
         tableView.tableHeaderView = searchController.searchBar
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = StyleLayout.TableView.separatorColor
-        tableView.separatorInset = TokensLayout.tableView.layoutInsets
         tableView.backgroundColor = .white
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -114,7 +113,6 @@ class EditTokensViewController: UITableViewController {
             config: session.config,
             isLocal: token.local
         )
-        cell.separatorInset = TokensLayout.tableView.layoutInsets
         cell.selectionStyle = token.local ? .none : .default
     }
 
