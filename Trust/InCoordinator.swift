@@ -156,10 +156,10 @@ class InCoordinator: Coordinator {
         addCoordinator(settingsCoordinator)
 
         tabBarController.viewControllers = [
-            browserCoordinator.navigationController,
-            walletCoordinator.navigationController,
-            transactionCoordinator.navigationController,
-            settingsCoordinator.navigationController,
+            browserCoordinator.navigationController.viewControllers[0],
+            walletCoordinator.navigationController.viewControllers[0],
+            transactionCoordinator.navigationController.viewControllers[0],
+            settingsCoordinator.navigationController.viewControllers[0],
         ]
 
         navigationController.setViewControllers([tabBarController], animated: false)

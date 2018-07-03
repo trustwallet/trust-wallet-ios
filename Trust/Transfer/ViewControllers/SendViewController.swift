@@ -6,7 +6,6 @@ import Eureka
 import JSONRPCKit
 import APIKit
 import BigInt
-import QRCodeReaderViewController
 import TrustCore
 import TrustKeystore
 
@@ -16,6 +15,7 @@ protocol SendViewControllerDelegate: class {
         transferType: TransferType,
         in viewController: SendViewController
     )
+    func didPressOpenQrCodeScanner()
 }
 class SendViewController: FormViewController {
     private lazy var viewModel: SendViewModel = {
@@ -187,9 +187,7 @@ class SendViewController: FormViewController {
         self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, in: self)
     }
     @objc func openReader() {
-        let controller = QRCodeReaderViewController()
-        controller.delegate = self
-        present(controller, animated: true, completion: nil)
+        delegate?.didPressOpenQrCodeScanner()
     }
     @objc func pasteAction() {
         guard let value = UIPasteboard.general.string?.trimmed else {
@@ -247,28 +245,16 @@ class SendViewController: FormViewController {
         tableView.endUpdates()
         UIView.setAnimationsEnabled(true)
     }
-}
-extension SendViewController: QRCodeReaderDelegate {
-    func readerDidCancel(_ reader: QRCodeReaderViewController!) {
-        reader.stopScanning()
-        reader.dismiss(animated: true, completion: nil)
-    }
-    func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
-        reader.stopScanning()
-        reader.dismiss(animated: true) { [weak self] in
-           self?.activateAmountView()
-        }
-
+    public func updateScreenInfo(with result: String) {
+        self.activateAmountView()
         guard let result = QRURLParser.from(string: result) else { return }
         addressRow?.value = result.address
         addressRow?.reload()
-
         if let dataString = result.params["data"] {
             data = Data(hex: dataString.drop0x)
         } else {
             data = Data()
         }
-
         if let value = result.params["amount"] {
             amountRow?.value = EtherNumberFormatter.full.string(from: BigInt(value) ?? BigInt(), units: .ether)
         } else {

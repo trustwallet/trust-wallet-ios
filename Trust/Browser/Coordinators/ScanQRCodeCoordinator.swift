@@ -8,7 +8,7 @@ protocol ScanQRCodeCoordinatorDelegate: class {
     func didScan(result: String, in coordinator: ScanQRCodeCoordinator)
 }
 
-class ScanQRCodeCoordinator: NSObject, Coordinator {
+class ScanQRCodeCoordinator: NSObject, Coordinator, RootViewControllerProvider {
     var coordinators: [Coordinator] = []
     weak var delegate: ScanQRCodeCoordinatorDelegate?
 
@@ -32,20 +32,22 @@ class ScanQRCodeCoordinator: NSObject, Coordinator {
     }
 
     @objc func dismiss() {
-        qrcodeController.dismiss(animated: true, completion: nil)
+        delegate?.didCancel(in: self)
+    }
+
+    var rootViewController: UIViewController {
+        return qrcodeController
     }
 }
 
 extension ScanQRCodeCoordinator: QRCodeReaderDelegate {
     func readerDidCancel(_ reader: QRCodeReaderViewController!) {
         reader.stopScanning()
-        reader.dismiss(animated: true)
         delegate?.didCancel(in: self)
     }
 
     func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
         reader.stopScanning()
         delegate?.didScan(result: result, in: self)
-        reader.dismiss(animated: true)
     }
 }

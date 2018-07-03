@@ -3,11 +3,11 @@
 import Foundation
 import Eureka
 import TrustCore
-import QRCodeReaderViewController
 import PromiseKit
 
 protocol NewTokenViewControllerDelegate: class {
     func didAddToken(token: ERC20Token, in viewController: NewTokenViewController)
+    func didPressOpenQrCodeScanner()
 }
 
 class NewTokenViewController: FormViewController {
@@ -119,9 +119,7 @@ class NewTokenViewController: FormViewController {
     }
 
     @objc func openReader() {
-        let controller = QRCodeReaderViewController()
-        controller.delegate = self
-        present(controller, animated: true, completion: nil)
+        delegate?.didPressOpenQrCodeScanner()
     }
 
     @objc func pasteAction() {
@@ -136,7 +134,7 @@ class NewTokenViewController: FormViewController {
         updateContractValue(value: value)
     }
 
-    private func updateContractValue(value: String) {
+    public func updateContractValue(value: String) {
         contractRow?.value = value
         contractRow?.reload()
         fetchInfo(for: value)
@@ -163,20 +161,5 @@ class NewTokenViewController: FormViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension NewTokenViewController: QRCodeReaderDelegate {
-    func readerDidCancel(_ reader: QRCodeReaderViewController!) {
-        reader.stopScanning()
-        reader.dismiss(animated: true, completion: nil)
-    }
-
-    func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
-        reader.stopScanning()
-        reader.dismiss(animated: true, completion: nil)
-
-        guard let result = QRURLParser.from(string: result) else { return }
-        updateContractValue(value: result.address)
     }
 }

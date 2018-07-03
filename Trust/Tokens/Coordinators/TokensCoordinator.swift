@@ -10,7 +10,7 @@ protocol TokensCoordinatorDelegate: class {
     func didPressDiscover(in coordinator: TokensCoordinator)
 }
 
-class TokensCoordinator: Coordinator {
+class TokensCoordinator: Coordinator, PushableCoordinator {
 
     let navigationController: NavigationController
     let session: WalletSession
@@ -41,9 +41,13 @@ class TokensCoordinator: Coordinator {
     }()
     weak var delegate: TokensCoordinatorDelegate?
 
-    lazy var rootViewController: WalletViewController = {
+    lazy var walletViewContoller: WalletViewController = {
         return self.masterViewController
     }()
+    var newTokenController: NewTokenViewController!
+    var rootViewController: UIViewController {
+        return walletViewContoller
+    }
 
     init(
         navigationController: NavigationController = NavigationController(),
@@ -80,9 +84,9 @@ class TokensCoordinator: Coordinator {
 
     func newTokenViewController(token: ERC20Token?) -> NewTokenViewController {
         let viewModel = NewTokenViewModel(token: token, tokensNetwork: network)
-        let controller = NewTokenViewController(token: token, viewModel: viewModel)
-        controller.delegate = self
-        return controller
+        newTokenController = NewTokenViewController(token: token, viewModel: viewModel)
+        newTokenController.delegate = self
+        return newTokenController
     }
 
     func editTokenViewController(token: TokenObject) -> NewTokenViewController {
@@ -186,6 +190,24 @@ extension TokensCoordinator: NewTokenViewControllerDelegate {
         store.addCustom(token: token)
         tokensViewController.fetch()
         dismiss()
+    }
+    func didPressOpenQrCodeScanner() {
+        let coordinator = ScanQRCodeCoordinator(
+            navigationController: NavigationController()
+        )
+        coordinator.delegate = self
+        pushCoordinator(coordinator)
+    }
+}
+
+extension TokensCoordinator: ScanQRCodeCoordinatorDelegate {
+    func didCancel(in coordinator: ScanQRCodeCoordinator) {
+        popCoordinator(coordinator)
+    }
+    func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
+        popCoordinator(coordinator)
+        guard let result = QRURLParser.from(string: result) else { return }
+        newTokenController.updateContractValue(value: result.address)
     }
 }
 
