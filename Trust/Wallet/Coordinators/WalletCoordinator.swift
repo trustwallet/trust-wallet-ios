@@ -152,7 +152,7 @@ extension WalletCoordinator: WelcomeViewControllerDelegate {
     }
 }
 
-extension WalletCoordinator: ImportWalletViewControllerDelegate {    
+extension WalletCoordinator: ImportWalletViewControllerDelegate {
     func didImportAccount(account: WalletInfo, in viewController: ImportWalletViewController) {
         didCreateAccount(account: account)
     }
