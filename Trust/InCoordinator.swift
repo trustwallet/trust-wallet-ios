@@ -124,7 +124,7 @@ class InCoordinator: Coordinator {
         let browserCoordinator = BrowserCoordinator(session: session, keystore: keystore, navigator: navigator, sharedRealm: sharedRealm)
         browserCoordinator.delegate = self
         browserCoordinator.start()
-        browserCoordinator.masterBrowserViewController.tabBarItem = viewModel.browserBarItem
+        browserCoordinator.rootViewController.tabBarItem = viewModel.browserBarItem
         addCoordinator(browserCoordinator)
 
         let walletCoordinator = TokensCoordinator(
@@ -134,7 +134,7 @@ class InCoordinator: Coordinator {
             network: trustNetwork,
             transactionsStore: transactionsStorage
         )
-        walletCoordinator.walletViewContoller.tabBarItem = viewModel.walletBarItem
+        walletCoordinator.rootViewController.tabBarItem = viewModel.walletBarItem
         walletCoordinator.delegate = self
         walletCoordinator.start()
         addCoordinator(walletCoordinator)
