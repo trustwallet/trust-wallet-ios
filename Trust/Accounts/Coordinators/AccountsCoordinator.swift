@@ -212,4 +212,9 @@ extension AccountsCoordinator: WalletInfoViewControllerDelegate {
             UIPasteboard.general.string = address.description
         }
     }
+
+    func didPressSave(wallet: WalletInfo, field: WalletInfoField, in controller: WalletInfoViewController) {
+        walletStorage.store(object: wallet.info, field: field)
+        navigationController.popViewController(animated: true)
+    }
 }

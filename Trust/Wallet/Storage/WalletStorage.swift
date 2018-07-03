@@ -19,9 +19,10 @@ class WalletStorage {
         return foundWallet
     }
 
-    func store(objects: [WalletObject]) {
+    func store(object: WalletObject, field: WalletInfoField) {
         try? realm.write {
-            realm.add(objects, update: true)
+            object.name = field.name
+            realm.add(object, update: true)
         }
     }
 }
