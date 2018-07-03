@@ -97,7 +97,7 @@ enum RPCServer {
             case .kovan: return "https://kovan.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .ropsten: return "https://ropsten.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .rinkeby: return "https://rinkeby.infura.io/llyrtzQ3YhkdESt2Fzrk"
-            case .poa: return "https://core.poa.network"
+            case .poa: return "https://poa.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .sokol: return "https://sokol.poa.network"
             case .gochain: return "https://rpc.gochain.io"
             case .custom(let custom):
@@ -114,7 +114,8 @@ enum RPCServer {
             case .ropsten: return "wss://ropsten.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
             case .rinkeby: return "wss://rinkeby.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
             case .kovan: return "wss://kovan.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
-            case .poa, .sokol: return "wss://localhost"
+            case .poa: return "wss://poa.infura.io/llyrtzQ3YhkdESt2Fzrk"
+            case .sokol: return "wss://localhost"
             case .classic, .callisto, .gochain: return "wss://localhost"
             case .custom(let custom): return custom.wssEndpoint
             }
