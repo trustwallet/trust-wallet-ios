@@ -46,3 +46,13 @@ struct StyleLayout {
         static let heightForHeaderInSection: CGFloat = 40
     }
 }
+
+struct EditTokenStyleLayout {
+    static let preferedImageSize: CGFloat = 52
+    static let sideMargin: CGFloat = 15
+}
+
+struct TransactionStyleLayout {
+    static let stackViewSpacing: CGFloat = 15
+    static let preferedImageSize: CGFloat = 26
+}

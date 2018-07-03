@@ -32,6 +32,19 @@ class EditTokenTableViewCell: UITableViewCell {
         }
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateSeparatorInset()
+    }
+
+    private func updateSeparatorInset() {
+        separatorInset = UIEdgeInsets(
+            top: 0,
+            left: layoutInsets.left + EditTokenStyleLayout.sideMargin + EditTokenStyleLayout.preferedImageSize + EditTokenStyleLayout.sideMargin,
+            bottom: 0, right: 0
+        )
+    }
+
     @IBAction func didChangeSwitch(_ sender: UISwitch) {
         delegate?.didChangeState(state: sender.isOn, in: self)
     }
