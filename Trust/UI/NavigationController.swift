@@ -9,17 +9,17 @@ class NavigationController: UIViewController {
 
     private let rootViewController: UIViewController
     public var viewControllers: [UIViewController] = [] {
-        didSet{
+        didSet {
             childNavigationController.viewControllers = viewControllers
         }
     }
-    
+
     var isToolbarHidden: Bool = true
 
     func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
         childNavigationController.viewControllers = viewControllers
     }
-    
+
     // MARK: - Mutable state
 
     private var viewControllersToChildCoordinators: [UIViewController: Coordinator] = [:]
@@ -41,10 +41,10 @@ class NavigationController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     init(rootViewController: UIViewController = UIViewController()) {
         self.rootViewController = rootViewController
-        
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -85,11 +85,11 @@ class NavigationController: UIViewController {
     func pushViewController(_ viewController: UIViewController, animated: Bool) {
         childNavigationController.pushViewController(viewController, animated: animated)
     }
-    
+
     func pushViewController(viewController: UIViewController, animated: Bool) {
         childNavigationController.pushViewController(viewController, animated: animated)
     }
-    
+
     func setNavigationBarHidden(_ asdfas: Bool, animated: Bool) {}
     func setToolbarHidden(_ asdfas: Bool, animated: Bool) {}
 

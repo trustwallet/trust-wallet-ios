@@ -75,10 +75,12 @@ class WalletCoordinator: Coordinator {
     }
 
     func configureWhiteNavigation() {
+/*
         navigationController.navigationBar.tintColor = Colors.blue
         navigationController.navigationBar.barTintColor = .white
         navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController.navigationBar.shadowImage = UIImage()
+ */
     }
 
     func pushBackup(for account: Account, words: [String]) {
@@ -148,7 +150,7 @@ extension WalletCoordinator: WelcomeViewControllerDelegate {
     }
 }
 
-extension WalletCoordinator: ImportWalletViewControllerDelegate {    
+extension WalletCoordinator: ImportWalletViewControllerDelegate {
     func didImportAccount(account: WalletInfo, in viewController: ImportWalletViewController) {
         didCreateAccount(account: account)
     }
