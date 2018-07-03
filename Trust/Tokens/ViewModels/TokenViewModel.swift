@@ -49,7 +49,7 @@ class TokenViewModel {
 
     var isBuyActionAvailable: Bool {
         switch config.server {
-        case .main, .kovan, .classic, .callisto, .ropsten, .rinkeby, .poa, .sokol, .custom: return false
+        case .main, .kovan, .classic, .callisto, .ropsten, .rinkeby, .poa, .sokol, .gochain, .custom: return false
         }
     }
 

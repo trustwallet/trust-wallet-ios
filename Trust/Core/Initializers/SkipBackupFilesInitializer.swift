@@ -21,7 +21,7 @@ struct SkipBackupFilesInitializer: Initializer {
             try url.setResourceValue(true, forKey: .isExcludedFromBackupKey)
             try url.setResourceValue(false, forKey: .isUbiquitousItemKey)
             return true
-        } catch let error {
+        } catch {
             return false
         }
     }

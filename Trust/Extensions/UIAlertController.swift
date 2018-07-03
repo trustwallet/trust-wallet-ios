@@ -21,7 +21,7 @@ extension UIAlertController {
             let password = textField.text ?? ""
             completion(.success(password))
         }))
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Cancel", value: "Cancel", comment: ""), style: .cancel, handler: { _ in
+        alertController.addAction(UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: { _ in
             completion(.failure(ConfirmationError.cancel))
         }))
         alertController.addTextField(configurationHandler: {(textField: UITextField!) -> Void in

@@ -56,7 +56,7 @@ class BrowserConfigurationViewController: FormViewController {
             self.confirm(
                 title: self.viewModel.clearBrowserCacheConfirmTitle,
                 message: self.viewModel.clearBrowserCacheConfirmMessage,
-                okTitle: NSLocalizedString("Delete", value: "Delete", comment: ""),
+                okTitle: R.string.localizable.delete(),
                 okStyle: .destructive,
                 completion: { [weak self] result in
                     guard let `self` = self else { return }

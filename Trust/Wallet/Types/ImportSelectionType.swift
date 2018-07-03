@@ -11,13 +11,13 @@ enum ImportSelectionType {
     var title: String {
         switch self {
         case .keystore:
-            return NSLocalizedString("Keystore", value: "Keystore", comment: "")
+            return R.string.localizable.keystore()
         case .privateKey:
-            return NSLocalizedString("Private Key", value: "Private Key", comment: "")
+            return R.string.localizable.privateKey()
         case .mnemonic:
-            return NSLocalizedString("Mnemonic", value: "Mnemonic", comment: "")
+            return R.string.localizable.phrase()
         case .watch:
-            return NSLocalizedString("Watch", value: "Watch", comment: "")
+            return R.string.localizable.watch()
         }
     }
 

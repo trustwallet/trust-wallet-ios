@@ -106,7 +106,6 @@
 "settings.currency.button.title" = "Moneda";
 "settings.currency.popular.label.title" = "Popular";
 "settings.network.test.label.title" = "Prueba";
-"settings.wallets.button.title" = "Carteras";
 "Symbol" = "Symbol";
 "Today" = "Hoy";
 "Tokens" = "Tokens";
@@ -126,12 +125,10 @@
 "settings.network.test.warnning.message" = "Está cambiando a una red de prueba donde las transacciones son solo para fines de prueba";
 "settings.network.test.warnning.title" = "Advertencia";
 "Disable" = "Desactivar";
-"wallets.navigation.title" = "Billeteras";
+"Wallets" = "Billeteras";
 "browser.qrCode.button.title" = "Lector QR";
 "nft.details.external.button.title" = "Abrir en OpenSea.io";
 "nft.details.internal.button.title" = "Abierto en %@";
-"nft.poweredBy.label.text" = "Desarrollado por OpenSea";
-"configureTransaction.nonce.label.title" = "Mientras tanto";
 "Bookmarks" = "Marcadores";
 "History" = "Historial";
 "history.noHistory.label.title" = "¡Sin transacciones aún!";
@@ -143,8 +140,6 @@
 "Are you sure you would like to delete?" = "¿Está seguro que desea borrar?";
 "confirmPayment.amount.label.title" = "Cantidad";
 "confirmPayment.dapp.label.title" = "DApp";
-"confirmPayment.estimatedFees.label.title" = "Tarifa de Red Establecida";
-"confirmPayment.wallet.label.title" = "Billetera";
 "DuckDuckGo" = "DuckDuckGo";
 "Google" = "Google";
 "Incoming Transaction" = "Transacción entrante";

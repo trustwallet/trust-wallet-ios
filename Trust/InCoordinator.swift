@@ -16,7 +16,7 @@ class InCoordinator: Coordinator {
 
     let navigationController: NavigationController
     var coordinators: [Coordinator] = []
-    let initialWallet: Wallet
+    let initialWallet: WalletInfo
     var keystore: Keystore
     let config: Config
     let appTracker: AppTracker
@@ -48,7 +48,7 @@ class InCoordinator: Coordinator {
 
     init(
         navigationController: NavigationController = NavigationController(),
-        wallet: Wallet,
+        wallet: WalletInfo,
         keystore: Keystore,
         config: Config = .current,
         appTracker: AppTracker = AppTracker(),
@@ -72,9 +72,9 @@ class InCoordinator: Coordinator {
         addCoordinator(helpUsCoordinator)
     }
 
-    func showTabBar(for account: Wallet) {
+    func showTabBar(for account: WalletInfo) {
 
-        let migration = MigrationInitializer(account: account, chainID: config.chainID)
+        let migration = MigrationInitializer(account: account.wallet, chainID: config.chainID)
         migration.perform()
 
         let sharedMigration = SharedMigrationInitializer()
@@ -89,17 +89,17 @@ class InCoordinator: Coordinator {
             provider: TrustProviderFactory.makeProvider(),
             APIProvider: TrustProviderFactory.makeAPIProvider(),
             balanceService: balanceCoordinator,
-            account: account,
+            account: account.wallet,
             config: config
         )
-        let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
+        let balance =  BalanceCoordinator(account: account.wallet, config: config, storage: tokensStorage)
         let transactionsStorage = TransactionsStorage(
             realm: realm,
-            account: account
+            account: account.wallet
         )
         let nonceProvider = GetNonceProvider(storage: transactionsStorage)
         let session = WalletSession(
-            account: account,
+            account: account.wallet,
             config: config,
             balanceCoordinator: balance,
             nonceProvider: nonceProvider
@@ -138,10 +138,14 @@ class InCoordinator: Coordinator {
         walletCoordinator.delegate = self
         walletCoordinator.start()
         addCoordinator(walletCoordinator)
+
+        let walletStorage = WalletStorage(realm: realm)
+
         let settingsCoordinator = SettingsCoordinator(
             keystore: keystore,
             session: session,
             storage: transactionsStorage,
+            walletStorage: walletStorage,
             balanceCoordinator: balanceCoordinator,
             sharedRealm: sharedRealm,
             ensManager: ENSManager(realm: realm, config: config)
@@ -164,7 +168,7 @@ class InCoordinator: Coordinator {
 
         showTab(.wallet(.none))
 
-        keystore.recentlyUsedWallet = account
+        keystore.recentlyUsedWallet = account.wallet
 
         // activate all view controllers.
         [Tabs.wallet(.none), Tabs.transactions].forEach {
@@ -203,7 +207,7 @@ class InCoordinator: Coordinator {
         tabBarController?.selectedViewController = nav
     }
 
-    func restart(for account: Wallet, in coordinator: TransactionCoordinator) {
+    func restart(for account: WalletInfo, in coordinator: TransactionCoordinator) {
         settingsCoordinator?.rootViewController.navigationItem.leftBarButtonItem = nil
         settingsCoordinator?.rootViewController.networkStateView = nil
         localSchemeCoordinator?.delegate = nil
@@ -302,7 +306,7 @@ extension InCoordinator: SettingsCoordinatorDelegate {
 
     func didRestart(with account: Wallet, in coordinator: SettingsCoordinator) {
         guard let transactionCoordinator = transactionCoordinator else { return }
-        restart(for: account, in: transactionCoordinator)
+        restart(for: WalletInfo(wallet: account), in: transactionCoordinator)
     }
 
     func didUpdateAccounts(in coordinator: SettingsCoordinator) {

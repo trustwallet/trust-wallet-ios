@@ -106,7 +106,6 @@
 "settings.currency.button.title" = "Devise";
 "settings.currency.popular.label.title" = "Populaire";
 "settings.network.test.label.title" = "Tester";
-"settings.wallets.button.title" = "Portefeuilles";
 "Symbol" = "symbole";
 "Today" = "Aujourd'hui";
 "Tokens" = "Jetons";
@@ -126,4 +125,4 @@
 "settings.network.test.warnning.message" = "Vous passez à un réseau de test où les transactions sont uniquement à des fins de test";
 "settings.network.test.warnning.title" = "Attention";
 "Disable" = "Désactiver";
-"wallets.navigation.title" = "Portefeuilles";
+"Wallets" = "Portefeuilles";

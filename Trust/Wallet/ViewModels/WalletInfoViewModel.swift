@@ -4,24 +4,24 @@ import Foundation
 
 struct WalletInfoViewModel {
 
-    let wallet: Wallet
+    let wallet: WalletInfo
 
     init(
-        wallet: Wallet
+        wallet: WalletInfo
     ) {
         self.wallet = wallet
     }
 
     var title: String {
-        return NSLocalizedString("Manage", value: "Manage", comment: "")
+        return R.string.localizable.manage()
     }
 
     var nameTitle: String {
-        return NSLocalizedString("Name", value: "Name", comment: "")
+        return R.string.localizable.name()
     }
 
     var types: [WalletInfoType] {
-        switch wallet.type {
+        switch wallet.wallet.type {
         case .privateKey(let account):
             return [
                 .exportKeystore(account),

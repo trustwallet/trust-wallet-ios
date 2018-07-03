@@ -99,7 +99,7 @@ extension HistoryViewController: UITableViewDelegate {
             let history = viewModel.item(for: indexPath)
             confirm(
                 title: NSLocalizedString("Are you sure you would like to delete?", value: "Are you sure you would like to delete?", comment: ""),
-                okTitle: NSLocalizedString("Delete", value: "Delete", comment: ""),
+                okTitle: R.string.localizable.delete(),
                 okStyle: .destructive
             ) { [weak self] result in
                     switch result {

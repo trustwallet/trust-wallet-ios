@@ -106,7 +106,6 @@
 "settings.currency.button.title" = "Moeda";
 "settings.currency.popular.label.title" = "Popular";
 "settings.network.test.label.title" = "Teste";
-"settings.wallets.button.title" = "Carteiras";
 "Symbol" = "Símbolo";
 "Today" = "Hoje";
 "Tokens" = "Tokens";
@@ -122,14 +121,11 @@
 "Deleting" = "Apagar";
 "Ethereum Address" = "Endereço Ethereum";
 "InCoordinatorError.onlyWatchAccount" = "Esta carteira só pode ser usada para visualização. Importe a Chave Privada de armazenamento para assinar transações";
-"Mnemonic" = "Mnemônica";
-"passphrase.remember.label.title" = "Escreva isso e mantenha-o privado e seguro. Você não poderá restaurar sua carteira se você perder isso!";
 "recoveryPhrase.navigation.title" = "Frase de Recuperação";
-"settings.shareWithFriends.button.title" = "Compartilhe com os seus amigos";
+"Share With Friends" = "Compartilhe com os seus amigos";
 "transaction.cell.unknown.title" = "Desconhecido";
 "welldone.description.label.text" = "Ajude-nos a crescer compartilhando este aplicativo com seus amigos!";
 "welldone.navigation.title" = "Obrigado!";
-"welldone.share.label.text" = "Compartilhar";
 "welldone.viewmodel.sharing.text1" = "Aqui está o aplicativo que eu uso para armazenar meus tokens ETH e ERC20.";
 "welldone.viewmodel.sharing.text2" = "Dê uma olhada no Trust - a carteira que me permite armazenar de forma segura meus tokens Ethereum e ERC20.";
 "welldone.viewmodel.sharing.text3" = "Eu armazeno de forma segura tokens Ethereum e ERC20 na carteira Trust.";
@@ -142,12 +138,10 @@
 "settings.network.test.warnning.message" = "Você está mudando para uma rede de teste em que as transações são apenas para fins de teste";
 "settings.network.test.warnning.title" = "Atenção";
 "Disable" = "Desabilitar";
-"wallets.navigation.title" = "Carteiras";
+"Wallets" = "Carteiras";
 "browser.qrCode.button.title" = "Leitor de QR Code";
 "nft.details.external.button.title" = "Abrir em OpenSea.io";
 "nft.details.internal.button.title" = "Aberto em %@";
-"nft.poweredBy.label.text" = "Fornecido por OpenSea";
-"configureTransaction.nonce.label.title" = "Nonce";
 "Bookmarks" = "Favoritos";
 "History" = "Histórico";
 "history.noHistory.label.title" = "Sem histórico ainda!";
@@ -159,8 +153,6 @@
 "Are you sure you would like to delete?" = "Tem certeza de que deseja excluir?";
 "confirmPayment.amount.label.title" = "Montante";
 "confirmPayment.dapp.label.title" = "DApp";
-"confirmPayment.estimatedFees.label.title" = "Taxa da Rede Estimada";
-"confirmPayment.wallet.label.title" = "Carteira";
 "DuckDuckGo" = "DuckDuckGo";
 "Google" = "Google";
 "Incoming Transaction" = "Transação de entrada";

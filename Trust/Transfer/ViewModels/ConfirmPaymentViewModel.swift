@@ -18,9 +18,9 @@ struct ConfirmPaymentViewModel {
     var actionButtonText: String {
         switch type {
         case .sign:
-            return NSLocalizedString("Approve", value: "Approve", comment: "")
+            return R.string.localizable.approve()
         case .signThenSend:
-            return NSLocalizedString("Send", value: "Send", comment: "")
+            return R.string.localizable.send()
         }
     }
 

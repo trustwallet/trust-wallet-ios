@@ -19,6 +19,7 @@ class SettingsCoordinator: Coordinator {
     let keystore: Keystore
     let session: WalletSession
     let storage: TransactionsStorage
+    let walletStorage: WalletStorage
     let balanceCoordinator: TokensBalanceService
     let ensManager: ENSManager
     weak var delegate: SettingsCoordinatorDelegate?
@@ -30,6 +31,7 @@ class SettingsCoordinator: Coordinator {
             navigationController: navigationController,
             keystore: keystore,
             session: session,
+            walletStorage: walletStorage,
             balanceCoordinator: balanceCoordinator,
             ensManager: ensManager
         )
@@ -58,6 +60,7 @@ class SettingsCoordinator: Coordinator {
         keystore: Keystore,
         session: WalletSession,
         storage: TransactionsStorage,
+        walletStorage: WalletStorage,
         balanceCoordinator: TokensBalanceService,
         sharedRealm: Realm,
         ensManager: ENSManager
@@ -67,6 +70,7 @@ class SettingsCoordinator: Coordinator {
         self.keystore = keystore
         self.session = session
         self.storage = storage
+        self.walletStorage = walletStorage
         self.balanceCoordinator = balanceCoordinator
         self.sharedRealm = sharedRealm
         self.ensManager = ensManager
@@ -160,11 +164,11 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
 }
 
 extension SettingsCoordinator: AccountsCoordinatorDelegate {
-    func didAddAccount(account: Wallet, in coordinator: AccountsCoordinator) {
+    func didAddAccount(account: WalletInfo, in coordinator: AccountsCoordinator) {
         delegate?.didUpdateAccounts(in: self)
     }
 
-    func didDeleteAccount(account: Wallet, in coordinator: AccountsCoordinator) {
+    func didDeleteAccount(account: WalletInfo, in coordinator: AccountsCoordinator) {
         storage.deleteAll()
         delegate?.didUpdateAccounts(in: self)
         guard !coordinator.accountsViewController.hasWallets else { return }
@@ -177,9 +181,9 @@ extension SettingsCoordinator: AccountsCoordinatorDelegate {
         removeCoordinator(coordinator)
     }
 
-    func didSelectAccount(account: Wallet, in coordinator: AccountsCoordinator) {
+    func didSelectAccount(account: WalletInfo, in coordinator: AccountsCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
-        restart(for: account)
+        restart(for: account.wallet)
     }
 }
