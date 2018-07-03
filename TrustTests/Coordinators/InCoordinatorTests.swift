@@ -44,11 +44,11 @@ class InCoordinatorTests: XCTestCase {
             config: .make()
         )
 
-        coordinator.showTabBar(for: account1)
+        coordinator.showTabBar(for: WalletInfo(wallet: account1))
 
         XCTAssertEqual(coordinator.keystore.recentlyUsedWallet, account1)
 
-        coordinator.showTabBar(for: account2)
+        coordinator.showTabBar(for: WalletInfo(wallet: account2))
 
         XCTAssertEqual(coordinator.keystore.recentlyUsedWallet, account2)
     }

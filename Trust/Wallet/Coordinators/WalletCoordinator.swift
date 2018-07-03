@@ -168,7 +168,7 @@ extension WalletCoordinator: PassphraseViewControllerDelegate {
 
     func didFinish(in controller: PassphraseViewController, with account: Account) {
         let wallet = Wallet(type: .hd(account))
-        didCreateAccount(account: WalletInfo(wallet: wallet, info: WalletObject.from(wallet)))
+        didCreateAccount(account: WalletInfo(wallet: wallet))
     }
 
     func didPressShare(in controller: PassphraseViewController, sender: UIView, account: Account, words: [String]) {

@@ -45,7 +45,9 @@ class AppCoordinator: NSObject, Coordinator {
         resetToWelcomeScreen()
 
         if keystore.hasWallets {
-            showTransactions(for: keystore.recentlyUsedWallet ?? keystore.wallets.first!)
+            let wallet = keystore.recentlyUsedWallet ?? keystore.wallets.first!
+            let walletInfo = WalletInfo(wallet: wallet)
+            showTransactions(for: walletInfo)
         } else {
             resetToWelcomeScreen()
         }
@@ -57,7 +59,7 @@ class AppCoordinator: NSObject, Coordinator {
         }
     }
 
-    func showTransactions(for wallet: Wallet) {
+    func showTransactions(for wallet: WalletInfo) {
         let coordinator = InCoordinator(
             navigationController: navigationController,
             wallet: wallet,
@@ -146,7 +148,7 @@ extension AppCoordinator: InitialWalletCreationCoordinatorDelegate {
     func didAddAccount(_ account: WalletInfo, in coordinator: InitialWalletCreationCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
-        showTransactions(for: account.wallet)
+        showTransactions(for: account)
     }
 }
 

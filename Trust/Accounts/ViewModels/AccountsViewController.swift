@@ -30,7 +30,7 @@ class AccountsViewController: UITableViewController {
 
     var accounts: [WalletInfo] {
         return wallets.map {
-            return WalletInfo(wallet: $0, info: walletStorage.get(for: $0))
+            return WalletInfo(wallet: $0)
         }
     }
 

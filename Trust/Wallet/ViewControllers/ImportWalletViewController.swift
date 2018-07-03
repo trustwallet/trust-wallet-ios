@@ -152,7 +152,7 @@ class ImportWalletViewController: FormViewController {
     }
 
     func didImport(account: Wallet) {
-        let walletInfo = WalletInfo(wallet: account, info: WalletObject.from(account))
+        let walletInfo = WalletInfo(wallet: account)
         delegate?.didImportAccount(account: walletInfo, in: self)
     }
 
