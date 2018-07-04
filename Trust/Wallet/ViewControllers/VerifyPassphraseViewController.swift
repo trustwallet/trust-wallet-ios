@@ -100,7 +100,7 @@ class VerifyPassphraseViewController: UIViewController {
     lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = NSLocalizedString("Verify Backup Phrase", value: "Verify Backup Phrase", comment: "")
+        titleLabel.text = R.string.localizable.verifyBackupPhrase()
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.textAlignment = .center

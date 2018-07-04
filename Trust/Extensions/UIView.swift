@@ -40,6 +40,13 @@ extension UIView {
         return view
     }
 
+    static func label(style: AppStyle, text: String) -> UIView {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = text
+        return label
+    }
+
     static func spacerWidth(_ width: CGFloat = 1, backgroundColor: UIColor = .clear, alpha: CGFloat = 1, priority: UILayoutPriority = UILayoutPriority(rawValue: 1000)) -> UIView {
         let view = UIView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false

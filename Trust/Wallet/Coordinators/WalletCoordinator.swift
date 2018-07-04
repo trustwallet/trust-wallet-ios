@@ -125,15 +125,26 @@ class WalletCoordinator: Coordinator {
         navigationController.pushViewController(controller, animated: true)
     }
 
+    func walletCreated(wallet: WalletInfo) {
+        let controller = WalletCreatedController(wallet: wallet)
+        controller.delegate = self
+        navigationController.setNavigationBarHidden(false, animated: true)
+        navigationController.pushViewController(controller, animated: true)
+    }
+
     private func shareMnemonic(in sender: UIView, words: [String]) {
         let copyValue = words.joined(separator: " ")
         navigationController.showShareActivity(from: sender, with: [copyValue])
     }
 
-    func done(for account: Account) {
+    func showConfirm(for account: Account) {
         // TODO
         let w = Wallet(type: .hd(account))
         let wallet = WalletInfo(wallet: w, info: WalletObject.from(w))
+        walletCreated(wallet: wallet)
+    }
+
+    func done(for wallet: WalletInfo) {
         didCreateAccount(account: wallet)
     }
 }
@@ -178,7 +189,7 @@ extension WalletCoordinator: PassphraseViewControllerDelegate {
 
 extension WalletCoordinator: VerifyPassphraseViewControllerDelegate {
     func didFinish(in controller: VerifyPassphraseViewController, with account: Account) {
-        done(for: account)
+        showConfirm(for: account)
     }
 
     func didSkip(in controller: VerifyPassphraseViewController, with account: Account) {
@@ -189,7 +200,7 @@ extension WalletCoordinator: VerifyPassphraseViewControllerDelegate {
             okStyle: .destructive
         ) { [weak self] result in
             switch result {
-            case .success: self?.done(for: account)
+            case .success: self?.showConfirm(for: account)
             case .failure: break
             }
         }
@@ -209,5 +220,11 @@ extension WalletCoordinator: BackupCoordinatorDelegate {
         removeCoordinator(coordinator)
         // TODO
         //didCreateAccount(account: wallet)
+    }
+}
+
+extension WalletCoordinator: WalletCreatedControllerDelegate {
+    func didPressDone(wallet: WalletInfo, in controller: WalletCreatedController) {
+        done(for: wallet)
     }
 }
