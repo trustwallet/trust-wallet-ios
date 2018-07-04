@@ -93,12 +93,6 @@ open class EtherKeystore: Keystore {
         }
     }
 
-    static var current: WalletInfo? {
-        return .none
-        // TODO
-        //return EtherKeystore.shared.recentlyUsedWallet
-    }
-
     // Async
     @available(iOS 10.0, *)
     func createAccount(with password: String, completion: @escaping (Result<Account, KeystoreError>) -> Void) {

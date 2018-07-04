@@ -24,6 +24,7 @@ class AccountsCoordinator: Coordinator {
     lazy var accountsViewController: AccountsViewController = {
         let controller = AccountsViewController(
             keystore: keystore,
+            session: session,
             balanceCoordinator: balanceCoordinator,
             ensManager: ensManager
         )

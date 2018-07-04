@@ -15,7 +15,8 @@ class AccountsViewController: UITableViewController {
     weak var delegate: AccountsViewControllerDelegate?
     var viewModel: AccountsViewModel {
         return AccountsViewModel(
-            wallets: wallets
+            wallets: wallets,
+            current: session.account
         )
     }
     var hasWallets: Bool {
@@ -33,13 +34,16 @@ class AccountsViewController: UITableViewController {
     private let keystore: Keystore
     private let balanceCoordinator: TokensBalanceService
     private let config = Config()
+    private let session: WalletSession
 
     init(
         keystore: Keystore,
+        session: WalletSession,
         balanceCoordinator: TokensBalanceService,
         ensManager: ENSManager
     ) {
         self.keystore = keystore
+        self.session = session
         self.balanceCoordinator = balanceCoordinator
         self.ensManager = ensManager
         super.init(style: .grouped)
@@ -177,7 +181,7 @@ class AccountsViewController: UITableViewController {
         let account = self.wallet(for: path)! // Avoid force unwrap
         let balance = self.balances[account.address].flatMap { $0 }
         let ensName = self.addrNames[account.address] ?? ""
-        let model = AccountViewModel(server: config.server, wallet: account, current: EtherKeystore.current, walletBalance: balance, ensName: ensName)
+        let model = AccountViewModel(server: config.server, wallet: account, current: session.account, walletBalance: balance, ensName: ensName)
         return model
     }
 

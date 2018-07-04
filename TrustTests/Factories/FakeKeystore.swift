@@ -7,7 +7,6 @@ import Result
 
 struct FakeKeystore: Keystore {
 
-    static var current: Trust.WalletInfo?
     var hasWallets: Bool {
         return wallets.count > 0
     }

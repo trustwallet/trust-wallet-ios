@@ -7,8 +7,12 @@ struct AccountsViewModel {
 
     private var walletsTypes = [[WalletInfo]]()
     private var shouldShowHdWalletsTitle = false
-
-    init(wallets: [WalletInfo]) {
+    let current: WalletInfo
+    init(
+        wallets: [WalletInfo],
+        current: WalletInfo
+    ) {
+        self.current = current
         let hdWallets = wallets.filter { wallet in
             switch wallet.wallet.type {
             case .hd: return true
@@ -47,7 +51,7 @@ struct AccountsViewModel {
     }
 
     func canEditRowAt(for indexPath: IndexPath) -> Bool {
-        return (EtherKeystore.current != wallet(for: indexPath) || isLastWallet)
+        return (current != wallet(for: indexPath) || isLastWallet)
     }
 
     func numberOfRows(in section: Int) -> Int {
