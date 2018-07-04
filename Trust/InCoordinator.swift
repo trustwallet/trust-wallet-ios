@@ -139,7 +139,7 @@ class InCoordinator: Coordinator {
         walletCoordinator.start()
         addCoordinator(walletCoordinator)
 
-        let walletStorage = WalletStorage(realm: realm)
+        let walletStorage = WalletStorage(realm: sharedRealm)
 
         let settingsCoordinator = SettingsCoordinator(
             keystore: keystore,
