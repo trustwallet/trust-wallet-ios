@@ -28,7 +28,7 @@ struct AccountViewModel {
     }
 
     var isWatch: Bool {
-        return wallet.wallet.type == .address(wallet.wallet.address)
+        return wallet.wallet.type == .address(wallet.address)
     }
 
     var balanceText: String {
@@ -38,7 +38,7 @@ struct AccountViewModel {
 
     var title: String {
         guard wallet.info.name.isEmpty else { return wallet.info.name }
-        let address = wallet.wallet.address.description
+        let address = wallet.address.description
         if ensName.isEmpty {
             return address
         }
@@ -50,7 +50,7 @@ struct AccountViewModel {
     }
 
     var identicon: UIImage? {
-        guard let cgImage = IconGenerator(size: identiconSize, hash: wallet.wallet.address.data).render() else {
+        guard let cgImage = IconGenerator(size: identiconSize, hash: wallet.address.data).render() else {
             return nil
         }
         return UIImage(cgImage: cgImage)

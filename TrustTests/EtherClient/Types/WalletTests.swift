@@ -9,18 +9,18 @@ class WalletTests: XCTestCase {
     func testPrivateKeyAddressDescription() {
         let wallet = Trust.Wallet(type: .privateKey(.make()))
 
-        XCTAssertEqual("wallet-private-key-\(wallet.address.description)", wallet.description)
+        XCTAssertEqual("wallet-private-key-\(address.description)", wallet.description)
     }
 
     func testHDWalletAddressDescription() {
         let wallet = Trust.Wallet(type: .hd(.make()))
 
-        XCTAssertEqual("wallet-hd-wallet-\(wallet.address.description)", wallet.description)
+        XCTAssertEqual("wallet-hd-wallet-\(address.description)", wallet.description)
     }
 
     func testWalletAddressDescription() {
         let wallet = Trust.Wallet(type: .address(.make()))
 
-        XCTAssertEqual("wallet-address-\(wallet.address.description)", wallet.description)
+        XCTAssertEqual("wallet-address-\(address.description)", wallet.description)
     }
 }

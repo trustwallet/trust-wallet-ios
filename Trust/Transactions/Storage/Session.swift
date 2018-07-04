@@ -18,7 +18,7 @@ class WalletSession {
     }
 
     var sessionID: String {
-        return "\(account.wallet.address.description.lowercased())-\(config.chainID)"
+        return "\(account.address.description.lowercased())-\(config.chainID)"
     }
 
     var balanceViewModel: Subscribable<BalanceBaseViewModel> = Subscribable(nil)

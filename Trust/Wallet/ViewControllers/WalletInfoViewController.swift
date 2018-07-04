@@ -50,7 +50,7 @@ class WalletInfoViewController: FormViewController {
         navigationItem.rightBarButtonItem = saveBarButtonItem
 
         let types = viewModel.types
-        let section = Section(footer: viewModel.wallet.wallet.address.description)
+        let section = Section(footer: viewModel.wallet.address.description)
         for type in types {
             section.append(link(item: type))
         }

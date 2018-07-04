@@ -47,7 +47,7 @@ class WalletCreatedController: UIViewController {
             .spacer(),
             .label(style: .heading, text: wallet.info.name),
             .spacer(),
-            .label(style: .heading, text: wallet.wallet.address.description),
+            .label(style: .heading, text: wallet.address.description),
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical

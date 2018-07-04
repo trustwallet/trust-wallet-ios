@@ -207,7 +207,7 @@ class TokenViewModel {
     }
 
     private func fetchTransactions() {
-        tokensNetwork.transactions(for: session.account.wallet.address, startBlock: 1, page: 0, contract: token.contract) { result in
+        tokensNetwork.transactions(for: session.account.address, startBlock: 1, page: 0, contract: token.contract) { result in
             guard let transactions = result.0 else { return }
             self.transactionsStore.add(transactions)
         }

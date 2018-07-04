@@ -128,7 +128,7 @@ class ConfirmPaymentViewController: UIViewController {
             .spacer(height: TransactionAppearance.spacing),
             TransactionAppearance.item(
                 title: detailsViewModel.paymentFromTitle,
-                subTitle: session.account.wallet.address.description
+                subTitle: session.account.address.description
             ),
             .spacer(height: TransactionAppearance.spacing),
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),

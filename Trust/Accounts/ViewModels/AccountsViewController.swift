@@ -156,7 +156,7 @@ class AccountsViewController: UITableViewController {
     }
 
     private func refreshWalletBalances() {
-       let addresses = accounts.compactMap { $0.wallet.address }
+       let addresses = accounts.compactMap { $0.address }
        var counter = 0
        for address in addresses {
             balanceCoordinator.getEthBalance(for: address, completion: { [weak self] (result) in
@@ -170,7 +170,7 @@ class AccountsViewController: UITableViewController {
     }
 
     private func refreshENSNames() {
-        let addresses = accounts.compactMap { $0.wallet.address }
+        let addresses = accounts.compactMap { $0.address }
         let promises =  addresses.map { ensManager.lookup(address: $0) }
         _ = when(fulfilled: promises).done { [weak self] names in
             for (index, name) in names.enumerated() {
@@ -184,8 +184,8 @@ class AccountsViewController: UITableViewController {
 
     private func getAccountViewModels(for path: IndexPath) -> AccountViewModel {
         let account = self.wallet(for: path)! // Avoid force unwrap
-        let balance = self.balances[account.wallet.address].flatMap { $0 }
-        let ensName = self.addrNames[account.wallet.address] ?? ""
+        let balance = self.balances[account.address].flatMap { $0 }
+        let ensName = self.addrNames[account.address] ?? ""
         let model = AccountViewModel(server: config.server, wallet: account, current: EtherKeystore.current, walletBalance: balance, ensName: ensName)
         return model
     }
