@@ -9,7 +9,7 @@ enum RefreshType {
 }
 
 class WalletSession {
-    let account: Wallet
+    let account: WalletInfo
     let balanceCoordinator: BalanceCoordinator
     let config: Config
     let chainState: ChainState
@@ -18,14 +18,14 @@ class WalletSession {
     }
 
     var sessionID: String {
-        return "\(account.address.description.lowercased())-\(config.chainID)"
+        return "\(account.wallet.address.description.lowercased())-\(config.chainID)"
     }
 
     var balanceViewModel: Subscribable<BalanceBaseViewModel> = Subscribable(nil)
     var nonceProvider: NonceProvider
 
     init(
-        account: Wallet,
+        account: WalletInfo,
         config: Config,
         balanceCoordinator: BalanceCoordinator,
         nonceProvider: NonceProvider

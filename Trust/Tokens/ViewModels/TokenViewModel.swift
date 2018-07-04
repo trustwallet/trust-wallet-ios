@@ -190,7 +190,7 @@ class TokenViewModel {
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
-        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account)
+        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account.wallet)
     }
 
     func hasContent() -> Bool {
@@ -207,7 +207,7 @@ class TokenViewModel {
     }
 
     private func fetchTransactions() {
-        tokensNetwork.transactions(for: session.account.address, startBlock: 1, page: 0, contract: token.contract) { result in
+        tokensNetwork.transactions(for: session.account.wallet.address, startBlock: 1, page: 0, contract: token.contract) { result in
             guard let transactions = result.0 else { return }
             self.transactionsStore.add(transactions)
         }

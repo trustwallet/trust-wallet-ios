@@ -52,7 +52,7 @@ class TransactionOperation: TrustOperation {
     }
 
     private func transactions(for page: Int, completion: @escaping (([Transaction]?, TransactionFetchingState) -> Void)) {
-        self.network.transactions(for: self.session.account.address, startBlock: 1, page: page, contract: nil) { result in
+        self.network.transactions(for: self.session.account.wallet.address, startBlock: 1, page: page, contract: nil) { result in
             guard let transactions = result.0, result.1 else {
                 completion(nil, .failed)
                 return

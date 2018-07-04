@@ -45,7 +45,7 @@ class PaymentCoordinator: Coordinator {
     }
 
     func start() {
-        switch (flow, session.account.type) {
+        switch (flow, session.account.wallet.type) {
         case (.send(let type), .privateKey(let account)),
              (.send(let type), .hd(let account)):
             let coordinator = SendCoordinator(

@@ -20,7 +20,7 @@ class TransactionCoordinator: Coordinator {
     let tokensStorage: TokensDataStore
 
     lazy var rootViewController: TransactionsViewController = {
-        return self.makeTransactionsController(with: self.session.account)
+        return self.makeTransactionsController(with: self.session.account.wallet)
     }()
 
     lazy var viewModel: TransactionsViewModel = {
@@ -88,7 +88,7 @@ class TransactionCoordinator: Coordinator {
     }
 
     @objc func deposit(sender: UIBarButtonItem) {
-        showDeposit(for: session.account, from: sender)
+        showDeposit(for: session.account.wallet, from: sender)
     }
 
     func showDeposit(for account: Wallet, from barButtonItem: UIBarButtonItem? = .none) {

@@ -31,7 +31,7 @@ class SendTransactionCoordinator {
             signAndSend(transaction: transaction, completion: completion)
         } else {
             let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(
-                address: session.account.address.description,
+                address: session.account.wallet.address.description,
                 state: "latest"
             )))
             Session.send(request) { [weak self] result in

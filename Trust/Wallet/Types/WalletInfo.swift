@@ -1,10 +1,15 @@
 // Copyright SIX DAY LLC. All rights reserved.
 
 import Foundation
+import TrustCore
 
 struct WalletInfo {
     let wallet: Wallet
     let info: WalletObject
+
+    var address: Address {
+        return wallet.address
+    }
 
     init(
         wallet: Wallet,

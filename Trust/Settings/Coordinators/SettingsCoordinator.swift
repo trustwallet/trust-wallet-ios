@@ -131,7 +131,7 @@ class SettingsCoordinator: Coordinator {
     func switchNetwork(for server: RPCServer) {
         var config = session.config
         config.chainID = server.chainID
-        restart(for: session.account)
+        restart(for: session.account.wallet)
     }
 }
 
@@ -141,7 +141,7 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
         case .RPCServer(let server):
             prepareSwitchNetwork(for: server)
         case .currency:
-            restart(for: session.account)
+            restart(for: session.account.wallet)
         case .pushNotifications(let change):
             switch change {
             case .state(let isEnabled):

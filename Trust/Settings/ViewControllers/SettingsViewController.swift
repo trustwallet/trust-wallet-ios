@@ -92,7 +92,7 @@ class SettingsViewController: FormViewController, Coordinator {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: stateView)
         }
         title = NSLocalizedString("settings.navigation.title", value: "Settings", comment: "")
-        let account = session.account
+        let account = session.account.wallet
 
         form = Section()
 

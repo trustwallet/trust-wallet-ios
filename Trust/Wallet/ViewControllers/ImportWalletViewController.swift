@@ -19,6 +19,7 @@ class ImportWalletViewController: FormViewController {
         static let keystore = "keystore"
         static let privateKey = "privateKey"
         static let password = "password"
+        static let name = "password"
         static let watch = "watch"
         static let mnemonic = "mnemonic"
     }
@@ -40,6 +41,9 @@ class ImportWalletViewController: FormViewController {
     }
     var watchRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.watch)
+    }
+    var nameRow: TextFloatLabelRow? {
+        return form.rowBy(tag: Values.name)
     }
 
     weak var delegate: ImportWalletViewControllerDelegate?
@@ -69,6 +73,12 @@ class ImportWalletViewController: FormViewController {
         let recipientRightView = FieldAppereance.addressFieldRightView(
             pasteAction: { [unowned self] in self.pasteAddressAction() },
             qrAction: { [unowned self] in self.openReader() }
+        )
+
+        let initialName = String(format: NSLocalizedString(
+            "importWallet.initialNmae", value: "ETH %@ %@", comment: ""
+        ),
+            "ETH", R.string.localizable.name(), "\(keystore.wallets.count + 1)"
         )
 
         form
@@ -141,6 +151,16 @@ class ImportWalletViewController: FormViewController {
                 cell.textField.placeholder = self?.viewModel.watchAddressPlaceholder
                 cell.textField.rightView = recipientRightView
                 cell.textField.rightViewMode = .always
+            }
+
+            // Name
+
+            <<< AppFormAppearance.textFieldFloat(tag: Values.password) {
+                $0.validationOptions = .validatesOnDemand
+                $0.value = initialName
+            }.cellUpdate { cell, _ in
+                cell.textField.textAlignment = .left
+                cell.textField.placeholder = R.string.localizable.name()
             }
 
             +++ Section()

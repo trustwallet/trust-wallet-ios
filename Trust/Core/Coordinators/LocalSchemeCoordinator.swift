@@ -99,7 +99,7 @@ class LocalSchemeCoordinator: Coordinator {
     }
 
     private func account(for session: WalletSession) -> Account? {
-        switch session.account.type {
+        switch session.account.wallet.type {
         case .privateKey(let account), .hd(let account): return account
         case .address: return .none
         }

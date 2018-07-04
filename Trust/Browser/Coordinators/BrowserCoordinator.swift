@@ -43,7 +43,7 @@ class BrowserCoordinator: NSObject, Coordinator {
     }()
 
     lazy var browserViewController: BrowserViewController = {
-        let controller = BrowserViewController(account: session.account, config: session.config)
+        let controller = BrowserViewController(account: session.account.wallet, config: session.config)
         controller.delegate = self
         controller.webView.uiDelegate = self
         return controller
@@ -272,7 +272,7 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
     }
 
     func didCall(action: DappAction, callbackID: Int) {
-        switch session.account.type {
+        switch session.account.wallet.type {
         case .privateKey(let account), .hd(let account) :
             switch action {
             case .signTransaction(let unconfirmedTransaction):

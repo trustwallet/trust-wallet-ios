@@ -21,7 +21,7 @@ class TokensCoordinator: Coordinator {
     let transactionsStore: TransactionsStorage
 
     lazy var tokensViewController: TokensViewController = {
-        let tokensViewModel = TokensViewModel(address: session.account.address, store: store, tokensNetwork: network)
+        let tokensViewModel = TokensViewModel(address: session.account.wallet.address, store: store, tokensNetwork: network)
         let controller = TokensViewController(viewModel: tokensViewModel)
         controller.footerView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
         controller.footerView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
@@ -29,7 +29,7 @@ class TokensCoordinator: Coordinator {
         return controller
     }()
     lazy var nonFungibleTokensViewController: NonFungibleTokensViewController = {
-        let nonFungibleTokenViewModel = NonFungibleTokenViewModel(address: session.account.address, storage: store, tokensNetwork: network)
+        let nonFungibleTokenViewModel = NonFungibleTokenViewModel(address: session.account.wallet.address, storage: store, tokensNetwork: network)
         let controller = NonFungibleTokensViewController(viewModel: nonFungibleTokenViewModel)
         controller.delegate = self
         return controller

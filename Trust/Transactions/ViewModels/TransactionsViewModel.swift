@@ -115,7 +115,7 @@ struct TransactionsViewModel {
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
-        return TransactionCellViewModel(transaction: storage.transactionSections[indexPath.section].items[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account)
+        return TransactionCellViewModel(transaction: storage.transactionSections[indexPath.section].items[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account.wallet)
     }
 
     func statBlock() -> Int {
@@ -129,7 +129,7 @@ struct TransactionsViewModel {
     }
 
     func fetchTransactions(completion: (() -> Void)? = .none) {
-        self.network.transactions(for: session.account.address, startBlock: 1, page: 0, contract: nil) { result in
+        self.network.transactions(for: session.account.wallet.address, startBlock: 1, page: 0, contract: nil) { result in
             guard let transactions = result.0 else {
                 completion?()
                 return
@@ -140,7 +140,7 @@ struct TransactionsViewModel {
     }
 
     func addSentTransaction(_ transaction: SentTransaction) {
-        let transaction = SentTransaction.from(from: session.account.address, transaction: transaction)
+        let transaction = SentTransaction.from(from: session.account.wallet.address, transaction: transaction)
         storage.add([transaction])
     }
 

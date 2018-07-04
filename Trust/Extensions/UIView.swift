@@ -40,10 +40,18 @@ extension UIView {
         return view
     }
 
-    static func label(style: AppStyle, text: String) -> UIView {
+    static func label(
+        style: AppStyle,
+        text: String,
+        aligment: NSTextAlignment = .center
+    ) -> UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = text
+        label.textColor = style.textColor
+        label.font = style.font
+        label.textAlignment = aligment
+        label.adjustsFontSizeToFitWidth = true
         return label
     }
 

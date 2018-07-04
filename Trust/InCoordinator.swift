@@ -99,7 +99,7 @@ class InCoordinator: Coordinator {
         )
         let nonceProvider = GetNonceProvider(storage: transactionsStorage)
         let session = WalletSession(
-            account: account.wallet,
+            account: account,
             config: config,
             balanceCoordinator: balance,
             nonceProvider: nonceProvider
@@ -236,7 +236,7 @@ class InCoordinator: Coordinator {
         let session = transactionCoordinator.session
         let tokenStorage = transactionCoordinator.tokensStorage
 
-        switch (type, session.account.type) {
+        switch (type, session.account.wallet.type) {
         case (.send, .privateKey), (.send, .hd), (.request, _):
             let coordinator = PaymentCoordinator(
                 flow: type,
