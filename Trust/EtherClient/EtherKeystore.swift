@@ -19,29 +19,49 @@ open class EtherKeystore: Keystore {
         static let watchAddresses = "watchAddresses"
     }
 
-    static let shared = EtherKeystore()
-
     private let keychain: KeychainSwift
     private let datadir = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     let keyStore: KeyStore
     private let defaultKeychainAccess: KeychainSwiftAccessOptions = .accessibleWhenUnlockedThisDeviceOnly
     let keysDirectory: URL
     let userDefaults: UserDefaults
+    let storage: WalletStorage
 
     public init(
         keychain: KeychainSwift = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix),
         keysSubfolder: String = "/keystore",
-        userDefaults: UserDefaults = UserDefaults.standard
+        userDefaults: UserDefaults = UserDefaults.standard,
+        storage: WalletStorage
     ) {
         self.keysDirectory = URL(fileURLWithPath: datadir + keysSubfolder)
         self.keychain = keychain
         self.keychain.synchronizable = false
         self.keyStore = try! KeyStore(keyDirectory: keysDirectory)
         self.userDefaults = userDefaults
+        self.storage = storage
     }
 
     var hasWallets: Bool {
         return !wallets.isEmpty
+    }
+
+    var wallets: [WalletInfo] {
+        return accounts.map {
+            return WalletInfo(wallet: $0, info: storage.get(for: $0))
+        }
+    }
+
+    private var accounts: [Wallet] {
+        let addresses = watchAddresses.compactMap { Address(string: $0) }
+        return [
+            keyStore.accounts.map {
+                switch $0.type {
+                case .encryptedKey: return Wallet(type: .privateKey($0))
+                case .hierarchicalDeterministicWallet: return Wallet(type: .hd($0))
+                }
+            },
+            addresses.map { Wallet(type: .address($0)) },
+        ].flatMap { $0 }
     }
 
     private var watchAddresses: [String] {
@@ -55,26 +75,28 @@ open class EtherKeystore: Keystore {
         }
      }
 
-    var recentlyUsedWallet: Wallet? {
+    var recentlyUsedWallet: WalletInfo? {
         set {
-            keychain.set(newValue?.description ?? "", forKey: Keys.recentlyUsedWallet, withAccess: defaultKeychainAccess)
+            keychain.set(newValue?.wallet.description ?? "", forKey: Keys.recentlyUsedWallet, withAccess: defaultKeychainAccess)
         }
         get {
             let walletKey = keychain.get(Keys.recentlyUsedWallet)
-            let foundWallet = wallets.filter { $0.description == walletKey }.first
+            let foundWallet = wallets.filter { $0.wallet.description == walletKey }.first
             guard let wallet = foundWallet else {
                 // Old way to match recently selected address
                 let address = keychain.get(Keys.recentlyUsedAddress)
                 return wallets.filter {
-                    $0.address.description == address || $0.address.description.lowercased() == address?.lowercased()
+                    $0.wallet.address.description == address || $0.wallet.address.description.lowercased() == address?.lowercased()
                 }.first
             }
             return wallet
         }
     }
 
-    static var current: Wallet? {
-        return EtherKeystore.shared.recentlyUsedWallet
+    static var current: WalletInfo? {
+        return .none
+        // TODO
+        //return EtherKeystore.shared.recentlyUsedWallet
     }
 
     // Async
@@ -198,19 +220,6 @@ open class EtherKeystore: Keystore {
                 return .failure(.failedToImport(error))
             }
         }
-    }
-
-    var wallets: [Wallet] {
-        let addresses = watchAddresses.compactMap { Address(string: $0) }
-        return [
-            keyStore.accounts.map {
-                switch $0.type {
-                case .encryptedKey: return Wallet(type: .privateKey($0))
-                case .hierarchicalDeterministicWallet: return Wallet(type: .hd($0))
-                }
-            },
-            addresses.map { Wallet(type: .address($0)) },
-        ].flatMap { $0 }
     }
 
     func export(account: Account, password: String, newPassword: String) -> Result<String, KeystoreError> {

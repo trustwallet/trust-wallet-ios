@@ -46,8 +46,7 @@ class AppCoordinator: NSObject, Coordinator {
 
         if keystore.hasWallets {
             let wallet = keystore.recentlyUsedWallet ?? keystore.wallets.first!
-            let walletInfo = WalletInfo(wallet: wallet)
-            showTransactions(for: walletInfo)
+            showTransactions(for: wallet)
         } else {
             resetToWelcomeScreen()
         }

@@ -7,7 +7,7 @@ import Result
 
 struct FakeKeystore: Keystore {
 
-    static var current: Trust.Wallet?
+    static var current: Trust.WalletInfo?
     var hasWallets: Bool {
         return wallets.count > 0
     }
@@ -17,12 +17,12 @@ struct FakeKeystore: Keystore {
     var walletsDirectory: URL {
         return URL(fileURLWithPath: "file://")
     }
-    var wallets: [Trust.Wallet]
-    var recentlyUsedWallet: Trust.Wallet?
+    var wallets: [Trust.WalletInfo]
+    var recentlyUsedWallet: Trust.WalletInfo?
 
     init(
-        wallets: [Trust.Wallet] = [],
-        recentlyUsedWallet: Trust.Wallet? = .none
+        wallets: [Trust.WalletInfo] = [],
+        recentlyUsedWallet: Trust.WalletInfo? = .none
     ) {
         self.wallets = wallets
         self.recentlyUsedWallet = recentlyUsedWallet
@@ -126,8 +126,8 @@ struct FakeKeystore: Keystore {
 
 extension FakeKeystore {
     static func make(
-        wallets: [Trust.Wallet] = [],
-        recentlyUsedWallet: Trust.Wallet? = .none
+        wallets: [Trust.WalletInfo] = [],
+        recentlyUsedWallet: Trust.WalletInfo? = .none
     ) -> FakeKeystore {
         return FakeKeystore(
             wallets: wallets,

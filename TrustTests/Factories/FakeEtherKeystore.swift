@@ -12,7 +12,8 @@ class FakeEtherKeystore: EtherKeystore {
         self.init(
             keychain: KeychainSwift(keyPrefix: "fake" + uniqueString),
             keysSubfolder: "/keys" + uniqueString,
-            userDefaults: UserDefaults.test
+            userDefaults: UserDefaults.test,
+            storage: FakeWalletStorage()
         )
     }
 

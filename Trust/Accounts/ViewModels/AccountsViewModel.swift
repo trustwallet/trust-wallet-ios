@@ -47,7 +47,7 @@ struct AccountsViewModel {
     }
 
     func canEditRowAt(for indexPath: IndexPath) -> Bool {
-        return (EtherKeystore.current != wallet(for: indexPath)?.wallet || isLastWallet)
+        return (EtherKeystore.current != wallet(for: indexPath) || isLastWallet)
     }
 
     func numberOfRows(in section: Int) -> Int {

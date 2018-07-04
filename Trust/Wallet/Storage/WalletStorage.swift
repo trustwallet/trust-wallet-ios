@@ -3,7 +3,7 @@
 import Foundation
 import RealmSwift
 
-class WalletStorage {
+public class WalletStorage {
 
     let realm: Realm
 

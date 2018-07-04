@@ -8,7 +8,7 @@ import UIKit
 struct AccountViewModel {
     let identiconSize = 60 as CGFloat
     let wallet: WalletInfo
-    let current: Wallet?
+    let current: WalletInfo?
     let walletBalance: Balance?
     let server: RPCServer
     let ensName: String
@@ -16,7 +16,7 @@ struct AccountViewModel {
     init(
         server: RPCServer,
         wallet: WalletInfo,
-        current: Wallet?,
+        current: WalletInfo?,
         walletBalance: Balance?,
         ensName: String = ""
     ) {
@@ -46,7 +46,7 @@ struct AccountViewModel {
     }
 
     var isActive: Bool {
-        return wallet.wallet == current
+        return wallet == current
     }
 
     var identicon: UIImage? {

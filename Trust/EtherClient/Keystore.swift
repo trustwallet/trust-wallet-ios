@@ -6,10 +6,10 @@ import TrustKeystore
 
 protocol Keystore {
     var hasWallets: Bool { get }
-    var wallets: [Wallet] { get }
+    var wallets: [WalletInfo] { get }
     var keysDirectory: URL { get }
-    var recentlyUsedWallet: Wallet? { get set }
-    static var current: Wallet? { get }
+    var recentlyUsedWallet: WalletInfo? { get set }
+    static var current: WalletInfo? { get }
     @available(iOS 10.0, *)
     func createAccount(with password: String, completion: @escaping (Result<Account, KeystoreError>) -> Void)
     func importWallet(type: ImportType, completion: @escaping (Result<Wallet, KeystoreError>) -> Void)

@@ -72,9 +72,9 @@ class InCoordinator: Coordinator {
         addCoordinator(helpUsCoordinator)
     }
 
-    func showTabBar(for accountInfo: WalletInfo) {
+    func showTabBar(for account: WalletInfo) {
 
-        let migration = MigrationInitializer(account: accountInfo.wallet, chainID: config.chainID)
+        let migration = MigrationInitializer(account: account.wallet, chainID: config.chainID)
         migration.perform()
 
         let sharedMigration = SharedMigrationInitializer()
@@ -86,13 +86,6 @@ class InCoordinator: Coordinator {
         let walletStorage = WalletStorage(realm: sharedRealm)
         let tokensStorage = TokensDataStore(realm: realm, config: config)
         let balanceCoordinator =  TokensBalanceService()
-
-        // TODO FIX.
-        let account = WalletInfo(
-            wallet: accountInfo.wallet,
-            info: walletStorage.get(for: accountInfo.wallet)
-        )
-
         let viewModel = InCoordinatorViewModel(config: config)
         let trustNetwork = TrustNetwork(
             provider: TrustProviderFactory.makeProvider(),
@@ -175,7 +168,7 @@ class InCoordinator: Coordinator {
 
         showTab(.wallet(.none))
 
-        keystore.recentlyUsedWallet = account.wallet
+        keystore.recentlyUsedWallet = account
 
         // activate all view controllers.
         [Tabs.wallet(.none), Tabs.transactions].forEach {

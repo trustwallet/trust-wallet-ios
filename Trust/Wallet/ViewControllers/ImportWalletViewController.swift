@@ -155,7 +155,7 @@ class ImportWalletViewController: FormViewController {
 
             // Name
 
-            <<< AppFormAppearance.textFieldFloat(tag: Values.password) {
+            <<< AppFormAppearance.textFieldFloat(tag: Values.name) {
                 $0.validationOptions = .validatesOnDemand
                 $0.value = initialName
             }.cellUpdate { cell, _ in

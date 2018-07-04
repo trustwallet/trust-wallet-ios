@@ -19,3 +19,9 @@ struct WalletInfo {
         self.info = info ?? WalletObject.from(wallet)
     }
 }
+
+extension WalletInfo: Equatable {
+    static func == (lhs: WalletInfo, rhs: WalletInfo) -> Bool {
+        return lhs.wallet.description == rhs.wallet.description
+    }
+}

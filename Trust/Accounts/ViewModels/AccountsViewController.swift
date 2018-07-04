@@ -15,22 +15,16 @@ class AccountsViewController: UITableViewController {
     weak var delegate: AccountsViewControllerDelegate?
     var viewModel: AccountsViewModel {
         return AccountsViewModel(
-            wallets: accounts
+            wallets: wallets
         )
     }
     var hasWallets: Bool {
-        return !accounts.isEmpty
+        return !wallets.isEmpty
     }
 
-    var wallets: [Wallet] = [] {
+    var wallets: [WalletInfo] = [] {
         didSet {
             tableView.reloadData()
-        }
-    }
-
-    var accounts: [WalletInfo] {
-        return wallets.map {
-            return WalletInfo(wallet: $0, info: walletStorage.get(for: $0))
         }
     }
 
@@ -156,7 +150,7 @@ class AccountsViewController: UITableViewController {
     }
 
     private func refreshWalletBalances() {
-       let addresses = accounts.compactMap { $0.address }
+       let addresses = wallets.compactMap { $0.wallet.address }
        var counter = 0
        for address in addresses {
             balanceCoordinator.getEthBalance(for: address, completion: { [weak self] (result) in
@@ -170,7 +164,7 @@ class AccountsViewController: UITableViewController {
     }
 
     private func refreshENSNames() {
-        let addresses = accounts.compactMap { $0.address }
+        let addresses = wallets.compactMap { $0.wallet.address }
         let promises =  addresses.map { ensManager.lookup(address: $0) }
         _ = when(fulfilled: promises).done { [weak self] names in
             for (index, name) in names.enumerated() {
