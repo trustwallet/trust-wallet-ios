@@ -429,4 +429,16 @@ open class EtherKeystore: Keystore {
             return .failure(KeystoreError.failedToImportPrivateKey)
         }
     }
+
+    func store(object: WalletObject, fields: [WalletInfoField]) {
+        try? storage.realm.write {
+            for field in fields {
+                switch field {
+                case .name(let name):
+                    object.name = name
+                }
+            }
+            storage.realm.add(object, update: true)
+        }
+    }
 }

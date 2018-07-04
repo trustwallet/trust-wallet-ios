@@ -31,7 +31,6 @@ class SettingsCoordinator: Coordinator {
             navigationController: navigationController,
             keystore: keystore,
             session: session,
-            walletStorage: walletStorage,
             balanceCoordinator: balanceCoordinator,
             ensManager: ensManager
         )

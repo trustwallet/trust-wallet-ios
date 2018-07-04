@@ -17,7 +17,6 @@ class AccountsCoordinator: Coordinator {
     let navigationController: NavigationController
     let keystore: Keystore
     let session: WalletSession
-    let walletStorage: WalletStorage
     let balanceCoordinator: TokensBalanceService
     let ensManager: ENSManager
     var coordinators: [Coordinator] = []
@@ -25,7 +24,6 @@ class AccountsCoordinator: Coordinator {
     lazy var accountsViewController: AccountsViewController = {
         let controller = AccountsViewController(
             keystore: keystore,
-            walletStorage: walletStorage,
             balanceCoordinator: balanceCoordinator,
             ensManager: ensManager
         )
@@ -40,7 +38,6 @@ class AccountsCoordinator: Coordinator {
         navigationController: NavigationController,
         keystore: Keystore,
         session: WalletSession,
-        walletStorage: WalletStorage,
         balanceCoordinator: TokensBalanceService,
         ensManager: ENSManager
     ) {
@@ -48,7 +45,6 @@ class AccountsCoordinator: Coordinator {
         self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
         self.session = session
-        self.walletStorage = walletStorage
         self.balanceCoordinator = balanceCoordinator
         self.ensManager = ensManager
     }
@@ -75,8 +71,7 @@ class AccountsCoordinator: Coordinator {
 
     func showWalletInfo(for wallet: WalletInfo, sender: UIView) {
         let controller = WalletInfoViewController(
-            wallet: wallet,
-            storage: walletStorage
+            wallet: wallet
         )
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)
@@ -213,8 +208,8 @@ extension AccountsCoordinator: WalletInfoViewControllerDelegate {
         }
     }
 
-    func didPressSave(wallet: WalletInfo, field: WalletInfoField, in controller: WalletInfoViewController) {
-        walletStorage.store(object: wallet.info, field: field)
+    func didPressSave(wallet: WalletInfo, fields: [WalletInfoField], in controller: WalletInfoViewController) {
+        keystore.store(object: wallet.info, fields: fields)
         navigationController.popViewController(animated: true)
     }
 }

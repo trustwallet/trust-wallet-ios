@@ -122,6 +122,10 @@ struct FakeKeystore: Keystore {
         //TODO: Implement
         return completion(.failure(KeystoreError.failedToExportPrivateKey))
     }
+
+    func store(object: WalletObject, fields: [WalletInfoField]) {
+        //TODO
+    }
 }
 
 extension FakeKeystore {

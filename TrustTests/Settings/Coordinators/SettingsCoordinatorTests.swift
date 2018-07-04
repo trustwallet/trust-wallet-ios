@@ -26,7 +26,6 @@ class SettingsCoordinatorTests: XCTestCase {
             navigationController: FakeNavigationController(),
             keystore: FakeEtherKeystore(),
             session: .make(),
-            walletStorage: FakeWalletStorage(),
             balanceCoordinator: FakeGetBalanceCoordinator(),
             ensManager: ENSManager(realm: .make())
         )

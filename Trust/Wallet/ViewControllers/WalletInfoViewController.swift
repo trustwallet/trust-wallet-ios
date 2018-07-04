@@ -6,11 +6,11 @@ import TrustKeystore
 
 protocol WalletInfoViewControllerDelegate: class {
     func didPress(item: WalletInfoType, in controller: WalletInfoViewController)
-    func didPressSave(wallet: WalletInfo, field: WalletInfoField, in controller: WalletInfoViewController)
+    func didPressSave(wallet: WalletInfo, fields: [WalletInfoField], in controller: WalletInfoViewController)
 }
 
-struct WalletInfoField {
-    let name: String
+enum WalletInfoField {
+    case name(String)
 }
 
 class WalletInfoViewController: FormViewController {
@@ -22,7 +22,6 @@ class WalletInfoViewController: FormViewController {
         return form.rowBy(tag: Values.name)
     }
     let wallet: WalletInfo
-    let storage: WalletStorage
 
     weak var delegate: WalletInfoViewControllerDelegate?
 
@@ -35,11 +34,9 @@ class WalletInfoViewController: FormViewController {
     }()
 
     init(
-        wallet: WalletInfo,
-        storage: WalletStorage
+        wallet: WalletInfo
     ) {
         self.wallet = wallet
-        self.storage = storage
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -89,8 +86,7 @@ class WalletInfoViewController: FormViewController {
 
     @objc func save() {
         let name = segmentRow?.value ?? ""
-        let field = WalletInfoField(name: name)
-        delegate?.didPressSave(wallet: wallet, field: field, in: self)
+        delegate?.didPressSave(wallet: wallet, fields: [.name(name)], in: self)
     }
 
     required init?(coder aDecoder: NSCoder) {

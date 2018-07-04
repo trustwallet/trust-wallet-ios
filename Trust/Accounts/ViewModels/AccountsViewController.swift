@@ -31,18 +31,15 @@ class AccountsViewController: UITableViewController {
     private var balances: [Address: Balance?] = [:]
     private var addrNames: [Address: String] = [:]
     private let keystore: Keystore
-    private let walletStorage: WalletStorage
     private let balanceCoordinator: TokensBalanceService
     private let config = Config()
 
     init(
         keystore: Keystore,
-        walletStorage: WalletStorage,
         balanceCoordinator: TokensBalanceService,
         ensManager: ENSManager
     ) {
         self.keystore = keystore
-        self.walletStorage = walletStorage
         self.balanceCoordinator = balanceCoordinator
         self.ensManager = ensManager
         super.init(style: .grouped)
