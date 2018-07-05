@@ -6,6 +6,7 @@ import StatefulViewController
 protocol TokenViewControllerDelegate: class {
     func didPressRequest(for token: TokenObject, in controller: UIViewController)
     func didPressSend(for token: TokenObject, in controller: UIViewController)
+    func didPressInfo(for token: TokenObject, in controller: UIViewController)
     func didPress(transaction: Transaction, in controller: UIViewController)
 }
 
@@ -55,6 +56,11 @@ class TokenViewController: UIViewController {
         header.buttonsView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
         header.buttonsView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
         updateHeader()
+
+        // TODO: Enable when finished
+        if isDebug {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(infoAction))
+        }
     }
 
     override func viewDidLoad() {
@@ -70,13 +76,13 @@ class TokenViewController: UIViewController {
         fetch()
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     private func fetch() {
         startLoading()
         viewModel.fetch()
+    }
+
+    @objc func infoAction() {
+        delegate?.didPressInfo(for: viewModel.token, in: self)
     }
 
     private func observToken() {
@@ -140,6 +146,10 @@ class TokenViewController: UIViewController {
         })
         loadingView = LoadingView(insets: insets)
         emptyView = TransactionsEmptyView(insets: insets)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

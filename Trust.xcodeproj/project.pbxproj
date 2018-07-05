@@ -352,6 +352,7 @@
 		771D536F2058BB0D00C79485 /* BrowserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D536D2058BB0D00C79485 /* BrowserCoordinator.swift */; };
 		771D5371205923F500C79485 /* NetworkConditionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D5370205923F500C79485 /* NetworkConditionViewModel.swift */; };
 		771D53732059337100C79485 /* TokenImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D53722059337100C79485 /* TokenImageView.swift */; };
+		771DC9CF20EEC8AC003E2CE2 /* TokenInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771DC9CE20EEC8AC003E2CE2 /* TokenInfoViewController.swift */; };
 		7721A6BE202A5677004DB16C /* DecryptError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6BD202A5677004DB16C /* DecryptError.swift */; };
 		7721A6C8202EF81B004DB16C /* CustomRPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6C7202EF81B004DB16C /* CustomRPC.swift */; };
 		7721A6CC202EFBC5004DB16C /* AddCustomNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6CB202EFBC5004DB16C /* AddCustomNetworkViewController.swift */; };
@@ -843,6 +844,7 @@
 		771D536D2058BB0D00C79485 /* BrowserCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserCoordinator.swift; sourceTree = "<group>"; };
 		771D5370205923F500C79485 /* NetworkConditionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConditionViewModel.swift; sourceTree = "<group>"; };
 		771D53722059337100C79485 /* TokenImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenImageView.swift; sourceTree = "<group>"; };
+		771DC9CE20EEC8AC003E2CE2 /* TokenInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenInfoViewController.swift; sourceTree = "<group>"; };
 		7721A6BD202A5677004DB16C /* DecryptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecryptError.swift; sourceTree = "<group>"; };
 		7721A6BF202B1D3E004DB16C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7721A6C0202B1D43004DB16C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -1521,6 +1523,7 @@
 				73B1A6B7204B4893001F546C /* WalletViewController.swift */,
 				776C1143205CF67E00449539 /* TokenViewController.swift */,
 				77B1EAFE20639DEB007970AA /* NFTokenViewController.swift */,
+				771DC9CE20EEC8AC003E2CE2 /* TokenInfoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3234,6 +3237,7 @@
 				29E9CFD21FE737FE00017744 /* TrustRealmConfiguration.swift in Sources */,
 				BB3395E9209C4F8100ACED2C /* ENSClient.swift in Sources */,
 				BB3E2A1020A12592000F8B76 /* ENSManager.swift in Sources */,
+				771DC9CF20EEC8AC003E2CE2 /* TokenInfoViewController.swift in Sources */,
 				2959961C1FAE3EDF00DB66A8 /* TrustClient.swift in Sources */,
 				29AD8A0C1F93FBBF008E10E7 /* Subscribable.swift in Sources */,
 				777871382085D7A600CF7303 /* BranchEvent.swift in Sources */,

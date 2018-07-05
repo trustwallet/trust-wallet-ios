@@ -111,6 +111,11 @@ class TokensCoordinator: Coordinator {
         navigationController.present(nav, animated: true, completion: nil)
     }
 
+    func tokenInfo(_ token: TokenObject) {
+        let controller = TokenInfoViewController(token: token)
+        navigationController.pushViewController(controller, animated: true)
+    }
+
     @objc func dismiss() {
         navigationController.dismiss(animated: true, completion: nil)
     }
@@ -219,6 +224,10 @@ extension TokensCoordinator: TokenViewControllerDelegate {
             in: navigationController,
             barItem: UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         )
+    }
+
+    func didPressInfo(for token: TokenObject, in controller: UIViewController) {
+        tokenInfo(token)
     }
 }
 
