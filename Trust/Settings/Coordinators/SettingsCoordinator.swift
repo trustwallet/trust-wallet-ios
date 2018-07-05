@@ -22,6 +22,7 @@ class SettingsCoordinator: Coordinator {
     let walletStorage: WalletStorage
     let balanceCoordinator: TokensBalanceService
     let ensManager: ENSManager
+    let cookiesStore: CookiesStore
     weak var delegate: SettingsCoordinatorDelegate?
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
     var coordinators: [Coordinator] = []
@@ -43,7 +44,8 @@ class SettingsCoordinator: Coordinator {
             session: session,
             keystore: keystore,
             balanceCoordinator: balanceCoordinator,
-            accountsCoordinator: accountsCoordinator
+            accountsCoordinator: accountsCoordinator,
+            cookiesStore: cookiesStore
         )
         controller.delegate = self
         controller.modalPresentationStyle = .pageSheet
@@ -62,7 +64,8 @@ class SettingsCoordinator: Coordinator {
         walletStorage: WalletStorage,
         balanceCoordinator: TokensBalanceService,
         sharedRealm: Realm,
-        ensManager: ENSManager
+        ensManager: ENSManager,
+        cookiesStore: CookiesStore
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
@@ -73,6 +76,7 @@ class SettingsCoordinator: Coordinator {
         self.balanceCoordinator = balanceCoordinator
         self.sharedRealm = sharedRealm
         self.ensManager = ensManager
+        self.cookiesStore = cookiesStore
 
         addCoordinator(accountsCoordinator)
     }
@@ -157,7 +161,7 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
             delegate?.didPressURL(url, in: self)
         case .clearBrowserCache:
             cleadCache()
-            CookiesStore.delete()
+            cookiesStore.delete()
         }
     }
 }

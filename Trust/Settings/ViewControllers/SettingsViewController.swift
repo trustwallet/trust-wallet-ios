@@ -70,24 +70,29 @@ class SettingsViewController: FormViewController, Coordinator {
 
     let balanceCoordinator: TokensBalanceService
 
+    let cookiesStore: CookiesStore
+
     weak var accountsCoordinator: AccountsCoordinator?
 
     init(
         session: WalletSession,
         keystore: Keystore,
         balanceCoordinator: TokensBalanceService,
-        accountsCoordinator: AccountsCoordinator
+        accountsCoordinator: AccountsCoordinator,
+        cookiesStore: CookiesStore
     ) {
         self.session = session
         self.keystore = keystore
         self.balanceCoordinator = balanceCoordinator
         self.accountsCoordinator = accountsCoordinator
+        self.cookiesStore = cookiesStore
         super.init(nibName: nil, bundle: nil)
         self.chaineStateObservation()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        cookiesStore.syncCookies()
         if let stateView = networkStateView {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: stateView)
         }

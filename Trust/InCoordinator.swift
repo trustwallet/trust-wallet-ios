@@ -21,6 +21,7 @@ class InCoordinator: Coordinator {
     let config: Config
     let appTracker: AppTracker
     let navigator: Navigator
+    var cookiesStore: CookiesStore
     weak var delegate: InCoordinatorDelegate?
     var browserCoordinator: BrowserCoordinator? {
         return self.coordinators.compactMap { $0 as? BrowserCoordinator }.first
@@ -61,6 +62,7 @@ class InCoordinator: Coordinator {
         self.config = config
         self.appTracker = appTracker
         self.navigator = navigator
+        self.cookiesStore = CookiesStore(wallet: wallet)
         self.register(with: navigator)
     }
 
@@ -141,6 +143,10 @@ class InCoordinator: Coordinator {
         walletCoordinator.start()
         addCoordinator(walletCoordinator)
 
+        let walletStorage = WalletStorage(realm: realm)
+
+        cookiesStore = CookiesStore(wallet: account)
+
         let settingsCoordinator = SettingsCoordinator(
             keystore: keystore,
             session: session,
@@ -148,7 +154,8 @@ class InCoordinator: Coordinator {
             walletStorage: walletStorage,
             balanceCoordinator: balanceCoordinator,
             sharedRealm: sharedRealm,
-            ensManager: ENSManager(realm: realm, config: config)
+            ensManager: ENSManager(realm: realm, config: config),
+            cookiesStore: cookiesStore
         )
         settingsCoordinator.rootViewController.tabBarItem = viewModel.settingsBarItem
         settingsCoordinator.delegate = self
@@ -215,7 +222,6 @@ class InCoordinator: Coordinator {
         navigationController.dismiss(animated: false, completion: nil)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         coordinator.stop()
-        CookiesStore.delete()
         removeAllCoordinators()
         showTabBar(for: account)
     }
