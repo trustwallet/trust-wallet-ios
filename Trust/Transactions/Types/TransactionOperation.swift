@@ -13,7 +13,7 @@ class TransactionOperation: TrustOperation {
     var transactionsHistory = [Transaction]()
 
     private lazy var tracker: TransactionsTracker = {
-        return TransactionsTracker(sessionID: self.session.sessionID)
+        return TransactionsTracker(sessionID: self.session.account.sessionID)
     }()
 
     init(

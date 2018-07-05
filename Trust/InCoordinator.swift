@@ -143,7 +143,7 @@ class InCoordinator: Coordinator {
         walletCoordinator.start()
         addCoordinator(walletCoordinator)
 
-        cookiesStore = CookiesStore(sessionKey: session.sessionID)
+        cookiesStore = CookiesStore(sessionKey: account.sessionID)
 
         let settingsCoordinator = SettingsCoordinator(
             keystore: keystore,
