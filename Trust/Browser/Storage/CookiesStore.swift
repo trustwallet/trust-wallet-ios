@@ -15,13 +15,10 @@ class CookiesStore {
     private let httpCookieStorage = HTTPCookieStorage.shared
     private let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
 
-    private var wallet: WalletInfo
     private var key: String
-    private var config = Config()
 
-    init(wallet: WalletInfo) {
-        self.wallet = wallet
-        self.key = wallet.wallet.address.eip55String + "\(config.chainID)"
+    init(sessionKey: String) {
+        self.key = sessionKey
         load()
     }
 

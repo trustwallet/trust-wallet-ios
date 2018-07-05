@@ -62,7 +62,7 @@ class InCoordinator: Coordinator {
         self.config = config
         self.appTracker = appTracker
         self.navigator = navigator
-        self.cookiesStore = CookiesStore(wallet: wallet)
+        self.cookiesStore = CookiesStore(sessionKey: wallet.sessionID)
         self.register(with: navigator)
     }
 
@@ -143,7 +143,7 @@ class InCoordinator: Coordinator {
         walletCoordinator.start()
         addCoordinator(walletCoordinator)
 
-        cookiesStore = CookiesStore(wallet: account)
+        cookiesStore = CookiesStore(sessionKey: session.sessionID)
 
         let settingsCoordinator = SettingsCoordinator(
             keystore: keystore,
