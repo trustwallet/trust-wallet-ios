@@ -45,6 +45,7 @@ platform :ios do
     gym(scheme: "Trust")
     commit_version_bump(message: "Version Bump", force: true)
     deliver(force: true)
+    upload_symbols_to_crashlytics(dsym_path: "Trust.app.dSYM.zip")
     push_to_git_remote
   end
 
