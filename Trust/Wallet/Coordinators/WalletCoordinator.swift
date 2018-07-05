@@ -138,9 +138,10 @@ class WalletCoordinator: Coordinator {
     }
 
     func showConfirm(for account: Account) {
-        // TODO
         let w = Wallet(type: .hd(account))
         let wallet = WalletInfo(wallet: w, info: WalletObject.from(w))
+        let initialName = WalletInfo.initialName(index: keystore.wallets.count)
+        keystore.store(object: wallet.info, fields: [.name(initialName)])
         walletCreated(wallet: wallet)
     }
 

@@ -75,11 +75,7 @@ class ImportWalletViewController: FormViewController {
             qrAction: { [unowned self] in self.openReader() }
         )
 
-        let initialName = String(format: NSLocalizedString(
-            "importWallet.initialNmae", value: "%@ %@ %@", comment: ""
-        ),
-            "ETH", R.string.localizable.wallet(), "\(keystore.wallets.count + 1)"
-        )
+        let initialName = WalletInfo.initialName(index: keystore.wallets.count)
 
         form
             +++ Section()
@@ -302,5 +298,15 @@ extension ImportWalletViewController: QRCodeReaderDelegate {
         reader.stopScanning()
         setValueForCurrentField(string: result)
         reader.dismiss(animated: true)
+    }
+}
+
+extension WalletInfo {
+    static func initialName(index numberOfWallets: Int) -> String {
+        return String(format: NSLocalizedString(
+            "importWallet.initialNmae", value: "%@ %@ %@", comment: ""
+        ),
+            "ETH", R.string.localizable.wallet(), "\(numberOfWallets + 1)"
+        )
     }
 }

@@ -37,7 +37,7 @@ class InitialWalletCreationCoordinator: Coordinator {
     }
 
     func showCreateWallet() {
-        let coordinator = WalletCoordinator(navigationController: self.navigationController, keystore: keystore)
+        let coordinator = WalletCoordinator(navigationController: navigationController, keystore: keystore)
         coordinator.delegate = self
         coordinator.start(.createInstantWallet)
         addCoordinator(coordinator)

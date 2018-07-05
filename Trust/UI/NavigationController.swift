@@ -26,7 +26,8 @@ class NavigationController: UINavigationController {
         if
             topViewController is MasterBrowserViewController ||
             topViewController is DarkPassphraseViewController ||
-            topViewController is DarkVerifyPassphraseViewController
+            topViewController is DarkVerifyPassphraseViewController ||
+            topViewController is WalletCreatedController
         {
             preferredStyle = .default
         } else {

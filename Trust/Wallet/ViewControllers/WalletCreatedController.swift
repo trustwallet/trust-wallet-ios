@@ -30,6 +30,13 @@ class WalletCreatedController: UIViewController {
         return titleLabel
     }()
 
+    lazy var imageView: UIImageView = {
+        let imageView = UIImageView(image: R.image.mascot_happy())
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
     init(wallet: WalletInfo) {
         self.wallet = wallet
         super.init(nibName: nil, bundle: nil)
@@ -41,13 +48,19 @@ class WalletCreatedController: UIViewController {
         view.backgroundColor = .white
 
         let stackView = UIStackView(arrangedSubviews: [
-            titleLabel,
+            imageView,
             .spacer(),
-            .label(style: .heading, text: "Wallet Created"),
+            .label(style: .heading, text: R.string.localizable.walletCreated()),
             .spacer(),
-            .label(style: .heading, text: wallet.info.name),
+            TransactionAppearance.item(
+                title: R.string.localizable.name(),
+                subTitle: wallet.info.name
+            ),
             .spacer(),
-            .label(style: .heading, text: wallet.address.description),
+            TransactionAppearance.item(
+                title: R.string.localizable.myWalletAddress(),
+                subTitle: wallet.address.description
+            ),
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -62,6 +75,8 @@ class WalletCreatedController: UIViewController {
             stackView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
             stackView.centerYAnchor.constraint(greaterThanOrEqualTo: view.readableContentGuide.centerYAnchor, constant: -40),
+
+            imageView.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
 
             doneButton.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
             doneButton.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
