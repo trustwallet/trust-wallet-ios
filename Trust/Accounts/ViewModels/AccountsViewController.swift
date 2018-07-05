@@ -42,11 +42,7 @@ class AccountsViewController: UITableViewController {
         self.session = session
         self.balanceCoordinator = balanceCoordinator
         super.init(style: .grouped)
-        fetch()
-    }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 60
         tableView.register(R.nib.accountViewCell(), forCellReuseIdentifier: R.nib.accountViewCell.name)
@@ -55,6 +51,7 @@ class AccountsViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         fetch()
     }
 
