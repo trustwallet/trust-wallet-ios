@@ -143,8 +143,6 @@ class InCoordinator: Coordinator {
         walletCoordinator.start()
         addCoordinator(walletCoordinator)
 
-        let walletStorage = WalletStorage(realm: realm)
-
         cookiesStore = CookiesStore(wallet: account)
 
         let settingsCoordinator = SettingsCoordinator(

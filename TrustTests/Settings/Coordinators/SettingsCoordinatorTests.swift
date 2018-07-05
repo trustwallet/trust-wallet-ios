@@ -15,7 +15,8 @@ class SettingsCoordinatorTests: XCTestCase {
             walletStorage: FakeWalletStorage(),
             balanceCoordinator: FakeGetBalanceCoordinator(),
             sharedRealm: .make(),
-            ensManager: ENSManager(realm: .make())
+            ensManager: ENSManager(realm: .make()),
+            cookiesStore: CookiesStore(wallet: .make())
         )
         storage.add([.make()])
         storage.updateTransactionSection()
