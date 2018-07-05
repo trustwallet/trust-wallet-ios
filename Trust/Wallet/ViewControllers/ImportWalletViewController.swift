@@ -302,6 +302,10 @@ extension ImportWalletViewController: QRCodeReaderDelegate {
 }
 
 extension WalletInfo {
+    static var emptyName: String {
+        return "ETH " + R.string.localizable.wallet()
+    }
+
     static func initialName(index numberOfWallets: Int) -> String {
         return String(format: NSLocalizedString(
             "importWallet.initialNmae", value: "%@ %@ %@", comment: ""

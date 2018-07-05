@@ -25,8 +25,7 @@ class AccountsCoordinator: Coordinator {
         let controller = AccountsViewController(
             keystore: keystore,
             session: session,
-            balanceCoordinator: balanceCoordinator,
-            ensManager: ensManager
+            balanceCoordinator: balanceCoordinator
         )
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add))
         controller.delegate = self

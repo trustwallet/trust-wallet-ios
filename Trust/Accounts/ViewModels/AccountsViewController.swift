@@ -11,7 +11,6 @@ protocol AccountsViewControllerDelegate: class {
 }
 
 class AccountsViewController: UITableViewController {
-    let ensManager: ENSManager
     weak var delegate: AccountsViewControllerDelegate?
     var viewModel: AccountsViewModel {
         return AccountsViewModel(
@@ -29,8 +28,6 @@ class AccountsViewController: UITableViewController {
         }
     }
 
-    private var balances: [Address: Balance?] = [:]
-    private var addrNames: [Address: String] = [:]
     private let keystore: Keystore
     private let balanceCoordinator: TokensBalanceService
     private let config = Config()
@@ -39,13 +36,11 @@ class AccountsViewController: UITableViewController {
     init(
         keystore: Keystore,
         session: WalletSession,
-        balanceCoordinator: TokensBalanceService,
-        ensManager: ENSManager
+        balanceCoordinator: TokensBalanceService
     ) {
         self.keystore = keystore
         self.session = session
         self.balanceCoordinator = balanceCoordinator
-        self.ensManager = ensManager
         super.init(style: .grouped)
         fetch()
     }
@@ -61,8 +56,6 @@ class AccountsViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetch()
-        refreshWalletBalances()
-        refreshENSNames()
     }
 
     func fetch() {
@@ -86,7 +79,7 @@ class AccountsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: R.nib.accountViewCell.name, for: indexPath) as! AccountViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.accountViewCell.name, for: indexPath) as! AccountViewCell
         cell.viewModel = getAccountViewModels(for: indexPath)
         cell.delegate = self
         return cell
@@ -136,7 +129,7 @@ class AccountsViewController: UITableViewController {
     }
 
     func delete(wallet: WalletInfo) {
-        navigationController?.displayLoading(text: NSLocalizedString("Deleting", value: "Deleting", comment: ""))
+        navigationController?.displayLoading(text: R.string.localizable.deleting())
         keystore.delete(wallet: wallet.wallet) { [weak self] result in
             guard let `self` = self else { return }
             self.navigationController?.hideLoading()
@@ -150,39 +143,12 @@ class AccountsViewController: UITableViewController {
         }
     }
 
-    private func refreshWalletBalances() {
-       let addresses = wallets.compactMap { $0.wallet.address }
-       var counter = 0
-       for address in addresses {
-            balanceCoordinator.getEthBalance(for: address, completion: { [weak self] (result) in
-                self?.balances[address] = result.value
-                counter += 1
-                if counter == addresses.count {
-                    self?.tableView.reloadData()
-                }
-            })
-        }
-    }
-
-    private func refreshENSNames() {
-        let addresses = wallets.compactMap { $0.wallet.address }
-        let promises =  addresses.map { ensManager.lookup(address: $0) }
-        _ = when(fulfilled: promises).done { [weak self] names in
-            for (index, name) in names.enumerated() {
-                self?.addrNames[addresses[index]] = name
-            }
-            self?.tableView.reloadData()
-        }.catch { error in
-            print(error)
-        }
-    }
-
     private func getAccountViewModels(for path: IndexPath) -> AccountViewModel {
-        let account = self.wallet(for: path)! // Avoid force unwrap
-        let balance = self.balances[account.address].flatMap { $0 }
-        let ensName = self.addrNames[account.address] ?? ""
-        let model = AccountViewModel(server: config.server, wallet: account, current: session.account, walletBalance: balance, ensName: ensName)
-        return model
+        return AccountViewModel(
+            server: config.server,
+            wallet: self.wallet(for: path)!,
+            current: session.account
+        )
     }
 
     required init?(coder aDecoder: NSCoder) {

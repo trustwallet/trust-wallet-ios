@@ -9,40 +9,31 @@ struct AccountViewModel {
     let identiconSize = 60 as CGFloat
     let wallet: WalletInfo
     let current: WalletInfo?
-    let walletBalance: Balance?
     let server: RPCServer
-    let ensName: String
 
     init(
         server: RPCServer,
         wallet: WalletInfo,
-        current: WalletInfo?,
-        walletBalance: Balance?,
-        ensName: String = ""
+        current: WalletInfo?
     ) {
         self.server = server
         self.wallet = wallet
         self.current = current
-        self.walletBalance = walletBalance
-        self.ensName = ensName
     }
 
     var isWatch: Bool {
         return wallet.wallet.type == .address(wallet.address)
     }
 
-    var balanceText: String {
-        guard let amount = walletBalance?.amountFull else { return "--" }
-        return "\(amount) \(server.symbol)"
+    var title: String {
+        guard wallet.info.name.isEmpty else {
+            return wallet.info.name
+        }
+        return WalletInfo.emptyName
     }
 
-    var title: String {
-        guard wallet.info.name.isEmpty else { return wallet.info.name }
-        let address = wallet.address.description
-        if ensName.isEmpty {
-            return address
-        }
-        return String(format: "%@ (%@...%@)", ensName, String(address.prefix(6)), String(address.suffix(4)))
+    var subTitle: String {
+        return wallet.address.description
     }
 
     var isActive: Bool {

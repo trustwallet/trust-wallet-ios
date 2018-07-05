@@ -24,7 +24,7 @@ class AccountViewCell: UITableViewCell {
             guard let model = viewModel else {
                 return
             }
-            balanceLabel.text = model.balanceText
+            balanceLabel.text = model.subTitle
             glassesImageView.isHidden = !model.isWatch
             activeView.isHidden = !model.isActive
             addressLabel.text = model.title
