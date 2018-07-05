@@ -11,22 +11,28 @@ enum CookiesStoreError: LocalizedError {
 
 class CookiesStore {
 
-    private static let webKitStorage = WKWebsiteDataStore.default()
-    private static let httpCookieStorage = HTTPCookieStorage.shared
-    private static let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
+    private let webKitStorage = WKWebsiteDataStore.default()
+    private let httpCookieStorage = HTTPCookieStorage.shared
+    private let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
 
-    private static let cookiesKey = "cookies"
+    private var key: String
 
-    static func save() {
+    init(sessionKey: String) {
+        self.key = sessionKey
+        load()
+    }
+
+    func syncCookies(completion: (() -> Void)? = nil) {
         firstly {
             fetchCookies()
-        }.done { cookies in
-            save(cookies: cookies)
+        }.done { [weak self] cookies in
+            self?.save(cookies: cookies)
+            completion?()
         }
     }
 
-    static func load() {
-        guard let encodedData = keychain.getData(cookiesKey), let decodedArray = NSKeyedUnarchiver.unarchiveObject(with: encodedData) as? [HTTPCookie] else { return }
+    func load() {
+        guard let encodedData = keychain.getData(key), let decodedArray = NSKeyedUnarchiver.unarchiveObject(with: encodedData) as? [HTTPCookie] else { return }
         decodedArray.forEach { cookie in
             if #available(iOS 11.0, *) {
                 webKitStorage.httpCookieStore.setCookie(cookie, completionHandler: nil)
@@ -36,16 +42,16 @@ class CookiesStore {
         }
     }
 
-    static func delete() {
-        keychain.delete(cookiesKey)
+    func delete() {
+        keychain.delete(key)
     }
 
-    private static func save(cookies: [HTTPCookie]) {
+    private func save(cookies: [HTTPCookie]) {
         let data = NSKeyedArchiver.archivedData(withRootObject: cookies)
-        keychain.set(data, forKey: cookiesKey)
+        keychain.set(data, forKey: key)
     }
 
-    private static func fetchCookies() -> Promise<[HTTPCookie]> {
+    private func fetchCookies() -> Promise<[HTTPCookie]> {
         return Promise { seal in
             if #available(iOS 11.0, *) {
                 webKitStorage.httpCookieStore.getAllCookies { cookies in

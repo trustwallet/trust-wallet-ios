@@ -22,6 +22,7 @@ class SettingsCoordinator: Coordinator {
     let walletStorage: WalletStorage
     let balanceCoordinator: TokensBalanceService
     let ensManager: ENSManager
+    let cookiesStore: CookiesStore
     weak var delegate: SettingsCoordinatorDelegate?
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
     var coordinators: [Coordinator] = []
@@ -62,7 +63,8 @@ class SettingsCoordinator: Coordinator {
         walletStorage: WalletStorage,
         balanceCoordinator: TokensBalanceService,
         sharedRealm: Realm,
-        ensManager: ENSManager
+        ensManager: ENSManager,
+        cookiesStore: CookiesStore
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
@@ -73,6 +75,7 @@ class SettingsCoordinator: Coordinator {
         self.balanceCoordinator = balanceCoordinator
         self.sharedRealm = sharedRealm
         self.ensManager = ensManager
+        self.cookiesStore = cookiesStore
 
         addCoordinator(accountsCoordinator)
     }
@@ -82,7 +85,13 @@ class SettingsCoordinator: Coordinator {
     }
 
     func restart(for wallet: Wallet) {
-        delegate?.didRestart(with: wallet, in: self)
+        guard let currentViewController = self.navigationController.viewControllers.last else { return }
+        currentViewController.displayLoading()
+        cookiesStore.syncCookies { [weak self] in
+            currentViewController.hideLoading(animated: false)
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.didRestart(with: wallet, in: strongSelf)
+        }
     }
 
     func cleadCache() {
@@ -157,7 +166,7 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
             delegate?.didPressURL(url, in: self)
         case .clearBrowserCache:
             cleadCache()
-            CookiesStore.delete()
+            cookiesStore.delete()
         }
     }
 }

@@ -100,11 +100,19 @@ class AppCoordinator: NSObject, Coordinator {
         navigationController.viewControllers = [welcomeViewController]
     }
 
+    func applicationWillResignActive() {
+        inCoordinator?.cookiesStore.syncCookies()
+    }
+
+    func applicationDidBecomeActive() {
+        inCoordinator?.cookiesStore.load()
+    }
+
     @objc func reset() {
         lock.deletePasscode()
         pushNotificationRegistrar.unregister()
         coordinators.removeAll()
-        CookiesStore.delete()
+        inCoordinator?.cookiesStore.delete()
         navigationController.dismiss(animated: true, completion: nil)
         resetToWelcomeScreen()
     }

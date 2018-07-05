@@ -25,3 +25,9 @@ extension WalletInfo: Equatable {
         return lhs.wallet.description == rhs.wallet.description
     }
 }
+
+extension WalletInfo {
+    var sessionID: String {
+        return "\(address.description.lowercased())-\(Config().chainID)"
+    }
+}
