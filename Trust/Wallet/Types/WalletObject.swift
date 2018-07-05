@@ -8,6 +8,7 @@ class WalletObject: Object {
 
     @objc dynamic var id: String = ""
     @objc dynamic var name: String = ""
+    @objc dynamic var createdAt: Date = Date()
 
     override static func primaryKey() -> String? {
         return "id"

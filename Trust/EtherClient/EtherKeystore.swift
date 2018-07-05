@@ -48,7 +48,7 @@ open class EtherKeystore: Keystore {
     var wallets: [WalletInfo] {
         return accounts.map {
             return WalletInfo(wallet: $0, info: storage.get(for: $0))
-        }
+        }.sorted(by: { $0.info.createdAt < $1.info.createdAt })
     }
 
     private var accounts: [Wallet] {
