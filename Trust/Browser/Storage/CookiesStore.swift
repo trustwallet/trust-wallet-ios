@@ -22,11 +22,12 @@ class CookiesStore {
         load()
     }
 
-    func syncCookies() {
+    func syncCookies(completion: (() -> Void)? = nil) {
         firstly {
             fetchCookies()
         }.done { [weak self] cookies in
             self?.save(cookies: cookies)
+            completion?()
         }
     }
 

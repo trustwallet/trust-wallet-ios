@@ -44,8 +44,7 @@ class SettingsCoordinator: Coordinator {
             session: session,
             keystore: keystore,
             balanceCoordinator: balanceCoordinator,
-            accountsCoordinator: accountsCoordinator,
-            cookiesStore: cookiesStore
+            accountsCoordinator: accountsCoordinator
         )
         controller.delegate = self
         controller.modalPresentationStyle = .pageSheet
@@ -86,7 +85,13 @@ class SettingsCoordinator: Coordinator {
     }
 
     func restart(for wallet: Wallet) {
-        delegate?.didRestart(with: wallet, in: self)
+        guard let currentViewController = self.navigationController.viewControllers.last else { return }
+        currentViewController.displayLoading()
+        cookiesStore.syncCookies { [weak self] in
+            currentViewController.hideLoading(animated: false)
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.didRestart(with: wallet, in: strongSelf)
+        }
     }
 
     func cleadCache() {
