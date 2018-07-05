@@ -253,3 +253,9 @@
 "wallets.navigation.title.autolock.one.hour" = "1時間使用していない場合";
 "wallets.navigation.title.autolock.one.minute" = "1分間使用していない場合";
 "Watch" = "ウォッチ";
+"Backup Phrase" = "バックアップ フレーズ";
+"Creating wallet %@" = "ウォレットを作成中 %@";
+"Done" = "完了";
+"Manage" = "管理";
+"passphrase.seed.label.title" = "これらの12の言葉はあなたの Trust アカウントを復元する唯一の方法です。誰にも言わず安全に保存してください。";
+"settings.analitics.answer.description" = "日次の診断を共有することで Trust のユーザエクスペリエンス向上を支援します。";

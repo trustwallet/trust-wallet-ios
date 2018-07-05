@@ -6,7 +6,7 @@ import TrustCore
 import QRCodeReaderViewController
 
 protocol ImportWalletViewControllerDelegate: class {
-    func didImportAccount(account: WalletInfo, in viewController: ImportWalletViewController)
+    func didImportAccount(account: WalletInfo, fields: [WalletInfoField], in viewController: ImportWalletViewController)
 }
 
 class ImportWalletViewController: FormViewController {
@@ -19,7 +19,7 @@ class ImportWalletViewController: FormViewController {
         static let keystore = "keystore"
         static let privateKey = "privateKey"
         static let password = "password"
-        static let name = "password"
+        static let name = "name"
         static let watch = "watch"
         static let mnemonic = "mnemonic"
     }
@@ -76,9 +76,9 @@ class ImportWalletViewController: FormViewController {
         )
 
         let initialName = String(format: NSLocalizedString(
-            "importWallet.initialNmae", value: "ETH %@ %@", comment: ""
+            "importWallet.initialNmae", value: "%@ %@ %@", comment: ""
         ),
-            "ETH", R.string.localizable.name(), "\(keystore.wallets.count + 1)"
+            "ETH", R.string.localizable.wallet(), "\(keystore.wallets.count + 1)"
         )
 
         form
@@ -109,7 +109,7 @@ class ImportWalletViewController: FormViewController {
             }.cellUpdate { cell, _ in
                 cell.textField.isSecureTextEntry = true
                 cell.textField.textAlignment = .left
-                cell.textField.placeholder = NSLocalizedString("Password", value: "Password", comment: "")
+                cell.textField.placeholder = R.string.localizable.password()
             }
 
             // Private Key
@@ -154,9 +154,8 @@ class ImportWalletViewController: FormViewController {
             }
 
             // Name
-
+            +++ Section()
             <<< AppFormAppearance.textFieldFloat(tag: Values.name) {
-                $0.validationOptions = .validatesOnDemand
                 $0.value = initialName
             }.cellUpdate { cell, _ in
                 cell.textField.textAlignment = .left
@@ -171,9 +170,9 @@ class ImportWalletViewController: FormViewController {
             }
     }
 
-    func didImport(account: Wallet) {
+    func didImport(account: Wallet, name: String) {
         let walletInfo = WalletInfo(wallet: account)
-        delegate?.didImportAccount(account: walletInfo, in: self)
+        delegate?.didImportAccount(account: walletInfo, fields: [.name(name)], in: self)
     }
 
     func importWallet() {
@@ -185,6 +184,7 @@ class ImportWalletViewController: FormViewController {
         let password = passwordRow?.value ?? ""
         let watchInput = watchRow?.value?.trimmed ?? ""
         let mnemonicInput = mnemonicRow?.value?.trimmed ?? ""
+        let name = nameRow?.value?.trimmed ?? ""
         let words = mnemonicInput.components(separatedBy: " ").map { $0.trimmed.lowercased() }
 
         displayLoading(text: NSLocalizedString("importWallet.importingIndicator.label.title", value: "Importing wallet...", comment: ""), animated: false)
@@ -208,7 +208,7 @@ class ImportWalletViewController: FormViewController {
             self.hideLoading(animated: false)
             switch result {
             case .success(let account):
-                self.didImport(account: account)
+                self.didImport(account: account, name: name)
             case .failure(let error):
                 self.displayError(error: error)
             }
@@ -219,7 +219,7 @@ class ImportWalletViewController: FormViewController {
         //Used for taking screenshots to the App Store by snapshot
         let demoWallet = Wallet(type: .address(Address(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")!))
         let walletInfo = WalletInfo(wallet: demoWallet, info: WalletObject.from(demoWallet))
-        delegate?.didImportAccount(account: walletInfo, in: self)
+        delegate?.didImportAccount(account: walletInfo, fields: [], in: self)
     }
 
     @objc func importOptions(sender: UIBarButtonItem) {
