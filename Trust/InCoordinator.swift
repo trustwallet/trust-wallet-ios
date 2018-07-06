@@ -157,7 +157,7 @@ class InCoordinator: Coordinator {
 
         tabBarController.viewControllers = [
             browserCoordinator.navigationController,
-            walletCoordinator.navigationController,
+            walletCoordinator.navigationController.childNavigationController,
             transactionCoordinator.navigationController,
             settingsCoordinator.navigationController,
         ]
