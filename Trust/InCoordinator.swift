@@ -215,7 +215,6 @@ class InCoordinator: Coordinator {
         navigationController.dismiss(animated: false, completion: nil)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         coordinator.stop()
-        CookiesStore.delete()
         removeAllCoordinators()
         showTabBar(for: account)
     }
