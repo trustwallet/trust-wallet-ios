@@ -46,12 +46,6 @@ class WalletInfoViewController: FormViewController {
         navigationItem.title = viewModel.title
         navigationItem.rightBarButtonItem = saveBarButtonItem
 
-        let types = viewModel.types
-        let section = Section(footer: viewModel.wallet.address.description)
-        for type in types {
-            section.append(link(item: type))
-        }
-
         form +++ Section()
 
         <<< AppFormAppearance.textFieldFloat(tag: Values.name) {
@@ -62,7 +56,13 @@ class WalletInfoViewController: FormViewController {
             cell.textField.rightViewMode = .always
         }
 
-        +++ section
+        for types in viewModel.sections {
+            let newSection = Section(footer: types.footer ?? "")
+            for type in types.rows {
+                newSection.append(link(item: type))
+            }
+            form +++ newSection
+        }
     }
 
     private func link(
