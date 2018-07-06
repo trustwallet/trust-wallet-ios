@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class TransactionsFooterView: UIView {
+class ButtonsFooterView: UIView {
 
     lazy var sendButton: Button = {
         let sendButton = Button(size: .large, style: .squared)
