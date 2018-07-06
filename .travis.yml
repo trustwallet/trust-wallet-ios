@@ -22,7 +22,7 @@ before_script:
 
 script:
   - set -o pipefail
-  - fastlane tests
+  - xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
 
 notifications:
   slack: trust-wallet:33Vj3pGpKoBMTBAHTB8dF79n
