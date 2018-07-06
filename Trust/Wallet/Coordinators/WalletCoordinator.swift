@@ -128,6 +128,8 @@ class WalletCoordinator: Coordinator {
     func walletCreated(wallet: WalletInfo) {
         let controller = WalletCreatedController(wallet: wallet)
         controller.delegate = self
+        controller.navigationItem.backBarButtonItem = nil
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         navigationController.setNavigationBarHidden(false, animated: true)
         navigationController.pushViewController(controller, animated: true)
     }
