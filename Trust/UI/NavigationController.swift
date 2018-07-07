@@ -146,8 +146,7 @@ extension NavigationController: Scrollable {
 // MARK: - UIGestureRecognizerDelegate
 
 extension NavigationController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer,
-                           shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         // Necessary to get the child navigation controller’s interactive pop gesture recognizer to work.
         return true
     }
@@ -156,8 +155,7 @@ extension NavigationController: UIGestureRecognizerDelegate {
 // MARK: - UINavigationControllerDelegate
 
 extension NavigationController: UINavigationControllerDelegate {
-    func navigationController(navigationController: UINavigationController,
-                              didShowViewController viewController: UIViewController, animated: Bool) {
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         cleanUpChildCoordinators()
     }
 
