@@ -168,15 +168,7 @@ class InCoordinator: Coordinator {
         addCoordinator(transactionCoordinator)
 
         showTab(.wallet(.none))
-        // TODO: Temp
-        tabBarController.selectedViewController = walletCoordinator.navigationController.childNavigationController
-
         keystore.recentlyUsedWallet = account
-
-        // activate all view controllers.
-        [Tabs.wallet(.none), Tabs.transactions].forEach {
-            let _ = (tabBarController.viewControllers?[$0.index] as? NavigationController)?.viewControllers[0].view
-        }
 
         let localSchemeCoordinator = LocalSchemeCoordinator(
             navigationController: navigationController,
@@ -190,7 +182,7 @@ class InCoordinator: Coordinator {
 
     func showTab(_ selectTab: Tabs) {
         guard let viewControllers = tabBarController?.viewControllers else { return }
-        guard let nav = viewControllers[selectTab.index] as? NavigationController else { return }
+        guard let nav = viewControllers[selectTab.index] as? UINavigationController else { return }
 
         switch selectTab {
         case .browser(let url):

@@ -13,10 +13,9 @@ final class NavigationController: UIViewController {
     private let rootViewController: UIViewController
     private var viewControllersToChildCoordinators: [UIViewController: Coordinator] = [:]
 
-    var viewControllers: [UIViewController] = [] {
-        didSet {
-            childNavigationController.viewControllers = viewControllers
-        }
+    var viewControllers: [UIViewController] {
+        get { return childNavigationController.viewControllers }
+        set { childNavigationController.viewControllers = newValue }
     }
     var navigationBar: UINavigationBar {
         return childNavigationController.navigationBar
