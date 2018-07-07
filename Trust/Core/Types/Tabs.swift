@@ -10,7 +10,6 @@ enum WalletAction {
 
 enum Tabs {
     case browser(openURL: URL?)
-    case transactions
     case wallet(WalletAction)
     case settings
 
@@ -18,8 +17,7 @@ enum Tabs {
         switch self {
         case .browser: return 0
         case .wallet: return 1
-        case .transactions: return 2
-        case .settings: return 3
+        case .settings: return 2
         }
     }
 }
@@ -29,12 +27,10 @@ extension Tabs: Equatable {
         switch (lhs, rhs) {
         case (let .browser(lhs), let .browser(rhs)):
             return lhs == rhs
-        case (.transactions, .transactions),
-             (.wallet, .wallet),
+        case (.wallet, .wallet),
              (.settings, .settings):
             return true
         case (_, .browser),
-             (_, .transactions),
              (_, .wallet),
              (_, .settings):
             return false
