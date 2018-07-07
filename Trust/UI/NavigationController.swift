@@ -22,6 +22,11 @@ final class NavigationController: UIViewController {
         return childNavigationController.navigationBar
     }
 
+    var isToolbarHidden: Bool {
+        get { return childNavigationController.isToolbarHidden }
+        set { childNavigationController.isToolbarHidden = newValue }
+    }
+
     let childNavigationController: UINavigationController
 
     @discardableResult
@@ -50,7 +55,7 @@ final class NavigationController: UIViewController {
     init(
         navigationBarClass: Swift.AnyClass?,
         toolbarClass: Swift.AnyClass?
-        ) {
+    ) {
         self.rootViewController = UIViewController()
         self.childNavigationController = UINavigationController(
             navigationBarClass: navigationBarClass,
@@ -101,6 +106,10 @@ final class NavigationController: UIViewController {
 
     func popViewController(animated: Bool) {
         childNavigationController.popViewController(animated: animated)
+    }
+
+    func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
+        childNavigationController.setViewControllers(viewControllers, animated: animated)
     }
 
     func setNavigationBarHidden(_ hidden: Bool, animated: Bool) {

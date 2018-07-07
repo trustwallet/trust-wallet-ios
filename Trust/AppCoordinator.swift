@@ -96,7 +96,7 @@ class AppCoordinator: NSObject, Coordinator {
     }
 
     func resetToWelcomeScreen() {
-        navigationController.childNavigationController.setNavigationBarHidden(true, animated: false)
+        navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.viewControllers = [welcomeViewController]
     }
 

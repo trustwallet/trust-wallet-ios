@@ -163,8 +163,8 @@ class InCoordinator: Coordinator {
             settingsCoordinator.navigationController.childNavigationController,
         ]
 
-        navigationController.childNavigationController.setViewControllers([tabBarController], animated: false)
-        navigationController.childNavigationController.setNavigationBarHidden(true, animated: false)
+        navigationController.setViewControllers([tabBarController], animated: false)
+        navigationController.setNavigationBarHidden(true, animated: false)
         addCoordinator(transactionCoordinator)
 
         showTab(.wallet(.none))
