@@ -39,6 +39,32 @@ class TokenViewModel {
         return UIFont.systemFont(ofSize: 18, weight: .medium)
     }
 
+    let titleFormmater: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d yyyy"
+        return formatter
+    }()
+
+    let backgroundColor: UIColor = {
+        return .white
+    }()
+
+    let headerBackgroundColor: UIColor = {
+        return UIColor(hex: "fafafa")
+    }()
+
+    let headerTitleTextColor: UIColor = {
+        return UIColor(hex: "555357")
+    }()
+
+    let headerTitleFont: UIFont = {
+        return UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
+    }()
+
+    let headerBorderColor: UIColor = {
+        return UIColor(hex: "e1e1e1")
+    }()
+
     var amount: String {
         return String(
             format: "%@ %@",
@@ -164,9 +190,13 @@ class TokenViewModel {
         return tokenTransactionSections[section].items[row]
     }
 
+    func convert(from title: String) -> Date? {
+        return titleFormmater.date(from: title)
+    }
+
     func titleForHeader(in section: Int) -> String {
         let stringDate = tokenTransactionSections[section].title
-        guard let date = TransactionsViewModel.convert(from: stringDate) else {
+        guard let date = convert(from: stringDate) else {
             return stringDate
         }
 
@@ -181,11 +211,11 @@ class TokenViewModel {
 
     func hederView(for section: Int) -> UIView {
         return SectionHeader(
-            fillColor: TransactionsViewModel.headerBackgroundColor,
-            borderColor: TransactionsViewModel.headerBorderColor,
+            fillColor: headerBackgroundColor,
+            borderColor: headerBorderColor,
             title: titleForHeader(in: section),
-            textColor: TransactionsViewModel.headerTitleTextColor,
-            textFont: TransactionsViewModel.headerTitleFont
+            textColor: headerTitleTextColor,
+            textFont: headerTitleFont
         )
     }
 

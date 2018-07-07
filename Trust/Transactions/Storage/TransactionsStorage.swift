@@ -18,12 +18,20 @@ class TransactionsStorage {
     var transactions: Results<Transaction> {
         return realm.objects(Transaction.self).filter(NSPredicate(format: "id!=''")).sorted(byKeyPath: "date", ascending: false)
     }
+
     var latestTransaction: Transaction? {
         return realm.objects(Transaction.self)
             .filter(NSPredicate(format: "from == %@", account.address.description))
             .sorted(byKeyPath: "nonce", ascending: false)
             .first
     }
+
+    let titleFormmater: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d yyyy"
+        return formatter
+    }()
+
 
     var transactionSections: [TransactionSection] = []
 
@@ -106,12 +114,12 @@ class TransactionsStorage {
 
     func mappedSections(for transactions: [Transaction]) -> [TransactionSection] {
         var items = [TransactionSection]()
-        let headerDates = NSOrderedSet(array: transactions.map { TransactionsViewModel.titleFormmater.string(from: $0.date ) })
+        let headerDates = NSOrderedSet(array: transactions.map { titleFormmater.string(from: $0.date ) })
         headerDates.forEach {
             guard let dateKey = $0 as? String else {
                 return
             }
-            let filteredTransactionByDate = Array(transactions.filter { TransactionsViewModel.titleFormmater.string(from: $0.date ) == dateKey })
+            let filteredTransactionByDate = Array(transactions.filter { titleFormmater.string(from: $0.date ) == dateKey })
             items.append(TransactionSection(title: dateKey, items: filteredTransactionByDate))
         }
         return items

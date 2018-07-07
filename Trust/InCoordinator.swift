@@ -25,9 +25,6 @@ class InCoordinator: Coordinator {
     var browserCoordinator: BrowserCoordinator? {
         return self.coordinators.compactMap { $0 as? BrowserCoordinator }.first
     }
-    var transactionCoordinator: TransactionCoordinator? {
-        return self.coordinators.compactMap { $0 as? TransactionCoordinator }.first
-    }
     var settingsCoordinator: SettingsCoordinator? {
         return self.coordinators.compactMap { $0 as? SettingsCoordinator }.first
     }
@@ -108,18 +105,6 @@ class InCoordinator: Coordinator {
         )
         transactionsStorage.removeTransactions(for: [.failed, .unknown])
 
-        let transactionCoordinator = TransactionCoordinator(
-            session: session,
-            storage: transactionsStorage,
-            tokensStorage: tokensStorage,
-            network: trustNetwork,
-            keystore: keystore
-        )
-        transactionCoordinator.rootViewController.tabBarItem = viewModel.transactionsBarItem
-        transactionCoordinator.delegate = self
-        transactionCoordinator.start()
-        addCoordinator(transactionCoordinator)
-
         let tabBarController = TabBarController()
         tabBarController.tabBar.isTranslucent = false
 
@@ -158,13 +143,11 @@ class InCoordinator: Coordinator {
         tabBarController.viewControllers = [
             browserCoordinator.navigationController,
             walletCoordinator.navigationController,
-            transactionCoordinator.navigationController,
             settingsCoordinator.navigationController,
         ]
 
         navigationController.setViewControllers([tabBarController], animated: false)
         navigationController.setNavigationBarHidden(true, animated: false)
-        addCoordinator(transactionCoordinator)
 
         showTab(.wallet(.none))
 
@@ -207,18 +190,6 @@ class InCoordinator: Coordinator {
         tabBarController?.selectedViewController = nav
     }
 
-    func restart(for account: WalletInfo, in coordinator: TransactionCoordinator) {
-        settingsCoordinator?.rootViewController.navigationItem.leftBarButtonItem = nil
-        settingsCoordinator?.rootViewController.networkStateView = nil
-        localSchemeCoordinator?.delegate = nil
-        localSchemeCoordinator = nil
-        navigationController.dismiss(animated: false, completion: nil)
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        coordinator.stop()
-        removeAllCoordinators()
-        showTabBar(for: account)
-    }
-
     func checkDevice() {
         let deviceChecker = CheckDeviceCoordinator(
             navigationController: navigationController,
@@ -231,9 +202,9 @@ class InCoordinator: Coordinator {
     }
 
     func showPaymentFlow(for type: PaymentFlow) {
-        guard let transactionCoordinator = transactionCoordinator else { return }
-        let session = transactionCoordinator.session
-        let tokenStorage = transactionCoordinator.tokensStorage
+        guard let tokensCoordinator = tokensCoordinator else { return }
+        let session = tokensCoordinator.session
+        let tokenStorage = tokensCoordinator.store
 
         switch (type, session.account.wallet.type) {
         case (.send, .privateKey), (.send, .hd), (.request, _):
@@ -253,7 +224,7 @@ class InCoordinator: Coordinator {
     }
 
     private func handlePendingTransaction(transaction: SentTransaction) {
-        transactionCoordinator?.viewModel.addSentTransaction(transaction)
+        //transactionCoordinator?.viewModel.addSentTransaction(transaction)
     }
 
     private func realm(for config: Realm.Configuration) -> Realm {
@@ -279,23 +250,6 @@ extension InCoordinator: LocalSchemeCoordinatorDelegate {
     }
 }
 
-extension InCoordinator: TransactionCoordinatorDelegate {
-    func didPress(for type: PaymentFlow, in coordinator: TransactionCoordinator) {
-        showPaymentFlow(for: type)
-    }
-
-    func didCancel(in coordinator: TransactionCoordinator) {
-        delegate?.didCancel(in: self)
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        coordinator.stop()
-        removeAllCoordinators()
-    }
-
-    func didPressURL(_ url: URL) {
-        showTab(.browser(openURL: url))
-    }
-}
-
 extension InCoordinator: SettingsCoordinatorDelegate {
     func didCancel(in coordinator: SettingsCoordinator) {
         removeCoordinator(coordinator)
@@ -304,8 +258,7 @@ extension InCoordinator: SettingsCoordinatorDelegate {
     }
 
     func didRestart(with account: Wallet, in coordinator: SettingsCoordinator) {
-        guard let transactionCoordinator = transactionCoordinator else { return }
-        restart(for: WalletInfo(wallet: account), in: transactionCoordinator)
+
     }
 
     func didUpdateAccounts(in coordinator: SettingsCoordinator) {
