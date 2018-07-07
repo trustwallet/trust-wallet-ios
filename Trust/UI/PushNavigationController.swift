@@ -18,12 +18,23 @@ final class PushNavigationController: UIViewController {
             childNavigationController.viewControllers = viewControllers
         }
     }
-
-    lazy var childNavigationController: UINavigationController =
-        NavigationController(rootViewController: self.rootViewController)
+    let childNavigationController: NavigationController
 
     init(rootViewController: UIViewController = UIViewController()) {
         self.rootViewController = rootViewController
+        self.childNavigationController = NavigationController(rootViewController: rootViewController)
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    init(
+        navigationBarClass: Swift.AnyClass?,
+        toolbarClass: Swift.AnyClass?
+    ) {
+        self.rootViewController = UIViewController()
+        self.childNavigationController = NavigationController(
+            navigationBarClass: navigationBarClass,
+            toolbarClass: toolbarClass
+        )
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -44,7 +55,7 @@ final class PushNavigationController: UIViewController {
             childNavigationController.view.leftAnchor.constraint(equalTo: view.leftAnchor),
             childNavigationController.view.rightAnchor.constraint(equalTo: view.rightAnchor),
             childNavigationController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            ])
+        ])
     }
 
     // MARK: - Public
@@ -61,6 +72,14 @@ final class PushNavigationController: UIViewController {
 
     override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         childNavigationController.dismiss(animated: flag, completion: completion)
+    }
+
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        childNavigationController.present(viewControllerToPresent, animated: flag, completion: completion)
+    }
+
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        return childNavigationController.preferredStatusBarStyle
     }
 
     required init?(coder aDecoder: NSCoder) {

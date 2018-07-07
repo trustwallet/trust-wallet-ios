@@ -5,7 +5,7 @@ import StoreKit
 
 class HelpUsCoordinator: Coordinator {
 
-    let navigationController: NavigationController
+    let navigationController: UINavigationController
     let appTracker: AppTracker
     var coordinators: [Coordinator] = []
 
@@ -19,7 +19,7 @@ class HelpUsCoordinator: Coordinator {
     }()
 
     init(
-        navigationController: NavigationController = NavigationController(),
+        navigationController: UINavigationController = NavigationController(),
         appTracker: AppTracker = AppTracker()
     ) {
         self.navigationController = navigationController

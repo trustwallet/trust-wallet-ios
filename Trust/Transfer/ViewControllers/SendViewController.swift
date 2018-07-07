@@ -63,6 +63,13 @@ class SendViewController: FormViewController {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
 
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: R.string.localizable.next(),
+            style: .done,
+            target: self,
+            action: #selector(send)
+        )
+
         let section = Section(header: "", footer: viewModel.isFiatViewHidden() ? "" : viewModel.pairRateRepresantetion())
         fields().forEach { cell in
             section.append(cell)
@@ -156,6 +163,7 @@ class SendViewController: FormViewController {
             field?.reload()
         }
     }
+
     @objc func send() {
         let errors = form.validate()
         guard errors.isEmpty else { return }

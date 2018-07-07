@@ -17,7 +17,7 @@ class BrowserCoordinator: NSObject, Coordinator {
     var coordinators: [Coordinator] = []
     let session: WalletSession
     let keystore: Keystore
-    let navigationController: NavigationController
+    let navigationController: PushNavigationController
 
     lazy var bookmarksViewController: BookmarkViewController = {
         let controller = BookmarkViewController(bookmarksStore: bookmarksStore)
@@ -67,7 +67,7 @@ class BrowserCoordinator: NSObject, Coordinator {
 
     var enableToolbar: Bool = true {
         didSet {
-            navigationController.isToolbarHidden = !enableToolbar
+            navigationController.childNavigationController.isToolbarHidden = !enableToolbar
         }
     }
 
@@ -77,7 +77,7 @@ class BrowserCoordinator: NSObject, Coordinator {
         navigator: Navigator,
         sharedRealm: Realm
     ) {
-        self.navigationController = NavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
+        self.navigationController = PushNavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
         self.session = session
         self.keystore = keystore
         self.sharedRealm = sharedRealm
@@ -99,7 +99,6 @@ class BrowserCoordinator: NSObject, Coordinator {
             transaction: transaction
         )
         let coordinator = ConfirmCoordinator(
-            navigationController: NavigationController(),
             session: session,
             configurator: configurator,
             keystore: keystore,
@@ -144,7 +143,7 @@ class BrowserCoordinator: NSObject, Coordinator {
 
     func handleToolbar(for url: URL) {
         let isToolbarHidden = url.absoluteString != Constants.dappsBrowserURL
-        navigationController.isToolbarHidden = isToolbarHidden
+        navigationController.childNavigationController.isToolbarHidden = isToolbarHidden
 
         if isToolbarHidden {
             rootViewController.select(viewType: .browser)
@@ -153,7 +152,7 @@ class BrowserCoordinator: NSObject, Coordinator {
 
     func signMessage(with type: SignMesageType, account: Account, callbackID: Int) {
         let coordinator = SignMessageCoordinator(
-            navigationController: navigationController,
+            navigationController: navigationController.childNavigationController,
             keystore: keystore,
             account: account
         )
@@ -361,7 +360,7 @@ extension BrowserCoordinator: WKUIDelegate {
             title: .none,
             message: message,
             style: .alert,
-            in: navigationController
+            in: navigationController.childNavigationController
         )
         alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
             completionHandler()
@@ -374,7 +373,7 @@ extension BrowserCoordinator: WKUIDelegate {
             title: .none,
             message: message,
             style: .alert,
-            in: navigationController
+            in: navigationController.childNavigationController
         )
         alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
             completionHandler(true)
@@ -390,7 +389,7 @@ extension BrowserCoordinator: WKUIDelegate {
             title: .none,
             message: prompt,
             style: .alert,
-            in: navigationController
+            in: navigationController.childNavigationController
         )
         alertController.addTextField { (textField) in
             textField.text = defaultText
