@@ -136,6 +136,14 @@ final class NavigationController: UIViewController {
     }
 }
 
+extension NavigationController: Scrollable {
+    func scrollOnTop() {
+        if let controller = childNavigationController.viewControllers[0] as? Scrollable {
+            controller.scrollOnTop()
+        }
+    }
+}
+
 // MARK: - UIGestureRecognizerDelegate
 
 extension NavigationController: UIGestureRecognizerDelegate {
