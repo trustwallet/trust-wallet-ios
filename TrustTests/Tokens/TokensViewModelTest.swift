@@ -18,7 +18,7 @@ class TokensViewModelTest: XCTestCase {
     }
 
     func testCellViewModel() {
-        let item = model.cellViewModel(for: firstItem)
+        let item = model.cellViewModel(for: firstItem) as! TokenViewCellViewModel
         let token = model.tokens[firstItem.row]
         XCTAssertEqual(item.token, token)
     }

@@ -82,6 +82,7 @@ class TokensViewController: UIViewController {
             footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
         tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
+        tableView.register(R.nib.addCustomTokenCell(), forCellReuseIdentifier: R.nib.addCustomTokenCell.name)
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
         errorView = ErrorView(onRetry: { [weak self] in
@@ -94,7 +95,7 @@ class TokensViewController: UIViewController {
             onRetry: { [weak self] in
                 self?.startLoading()
                 self?.fetch()
-        })
+            })
         tableView.tableHeaderView = header
         tableView.tableFooterView = footer
         sheduleBalanceUpdate()
@@ -141,6 +142,7 @@ class TokensViewController: UIViewController {
     private func startTokenObservation() {
         viewModel.setTokenObservation { [weak self] (changes: RealmCollectionChange) in
             guard let strongSelf = self else { return }
+            self?.viewModel.prepareItems()
             let tableView = strongSelf.tableView
             switch changes {
             case .initial:
@@ -192,10 +194,19 @@ extension TokensViewController: StatefulViewController {
 extension TokensViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let token = viewModel.item(for: indexPath)
-        delegate?.didSelect(token: token, in: self)
+        let item = viewModel.cellViewModel(for: indexPath)
+        switch item.type {
+        case .token:
+            let token = viewModel.item(for: indexPath)
+            delegate?.didSelect(token: token, in: self)
+        case .addCustomToken:
+            delegate?.didPressAddToken(in: self)
+        }
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        guard viewModel.items[indexPath.row].type != .addCustomToken else {
+            return []
+        }
         let token = viewModel.item(for: indexPath)
         let delete = UITableViewRowAction(style: .destructive, title: R.string.localizable.delete()) {[unowned self] (_, _) in
             self.delegate?.didDelete(token: token, in: self)
@@ -221,14 +232,24 @@ extension TokensViewController: UITableViewDelegate {
 }
 extension TokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TokenViewCell.identifier, for: indexPath) as! TokenViewCell
-        cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
-        cell.contentView.isExclusiveTouch = true
-        cell.isExclusiveTouch = true
-        return cell
+        let item = viewModel.cellViewModel(for: indexPath)
+        switch item.type {
+        case .token:
+            guard let token = item as? TokenViewCellViewModel else { return UITableViewCell() }
+            let cell = tableView.dequeueReusableCell(withIdentifier: TokenViewCell.identifier, for: indexPath) as! TokenViewCell
+            cell.configure(viewModel: token)
+            cell.contentView.isExclusiveTouch = true
+            cell.isExclusiveTouch = true
+            return cell
+        case .addCustomToken:
+            guard let token = item as? AddCustomTokenCellViewModel else { return UITableViewCell() }
+            let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.addCustomTokenCell.name, for: indexPath) as! AddCustomTokenCell
+            cell.config(with: token)
+            return cell
+        }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.tokens.count
+        return viewModel.items.count
     }
 }
 extension TokensViewController: TokensViewModelDelegate {

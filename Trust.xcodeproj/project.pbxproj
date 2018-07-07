@@ -290,6 +290,9 @@
 		732E0F502022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */; };
 		732E0F522022754600B39C1F /* FakeLockProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F512022754600B39C1F /* FakeLockProtocol.swift */; };
 		732E0F542022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */; };
+		7330469C20DFA51C001BAB01 /* AddCustomTokenCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330469B20DFA51C001BAB01 /* AddCustomTokenCellViewModel.swift */; };
+		7330469F20DFAA8E001BAB01 /* AddCustomTokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7330469D20DFAA8E001BAB01 /* AddCustomTokenCell.swift */; };
+		733046A020DFAA8E001BAB01 /* AddCustomTokenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7330469E20DFAA8E001BAB01 /* AddCustomTokenCell.xib */; };
 		735AB03D2073BF2100EEEDDD /* TokenBalanceOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735AB03C2073BF2100EEEDDD /* TokenBalanceOperation.swift */; };
 		736D6ECF20DBD946008C2CC4 /* AnaliticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736D6ECE20DBD946008C2CC4 /* AnaliticsViewController.swift */; };
 		736D6ED120DBE925008C2CC4 /* AnaliticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736D6ED020DBE925008C2CC4 /* AnaliticsViewModel.swift */; };
@@ -782,6 +785,9 @@
 		732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
 		732E0F512022754600B39C1F /* FakeLockProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeLockProtocol.swift; sourceTree = "<group>"; };
 		732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockCreatePasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
+		7330469B20DFA51C001BAB01 /* AddCustomTokenCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCustomTokenCellViewModel.swift; sourceTree = "<group>"; };
+		7330469D20DFAA8E001BAB01 /* AddCustomTokenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCustomTokenCell.swift; sourceTree = "<group>"; };
+		7330469E20DFAA8E001BAB01 /* AddCustomTokenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCustomTokenCell.xib; sourceTree = "<group>"; };
 		735AB03C2073BF2100EEEDDD /* TokenBalanceOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBalanceOperation.swift; sourceTree = "<group>"; };
 		736D6ECE20DBD946008C2CC4 /* AnaliticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnaliticsViewController.swift; sourceTree = "<group>"; };
 		736D6ED020DBE925008C2CC4 /* AnaliticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnaliticsViewModel.swift; sourceTree = "<group>"; };
@@ -1508,6 +1514,8 @@
 				776C1146205CF6DF00449539 /* TokenHeaderView.swift */,
 				73DE7B3020987D8F00AE04E6 /* NonFungibleCollectionViewCell.swift */,
 				73DE7B3120987D8F00AE04E6 /* NonFungibleCollectionViewCell.xib */,
+				7330469D20DFAA8E001BAB01 /* AddCustomTokenCell.swift */,
+				7330469E20DFAA8E001BAB01 /* AddCustomTokenCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1541,6 +1549,7 @@
 				776C1148205D02E800449539 /* TokenViewModel.swift */,
 				77B1EB002063A198007970AA /* NFTDetailsViewModel.swift */,
 				73DE7B34209884AB00AE04E6 /* NonFungibleCollectionViewCellModel.swift */,
+				7330469B20DFA51C001BAB01 /* AddCustomTokenCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2705,6 +2714,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				733046A020DFAA8E001BAB01 /* AddCustomTokenCell.xib in Resources */,
 				902CAB592051818B00F96FFE /* BookmarkViewCell.xib in Resources */,
 				771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */,
 				775DF43F203E38D3009CD082 /* NonFungibleTokenViewCell.xib in Resources */,
@@ -2984,6 +2994,7 @@
 				77E81D94203687FB00534C99 /* NotificationsViewController.swift in Sources */,
 				296FC59920B6874800B923EF /* ExportPhraseCoordinator.swift in Sources */,
 				615F10561FCBEF2E008A45AF /* OnboardingPageViewModel.swift in Sources */,
+				7330469F20DFAA8E001BAB01 /* AddCustomTokenCell.swift in Sources */,
 				29FC0CB61F8298820036089F /* TransactionCoordinator.swift in Sources */,
 				73200B752048B67E00118A82 /* NonFungibleTokenObject.swift in Sources */,
 				77872D27202505C00032D687 /* EnterPasswordViewModel.swift in Sources */,
@@ -3198,6 +3209,7 @@
 				2996F1461F6C98B3005C33AE /* SettingsViewController.swift in Sources */,
 				73F2FF3C20557C020021976E /* TrustOperation.swift in Sources */,
 				2963B6AD1F981A96003063C1 /* TransactionAppearance.swift in Sources */,
+				7330469C20DFA51C001BAB01 /* AddCustomTokenCellViewModel.swift in Sources */,
 				77B1EAFF20639DEB007970AA /* NFTokenViewController.swift in Sources */,
 				29850D2B1F6B30FF00791A49 /* TransactionViewController.swift in Sources */,
 				73B1A6BC204B4FB6001F546C /* NonFungibleTokenViewModel.swift in Sources */,
