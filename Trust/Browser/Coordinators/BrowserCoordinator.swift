@@ -1,4 +1,4 @@
-// Copyright SIX DAY LLC. All rights reserved.
+// Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
 import UIKit
@@ -99,7 +99,6 @@ class BrowserCoordinator: NSObject, Coordinator {
             transaction: transaction
         )
         let coordinator = ConfirmCoordinator(
-            navigationController: NavigationController(),
             session: session,
             configurator: configurator,
             keystore: keystore,
@@ -223,7 +222,7 @@ class BrowserCoordinator: NSObject, Coordinator {
 
     private func share() {
         guard let url = rootViewController.browserViewController.webView.url else { return }
-        navigationController.displayLoading()
+        rootViewController.displayLoading()
         let params = BranchEvent.openURL(url).params
         Branch.getInstance().getShortURL(withParams: params) { [weak self] shortURLString, _ in
             guard let `self` = self else { return }
@@ -233,8 +232,8 @@ class BrowserCoordinator: NSObject, Coordinator {
                 }
                 return url
             }()
-            self.navigationController.showShareActivity(from: UIView(), with: [shareURL]) { [weak self] in
-                self?.navigationController.hideLoading()
+            self.rootViewController.showShareActivity(from: UIView(), with: [shareURL]) { [weak self] in
+                self?.rootViewController.hideLoading()
             }
         }
     }

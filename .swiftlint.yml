@@ -41,6 +41,6 @@ file_length:
 trailing_comma:
   mandatory_comma: true
 file_header:
-  required_pattern: "// Copyright SIX DAY LLC. All rights reserved.\n"
+  required_pattern: "// Copyright DApps Platform Inc. All rights reserved.\n"
 superfluous_disable_command: warning
 reporter: "xcode"

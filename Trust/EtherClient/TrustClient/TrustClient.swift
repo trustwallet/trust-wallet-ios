@@ -1,4 +1,4 @@
-// Copyright SIX DAY LLC. All rights reserved.
+// Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
 import Moya
@@ -9,7 +9,6 @@ enum TrustService {
     case getTransaction(ID: String)
     case register(device: PushDevice)
     case unregister(device: PushDevice)
-    case marketplace(chainID: Int)
     case assets(address: String)
     case search(token: String)
 }
@@ -30,8 +29,6 @@ extension TrustService: TargetType {
             return "/push/register"
         case .unregister:
             return "/push/unregister"
-        case .marketplace:
-            return "/marketplace"
         case .assets:
             return "/assets"
         case .search:
@@ -46,7 +43,6 @@ extension TrustService: TargetType {
         case .getTransaction: return .get
         case .register: return .post
         case .unregister: return .post
-        case .marketplace: return .get
         case .assets: return .get
         case .search: return .get
         }
@@ -71,8 +67,6 @@ extension TrustService: TargetType {
             return .requestJSONEncodable(device)
         case .unregister(let device):
             return .requestJSONEncodable(device)
-        case .marketplace(let chainID):
-            return .requestParameters(parameters: ["chainID": chainID], encoding: URLEncoding())
         case .assets(let address):
             return .requestParameters(parameters: ["address": address], encoding: URLEncoding())
         case .search(let token):

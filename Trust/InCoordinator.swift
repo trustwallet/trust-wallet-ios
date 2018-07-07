@@ -1,4 +1,4 @@
-// Copyright SIX DAY LLC. All rights reserved.
+// Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
 import TrustCore
@@ -6,6 +6,7 @@ import UIKit
 import RealmSwift
 import URLNavigator
 import TrustWalletSDK
+import Result
 
 protocol InCoordinatorDelegate: class {
     func didCancel(in coordinator: InCoordinator)
@@ -141,22 +142,16 @@ class InCoordinator: Coordinator {
         addCoordinator(settingsCoordinator)
 
         tabBarController.viewControllers = [
-            browserCoordinator.navigationController,
-            walletCoordinator.navigationController,
-            settingsCoordinator.navigationController,
+            browserCoordinator.navigationController.childNavigationController,
+            walletCoordinator.navigationController.childNavigationController,
+            settingsCoordinator.navigationController.childNavigationController,
         ]
 
         navigationController.setViewControllers([tabBarController], animated: false)
         navigationController.setNavigationBarHidden(true, animated: false)
 
         showTab(.wallet(.none))
-
         keystore.recentlyUsedWallet = account
-
-        // activate all view controllers.
-        [Tabs.wallet(.none), Tabs.transactions].forEach {
-            let _ = (tabBarController.viewControllers?[$0.index] as? NavigationController)?.viewControllers[0].view
-        }
 
         let localSchemeCoordinator = LocalSchemeCoordinator(
             navigationController: navigationController,
@@ -183,11 +178,21 @@ class InCoordinator: Coordinator {
             case .addToken(let address):
                 tokensCoordinator?.addTokenContract(for: address)
             }
-        case .settings, .transactions:
+        case .settings:
             break
         }
 
         tabBarController?.selectedViewController = nav
+    }
+
+    func restart(for account: WalletInfo) {
+        settingsCoordinator?.rootViewController.navigationItem.leftBarButtonItem = nil
+        settingsCoordinator?.rootViewController.networkStateView = nil
+        localSchemeCoordinator?.delegate = nil
+        localSchemeCoordinator = nil
+        navigationController.dismiss(animated: false, completion: nil)
+        removeAllCoordinators()
+        showTabBar(for: account)
     }
 
     func checkDevice() {
@@ -195,10 +200,7 @@ class InCoordinator: Coordinator {
             navigationController: navigationController,
             jailbreakChecker: DeviceChecker()
         )
-
         deviceChecker.start()
-
-        addCoordinator(deviceChecker)
     }
 
     func showPaymentFlow(for type: PaymentFlow) {
@@ -207,19 +209,29 @@ class InCoordinator: Coordinator {
         let tokenStorage = tokensCoordinator.store
 
         switch (type, session.account.wallet.type) {
-        case (.send, .privateKey), (.send, .hd), (.request, _):
-            let coordinator = PaymentCoordinator(
-                flow: type,
+        case (.send(let type), .privateKey(let account)),
+             (.send(let type), .hd(let account)):
+            let coordinator = SendCoordinator(
+                transferType: type,
+                navigationController: navigationController,
                 session: session,
                 keystore: keystore,
-                storage: tokenStorage
+                storage: tokenStorage,
+                account: account
             )
             coordinator.delegate = self
-            navigationController.present(coordinator.navigationController, animated: true, completion: nil)
-            coordinator.start()
             addCoordinator(coordinator)
-        case (_, _):
-            navigationController.displayError(error: InCoordinatorError.onlyWatchAccount)
+            navigationController.pushCoordinator(coordinator: coordinator, animated: true)
+        case (.request(let token), _):
+            let coordinator = RequestCoordinator(
+                session: session,
+                token: token
+            )
+            addCoordinator(coordinator)
+            navigationController.pushCoordinator(coordinator: coordinator, animated: true)
+        case (.send, .address):
+            break
+            // This case should be returning an error inCoordinator. Improve this logic into single piece.
         }
     }
 
@@ -257,8 +269,8 @@ extension InCoordinator: SettingsCoordinatorDelegate {
         delegate?.didCancel(in: self)
     }
 
-    func didRestart(with account: Wallet, in coordinator: SettingsCoordinator) {
-
+    func didRestart(with account: WalletInfo, in coordinator: SettingsCoordinator) {
+        restart(for: account)
     }
 
     func didUpdateAccounts(in coordinator: SettingsCoordinator) {
@@ -285,21 +297,22 @@ extension InCoordinator: TokensCoordinatorDelegate {
     }
 }
 
-extension InCoordinator: PaymentCoordinatorDelegate {
-    func didFinish(_ result: ConfirmResult, in coordinator: PaymentCoordinator) {
+extension InCoordinator: SendCoordinatorDelegate {
+    func didFinish(_ result: Result<ConfirmResult, AnyError>, in coordinator: SendCoordinator) {
         switch result {
-        case .sentTransaction(let transaction):
-            handlePendingTransaction(transaction: transaction)
-            coordinator.navigationController.dismiss(animated: true, completion: nil)
-            removeCoordinator(coordinator)
-        case .signedTransaction:
-            break
+        case .success(let confirmResult):
+            switch confirmResult {
+            case .sentTransaction(let transaction):
+                handlePendingTransaction(transaction: transaction)
+                // TODO. Pop 2 view controllers
+                coordinator.navigationController.childNavigationController.popToRootViewController(animated: true)
+                removeCoordinator(coordinator)
+            case .signedTransaction:
+                break
+            }
+        case .failure(let error):
+            coordinator.navigationController.displayError(error: error)
         }
-    }
-
-    func didCancel(in coordinator: PaymentCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
     }
 }
 

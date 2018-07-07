@@ -1,4 +1,4 @@
-// Copyright SIX DAY LLC. All rights reserved.
+// Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
 import UIKit
@@ -112,8 +112,8 @@ class TokensCoordinator: Coordinator {
     }
 
     func tokenInfo(_ token: TokenObject) {
-        let controller = TokenInfoViewController(token: token)
-        navigationController.pushViewController(controller, animated: true)
+        let coordinator = TokenInfoCoordinator(token: token)
+        navigationController.pushCoordinator(coordinator: coordinator, animated: true)
     }
 
     @objc func dismiss() {

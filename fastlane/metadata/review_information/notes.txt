@@ -1,4 +1,0 @@
-In order to use the app, you need either create a wallet or import existed:
-
-Keystore: {"version":3,"id":"13169307-59db-4eee-8071-b8890f8550ad","crypto":{"ciphertext":"125d6f50aca4fd2862d7a3bb7cefe1c8520c4728f044894785c0e24a5c309c52","cipherparams":{"iv":"8d4612a277e940e3be8b4662f11bfad0"},"kdf":"scrypt","kdfparams":{"r":8,"p":6,"n":4096,"dklen":32,"salt":"2be1a4efdc919926b90e087d5381f3184a105cd971bc00170ea09cd29f309855"},"mac":"10c75729f6211cd4c2e2c7b39578ba3785bdc2a91a549b96fc7c7fd4c71fc338","cipher":"aes-128-ctr"},"type":"private-key","address":"D003c94eEd333cA604a9430b7996FD47f68e17Ae"}
-Password: testtest
