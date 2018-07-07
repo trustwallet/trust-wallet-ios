@@ -7,7 +7,7 @@ import WebKit
 import RealmSwift
 
 protocol SettingsCoordinatorDelegate: class {
-    func didRestart(with account: Wallet, in coordinator: SettingsCoordinator)
+    func didRestart(with account: WalletInfo, in coordinator: SettingsCoordinator)
     func didUpdateAccounts(in coordinator: SettingsCoordinator)
     func didPressURL(_ url: URL, in coordinator: SettingsCoordinator)
     func didCancel(in coordinator: SettingsCoordinator)
@@ -81,7 +81,7 @@ class SettingsCoordinator: Coordinator {
         navigationController.viewControllers = [rootViewController]
     }
 
-    func restart(for wallet: Wallet) {
+    func restart(for wallet: WalletInfo) {
         delegate?.didRestart(with: wallet, in: self)
     }
 
@@ -130,7 +130,7 @@ class SettingsCoordinator: Coordinator {
     func switchNetwork(for server: RPCServer) {
         var config = session.config
         config.chainID = server.chainID
-        restart(for: session.account.wallet)
+        restart(for: session.account)
     }
 }
 
@@ -140,7 +140,7 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
         case .RPCServer(let server):
             prepareSwitchNetwork(for: server)
         case .currency:
-            restart(for: session.account.wallet)
+            restart(for: session.account)
         case .pushNotifications(let change):
             switch change {
             case .state(let isEnabled):
@@ -183,6 +183,6 @@ extension SettingsCoordinator: AccountsCoordinatorDelegate {
     func didSelectAccount(account: WalletInfo, in coordinator: AccountsCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
-        restart(for: account.wallet)
+        restart(for: account)
     }
 }
