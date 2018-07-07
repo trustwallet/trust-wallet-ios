@@ -284,6 +284,7 @@
 		732E0F502022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */; };
 		732E0F522022754600B39C1F /* FakeLockProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F512022754600B39C1F /* FakeLockProtocol.swift */; };
 		732E0F542022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */; };
+		734AFD1520F1558800864E8E /* NotificationBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734AFD1420F1558800864E8E /* NotificationBadge.swift */; };
 		735AB03D2073BF2100EEEDDD /* TokenBalanceOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735AB03C2073BF2100EEEDDD /* TokenBalanceOperation.swift */; };
 		736D6ECF20DBD946008C2CC4 /* AnaliticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736D6ECE20DBD946008C2CC4 /* AnaliticsViewController.swift */; };
 		736D6ED120DBE925008C2CC4 /* AnaliticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736D6ED020DBE925008C2CC4 /* AnaliticsViewModel.swift */; };
@@ -769,6 +770,7 @@
 		732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
 		732E0F512022754600B39C1F /* FakeLockProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeLockProtocol.swift; sourceTree = "<group>"; };
 		732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockCreatePasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
+		734AFD1420F1558800864E8E /* NotificationBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBadge.swift; sourceTree = "<group>"; };
 		735AB03C2073BF2100EEEDDD /* TokenBalanceOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBalanceOperation.swift; sourceTree = "<group>"; };
 		736D6ECE20DBD946008C2CC4 /* AnaliticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnaliticsViewController.swift; sourceTree = "<group>"; };
 		736D6ED020DBE925008C2CC4 /* AnaliticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnaliticsViewModel.swift; sourceTree = "<group>"; };
@@ -1491,6 +1493,7 @@
 				776C1146205CF6DF00449539 /* TokenHeaderView.swift */,
 				73DE7B3020987D8F00AE04E6 /* NonFungibleCollectionViewCell.swift */,
 				73DE7B3120987D8F00AE04E6 /* NonFungibleCollectionViewCell.xib */,
+				734AFD1420F1558800864E8E /* NotificationBadge.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2936,6 +2939,7 @@
 				299B5E2D1FCBC0660051361C /* BalanceProtocol.swift in Sources */,
 				296421971F70C1F200EB363B /* ErrorView.swift in Sources */,
 				903682F1204A6DB800013479 /* BookmarkViewController.swift in Sources */,
+				734AFD1520F1558800864E8E /* NotificationBadge.swift in Sources */,
 				29358DA91F79FD1C00925D61 /* CALayer.swift in Sources */,
 				29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */,
 				BB767E2E205E10FD00263658 /* Debounce.swift in Sources */,

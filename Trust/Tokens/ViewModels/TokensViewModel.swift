@@ -18,6 +18,7 @@ class TokensViewModel: NSObject {
     let tokens: Results<TokenObject>
     var tokensObserver: NotificationToken?
     let address: Address
+    let transactionStore: TransactionsStorage
 
     var headerBalance: String {
         return amount ?? "0.00"
@@ -65,13 +66,15 @@ class TokensViewModel: NSObject {
         config: Config = Config(),
         address: Address,
         store: TokensDataStore,
-        tokensNetwork: NetworkProtocol
+        tokensNetwork: NetworkProtocol,
+        transactionStore: TransactionsStorage
     ) {
         self.config = config
         self.address = address
         self.store = store
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
+        self.transactionStore = transactionStore
         super.init()
     }
 
@@ -113,7 +116,7 @@ class TokensViewModel: NSObject {
 
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
-        return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token))
+        return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token), store: transactionStore)
     }
 
     func updateEthBalance() {
