@@ -12,7 +12,7 @@ protocol TokensCoordinatorDelegate: class {
 
 class TokensCoordinator: Coordinator {
 
-    let navigationController: PushNavigationController
+    let navigationController: NavigationController
     let session: WalletSession
     let keystore: Keystore
     var coordinators: [Coordinator] = []
@@ -46,7 +46,7 @@ class TokensCoordinator: Coordinator {
     }()
 
     init(
-        navigationController: PushNavigationController = PushNavigationController(),
+        navigationController: NavigationController = NavigationController(),
         session: WalletSession,
         keystore: Keystore,
         tokensStorage: TokensDataStore,
@@ -221,7 +221,7 @@ extension TokensCoordinator: TokenViewControllerDelegate {
         controller.delegate = self
         NavigationController.openFormSheet(
             for: controller,
-            in: navigationController.childNavigationController,
+            in: navigationController,
             barItem: UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         )
     }

@@ -17,7 +17,7 @@ class BrowserCoordinator: NSObject, Coordinator {
     var coordinators: [Coordinator] = []
     let session: WalletSession
     let keystore: Keystore
-    let navigationController: PushNavigationController
+    let navigationController: NavigationController
 
     lazy var bookmarksViewController: BookmarkViewController = {
         let controller = BookmarkViewController(bookmarksStore: bookmarksStore)
@@ -77,7 +77,7 @@ class BrowserCoordinator: NSObject, Coordinator {
         navigator: Navigator,
         sharedRealm: Realm
     ) {
-        self.navigationController = PushNavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
+        self.navigationController = NavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
         self.session = session
         self.keystore = keystore
         self.sharedRealm = sharedRealm
@@ -152,7 +152,7 @@ class BrowserCoordinator: NSObject, Coordinator {
 
     func signMessage(with type: SignMesageType, account: Account, callbackID: Int) {
         let coordinator = SignMessageCoordinator(
-            navigationController: navigationController.childNavigationController,
+            navigationController: navigationController,
             keystore: keystore,
             account: account
         )
@@ -360,7 +360,7 @@ extension BrowserCoordinator: WKUIDelegate {
             title: .none,
             message: message,
             style: .alert,
-            in: navigationController.childNavigationController
+            in: navigationController
         )
         alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
             completionHandler()
@@ -373,7 +373,7 @@ extension BrowserCoordinator: WKUIDelegate {
             title: .none,
             message: message,
             style: .alert,
-            in: navigationController.childNavigationController
+            in: navigationController
         )
         alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
             completionHandler(true)
@@ -389,7 +389,7 @@ extension BrowserCoordinator: WKUIDelegate {
             title: .none,
             message: prompt,
             style: .alert,
-            in: navigationController.childNavigationController
+            in: navigationController
         )
         alertController.addTextField { (textField) in
             textField.text = defaultText

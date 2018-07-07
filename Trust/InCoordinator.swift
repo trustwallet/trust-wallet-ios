@@ -15,7 +15,7 @@ protocol InCoordinatorDelegate: class {
 
 class InCoordinator: Coordinator {
 
-    let navigationController: PushNavigationController
+    let navigationController: NavigationController
     var coordinators: [Coordinator] = []
     let initialWallet: WalletInfo
     var keystore: Keystore
@@ -41,14 +41,14 @@ class InCoordinator: Coordinator {
     var localSchemeCoordinator: LocalSchemeCoordinator?
     lazy var helpUsCoordinator: HelpUsCoordinator = {
         return HelpUsCoordinator(
-            navigationController: navigationController.childNavigationController,
+            navigationController: navigationController,
             appTracker: appTracker
         )
     }()
     let events: [BranchEvent] = []
 
     init(
-        navigationController: PushNavigationController = PushNavigationController(),
+        navigationController: NavigationController = NavigationController(),
         wallet: WalletInfo,
         keystore: Keystore,
         config: Config = .current,
@@ -159,8 +159,8 @@ class InCoordinator: Coordinator {
         tabBarController.viewControllers = [
             browserCoordinator.navigationController.childNavigationController,
             walletCoordinator.navigationController.childNavigationController,
-            transactionCoordinator.navigationController,
-            settingsCoordinator.navigationController,
+            transactionCoordinator.navigationController.childNavigationController,
+            settingsCoordinator.navigationController.childNavigationController,
         ]
 
         navigationController.childNavigationController.setViewControllers([tabBarController], animated: false)
@@ -179,7 +179,7 @@ class InCoordinator: Coordinator {
         }
 
         let localSchemeCoordinator = LocalSchemeCoordinator(
-            navigationController: navigationController.childNavigationController,
+            navigationController: navigationController,
             keystore: keystore,
             session: session
         )

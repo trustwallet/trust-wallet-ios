@@ -352,7 +352,6 @@
 		771D53732059337100C79485 /* TokenImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771D53722059337100C79485 /* TokenImageView.swift */; };
 		771DC9CF20EEC8AC003E2CE2 /* TokenInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771DC9CE20EEC8AC003E2CE2 /* TokenInfoViewController.swift */; };
 		771DC9D120F024D7003E2CE2 /* TokenInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771DC9D020F024D7003E2CE2 /* TokenInfoCoordinator.swift */; };
-		771DC9D320F027AA003E2CE2 /* PushNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771DC9D220F027AA003E2CE2 /* PushNavigationController.swift */; };
 		7721A6BE202A5677004DB16C /* DecryptError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6BD202A5677004DB16C /* DecryptError.swift */; };
 		7721A6C8202EF81B004DB16C /* CustomRPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6C7202EF81B004DB16C /* CustomRPC.swift */; };
 		7721A6CC202EFBC5004DB16C /* AddCustomNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7721A6CB202EFBC5004DB16C /* AddCustomNetworkViewController.swift */; };
@@ -843,7 +842,6 @@
 		771D53722059337100C79485 /* TokenImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenImageView.swift; sourceTree = "<group>"; };
 		771DC9CE20EEC8AC003E2CE2 /* TokenInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenInfoViewController.swift; sourceTree = "<group>"; };
 		771DC9D020F024D7003E2CE2 /* TokenInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenInfoCoordinator.swift; sourceTree = "<group>"; };
-		771DC9D220F027AA003E2CE2 /* PushNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNavigationController.swift; sourceTree = "<group>"; };
 		7721A6BD202A5677004DB16C /* DecryptError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecryptError.swift; sourceTree = "<group>"; };
 		7721A6BF202B1D3E004DB16C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7721A6C0202B1D43004DB16C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -1177,7 +1175,6 @@
 				77CB8399206CEED7006F34A8 /* Size.swift */,
 				296FC5A320C2766B00B923EF /* Scrollable.swift */,
 				77EAD88120E156E900D14AA2 /* DynamicCollectionView.swift */,
-				771DC9D220F027AA003E2CE2 /* PushNavigationController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -3272,7 +3269,6 @@
 				291A1B651F974E8600ADEC80 /* WalletEntryPoint.swift in Sources */,
 				2959960E1FAB05C200DB66A8 /* TransactionsEmptyView.swift in Sources */,
 				29BB94931F6FC380009B09CC /* BalanceViewModel.swift in Sources */,
-				771DC9D320F027AA003E2CE2 /* PushNavigationController.swift in Sources */,
 				BB03A86D20416AF600649DA0 /* BalanceStatus.swift in Sources */,
 				29D03F1D1F712183006E548C /* Button.swift in Sources */,
 				CCCD74FD1FD2D38D004A087D /* CheckDeviceCoordinator.swift in Sources */,

@@ -11,7 +11,7 @@ protocol ConfirmCoordinatorDelegate: class {
 }
 
 class ConfirmCoordinator: RootCoordinator {
-    let navigationController: PushNavigationController
+    let navigationController: NavigationController
     let session: WalletSession
     let account: Account
     let keystore: Keystore
@@ -36,7 +36,7 @@ class ConfirmCoordinator: RootCoordinator {
     }()
 
     init(
-        navigationController: PushNavigationController = PushNavigationController(),
+        navigationController: NavigationController = NavigationController(),
         session: WalletSession,
         configurator: TransactionConfigurator,
         keystore: Keystore,

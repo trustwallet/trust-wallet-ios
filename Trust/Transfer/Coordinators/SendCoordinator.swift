@@ -15,7 +15,7 @@ class SendCoordinator: RootCoordinator {
     let transferType: TransferType
     let session: WalletSession
     let account: Account
-    let navigationController: PushNavigationController
+    let navigationController: NavigationController
     let keystore: Keystore
     let storage: TokensDataStore
     var coordinators: [Coordinator] = []
@@ -45,7 +45,7 @@ class SendCoordinator: RootCoordinator {
 
     init(
         transferType: TransferType,
-        navigationController: PushNavigationController = PushNavigationController(),
+        navigationController: NavigationController = NavigationController(),
         session: WalletSession,
         keystore: Keystore,
         storage: TokensDataStore,
