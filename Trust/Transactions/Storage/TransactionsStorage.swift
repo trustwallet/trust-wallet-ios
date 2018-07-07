@@ -13,8 +13,6 @@ class TransactionsStorage {
 
     let realm: Realm
 
-    var transactionsUpdateHandler: () -> Void = {}
-
     var transactions: Results<Transaction> {
         return realm.objects(Transaction.self).filter(NSPredicate(format: "id!=''")).sorted(byKeyPath: "date", ascending: false)
     }
@@ -32,10 +30,10 @@ class TransactionsStorage {
         return formatter
     }()
 
-
     var transactionSections: [TransactionSection] = []
 
     private var transactionsObserver: NotificationToken?
+
     let account: Wallet
     init(
         realm: Realm,
@@ -128,11 +126,10 @@ class TransactionsStorage {
     func transactionsObservation() {
         transactionsObserver = transactions.observe { [weak self] _ in
             self?.updateTransactionSection()
-            self?.transactionsUpdateHandler()
         }
     }
 
-    func invalidateTransactionsObservation() {
+    deinit {
         transactionsObserver?.invalidate()
         transactionsObserver = nil
     }
