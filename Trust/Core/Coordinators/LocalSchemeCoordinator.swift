@@ -66,7 +66,6 @@ class LocalSchemeCoordinator: Coordinator {
             forceFetchNonce: true
         )
         let coordinator = ConfirmCoordinator(
-            navigationController: NavigationController(),
             session: session,
             configurator: configurator,
             keystore: keystore,

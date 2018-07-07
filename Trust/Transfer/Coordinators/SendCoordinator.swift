@@ -5,29 +5,47 @@ import UIKit
 import BigInt
 import TrustCore
 import TrustKeystore
+import Result
 
 protocol SendCoordinatorDelegate: class {
-    func didFinish(_ result: ConfirmResult, in coordinator: SendCoordinator)
-    func didCancel(in coordinator: SendCoordinator)
+    func didFinish(_ result: Result<ConfirmResult, AnyError>, in coordinator: SendCoordinator)
 }
 
-class SendCoordinator: Coordinator {
-
+class SendCoordinator: RootCoordinator {
     let transferType: TransferType
     let session: WalletSession
     let account: Account
-    let navigationController: NavigationController
+    let navigationController: PushNavigationController
     let keystore: Keystore
     let storage: TokensDataStore
     var coordinators: [Coordinator] = []
     weak var delegate: SendCoordinatorDelegate?
-    lazy var sendViewController: SendViewController = {
-        return self.makeSendViewController()
+    var rootViewController: UIViewController {
+        return controller
+    }
+
+    private lazy var controller: SendViewController = {
+        let controller = SendViewController(
+            session: session,
+            storage: storage,
+            account: account,
+            transferType: transferType
+        )
+        controller.navigationItem.titleView = BalanceTitleView.make(from: self.session, transferType)
+        controller.hidesBottomBarWhenPushed = true
+        switch transferType {
+        case .ether(let destination):
+            controller.addressRow?.value = destination?.description
+            controller.addressRow?.cell.row.updateCell()
+        case .token, .dapp, .nft: break
+        }
+        controller.delegate = self
+        return controller
     }()
 
     init(
         transferType: TransferType,
-        navigationController: NavigationController = NavigationController(),
+        navigationController: PushNavigationController = PushNavigationController(),
         session: WalletSession,
         keystore: Keystore,
         storage: TokensDataStore,
@@ -41,39 +59,6 @@ class SendCoordinator: Coordinator {
         self.keystore = keystore
         self.storage = storage
     }
-
-    func start() {
-        navigationController.viewControllers = [sendViewController]
-    }
-
-    func makeSendViewController() -> SendViewController {
-        let controller = SendViewController(
-            session: session,
-            storage: storage,
-            account: account,
-            transferType: transferType
-        )
-        controller.navigationItem.titleView = BalanceTitleView.make(from: self.session, transferType)
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: R.string.localizable.next(),
-            style: .done,
-            target: controller,
-            action: #selector(SendViewController.send)
-        )
-        switch transferType {
-        case .ether(let destination):
-            controller.addressRow?.value = destination?.description
-            controller.addressRow?.cell.row.updateCell()
-        case .token, .dapp, .nft: break
-        }
-        controller.delegate = self
-        return controller
-    }
-
-    @objc func dismiss() {
-        delegate?.didCancel(in: self)
-    }
 }
 
 extension SendCoordinator: SendViewControllerDelegate {
@@ -84,32 +69,19 @@ extension SendCoordinator: SendViewControllerDelegate {
             transaction: transaction
         )
 
-//        let coordinator = ConfirmCoordinator(
-//            navigationController: navigationController,
-//            session: session,
-//            configurator: configurator,
-//            keystore: keystore,
-//            account: account,
-//            type: .signThenSend
-//        )
-//        coordinator.start()
-//        addCoordinator(coordinator)
-
-        let controller = ConfirmPaymentViewController(
+        let coordinator = ConfirmCoordinator(
+            navigationController: navigationController,
             session: session,
-            keystore: keystore,
             configurator: configurator,
-            confirmType: .signThenSend
+            keystore: keystore,
+            account: account,
+            type: .signThenSend
         )
-        controller.didCompleted = { [weak self] result in
+        coordinator.didCompleted = { [weak self] result in
             guard let `self` = self else { return }
-            switch result {
-            case .success(let type):
-                self.delegate?.didFinish(type, in: self)
-            case .failure(let error):
-                self.navigationController.displayError(error: error)
-            }
+            self.delegate?.didFinish(result, in: self)
         }
-        navigationController.pushViewController(controller, animated: true)
+        addCoordinator(coordinator)
+        navigationController.pushCoordinator(coordinator: coordinator, animated: true)
     }
 }

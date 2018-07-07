@@ -10,8 +10,8 @@ protocol ConfirmCoordinatorDelegate: class {
     func didCancel(in coordinator: ConfirmCoordinator)
 }
 
-class ConfirmCoordinator: Coordinator {
-    let navigationController: NavigationController
+class ConfirmCoordinator: RootCoordinator {
+    let navigationController: PushNavigationController
     let session: WalletSession
     let account: Account
     let keystore: Keystore
@@ -22,8 +22,21 @@ class ConfirmCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     weak var delegate: ConfirmCoordinatorDelegate?
 
+    var rootViewController: UIViewController {
+        return controller
+    }
+
+    private lazy var controller: ConfirmPaymentViewController = {
+        return ConfirmPaymentViewController(
+            session: session,
+            keystore: keystore,
+            configurator: configurator,
+            confirmType: type
+        )
+    }()
+
     init(
-        navigationController: NavigationController,
+        navigationController: PushNavigationController = PushNavigationController(),
         session: WalletSession,
         configurator: TransactionConfigurator,
         keystore: Keystore,
@@ -31,7 +44,6 @@ class ConfirmCoordinator: Coordinator {
         type: ConfirmType
     ) {
         self.navigationController = navigationController
-        //self.navigationController.modalPresentationStyle = .custom
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
         self.configurator = configurator
@@ -39,38 +51,24 @@ class ConfirmCoordinator: Coordinator {
         self.account = account
         self.type = type
 
+        controller.didCompleted = { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let data):
+                self.didCompleted?(.success(data))
+            case .failure(let error):
+                self.didCompleted?(.failure(error))
+            }
+        }
     }
 
     func start() {
-        let controller = ConfirmPaymentViewController(
-            session: session,
-            keystore: keystore,
-            configurator: configurator,
-            confirmType: type
-        )
-        //navigationController.transitioningDelegate = controller as UIViewControllerTransitioningDelegate
-        controller.didCompleted = { [weak self] result in
-            switch result {
-            case .success(let data):
-                self?.didCompleted?(.success(data))
-            case .failure(let error):
-                self?.navigationController.displayError(error: error)
-            }
-        }
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-
         navigationController.viewControllers = [controller]
     }
 
     @objc func dismiss() {
         didCompleted?(.failure(AnyError(DAppError.cancelled)))
         delegate?.didCancel(in: self)
-    }
-
-}
-
-extension ConfirmPaymentViewController: UIViewControllerTransitioningDelegate {
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return HalfModalPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }

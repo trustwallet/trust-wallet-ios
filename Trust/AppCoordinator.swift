@@ -6,7 +6,7 @@ import UIKit
 import URLNavigator
 
 class AppCoordinator: NSObject, Coordinator {
-    let navigationController: NavigationController
+    let navigationController: PushNavigationController
     lazy var welcomeViewController: WelcomeViewController = {
         let controller = WelcomeViewController()
         controller.delegate = self
@@ -27,7 +27,7 @@ class AppCoordinator: NSObject, Coordinator {
         window: UIWindow,
         keystore: Keystore,
         navigator: URLNavigatorCoordinator = URLNavigatorCoordinator(),
-        navigationController: NavigationController = NavigationController()
+        navigationController: PushNavigationController = PushNavigationController()
     ) {
         self.navigationController = navigationController
         self.keystore = keystore
@@ -96,7 +96,7 @@ class AppCoordinator: NSObject, Coordinator {
     }
 
     func resetToWelcomeScreen() {
-        navigationController.setNavigationBarHidden(true, animated: false)
+        navigationController.childNavigationController.setNavigationBarHidden(true, animated: false)
         navigationController.viewControllers = [welcomeViewController]
     }
 
@@ -118,7 +118,7 @@ class AppCoordinator: NSObject, Coordinator {
 
     func showInitialWalletCoordinator(entryPoint: WalletEntryPoint) {
         let coordinator = InitialWalletCreationCoordinator(
-            navigationController: navigationController,
+            navigationController: navigationController.childNavigationController,
             keystore: keystore,
             entryPoint: entryPoint
         )

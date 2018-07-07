@@ -7,9 +7,9 @@ class NavigationController: UINavigationController {
     @discardableResult
     static func openFormSheet(
         for controller: UIViewController,
-        in navigationController: NavigationController,
+        in navigationController: UINavigationController,
         barItem: UIBarButtonItem
-        ) -> UIViewController {
+    ) -> UIViewController {
         if UIDevice.current.userInterfaceIdiom == .pad {
             controller.navigationItem.leftBarButtonItem = barItem
             let nav = NavigationController(rootViewController: controller)
