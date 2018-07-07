@@ -168,6 +168,8 @@ class InCoordinator: Coordinator {
         addCoordinator(transactionCoordinator)
 
         showTab(.wallet(.none))
+        // TODO: Temp
+        tabBarController.selectedViewController = walletCoordinator.navigationController.childNavigationController
 
         keystore.recentlyUsedWallet = account
 
@@ -188,7 +190,7 @@ class InCoordinator: Coordinator {
 
     func showTab(_ selectTab: Tabs) {
         guard let viewControllers = tabBarController?.viewControllers else { return }
-        guard let nav = viewControllers[selectTab.index] as? UINavigationController else { return }
+        guard let nav = viewControllers[selectTab.index] as? NavigationController else { return }
 
         switch selectTab {
         case .browser(let url):
@@ -222,13 +224,10 @@ class InCoordinator: Coordinator {
 
     func checkDevice() {
         let deviceChecker = CheckDeviceCoordinator(
-            navigationController: navigationController.childNavigationController,
+            navigationController: navigationController,
             jailbreakChecker: DeviceChecker()
         )
-
         deviceChecker.start()
-
-        addCoordinator(deviceChecker)
     }
 
     func showPaymentFlow(for type: PaymentFlow) {

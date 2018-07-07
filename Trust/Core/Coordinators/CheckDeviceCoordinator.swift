@@ -6,11 +6,11 @@ import UIKit
 class CheckDeviceCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
 
-    let navigationController: UINavigationController
+    let navigationController: PushNavigationController
 
     let jailbreakChecker: JailbreakChecker
 
-    lazy var alertViewController: UIAlertController = {
+    lazy var rootViewController: UIAlertController = {
         let controller = UIAlertController(
             title: NSLocalizedString("app.device.jailbreak.title", value: "DEVICE SECURITY COMPROMISED", comment: ""),
             message: NSLocalizedString(
@@ -21,13 +21,12 @@ class CheckDeviceCoordinator: Coordinator {
             preferredStyle: UIAlertControllerStyle.alert
         )
         controller.popoverPresentationController?.sourceView = navigationController.view
-        controller.addAction(UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default))
-
+        controller.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default))
         return controller
     }()
 
     init(
-        navigationController: UINavigationController,
+        navigationController: PushNavigationController,
         jailbreakChecker: JailbreakChecker
     ) {
         self.navigationController = navigationController
@@ -36,7 +35,7 @@ class CheckDeviceCoordinator: Coordinator {
 
     func start() {
         if jailbreakChecker.isJailbroken() {
-            navigationController.present(alertViewController, animated: true, completion: nil)
+            navigationController.present(rootViewController, animated: true, completion: nil)
         }
     }
 }
