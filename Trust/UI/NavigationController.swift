@@ -20,12 +20,13 @@ final class NavigationController: UIViewController {
     var navigationBar: UINavigationBar {
         return childNavigationController.navigationBar
     }
-
     var isToolbarHidden: Bool {
         get { return childNavigationController.isToolbarHidden }
         set { childNavigationController.isToolbarHidden = newValue }
     }
-
+    var topViewController: UIViewController? {
+        return childNavigationController.topViewController
+    }
     let childNavigationController: UINavigationController
 
     @discardableResult
@@ -115,9 +116,16 @@ final class NavigationController: UIViewController {
         childNavigationController.setNavigationBarHidden(hidden, animated: animated)
     }
 
-    open override var preferredStatusBarStyle: UIStatusBarStyle {
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
         var preferredStyle: UIStatusBarStyle
+
+        let rootTabBarController: UIViewController? = {
+            guard let nav = ((childNavigationController.topViewController as? TabBarController)?.selectedViewController) as? UINavigationController else { return .none }
+            return nav.viewControllers.isEmpty ? .none : nav.viewControllers[0]
+        }()
+
         if
+            rootTabBarController is MasterBrowserViewController ||
             childNavigationController.topViewController is MasterBrowserViewController ||
                 childNavigationController.topViewController is DarkPassphraseViewController ||
                 childNavigationController.topViewController is DarkVerifyPassphraseViewController ||

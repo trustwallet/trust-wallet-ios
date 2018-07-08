@@ -24,11 +24,7 @@ func applyStyle() {
     BalanceTitleView.appearance().titleTextColor = UIColor.white
     BalanceTitleView.appearance().subTitleTextColor = UIColor(white: 0.9, alpha: 1)
 
-    BrowserNavigationBar.appearance().tintColor = UIColor.white
-    BrowserNavigationBar.appearance().barTintColor = UIColor.white
-
-    UITextField.appearance(whenContainedInInstancesOf: [BrowserNavigationBar.self]).tintColor = .white
-    UIImageView.appearance(whenContainedInInstancesOf: [BrowserNavigationBar.self]).tintColor = .white
+    BrowserNavigationBar.appearance().setBackgroundImage(.filled(with: .white), for: .default)
 }
 
 struct AppGlobalStyle {
