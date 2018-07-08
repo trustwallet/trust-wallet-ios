@@ -307,9 +307,7 @@ extension WalletInfo {
     }
 
     static func initialName(index numberOfWallets: Int) -> String {
-        return String(format: NSLocalizedString(
-            "importWallet.initialNmae", value: "%@ %@ %@", comment: ""
-        ),
+        return String(format: "%@ %@ %@",
             "ETH", R.string.localizable.wallet(), "\(numberOfWallets + 1)"
         )
     }
