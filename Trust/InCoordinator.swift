@@ -208,6 +208,7 @@ class InCoordinator: Coordinator {
 
     func showPaymentFlow(for type: PaymentFlow) {
         guard let tokensCoordinator = tokensCoordinator else { return }
+        let nav = tokensCoordinator.navigationController
         let session = tokensCoordinator.session
         let tokenStorage = tokensCoordinator.store
 
@@ -216,7 +217,7 @@ class InCoordinator: Coordinator {
              (.send(let type), .hd(let account)):
             let coordinator = SendCoordinator(
                 transferType: type,
-                navigationController: navigationController,
+                navigationController: nav,
                 session: session,
                 keystore: keystore,
                 storage: tokenStorage,
@@ -224,14 +225,14 @@ class InCoordinator: Coordinator {
             )
             coordinator.delegate = self
             addCoordinator(coordinator)
-            navigationController.pushCoordinator(coordinator: coordinator, animated: true)
+            nav.pushCoordinator(coordinator: coordinator, animated: true)
         case (.request(let token), _):
             let coordinator = RequestCoordinator(
                 session: session,
                 token: token
             )
             addCoordinator(coordinator)
-            navigationController.pushCoordinator(coordinator: coordinator, animated: true)
+            nav.pushCoordinator(coordinator: coordinator, animated: true)
         case (.send, .address):
             break
             // This case should be returning an error inCoordinator. Improve this logic into single piece.
