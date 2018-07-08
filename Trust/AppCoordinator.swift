@@ -106,6 +106,7 @@ class AppCoordinator: NSObject, Coordinator {
         coordinators.removeAll()
         CookiesStore.delete()
         navigationController.dismiss(animated: true, completion: nil)
+        navigationController.viewControllers.removeAll()
         resetToWelcomeScreen()
     }
 
