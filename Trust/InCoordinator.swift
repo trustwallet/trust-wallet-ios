@@ -23,6 +23,7 @@ class InCoordinator: Coordinator {
     let appTracker: AppTracker
     let navigator: Navigator
     weak var delegate: InCoordinatorDelegate?
+    private var pendingTransactionsObserver: NotificationToken?
     var browserCoordinator: BrowserCoordinator? {
         return self.coordinators.compactMap { $0 as? BrowserCoordinator }.first
     }
@@ -161,6 +162,8 @@ class InCoordinator: Coordinator {
         localSchemeCoordinator.delegate = self
         addCoordinator(localSchemeCoordinator)
         self.localSchemeCoordinator = localSchemeCoordinator
+
+        observePendingTransactions(from: transactionsStorage)
     }
 
     func showTab(_ selectTab: Tabs) {
@@ -204,12 +207,9 @@ class InCoordinator: Coordinator {
     }
 
     func showPaymentFlow(for type: PaymentFlow) {
-        guard let navigationController = tokensCoordinator?.navigationController else {
-            return
-        }
-        guard let walletCoordinator = tokensCoordinator else { return }
-        let session = walletCoordinator.session
-        let tokenStorage = walletCoordinator.store
+        guard let tokensCoordinator = tokensCoordinator else { return }
+        let session = tokensCoordinator.session
+        let tokenStorage = tokensCoordinator.store
 
         switch (type, session.account.wallet.type) {
         case (.send(let type), .privateKey(let account)),
@@ -239,8 +239,8 @@ class InCoordinator: Coordinator {
     }
 
     private func handlePendingTransaction(transaction: SentTransaction) {
-        //TODO: Transactions
-        // transactionCoordinator?.viewModel.addSentTransaction(transaction)
+        let transaction = SentTransaction.from(from: initialWallet.address, transaction: transaction)
+        tokensCoordinator?.transactionsStore.add([transaction])
     }
 
     private func realm(for config: Realm.Configuration) -> Realm {
@@ -256,6 +256,18 @@ class InCoordinator: Coordinator {
             showTab(.wallet(.addToken(address)))
         }
         return true
+    }
+
+    private func observePendingTransactions(from storage: TransactionsStorage) {
+        pendingTransactionsObserver = storage.transactions.observe { [weak self] _ in
+            let itemsCount = storage.pendingObjects.count
+            self?.tabBarController?.tabBar.items?[Tabs.wallet(.none).index].badgeValue = itemsCount > 0 ? String(itemsCount) : nil
+        }
+    }
+
+    deinit {
+        pendingTransactionsObserver?.invalidate()
+        pendingTransactionsObserver = nil
     }
 }
 

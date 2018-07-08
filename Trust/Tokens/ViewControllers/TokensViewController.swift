@@ -41,8 +41,8 @@ class TokensViewController: UIViewController {
         return footer
     }()
 
-    lazy var footerView: TransactionsFooterView = {
-        let footerView = TransactionsFooterView(
+    lazy var footerView: ButtonsFooterView = {
+        let footerView = ButtonsFooterView(
             frame: .zero
         )
         footerView.translatesAutoresizingMaskIntoConstraints = false

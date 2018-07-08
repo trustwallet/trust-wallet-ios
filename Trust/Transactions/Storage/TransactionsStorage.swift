@@ -13,11 +13,10 @@ class TransactionsStorage {
 
     let realm: Realm
 
-    var transactionsUpdateHandler: () -> Void = {}
-
     var transactions: Results<Transaction> {
         return realm.objects(Transaction.self).filter(NSPredicate(format: "id!=''")).sorted(byKeyPath: "date", ascending: false)
     }
+
     var latestTransaction: Transaction? {
         return realm.objects(Transaction.self)
             .filter(NSPredicate(format: "from == %@", account.address.description))
@@ -25,9 +24,16 @@ class TransactionsStorage {
             .first
     }
 
+    let titleFormmater: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d yyyy"
+        return formatter
+    }()
+
     var transactionSections: [TransactionSection] = []
 
     private var transactionsObserver: NotificationToken?
+
     let account: Wallet
     init(
         realm: Realm,
@@ -106,12 +112,12 @@ class TransactionsStorage {
 
     func mappedSections(for transactions: [Transaction]) -> [TransactionSection] {
         var items = [TransactionSection]()
-        let headerDates = NSOrderedSet(array: transactions.map { TransactionsViewModel.titleFormmater.string(from: $0.date ) })
+        let headerDates = NSOrderedSet(array: transactions.map { titleFormmater.string(from: $0.date ) })
         headerDates.forEach {
             guard let dateKey = $0 as? String else {
                 return
             }
-            let filteredTransactionByDate = Array(transactions.filter { TransactionsViewModel.titleFormmater.string(from: $0.date ) == dateKey })
+            let filteredTransactionByDate = Array(transactions.filter { titleFormmater.string(from: $0.date ) == dateKey })
             items.append(TransactionSection(title: dateKey, items: filteredTransactionByDate))
         }
         return items
@@ -120,11 +126,10 @@ class TransactionsStorage {
     func transactionsObservation() {
         transactionsObserver = transactions.observe { [weak self] _ in
             self?.updateTransactionSection()
-            self?.transactionsUpdateHandler()
         }
     }
 
-    func invalidateTransactionsObservation() {
+    deinit {
         transactionsObserver?.invalidate()
         transactionsObserver = nil
     }

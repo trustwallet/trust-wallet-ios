@@ -10,13 +10,16 @@ struct TokenViewCellViewModel {
 
     let token: TokenObject
     let ticker: CoinTicker?
+    let store: TransactionsStorage
 
     init(
         token: TokenObject,
-        ticker: CoinTicker?
+        ticker: CoinTicker?,
+        store: TransactionsStorage
     ) {
         self.token = token
         self.ticker = ticker
+        self.store = store
     }
 
     var title: String {

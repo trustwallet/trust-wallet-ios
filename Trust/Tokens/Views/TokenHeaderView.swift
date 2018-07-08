@@ -36,8 +36,8 @@ class TokenHeaderView: UIView {
         return imageView
     }()
 
-    lazy var buttonsView: TransactionsFooterView = {
-        let footerView = TransactionsFooterView(
+    lazy var buttonsView: ButtonsFooterView = {
+        let footerView = ButtonsFooterView(
             frame: .zero,
             bottomOffset: 5
         )
