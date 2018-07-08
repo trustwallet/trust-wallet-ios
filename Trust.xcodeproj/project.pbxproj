@@ -158,7 +158,7 @@
 		29A13E2C1F6A955700E432A2 /* CreateWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E2B1F6A955700E432A2 /* CreateWalletViewModel.swift */; };
 		29A13E331F6B1B7A00E432A2 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E321F6B1B7A00E432A2 /* Styles.swift */; };
 		29AD3D4720EC443D007893C9 /* WalletCreatedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD3D4620EC443D007893C9 /* WalletCreatedController.swift */; };
-		29AD3D4B20F2B904007893C9 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD3D4A20F2B904007893C9 /* SnapshotHelper.swift */; };
+		29AD3D4F20F2CEEE007893C9 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD3D4E20F2CEEE007893C9 /* SnapshotHelper.swift */; };
 		29AD8A041F93D6CD008E10E7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD8A031F93D6CD008E10E7 /* Constants.swift */; };
 		29AD8A061F93DC8C008E10E7 /* PushDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD8A051F93DC8C008E10E7 /* PushDevice.swift */; };
 		29AD8A091F93F8B2008E10E7 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD8A081F93F8B2008E10E7 /* Session.swift */; };
@@ -636,7 +636,7 @@
 		29A13E2B1F6A955700E432A2 /* CreateWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWalletViewModel.swift; sourceTree = "<group>"; };
 		29A13E321F6B1B7A00E432A2 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		29AD3D4620EC443D007893C9 /* WalletCreatedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCreatedController.swift; sourceTree = "<group>"; };
-		29AD3D4A20F2B904007893C9 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = scripts/fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
+		29AD3D4E20F2CEEE007893C9 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = scripts/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		29AD8A031F93D6CD008E10E7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		29AD8A051F93DC8C008E10E7 /* PushDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushDevice.swift; sourceTree = "<group>"; };
 		29AD8A071F93E1F0008E10E7 /* Trust.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Trust.entitlements; sourceTree = "<group>"; };
@@ -1084,8 +1084,8 @@
 		2912CD191F6A830700C6CBE3 /* TrustUITests */ = {
 			isa = PBXGroup;
 			children = (
+				29AD3D4E20F2CEEE007893C9 /* SnapshotHelper.swift */,
 				2912CD1A1F6A830700C6CBE3 /* TrustUITests.swift */,
-				29AD3D4A20F2B904007893C9 /* SnapshotHelper.swift */,
 				2912CD1C1F6A830700C6CBE3 /* Info.plist */,
 				29358D9E1F78D5B700925D61 /* Screenshots.swift */,
 			);
@@ -3352,7 +3352,7 @@
 			files = (
 				2912CD1B1F6A830700C6CBE3 /* TrustUITests.swift in Sources */,
 				29358D9F1F78D5B700925D61 /* Screenshots.swift in Sources */,
-				29AD3D4B20F2B904007893C9 /* SnapshotHelper.swift in Sources */,
+				29AD3D4F20F2CEEE007893C9 /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
