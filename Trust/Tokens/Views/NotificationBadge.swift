@@ -145,7 +145,7 @@ public struct BadgeAppearance {
     public init() {
         textSize = 12
         textAlignment = .center
-        backgroundColor = .red
+        backgroundColor = UIColor(hex: "ff3a2f")
         textColor = .white
         animate = true
         duration = 0.2

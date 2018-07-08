@@ -167,8 +167,22 @@ class TokensViewModel: NSObject {
         operationQueue.addOperations(balancesOperations, waitUntilFinished: false)
     }
 
+    func updatePendingTransactions() {
+        let transactions = transactionStore.pendingObjects
+        for transaction in transactions {
+            tokensNetwork.update(for: transaction) { result in
+                switch result {
+                case .success(let transaction, let state):
+                    self.transactionStore.update(state: state, for: transaction)
+                case .failure: break
+                }
+            }
+        }
+    }
+
     func fetch() {
         tokensInfo()
+        updatePendingTransactions()
     }
 
     func invalidateTokensObservation() {
