@@ -195,6 +195,7 @@ class InCoordinator: Coordinator {
         localSchemeCoordinator = nil
         navigationController.dismiss(animated: false, completion: nil)
         removeAllCoordinators()
+        navigationController.viewControllers.removeAll()
         showTabBar(for: account)
     }
 
