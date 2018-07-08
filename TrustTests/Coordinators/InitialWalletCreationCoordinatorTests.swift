@@ -14,6 +14,6 @@ class InitialWalletCreationCoordinatorTests: XCTestCase {
 
         coordinator.start()
 
-        XCTAssertTrue((coordinator.navigationController.presentedViewController as? UINavigationController)?.viewControllers[0] is ImportWalletViewController)
+        XCTAssertTrue((coordinator.navigationController.presentedViewController as? NavigationController)?.viewControllers[0] is ImportWalletViewController)
     }
 }

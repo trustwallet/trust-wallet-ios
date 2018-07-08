@@ -16,9 +16,7 @@ class SendCoordinatorTests: XCTestCase {
             account: .make()
         )
 
-        coordinator.start()
-
-        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is SendViewController)
+        XCTAssertTrue(coordinator.rootViewController is SendViewController)
     }
 
     func testDestanation() {
@@ -31,9 +29,8 @@ class SendCoordinatorTests: XCTestCase {
             storage: FakeTokensDataStore(),
             account: .make()
         )
-        coordinator.start()
 
-        XCTAssertEqual(address.description, coordinator.sendViewController.addressRow?.value)
-        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is SendViewController)
+        XCTAssertEqual(address.description, ((coordinator.rootViewController) as? SendViewController)?.addressRow?.value)
+        XCTAssertTrue(coordinator.rootViewController is SendViewController)
     }
 }

@@ -9,7 +9,7 @@ protocol RootViewControllerProvider: class {
 
 typealias RootCoordinator = Coordinator & RootViewControllerProvider
 
-final class NavigationController: UIViewController {
+public class NavigationController: UIViewController {
     private let rootViewController: UIViewController
     private var viewControllersToChildCoordinators: [UIViewController: Coordinator] = [:]
 
@@ -64,7 +64,7 @@ final class NavigationController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
         childNavigationController.delegate = self
@@ -96,11 +96,11 @@ final class NavigationController: UIViewController {
         childNavigationController.pushViewController(viewController, animated: animated)
     }
 
-    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+    override public func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         childNavigationController.dismiss(animated: flag, completion: completion)
     }
 
-    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+    override public func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
         childNavigationController.present(viewControllerToPresent, animated: flag, completion: completion)
     }
 
@@ -154,7 +154,7 @@ extension NavigationController: Scrollable {
 // MARK: - UIGestureRecognizerDelegate
 
 extension NavigationController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         // Necessary to get the child navigation controller’s interactive pop gesture recognizer to work.
         return true
     }
@@ -163,7 +163,7 @@ extension NavigationController: UIGestureRecognizerDelegate {
 // MARK: - UINavigationControllerDelegate
 
 extension NavigationController: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+    public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         cleanUpChildCoordinators()
     }
 

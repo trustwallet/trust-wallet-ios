@@ -5,13 +5,11 @@ import XCTest
 
 class ExportPrivateKeyCoordinatorTests: XCTestCase {
     
-    func testStart() {
+    func testInit() {
         let coordinator = ExportPrivateKeyCoordinator(
             privateKey: Data()
         )
 
-        coordinator.start()
-
-        XCTAssertTrue(coordinator.navigationController.viewControllers[0] is ExportPrivateKeyViewConroller)
+        XCTAssertTrue(coordinator.rootViewController is ExportPrivateKeyViewConroller)
     }
 }
