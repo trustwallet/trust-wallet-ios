@@ -44,7 +44,7 @@ class BackupCoordinator: Coordinator {
     }
 
     func presentActivityViewController(for account: Account, password: String, newPassword: String, completion: @escaping (Result<Bool, AnyError>) -> Void) {
-        navigationController.displayLoading(
+        navigationController.topViewController?.displayLoading(
             text: NSLocalizedString("export.presentBackupOptions.label.title", value: "Preparing backup options...", comment: "")
         )
         keystore.export(account: account, password: password, newPassword: newPassword) { [weak self] result in
@@ -73,14 +73,16 @@ class BackupCoordinator: Coordinator {
                 }
                 completion(.failure(AnyError(error)))
             }
-            activityViewController.popoverPresentationController?.sourceView = navigationController.view
-            activityViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
-            navigationController.present(activityViewController, animated: true) { [unowned self] in
-                self.navigationController.hideLoading()
+            let presenterViewController = navigationController.topViewController
+
+            activityViewController.popoverPresentationController?.sourceView = presenterViewController?.view
+            activityViewController.popoverPresentationController?.sourceRect = presenterViewController?.view.centerRect ?? .zero
+            presenterViewController?.present(activityViewController, animated: true) { [weak presenterViewController] in
+                presenterViewController?.hideLoading()
             }
         case .failure(let error):
-            navigationController.hideLoading()
-            navigationController.displayError(error: error)
+            navigationController.topViewController?.hideLoading()
+            navigationController.topViewController?.displayError(error: error)
         }
     }
 

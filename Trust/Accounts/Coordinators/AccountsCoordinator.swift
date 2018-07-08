@@ -78,28 +78,28 @@ class AccountsCoordinator: Coordinator {
     }
 
     func exportMnemonic(for account: Account) {
-        navigationController.displayLoading()
+        navigationController.topViewController?.displayLoading()
         keystore.exportMnemonic(account: account) { [weak self] result in
-            self?.navigationController.hideLoading()
+            self?.navigationController.topViewController?.hideLoading()
             switch result {
             case .success(let words):
                 self?.exportMnemonicCoordinator(for: account, words: words)
             case .failure(let error):
-                self?.navigationController.displayError(error: error)
+                self?.navigationController.topViewController?.displayError(error: error)
             }
         }
     }
 
     func exportPrivateKeyView(for account: Account) {
-        navigationController.displayLoading()
+        navigationController.topViewController?.displayLoading()
         keystore.exportPrivateKey(account: account) { [weak self] result in
+            self?.navigationController.topViewController?.hideLoading()
             switch result {
             case .success(let privateKey):
                 self?.exportPrivateKey(with: privateKey)
             case .failure(let error):
-                self?.navigationController.displayError(error: error)
+                self?.navigationController.topViewController?.displayError(error: error)
             }
-            self?.navigationController.hideLoading()
         }
     }
 
@@ -109,10 +109,7 @@ class AccountsCoordinator: Coordinator {
             account: account,
             words: words
         )
-        coordinator.delegate = self
-        coordinator.start()
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
-        addCoordinator(coordinator)
+        navigationController.pushCoordinator(coordinator: coordinator, animated: true)
     }
 
     func exportKeystore(for account: Account) {
@@ -127,13 +124,8 @@ class AccountsCoordinator: Coordinator {
     }
 
     func exportPrivateKey(with privateKey: Data) {
-        let coordinator = ExportPrivateKeyCoordinator(
-            privateKey: privateKey
-        )
-        coordinator.delegate = self
-        coordinator.start()
-        addCoordinator(coordinator)
-        navigationController.present(coordinator.navigationController, animated: true, completion: nil)
+        let coordinator = ExportPrivateKeyCoordinator(privateKey: privateKey)
+        navigationController.pushCoordinator(coordinator: coordinator, animated: true)
     }
 }
 
@@ -175,20 +167,6 @@ extension AccountsCoordinator: BackupCoordinatorDelegate {
     }
 
     func didFinish(wallet: Wallet, in coordinator: BackupCoordinator) {
-        removeCoordinator(coordinator)
-    }
-}
-
-extension AccountsCoordinator: ExportPhraseCoordinatorDelegate {
-    func didCancel(in coordinator: ExportPhraseCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
-    }
-}
-
-extension AccountsCoordinator: ExportPrivateKeyCoordinatorDelegate {
-    func didCancel(in coordinator: ExportPrivateKeyCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
     }
 }

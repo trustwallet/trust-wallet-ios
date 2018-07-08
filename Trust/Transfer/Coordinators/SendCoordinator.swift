@@ -31,6 +31,7 @@ class SendCoordinator: RootCoordinator {
             account: account,
             transferType: transferType
         )
+        controller.navigationItem.backBarButtonItem = nil
         controller.navigationItem.titleView = BalanceTitleView.make(from: self.session, transferType)
         controller.hidesBottomBarWhenPushed = true
         switch transferType {

@@ -329,7 +329,7 @@ extension InCoordinator: SendCoordinatorDelegate {
                 break
             }
         case .failure(let error):
-            coordinator.navigationController.displayError(error: error)
+            coordinator.navigationController.topViewController?.displayError(error: error)
         }
     }
 }

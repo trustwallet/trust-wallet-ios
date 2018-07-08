@@ -289,7 +289,7 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
             }
         case .address:
             self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
-            self.navigationController.displayError(error: InCoordinatorError.onlyWatchAccount)
+            self.navigationController.topViewController?.displayError(error: InCoordinatorError.onlyWatchAccount)
         }
     }
 

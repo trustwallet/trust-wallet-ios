@@ -53,13 +53,13 @@ class WalletCoordinator: Coordinator {
 
     func createInstantWallet() {
         let text = String(format: NSLocalizedString("Creating wallet %@", value: "Creating wallet %@", comment: ""), "...")
-        navigationController.displayLoading(text: text, animated: false)
+        navigationController.topViewController?.displayLoading(text: text, animated: false)
         let password = PasswordGenerator.generateRandom()
         keystore.createAccount(with: password) { result in
             switch result {
             case .success(let account):
                 self.keystore.exportMnemonic(account: account) { mnemonicResult in
-                    self.navigationController.hideLoading(animated: false)
+                    self.navigationController.topViewController?.hideLoading(animated: false)
                     switch mnemonicResult {
                     case .success(let words):
                         self.pushBackup(for: account, words: words)
@@ -68,8 +68,8 @@ class WalletCoordinator: Coordinator {
                     }
                 }
             case .failure(let error):
-                self.navigationController.hideLoading(animated: false)
-                self.navigationController.displayError(error: error)
+                self.navigationController.topViewController?.hideLoading(animated: false)
+                self.navigationController.topViewController?.displayError(error: error)
             }
         }
     }
