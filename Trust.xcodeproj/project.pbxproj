@@ -1070,7 +1070,6 @@
 				299B5E351FCBCDE10051361C /* Transfer */,
 				299573A01FA1F35B006F17FD /* Foundation */,
 				290B2B681F92C0300053C83E /* Settings */,
-				29FC9BCA1F831849000209CD /* ViewControllers */,
 				29E14FD21F7F46F700185568 /* Transactions */,
 				291E8FBD1F7DEA72003F0ECF /* EtherClient */,
 				29FF13041F75F08000AFD326 /* Coordinators */,
@@ -2010,13 +2009,6 @@
 				736D6ED220DBE93D008C2CC4 /* Analitics.swift */,
 			);
 			path = Types;
-			sourceTree = "<group>";
-		};
-		29FC9BCA1F831849000209CD /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		29FF12F91F74CC6C00AFD326 /* Form */ = {
