@@ -2,7 +2,7 @@
 
 import UIKit
 
-class WordCollectionViewCell: UICollectionViewCell {
+final class WordCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var wordLabel: UILabel!
 

@@ -2,7 +2,7 @@
 
 import Foundation
 
-class PreferencesController {
+final class PreferencesController {
 
     let userDefaults: UserDefaults
 

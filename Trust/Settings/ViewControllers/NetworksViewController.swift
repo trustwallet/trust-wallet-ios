@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 import Eureka
 
-class NetworksViewController: FormViewController {
+final class NetworksViewController: FormViewController {
 
     lazy var addButton: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(addNetwork))

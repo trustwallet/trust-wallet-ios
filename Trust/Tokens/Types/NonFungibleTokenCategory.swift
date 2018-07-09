@@ -4,7 +4,7 @@ import RealmSwift
 import Realm
 import Foundation
 
-class NonFungibleTokenCategory: Object, Decodable {
+final class NonFungibleTokenCategory: Object, Decodable {
     @objc dynamic var name: String = ""
     var items = List<NonFungibleTokenObject>()
 

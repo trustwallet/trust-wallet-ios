@@ -10,7 +10,7 @@ protocol SupportViewControllerDelegate: class {
     func didPressURL(_ url: URL, in controller: SupportViewController)
 }
 
-class SupportViewController: FormViewController {
+final class SupportViewController: FormViewController {
 
     let viewModel = SupportViewModel()
     weak var delegate: SupportViewControllerDelegate?

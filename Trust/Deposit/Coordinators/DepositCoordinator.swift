@@ -4,7 +4,7 @@ import Foundation
 import TrustCore
 import UIKit
 
-class DepositCoordinator: Coordinator {
+final class DepositCoordinator: Coordinator {
 
     let navigationController: NavigationController
     let account: Wallet

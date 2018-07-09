@@ -6,7 +6,7 @@ protocol BrowserErrorViewDelegate: class {
     func didTapReload(_ sender: Button)
 }
 
-class BrowserErrorView: UIView {
+final class BrowserErrorView: UIView {
 
     weak var delegate: BrowserErrorViewDelegate?
 

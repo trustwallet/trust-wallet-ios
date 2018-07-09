@@ -11,7 +11,7 @@ protocol BackupCoordinatorDelegate: class {
     func didFinish(wallet: Wallet, in coordinator: BackupCoordinator)
 }
 
-class BackupCoordinator: Coordinator {
+final class BackupCoordinator: Coordinator {
 
     let navigationController: NavigationController
     weak var delegate: BackupCoordinatorDelegate?

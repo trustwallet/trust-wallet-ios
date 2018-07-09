@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 import StatefulViewController
 
-class LoadingView: UIView {
+final class LoadingView: UIView {
 
     let label = UILabel()
     let imageView = UIImageView()

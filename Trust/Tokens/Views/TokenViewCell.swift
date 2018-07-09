@@ -6,7 +6,7 @@ import Kingfisher
 import RealmSwift
 import TrustCore
 
-class TokenViewCell: UITableViewCell {
+final class TokenViewCell: UITableViewCell {
 
     static let identifier = "TokenViewCell"
 
@@ -151,8 +151,8 @@ class TokenViewCell: UITableViewCell {
 
     private func observePendingTransactions(from storage: TransactionsStorage, with contract: Address) {
         pendingTokenTransactionsObserver = storage.transactions.observe { [weak self] _ in
-            let itemsCount = storage.pendingObjects.filter { $0.contractAddress == contract }.count
-            self?.containerForImageView.badge(text: itemsCount > 0 ? String(itemsCount) : nil)
+            let items = storage.pendingObjects.filter { $0.contractAddress == contract }
+            self?.containerForImageView.badge(text: items.isEmpty ? nil : String(items.count))
         }
     }
 

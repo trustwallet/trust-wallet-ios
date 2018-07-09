@@ -11,7 +11,7 @@ protocol LocalSchemeCoordinatorDelegate: class {
     func didCancel(in coordinator: LocalSchemeCoordinator)
 }
 
-class LocalSchemeCoordinator: Coordinator {
+final class LocalSchemeCoordinator: Coordinator {
 
     let navigationController: NavigationController
     let keystore: Keystore

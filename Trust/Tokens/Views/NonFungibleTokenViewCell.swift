@@ -3,7 +3,7 @@
 import UIKit
 import Kingfisher
 
-class NonFungibleTokenViewCell: UITableViewCell {
+final class NonFungibleTokenViewCell: UITableViewCell {
 
     @IBOutlet private weak var collectionView: UICollectionView!
 

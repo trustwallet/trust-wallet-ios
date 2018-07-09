@@ -21,7 +21,7 @@ protocol BrowserViewControllerDelegate: class {
     func didVisitURL(url: URL, title: String)
 }
 
-class BrowserViewController: UIViewController {
+final class BrowserViewController: UIViewController {
 
     private var myContext = 0
     let account: Wallet

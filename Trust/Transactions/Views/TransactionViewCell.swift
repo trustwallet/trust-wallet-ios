@@ -2,7 +2,7 @@
 
 import UIKit
 
-class TransactionViewCell: UITableViewCell {
+final class TransactionViewCell: UITableViewCell {
 
     static let identifier = "TransactionTableViewCell"
 

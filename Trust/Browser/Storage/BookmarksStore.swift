@@ -3,7 +3,7 @@
 import Foundation
 import RealmSwift
 
-class BookmarksStore {
+final class BookmarksStore {
     var bookmarks: Results<Bookmark> {
         return realm.objects(Bookmark.self)
             .sorted(byKeyPath: "createdAt", ascending: false)

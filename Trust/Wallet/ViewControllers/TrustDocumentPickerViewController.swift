@@ -2,7 +2,7 @@
 
 import UIKit
 
-class TrustDocumentPickerViewController: UIDocumentPickerViewController {
+final class TrustDocumentPickerViewController: UIDocumentPickerViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

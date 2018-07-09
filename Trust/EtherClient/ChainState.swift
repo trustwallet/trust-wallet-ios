@@ -5,7 +5,7 @@ import JSONRPCKit
 import APIKit
 import BigInt
 
-class ChainState {
+final class ChainState {
 
     struct Keys {
         static let latestBlock = "chainID"

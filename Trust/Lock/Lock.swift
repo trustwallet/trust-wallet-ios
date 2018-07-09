@@ -9,7 +9,7 @@ protocol LockInterface {
     func shouldShowProtection() -> Bool
 }
 
-class Lock: LockInterface {
+final class Lock: LockInterface {
 
     private struct Keys {
         static let service = "trust.lock"

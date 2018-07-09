@@ -13,7 +13,7 @@ protocol BrowserCoordinatorDelegate: class {
     func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator)
 }
 
-class BrowserCoordinator: NSObject, Coordinator {
+final class BrowserCoordinator: NSObject, Coordinator {
     var coordinators: [Coordinator] = []
     let session: WalletSession
     let keystore: Keystore

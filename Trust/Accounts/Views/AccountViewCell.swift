@@ -7,7 +7,7 @@ protocol AccountViewCellDelegate: class {
     func accountViewCell(_ cell: AccountViewCell, didTapInfoViewForAccount _: WalletInfo)
 }
 
-class AccountViewCell: UITableViewCell {
+final class AccountViewCell: UITableViewCell {
 
     @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var activeView: UIView!

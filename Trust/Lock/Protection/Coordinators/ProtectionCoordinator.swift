@@ -2,7 +2,7 @@
 
 import UIKit
 
-class ProtectionCoordinator: Coordinator {
+final class ProtectionCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     lazy var splashCoordinator: SplashCoordinator = {
         return SplashCoordinator(window: self.protectionWindow)

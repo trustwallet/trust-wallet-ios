@@ -8,7 +8,7 @@ protocol EnterPasswordCoordinatorDelegate: class {
     func didCancel(in coordinator: EnterPasswordCoordinator)
 }
 
-class EnterPasswordCoordinator: Coordinator {
+final class EnterPasswordCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
 
     weak var delegate: EnterPasswordCoordinatorDelegate?

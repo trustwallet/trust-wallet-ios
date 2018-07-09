@@ -7,7 +7,7 @@ import APIKit
 import Result
 import TrustCore
 
-class TokensBalanceService {
+final class TokensBalanceService {
 
     func getBalance(
         for address: Address,

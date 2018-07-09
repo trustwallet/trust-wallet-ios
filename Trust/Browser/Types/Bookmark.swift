@@ -3,7 +3,7 @@
 import Foundation
 import RealmSwift
 
-class Bookmark: Object {
+final class Bookmark: Object {
     @objc dynamic var url: String = ""
     @objc dynamic var title: String = ""
     @objc dynamic var id: String = UUID().uuidString

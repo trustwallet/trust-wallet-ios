@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class RequestCoordinator: RootCoordinator {
+final class RequestCoordinator: RootCoordinator {
     let session: WalletSession
     var coordinators: [Coordinator] = []
 

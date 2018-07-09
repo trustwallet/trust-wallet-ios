@@ -10,7 +10,7 @@ protocol NewTokenViewControllerDelegate: class {
     func didAddToken(token: ERC20Token, in viewController: NewTokenViewController)
 }
 
-class NewTokenViewController: FormViewController {
+final class NewTokenViewController: FormViewController {
 
     private var viewModel: NewTokenViewModel
 

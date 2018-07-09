@@ -7,7 +7,7 @@ protocol WelcomeViewControllerDelegate: class {
     func didPressImportWallet(in viewController: WelcomeViewController)
 }
 
-class WelcomeViewController: UIViewController {
+final class WelcomeViewController: UIViewController {
 
     var viewModel = WelcomeViewModel()
     weak var delegate: WelcomeViewControllerDelegate?

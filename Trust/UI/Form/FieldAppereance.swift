@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class FieldAppereance {
+final class FieldAppereance {
 
     static func addressFieldRightView(
         pasteAction: @escaping () -> Void,

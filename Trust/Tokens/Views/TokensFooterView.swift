@@ -2,7 +2,7 @@
 
 import UIKit
 
-class TokensFooterView: UIView {
+final class TokensFooterView: UIView {
 
     lazy var textLabel: UILabel = {
         let label = UILabel(frame: .zero)

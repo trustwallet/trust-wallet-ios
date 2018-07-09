@@ -2,7 +2,7 @@
 
 import UIKit
 
-class SplashCoordinator: Coordinator {
+final class SplashCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     private let window: UIWindow
     init(window: UIWindow) {

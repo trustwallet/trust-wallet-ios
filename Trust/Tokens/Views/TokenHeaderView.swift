@@ -2,7 +2,7 @@
 
 import UIKit
 
-class TokenHeaderView: UIView {
+final class TokenHeaderView: UIView {
 
     private struct Layout {
         static let imageSize: CGFloat = 70

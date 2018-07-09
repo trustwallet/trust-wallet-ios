@@ -13,7 +13,7 @@ enum NotificationChanged {
     case preferences(Preferences)
 }
 
-class NotificationsViewController: FormViewController {
+final class NotificationsViewController: FormViewController {
 
     private let viewModel = NotificationsViewModel()
     private let preferencesController: PreferencesController

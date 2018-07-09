@@ -7,7 +7,7 @@ enum DetailsViewType: Int {
     case nonFungibleTokens
 }
 
-class WalletViewController: UIViewController {
+final class WalletViewController: UIViewController {
     fileprivate lazy var segmentController: UISegmentedControl = {
         let items = [
             NSLocalizedString("Tokens", value: "Tokens", comment: ""),

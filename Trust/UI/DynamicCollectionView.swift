@@ -2,7 +2,7 @@
 
 import UIKit
 
-class DynamicCollectionView: UICollectionView {
+final class DynamicCollectionView: UICollectionView {
     override func layoutSubviews() {
         super.layoutSubviews()
         if !__CGSizeEqualToSize(bounds.size, self.intrinsicContentSize) {

@@ -3,7 +3,7 @@
 import Foundation
 import RealmSwift
 
-class History: Object {
+final class History: Object {
     @objc dynamic var url: String = ""
     @objc dynamic var title: String = ""
     @objc dynamic var createdAt: Date = Date()

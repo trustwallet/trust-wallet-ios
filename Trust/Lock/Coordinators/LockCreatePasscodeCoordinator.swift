@@ -6,7 +6,7 @@ protocol LockCreatePasscodeCoordinatorDelegate: class {
     func didCancel(in coordinator: LockCreatePasscodeCoordinator)
 }
 
-class LockCreatePasscodeCoordinator: Coordinator {
+final class LockCreatePasscodeCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     private let model: LockCreatePasscodeViewModel
     let navigationController: NavigationController

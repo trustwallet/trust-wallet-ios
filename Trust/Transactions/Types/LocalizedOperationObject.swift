@@ -4,7 +4,7 @@ import Foundation
 import RealmSwift
 import TrustCore
 
-class LocalizedOperationObject: Object, Decodable {
+final class LocalizedOperationObject: Object, Decodable {
     @objc dynamic var from: String = ""
     @objc dynamic var to: String = ""
     @objc dynamic var contract: String? = .none

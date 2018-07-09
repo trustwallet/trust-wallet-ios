@@ -3,7 +3,7 @@ import Foundation
 import UIKit
 import StoreKit
 
-class HelpUsCoordinator: Coordinator {
+final class HelpUsCoordinator: Coordinator {
 
     let navigationController: NavigationController
     let appTracker: AppTracker

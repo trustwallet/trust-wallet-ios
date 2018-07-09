@@ -8,7 +8,7 @@ protocol AddCustomNetworkCoordinatorDelegate: class {
     func didCancel(in coordinator: AddCustomNetworkCoordinator)
 }
 
-class AddCustomNetworkCoordinator: Coordinator {
+final class AddCustomNetworkCoordinator: Coordinator {
     let navigationController: NavigationController
     var coordinators: [Coordinator] = []
     weak var delegate: AddCustomNetworkCoordinatorDelegate?

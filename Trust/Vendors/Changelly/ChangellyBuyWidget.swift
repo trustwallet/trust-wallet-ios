@@ -2,7 +2,7 @@
 
 import Foundation
 
-class ChangellyBuyWidget {
+final class ChangellyBuyWidget {
 
     private let amount: Int
     private let address: String

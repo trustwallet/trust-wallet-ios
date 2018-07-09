@@ -25,7 +25,7 @@ protocol NetworkProtocol: TrustNetworkProtocol {
     func search(token: String) -> Promise<TokenObject>
 }
 
-class TrustNetwork: NetworkProtocol {
+final class TrustNetwork: NetworkProtocol {
     static let deleteMissingInternalSeconds: Double = 60.0
     static let deleyedTransactionInternalSeconds: Double = 60.0
     let provider: MoyaProvider<TrustService>

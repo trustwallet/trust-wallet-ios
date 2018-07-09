@@ -3,7 +3,7 @@
 import Foundation
 import WebKit
 
-class ScriptMessageProxy: NSObject, WKScriptMessageHandler {
+final class ScriptMessageProxy: NSObject, WKScriptMessageHandler {
 
     weak var delegate: WKScriptMessageHandler?
 

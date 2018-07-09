@@ -7,7 +7,7 @@ enum BalanceMode {
     case full
 }
 
-class BalanceTitleView: UIView {
+final class BalanceTitleView: UIView {
 
     @objc dynamic var titleTextColor: UIColor? {
         get { return self.titleLabel.textColor }

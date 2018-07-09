@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class SplashViewController: UIViewController {
+final class SplashViewController: UIViewController {
     private var splashView = SplashView()
     init() {
         super.init(nibName: nil, bundle: nil)

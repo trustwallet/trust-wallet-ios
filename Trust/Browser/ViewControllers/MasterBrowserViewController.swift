@@ -18,7 +18,7 @@ enum BookmarksViewType: Int {
     case history
 }
 
-class MasterBrowserViewController: UIViewController {
+final class MasterBrowserViewController: UIViewController {
 
     private lazy var segmentController: UISegmentedControl = {
         let items = [

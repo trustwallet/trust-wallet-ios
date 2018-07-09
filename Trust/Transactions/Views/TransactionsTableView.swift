@@ -2,7 +2,7 @@
 
 import UIKit
 
-class TransactionsTableView: UITableView {
+final class TransactionsTableView: UITableView {
 
     init() {
         super.init(frame: .zero, style: .plain)

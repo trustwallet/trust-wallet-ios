@@ -7,7 +7,7 @@ protocol HistoryViewControllerDelegate: class {
     func didSelect(history: History, in controller: HistoryViewController)
 }
 
-class HistoryViewController: UIViewController {
+final class HistoryViewController: UIViewController {
 
     let store: HistoryStore
     let tableView = UITableView(frame: .zero, style: .plain)

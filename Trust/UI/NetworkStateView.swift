@@ -11,7 +11,7 @@ enum NetworkCondition {
     }
 }
 
-class NetworkStateView: UIView {
+final class NetworkStateView: UIView {
     var viewModel: NetworkConditionViewModel? = nil {
         didSet {
             guard let viewModel = viewModel else { return }

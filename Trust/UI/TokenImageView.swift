@@ -2,7 +2,7 @@
 
 import UIKit
 
-class TokenImageView: UIImageView {
+final class TokenImageView: UIImageView {
 
     override func layoutSubviews() {
         super.layoutSubviews()

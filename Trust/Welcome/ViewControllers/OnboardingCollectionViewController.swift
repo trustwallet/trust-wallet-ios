@@ -2,7 +2,7 @@
 
 import UIKit
 
-class OnboardingCollectionViewController: UICollectionViewController {
+final class OnboardingCollectionViewController: UICollectionViewController {
     var pages = [OnboardingPageViewModel]()
     weak var pageControl: UIPageControl?
 

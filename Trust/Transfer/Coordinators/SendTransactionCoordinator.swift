@@ -6,7 +6,7 @@ import APIKit
 import JSONRPCKit
 import Result
 
-class SendTransactionCoordinator {
+final class SendTransactionCoordinator {
 
     private let keystore: Keystore
     let session: WalletSession

@@ -3,7 +3,7 @@
 import UIKit
 import Branch
 
-class BranchCoordinator {
+final class BranchCoordinator {
 
     private struct Keys {
         static let isFirstSession = "is_first_session"

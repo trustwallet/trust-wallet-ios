@@ -9,7 +9,7 @@ protocol RootViewControllerProvider: class {
 
 typealias RootCoordinator = Coordinator & RootViewControllerProvider
 
-public class NavigationController: UIViewController {
+final class NavigationController: UIViewController {
     private let rootViewController: UIViewController
     private var viewControllersToChildCoordinators: [UIViewController: Coordinator] = [:]
 

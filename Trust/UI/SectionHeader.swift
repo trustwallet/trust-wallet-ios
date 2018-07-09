@@ -2,7 +2,7 @@
 
 import UIKit
 
-class SectionHeader: UIView {
+final class SectionHeader: UIView {
 
     private var fillColor: UIColor
     private var borderColor: UIColor

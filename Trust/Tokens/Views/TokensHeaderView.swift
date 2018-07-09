@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class TokensHeaderView: UIView {
+final class TokensHeaderView: UIView {
 
     lazy var amountLabel: UILabel = {
         let label = UILabel(frame: .zero)
