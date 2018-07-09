@@ -262,8 +262,8 @@ class InCoordinator: Coordinator {
 
     private func observePendingTransactions(from storage: TransactionsStorage) {
         pendingTransactionsObserver = storage.transactions.observe { [weak self] _ in
-            let itemsCount = storage.pendingObjects.count
-            self?.tabBarController?.tabBar.items?[Tabs.wallet(.none).index].badgeValue = itemsCount > 0 ? String(itemsCount) : nil
+            let items = storage.pendingObjects
+            self?.tabBarController?.tabBar.items?[Tabs.wallet(.none).index].badgeValue = items.isEmpty ? nil : String(items.count)
         }
     }
 
