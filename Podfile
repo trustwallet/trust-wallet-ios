@@ -57,5 +57,10 @@ post_install do |installer|
         config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Owholemodule'
       end
     end
+    if target.name != 'Realm'
+        target.build_configurations.each do |config|
+            config.build_settings['MACH_O_TYPE'] = 'staticlib'
+        end
+    end
   end
 end
