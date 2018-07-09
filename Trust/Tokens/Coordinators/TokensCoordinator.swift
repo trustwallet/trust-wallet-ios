@@ -158,6 +158,7 @@ extension TokensCoordinator: TokensViewControllerDelegate {
             viewModel: TokenViewModel(token: token, store: store, transactionsStore: transactionsStore, tokensNetwork: network, session: session)
         )
         controller.delegate = self
+        controller.navigationItem.backBarButtonItem = .back
         navigationController.pushViewController(controller, animated: true)
     }
 
