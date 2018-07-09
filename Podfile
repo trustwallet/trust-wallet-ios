@@ -57,7 +57,7 @@ post_install do |installer|
         config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Owholemodule'
       end
     end
-    if target.name != 'Realm'
+    if target.name != 'Realm' && target.name != 'RealmSwift' && target.name != 'TrustWeb3Provider-TrustWeb3Provider'
         target.build_configurations.each do |config|
             config.build_settings['MACH_O_TYPE'] = 'staticlib'
         end
