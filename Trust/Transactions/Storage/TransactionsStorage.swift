@@ -9,7 +9,7 @@ struct TransactionSection {
     let items: [Transaction]
 }
 
-final class TransactionsStorage {
+class TransactionsStorage {
 
     let realm: Realm
 

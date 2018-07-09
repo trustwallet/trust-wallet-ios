@@ -12,7 +12,7 @@ enum EtherKeystoreError: LocalizedError {
     case protectionDisabled
 }
 
-final class EtherKeystore: Keystore {
+class EtherKeystore: Keystore {
     struct Keys {
         static let recentlyUsedAddress: String = "recentlyUsedAddress"
         static let recentlyUsedWallet: String = "recentlyUsedWallet"

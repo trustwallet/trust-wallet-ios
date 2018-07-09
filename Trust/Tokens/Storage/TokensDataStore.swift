@@ -13,7 +13,7 @@ enum TokenAction {
     case updateInfo
 }
 
-final class TokensDataStore {
+class TokensDataStore {
     var tokens: Results<TokenObject> {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO"))
             .sorted(byKeyPath: "contract", ascending: true)
