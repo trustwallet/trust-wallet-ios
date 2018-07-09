@@ -313,7 +313,7 @@ extension WalletInfo {
                 "Main", R.string.localizable.wallet()
             )
         }
-        return String(format: "%@ %@ %@", "ETH", R.string.localizable.wallet(), "\(numberOfWallets + 1)"
+        return String(format: "%@ %@", R.string.localizable.wallet(), "\(numberOfWallets + 1)"
         )
     }
 }

@@ -182,7 +182,7 @@ extension AccountsCoordinator: WalletInfoViewControllerDelegate {
         case .exportRecoveryPhrase(let account):
             exportMnemonic(for: account)
         case .copyAddress(let address):
-            UIPasteboard.general.string = address.description
+            controller.showShareActivity(from: controller.view, with: [address.description])
         }
     }
 

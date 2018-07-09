@@ -107,17 +107,6 @@ final class WalletCoordinator: Coordinator {
         delegate?.didFinish(with: account, in: self)
     }
 
-    func backup(account: Account) {
-        let coordinator = BackupCoordinator(
-            navigationController: navigationController,
-            keystore: keystore,
-            account: account
-        )
-        coordinator.delegate = self
-        addCoordinator(coordinator)
-        coordinator.start()
-    }
-
     func verify(account: Account, words: [String]) {
         let controller = DarkVerifyPassphraseViewController(account: account, words: words)
         controller.delegate = self
@@ -134,11 +123,14 @@ final class WalletCoordinator: Coordinator {
         navigationController.pushViewController(controller, animated: true)
     }
 
-    func showConfirm(for account: Account) {
+    func showConfirm(for account: Account, completedBackup: Bool) {
         let w = Wallet(type: .hd(account))
         let wallet = WalletInfo(wallet: w, info: WalletObject.from(w))
         let initialName = WalletInfo.initialName(index: keystore.wallets.count - 1)
-        keystore.store(object: wallet.info, fields: [.name(initialName)])
+        keystore.store(object: wallet.info, fields: [
+            .name(initialName),
+            .backup(completedBackup),
+        ])
         walletCreated(wallet: wallet)
     }
 
@@ -157,16 +149,10 @@ extension WalletCoordinator: WelcomeViewControllerDelegate {
     }
 }
 
-extension WalletCoordinator: ImportWalletViewControllerDelegate {    
+extension WalletCoordinator: ImportWalletViewControllerDelegate {
     func didImportAccount(account: WalletInfo, fields: [WalletInfoField], in viewController: ImportWalletViewController) {
         keystore.store(object: account.info, fields: fields)
         didCreateAccount(account: account)
-    }
-}
-
-extension WalletCoordinator: BackupViewControllerDelegate {
-    func didPressBackup(account: Account, in viewController: BackupViewController) {
-        backup(account: account)
     }
 }
 
@@ -179,33 +165,22 @@ extension WalletCoordinator: PassphraseViewControllerDelegate {
 
 extension WalletCoordinator: VerifyPassphraseViewControllerDelegate {
     func didFinish(in controller: VerifyPassphraseViewController, with account: Account) {
-        showConfirm(for: account)
+        showConfirm(for: account, completedBackup: true)
     }
 
     func didSkip(in controller: VerifyPassphraseViewController, with account: Account) {
         controller.confirm(
             title: NSLocalizedString("verifyPassphrase.skip.confirm.title", value: "Are you sure you want to skip this step?", comment: ""),
             message: NSLocalizedString("verifyPassphrase.skip.confirm.message", value: "Loss of backup phrase can put your wallet at risk!", comment: ""),
-            okTitle: NSLocalizedString("Skip", value: "Skip", comment: ""),
+            okTitle: R.string.localizable.skip(),
             okStyle: .destructive
         ) { [weak self] result in
             switch result {
-            case .success: self?.showConfirm(for: account)
+            case .success:
+                self?.showConfirm(for: account, completedBackup: false)
             case .failure: break
             }
         }
-    }
-}
-
-extension WalletCoordinator: BackupCoordinatorDelegate {
-    func didCancel(coordinator: BackupCoordinator) {
-        removeCoordinator(coordinator)
-    }
-
-    func didFinish(wallet: Wallet, in coordinator: BackupCoordinator) {
-        removeCoordinator(coordinator)
-        // TODO
-        //didCreateAccount(account: wallet)
     }
 }
 
