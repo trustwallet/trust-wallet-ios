@@ -146,6 +146,7 @@ extension AccountsCoordinator: AccountsViewControllerDelegate {
 extension AccountsCoordinator: WalletCoordinatorDelegate {
     func didFinish(with account: WalletInfo, in coordinator: WalletCoordinator) {
         delegate?.didAddAccount(account: account, in: self)
+        accountsViewController.fetch()
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
     }

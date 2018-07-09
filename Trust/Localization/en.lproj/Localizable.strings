@@ -277,3 +277,4 @@
 "importWallet.initialNmae" = "%1$@ %2$@ %3$@";
 "myWalletAddress" = "My Wallet Address";
 "walletCreated" = "Wallet Created";
+"Back" = "Back";

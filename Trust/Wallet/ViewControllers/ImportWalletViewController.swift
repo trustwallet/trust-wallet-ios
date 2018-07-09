@@ -307,8 +307,13 @@ extension WalletInfo {
     }
 
     static func initialName(index numberOfWallets: Int) -> String {
-        return String(format: "%@ %@ %@",
-            "ETH", R.string.localizable.wallet(), "\(numberOfWallets + 1)"
+        if numberOfWallets == 0 {
+            return String(
+                format: "%@ %@",
+                "Main", R.string.localizable.wallet()
+            )
+        }
+        return String(format: "%@ %@ %@", "ETH", R.string.localizable.wallet(), "\(numberOfWallets + 1)"
         )
     }
 }

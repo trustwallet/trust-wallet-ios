@@ -64,7 +64,7 @@ final class WalletCreatedController: UIViewController {
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = 12
+        stackView.spacing = 15
         stackView.backgroundColor = .clear
 
         view.addSubview(stackView)
