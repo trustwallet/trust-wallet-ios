@@ -7,6 +7,7 @@ import PromiseKit
 
 protocol NonFungibleTokensViewControllerDelegate: class {
     func didPressDiscover()
+    func didPress(token: NonFungibleTokenObject, with bacground: UIColor)
 }
 
 class NonFungibleTokensViewController: UIViewController {
@@ -112,6 +113,7 @@ extension NonFungibleTokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.nonFungibleTokenViewCell.name, for: indexPath) as! NonFungibleTokenViewCell
         cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
+        cell.delegate = delegate
         return cell
     }
 

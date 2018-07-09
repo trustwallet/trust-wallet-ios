@@ -8,6 +8,7 @@ class NonFungibleTokenViewCell: UITableViewCell {
     @IBOutlet private weak var collectionView: UICollectionView!
 
     fileprivate var viewModel: NonFungibleTokenCellViewModel?
+    weak var delegate: NonFungibleTokensViewControllerDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,12 +26,11 @@ class NonFungibleTokenViewCell: UITableViewCell {
 
 extension NonFungibleTokenViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let model = viewModel, let cell = collectionView.cellForItem(at: indexPath) as? NonFungibleCollectionViewCell else {
+        guard let model = viewModel, let cell = collectionView.cellForItem(at: indexPath) as? NonFungibleCollectionViewCell, let color = cell.imageViewBackground.backgroundColor  else {
             return
         }
         let token = model.token(for: indexPath)
-        let tokenDictionary: [String: Any] = ["token": token, "color": cell.imageViewBackground.backgroundColor!]
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ShowToken"), object: nil, userInfo: tokenDictionary)
+        delegate?.didPress(token: token, with: color)
     }
 }
 

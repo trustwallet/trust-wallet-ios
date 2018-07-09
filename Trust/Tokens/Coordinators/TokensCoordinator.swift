@@ -60,14 +60,6 @@ class TokensCoordinator: Coordinator {
         self.store = tokensStorage
         self.network = network
         self.transactionsStore = transactionsStore
-
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheel(_:)), name: NSNotification.Name(rawValue: "ShowToken"), object: nil)
-    }
-
-    @objc func showSpinningWheel(_ notification: NSNotification) {
-        if let token = notification.userInfo?["token"] as? NonFungibleTokenObject, let backgroundColor =  notification.userInfo?["color"] as? UIColor {
-            didSelectToken(token, with: backgroundColor)
-        }
     }
 
     func start() {
@@ -197,6 +189,10 @@ extension TokensCoordinator: NewTokenViewControllerDelegate {
 extension TokensCoordinator: NonFungibleTokensViewControllerDelegate {
     func didPressDiscover() {
         delegate?.didPressDiscover(in: self)
+    }
+
+    func didPress(token: NonFungibleTokenObject, with bacground: UIColor) {
+        didSelectToken(token, with: bacground)
     }
 }
 
