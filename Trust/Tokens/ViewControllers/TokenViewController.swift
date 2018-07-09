@@ -35,7 +35,7 @@ class TokenViewController: UIViewController {
 
         navigationItem.title = viewModel.title
         view.backgroundColor = .white
-
+        tableView.tableFooterView = UIView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
