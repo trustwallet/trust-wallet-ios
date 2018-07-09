@@ -308,10 +308,7 @@ extension WalletInfo {
 
     static func initialName(index numberOfWallets: Int) -> String {
         if numberOfWallets == 0 {
-            return String(
-                format: "%@ %@",
-                "Main", R.string.localizable.wallet()
-            )
+            return R.string.localizable.mainWallet()
         }
         return String(format: "%@ %@", R.string.localizable.wallet(), "\(numberOfWallets + 1)"
         )
