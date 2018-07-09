@@ -9,7 +9,7 @@ protocol NonFungibleTokensViewControllerDelegate: class {
     func didPressDiscover()
 }
 
-class NonFungibleTokensViewController: UIViewController {
+final class NonFungibleTokensViewController: UIViewController {
 
     private var viewModel: NonFungibleTokenViewModel
     let tableView: UITableView

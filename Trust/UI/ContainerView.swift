@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class ContainerView: UIView {
+final class ContainerView: UIView {
 
     public init(innerView: UIView, layoutMargins: UIEdgeInsets) {
 

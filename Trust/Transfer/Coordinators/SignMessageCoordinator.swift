@@ -16,7 +16,7 @@ protocol SignMessageCoordinatorDelegate: class {
     func didCancel(in coordinator: SignMessageCoordinator)
 }
 
-class SignMessageCoordinator: Coordinator {
+final class SignMessageCoordinator: Coordinator {
 
     var coordinators: [Coordinator] = []
 

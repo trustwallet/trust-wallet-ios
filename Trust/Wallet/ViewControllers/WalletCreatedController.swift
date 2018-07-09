@@ -7,7 +7,7 @@ protocol WalletCreatedControllerDelegate: class {
     func didPressDone(wallet: WalletInfo, in controller: WalletCreatedController)
 }
 
-class WalletCreatedController: UIViewController {
+final class WalletCreatedController: UIViewController {
 
     weak var delegate: WalletCreatedControllerDelegate?
     let wallet: WalletInfo

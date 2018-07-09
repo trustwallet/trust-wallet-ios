@@ -13,7 +13,7 @@ enum WalletInfoField {
     case name(String)
 }
 
-class WalletInfoViewController: FormViewController {
+final class WalletInfoViewController: FormViewController {
 
     lazy var viewModel: WalletInfoViewModel = {
         return WalletInfoViewModel(wallet: wallet)

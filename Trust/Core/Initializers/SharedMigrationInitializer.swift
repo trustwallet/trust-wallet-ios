@@ -3,7 +3,7 @@
 import Foundation
 import RealmSwift
 
-class SharedMigrationInitializer: Initializer {
+final class SharedMigrationInitializer: Initializer {
 
     lazy var config: Realm.Configuration = {
         return RealmConfiguration.sharedConfiguration()

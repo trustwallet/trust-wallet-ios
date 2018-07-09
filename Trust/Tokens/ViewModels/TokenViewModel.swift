@@ -4,7 +4,7 @@ import Foundation
 import BigInt
 import RealmSwift
 
-class TokenViewModel {
+final class TokenViewModel {
 
     private let shortFormatter = EtherNumberFormatter.short
     private let config: Config

@@ -12,7 +12,7 @@ protocol AccountsCoordinatorDelegate: class {
     func didDeleteAccount(account: WalletInfo, in coordinator: AccountsCoordinator)
 }
 
-class AccountsCoordinator: Coordinator {
+final class AccountsCoordinator: Coordinator {
 
     let navigationController: NavigationController
     let keystore: Keystore

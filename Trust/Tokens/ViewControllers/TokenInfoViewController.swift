@@ -3,7 +3,7 @@
 import UIKit
 import Eureka
 
-class TokenInfoViewController: FormViewController {
+final class TokenInfoViewController: FormViewController {
 
     let token: TokenObject
 

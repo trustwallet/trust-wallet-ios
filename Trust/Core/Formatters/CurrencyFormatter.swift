@@ -2,7 +2,7 @@
 
 import Foundation
 
-class CurrencyFormatter {
+final class CurrencyFormatter {
     static var formatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 2

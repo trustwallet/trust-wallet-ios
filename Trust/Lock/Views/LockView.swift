@@ -2,7 +2,7 @@
 
 import UIKit
 
-class LockView: UIView {
+final class LockView: UIView {
     var characterView = UIStackView()
     var lockTitle = UILabel()
     var model: LockViewModel!

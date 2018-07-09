@@ -8,7 +8,7 @@ protocol BackupViewControllerDelegate: class {
     func didPressBackup(account: Account, in viewController: BackupViewController)
 }
 
-class BackupViewController: UIViewController {
+final class BackupViewController: UIViewController {
 
     let account: Account
     weak var delegate: BackupViewControllerDelegate?

@@ -10,7 +10,7 @@ protocol ConfirmCoordinatorDelegate: class {
     func didCancel(in coordinator: ConfirmCoordinator)
 }
 
-class ConfirmCoordinator: RootCoordinator {
+final class ConfirmCoordinator: RootCoordinator {
     let navigationController: NavigationController
     let session: WalletSession
     let account: Account

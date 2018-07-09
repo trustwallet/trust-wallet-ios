@@ -2,7 +2,7 @@
 
 import UIKit
 
-class PasscodeCharacterView: UIView {
+final class PasscodeCharacterView: UIView {
     var isEmpty = true
     private var circle: CAShapeLayer?
     private var hyphen: CAShapeLayer?

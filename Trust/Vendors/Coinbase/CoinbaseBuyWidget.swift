@@ -2,7 +2,7 @@
 
 import Foundation
 
-class CoinbaseBuyWidget {
+final class CoinbaseBuyWidget {
 
     private let amount: Int
     private let address: String

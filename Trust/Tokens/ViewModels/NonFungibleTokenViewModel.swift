@@ -4,7 +4,7 @@ import RealmSwift
 import TrustCore
 import PromiseKit
 
-class NonFungibleTokenViewModel {
+final class NonFungibleTokenViewModel {
 
     let config: Config
     let storage: TokensDataStore

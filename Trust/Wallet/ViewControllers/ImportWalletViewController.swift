@@ -9,7 +9,7 @@ protocol ImportWalletViewControllerDelegate: class {
     func didImportAccount(account: WalletInfo, fields: [WalletInfoField], in viewController: ImportWalletViewController)
 }
 
-class ImportWalletViewController: FormViewController {
+final class ImportWalletViewController: FormViewController {
 
     let keystore: Keystore
     private let viewModel = ImportWalletViewModel()

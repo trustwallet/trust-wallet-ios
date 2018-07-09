@@ -2,7 +2,7 @@
 
 import UIKit
 
-struct NonFungibleTokenCellViewModel {
+final class NonFungibleTokenCellViewModel {
 
     private let tokens: [NonFungibleTokenObject]
 

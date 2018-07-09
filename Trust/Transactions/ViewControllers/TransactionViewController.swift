@@ -9,7 +9,7 @@ protocol TransactionViewControllerDelegate: class {
     func didPressURL(_ url: URL)
 }
 
-class TransactionViewController: UIViewController {
+final class TransactionViewController: UIViewController {
 
     private lazy var viewModel: TransactionDetailsViewModel = {
         return .init(

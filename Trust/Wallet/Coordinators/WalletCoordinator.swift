@@ -10,7 +10,7 @@ protocol WalletCoordinatorDelegate: class {
     func didCancel(in coordinator: WalletCoordinator)
 }
 
-class WalletCoordinator: Coordinator {
+final class WalletCoordinator: Coordinator {
 
     let navigationController: NavigationController
     weak var delegate: WalletCoordinatorDelegate?

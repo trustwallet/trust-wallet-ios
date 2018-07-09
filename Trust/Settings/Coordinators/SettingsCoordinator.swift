@@ -13,7 +13,7 @@ protocol SettingsCoordinatorDelegate: class {
     func didCancel(in coordinator: SettingsCoordinator)
 }
 
-class SettingsCoordinator: Coordinator {
+final class SettingsCoordinator: Coordinator {
 
     let navigationController: NavigationController
     let keystore: Keystore

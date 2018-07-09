@@ -9,7 +9,7 @@ protocol InitialWalletCreationCoordinatorDelegate: class {
     func didAddAccount(_ account: WalletInfo, in coordinator: InitialWalletCreationCoordinator)
 }
 
-class InitialWalletCreationCoordinator: Coordinator {
+final class InitialWalletCreationCoordinator: Coordinator {
 
     let navigationController: NavigationController
     let keystore: Keystore

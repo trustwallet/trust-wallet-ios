@@ -4,7 +4,7 @@ import UIKit
 import Eureka
 import Result
 
-class AddCustomNetworkViewController: FormViewController {
+final class AddCustomNetworkViewController: FormViewController {
 
     let viewModel = AddCustomNetworkViewModel()
 

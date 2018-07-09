@@ -6,7 +6,7 @@ import Kingfisher
 import RealmSwift
 import TrustCore
 
-class TokenViewCell: UITableViewCell {
+final class TokenViewCell: UITableViewCell {
 
     static let identifier = "TokenViewCell"
 

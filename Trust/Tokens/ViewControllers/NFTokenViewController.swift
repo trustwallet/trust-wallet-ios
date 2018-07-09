@@ -10,7 +10,7 @@ protocol NFTokenViewControllerDelegate: class {
     func didPressLink(url: URL, in viewController: NFTokenViewController)
 }
 
-class NFTokenViewController: UIViewController {
+final class NFTokenViewController: UIViewController {
 
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()

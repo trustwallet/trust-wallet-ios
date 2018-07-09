@@ -10,7 +10,7 @@ protocol AboutViewControllerDelegate: class {
     func didPressURL(_ url: URL, in controller: AboutViewController)
 }
 
-class AboutViewController: FormViewController {
+final class AboutViewController: FormViewController {
 
     let viewModel = AboutViewModel()
     weak var delegate: AboutViewControllerDelegate?

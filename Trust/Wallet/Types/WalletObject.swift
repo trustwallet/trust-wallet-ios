@@ -4,7 +4,7 @@ import Foundation
 import RealmSwift
 import Realm
 
-class WalletObject: Object {
+final class WalletObject: Object {
 
     @objc dynamic var id: String = ""
     @objc dynamic var name: String = ""

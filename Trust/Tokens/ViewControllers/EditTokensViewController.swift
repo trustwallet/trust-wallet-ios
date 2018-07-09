@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class EditTokensViewController: UITableViewController {
+final class EditTokensViewController: UITableViewController {
 
     let session: WalletSession
     let storage: TokensDataStore

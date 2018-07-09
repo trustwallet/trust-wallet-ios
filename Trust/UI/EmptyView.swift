@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 import StatefulViewController
 
-class EmptyView: UIView {
+final class EmptyView: UIView {
 
     let titleLabel = UILabel()
     let imageView = UIImageView()

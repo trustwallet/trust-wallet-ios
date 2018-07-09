@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class CheckDeviceCoordinator: Coordinator {
+final class CheckDeviceCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
 
     let navigationController: NavigationController

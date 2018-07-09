@@ -13,7 +13,7 @@ enum PassphraseMode {
     case showAndVerify
 }
 
-class DarkPassphraseViewController: PassphraseViewController {
+final class DarkPassphraseViewController: PassphraseViewController {
 
 }
 

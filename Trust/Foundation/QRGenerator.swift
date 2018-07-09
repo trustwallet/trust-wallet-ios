@@ -2,7 +2,7 @@
 
 import UIKit
 
-class QRGenerator {
+final class QRGenerator {
     static func generate(from string: String) -> UIImage? {
         let context = CIContext()
         let data = string.data(using: String.Encoding.ascii)

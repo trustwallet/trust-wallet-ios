@@ -6,7 +6,7 @@ import UIKit
 import Moya
 import TrustCore
 
-class PushNotificationsRegistrar {
+final class PushNotificationsRegistrar {
 
     private let trustProvider = TrustProviderFactory.makeProvider()
     let config = Config()

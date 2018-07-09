@@ -8,7 +8,7 @@ protocol EnterPasswordViewControllerDelegate: class {
     func didEnterPassword(password: String, for account: Account, in viewController: EnterPasswordViewController)
 }
 
-class EnterPasswordViewController: FormViewController {
+final class EnterPasswordViewController: FormViewController {
 
     struct Values {
         static var password = "password"

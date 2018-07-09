@@ -4,7 +4,7 @@ import Foundation
 import RealmSwift
 import TrustCore
 
-class MigrationInitializer: Initializer {
+final class MigrationInitializer: Initializer {
 
     let account: Wallet
     let chainID: Int

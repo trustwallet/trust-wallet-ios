@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class TokenInfoCoordinator: RootCoordinator {
+final class TokenInfoCoordinator: RootCoordinator {
     let token: TokenObject
     var rootViewController: UIViewController {
         return TokenInfoViewController(token: token)

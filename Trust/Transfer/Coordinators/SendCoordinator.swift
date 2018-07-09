@@ -11,7 +11,7 @@ protocol SendCoordinatorDelegate: class {
     func didFinish(_ result: Result<ConfirmResult, AnyError>, in coordinator: SendCoordinator)
 }
 
-class SendCoordinator: RootCoordinator {
+final class SendCoordinator: RootCoordinator {
     let transferType: TransferType
     let session: WalletSession
     let account: Account

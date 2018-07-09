@@ -10,7 +10,7 @@ protocol TokenViewControllerDelegate: class {
     func didPress(transaction: Transaction, in controller: UIViewController)
 }
 
-class TokenViewController: UIViewController {
+final class TokenViewController: UIViewController {
 
     private let refreshControl = UIRefreshControl()
 

@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class NFTDetailsViewModel {
+final class NFTDetailsViewModel {
 
     let token: NonFungibleTokenObject
 

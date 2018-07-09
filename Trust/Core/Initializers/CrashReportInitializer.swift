@@ -4,7 +4,7 @@ import Foundation
 import Fabric
 import Crashlytics
 
-class CrashReportInitializer: NSObject, Initializer {
+final class CrashReportInitializer: NSObject, Initializer {
 
     func perform() {
         guard !isDebug else { return }

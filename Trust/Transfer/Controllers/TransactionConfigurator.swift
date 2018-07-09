@@ -20,7 +20,7 @@ public struct PreviewTransaction {
     let transferType: TransferType
 }
 
-class TransactionConfigurator {
+final class TransactionConfigurator {
 
     let session: WalletSession
     let account: Account

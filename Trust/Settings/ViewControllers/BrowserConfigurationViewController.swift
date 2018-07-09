@@ -10,7 +10,7 @@ protocol BrowserConfigurationViewControllerDelegate: class {
     func didPressDeleteCache(in controller: BrowserConfigurationViewController)
 }
 
-class BrowserConfigurationViewController: FormViewController {
+final class BrowserConfigurationViewController: FormViewController {
 
     let viewModel = BrowserConfigurationViewModel()
     let preferences: PreferencesController

@@ -2,7 +2,7 @@
 
 import Foundation
 
-class ShapeShiftBuyWidget {
+final class ShapeShiftBuyWidget {
 
     private let amount: Int
     private let address: String

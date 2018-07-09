@@ -4,7 +4,7 @@ import Foundation
 import TrustKeystore
 import TrustCore
 
-class ExportPhraseCoordinator: RootCoordinator {
+final class ExportPhraseCoordinator: RootCoordinator {
 
     let keystore: Keystore
     let account: Account

@@ -10,7 +10,7 @@ protocol TokensCoordinatorDelegate: class {
     func didPressDiscover(in coordinator: TokensCoordinator)
 }
 
-class TokensCoordinator: Coordinator {
+final class TokensCoordinator: Coordinator {
 
     let navigationController: NavigationController
     let session: WalletSession

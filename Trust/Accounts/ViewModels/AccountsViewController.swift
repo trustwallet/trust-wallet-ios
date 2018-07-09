@@ -10,7 +10,7 @@ protocol AccountsViewControllerDelegate: class {
     func didSelectInfoForAccount(account: WalletInfo, sender: UIView, in viewController: AccountsViewController)
 }
 
-class AccountsViewController: UITableViewController {
+final class AccountsViewController: UITableViewController {
     weak var delegate: AccountsViewControllerDelegate?
     var viewModel: AccountsViewModel {
         return AccountsViewModel(

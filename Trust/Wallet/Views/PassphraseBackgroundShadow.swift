@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class PassphraseBackgroundShadow: UIView {
+final class PassphraseBackgroundShadow: UIView {
     init() {
         super.init(frame: .zero)
 

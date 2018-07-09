@@ -12,7 +12,7 @@ enum TransactionFetchingState: Int {
     }
 }
 
-class TransactionsTracker {
+final class TransactionsTracker {
     private var fetchingStateKey: String {
         return "transactions.fetchingState-\(sessionID)"
     }

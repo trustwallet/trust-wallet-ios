@@ -5,7 +5,7 @@ import Realm
 import RealmSwift
 import TrustCore
 
-class CoinTicker: Object, Decodable {
+final class CoinTicker: Object, Decodable {
     @objc dynamic var symbol: String = ""
     @objc dynamic var price: String = ""
     @objc dynamic var percent_change_24h: String = ""

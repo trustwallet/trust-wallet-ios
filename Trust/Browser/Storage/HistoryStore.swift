@@ -3,7 +3,7 @@
 import Foundation
 import RealmSwift
 
-class HistoryStore {
+final class  HistoryStore {
     var histories: Results<History> {
         return realm.objects(History.self)
             .sorted(byKeyPath: "createdAt", ascending: false)

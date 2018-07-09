@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class InfoHeaderView: UIView {
+final class InfoHeaderView: UIView {
 
     let amountLabel = UILabel(frame: .zero)
     let logoImageView = UIImageView(frame: .zero)

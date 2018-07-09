@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class TabBarController: UITabBarController {
+final class TabBarController: UITabBarController {
 
     private var previousController: UIViewController?
 

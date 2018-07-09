@@ -5,7 +5,7 @@ import Eureka
 import Branch
 import Crashlytics
 
-class AnaliticsViewController: FormViewController {
+final class AnaliticsViewController: FormViewController {
 
     private let viewModel = AnaliticsViewModel()
 

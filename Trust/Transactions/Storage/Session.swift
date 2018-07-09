@@ -8,7 +8,7 @@ enum RefreshType {
     case ethBalance
 }
 
-class WalletSession {
+final class WalletSession {
     let account: WalletInfo
     let balanceCoordinator: BalanceCoordinator
     let config: Config

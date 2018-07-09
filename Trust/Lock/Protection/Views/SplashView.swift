@@ -2,7 +2,7 @@
 
 import UIKit
 
-class SplashView: UIView {
+final class SplashView: UIView {
     init() {
         super.init(frame: CGRect.zero)
         self.backgroundColor = .white

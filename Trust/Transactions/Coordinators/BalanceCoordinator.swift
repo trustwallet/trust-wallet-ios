@@ -11,7 +11,7 @@ protocol BalanceCoordinatorDelegate: class {
     func didUpdate(viewModel: BalanceViewModel)
 }
 
-class BalanceCoordinator {
+final class BalanceCoordinator {
     let account: Wallet
     let storage: TokensDataStore
     let config: Config

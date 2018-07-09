@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 import TrustKeystore
 
-class ExportPrivateKeyCoordinator: RootCoordinator {
+final class ExportPrivateKeyCoordinator: RootCoordinator {
 
     let privateKey: Data
     var coordinators: [Coordinator] = []

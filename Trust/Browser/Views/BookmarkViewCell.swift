@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-class BookmarkViewCell: UITableViewCell {
+final class BookmarkViewCell: UITableViewCell {
 
     @IBOutlet weak var bookmarkTitleLabel: UILabel!
     @IBOutlet weak var urlLabel: UILabel!

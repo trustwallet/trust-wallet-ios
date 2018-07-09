@@ -15,7 +15,7 @@ protocol TokensViewControllerDelegate: class {
     func didDisable(token: TokenObject, in viewController: UIViewController)
 }
 
-class TokensViewController: UIViewController {
+final class TokensViewController: UIViewController {
 
     fileprivate var viewModel: TokensViewModel
 

@@ -7,7 +7,7 @@ protocol EditTokenTableViewCellDelegate: class {
     func didChangeState(state: Bool, in cell: EditTokenTableViewCell)
 }
 
-class EditTokenTableViewCell: UITableViewCell {
+final class EditTokenTableViewCell: UITableViewCell {
 
     @IBOutlet weak var tokenImageView: TokenImageView!
     @IBOutlet weak var tokenLabel: UILabel!

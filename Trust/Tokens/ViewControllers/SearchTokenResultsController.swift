@@ -13,7 +13,7 @@ protocol SearchTokenResultsControllerDelegate: class {
     func searchResultsController(didUpdate token: TokenObject, with action: TokenAction)
 }
 
-class SearchTokenResultsController: UITableViewController {
+final class SearchTokenResultsController: UITableViewController {
     weak var delegate: SearchTokenResultsControllerDelegate?
     var localResults: [TokenObject] {
         get {

@@ -34,7 +34,6 @@
 		291ED08D1F6F5F0A00E7E93A /* KeyStoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ED08C1F6F5F0A00E7E93A /* KeyStoreError.swift */; };
 		291ED08F1F6F613200E7E93A /* GetTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ED08E1F6F613200E7E93A /* GetTransactionRequest.swift */; };
 		291ED0921F6FA5D900E7E93A /* RequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291ED0911F6FA5D900E7E93A /* RequestViewController.swift */; };
-		291F52A21F6B6DCF00B369AB /* EtherClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52A11F6B6DCF00B369AB /* EtherClient.swift */; };
 		291F52A51F6B762300B369AB /* EtherServiceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52A41F6B762300B369AB /* EtherServiceRequest.swift */; };
 		291F52A71F6B766100B369AB /* BalanceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52A61F6B766100B369AB /* BalanceRequest.swift */; };
 		291F52A91F6B7BE100B369AB /* BlockNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52A81F6B7BE100B369AB /* BlockNumber.swift */; };
@@ -511,7 +510,6 @@
 		291ED08C1F6F5F0A00E7E93A /* KeyStoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreError.swift; sourceTree = "<group>"; };
 		291ED08E1F6F613200E7E93A /* GetTransactionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionRequest.swift; sourceTree = "<group>"; };
 		291ED0911F6FA5D900E7E93A /* RequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestViewController.swift; sourceTree = "<group>"; };
-		291F52A11F6B6DCF00B369AB /* EtherClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherClient.swift; sourceTree = "<group>"; };
 		291F52A41F6B762300B369AB /* EtherServiceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherServiceRequest.swift; sourceTree = "<group>"; };
 		291F52A61F6B766100B369AB /* BalanceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceRequest.swift; sourceTree = "<group>"; };
 		291F52A81F6B7BE100B369AB /* BlockNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockNumber.swift; sourceTree = "<group>"; };
@@ -1145,7 +1143,6 @@
 		291EC9E01F7053C80004EDD0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				A2CC7DD320903C9C002276D1 /* HalfModal */,
 				29FF12F91F74CC6C00AFD326 /* Form */,
 				291EC9DE1F7053C50004EDD0 /* NavigationController.swift */,
 				293B8B421F70815900356286 /* BalanceTitleView.swift */,
@@ -1192,7 +1189,6 @@
 				2959961D1FAE756400DB66A8 /* TrustClient */,
 				291F52B61F6B870400B369AB /* CastError.swift */,
 				2961BD061FB146EB00C4B840 /* ChainState.swift */,
-				291F52A11F6B6DCF00B369AB /* EtherClient.swift */,
 				291F52B81F6B880F00B369AB /* EtherKeystore.swift */,
 				291F52A41F6B762300B369AB /* EtherServiceRequest.swift */,
 				29F114ED1FA65DEF00114A29 /* ImportType.swift */,
@@ -2453,13 +2449,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		A2CC7DD320903C9C002276D1 /* HalfModal */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = HalfModal;
-			sourceTree = "<group>";
-		};
 		BB3864A1208F1C3000CBF773 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -3138,7 +3127,6 @@
 				2912CD341F6A849C00C6CBE3 /* WelcomeViewModel.swift in Sources */,
 				7721A6C8202EF81B004DB16C /* CustomRPC.swift in Sources */,
 				29E9CFCD1FE7343C00017744 /* NewTokenViewModel.swift in Sources */,
-				291F52A21F6B6DCF00B369AB /* EtherClient.swift in Sources */,
 				299B5E421FD2298E0051361C /* ConfigureTransactionViewController.swift in Sources */,
 				294DFBA31FE0E2EA004CEB56 /* TransactionValue.swift in Sources */,
 				BB3B86BF204CECBC0061FCBA /* URLNavigable.swift in Sources */,

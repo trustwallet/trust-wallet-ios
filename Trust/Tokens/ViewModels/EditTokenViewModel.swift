@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 import Moya
 
-class EditTokenViewModel {
+final class EditTokenViewModel {
 
     let network: NetworkProtocol
     let storage: TokensDataStore

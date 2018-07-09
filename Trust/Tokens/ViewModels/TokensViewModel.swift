@@ -10,7 +10,7 @@ protocol TokensViewModelDelegate: class {
     func refresh()
 }
 
-class TokensViewModel: NSObject {
+final class TokensViewModel: NSObject {
     let config: Config
 
     let store: TokensDataStore

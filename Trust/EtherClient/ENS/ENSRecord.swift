@@ -3,7 +3,7 @@
 import Foundation
 import RealmSwift
 
-class ENSRecord: Object {
+final class ENSRecord: Object {
 
     @objc dynamic var name: String = ""
     @objc dynamic var owner: String = ""
