@@ -134,11 +134,6 @@ class WalletCoordinator: Coordinator {
         navigationController.pushViewController(controller, animated: true)
     }
 
-    private func shareMnemonic(in sender: UIView, words: [String]) {
-        let copyValue = words.joined(separator: " ")
-        navigationController.showShareActivity(from: sender, with: [copyValue])
-    }
-
     func showConfirm(for account: Account) {
         let w = Wallet(type: .hd(account))
         let wallet = WalletInfo(wallet: w, info: WalletObject.from(w))
@@ -180,15 +175,6 @@ extension WalletCoordinator: PassphraseViewControllerDelegate {
         // show verify
         verify(account: account, words: words)
     }
-
-    func didFinish(in controller: PassphraseViewController, with account: Account) {
-        let wallet = Wallet(type: .hd(account))
-        didCreateAccount(account: WalletInfo(wallet: wallet))
-    }
-
-    func didPressShare(in controller: PassphraseViewController, sender: UIView, account: Account, words: [String]) {
-        shareMnemonic(in: sender, words: words)
-    }
 }
 
 extension WalletCoordinator: VerifyPassphraseViewControllerDelegate {
@@ -208,10 +194,6 @@ extension WalletCoordinator: VerifyPassphraseViewControllerDelegate {
             case .failure: break
             }
         }
-    }
-
-    func didPressShare(in controller: VerifyPassphraseViewController, sender: UIView, account: Account, words: [String]) {
-        shareMnemonic(in: sender, words: words)
     }
 }
 

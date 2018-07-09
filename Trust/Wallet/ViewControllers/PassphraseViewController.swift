@@ -5,9 +5,7 @@ import UIKit
 import TrustKeystore
 
 protocol PassphraseViewControllerDelegate: class {
-    func didFinish(in controller: PassphraseViewController, with account: Account)
     func didPressVerify(in controller: PassphraseViewController, with account: Account, words: [String])
-    func didPressShare(in controller: PassphraseViewController, sender: UIView, account: Account, words: [String])
 }
 
 enum PassphraseMode {
@@ -145,12 +143,17 @@ class PassphraseViewController: UIViewController {
         actionButton.addTarget(self, action: #selector(nextAction(_:)), for: .touchUpInside)
     }
 
+    func presentShare(in sender: UIView) {
+        let copyValue = words.joined(separator: " ")
+        showShareActivity(from: sender, with: [copyValue])
+    }
+
     @objc private func copyAction(_ sender: UIButton) {
-        delegate?.didPressShare(in: self, sender: sender, account: account, words: words)
+        presentShare(in: sender)
     }
 
     @objc private func copyGesture(_ sender: UIGestureRecognizer) {
-        delegate?.didPressShare(in: self, sender: sender.view!, account: account, words: words)
+        presentShare(in: sender.view!)
     }
 
     @objc private func nextAction(_ sender: UIButton) {

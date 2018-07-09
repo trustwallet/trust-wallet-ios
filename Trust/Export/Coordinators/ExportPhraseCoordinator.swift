@@ -38,16 +38,7 @@ class ExportPhraseCoordinator: RootCoordinator {
 }
 
 extension ExportPhraseCoordinator: PassphraseViewControllerDelegate {
-    func didFinish(in controller: PassphraseViewController, with account: Account) {
-        //delegate?.didCancel(in: self)
-    }
-
     func didPressVerify(in controller: PassphraseViewController, with account: Account, words: [String]) {
         // Missing functionality
-    }
-
-    func didPressShare(in controller: PassphraseViewController, sender: UIView, account: Account, words: [String]) {
-        let copyValue = words.joined(separator: " ")
-        rootViewController.showShareActivity(from: sender, with: [copyValue])
     }
 }
