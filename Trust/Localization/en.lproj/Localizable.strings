@@ -189,7 +189,7 @@
 "export.privateKey.navigation.title" = "Export Private Key";
 "export.qrCode.loading.label" = "Generating QR Code";
 "export.warning.private.key" = "Export at your own risk!";
-"export.warningTwo.private.key" = "Anyone with your Private Key will have FULL access to your wallet!";
+"export.warningTwo.private.key" = "Anyone with your backup phrase will have FULL access to your wallet!";
 "import.wallet.mnemonic.placeholder" = "Words separated by a space. (Usually contains 12 words)";
 "import.wallet.watch.placeholder" = "%@ Address";
 "settings.joinCommunity.label.title" = "Join Community";
@@ -271,9 +271,11 @@
 "verifyPassphrase.skip.confirm.title" = "Are you sure you want to skip this step?";
 "wallet.info.exportBackupPhrase" = "Show Backup Phrase";
 "Reload" = "Reload";
-"export.reveal.button.title" = "Hold to Reveal";
 "Phrase" = "Phrase";
 "Wallet" = "Wallet";
-"importWallet.initialNmae" = "%1$@ %2$@ %3$@";
 "myWalletAddress" = "My Wallet Address";
 "walletCreated" = "Wallet Created";
+"Back" = "Back";
+"Main Wallet" = "Main Wallet";
+"ImportedWallets" = "Imported Wallets";
+"export.reveal.button.title" = "Hold to Reveal";

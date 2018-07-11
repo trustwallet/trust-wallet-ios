@@ -169,7 +169,9 @@ extension TokenViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return viewModel.hederView(for: section)
+        return SectionHeader(
+            title: viewModel.titleForHeader(in: section)
+        )
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

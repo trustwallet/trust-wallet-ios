@@ -271,9 +271,7 @@
 "verifyPassphrase.skip.confirm.title" = "本当にこの手順をスキップしてよろしいですか？";
 "wallet.info.exportBackupPhrase" = "バックアップフレーズを表示する。";
 "Reload" = "再読み込み";
-"export.reveal.button.title" = "押して表示する";
 "Phrase" = "フレーズ";
 "Wallet" = "ウォレット";
-"importWallet.initialNmae" = "%1$@ %2$@ %3$@";
 "myWalletAddress" = "私のウォレットアドレス";
 "walletCreated" = "ウォレットが作成されました";

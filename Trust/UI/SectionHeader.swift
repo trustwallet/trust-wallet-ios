@@ -6,11 +6,17 @@ final class SectionHeader: UIView {
 
     private var fillColor: UIColor
     private var borderColor: UIColor
-    private var title: String
+    private var title: String?
     private var textColor: UIColor
     private var textFont: UIFont
 
-    init(fillColor: UIColor, borderColor: UIColor, title: String, textColor: UIColor, textFont: UIFont) {
+    init(
+        fillColor: UIColor = UIColor(hex: "fafafa"),
+        borderColor: UIColor = UIColor(hex: "e1e1e1"),
+        title: String?,
+        textColor: UIColor = UIColor(hex: "555357"),
+        textFont: UIFont = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
+    ) {
         self.fillColor = fillColor
         self.borderColor = borderColor
         self.title = title

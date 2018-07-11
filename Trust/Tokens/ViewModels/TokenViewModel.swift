@@ -49,22 +49,6 @@ final class TokenViewModel {
         return .white
     }()
 
-    let headerBackgroundColor: UIColor = {
-        return UIColor(hex: "fafafa")
-    }()
-
-    let headerTitleTextColor: UIColor = {
-        return UIColor(hex: "555357")
-    }()
-
-    let headerTitleFont: UIFont = {
-        return UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
-    }()
-
-    let headerBorderColor: UIColor = {
-        return UIColor(hex: "e1e1e1")
-    }()
-
     var amount: String {
         return String(
             format: "%@ %@",
@@ -207,16 +191,6 @@ final class TokenViewModel {
             return NSLocalizedString("Yesterday", value: "Yesterday", comment: "")
         }
         return stringDate
-    }
-
-    func hederView(for section: Int) -> UIView {
-        return SectionHeader(
-            fillColor: headerBackgroundColor,
-            borderColor: headerBorderColor,
-            title: titleForHeader(in: section),
-            textColor: headerTitleTextColor,
-            textFont: headerTitleFont
-        )
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
