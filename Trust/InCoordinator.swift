@@ -235,8 +235,7 @@ class InCoordinator: Coordinator {
             addCoordinator(coordinator)
             nav.pushCoordinator(coordinator: coordinator, animated: true)
         case (.send, .address):
-            break
-            // This case should be returning an error inCoordinator. Improve this logic into single piece.
+            nav.displayError(error: InCoordinatorError.onlyWatchAccount)
         }
     }
 

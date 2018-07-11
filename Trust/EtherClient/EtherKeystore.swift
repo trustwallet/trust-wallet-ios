@@ -430,6 +430,8 @@ class EtherKeystore: Keystore {
                 switch field {
                 case .name(let name):
                     object.name = name
+                case .backup(let completedBackup):
+                    object.completedBackup = completedBackup
                 }
             }
             storage.realm.add(object, update: true)

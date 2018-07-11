@@ -146,6 +146,7 @@ extension AccountsCoordinator: AccountsViewControllerDelegate {
 extension AccountsCoordinator: WalletCoordinatorDelegate {
     func didFinish(with account: WalletInfo, in coordinator: WalletCoordinator) {
         delegate?.didAddAccount(account: account, in: self)
+        accountsViewController.fetch()
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
     }
@@ -181,7 +182,7 @@ extension AccountsCoordinator: WalletInfoViewControllerDelegate {
         case .exportRecoveryPhrase(let account):
             exportMnemonic(for: account)
         case .copyAddress(let address):
-            UIPasteboard.general.string = address.description
+            controller.showShareActivity(from: controller.view, with: [address.description])
         }
     }
 
