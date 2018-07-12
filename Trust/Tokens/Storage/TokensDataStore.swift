@@ -18,7 +18,7 @@ class TokensDataStore {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO"))
             .sorted(byKeyPath: "contract", ascending: true)
     }
-    var tickers: Results<CoinTicker>{
+    var tickers: Results<CoinTicker> {
         return realm.objects(CoinTicker.self).filter("tickersKey == %@", CoinTickerKeyMaker.makeCurrencyKey(for: config))
     }
     var nonFungibleTokens: Results<NonFungibleTokenCategory> {

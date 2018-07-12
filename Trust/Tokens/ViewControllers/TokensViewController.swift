@@ -21,7 +21,9 @@ final class TokensViewController: UIViewController {
 
     lazy var header: TokensHeaderView = {
         let header = TokensHeaderView(frame: .zero)
-        header.amountLabel.text = viewModel.headerBalance
+        viewModel.amount(completion: { value in
+            header.amountLabel.text = value
+        })
         header.amountLabel.textColor = viewModel.headerBalanceTextColor
         header.backgroundColor = viewModel.headerBackgroundColor
         header.amountLabel.font = viewModel.headerBalanceFont
@@ -117,7 +119,9 @@ final class TokensViewController: UIViewController {
     }
 
     func refreshHeaderView() {
-        header.amountLabel.text = viewModel.headerBalance
+        viewModel.amount(completion: { [weak self] value in
+            self?.header.amountLabel.text = value
+        })
     }
 
     @objc func missingToken() {
@@ -131,9 +135,10 @@ final class TokensViewController: UIViewController {
             switch changes {
             case .initial:
                 tableView.reloadData()
-            case .update:
+            case .update(_, let deletions, let insertions, let updates):
+                self?.tableView.beginUpdates()
                 self?.tableView.reloadData()
-                self?.endLoading()
+                self?.tableView.endUpdates()
             case .error(let error):
                 self?.endLoading(animated: true, error: error, completion: nil)
             }
