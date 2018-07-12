@@ -61,7 +61,7 @@ final class NewTokenViewController: FormViewController {
             <<< AppFormAppearance.textFieldFloat(tag: Values.contract) { [unowned self] in
                 $0.add(rule: EthereumAddressRule())
                 $0.validationOptions = .validatesOnDemand
-                $0.title = NSLocalizedString("Contract Address", value: "Contract Address", comment: "")
+                $0.title = R.string.localizable.contractAddress()
                 $0.value = self.viewModel.contract
             }.cellUpdate { cell, _ in
                 cell.textField.textAlignment = .left

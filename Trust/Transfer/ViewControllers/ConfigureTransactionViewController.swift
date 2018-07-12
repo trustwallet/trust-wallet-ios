@@ -156,7 +156,7 @@ class ConfigureTransactionViewController: FormViewController {
         +++ Section()
 
         <<< TextRow(Values.totalFee) {
-            $0.title = NSLocalizedString("Network Fee", value: "Network Fee", comment: "")
+            $0.title = R.string.localizable.networkFee()
             $0.disabled = true
         }
 

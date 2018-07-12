@@ -108,7 +108,7 @@ final class TransactionViewController: UIViewController {
 
     private func moreDetails() -> UIView {
         let button = Button(size: .large, style: .border)
-        button.setTitle(NSLocalizedString("More Details", value: "More Details", comment: ""), for: .normal)
+        button.setTitle(R.string.localizable.moreDetails(), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(more), for: .touchUpInside)
 

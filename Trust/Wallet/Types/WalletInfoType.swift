@@ -20,7 +20,7 @@ enum WalletInfoType {
         case .exportPrivateKey:
             return NSLocalizedString("wallets.export.alertSheet.title", value: "Export Private Key", comment: "")
         case .copyAddress:
-            return NSLocalizedString("Copy Address", value: "Copy Address", comment: "")
+            return R.string.localizable.copyAddress()
         }
     }
 

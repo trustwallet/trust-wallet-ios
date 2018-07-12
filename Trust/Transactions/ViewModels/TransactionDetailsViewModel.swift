@@ -51,12 +51,12 @@ struct TransactionDetailsViewModel {
 
     var title: String {
         if transaction.state == .pending {
-            return NSLocalizedString("Pending Transaction", value: "Pending Transaction", comment: "")
+            return R.string.localizable.pendingTransaction()
         }
         if transactionViewModel.direction == .incoming {
-            return NSLocalizedString("Incoming Transaction", value: "Incoming Transaction", comment: "")
+            return R.string.localizable.incomingTransaction()
         }
-        return NSLocalizedString("Outgoing Transaction", value: "Outgoing Transaction", comment: "")
+        return R.string.localizable.outgoingTransaction()
     }
 
     var backgroundColor: UIColor {
@@ -68,7 +68,7 @@ struct TransactionDetailsViewModel {
     }
 
     var createdAtLabelTitle: String {
-        return NSLocalizedString("transaction.time.label.title", value: "Transaction Time", comment: "")
+        return R.string.localizable.transactionTimeLabelTitle()
     }
 
     var detailsAvailable: Bool {
@@ -141,7 +141,7 @@ struct TransactionDetailsViewModel {
     }
 
     var gasFeeLabelTitle: String {
-        return NSLocalizedString("Network Fee", value: "Network Fee", comment: "")
+        return R.string.localizable.networkFee()
     }
 
     var confirmation: String {
