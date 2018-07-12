@@ -50,7 +50,9 @@ final class TokensViewController: UIViewController {
         return footerView
     }()
 
-    let tableView: UITableView
+    let tableView: UITableView = {
+        return  UITableView(frame: .zero, style: .plain)
+    }()
     let refreshControl = UIRefreshControl()
     weak var delegate: TokensViewControllerDelegate?
     var etherFetchTimer: Timer?
@@ -60,17 +62,13 @@ final class TokensViewController: UIViewController {
         viewModel: TokensViewModel
     ) {
         self.viewModel = viewModel
-        tableView = UITableView(frame: .zero, style: .plain)
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = StyleLayout.TableView.separatorColor
-        tableView.backgroundColor = .white
+        
+        tableViewConfigiration()
         view.addSubview(tableView)
         view.addSubview(footerView)
+
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -81,22 +79,10 @@ final class TokensViewController: UIViewController {
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
         ])
-        tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
+
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-        tableView.addSubview(refreshControl)
-        errorView = ErrorView(onRetry: { [weak self] in
-            self?.startLoading()
-            self?.fetch()
-        })
         loadingView = LoadingView()
-        emptyView = EmptyView(
-            title: NSLocalizedString("emptyView.noTokens.label.title", value: "You haven't received any tokens yet!", comment: ""),
-            onRetry: { [weak self] in
-                self?.startLoading()
-                self?.fetch()
-        })
-        tableView.tableHeaderView = header
-        tableView.tableFooterView = footer
+
         sheduleBalanceUpdate()
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
@@ -179,6 +165,19 @@ final class TokensViewController: UIViewController {
 
     private func stopTokenObservation() {
         viewModel.invalidateTokensObservation()
+    }
+
+    private func tableViewConfigiration() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = StyleLayout.TableView.separatorColor
+        tableView.backgroundColor = .white
+        tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
+        tableView.addSubview(refreshControl)
+        tableView.tableHeaderView = header
+        tableView.tableFooterView = footer
     }
 
     deinit {
