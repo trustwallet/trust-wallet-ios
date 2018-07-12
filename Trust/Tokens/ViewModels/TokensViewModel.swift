@@ -81,9 +81,9 @@ final class TokensViewModel: NSObject {
     }
 
     func amount(completion: @escaping (String?) -> Void) {
-        DispatchQueue.global(qos: .background).async { [weak self] in
+        store.tokensQueue.async { [weak self] in
            guard let strongSelf = self else {
-                completion(CurrencyFormatter.formatter.string(from: NSNumber(value: TokenObject.DEFAULT_BALANCE)))
+                completion( CurrencyFormatter.formatter.string(from: NSNumber(value: TokenObject.DEFAULT_BALANCE)))
                 return
            }
            let realm = try! Realm(configuration: strongSelf.store.realm.configuration)
@@ -127,7 +127,7 @@ final class TokensViewModel: NSObject {
         let ticker = tickers.first(where: {
             return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: token.address, currencyKey: $0.tickersKey)
         })
-        return TokenViewCellViewModel(token: token, ticker: nil, store: transactionStore)
+        return TokenViewCellViewModel(token: token, ticker: ticker, store: transactionStore)
     }
 
     func updateEthBalance() {

@@ -40,6 +40,7 @@ class TokensDataStore {
         return realm.objects(NonFungibleTokenObject.self).map { $0 }
     }
 
+    let tokensQueue = DispatchQueue(label: "TokensDataStore", qos: .utility)
     init(
         realm: Realm,
         config: Config
