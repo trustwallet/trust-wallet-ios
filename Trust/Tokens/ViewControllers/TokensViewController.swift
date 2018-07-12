@@ -21,9 +21,6 @@ final class TokensViewController: UIViewController {
 
     lazy var header: TokensHeaderView = {
         let header = TokensHeaderView(frame: .zero)
-        viewModel.amount(completion: { value in
-            header.amountLabel.text = value
-        })
         header.amountLabel.textColor = viewModel.headerBalanceTextColor
         header.backgroundColor = viewModel.headerBackgroundColor
         header.amountLabel.font = viewModel.headerBalanceFont
@@ -66,7 +63,7 @@ final class TokensViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
-        
+
         tableViewConfigiration()
         view.addSubview(tableView)
         view.addSubview(footerView)
@@ -83,8 +80,6 @@ final class TokensViewController: UIViewController {
         ])
 
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-        loadingView = LoadingView()
-
         sheduleBalanceUpdate()
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
@@ -110,7 +105,6 @@ final class TokensViewController: UIViewController {
     }
 
     func fetch() {
-        self.startLoading()
         self.viewModel.fetch()
     }
 
@@ -135,12 +129,12 @@ final class TokensViewController: UIViewController {
             switch changes {
             case .initial:
                 tableView.reloadData()
-            case .update(_, let deletions, let insertions, let updates):
+            case .update:
                 self?.tableView.beginUpdates()
                 self?.tableView.reloadData()
                 self?.tableView.endUpdates()
-            case .error(let error):
-                self?.endLoading(animated: true, error: error, completion: nil)
+            case .error:
+                break
             }
             if strongSelf.refreshControl.isRefreshing {
                 strongSelf.refreshControl.endRefreshing()
@@ -189,11 +183,6 @@ final class TokensViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
         resignActive()
         stopTokenObservation()
-    }
-}
-extension TokensViewController: StatefulViewController {
-    func hasContent() -> Bool {
-        return viewModel.hasContent
     }
 }
 extension TokensViewController: UITableViewDelegate {
