@@ -42,4 +42,8 @@ class WalletsViewModel {
         let enabled = numberOfRows(in: section) > 0
         return enabled ? StyleLayout.TableView.heightForHeaderInSection : 0.001
     }
+
+    func cellViewModel(for indexPath: IndexPath) -> WalletInfoViewModel {
+        return WalletInfoViewModel(wallet: keystore.wallets[0])
+    }
 }

@@ -4,6 +4,10 @@ import UIKit
 
 class WalletTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var tokenImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var subNameLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -14,5 +18,10 @@ class WalletTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
+    func configure(for viewModel: WalletInfoViewModel) {
+        nameLabel.text = viewModel.nameTitle
+        subNameLabel.text = viewModel.title
+        tokenImageView.image = R.image.backup_warning()
+    }
 }
