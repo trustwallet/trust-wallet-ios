@@ -16,6 +16,7 @@ final class TokensViewModel: NSObject {
     let store: TokensDataStore
     var tokensNetwork: NetworkProtocol
     let tokens: Results<TokenObject>
+    let tickers: Results<CoinTicker>
     var tokensObserver: NotificationToken?
     let address: Address
     let transactionStore: TransactionsStorage
@@ -75,6 +76,7 @@ final class TokensViewModel: NSObject {
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
         self.transactionStore = transactionStore
+        self.tickers = store.tickers
         super.init()
     }
 
@@ -116,7 +118,10 @@ final class TokensViewModel: NSObject {
 
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
-        return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token), store: transactionStore)
+        let ticker = tickers.first(where: {
+            return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: token.address, currencyKey: $0.tickersKey)
+        })
+        return TokenViewCellViewModel(token: token, ticker: nil, store: transactionStore)
     }
 
     func updateEthBalance() {
