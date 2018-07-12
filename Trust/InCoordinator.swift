@@ -166,6 +166,14 @@ class InCoordinator: Coordinator {
         observePendingTransactions(from: transactionsStorage)
     }
 
+    func changeWallet() {
+        let coordinator = WalletsCoordinator(keystore: keystore)
+        coordinator.start()
+        coordinator.delegate = self
+        addCoordinator(coordinator)
+        navigationController.present(coordinator.navigationController, animated: true)
+    }
+
     func showTab(_ selectTab: Tabs) {
         guard let viewControllers = tabBarController?.viewControllers else { return }
         guard let nav = viewControllers[selectTab.index] as? UINavigationController else { return }
@@ -312,6 +320,10 @@ extension InCoordinator: TokensCoordinatorDelegate {
     func didPress(url: URL, in coordinator: TokensCoordinator) {
         showTab(.browser(openURL: url))
     }
+
+    func didPressChangeWallet(in coordinator: TokensCoordinator) {
+        changeWallet()
+    }
 }
 
 extension InCoordinator: SendCoordinatorDelegate {
@@ -336,5 +348,12 @@ extension InCoordinator: SendCoordinatorDelegate {
 extension InCoordinator: BrowserCoordinatorDelegate {
     func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator) {
         handlePendingTransaction(transaction: transaction)
+    }
+}
+
+extension InCoordinator: WalletsCoordinatorDelegate {
+    func didCancel(in coordinator: WalletsCoordinator) {
+        navigationController.dismiss(animated: true)
+        removeCoordinator(coordinator)
     }
 }

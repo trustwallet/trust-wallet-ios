@@ -14,6 +14,7 @@ final class WalletViewController: UIViewController {
             NSLocalizedString("Collectibles", value: "Collectibles", comment: ""),
         ]
         let segmentedControl = UISegmentedControl(items: items)
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.selectedSegmentIndex = DetailsViewType.tokens.rawValue
         segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
         let titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
@@ -28,6 +29,11 @@ final class WalletViewController: UIViewController {
     }()
     var tokensViewController: TokensViewController
     var nonFungibleTokensViewController: NonFungibleTokensViewController
+    lazy var titleView: WalletTitleView = {
+        let view =  WalletTitleView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     init(
         tokensViewController: TokensViewController,
@@ -40,12 +46,26 @@ final class WalletViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.titleView = segmentController
+
+        self.navigationItem.titleView = titleView
+        //segmentController
         setupView()
+
+        view.addSubview(segmentController)
+
+        NSLayoutConstraint.activate([
+            segmentController.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
+            segmentController.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            //segmentController.bottomAnchor.constraint(equalTo: bottomAnchor),
+            segmentController.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            // widthAnchor.constraint(equalToConstant: 200),
+            segmentController.heightAnchor.constraint(equalToConstant: 34),
+        ])
     }
 
     private func setupView() {
-        updateView()
+        //updateView()
     }
 
     private func updateView() {
@@ -53,6 +73,7 @@ final class WalletViewController: UIViewController {
             showBarButtonItems()
             remove(asChildViewController: nonFungibleTokensViewController)
             add(asChildViewController: tokensViewController)
+            segmentController.bringSubview(toFront: view)
         } else {
             hideBarButtonItems()
             remove(asChildViewController: tokensViewController)

@@ -8,6 +8,7 @@ protocol TokensCoordinatorDelegate: class {
     func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator)
     func didPress(url: URL, in coordinator: TokensCoordinator)
     func didPressDiscover(in coordinator: TokensCoordinator)
+    func didPressChangeWallet(in coordinator: TokensCoordinator)
 }
 
 final class TokensCoordinator: Coordinator {
@@ -37,6 +38,7 @@ final class TokensCoordinator: Coordinator {
     lazy var masterViewController: WalletViewController = {
         let masterViewController = WalletViewController(tokensViewController: self.tokensViewController, nonFungibleTokensViewController: self.nonFungibleTokensViewController)
         masterViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(edit))
+        masterViewController.titleView.delegate = self
         return masterViewController
     }()
     weak var delegate: TokensCoordinatorDelegate?
@@ -242,5 +244,11 @@ extension TokensCoordinator: TransactionViewControllerDelegate {
     func didPressURL(_ url: URL) {
         openURL(url)
         navigationController.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension TokensCoordinator: WalletTitleViewDelegate {
+    func didTap(in view: WalletTitleView) {
+        delegate?.didPressChangeWallet(in: self)
     }
 }
