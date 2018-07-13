@@ -147,7 +147,7 @@ class ConfigureTransactionViewController: FormViewController {
         +++ Section()
 
         <<< AppFormAppearance.textFieldFloat(tag: Values.nonce) {
-            $0.title = NSLocalizedString("Nonce", value: "Nonce", comment: "")
+            $0.title = R.string.localizable.nonce()
             $0.value = "\(self.configuration.nonce)"
         }.cellUpdate { cell, _ in
             cell.textField.keyboardType = .numberPad

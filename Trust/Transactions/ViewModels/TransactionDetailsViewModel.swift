@@ -118,7 +118,7 @@ struct TransactionDetailsViewModel {
     }
 
     var nonceTitle: String {
-        return NSLocalizedString("Nonce", value: "Nonce", comment: "")
+        return R.string.localizable.nonce()
     }
 
     var gasViewModel: GasViewModel {
