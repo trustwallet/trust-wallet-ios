@@ -16,7 +16,7 @@ final class TokensViewModel: NSObject {
     let store: TokensDataStore
     var tokensNetwork: NetworkProtocol
     let tokens: Results<TokenObject>
-    let tickers: Results<CoinTicker>
+    var tickers: [CoinTicker]
     var tokensObserver: NotificationToken?
     let address: Address
     let transactionStore: TransactionsStorage
@@ -69,7 +69,7 @@ final class TokensViewModel: NSObject {
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
         self.transactionStore = transactionStore
-        self.tickers = store.tickers
+        self.tickers = store.preparedTickres()
         super.init()
     }
 
@@ -124,10 +124,11 @@ final class TokensViewModel: NSObject {
 
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
-        //let ticker = tickers.first(where: {
-        //    return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: token.address, currencyKey: $0.tickersKey)
-        //})
-        return TokenViewCellViewModel(token: token, ticker: nil, store: transactionStore)
+        var ticker: CoinTicker? = nil
+        if tickers.indices.contains(path.row) {
+            ticker = tickers[path.row]
+        }
+        return TokenViewCellViewModel(token: token, ticker: ticker, store: transactionStore)
     }
 
     func updateEthBalance() {
@@ -161,7 +162,9 @@ final class TokensViewModel: NSObject {
         firstly {
             tokensNetwork.tickers(with: prices)
         }.done { [weak self] tickers in
-            self?.store.saveTickers(tickers: tickers)
+            guard let strongSelf = self else { return }
+            strongSelf.store.saveTickers(tickers: tickers)
+            strongSelf.tickers = strongSelf.store.preparedTickres()
         }.catch { error in
             NSLog("prices \(error)")
         }.finally { [weak self] in

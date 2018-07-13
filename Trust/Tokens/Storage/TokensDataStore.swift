@@ -19,7 +19,7 @@ class TokensDataStore {
             .sorted(byKeyPath: "contract", ascending: true)
     }
     var tickers: Results<CoinTicker> {
-        return realm.objects(CoinTicker.self).filter("tickersKey == %@", CoinTickerKeyMaker.makeCurrencyKey(for: config))
+        return realm.objects(CoinTicker.self).filter("tickersKey == %@", CoinTickerKeyMaker.makeCurrencyKey(for: config)).sorted(byKeyPath: "contract", ascending: true)
     }
     var nonFungibleTokens: Results<NonFungibleTokenCategory> {
         return realm.objects(NonFungibleTokenCategory.self).sorted(byKeyPath: "name", ascending: true)
@@ -73,6 +73,13 @@ class TokensDataStore {
             isCustom: true
         )
         add(tokens: [newToken])
+    }
+
+    func preparedTickres() -> [CoinTicker] {
+        let filteredTickers = tickers.filter { ticker in self.tokens.contains(where: { $0.contract == ticker.contract }) }.sorted(by: { (left, right) -> Bool in
+            return left.contract < right.contract
+        })
+        return filteredTickers
     }
 
     func add(tokens: [Object]) {
