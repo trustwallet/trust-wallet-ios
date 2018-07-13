@@ -80,14 +80,12 @@ final class TokensViewController: UIViewController {
         ])
 
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-        sheduleBalanceUpdate()
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        startTokenObservation()
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
         footer.textLabel.text = viewModel.footerTitle
@@ -105,7 +103,9 @@ final class TokensViewController: UIViewController {
     }
 
     func fetch() {
-        self.viewModel.fetch()
+        self.viewModel.updateEthBalance()
+        self.viewModel.tokensInfo()
+        self.viewModel.updatePendingTransactions()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -130,15 +130,11 @@ final class TokensViewController: UIViewController {
             case .initial:
                 tableView.reloadData()
             case .update:
-                self?.tableView.beginUpdates()
                 self?.tableView.reloadData()
-                self?.tableView.endUpdates()
             case .error:
                 break
             }
-            if strongSelf.refreshControl.isRefreshing {
-                strongSelf.refreshControl.endRefreshing()
-            }
+            strongSelf.refreshControl.endRefreshing()
             self?.refreshHeaderView()
         }
     }
@@ -150,8 +146,9 @@ final class TokensViewController: UIViewController {
     }
 
     @objc func didBecomeActive() {
-        sheduleBalanceUpdate()
         startTokenObservation()
+        fetch()
+        sheduleBalanceUpdate()
     }
 
     private func sheduleBalanceUpdate() {
@@ -231,7 +228,8 @@ extension TokensViewController: UITableViewDataSource {
 }
 extension TokensViewController: TokensViewModelDelegate {
     func refresh() {
-        self.tableView.reloadData()
-        self.refreshHeaderView()
+        refreshControl.endRefreshing()
+        tableView.reloadData()
+        refreshHeaderView()
     }
 }

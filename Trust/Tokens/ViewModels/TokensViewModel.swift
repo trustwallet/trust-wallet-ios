@@ -20,6 +20,7 @@ final class TokensViewModel: NSObject {
     var tokensObserver: NotificationToken?
     let address: Address
     let transactionStore: TransactionsStorage
+    private var calculationProcessing = false
 
     var headerBalanceTextColor: UIColor {
         return Colors.black
@@ -39,10 +40,6 @@ final class TokensViewModel: NSObject {
 
     var backgroundColor: UIColor {
         return .white
-    }
-
-    var hasContent: Bool {
-        return !tokens.isEmpty
     }
 
     var footerTitle: String {
@@ -81,6 +78,8 @@ final class TokensViewModel: NSObject {
     }
 
     func amount(completion: @escaping (String?) -> Void) {
+        guard !calculationProcessing else { return }
+        calculationProcessing = true
         store.tokensQueue.async { [weak self] in
            guard let strongSelf = self else {
                 completion( CurrencyFormatter.formatter.string(from: NSNumber(value: TokenObject.DEFAULT_BALANCE)))
@@ -101,6 +100,7 @@ final class TokensViewModel: NSObject {
             }.reduce(0.0, +)
 
             DispatchQueue.main.async {
+                self?.calculationProcessing = false
                 completion(CurrencyFormatter.formatter.string(from: NSNumber(value: totalAmount)))
             }
         }
@@ -124,10 +124,10 @@ final class TokensViewModel: NSObject {
 
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
-        let ticker = tickers.first(where: {
-            return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: token.address, currencyKey: $0.tickersKey)
-        })
-        return TokenViewCellViewModel(token: token, ticker: ticker, store: transactionStore)
+        //let ticker = tickers.first(where: {
+        //    return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: token.address, currencyKey: $0.tickersKey)
+        //})
+        return TokenViewCellViewModel(token: token, ticker: nil, store: transactionStore)
     }
 
     func updateEthBalance() {
@@ -140,7 +140,7 @@ final class TokensViewModel: NSObject {
         }
     }
 
-    private func tokensInfo() {
+    func tokensInfo() {
         firstly {
             tokensNetwork.tokensList(for: address)
         }.done { [weak self] tokens in
@@ -189,11 +189,6 @@ final class TokensViewModel: NSObject {
                 }
             }
         }
-    }
-
-    func fetch() {
-        tokensInfo()
-        updatePendingTransactions()
     }
 
     func invalidateTokensObservation() {

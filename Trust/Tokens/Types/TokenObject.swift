@@ -100,7 +100,7 @@ final class TokenObject: Object, Decodable {
     var imagePath: String {
         let config = Config.current
         let formatter = ImageURLFormatter()
-        if TokensDataStore.etherToken(for: config) == self {
+        if config.server.address.description == self.contract {
             return formatter.image(chainID: config.chainID)
         } else {
             return formatter.image(for: contract)
