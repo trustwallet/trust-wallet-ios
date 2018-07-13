@@ -49,7 +49,13 @@ final class TokensViewController: UIViewController {
     }()
 
     let tableView: UITableView = {
-        return  UITableView(frame: .zero, style: .plain)
+        let tableView =  UITableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = StyleLayout.TableView.separatorColor
+        tableView.backgroundColor = .white
+        tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
+        return tableView
     }()
 
     lazy var titleView: WalletTitleView = {
@@ -86,7 +92,7 @@ final class TokensViewController: UIViewController {
         ])
 
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-        sheduleBalanceUpdate()
+        scheduleBalanceUpdate()
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
     }
@@ -137,7 +143,7 @@ final class TokensViewController: UIViewController {
             case .initial:
                 tableView.reloadData()
             case .update:
-                self?.tableView.reloadData()
+                tableView.reloadData()
             case .error:
                 break
             }
@@ -155,10 +161,10 @@ final class TokensViewController: UIViewController {
     @objc func didBecomeActive() {
         startTokenObservation()
         fetch()
-        sheduleBalanceUpdate()
+        scheduleBalanceUpdate()
     }
 
-    private func sheduleBalanceUpdate() {
+    private func scheduleBalanceUpdate() {
         guard etherFetchTimer == nil else { return }
         etherFetchTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in
             self?.viewModel.updateEthBalance()
@@ -171,13 +177,8 @@ final class TokensViewController: UIViewController {
     }
 
     private func tableViewConfigiration() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = StyleLayout.TableView.separatorColor
-        tableView.backgroundColor = .white
-        tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
         tableView.addSubview(refreshControl)
         tableView.tableHeaderView = header
         tableView.tableFooterView = footer

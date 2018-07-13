@@ -25,7 +25,7 @@ final class TokensViewModel: NSObject {
     var headerViewTitle: String {
         return "Ethereum (ETH)"
     }
-    
+
     var headerBalanceTextColor: UIColor {
         return Colors.black
     }
@@ -73,7 +73,7 @@ final class TokensViewModel: NSObject {
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
         self.transactionStore = transactionStore
-        self.tickers = store.preparedTickres()
+        self.tickers = store.preparedTickers()
         super.init()
     }
 
@@ -168,7 +168,7 @@ final class TokensViewModel: NSObject {
         }.done { [weak self] tickers in
             guard let strongSelf = self else { return }
             strongSelf.store.saveTickers(tickers: tickers)
-            strongSelf.tickers = strongSelf.store.preparedTickres()
+            strongSelf.tickers = strongSelf.store.preparedTickers()
         }.catch { error in
             NSLog("prices \(error)")
         }.finally { [weak self] in

@@ -63,6 +63,10 @@ class TokensDataStore {
         })
     }
 
+    func coinTicker(by contract: Address) -> CoinTicker? {
+        return tickers.first(where: { $0.contract == contract.description })
+    }
+
     func addCustom(token: ERC20Token) {
         let newToken = TokenObject(
             contract: token.contract.description,
@@ -75,7 +79,7 @@ class TokensDataStore {
         add(tokens: [newToken])
     }
 
-    func preparedTickres() -> [CoinTicker] {
+    func preparedTickers() -> [CoinTicker] {
         let filteredTickers = tickers.filter { ticker in self.tokens.contains(where: { $0.contract == ticker.contract }) }.sorted(by: { (left, right) -> Bool in
             return left.contract < right.contract
         })
