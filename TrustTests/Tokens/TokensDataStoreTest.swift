@@ -7,18 +7,18 @@ class TokensDataStoreTest: XCTestCase {
     var tokensDataStore = TokensDataStore(realm: .make(), config: .make())
 
     func testGetAndSetTickers() {
-        XCTAssertEqual(0, tokensDataStore.tickers().count)
+        XCTAssertEqual(0, tokensDataStore.tickers.count)
 
         tokensDataStore.saveTickers(tickers: FakeCoinTickerFactory.make3UniqueCionTickers())
         
-        let returnedCoinTickers = tokensDataStore.tickers()
+        let returnedCoinTickers = tokensDataStore.tickers
         
         XCTAssertEqual(3, returnedCoinTickers.count)
     }
     
     func testDeleteTickers() {
         XCTAssertEqual(0, tokensDataStore.realm.objects(CoinTicker.self).count)
-        XCTAssertEqual(0, tokensDataStore.tickers().count)
+        XCTAssertEqual(0, tokensDataStore.tickers.count)
 
         do {
             try tokensDataStore.realm.write {
@@ -29,7 +29,7 @@ class TokensDataStoreTest: XCTestCase {
         }
 
         XCTAssertEqual(1, tokensDataStore.realm.objects(CoinTicker.self).count)
-        XCTAssertEqual(0, tokensDataStore.tickers().count)
+        XCTAssertEqual(0, tokensDataStore.tickers.count)
 
         let coinTickers = [
             CoinTicker.make(currencyKey: CoinTickerKeyMaker.makeCurrencyKey(for: Config.make()))
@@ -38,12 +38,12 @@ class TokensDataStoreTest: XCTestCase {
         tokensDataStore.saveTickers(tickers: coinTickers)
 
         XCTAssertEqual(2, tokensDataStore.realm.objects(CoinTicker.self).count)
-        XCTAssertEqual(1, tokensDataStore.tickers().count)
+        XCTAssertEqual(1, tokensDataStore.tickers.count)
 
         tokensDataStore.deleteAllExistingTickers()
 
         XCTAssertEqual(1, tokensDataStore.realm.objects(CoinTicker.self).count)
-        XCTAssertEqual(0, tokensDataStore.tickers().count)
+        XCTAssertEqual(0, tokensDataStore.tickers.count)
     }
 
     func testGetBalance() {

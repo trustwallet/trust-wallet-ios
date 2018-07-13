@@ -17,7 +17,7 @@ class FakeTokensDataStore: TokensDataStore {
         return [coinTiekcer]
     }
 
-    override func tickers() -> [CoinTicker] {
+    func fakeTickers() -> [CoinTicker] {
         return makeFakeTicker()
     }
 }
