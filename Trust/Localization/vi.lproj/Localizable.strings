@@ -121,7 +121,6 @@
 "Deleting" = "Đang xóa";
 "EthereumAddress" = "Địa chỉ Ethereum";
 "InCoordinatorError.onlyWatchAccount" = "Ví này có thể chỉ được sử dụng để xem. Nhập Private Key/Keystore để xác nhận thực hiện các giao dịch.";
-"recoveryPhrase.navigation.title" = "Cụm từ để phục hồi";
 "Share With Friends" = "Chia sẻ với bạn bè.";
 "transaction.cell.unknown.title" = "Không xác định";
 "welldone.description.label.text" = "Giúp chúng tôi lớn mạnh bằng cách chia sẻ ứng dụng này với bạn bè của bạn.";
@@ -149,13 +148,11 @@
 "settings.dappbroser.button.title" = "Trình duyệt DApps";
 "settings.emailUsReadFAQ.button.title" = "Gửi Email cho chúng tôi (hãy đọc FAQ trước)";
 "settings.faq.button.title" = "Câu hỏi thường gặp";
-"settings.learnMore.label.title" = "Tìm hiểu thêm";
 "settings.wallets.balance" = "Số dư: %@ ETH";
 "transaction.cell.failed.title" = "Thất bại";
 "transaction.cell.pending.title" = "Đang chờ xử lý";
 "transactions.receive.button.title" = "Nhận";
 "accounts.confirm.delete.message" = "Hãy đảm bảo rằng bạn đã sao lưu ví của bạn.";
-"accounts.confirm.delete.okTitle" = "Xóa";
 "accounts.confirm.delete.title" = "Bạn có chắc chắn muốn xóa ví này?";
 "Approve" = "Chấp thuận";
 "ChainID" = "ID chuỗi";

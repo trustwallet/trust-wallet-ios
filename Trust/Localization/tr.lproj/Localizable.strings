@@ -121,7 +121,6 @@
 "Deleting" = "Siliniyor";
 "EthereumAddress" = "Ethereum Adresi";
 "InCoordinatorError.onlyWatchAccount" = "Bu cüzdan sadece izlemek için kullanılabilir. Gizli Anahtarı veya Anahtar dosyasının aktararak işlemleri ve mesajları daha detaylı görüntüleyebilirsiniz";
-"recoveryPhrase.navigation.title" = "Kurtarma Cümlesi";
 "Share With Friends" = "Arkadaşlarınızla Paylaşın";
 "transaction.cell.unknown.title" = "Bilinmeyen";
 "welldone.description.label.text" = "Bu uygulamayı arkadaşlarınızla paylaşarak büyümemize yardımcı olun!";
@@ -149,13 +148,11 @@
 "settings.dappbroser.button.title" = "DApps Tarayıcısı";
 "settings.emailUsReadFAQ.button.title" = "Bize E-posta Gönderin (Önce SSS'yi okuyun)";
 "settings.faq.button.title" = "SSS";
-"settings.learnMore.label.title" = "Daha Fazla Bilgi Edinin";
 "settings.wallets.balance" = "Bakiye: %@ ETH";
 "transaction.cell.failed.title" = "Başarısız oldu";
 "transaction.cell.pending.title" = "Bekleyen";
 "transactions.receive.button.title" = "Al";
 "accounts.confirm.delete.message" = "Cüzdanınızın yedeklemesine sahip olduğunuzdan emin olun.";
-"accounts.confirm.delete.okTitle" = "Sil";
 "accounts.confirm.delete.title" = "Bu cüzdanı silmek istediğinizden emin misiniz?";
 "Approve" = "Onayla";
 "ChainID" = "Chain Kimliği";

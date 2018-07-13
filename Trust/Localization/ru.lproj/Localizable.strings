@@ -129,11 +129,19 @@
 "configureTransaction.gasPriceGwei.label.title" = "Цена газа (Gwei)";
 "enterPassword.password.textField.placeholder" = "Пароль";
 "lock.enter.passcode.view.model.try.after.one.minute" = "Попробуйте через 1 минуту.";
+"Name" = "Имя";
+"settings.faq.button.title" = "Вопросы и ответы";
+"transaction.cell.failed.title" = "Не удалось загрузить";
+"transaction.cell.pending.title" = "Ожидание";
 "transactions.receive.button.title" = "Получить";
+"Approve" = "Одобрить";
 "transaction.blockNumber.label.title" = "Блок #";
 "transaction.confirmation.label.title" = "Подтверждений";
 "transaction.from.label.title" = "От";
+"transaction.id.label.title" = "Транзакция #";
+"transaction.time.label.title" = "Время транзакции";
 "transaction.to.label.title" = "Кому";
+"settings.allowPushNotifications.button.title" = "Разрешить Push-уведомления";
 "settings.pushNotifications.allowPushNotifications.footer" = "Вы будете уведомлены об отправлянных и полученных транзакциях.";
 "settings.pushNotifications.payment.button.title" = "Отправлено и получено";
 "settings.pushNotifications.title" = "Push-уведомления";
@@ -143,6 +151,7 @@
 "browser.bookmarks.confirm.delete.title" = "Вы уверены, что хотите удалить эту закладку?";
 "browser.bookmarks.title" = "Закладки";
 "browser.url.textfield.placeholder" = "Поиск или введите URL веб-сайта";
+"Collectibles" = "Коллекции";
 "confirmPayment.maxTotal.label.title" = "Макс Тотал";
 "Delete" = "Удалить";
 "Edit" = "Редактировать";
@@ -191,6 +200,7 @@
 "Keystore" = "Keystore";
 "NetworkFee" = "Сетевой сбор";
 "OpenSea" = "OpenSea";
+"settings.about.title" = "О Нас";
 "settings.autoLock.button.title" = "Автоматическая блокировка";
 "wallets.navigation.title.autolock.immediate" = "Немедленно";
 "Watch" = "Смотреть";
@@ -204,6 +214,7 @@
 "verifyPassphrase.label.title" = "Нажмите слова, чтобы поместить их рядом друг с другом в правильном порядке.";
 "verifyPassphrase.skip.confirm.message" = "Потеря резервной фразы может поставить ваш кошелек под угрозу!";
 "verifyPassphrase.skip.confirm.title" = "Вы уверены, что хотите пропустить этот шаг?";
+"wallet.info.exportBackupPhrase" = "Показать Резервную Фразу";
 "Reload" = "Перезагрузить";
 "Phrase" = "Фраза";
 "Wallet" = "Кошелек";

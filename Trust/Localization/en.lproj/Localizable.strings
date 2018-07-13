@@ -121,7 +121,6 @@
 "Deleting" = "Deleting";
 "EthereumAddress" = "Ethereum Address";
 "InCoordinatorError.onlyWatchAccount" = "This wallet can be only used for watching. Import Private Key/Keystore to sign transactions/messages";
-"recoveryPhrase.navigation.title" = "Recovery Phrase";
 "Share With Friends" = "Share With Friends";
 "transaction.cell.unknown.title" = "Unknown";
 "welldone.description.label.text" = "Help us grow by sharing this app with your friends!";
@@ -149,13 +148,11 @@
 "settings.dappbroser.button.title" = "DApps Browser";
 "settings.emailUsReadFAQ.button.title" = "Email Us (Read FAQ first)";
 "settings.faq.button.title" = "FAQ";
-"settings.learnMore.label.title" = "Learn More";
 "settings.wallets.balance" = "Balance: %@ ETH";
 "transaction.cell.failed.title" = "Failed";
 "transaction.cell.pending.title" = "Pending";
 "transactions.receive.button.title" = "Receive";
 "accounts.confirm.delete.message" = "Make sure you have backup of your wallet.";
-"accounts.confirm.delete.okTitle" = "Delete";
 "accounts.confirm.delete.title" = "Are you sure you would like to delete this wallet?";
 "Approve" = "Approve";
 "ChainID" = "Chain ID";

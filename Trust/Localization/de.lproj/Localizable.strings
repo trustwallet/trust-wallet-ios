@@ -121,7 +121,6 @@
 "Deleting" = "Löschen";
 "EthereumAddress" = "Ethereum-Adresse";
 "InCoordinatorError.onlyWatchAccount" = "Nur öffentliche Informationen dieses Wallets einsehbar. Importieren Sie den privaten Schlüssel / Keystore, um Transaktionen zu signieren";
-"recoveryPhrase.navigation.title" = "Wiederherstellungs-Satz";
 "Share With Friends" = "Mit Freunden teilen";
 "transaction.cell.unknown.title" = "Unbekannt";
 "welldone.description.label.text" = "Helfen Sie uns, indem Sie diese App mit Ihren Freunden teilen!";
@@ -149,13 +148,11 @@
 "settings.dappbroser.button.title" = "DApps Browser";
 "settings.emailUsReadFAQ.button.title" = "Schreiben Sie uns eine Email (Lies zuerst die FAQ)";
 "settings.faq.button.title" = "FAQ";
-"settings.learnMore.label.title" = "Mehr erfahren";
 "settings.wallets.balance" = "Balance: %@ ETH";
 "transaction.cell.failed.title" = "Abgewiesen";
 "transaction.cell.pending.title" = "Wird bearbeitet...";
 "transactions.receive.button.title" = "Einzahlen";
 "accounts.confirm.delete.message" = "Stellen Sie sicher, dass Sie ein Backup Ihrer Wallet erstellt haben.";
-"accounts.confirm.delete.okTitle" = "Löschen";
 "accounts.confirm.delete.title" = "Sind Sie sicher, dass Sie diese Wallet löschen möchten?";
 "Approve" = "Genehmigen";
 "ChainID" = "Chain-ID";

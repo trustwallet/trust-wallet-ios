@@ -121,7 +121,6 @@
 "Deleting" = "删除";
 "EthereumAddress" = "以太坊地址";
 "InCoordinatorError.onlyWatchAccount" = "这个钱包只能观察，请导入私钥 / Keystore 来签署交易";
-"recoveryPhrase.navigation.title" = "恢复短语";
 "Share With Friends" = "与朋友分享";
 "transaction.cell.unknown.title" = "未知";
 "welldone.description.label.text" = "通过与你的朋友分享这个应用来帮助我们成长！";
@@ -149,13 +148,11 @@
 "settings.dappbroser.button.title" = "DApps 浏览器";
 "settings.emailUsReadFAQ.button.title" = "邮件我们 (请先阅读FAQ)";
 "settings.faq.button.title" = "常见问题";
-"settings.learnMore.label.title" = "了解更多";
 "settings.wallets.balance" = "余额: %@";
 "transaction.cell.failed.title" = "失败";
 "transaction.cell.pending.title" = "等待";
 "transactions.receive.button.title" = "接收";
 "accounts.confirm.delete.message" = "请确保你备份了钱包。";
-"accounts.confirm.delete.okTitle" = "删除";
 "accounts.confirm.delete.title" = "你确定要删除这个钱包吗？";
 "Approve" = "批准";
 "ChainID" = "Chain ID";
