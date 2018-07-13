@@ -52,7 +52,7 @@ final class WalletCoordinator: Coordinator {
     }
 
     func createInstantWallet() {
-        let text = String(format: NSLocalizedString("Creating wallet %@", value: "Creating wallet %@", comment: ""), "...")
+        let text = R.string.localizable.creatingWallet() + "..."
         navigationController.topViewController?.displayLoading(text: text, animated: false)
         let password = PasswordGenerator.generateRandom()
         keystore.createAccount(with: password) { result in

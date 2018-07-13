@@ -2,7 +2,6 @@
 
 import Foundation
 import UIKit
-import StatefulViewController
 import Result
 import TrustCore
 import RealmSwift
@@ -52,6 +51,13 @@ final class TokensViewController: UIViewController {
     let tableView: UITableView = {
         return  UITableView(frame: .zero, style: .plain)
     }()
+
+    lazy var titleView: WalletTitleView = {
+        let view = WalletTitleView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     let refreshControl = UIRefreshControl()
     weak var delegate: TokensViewControllerDelegate?
     var etherFetchTimer: Timer?
@@ -80,6 +86,7 @@ final class TokensViewController: UIViewController {
         ])
 
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        sheduleBalanceUpdate()
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
     }
@@ -174,6 +181,8 @@ final class TokensViewController: UIViewController {
         tableView.addSubview(refreshControl)
         tableView.tableHeaderView = header
         tableView.tableFooterView = footer
+        navigationItem.titleView = titleView
+        titleView.title = viewModel.headerViewTitle
     }
 
     deinit {
@@ -231,5 +240,11 @@ extension TokensViewController: TokensViewModelDelegate {
         refreshControl.endRefreshing()
         tableView.reloadData()
         refreshHeaderView()
+    }
+}
+
+extension TokensViewController: Scrollable {
+    func scrollOnTop() {
+        tableView.scrollOnTop()
     }
 }

@@ -51,6 +51,7 @@ final class NonFungibleTokensViewController: UIViewController {
                 self?.fetch()
             }
         )
+        title = viewModel.title
     }
 
     required init?(coder aDecoder: NSCoder) {

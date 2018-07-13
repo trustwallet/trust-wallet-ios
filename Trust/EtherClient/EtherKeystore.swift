@@ -152,7 +152,7 @@ class EtherKeystore: Keystore {
             } catch {
                 return completion(.failure(KeystoreError.duplicateAccount))
             }
-        case .watch(let address):
+        case .address(let address):
             let addressString = address.description
             guard !watchAddresses.contains(addressString) else {
                 return completion(.failure(.duplicateAccount))

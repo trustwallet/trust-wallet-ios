@@ -114,7 +114,7 @@ final class AccountsViewController: UITableViewController {
         confirm(
             title: NSLocalizedString("accounts.confirm.delete.title", value: "Are you sure you would like to delete this wallet?", comment: ""),
             message: NSLocalizedString("accounts.confirm.delete.message", value: "Make sure you have backup of your wallet.", comment: ""),
-            okTitle: NSLocalizedString("accounts.confirm.delete.okTitle", value: "Delete", comment: ""),
+            okTitle: R.string.localizable.delete(),
             okStyle: .destructive
         ) { [weak self] result in
             switch result {

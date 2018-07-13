@@ -6,7 +6,7 @@ import UIKit
 struct PassphraseViewModel {
 
     var title: String {
-        return NSLocalizedString("Backup Phrase", value: "Backup Phrase", comment: "")
+        return R.string.localizable.backupPhrase()
     }
 
     var backgroundColor: UIColor {

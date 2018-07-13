@@ -4,6 +4,7 @@ import Foundation
 import UIKit
 
 protocol WalletsCoordinatorDelegate: class {
+    func didSelect(wallet: WalletInfo, in coordinator: WalletsCoordinator)
     func didCancel(in coordinator: WalletsCoordinator)
 }
 
@@ -21,6 +22,7 @@ class WalletsCoordinator: Coordinator {
             target: self,
             action: #selector(dismiss)
         )
+        controller.delegate = self
         return controller
     }()
 
@@ -38,5 +40,11 @@ class WalletsCoordinator: Coordinator {
 
     func start() {
         navigationController.viewControllers = [rootViewController]
+    }
+}
+
+extension WalletsCoordinator: WalletsViewControllerDelegate {
+    func didSelect(wallet: WalletInfo, in controller: WalletsViewController) {
+        delegate?.didSelect(wallet: wallet, in: self)
     }
 }
