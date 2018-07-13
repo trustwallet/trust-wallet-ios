@@ -9,7 +9,7 @@ protocol WalletTitleViewDelegate: class {
 
 final class WalletTitleView: UIView {
 
-    var title: String = "Ethereum (Wallet 1)" {
+    var title: String = "" {
         didSet {
             button.setTitle(title, for: .normal)
         }
@@ -24,17 +24,24 @@ final class WalletTitleView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(title, for: .normal)
         button.addTarget(self, action: #selector(press), for: .touchUpInside)
+        button.layer.cornerRadius = 5
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.white.cgColor
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
 
         addSubview(button)
 
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: topAnchor),
-            button.leadingAnchor.constraint(equalTo: leadingAnchor),
             button.bottomAnchor.constraint(equalTo: bottomAnchor),
-            button.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            widthAnchor.constraint(equalToConstant: 200),
-            heightAnchor.constraint(equalToConstant: 34),
+            leadingAnchor.constraint(equalTo: button.leadingAnchor),
+            trailingAnchor.constraint(equalTo: button.trailingAnchor),
+
+            heightAnchor.constraint(equalToConstant: 32),
+            widthAnchor.constraint(lessThanOrEqualToConstant: 160),
         ])
     }
 

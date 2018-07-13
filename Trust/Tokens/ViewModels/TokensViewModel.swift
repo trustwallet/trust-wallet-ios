@@ -17,8 +17,12 @@ final class TokensViewModel: NSObject {
     var tokensNetwork: NetworkProtocol
     let tokens: Results<TokenObject>
     var tokensObserver: NotificationToken?
-    let address: Address
+    let wallet: WalletInfo
     let transactionStore: TransactionsStorage
+
+    var headerViewTitle: String {
+        return "Ethereum (ETH)"
+    }
 
     var headerBalance: String {
         return amount ?? "0.00"
@@ -44,10 +48,6 @@ final class TokensViewModel: NSObject {
         return .white
     }
 
-    var hasContent: Bool {
-        return !tokens.isEmpty
-    }
-
     var footerTitle: String {
         return NSLocalizedString("tokens.footer.label.title", value: "Tokens will appear automagically. Tap + to add manually.", comment: "")
     }
@@ -64,13 +64,13 @@ final class TokensViewModel: NSObject {
 
     init(
         config: Config = Config(),
-        address: Address,
+        wallet: WalletInfo,
         store: TokensDataStore,
         tokensNetwork: NetworkProtocol,
         transactionStore: TransactionsStorage
     ) {
         self.config = config
-        self.address = address
+        self.wallet = wallet
         self.store = store
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
@@ -131,7 +131,7 @@ final class TokensViewModel: NSObject {
 
     private func tokensInfo() {
         firstly {
-            tokensNetwork.tokensList(for: address)
+            tokensNetwork.tokensList(for: wallet.address)
         }.done { [weak self] tokens in
              self?.store.update(tokens: tokens, action: .updateInfo)
         }.catch { error in

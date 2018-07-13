@@ -13,6 +13,10 @@ final class NonFungibleTokenViewModel {
     var tokensObserver: NotificationToken?
     let address: Address
 
+    var title: String {
+        return R.string.localizable.collectibles()
+    }
+
     var headerBackgroundColor: UIColor {
         return UIColor(hex: "fafafa")
     }

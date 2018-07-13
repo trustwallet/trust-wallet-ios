@@ -9,8 +9,15 @@ class WalletsViewModel {
     private let networks: [WalletInfo] = []
     private let importedWallet: [WalletInfo] = []
 
+    let sections: [[WalletInfo]]
+
     init(keystore: Keystore) {
         self.keystore = keystore
+
+        sections = [
+            keystore.wallets,
+            keystore.wallets,
+        ]
     }
 
     var title: String {
@@ -22,11 +29,7 @@ class WalletsViewModel {
     }
 
     func numberOfRows(in section: Int) -> Int {
-        switch section {
-        case 0: return keystore.wallets.count //networks.count
-        case 1: return keystore.wallets.count //importedWallet.count
-        default: return 0
-        }
+        return sections[section].count
     }
 
     func titleForHeader(in section: Int) -> String? {
@@ -44,6 +47,7 @@ class WalletsViewModel {
     }
 
     func cellViewModel(for indexPath: IndexPath) -> WalletInfoViewModel {
-        return WalletInfoViewModel(wallet: keystore.wallets[0])
+        let wallet = sections[indexPath.section][indexPath.row]
+        return WalletInfoViewModel(wallet: wallet)
     }
 }

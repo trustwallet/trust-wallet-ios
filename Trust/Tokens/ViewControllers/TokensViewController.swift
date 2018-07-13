@@ -2,7 +2,6 @@
 
 import Foundation
 import UIKit
-import StatefulViewController
 import Result
 import TrustCore
 import RealmSwift
@@ -50,6 +49,12 @@ final class TokensViewController: UIViewController {
         return footerView
     }()
 
+    lazy var titleView: WalletTitleView = {
+        let view = WalletTitleView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
     weak var delegate: TokensViewControllerDelegate?
@@ -84,19 +89,10 @@ final class TokensViewController: UIViewController {
         tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
-        errorView = ErrorView(onRetry: { [weak self] in
-            self?.startLoading()
-            self?.fetch()
-        })
-        loadingView = LoadingView()
-        emptyView = EmptyView(
-            title: NSLocalizedString("emptyView.noTokens.label.title", value: "You haven't received any tokens yet!", comment: ""),
-            onRetry: { [weak self] in
-                self?.startLoading()
-                self?.fetch()
-        })
         tableView.tableHeaderView = header
         tableView.tableFooterView = footer
+        navigationItem.titleView = titleView
+        titleView.title = viewModel.headerViewTitle
         sheduleBalanceUpdate()
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
@@ -122,8 +118,7 @@ final class TokensViewController: UIViewController {
     }
 
     func fetch() {
-        self.startLoading()
-        self.viewModel.fetch()
+        viewModel.fetch()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -147,9 +142,7 @@ final class TokensViewController: UIViewController {
                 tableView.reloadData()
             case .update:
                 self?.tableView.reloadData()
-                self?.endLoading()
-            case .error(let error):
-                self?.endLoading(animated: true, error: error, completion: nil)
+            case .error: break
             }
             if strongSelf.refreshControl.isRefreshing {
                 strongSelf.refreshControl.endRefreshing()
@@ -187,11 +180,7 @@ final class TokensViewController: UIViewController {
         stopTokenObservation()
     }
 }
-extension TokensViewController: StatefulViewController {
-    func hasContent() -> Bool {
-        return viewModel.hasContent
-    }
-}
+
 extension TokensViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -238,5 +227,11 @@ extension TokensViewController: TokensViewModelDelegate {
     func refresh() {
         self.tableView.reloadData()
         self.refreshHeaderView()
+    }
+}
+
+extension TokensViewController: Scrollable {
+    func scrollOnTop() {
+        tableView.scrollOnTop()
     }
 }

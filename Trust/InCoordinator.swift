@@ -352,6 +352,11 @@ extension InCoordinator: BrowserCoordinatorDelegate {
 }
 
 extension InCoordinator: WalletsCoordinatorDelegate {
+    func didSelect(wallet: WalletInfo, in coordinator: WalletsCoordinator) {
+        coordinator.navigationController.dismiss(animated: true)
+        removeCoordinator(coordinator)
+        restart(for: wallet)
+    }
     func didCancel(in coordinator: WalletsCoordinator) {
         navigationController.dismiss(animated: true)
         removeCoordinator(coordinator)

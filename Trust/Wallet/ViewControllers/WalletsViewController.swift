@@ -2,13 +2,17 @@
 
 import UIKit
 
+protocol WalletsViewControllerDelegate: class {
+    func didSelect(wallet: WalletInfo, in controller: WalletsViewController)
+}
+
 class WalletsViewController: UITableViewController {
 
     let keystore: Keystore
-
     lazy var viewModel: WalletsViewModel = {
         return WalletsViewModel(keystore: keystore)
     }()
+    weak var delegate: WalletsViewControllerDelegate?
 
     init(keystore: Keystore) {
         self.keystore = keystore
@@ -49,7 +53,9 @@ class WalletsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewModel = self.viewModel.cellViewModel(for: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
+        delegate?.didSelect(wallet: viewModel.wallet, in: self)
     }
 
     required init?(coder aDecoder: NSCoder) {

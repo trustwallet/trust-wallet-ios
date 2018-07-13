@@ -20,8 +20,8 @@ class WalletTableViewCell: UITableViewCell {
     }
 
     func configure(for viewModel: WalletInfoViewModel) {
-        nameLabel.text = viewModel.nameTitle
-        subNameLabel.text = viewModel.title
+        nameLabel.text = viewModel.wallet.info.name
+        subNameLabel.text = viewModel.wallet.address.description
         tokenImageView.image = R.image.backup_warning()
     }
 }

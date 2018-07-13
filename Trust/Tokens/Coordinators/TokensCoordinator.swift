@@ -22,11 +22,16 @@ final class TokensCoordinator: Coordinator {
     let transactionsStore: TransactionsStorage
 
     lazy var tokensViewController: TokensViewController = {
-        let tokensViewModel = TokensViewModel(address: session.account.address, store: store, tokensNetwork: network, transactionStore: transactionsStore)
+        let tokensViewModel = TokensViewModel(wallet: session.account, store: store, tokensNetwork: network, transactionStore: transactionsStore)
         let controller = TokensViewController(viewModel: tokensViewModel)
         controller.footerView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
         controller.footerView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
         controller.delegate = self
+        controller.titleView.delegate = self
+        controller.navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken)),
+            UIBarButtonItem(image: R.image.collectibles(), style: .done, target: self, action: #selector(collectibles)),
+        ]
         return controller
     }()
     lazy var nonFungibleTokensViewController: NonFungibleTokensViewController = {
@@ -35,16 +40,10 @@ final class TokensCoordinator: Coordinator {
         controller.delegate = self
         return controller
     }()
-    lazy var masterViewController: WalletViewController = {
-        let masterViewController = WalletViewController(tokensViewController: self.tokensViewController, nonFungibleTokensViewController: self.nonFungibleTokensViewController)
-        masterViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(edit))
-        masterViewController.titleView.delegate = self
-        return masterViewController
-    }()
     weak var delegate: TokensCoordinatorDelegate?
 
-    lazy var rootViewController: WalletViewController = {
-        return self.masterViewController
+    lazy var rootViewController: TokensViewController = {
+        return self.tokensViewController
     }()
 
     init(
@@ -140,6 +139,10 @@ final class TokensCoordinator: Coordinator {
         let _ = network.search(token: contract.eip55String).done { [weak self] token in
             self?.store.add(tokens: [token])
         }
+    }
+
+    @objc private func collectibles() {
+        navigationController.pushViewController(nonFungibleTokensViewController, animated: true)
     }
 
     private func didSelectToken(_ token: NonFungibleTokenObject, with backgroundColor: UIColor) {
