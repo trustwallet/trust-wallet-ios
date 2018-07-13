@@ -29,16 +29,16 @@ final class AboutViewController: FormViewController {
             <<< link(
                 title: NSLocalizedString("settings.sourceCode.button.title", value: "Source Code", comment: ""),
                 value: "https://github.com/TrustWallet/trust-wallet-ios",
-                image: R.image.settings_open_source()
+                image: R.image.settings_colorful_source_code()
             )
 
             <<< link(
                 title: NSLocalizedString("settings.reportBug.button.title", value: "Report a Bug", comment: ""),
                 value: "https://github.com/TrustWallet/trust-wallet-ios/issues/new",
-                image: R.image.settings_bug()
+                image: R.image.settings_colorful_report_a_bug()
             )
 
-            +++ Section(NSLocalizedString("Powered By", value: "Powered By", comment: ""))
+            +++ Section(R.string.localizable.poweredBy())
 
             <<< link(
                 title: NSLocalizedString("Infura", value: "Infura", comment: ""),

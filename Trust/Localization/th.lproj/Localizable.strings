@@ -10,8 +10,8 @@
 "confirmPayment.to.label.title" = "ไปยัง";
 "Copy" = "สำเนา";
 "Empty" = "ว่างเปล่า";
-"More Details" = "รายละเอียดเพิ่มเติม";
-"Private Key" = "คีย์ส่วนตัว";
+"MoreDetails" = "รายละเอียดเพิ่มเติม";
+"PrivateKey" = "คีย์ส่วนตัว";
 "settings.network.test.label.title" = "ทดสอบ";
 "transaction.cell.sending.title" = "กำลังส่ง";
 "transaction.cell.sent.title" = "ส่งแล้ว";

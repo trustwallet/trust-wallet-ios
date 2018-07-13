@@ -28,9 +28,11 @@ final class TokensCoordinator: Coordinator {
         controller.footerView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
         controller.delegate = self
         controller.titleView.delegate = self
+        controller.navigationItem.leftBarButtonItems = [
+            UIBarButtonItem(image: R.image.collectibles(), style: .done, target: self, action: #selector(collectibles)),
+        ]
         controller.navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(edit)),
-            UIBarButtonItem(image: R.image.collectibles(), style: .done, target: self, action: #selector(collectibles)),
         ]
         return controller
     }()

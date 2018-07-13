@@ -39,7 +39,7 @@ final class ImportWalletViewController: FormViewController {
     var passwordRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.password)
     }
-    var watchRow: TextFloatLabelRow? {
+    var addressRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.watch)
     }
     var nameRow: TextFloatLabelRow? {
@@ -81,10 +81,10 @@ final class ImportWalletViewController: FormViewController {
             +++ Section()
             <<< SegmentedRow<String>(Values.segment) {
                 $0.options = [
+                    ImportSelectionType.mnemonic.title,
                     ImportSelectionType.keystore.title,
                     ImportSelectionType.privateKey.title,
-                    ImportSelectionType.mnemonic.title,
-                    ImportSelectionType.watch.title,
+                    ImportSelectionType.address.title,
                 ]
                 $0.value = ImportSelectionType.keystore.title
             }
@@ -135,9 +135,9 @@ final class ImportWalletViewController: FormViewController {
             }
 
             // Watch
-            +++ Section(footer: ImportSelectionType.watch.footerTitle) {
+            +++ Section(footer: ImportSelectionType.address.footerTitle) {
                 $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
-                    return self?.segmentRow?.value != ImportSelectionType.watch.title
+                    return self?.segmentRow?.value != ImportSelectionType.address.title
                 })
             }
             <<< AppFormAppearance.textFieldFloat(tag: Values.watch) {
@@ -178,7 +178,7 @@ final class ImportWalletViewController: FormViewController {
         let keystoreInput = keystoreRow?.value?.trimmed ?? ""
         let privateKeyInput = privateKeyRow?.value?.trimmed ?? ""
         let password = passwordRow?.value ?? ""
-        let watchInput = watchRow?.value?.trimmed ?? ""
+        let addressInput = addressRow?.value?.trimmed ?? ""
         let mnemonicInput = mnemonicRow?.value?.trimmed ?? ""
         let name = nameRow?.value?.trimmed ?? ""
         let words = mnemonicInput.components(separatedBy: " ").map { $0.trimmed.lowercased() }
@@ -194,9 +194,9 @@ final class ImportWalletViewController: FormViewController {
                 return .privateKey(privateKey: privateKeyInput)
             case .mnemonic:
                 return .mnemonic(words: words, password: password)
-            case .watch:
-                let address = Address(string: watchInput)! // Address validated by form view.
-                return .watch(address: address)
+            case .address:
+                let address = Address(string: addressInput)! // Address validated by form view.
+                return .address(address: address)
             }
         }()
 
@@ -258,10 +258,10 @@ final class ImportWalletViewController: FormViewController {
         case .privateKey:
             privateKeyRow?.value = string
             privateKeyRow?.reload()
-        case .watch:
+        case .address:
             guard let result = QRURLParser.from(string: string) else { return }
-            watchRow?.value = result.address
-            watchRow?.reload()
+            addressRow?.value = result.address
+            addressRow?.reload()
         case .mnemonic:
             mnemonicRow?.value = string
             mnemonicRow?.reload()
@@ -270,8 +270,8 @@ final class ImportWalletViewController: FormViewController {
 
     @objc func pasteAddressAction() {
         let value = UIPasteboard.general.string?.trimmed
-        watchRow?.value = value
-        watchRow?.reload()
+        addressRow?.value = value
+        addressRow?.reload()
     }
 
     required init?(coder aDecoder: NSCoder) {

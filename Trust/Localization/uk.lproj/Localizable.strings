@@ -1,5 +1,5 @@
 "Wallet" = "Гаманець";
-"myWalletAddress" = "Адреса Мого Гаманця ";
-"walletCreated" = "Гаманець створений";
+"MyWalletAddress" = "Адреса Мого Гаманця ";
+"WalletCreated" = "Гаманець створений";
 "Back" = "Назад";
-"Main Wallet" = "Основний Гаманець";
+"MainWallet" = "Основний Гаманець";

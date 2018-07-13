@@ -17,15 +17,7 @@ struct ExportPhraseViewModel {
     }
 
     var title: String {
-        return NSLocalizedString("Backup Phrase", value: "Backup Phrase", comment: "")
-    }
-
-    var headlineText: String {
-        return NSLocalizedString("export.warning.private.key", value: "Export at your own risk!", comment: "")
-    }
-
-    var warningText: String {
-        return NSLocalizedString("export.warningTwo.private.key", value: "Anyone with your backup phrase will have FULL access to your wallet!", comment: "")
+        return R.string.localizable.backupPhrase()
     }
 
     var backgroundColor: UIColor {

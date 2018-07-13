@@ -27,29 +27,29 @@ final class SupportViewController: FormViewController {
         form +++ Section()
 
             <<< link(
-                title: NSLocalizedString("settings.faq.button.title", value: "FAQ", comment: ""),
+                title: R.string.localizable.settingsFaqButtonTitle(),
                 value: "https://trustwalletapp.com/faq.html",
-                image: R.image.settings_faq()
+                image: R.image.settings_colorful_faq()
             )
 
             <<< link(
-                title: NSLocalizedString("settings.privacyPolicy.button.title", value: "Privacy Policy", comment: ""),
+                title: R.string.localizable.settingsPrivacyTitle(),
                 value: "https://trustwalletapp.com/privacy-policy.html",
-                image: R.image.settings_privacy_policy()
+                image: R.image.settings_colorful_privacy_and_policy()
             )
 
             <<< link(
-                title: NSLocalizedString("settings.termsOfService.button.title", value: "Terms of Service", comment: ""),
+                title: R.string.localizable.settingsTermsOfServiceButtonTitle(),
                 value: "https://trustwalletapp.com/terms.html",
-                image: R.image.settings_terms()
+                image: R.image.settings_colorful_terms_of_service()
             )
 
             <<< AppFormAppearance.button { button in
-                button.title = NSLocalizedString("settings.emailUsReadFAQ.button.title", value: "Email Us (Read FAQ first)", comment: "")
+                button.title = R.string.localizable.settingsEmailUsButtonTitle()
             }.onCellSelection { [weak self] _, _  in
                 self?.sendUsEmail()
             }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_email()
+                cell.imageView?.image = R.image.settings_colorful_email()
             }
     }
 
@@ -73,7 +73,7 @@ final class SupportViewController: FormViewController {
         let composerController = MFMailComposeViewController()
         composerController.mailComposeDelegate = self
         composerController.setToRecipients([Constants.supportEmail])
-        composerController.setSubject(NSLocalizedString("settings.feedback.email.title", value: "Trust Feedback", comment: ""))
+        composerController.setSubject(R.string.localizable.settingsFeedbackEmailTitle())
         composerController.setMessageBody(emailTemplate(), isHTML: false)
 
         if MFMailComposeViewController.canSendMail() {

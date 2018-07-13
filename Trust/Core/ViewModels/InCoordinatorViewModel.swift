@@ -28,14 +28,6 @@ struct InCoordinatorViewModel {
         )
     }
 
-    var transactionsBarItem: UITabBarItem {
-        return UITabBarItem(
-            title: NSLocalizedString("transactions.tabbar.item.title", value: "Transactions", comment: ""),
-            image: R.image.feed(),
-            selectedImage: nil
-        )
-    }
-
     var walletBarItem: UITabBarItem {
         return UITabBarItem(
             title: NSLocalizedString("wallet.navigation.title", value: "Wallet", comment: ""),
