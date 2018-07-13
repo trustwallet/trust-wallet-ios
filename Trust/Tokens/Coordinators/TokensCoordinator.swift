@@ -29,7 +29,7 @@ final class TokensCoordinator: Coordinator {
         controller.delegate = self
         controller.titleView.delegate = self
         controller.navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken)),
+            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(edit)),
             UIBarButtonItem(image: R.image.collectibles(), style: .done, target: self, action: #selector(collectibles)),
         ]
         return controller

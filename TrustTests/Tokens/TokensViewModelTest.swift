@@ -6,7 +6,7 @@ import BigInt
 
 class TokensViewModelTest: XCTestCase {
     let model = TokensViewModel(
-        address: .make(),
+        wallet: .make(),
         store: FakeTokensDataStore(),
         tokensNetwork: FakeTokensNetwork(
             provider: TrustProviderFactory.makeProvider(),
