@@ -141,9 +141,16 @@ final class TokensViewController: UIViewController {
             let tableView = strongSelf.tableView
             switch changes {
             case .initial:
-                tableView.reloadData()
-            case .update:
-                tableView.reloadData()
+                strongSelf.reload()
+            case .update(_, let deletions, let insertions, let updates):
+                UIView.setAnimationsEnabled(false)
+                let fromRow = { (row: Int) in return IndexPath(row: row, section: 0) }
+                tableView.beginUpdates()
+                tableView.insertRows(at: insertions.map(fromRow), with: .none)
+                tableView.reloadRows(at: updates.map(fromRow), with: .none)
+                tableView.deleteRows(at: deletions.map(fromRow), with: .none)
+                tableView.endUpdates()
+                UIView.setAnimationsEnabled(true)
             case .error:
                 break
             }
@@ -184,6 +191,14 @@ final class TokensViewController: UIViewController {
         tableView.tableFooterView = footer
         navigationItem.titleView = titleView
         titleView.title = viewModel.headerViewTitle
+    }
+
+    fileprivate func reload() {
+        UIView.setAnimationsEnabled(false)
+        tableView.beginUpdates()
+        tableView.reloadData()
+        tableView.endUpdates()
+        UIView.setAnimationsEnabled(true)
     }
 
     deinit {
@@ -239,7 +254,7 @@ extension TokensViewController: UITableViewDataSource {
 extension TokensViewController: TokensViewModelDelegate {
     func refresh() {
         refreshControl.endRefreshing()
-        tableView.reloadData()
+        reload()
         refreshHeaderView()
     }
 }
