@@ -7,7 +7,7 @@ import TrustCore
 final class ExportPhraseCoordinator: RootCoordinator {
 
     let keystore: Keystore
-    let account: Account
+    let account: Wallet
     let words: [String]
     var coordinators: [Coordinator] = []
     var rootViewController: UIViewController {
@@ -28,7 +28,7 @@ final class ExportPhraseCoordinator: RootCoordinator {
 
     init(
         keystore: Keystore,
-        account: Account,
+        account: Wallet,
         words: [String]
     ) {
         self.keystore = keystore
@@ -38,7 +38,7 @@ final class ExportPhraseCoordinator: RootCoordinator {
 }
 
 extension ExportPhraseCoordinator: PassphraseViewControllerDelegate {
-    func didPressVerify(in controller: PassphraseViewController, with account: Account, words: [String]) {
+    func didPressVerify(in controller: PassphraseViewController, with account: Wallet, words: [String]) {
         // Missing functionality
     }
 }

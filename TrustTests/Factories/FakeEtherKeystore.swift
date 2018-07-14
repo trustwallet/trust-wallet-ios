@@ -17,7 +17,7 @@ class FakeEtherKeystore: EtherKeystore {
         )
     }
 
-    override func createAccount(with password: String, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
+    override func createAccount(with password: String, completion: @escaping (Result<Wallet, KeystoreError>) -> Void) {
         completion(.success(.make()))
     }
 }

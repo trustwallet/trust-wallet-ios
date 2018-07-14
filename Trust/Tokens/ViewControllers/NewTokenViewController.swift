@@ -105,7 +105,7 @@ final class NewTokenViewController: FormViewController {
         let symbol = symbolRow?.value ?? ""
         let decimals = Int(decimalsRow?.value ?? "") ?? 0
 
-        guard let address = Address(string: contract) else {
+        guard let address = EthereumAddress(string: contract) else {
             return displayError(error: Errors.invalidAddress)
         }
 

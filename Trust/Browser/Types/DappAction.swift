@@ -36,7 +36,7 @@ extension DappAction {
     }
 
     private static func makeUnconfirmedTransaction(_ object: [String: DappCommandObjectValue], requester: DAppRequester) -> UnconfirmedTransaction {
-        let to = Address(string: object["to"]?.value ?? "")
+        let to = EthereumAddress(string: object["to"]?.value ?? "")
         let value = BigInt((object["value"]?.value ?? "0").drop0x, radix: 16) ?? BigInt()
         let nonce: BigInt? = {
             guard let value = object["nonce"]?.value else { return .none }

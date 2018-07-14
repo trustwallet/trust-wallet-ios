@@ -22,7 +22,7 @@ struct AccountViewModel {
     }
 
     var isWatch: Bool {
-        return wallet.wallet.type == .address(wallet.address)
+        return wallet.wallet.account == .none
     }
 
     var title: String {

@@ -5,7 +5,7 @@ import UIKit
 import TrustKeystore
 
 protocol PassphraseViewControllerDelegate: class {
-    func didPressVerify(in controller: PassphraseViewController, with account: Account, words: [String])
+    func didPressVerify(in controller: PassphraseViewController, with account: Wallet, words: [String])
 }
 
 enum PassphraseMode {
@@ -20,7 +20,7 @@ final class DarkPassphraseViewController: PassphraseViewController {
 class PassphraseViewController: UIViewController {
 
     let viewModel = PassphraseViewModel()
-    let account: Account
+    let account: Wallet
     let words: [String]
     lazy var actionButton: UIButton = {
         let button = Button(size: .large, style: .solid)
@@ -42,7 +42,7 @@ class PassphraseViewController: UIViewController {
     weak var delegate: PassphraseViewControllerDelegate?
 
     init(
-        account: Account,
+        account: Wallet,
         words: [String],
         mode: PassphraseMode = .showOnly
     ) {

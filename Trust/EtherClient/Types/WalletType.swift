@@ -5,9 +5,9 @@ import TrustCore
 import TrustKeystore
 
 enum WalletType {
-    case privateKey(Account)
-    case hd(Account)
-    case address(Address)
+    case privateKey(Wallet)
+    case hd(Wallet)
+    case address(EthereumAddress)
 }
 
 extension WalletType: Equatable {

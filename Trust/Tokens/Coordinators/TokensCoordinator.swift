@@ -82,7 +82,7 @@ final class TokensCoordinator: Coordinator {
 
     func editTokenViewController(token: TokenObject) -> NewTokenViewController {
         let token: ERC20Token? = {
-            guard let address = Address(string: token.contract) else {
+            guard let address = EthereumAddress(string: token.contract) else {
                 return .none
             }
             return ERC20Token(contract: address, name: token.name, symbol: token.symbol, decimals: token.decimals)
@@ -137,8 +137,8 @@ final class TokensCoordinator: Coordinator {
         delegate?.didPress(url: url, in: self)
     }
 
-    func addTokenContract(for contract: Address) {
-        let _ = network.search(token: contract.eip55String).done { [weak self] token in
+    func addTokenContract(for contract: EthereumAddress) {
+        let _ = network.search(token: contract.description).done { [weak self] token in
             self?.store.add(tokens: [token])
         }
     }

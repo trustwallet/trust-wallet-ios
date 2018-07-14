@@ -7,7 +7,7 @@ import BigInt
 
 //TODO: Replace with TrustCode once implemented
 public final class ERC721Encoder {
-    public static func encodeTransferFrom(from: Address, to: Address, tokenId: BigUInt) -> Data {
+    public static func encodeTransferFrom(from: EthereumAddress, to: EthereumAddress, tokenId: BigUInt) -> Data {
         let function = Function(name: "transferFrom", parameters: [.address, .address, .uint(bits: 256)])
         let encoder = ABIEncoder()
         try! encoder.encode(function: function, arguments: [from, to, tokenId])

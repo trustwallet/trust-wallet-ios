@@ -149,7 +149,7 @@ final class TokenViewCell: UITableViewCell {
         )
     }
 
-    private func observePendingTransactions(from storage: TransactionsStorage, with contract: Address) {
+    private func observePendingTransactions(from storage: TransactionsStorage, with contract: EthereumAddress) {
         pendingTokenTransactionsObserver = storage.transactions.observe { [weak self] _ in
             let items = storage.pendingObjects.filter { $0.contractAddress == contract }
             self?.containerForImageView.badge(text: items.isEmpty ? nil : String(items.count))

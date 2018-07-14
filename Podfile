@@ -23,7 +23,7 @@ target 'Trust' do
   pod 'Fabric'
   pod 'Crashlytics', '~> 3.10'
   pod 'Kingfisher', '~> 4.0'
-  pod 'TrustCore', '~> 0.0.7'
+  pod 'TrustCore', :git=>'https://github.com/TrustWallet/trust-core', :branch=>'master'
   pod 'TrustKeystore', :git=>'https://github.com/TrustWallet/trust-keystore', :branch=>'master'
   pod 'Branch'
   pod 'SAMKeychain'

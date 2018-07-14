@@ -3,9 +3,46 @@
 import Foundation
 @testable import Trust
 import TrustKeystore
+import TrustCore
 import Result
 
 struct FakeKeystore: Keystore {
+    func importPrivateKey(privateKey: PrivateKey, password: String) -> Result<WalletStruct, KeystoreError> {
+        return .failure(KeystoreError.accountNotFound)
+    }
+
+    func importWallet(type: ImportType, completion: @escaping (Result<WalletStruct, KeystoreError>) -> Void) {
+
+    }
+
+    func delete(wallet: WalletStruct) -> Result<Void, KeystoreError> {
+        return .success(())
+    }
+
+    func delete(wallet: WalletStruct, completion: @escaping (Result<Void, KeystoreError>) -> Void) {
+
+    }
+
+    func createAccount(with password: String, completion: @escaping (Result<Wallet, KeystoreError>) -> Void) {
+        //TODO: Implement
+    }
+
+    func importKeystore(value: String, password: String, newPassword: String, completion: @escaping (Result<WalletStruct, KeystoreError>) -> Void) {
+        //TODO: Implement
+    }
+
+    func createAccout(password: String) -> Wallet {
+        return .make()
+    }
+
+    func importKeystore(value: String, password: String, newPassword: String) -> Result<WalletStruct, KeystoreError> {
+        return .success(WalletStruct(type: .privateKey(.make())))
+    }
+
+    func exportMnemonic(wallet: Wallet, completion: @escaping (Result<[String], KeystoreError>) -> Void) {
+        //TODO: Implement
+    }
+
 
     var hasWallets: Bool {
         return wallets.count > 0
@@ -29,10 +66,6 @@ struct FakeKeystore: Keystore {
 
     func createAccount(with password: String, completion: @escaping (Result<Account, KeystoreError>) -> Void) {
         completion(.success(.make()))
-    }
-
-    func importWallet(type: ImportType, completion: @escaping (Result<Trust.Wallet, KeystoreError>) -> Void) {
-        //TODO: Implement
     }
 
     func keystore(for privateKey: String, password: String, completion: @escaping (Result<String, KeystoreError>) -> Void) {
@@ -70,15 +103,6 @@ struct FakeKeystore: Keystore {
     func exportMnemonic(account: Account, completion: @escaping (Result<[String], KeystoreError>) -> Void) {
         //TODO: Implement
         return completion(.success([]))
-    }
-
-    func delete(wallet: Trust.Wallet) -> Result<Void, KeystoreError> {
-        //TODO: Implement
-        return .failure(KeystoreError.failedToSignTransaction)
-    }
-
-    func delete(wallet: Trust.Wallet, completion: @escaping (Result<Void, KeystoreError>) -> Void) {
-        completion(.failure(KeystoreError.failedToSignTransaction))
     }
 
     func updateAccount(account: Account, password: String, newPassword: String) -> Result<Void, KeystoreError> {

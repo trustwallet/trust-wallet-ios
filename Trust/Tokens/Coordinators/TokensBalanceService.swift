@@ -14,6 +14,10 @@ public class TokensBalanceService {
         contract: Address,
         completion: @escaping (Result<BigInt, AnyError>) -> Void
     ) {
+        guard let address = address as? EthereumAddress else {
+            return
+        }
+
         let encoded = ERC20Encoder.encodeBalanceOf(address: address)
         let request = EtherServiceRequest(
             batch: BatchFactory().create(CallRequest(to: contract.description, data: encoded.hexEncoded))

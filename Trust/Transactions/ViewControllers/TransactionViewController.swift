@@ -12,11 +12,11 @@ protocol TransactionViewControllerDelegate: class {
 final class TransactionViewController: UIViewController {
 
     private lazy var viewModel: TransactionDetailsViewModel = {
-        return .init(
+        return TransactionDetailsViewModel(
             transaction: self.transaction,
             config: self.config,
             chainState: self.session.chainState,
-            currentWallet: self.session.account.wallet,
+            currentWallet: self.session.account,
             currencyRate: self.session.balanceCoordinator.currencyRate
         )
     }()

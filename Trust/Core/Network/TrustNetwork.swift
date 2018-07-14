@@ -32,13 +32,13 @@ final class TrustNetwork: NetworkProtocol {
     let APIProvider: MoyaProvider<TrustAPI>
     let config: Config
     let balanceService: TokensBalanceService
-    let account: Wallet
+    let account: WalletInfo
 
     required init(
         provider: MoyaProvider<TrustService>,
         APIProvider: MoyaProvider<TrustAPI>,
         balanceService: TokensBalanceService,
-        account: Wallet,
+        account: WalletInfo,
         config: Config
     ) {
         self.provider = provider
@@ -75,13 +75,13 @@ final class TrustNetwork: NetworkProtocol {
             symbol: rawTicker.symbol,
             price: rawTicker.price,
             percent_change_24h: rawTicker.percent_change_24h,
-            contract: Address(string: rawTicker.contract) ?? Address.zero, // This should not happen
+            contract: EthereumAddress(string: rawTicker.contract) ?? EthereumAddress.zero, // This should not happen
             tickersKey: tickersKey
         )
     }
 
     func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void) {
-        if contract == TokensDataStore.etherToken(for: config).address {
+        if contract.description == TokensDataStore.etherToken(for: config).address.description {
             balanceService.getEthBalance(for: account.address) { result in
                 switch result {
                 case .success(let balance):
@@ -281,7 +281,7 @@ final class TrustNetwork: NetworkProtocol {
                 case .success(let response):
                     do {
                         let tokens = try response.map([TokenObject].self)
-                        guard let token = tokens.first(where: { $0.address == Address(string: token) }) else {
+                        guard let token = tokens.first(where: { $0.address == EthereumAddress(string: token) }) else {
                              return seal.reject(TrustNetworkProtocolError.missingContractInfo)
                         }
                         seal.fulfill(token)

@@ -5,7 +5,7 @@ import TrustCore
 
 enum WalletAction {
     case none
-    case addToken(Address)
+    case addToken(EthereumAddress)
 }
 
 enum Tabs {

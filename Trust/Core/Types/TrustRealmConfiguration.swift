@@ -13,7 +13,7 @@ struct RealmConfiguration {
         return Realm.Configuration(fileURL: url)
     }
 
-    static func configuration(for account: Wallet, chainID: Int) -> Realm.Configuration {
+    static func configuration(for account: WalletStruct, chainID: Int) -> Realm.Configuration {
         var config = Realm.Configuration()
         let directory = config.fileURL!.deletingLastPathComponent()
         let oldURL = directory.appendingPathComponent("\(account.address.description.lowercased())-\(chainID).realm")

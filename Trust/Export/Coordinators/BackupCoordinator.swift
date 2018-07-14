@@ -37,7 +37,7 @@ final class BackupCoordinator: Coordinator {
     func finish(result: Result<Bool, AnyError>) {
         switch result {
         case .success:
-            delegate?.didFinish(wallet: Wallet(type: .privateKey(account)), in: self)
+            delegate?.didFinish(wallet: account.wallet!, in: self)
         case .failure:
             delegate?.didCancel(coordinator: self)
         }

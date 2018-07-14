@@ -15,14 +15,14 @@ final class WalletObject: Object {
         return "id"
     }
 
-    static func from(_ wallet: Wallet) -> WalletObject {
+    static func from(_ wallet: WalletStruct) -> WalletObject {
         let info = WalletObject()
         info.id = wallet.primaryKey
         return info
     }
 }
 
-extension Wallet {
+extension WalletStruct {
     var primaryKey: String {
         return description
     }

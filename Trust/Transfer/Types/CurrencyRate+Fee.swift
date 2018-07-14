@@ -5,7 +5,7 @@ import BigInt
 import TrustCore
 
 extension CurrencyRate {
-    func estimate(fee: String, with address: Address) -> Double? {
+    func estimate(fee: String, with address: EthereumAddress) -> Double? {
         guard let feeInDouble = Double(fee) else {
             return nil
         }

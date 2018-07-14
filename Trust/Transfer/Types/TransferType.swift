@@ -4,7 +4,7 @@ import Foundation
 import TrustCore
 
 enum TransferType {
-    case ether(destination: Address?)
+    case ether(destination: EthereumAddress?)
     case token(TokenObject)
     case nft(NonFungibleTokenObject)
     case dapp(DAppRequester)
@@ -23,10 +23,10 @@ extension TransferType {
     }
 
     // Used to fetch pricing for specific token
-    func contract() -> Address {
+    func contract() -> EthereumAddress {
         switch self {
         case .ether, .dapp:
-            return Address(string: TokensDataStore.etherToken(for: Config()).contract)!
+            return EthereumAddress(string: TokensDataStore.etherToken(for: Config()).contract)!
         case .nft(let token):
             return token.contractAddress
         case .token(let token):

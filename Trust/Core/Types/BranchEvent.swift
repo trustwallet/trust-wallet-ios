@@ -10,7 +10,7 @@ enum BranchEventName: String {
 
 enum BranchEvent {
     case openURL(URL)
-    case newToken(Address)
+    case newToken(EthereumAddress)
 
     var params: [String: String] {
         switch self {

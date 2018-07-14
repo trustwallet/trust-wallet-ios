@@ -12,7 +12,7 @@ protocol BalanceCoordinatorDelegate: class {
 }
 
 final class BalanceCoordinator {
-    let account: Wallet
+    let account: WalletInfo
     let storage: TokensDataStore
     let config: Config
     var balance: Balance?
@@ -26,7 +26,7 @@ final class BalanceCoordinator {
         )
     }
     init(
-        account: Wallet,
+        account: WalletInfo,
         config: Config,
         storage: TokensDataStore
     ) {

@@ -87,7 +87,7 @@ final class Transaction: Object, Decodable {
         let operations = try container.decode([LocalizedOperationObject].self, forKey: .operations)
 
         guard
-            let fromAddress = Address(string: from) else {
+            let fromAddress = EthereumAddress(string: from) else {
                 let context = DecodingError.Context(codingPath: [TransactionCodingKeys.from],
                                                     debugDescription: "Address can't be decoded as a TrustKeystore.Address")
                 throw DecodingError.dataCorrupted(context)
@@ -122,19 +122,19 @@ final class Transaction: Object, Decodable {
         return TransactionState(int: self.internalState)
     }
 
-    var toAddress: Address? {
-        return Address(string: to)
+    var toAddress: EthereumAddress? {
+        return EthereumAddress(string: to)
     }
 
-    var fromAddress: Address? {
-        return Address(string: from)
+    var fromAddress: EthereumAddress? {
+        return EthereumAddress(string: from)
     }
 
-    var contractAddress: Address {
+    var contractAddress: EthereumAddress {
         guard
             let operation = operation,
             let contract = operation.contract,
-            let contractAddress = Address(string: contract) else {
+            let contractAddress = EthereumAddress(string: contract) else {
             return TokensDataStore.etherToken().address
         }
         return contractAddress

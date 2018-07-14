@@ -117,7 +117,7 @@ class TokensDataStore {
     }
 
     //Background update of the Realm model.
-    func update(balance: BigInt, for address: Address) {
+    func update(balance: BigInt, for address: EthereumAddress) {
         if let tokenToUpdate = enabledObject.first(where: { $0.contract == address.description }) {
             let tokenBalance = self.getBalance(for: tokenToUpdate)
 
@@ -128,7 +128,7 @@ class TokensDataStore {
         }
     }
 
-    func update(balances: [Address: BigInt]) {
+    func update(balances: [EthereumAddress: BigInt]) {
         for balance in balances {
             let token = realm.object(ofType: TokenObject.self, forPrimaryKey: balance.key.description)
             let tokenBalance = self.getBalance(for: token)
@@ -140,7 +140,7 @@ class TokensDataStore {
         }
     }
 
-    private func objectToUpdate(for balance: (key: Address, value: BigInt), tokenBalance: Double) -> [String: Any] {
+    private func objectToUpdate(for balance: (key: EthereumAddress, value: BigInt), tokenBalance: Double) -> [String: Any] {
         return [
             "contract": balance.key.description,
             "value": balance.value.description,

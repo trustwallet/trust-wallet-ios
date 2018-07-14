@@ -18,7 +18,6 @@ final class AccountsCoordinator: Coordinator {
     let keystore: Keystore
     let session: WalletSession
     let balanceCoordinator: TokensBalanceService
-    let ensManager: ENSManager
     var coordinators: [Coordinator] = []
 
     lazy var accountsViewController: AccountsViewController = {
@@ -38,15 +37,13 @@ final class AccountsCoordinator: Coordinator {
         navigationController: NavigationController,
         keystore: Keystore,
         session: WalletSession,
-        balanceCoordinator: TokensBalanceService,
-        ensManager: ENSManager
+        balanceCoordinator: TokensBalanceService
     ) {
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.keystore = keystore
         self.session = session
         self.balanceCoordinator = balanceCoordinator
-        self.ensManager = ensManager
     }
 
     func start() {
@@ -77,9 +74,9 @@ final class AccountsCoordinator: Coordinator {
         navigationController.pushViewController(controller, animated: true)
     }
 
-    func exportMnemonic(for account: Account) {
+    func exportMnemonic(for account: Wallet) {
         navigationController.topViewController?.displayLoading()
-        keystore.exportMnemonic(account: account) { [weak self] result in
+        keystore.exportMnemonic(wallet: account) { [weak self] result in
             self?.navigationController.topViewController?.hideLoading()
             switch result {
             case .success(let words):
@@ -103,7 +100,7 @@ final class AccountsCoordinator: Coordinator {
         }
     }
 
-    func exportMnemonicCoordinator(for account: Account, words: [String]) {
+    func exportMnemonicCoordinator(for account: Wallet, words: [String]) {
         let coordinator = ExportPhraseCoordinator(
             keystore: keystore,
             account: account,

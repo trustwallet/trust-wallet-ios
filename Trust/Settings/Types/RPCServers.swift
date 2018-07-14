@@ -80,8 +80,8 @@ enum RPCServer {
         }
     }
 
-    var address: Address {
-        return Address.zero
+    var address: EthereumAddress {
+        return EthereumAddress.zero
     }
 
     var decimals: Int {
@@ -142,17 +142,17 @@ enum RPCServer {
         return URL(string: urlString)!
     }
 
-    var ensContract: Address {
+    var ensContract: EthereumAddress {
         // https://docs.ens.domains/en/latest/introduction.html#ens-on-ethereum
         switch self {
         case .main:
-            return Address(string: "0x314159265dd8dbb310642f98f50c066173c1259b")!
+            return EthereumAddress(string: "0x314159265dd8dbb310642f98f50c066173c1259b")!
         case .ropsten:
-            return Address(string: "0x112234455c3a32fd11230c42e7bccd4a84e02010")!
+            return EthereumAddress(string: "0x112234455c3a32fd11230c42e7bccd4a84e02010")!
         case .rinkeby:
-            return Address(string: "0xe7410170f87102df0055eb195163a03b7f2bff4a")!
+            return EthereumAddress(string: "0xe7410170f87102df0055eb195163a03b7f2bff4a")!
         case .classic, .poa, .kovan, .callisto, .sokol, .custom, .gochain:
-            return Address.zero
+            return EthereumAddress.zero
         }
     }
 

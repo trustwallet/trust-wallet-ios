@@ -5,8 +5,8 @@ import UIKit
 import TrustKeystore
 
 protocol VerifyPassphraseViewControllerDelegate: class {
-    func didFinish(in controller: VerifyPassphraseViewController, with account: Account)
-    func didSkip(in controller: VerifyPassphraseViewController, with account: Account)
+    func didFinish(in controller: VerifyPassphraseViewController, with account: Wallet)
+    func didSkip(in controller: VerifyPassphraseViewController, with account: Wallet)
 }
 
 enum VerifyStatus {
@@ -70,7 +70,7 @@ class VerifyPassphraseViewController: UIViewController {
 
     let contentView = PassphraseView()
     let proposalView = PassphraseView()
-    let account: Account
+    let account: Wallet
     let words: [String]
     let shuffledWords: [String]
     weak var delegate: VerifyPassphraseViewControllerDelegate?
@@ -112,7 +112,7 @@ class VerifyPassphraseViewController: UIViewController {
     }
 
     init(
-        account: Account,
+        account: Wallet,
         words: [String]
     ) {
         self.account = account
@@ -121,7 +121,7 @@ class VerifyPassphraseViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Skip", style: .plain, target: self, action: #selector(skipAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: R.string.localizable.skip(), style: .plain, target: self, action: #selector(skipAction))
 
         view.backgroundColor = .white
 

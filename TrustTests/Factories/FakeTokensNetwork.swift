@@ -19,10 +19,10 @@ class FakeTokensNetwork: NetworkProtocol {
     var provider: MoyaProvider<TrustService>
     var APIProvider: MoyaProvider<TrustAPI>
     var balanceService: TokensBalanceService
-    var account: Trust.Wallet
+    var account: Trust.WalletInfo
     var config: Config
     
-    required init(provider: MoyaProvider<TrustService>, APIProvider: MoyaProvider<TrustAPI>, balanceService: TokensBalanceService, account: Trust.Wallet, config: Config) {
+    required init(provider: MoyaProvider<TrustService>, APIProvider: MoyaProvider<TrustAPI>, balanceService: TokensBalanceService, account: Trust.WalletInfo, config: Config) {
         self.provider = provider
         self.APIProvider = APIProvider
         self.balanceService = balanceService

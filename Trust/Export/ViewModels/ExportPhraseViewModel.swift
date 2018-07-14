@@ -6,11 +6,11 @@ import TrustKeystore
 struct ExportPhraseViewModel {
 
     let keystore: Keystore
-    let account: Account
+    let account: Wallet
 
     init(
         keystore: Keystore,
-        account: Account
+        account: Wallet
     ) {
         self.keystore = keystore
         self.account = account

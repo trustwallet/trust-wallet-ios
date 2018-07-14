@@ -24,7 +24,7 @@ protocol BrowserViewControllerDelegate: class {
 final class BrowserViewController: UIViewController {
 
     private var myContext = 0
-    let account: Wallet
+    let account: WalletInfo
     let sessionConfig: Config
 
     private struct Keys {
@@ -81,7 +81,7 @@ final class BrowserViewController: UIViewController {
     }()
 
     init(
-        account: Wallet,
+        account: WalletInfo,
         config: Config
     ) {
         self.account = account

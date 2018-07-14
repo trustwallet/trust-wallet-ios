@@ -21,7 +21,7 @@ final class RequestCoordinator: RootCoordinator {
         return UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
     }()
     private lazy var viewModel: RequestViewModel = {
-        return .init(account: session.account.wallet, config: session.config, token: token)
+        return RequestViewModel(account: session.account, config: session.config, token: token)
     }()
     private let token: TokenObject
 

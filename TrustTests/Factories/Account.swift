@@ -7,11 +7,14 @@ import TrustKeystore
 
 extension Account {
     static func make(
-        address: Address = .make(),
-        type: AccountType = .encryptedKey,
-        url: URL = URL(fileURLWithPath: "")
+        address: EthereumAddress = .make(),
+        derivationPath: DerivationPath = Blockchain.ethereum.derivationPath(at: 0)
     ) -> Account {
-        return Account(address: address, type: type, url: url)
+        return Account(
+            wallet: .none,
+            address: address,
+            derivationPath: derivationPath
+        )
     }
 }
 
