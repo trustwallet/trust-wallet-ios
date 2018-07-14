@@ -7,14 +7,14 @@ import TrustCore
 class RequestViewModelTests: XCTestCase {
     
     func testMyAddressText() {
-        let account: Trust.Wallet = .make()
+        let account: WalletInfo = .make()
         let viewModel = RequestViewModel(account: account, config: .make(), token: .make())
 
         XCTAssertEqual(account.address.description, viewModel.myAddressText)
     }
 
     func testShareMyAddressText() {
-        let account: Trust.Wallet = .make()
+        let account: WalletInfo = .make()
         let config: Config = .make()
         let viewModel = RequestViewModel(account: account, config: .make(), token: .make())
 

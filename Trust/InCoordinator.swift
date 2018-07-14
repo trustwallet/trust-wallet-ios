@@ -90,13 +90,13 @@ class InCoordinator: Coordinator {
             provider: TrustProviderFactory.makeProvider(),
             APIProvider: TrustProviderFactory.makeAPIProvider(),
             balanceService: balanceCoordinator,
-            account: account.wallet,
+            account: account,
             config: config
         )
-        let balance =  BalanceCoordinator(account: account.wallet, config: config, storage: tokensStorage)
+        let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
         let transactionsStorage = TransactionsStorage(
             realm: realm,
-            account: account.wallet
+            account: account
         )
         let nonceProvider = GetNonceProvider(storage: transactionsStorage)
         let session = WalletSession(
@@ -134,8 +134,7 @@ class InCoordinator: Coordinator {
             storage: transactionsStorage,
             walletStorage: walletStorage,
             balanceCoordinator: balanceCoordinator,
-            sharedRealm: sharedRealm,
-            ensManager: ENSManager(realm: realm, config: config)
+            sharedRealm: sharedRealm
         )
         settingsCoordinator.rootViewController.tabBarItem = viewModel.settingsBarItem
         settingsCoordinator.delegate = self
@@ -230,7 +229,7 @@ class InCoordinator: Coordinator {
                 session: session,
                 keystore: keystore,
                 storage: tokenStorage,
-                account: account
+                account: account.accounts[0]
             )
             coordinator.delegate = self
             addCoordinator(coordinator)
@@ -248,7 +247,8 @@ class InCoordinator: Coordinator {
     }
 
     private func handlePendingTransaction(transaction: SentTransaction) {
-        let transaction = SentTransaction.from(from: initialWallet.address, transaction: transaction)
+        guard let address = initialWallet.address as? EthereumAddress else { return }
+        let transaction = SentTransaction.from(from: address, transaction: transaction)
         tokensCoordinator?.transactionsStore.add([transaction])
     }
 

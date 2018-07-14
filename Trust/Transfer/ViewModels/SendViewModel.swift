@@ -67,7 +67,7 @@ struct SendViewModel {
     var symbol: String {
         return transferType.symbol(server: config.server)
     }
-    var destinationAddress: Address {
+    var destinationAddress: EthereumAddress {
         return transferType.contract()
     }
     var backgroundColor: UIColor {

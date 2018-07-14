@@ -1,10 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
+import TrustKeystore
 import TrustCore
 
 struct WalletInfo {
-    let wallet: Wallet
+    let wallet: WalletStruct
     let info: WalletObject
 
     var address: Address {
@@ -12,7 +13,7 @@ struct WalletInfo {
     }
 
     init(
-        wallet: Wallet,
+        wallet: WalletStruct,
         info: WalletObject? = .none
     ) {
         self.wallet = wallet

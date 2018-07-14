@@ -34,10 +34,10 @@ class TransactionsStorage {
 
     private var transactionsObserver: NotificationToken?
 
-    let account: Wallet
+    let account: WalletInfo
     init(
         realm: Realm,
-        account: Wallet
+        account: WalletInfo
     ) {
         self.realm = realm
         self.account = account
@@ -65,7 +65,7 @@ class TransactionsStorage {
         let tokens: [Token] = transactions.compactMap { transaction in
             guard
                 let operation = transaction.localizedOperations.first,
-                let contract = Address(string: operation.contract ?? ""),
+                let contract = EthereumAddress(string: operation.contract ?? ""),
                 let name = operation.name,
                 let symbol = operation.symbol
                 else { return nil }

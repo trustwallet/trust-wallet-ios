@@ -2,8 +2,9 @@
 
 import Foundation
 import TrustCore
+import TrustKeystore
 
-struct Wallet {
+struct WalletStruct {
 
     struct Keys {
         static let walletPrivateKey = "wallet-private-key-"
@@ -15,29 +16,35 @@ struct Wallet {
 
     var address: Address {
         switch type {
-        case .privateKey(let account):
-            return account.address
-        case .hd(let account):
-            return account.address
+        case .privateKey(let account), .hd(let account):
+            return account.accounts[0].address
         case .address(let address):
             return address
+        }
+    }
+
+    var account: Account? {
+        switch type {
+        case .privateKey(let account), .hd(let account):
+            return account.accounts[0]
+        case .address: return .none
         }
     }
 
     var description: String {
         switch self.type {
         case .privateKey(let account):
-            return Keys.walletPrivateKey + account.address.description
+            return Keys.walletPrivateKey + address.description
         case .hd(let account):
-            return Keys.walletHD + account.address.description
+            return Keys.walletHD + address.description
         case .address(let address):
             return Keys.address + address.description
         }
     }
 }
 
-extension Wallet: Equatable {
-    static func == (lhs: Wallet, rhs: Wallet) -> Bool {
+extension WalletStruct: Equatable {
+    static func == (lhs: WalletStruct, rhs: WalletStruct) -> Bool {
         return lhs.description == rhs.description
     }
 }

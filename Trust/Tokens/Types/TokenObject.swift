@@ -54,7 +54,7 @@ final class TokenObject: Object, Decodable {
         let name = try container.decode(String.self, forKey: .name)
         let symbol = try container.decode(String.self, forKey: .symbol)
         let decimals = try container.decode(Int.self, forKey: .decimals)
-        if let convertedAddress = Address(string: contract)?.description {
+        if let convertedAddress = EthereumAddress(string: contract)?.description {
             contract = convertedAddress
         }
         self.init(contract: contract, name: name, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
@@ -72,8 +72,8 @@ final class TokenObject: Object, Decodable {
         super.init(realm: realm, schema: schema)
     }
 
-    var address: Address {
-        return Address(string: contract)!
+    var address: EthereumAddress {
+        return EthereumAddress(string: contract)!
     }
 
     var valueBigInt: BigInt {
@@ -115,7 +115,7 @@ final class TokenObject: Object, Decodable {
         return "\(self.name) (\(self.symbol))"
     }
 
-    var contractAddress: Address {
-        return Address(string: contract)!
+    var contractAddress: EthereumAddress {
+        return EthereumAddress(string: contract)!
     }
 }

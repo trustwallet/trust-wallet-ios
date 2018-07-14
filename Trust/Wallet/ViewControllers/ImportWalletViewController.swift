@@ -166,7 +166,7 @@ final class ImportWalletViewController: FormViewController {
             }
     }
 
-    func didImport(account: Wallet, name: String) {
+    func didImport(account: WalletStruct, name: String) {
         let walletInfo = WalletInfo(wallet: account)
         delegate?.didImportAccount(account: walletInfo, fields: [.name(name)], in: self)
     }
@@ -195,7 +195,7 @@ final class ImportWalletViewController: FormViewController {
             case .mnemonic:
                 return .mnemonic(words: words, password: password)
             case .address:
-                let address = Address(string: addressInput)! // Address validated by form view.
+                let address = EthereumAddress(string: addressInput)! // EthereumAddress validated by form view.
                 return .address(address: address)
             }
         }()
@@ -213,7 +213,7 @@ final class ImportWalletViewController: FormViewController {
 
     @objc func demo() {
         //Used for taking screenshots to the App Store by snapshot
-        let demoWallet = Wallet(type: .address(Address(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")!))
+        let demoWallet = WalletStruct(type: .address(EthereumAddress(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")!))
         let walletInfo = WalletInfo(wallet: demoWallet, info: WalletObject.from(demoWallet))
         delegate?.didImportAccount(account: walletInfo, fields: [], in: self)
     }

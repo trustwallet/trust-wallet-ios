@@ -10,7 +10,7 @@ struct SentTransaction {
 }
 
 extension SentTransaction {
-    static func from(from: Address, transaction: SentTransaction) -> Transaction {
+    static func from(from: EthereumAddress, transaction: SentTransaction) -> Transaction {
         return Transaction(
             id: transaction.id,
             blockNumber: 0,

@@ -6,13 +6,13 @@ import TrustCore
 
 struct MonetaryAmountViewModel {
     let amount: String
-    let address: Address?
+    let address: EthereumAddress?
     let currencyRate: CurrencyRate?
     let formatter: EtherNumberFormatter
 
     init(
         amount: String,
-        address: Address,
+        address: EthereumAddress,
         currencyRate: CurrencyRate? = nil,
         formatter: EtherNumberFormatter = .full
     ) {

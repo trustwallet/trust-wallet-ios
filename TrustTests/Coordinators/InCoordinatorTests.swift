@@ -27,8 +27,8 @@ class InCoordinatorTests: XCTestCase {
     }
 
     func testChangeRecentlyUsedAccount() {
-        let account1: Trust.WalletInfo = WalletInfo(wallet: .make(type: .address(Address(string: "0x1000000000000000000000000000000000000000")!)))
-        let account2: Trust.WalletInfo = WalletInfo(wallet: .make(type: .address(Address(string: "0x2000000000000000000000000000000000000000")!)))
+        let account1: Trust.WalletInfo = WalletInfo(wallet: .make(type: .address(EthereumAddress(string: "0x1000000000000000000000000000000000000000")!)))
+        let account2: Trust.WalletInfo = WalletInfo(wallet: .make(type: .address(EthereumAddress(string: "0x2000000000000000000000000000000000000000")!)))
 
         let keystore = FakeKeystore(
             wallets: [

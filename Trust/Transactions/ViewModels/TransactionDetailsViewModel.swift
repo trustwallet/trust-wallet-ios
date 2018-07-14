@@ -34,7 +34,7 @@ struct TransactionDetailsViewModel {
         transaction: Transaction,
         config: Config,
         chainState: ChainState,
-        currentWallet: Wallet,
+        currentWallet: WalletInfo,
         currencyRate: CurrencyRate?
     ) {
         self.transaction = transaction
@@ -93,7 +93,7 @@ struct TransactionDetailsViewModel {
 
     var address: String {
         if transaction.toAddress == nil {
-            return Address.zero.description
+            return EthereumAddress.zero.description
         }
         if transactionViewModel.direction == .incoming {
             return transaction.from

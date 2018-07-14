@@ -4,12 +4,12 @@ import TrustCore
 
 final class TokenBalanceOperation: TrustOperation {
     private var network: NetworkProtocol
-    private let address: Address
+    private let address: EthereumAddress
     private let store: TokensDataStore
 
     init(
         network: NetworkProtocol,
-        address: Address,
+        address: EthereumAddress,
         store: TokensDataStore
         ) {
         self.network = network

@@ -6,7 +6,7 @@ import UIKit
 import TrustCore
 
 enum WalletInfoType {
-    case exportRecoveryPhrase(Account)
+    case exportRecoveryPhrase(Wallet)
     case exportPrivateKey(Account)
     case exportKeystore(Account)
     case copyAddress(Address)
@@ -48,7 +48,7 @@ extension WalletInfoType: Equatable {
         case (let .exportPrivateKey(lhs), let .exportPrivateKey(rhs)):
             return lhs == rhs
         case (let .copyAddress(lhs), let .copyAddress(rhs)):
-            return lhs == rhs
+            return lhs.data == rhs.data
         case (_, .exportRecoveryPhrase),
              (_, .exportKeystore),
              (_, .exportPrivateKey),

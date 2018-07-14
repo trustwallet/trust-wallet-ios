@@ -17,7 +17,7 @@ final class CoinTicker: Object, Decodable {
         symbol: String = "",
         price: String = "",
         percent_change_24h: String = "",
-        contract: Address,
+        contract: EthereumAddress,
         tickersKey: String = ""
     ) {
         self.init()
@@ -69,7 +69,7 @@ extension CoinTicker {
 }
 
 struct CoinTickerKeyMaker {
-    static func makePrimaryKey(symbol: String, contract: Address, currencyKey: String) -> String {
+    static func makePrimaryKey(symbol: String, contract: EthereumAddress, currencyKey: String) -> String {
         return "\(symbol)_\(contract)_\(currencyKey)"
     }
 

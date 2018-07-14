@@ -11,8 +11,8 @@ import APIKit
 public struct PreviewTransaction {
     let value: BigInt
     let account: Account
-    let address: Address?
-    let contract: Address?
+    let address: EthereumAddress?
+    let contract: EthereumAddress?
     let nonce: BigInt
     let data: Data
     let gasPrice: BigInt
@@ -61,14 +61,16 @@ final class TransactionConfigurator {
     }
 
     private static func data(for transaction: UnconfirmedTransaction, from: Address) -> Data {
+        guard let from = from as? EthereumAddress else { return Data() }
+        guard let to = transaction.to else { return Data() }
         switch transaction.transferType {
         case .ether, .dapp:
             return transaction.data ?? Data()
         case .token:
-            return ERC20Encoder.encodeTransfer(to: transaction.to!, tokens: transaction.value.magnitude)
+            return ERC20Encoder.encodeTransfer(to: to, tokens: transaction.value.magnitude)
         case .nft(let token):
             let tokenID = BigUInt(token.id) ?? 0
-            return ERC721Encoder.encodeTransferFrom(from: from, to: transaction.to!, tokenId: tokenID)
+            return ERC721Encoder.encodeTransferFrom(from: from, to: to, tokenId: tokenID)
         }
     }
 
@@ -187,7 +189,7 @@ final class TransactionConfigurator {
             case .token, .nft: return 0
             }
         }()
-        let address: Address? = {
+        let address: EthereumAddress? = {
             switch transaction.transferType {
             case .ether, .dapp: return transaction.to
             case .token(let token): return token.contractAddress

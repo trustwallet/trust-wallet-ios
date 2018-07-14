@@ -6,12 +6,12 @@ import UIKit
 
 struct RequestViewModel {
 
-    let account: Wallet
+    let account: WalletInfo
     let config: Config
     let token: TokenObject
 
     init(
-        account: Wallet,
+        account: WalletInfo,
         config: Config,
         token: TokenObject
     ) {

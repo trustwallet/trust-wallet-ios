@@ -11,7 +11,7 @@ class WalletStorage {
         self.realm = realm
     }
 
-    func get(for wallet: Wallet) -> WalletObject {
+    func get(for wallet: WalletStruct) -> WalletObject {
         let firstWallet = realm.objects(WalletObject.self).filter { $0.id == wallet.primaryKey }.first
         guard let foundWallet = firstWallet else {
             return WalletObject.from(wallet)

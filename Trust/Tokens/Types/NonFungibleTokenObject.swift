@@ -89,7 +89,7 @@ final class NonFungibleTokenObject: Object, Decodable {
         return URL(string: externalPath)
     }
 
-    var contractAddress: Address {
-        return Address(string: contract)!
+    var contractAddress: EthereumAddress {
+        return EthereumAddress(string: contract)!
     }
 }

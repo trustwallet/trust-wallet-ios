@@ -13,24 +13,24 @@ class TypedMessageEncodingTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        let privateKeyResult = keystore.convertPrivateKeyToKeystoreFile(privateKey: "0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318", passphrase: TestKeyStore.password)
-        guard case let .success(keystoreString) = privateKeyResult else {
-            return XCTFail()
-        }
+        let keystore = FakeEtherKeystore()
 
-        let result = keystore.importKeystore(
-            value: keystoreString.jsonString!,
-            password: TestKeyStore.password,
-            newPassword: TestKeyStore.password
-        )
+        let privateKey = PrivateKey(data: Data(hexString: "0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318")!)!
+        let result = keystore.importPrivateKey(privateKey: privateKey, password: TestKeyStore.password)
 
         guard case let .success(account) = result else {
             return XCTFail()
         }
-        self.account = account
+        self.account = account.account!
     }
 
     func testValue_none() {
+        let privateKey = PrivateKey(data: Data(hexString: "0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318")!)!
+        let result = keystore.importPrivateKey(privateKey: privateKey, password: TestKeyStore.password)
+        guard case let .success(account1) = result else {
+            return XCTFail()
+        }
+
         let typedData = EthTypedData(type: "string", name: "test test", value: .none)
         let signResult = keystore.signTypedMessage([typedData], for: account)
         guard case let .success(data) = signResult else {

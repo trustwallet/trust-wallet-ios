@@ -169,7 +169,7 @@ class SendViewController: FormViewController {
         guard errors.isEmpty else { return }
         let addressString = addressRow?.value?.trimmed ?? ""
         let amountString = viewModel.amount
-        guard let address = Address(string: addressString) else {
+        guard let address = EthereumAddress(string: addressString) else {
             return displayError(error: Errors.invalidAddress)
         }
         let parsedValue: BigInt? = {

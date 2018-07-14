@@ -46,10 +46,10 @@ extension Transaction {
         transaction: PendingTransaction
     ) -> Transaction? {
         guard
-            let from = Address(string: transaction.from) else {
+            let from = EthereumAddress(string: transaction.from) else {
                 return .none
         }
-        let to = Address(string: transaction.to)?.description ?? transaction.to
+        let to = EthereumAddress(string: transaction.to)?.description ?? transaction.to
         return Transaction(
             id: transaction.hash,
             blockNumber: Int(transaction.blockNumber) ?? 0,

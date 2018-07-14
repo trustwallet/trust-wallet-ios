@@ -5,7 +5,7 @@ import Foundation
 
 extension WalletInfo {
     static func make(
-        wallet: Wallet = .make(),
+        wallet: WalletStruct = .make(),
         info: WalletObject = .make()
     ) -> WalletInfo {
         return WalletInfo(wallet: wallet, info: info)

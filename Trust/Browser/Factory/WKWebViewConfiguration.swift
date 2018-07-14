@@ -6,7 +6,7 @@ import JavaScriptCore
 
 extension WKWebViewConfiguration {
 
-    static func make(for account: Wallet, with sessionConfig: Config, in messageHandler: WKScriptMessageHandler) -> WKWebViewConfiguration {
+    static func make(for account: WalletInfo, with sessionConfig: Config, in messageHandler: WKScriptMessageHandler) -> WKWebViewConfiguration {
         let address = account.address.description.lowercased()
         let config = WKWebViewConfiguration()
         var js = ""
