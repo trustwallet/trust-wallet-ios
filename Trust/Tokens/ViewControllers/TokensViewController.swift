@@ -142,15 +142,8 @@ final class TokensViewController: UIViewController {
             switch changes {
             case .initial:
                 strongSelf.reload()
-            case .update(_, let deletions, let insertions, let updates):
-                UIView.setAnimationsEnabled(false)
-                let fromRow = { (row: Int) in return IndexPath(row: row, section: 0) }
-                tableView.beginUpdates()
-                tableView.insertRows(at: insertions.map(fromRow), with: .none)
-                tableView.reloadRows(at: updates.map(fromRow), with: .none)
-                tableView.deleteRows(at: deletions.map(fromRow), with: .none)
-                tableView.endUpdates()
-                UIView.setAnimationsEnabled(true)
+            case .update:
+                tableView.reloadData()
             case .error:
                 break
             }
