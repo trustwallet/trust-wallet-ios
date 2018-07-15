@@ -58,11 +58,8 @@ class EtherKeystore: Keystore {
         }
         keyStore.wallets.forEach { wallet in
             let account = wallet.accounts[0]
-            let password = keychain.get(keychainOldKey(for: account))
-            setPassword(
-                password ?? PasswordGenerator.generateRandom(),
-                for: account
-            )
+            let password = keychain.get(keychainOldKey(for: account)) ?? PasswordGenerator.generateRandom()
+            setPassword(password, for: wallet)
         }
         return true
     }
@@ -153,7 +150,7 @@ class EtherKeystore: Keystore {
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
                     //TODO: Blockchain
-                    let wallet = try self.keyStore.import(privateKey: privateKeyData, password: newPassword, blockchain: .ethereum)
+                    let wallet = try self.keyStore.import(privateKey: privateKeyData, password: newPassword, coin: .ethereum)
                     DispatchQueue.main.async {
                         completion(.success(WalletStruct(type: .privateKey(wallet))))
                     }
@@ -170,7 +167,7 @@ class EtherKeystore: Keystore {
             }
             do {
                 let account = try keyStore.import(mnemonic: string, passphrase: passphrase, encryptPassword: newPassword, derivationPath: Blockchain.ethereum.derivationPath(at: 0))
-                setPassword(newPassword, for: account.accounts[0])
+                setPassword(newPassword, for: account)
                 completion(.success(WalletStruct(type: .hd(account))))
             } catch {
                 return completion(.failure(KeystoreError.duplicateAccount))
@@ -201,15 +198,15 @@ class EtherKeystore: Keystore {
 
     func createAccout(password: String) -> Wallet {
         let wallet = try! keyStore.createWallet(password: password, derivationPaths: [Blockchain.ethereum.derivationPath(at: 0)])
-        let _ = setPassword(password, for: wallet.accounts[0])
+        let _ = setPassword(password, for: wallet)
         return wallet
     }
 
     func importPrivateKey(privateKey: PrivateKey, password: String) -> Result<WalletStruct, KeystoreError> {
         do {
-            let wallet = try keyStore.import(privateKey: privateKey, password: password, blockchain: .ethereum)
+            let wallet = try keyStore.import(privateKey: privateKey, password: password, coin: .ethereum)
             let w = WalletStruct(type: .privateKey(wallet))
-            let _ = setPassword(password, for: w.account!)
+            let _ = setPassword(password, for: wallet)
             return .success(w)
         } catch {
             return .failure(.failedToImport(error))
@@ -222,8 +219,8 @@ class EtherKeystore: Keystore {
         }
         do {
             //TODO: Blockchain. Pass blockchain ID
-            let wallet = try keyStore.import(json: data, password: password, newPassword: newPassword, blockchain: .ethereum)
-            let _ = setPassword(newPassword, for: wallet.accounts[0])
+            let wallet = try keyStore.import(json: data, password: password, newPassword: newPassword, coin: .ethereum)
+            let _ = setPassword(newPassword, for: wallet)
             return .success(WalletStruct(type: .hd(wallet)))
         } catch {
             if case KeyStore.Error.accountAlreadyExists = error {
@@ -264,7 +261,7 @@ class EtherKeystore: Keystore {
     }
 
     func exportPrivateKey(account: Account, completion: @escaping (Result<Data, KeystoreError>) -> Void) {
-        guard let password = getPassword(for: account) else {
+        guard let password = getPassword(for: account.wallet!) else {
             return completion(.failure(KeystoreError.accountNotFound))
         }
         DispatchQueue.global(qos: .userInitiated).async {
@@ -282,7 +279,7 @@ class EtherKeystore: Keystore {
     }
 
     func exportMnemonic(wallet: Wallet, completion: @escaping (Result<[String], KeystoreError>) -> Void) {
-        guard let password = getPassword(for: wallet.accounts[0]) else {
+        guard let password = getPassword(for: wallet) else {
             return completion(.failure(KeystoreError.accountNotFound))
         }
         DispatchQueue.global(qos: .userInitiated).async {
@@ -303,7 +300,7 @@ class EtherKeystore: Keystore {
     func delete(wallet: WalletStruct) -> Result<Void, KeystoreError> {
         switch wallet.type {
         case .privateKey(let w), .hd(let w):
-            guard let account = wallet.account, let password = getPassword(for: account) else {
+            guard let password = getPassword(for: w) else {
                 return .failure(.failedToDeleteAccount)
             }
             do {
@@ -345,7 +342,7 @@ class EtherKeystore: Keystore {
 
     func signHash(_ hash: Data, for account: Account) -> Result<Data, KeystoreError> {
         guard
-            let password = getPassword(for: account) else {
+            let password = getPassword(for: account.wallet!) else {
                 return .failure(KeystoreError.failedToSignMessage)
         }
         do {
@@ -360,7 +357,7 @@ class EtherKeystore: Keystore {
 
     func signTransaction(_ transaction: SignTransaction) -> Result<Data, KeystoreError> {
         let account = transaction.account
-        guard let password = getPassword(for: account) else {
+        guard let password = getPassword(for: account.wallet!) else {
             return .failure(.failedToSignTransaction)
         }
         let signer: Signer
@@ -389,20 +386,19 @@ class EtherKeystore: Keystore {
         }
     }
 
-    func getPassword(for account: Account) -> String? {
-        guard let key = keychainKey(for: account) else { return .none }
+    func getPassword(for account: Wallet) -> String? {
+        let key = keychainKey(for: account)
         return keychain.get(key)
     }
 
     @discardableResult
-    func setPassword(_ password: String, for account: Account) -> Bool {
-        guard let key = keychainKey(for: account) else { return false }
+    func setPassword(_ password: String, for account: Wallet) -> Bool {
+        let key = keychainKey(for: account)
         return keychain.set(password, forKey: key, withAccess: defaultKeychainAccess)
     }
 
-    internal func keychainKey(for account: Account) -> String? {
-        guard let wallet = account.wallet else { return .none }
-        return wallet.identifier
+    internal func keychainKey(for account: Wallet) -> String {
+        return account.identifier
     }
 
     func store(object: WalletObject, fields: [WalletInfoField]) {

@@ -29,6 +29,6 @@ protocol Keystore {
     func signTypedMessage(_ datas: [EthTypedData], for account: Account) -> Result<Data, KeystoreError>
     func signHash(_ hash: Data, for account: Account) -> Result<Data, KeystoreError>
     func signTransaction(_ signTransaction: SignTransaction) -> Result<Data, KeystoreError>
-    func getPassword(for account: Account) -> String?
+    func getPassword(for account: Wallet) -> String?
     func store(object: WalletObject, fields: [WalletInfoField])
 }
