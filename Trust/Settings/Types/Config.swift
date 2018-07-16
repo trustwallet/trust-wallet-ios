@@ -1,6 +1,7 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
+import TrustCore
 
 struct Config {
 
@@ -60,6 +61,16 @@ struct Config {
 
     var server: RPCServer {
         return RPCServer(chainID: chainID)
+    }
+
+    var servers: [Coin] {
+        return [
+            Coin.ethereum,
+            Coin.ethereumClassic,
+            Coin.poa,
+            Coin.callisto,
+            Coin.gochain,
+        ]
     }
 
     var testNetworkWarningOff: Bool {

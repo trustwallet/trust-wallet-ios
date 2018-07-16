@@ -12,6 +12,10 @@ struct WalletInfo {
         return wallet.address
     }
 
+    var mainWallet: Bool {
+        return info.main
+    }
+
     init(
         wallet: WalletStruct,
         info: WalletObject? = .none

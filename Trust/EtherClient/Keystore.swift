@@ -7,6 +7,7 @@ import TrustCore
 
 protocol Keystore {
     var hasWallets: Bool { get }
+    var mainWallet: WalletInfo? { get }
     var wallets: [WalletInfo] { get }
     var keysDirectory: URL { get }
     var recentlyUsedWallet: WalletInfo? { get set }

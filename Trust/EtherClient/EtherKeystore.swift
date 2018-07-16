@@ -68,6 +68,10 @@ class EtherKeystore: Keystore {
         return !wallets.isEmpty
     }
 
+    var mainWallet: WalletInfo? {
+        return wallets.filter { $0.mainWallet }.first
+    }
+
     var wallets: [WalletInfo] {
         return accounts.map {
             return WalletInfo(wallet: $0, info: storage.get(for: $0))
@@ -77,7 +81,7 @@ class EtherKeystore: Keystore {
     private var accounts: [WalletStruct] {
         let addresses = watchAddresses.compactMap { EthereumAddress(string: $0) }
         return [
-            keyStore.wallets.compactMap {
+            keyStore.wallets.filter { !$0.accounts.isEmpty }.compactMap {
                 switch $0.type {
                 case .encryptedKey:
                     return WalletStruct(type: .privateKey($0))
