@@ -64,6 +64,7 @@ final class ImportMainWalletViewController: FormViewController {
     func didImport(account: WalletStruct) {
         let walletInfo = WalletInfo(wallet: account)
         delegate?.didImportWallet(wallet: walletInfo, fields: [
+            .name(R.string.localizable.mainWallet()),
             .mainWallet(true),
         ], in: self)
     }
