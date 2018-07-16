@@ -166,7 +166,7 @@ class EtherKeystore: Keystore {
                 return completion(.failure(KeystoreError.invalidMnemonicPhrase))
             }
             do {
-                let account = try keyStore.import(mnemonic: string, passphrase: passphrase, encryptPassword: newPassword, derivationPath: Blockchain.ethereum.derivationPath(at: 0))
+                let account = try keyStore.import(mnemonic: string, passphrase: passphrase, encryptPassword: newPassword, derivationPath: Coin.ethereum.derivationPath(at: 0))
                 setPassword(newPassword, for: account)
                 completion(.success(WalletStruct(type: .hd(account))))
             } catch {
@@ -197,7 +197,7 @@ class EtherKeystore: Keystore {
     }
 
     func createAccout(password: String) -> Wallet {
-        let wallet = try! keyStore.createWallet(password: password, derivationPaths: [Blockchain.ethereum.derivationPath(at: 0)])
+        let wallet = try! keyStore.createWallet(password: password, derivationPaths: [Coin.ethereum.derivationPath(at: 0)])
         let _ = setPassword(password, for: wallet)
         return wallet
     }
@@ -409,6 +409,8 @@ class EtherKeystore: Keystore {
                     object.name = name
                 case .backup(let completedBackup):
                     object.completedBackup = completedBackup
+                case .mainWallet(let mainWallet):
+                    object.main = mainWallet
                 }
             }
             storage.realm.add(object, update: true)

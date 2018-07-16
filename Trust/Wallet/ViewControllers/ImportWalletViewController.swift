@@ -60,7 +60,6 @@ final class ImportWalletViewController: FormViewController {
 
         title = viewModel.title
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: R.image.import_options(), style: .done, target: self, action: #selector(importOptions)),
             UIBarButtonItem(image: R.image.qr_code_icon(), style: .done, target: self, action: #selector(openReader)),
         ]
 
@@ -216,31 +215,6 @@ final class ImportWalletViewController: FormViewController {
         let demoWallet = WalletStruct(type: .address(EthereumAddress(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")!))
         let walletInfo = WalletInfo(wallet: demoWallet, info: WalletObject.from(demoWallet))
         delegate?.didImportAccount(account: walletInfo, fields: [], in: self)
-    }
-
-    @objc func importOptions(sender: UIBarButtonItem) {
-        let alertController = UIAlertController(
-            title: NSLocalizedString("importWallet.import.alertSheet.title", value: "Import Wallet Options", comment: ""),
-            message: .none,
-            preferredStyle: .actionSheet
-        )
-        alertController.popoverPresentationController?.barButtonItem = sender
-        alertController.addAction(UIAlertAction(
-            title: NSLocalizedString("importWallet.import.alertSheet.option.title", value: "iCloud/Dropbox/Google Drive", comment: ""),
-            style: .default
-        ) { _ in
-            self.showDocumentPicker()
-        })
-        alertController.addAction(UIAlertAction(title: R.string.localizable.cancel(), style: .cancel) { _ in })
-        present(alertController, animated: true)
-    }
-
-    func showDocumentPicker() {
-        let types = ["public.text", "public.content", "public.item", "public.data"]
-        let controller = TrustDocumentPickerViewController(documentTypes: types, in: .import)
-        controller.delegate = self
-        controller.modalPresentationStyle = .formSheet
-        present(controller, animated: true, completion: nil)
     }
 
     @objc func openReader() {

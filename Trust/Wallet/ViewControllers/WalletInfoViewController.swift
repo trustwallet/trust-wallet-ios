@@ -12,6 +12,7 @@ protocol WalletInfoViewControllerDelegate: class {
 enum WalletInfoField {
     case name(String)
     case backup(Bool)
+    case mainWallet(Bool)
 }
 
 final class WalletInfoViewController: FormViewController {

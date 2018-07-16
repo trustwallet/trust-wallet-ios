@@ -13,7 +13,7 @@ struct Config {
         static let testNetworkWarningOff = "testNetworkWarningOff"
     }
 
-    static let dbMigrationSchemaVersion: UInt64 = 57
+    static let dbMigrationSchemaVersion: UInt64 = 58
 
     static let current: Config = Config()
 

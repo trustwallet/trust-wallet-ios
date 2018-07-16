@@ -10,6 +10,7 @@ final class WalletObject: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var createdAt: Date = Date()
     @objc dynamic var completedBackup: Bool = false
+    @objc dynamic var main: Bool = false
 
     override static func primaryKey() -> String? {
         return "id"

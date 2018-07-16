@@ -130,6 +130,7 @@ final class WalletCoordinator: Coordinator {
         keystore.store(object: wallet.info, fields: [
             .name(initialName),
             .backup(completedBackup),
+            .mainWallet(true)
         ])
         walletCreated(wallet: wallet)
     }
