@@ -275,3 +275,6 @@
 "BackupPhrase" = "Backup Phrase";
 "Address" = "Address";
 "CreatingWallet" = "Creating Wallet";
+"WalletImported" = "Wallet Imported";
+"SelectCoin" = "Select Coin";
+"ImportMainWallet" = "Import Main Wallet";

@@ -32,13 +32,13 @@ final class WalletCoordinator: Coordinator {
         switch entryPoint {
         case .welcome:
             if let _ = keystore.mainWallet {
-                setImportWalletView()
+                setSelectCoin()
             } else {
                 setWelcomeView()
             }
         case .importWallet:
             if let _ = keystore.mainWallet {
-                setImportWalletView()
+                setSelectCoin()
             } else {
                 setImportMainWallet()
             }
@@ -47,11 +47,10 @@ final class WalletCoordinator: Coordinator {
         }
     }
 
-    private func setImportWalletView() {
-        let controller = ImportWalletViewController(keystore: keystore)
+    private func pushImportWalletView(for coin: Coin) {
+        let controller = ImportWalletViewController(keystore: keystore, for: coin)
         controller.delegate = self
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-        navigationController.viewControllers = [controller]
+        navigationController.pushViewController(controller, animated: true)
     }
 
     private func setWelcomeView() {
@@ -63,9 +62,7 @@ final class WalletCoordinator: Coordinator {
 
     func pushImportWallet() {
         if let _ = keystore.mainWallet {
-            let controller = ImportWalletViewController(keystore: keystore)
-            controller.delegate = self
-            navigationController.pushViewController(controller, animated: true)
+            pushSelectCoin()
         } else {
             importMainWallet()
         }
@@ -156,6 +153,19 @@ final class WalletCoordinator: Coordinator {
         navigationController.pushViewController(controller, animated: true)
     }
 
+    private func pushSelectCoin() {
+        let controller = SelectCoinViewController(coins: Config.current.servers)
+        controller.delegate = self
+        navigationController.pushViewController(controller, animated: true)
+    }
+
+    private func setSelectCoin() {
+        let controller = SelectCoinViewController(coins: Config.current.servers)
+        controller.delegate = self
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        navigationController.viewControllers = [controller]
+    }
+
     func showConfirm(for account: Wallet, completedBackup: Bool) {
         let type = WalletType.hd(account)
         let wallet = WalletInfo(type: type, info: WalletObject.from(type))
@@ -232,5 +242,11 @@ extension WalletCoordinator: ImportMainWalletViewControllerDelegate {
         ]
         keystore.store(object: wallet.info, fields: fields)
         walletCreated(wallet: wallet, type: .imported)
+    }
+}
+
+extension WalletCoordinator: SelectCoinViewControllerDelegate {
+    func didSelect(coin: Coin, in controller: SelectCoinViewController) {
+        pushImportWalletView(for: coin)
     }
 }

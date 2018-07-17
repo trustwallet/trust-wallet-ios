@@ -39,7 +39,9 @@ struct WalletInfo {
         case .privateKey(let account), .hd(let account):
             return account.accounts
         case .address(let coin, let address):
-            return []
+            return [
+                Account(wallet: .none, address: address, derivationPath: coin.derivationPath(at: 0)),
+            ]
         }
     }
 

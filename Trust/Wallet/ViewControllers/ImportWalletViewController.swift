@@ -12,6 +12,7 @@ protocol ImportWalletViewControllerDelegate: class {
 final class ImportWalletViewController: FormViewController {
 
     let keystore: Keystore
+    let coin: Coin
     private let viewModel = ImportWalletViewModel()
 
     struct Values {
@@ -49,9 +50,11 @@ final class ImportWalletViewController: FormViewController {
     weak var delegate: ImportWalletViewControllerDelegate?
 
     init(
-        keystore: Keystore
+        keystore: Keystore,
+        for coin: Coin
     ) {
         self.keystore = keystore
+        self.coin = coin
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -198,7 +201,7 @@ final class ImportWalletViewController: FormViewController {
             }
         }()
 
-        keystore.importWallet(type: importType, coin: .poa) { result in
+        keystore.importWallet(type: importType, coin: coin) { result in
             self.hideLoading(animated: false)
             switch result {
             case .success(let account):

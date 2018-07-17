@@ -225,3 +225,5 @@
 "ImportedWallets" = "Импортированные кошельки";
 "Address" = "Адрес";
 "CreatingWallet" = "Создание Кошелька";
+"WalletImported" = "Кошелек был импортирован";
+"SelectCoin" = "Выберите Монету";
