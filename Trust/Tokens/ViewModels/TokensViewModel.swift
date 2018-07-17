@@ -21,7 +21,8 @@ final class TokensViewModel: NSObject {
     let transactionStore: TransactionsStorage
 
     var headerViewTitle: String {
-        return "Ethereum (ETH)"
+        guard let coin = wallet.currentAccount.coin else { return "" }
+        return CoinViewModel(coin: coin).displayName
     }
 
     var headerBalance: String {

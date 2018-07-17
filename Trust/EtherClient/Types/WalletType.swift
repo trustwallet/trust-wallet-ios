@@ -15,15 +15,6 @@ enum WalletType {
     case hd(Wallet)
     case address(Coin, EthereumAddress)
 
-    var address: Address {
-        switch self {
-        case .privateKey(let account), .hd(let account):
-            return account.accounts[0].address
-        case .address(_, let address):
-            return address
-        }
-    }
-
     var description: String {
         switch self {
         case .privateKey(let account):

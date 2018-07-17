@@ -9,7 +9,7 @@ struct WalletInfo {
     let info: WalletObject
 
     var address: Address {
-        return type.address
+        return currentAccount.address
     }
 
     var coin: Coin? {
@@ -37,10 +37,11 @@ struct WalletInfo {
         }
     }
 
-    var currentAccount: Account? {
+    var currentAccount: Account! {
+        NSLog("accounts \(accounts.count)")
         switch type {
         case .privateKey, .hd:
-            return accounts.first
+            return accounts.filter { $0.description == info.selectedAccount }.first ?? accounts.first!
         case .address:
             return Account(wallet: .none, address: address, derivationPath: coin?.derivationPath(at: 0) ?? Coin.ethereum.derivationPath(at: 0))
         }

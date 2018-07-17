@@ -8,10 +8,10 @@ import TrustCore
 struct WalletAccountViewModel {
 
     let wallet: WalletInfo
-    let account: Account?
+    let account: Account
 
     var title: String {
-        guard let coin = account?.coin else {
+        guard let coin = account.coin else {
             return R.string.localizable.transactionCellUnknownTitle()
         }
         let viewModel = CoinViewModel(coin: coin)
@@ -19,7 +19,7 @@ struct WalletAccountViewModel {
     }
 
     var subbtitle: String {
-        return account?.address.description ?? ""
+        return account.address.description
     }
 }
 
@@ -28,7 +28,7 @@ extension Account {
         return Coin(rawValue: derivationPath.coinType)
     }
 
-    var uniqueID: String {
+    var description: String {
         return derivationPath.description + "-" + address.description
     }
 }

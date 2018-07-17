@@ -191,14 +191,14 @@ final class ImportWalletViewController: FormViewController {
             case .privateKey:
                 return .privateKey(privateKey: privateKeyInput)
             case .mnemonic:
-                return .mnemonic(words: words, password: password)
+                return .mnemonic(words: words, password: password, derivationPath: Coin.ethereum.derivationPath(at: 0))
             case .address:
                 let address = EthereumAddress(string: addressInput)! // EthereumAddress validated by form view.
                 return .address(address: address)
             }
         }()
 
-        keystore.importWallet(type: importType) { result in
+        keystore.importWallet(type: importType, coin: .poa) { result in
             self.hideLoading(animated: false)
             switch result {
             case .success(let account):

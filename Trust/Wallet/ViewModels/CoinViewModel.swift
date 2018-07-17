@@ -7,6 +7,10 @@ struct CoinViewModel {
 
     let coin: Coin
 
+    var displayName: String {
+        return "\(name) (\(symbol)"
+    }
+
     var name: String {
         switch coin {
         case .bitcoin: return "Bitcoin"

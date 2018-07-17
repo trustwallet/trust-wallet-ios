@@ -96,7 +96,7 @@ class EtherKeystore: Keystore {
                 guard let coin = $0.coin, let address = $0.address else { return .none }
                 return WalletInfo(type: .address(coin, address))
             },
-        ].flatMap { $0 }.sorted(by: { $0.info.createdAt < $1.info.createdAt })
+        ].flatMap { $0 }.filter { !$0.accounts.isEmpty }.sorted(by: { $0.info.createdAt < $1.info.createdAt })
     }
 
     // Deprecated
@@ -140,14 +140,15 @@ class EtherKeystore: Keystore {
         }
     }
 
-    func importWallet(type: ImportType, completion: @escaping (Result<WalletInfo, KeystoreError>) -> Void) {
+    func importWallet(type: ImportType, coin: Coin, completion: @escaping (Result<WalletInfo, KeystoreError>) -> Void) {
         let newPassword = PasswordGenerator.generateRandom()
         switch type {
         case .keystore(let string, let password):
             importKeystore(
                 value: string,
                 password: password,
-                newPassword: newPassword
+                newPassword: newPassword,
+                coin: coin
             ) { result in
                 switch result {
                 case .success(let account):
@@ -160,8 +161,8 @@ class EtherKeystore: Keystore {
             let privateKeyData = PrivateKey(data: Data(hexString: privateKey)!)!
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
-                    //TODO: Blockchain
-                    let wallet = try self.keyStore.import(privateKey: privateKeyData, password: newPassword, coin: .ethereum)
+                    let wallet = try self.keyStore.import(privateKey: privateKeyData, password: newPassword, coin: coin)
+                    self.setPassword(newPassword, for: wallet)
                     DispatchQueue.main.async {
                         completion(.success(WalletInfo(type: .privateKey(wallet))))
                     }
@@ -171,13 +172,13 @@ class EtherKeystore: Keystore {
                     }
                 }
             }
-        case .mnemonic(let words, let passphrase):
+        case .mnemonic(let words, let passphrase, let derivationPath):
             let string = words.map { String($0) }.joined(separator: " ")
             if !Crypto.isValid(mnemonic: string) {
                 return completion(.failure(KeystoreError.invalidMnemonicPhrase))
             }
             do {
-                let account = try keyStore.import(mnemonic: string, passphrase: passphrase, encryptPassword: newPassword, derivationPath: Coin.ethereum.derivationPath(at: 0))
+                let account = try keyStore.import(mnemonic: string, passphrase: passphrase, encryptPassword: newPassword, derivationPath: derivationPath)
                 setPassword(newPassword, for: account)
                 completion(.success(WalletInfo(type: .hd(account))))
             } catch {
@@ -193,9 +194,9 @@ class EtherKeystore: Keystore {
         }
     }
 
-    func importKeystore(value: String, password: String, newPassword: String, completion: @escaping (Result<WalletInfo, KeystoreError>) -> Void) {
+    func importKeystore(value: String, password: String, newPassword: String, coin: Coin, completion: @escaping (Result<WalletInfo, KeystoreError>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let result = self.importKeystore(value: value, password: password, newPassword: newPassword)
+            let result = self.importKeystore(value: value, password: password, newPassword: newPassword, coin: coin)
             DispatchQueue.main.async {
                 switch result {
                 case .success(let account):
@@ -220,9 +221,9 @@ class EtherKeystore: Keystore {
         return wallet
     }
 
-    func importPrivateKey(privateKey: PrivateKey, password: String) -> Result<WalletInfo, KeystoreError> {
+    func importPrivateKey(privateKey: PrivateKey, password: String, coin: Coin) -> Result<WalletInfo, KeystoreError> {
         do {
-            let wallet = try keyStore.import(privateKey: privateKey, password: password, coin: .ethereum)
+            let wallet = try keyStore.import(privateKey: privateKey, password: password, coin: coin)
             let w = WalletInfo(type: .privateKey(wallet))
             let _ = setPassword(password, for: wallet)
             return .success(w)
@@ -231,13 +232,13 @@ class EtherKeystore: Keystore {
         }
     }
 
-    func importKeystore(value: String, password: String, newPassword: String) -> Result<WalletInfo, KeystoreError> {
+    func importKeystore(value: String, password: String, newPassword: String, coin: Coin) -> Result<WalletInfo, KeystoreError> {
         guard let data = value.data(using: .utf8) else {
             return (.failure(.failedToParseJSON))
         }
         do {
             //TODO: Blockchain. Pass blockchain ID
-            let wallet = try keyStore.import(json: data, password: password, newPassword: newPassword, coin: .ethereum)
+            let wallet = try keyStore.import(json: data, password: password, newPassword: newPassword, coin: coin)
             let _ = setPassword(newPassword, for: wallet)
             return .success(WalletInfo(type: .hd(wallet)))
         } catch {
@@ -446,6 +447,8 @@ class EtherKeystore: Keystore {
                     object.completedBackup = completedBackup
                 case .mainWallet(let mainWallet):
                     object.mainWallet = mainWallet
+                case .setAccount(let account):
+                    object.selectedAccount = account
                 }
             }
             storage.realm.add(object, update: true)

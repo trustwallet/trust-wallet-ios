@@ -26,25 +26,26 @@ protocol NetworkProtocol: TrustNetworkProtocol {
 }
 
 final class TrustNetwork: NetworkProtocol {
+
     static let deleteMissingInternalSeconds: Double = 60.0
     static let deleyedTransactionInternalSeconds: Double = 60.0
     let provider: MoyaProvider<TrustService>
     let APIProvider: MoyaProvider<TrustAPI>
     let config: Config
     let balanceService: TokensBalanceService
-    let account: WalletInfo
+    let address: Address
 
     required init(
         provider: MoyaProvider<TrustService>,
         APIProvider: MoyaProvider<TrustAPI>,
         balanceService: TokensBalanceService,
-        account: WalletInfo,
+        address: Address,
         config: Config
     ) {
         self.provider = provider
         self.APIProvider = APIProvider
         self.balanceService = balanceService
-        self.account = account
+        self.address = address
         self.config = config
     }
 
@@ -82,7 +83,7 @@ final class TrustNetwork: NetworkProtocol {
 
     func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void) {
         if contract.description == TokensDataStore.etherToken(for: config).address.description {
-            balanceService.getEthBalance(for: account.address) { result in
+            balanceService.getEthBalance(for: address) { result in
                 switch result {
                 case .success(let balance):
                     completion(balance)
@@ -91,7 +92,7 @@ final class TrustNetwork: NetworkProtocol {
                 }
             }
         } else {
-            balanceService.getBalance(for: account.address, contract: contract) { result in
+            balanceService.getBalance(for: address, contract: contract) { result in
                 switch result {
                 case .success(let balance):
                     completion(Balance(value: balance))
@@ -104,7 +105,7 @@ final class TrustNetwork: NetworkProtocol {
 
     func ethBalance() -> Promise<Balance> {
         return Promise { seal in
-            balanceService.getEthBalance(for: account.address) { result in
+            balanceService.getEthBalance(for: address) { result in
                 switch result {
                 case .success(let balance):
                     seal.fulfill(balance)
@@ -177,7 +178,7 @@ final class TrustNetwork: NetworkProtocol {
 
     func assets() -> Promise<[NonFungibleTokenCategory]> {
         return Promise { seal in
-            provider.request(.assets(address: account.address.description)) { result in
+            provider.request(.assets(address: address.description)) { result in
                 switch result {
                 case .success(let response):
                     do {

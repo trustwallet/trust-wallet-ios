@@ -4,6 +4,7 @@ import Foundation
 import UIKit
 import Eureka
 import QRCodeReaderViewController
+import TrustCore
 
 protocol ImportMainWalletViewControllerDelegate: class {
     func didImportWallet(wallet: WalletInfo, in controller: ImportMainWalletViewController)
@@ -75,9 +76,9 @@ final class ImportMainWalletViewController: FormViewController {
 
         displayLoading(text: R.string.localizable.importWalletImportingIndicatorLabelTitle(), animated: false)
 
-        let importType = ImportType.mnemonic(words: words, password: password)
+        let importType = ImportType.mnemonic(words: words, password: password, derivationPath: Coin.ethereum.derivationPath(at: 0))
 
-        keystore.importWallet(type: importType) { result in
+        keystore.importWallet(type: importType, coin: .ethereum) { result in
             self.hideLoading(animated: false)
             switch result {
             case .success(let account):

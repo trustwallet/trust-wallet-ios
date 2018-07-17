@@ -47,7 +47,6 @@ class InCoordinator: Coordinator {
 
     lazy var walletsCoordinator: WalletsCoordinator = {
         let coordinator = WalletsCoordinator(keystore: keystore)
-        coordinator.start()
         coordinator.delegate = self
         return coordinator
     }()
@@ -76,6 +75,8 @@ class InCoordinator: Coordinator {
 
         helpUsCoordinator.start()
         addCoordinator(helpUsCoordinator)
+
+        walletsCoordinator.start()
     }
 
     func showTabBar(for account: WalletInfo) {
@@ -100,7 +101,7 @@ class InCoordinator: Coordinator {
             provider: TrustProviderFactory.makeProvider(),
             APIProvider: TrustProviderFactory.makeAPIProvider(),
             balanceService: balanceCoordinator,
-            account: account,
+            address: account.currentAccount.address,
             config: config
         )
         let balance =  BalanceCoordinator(account: account, config: config, storage: tokensStorage)
@@ -235,7 +236,7 @@ class InCoordinator: Coordinator {
                 session: session,
                 keystore: keystore,
                 storage: tokenStorage,
-                account: account.accounts[0]
+                account: session.account.currentAccount
             )
             coordinator.delegate = self
             addCoordinator(coordinator)

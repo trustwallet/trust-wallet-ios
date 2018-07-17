@@ -1,9 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import UIKit
+import TrustKeystore
 
 protocol WalletsViewControllerDelegate: class {
-    func didSelect(wallet: WalletInfo, in controller: WalletsViewController)
+    func didSelect(wallet: WalletInfo, account: Account, in controller: WalletsViewController)
 }
 
 class WalletsViewController: UITableViewController {
@@ -27,7 +28,9 @@ class WalletsViewController: UITableViewController {
         tableView.register(R.nib.walletTableViewCell(), forCellReuseIdentifier: R.nib.walletTableViewCell.name)
 
         navigationItem.title = viewModel.title
+    }
 
+    func fetch() {
         displayLoading()
         viewModel.load { [weak self] in
             self?.tableView.reloadData()
@@ -61,7 +64,7 @@ class WalletsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewModel = self.viewModel.cellViewModel(for: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
-        delegate?.didSelect(wallet: viewModel.wallet, in: self)
+        delegate?.didSelect(wallet: viewModel.wallet, account: viewModel.account, in: self)
     }
 
     required init?(coder aDecoder: NSCoder) {

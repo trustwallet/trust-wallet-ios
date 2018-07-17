@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import TrustKeystore
 
 protocol WalletsCoordinatorDelegate: class {
     func didSelect(wallet: WalletInfo, in coordinator: WalletsCoordinator)
@@ -16,6 +17,10 @@ class WalletsCoordinator: Coordinator {
     weak var delegate: WalletsCoordinatorDelegate?
 
     lazy var rootViewController: UIViewController = {
+        return walletController
+    }()
+
+    lazy var walletController: WalletsViewController = {
         let controller = WalletsViewController(keystore: keystore)
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .done,
@@ -40,11 +45,16 @@ class WalletsCoordinator: Coordinator {
 
     func start() {
         navigationController.viewControllers = [rootViewController]
+        walletController.fetch()
     }
 }
 
 extension WalletsCoordinator: WalletsViewControllerDelegate {
-    func didSelect(wallet: WalletInfo, in controller: WalletsViewController) {
+    func didSelect(wallet: WalletInfo, account: Account, in controller: WalletsViewController) {
+        keystore.store(object: wallet.info, fields: [
+            .setAccount(account.description),
+        ])
+
         delegate?.didSelect(wallet: wallet, in: self)
     }
 }
