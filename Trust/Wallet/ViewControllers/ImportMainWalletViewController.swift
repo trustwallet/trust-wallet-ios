@@ -6,7 +6,7 @@ import Eureka
 import QRCodeReaderViewController
 
 protocol ImportMainWalletViewControllerDelegate: class {
-    func didImportWallet(wallet: WalletInfo, fields: [WalletInfoField], in controller: ImportMainWalletViewController)
+    func didImportWallet(wallet: WalletInfo, in controller: ImportMainWalletViewController)
 }
 
 final class ImportMainWalletViewController: FormViewController {
@@ -63,10 +63,7 @@ final class ImportMainWalletViewController: FormViewController {
 
     func didImport(account: WalletStruct) {
         let walletInfo = WalletInfo(wallet: account)
-        delegate?.didImportWallet(wallet: walletInfo, fields: [
-            .name(R.string.localizable.mainWallet()),
-            .mainWallet(true),
-        ], in: self)
+        delegate?.didImportWallet(wallet: walletInfo, in: self)
     }
 
     func importWallet() {

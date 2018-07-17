@@ -31,24 +31,44 @@ final class WalletCoordinator: Coordinator {
         self.entryPoint = entryPoint
         switch entryPoint {
         case .welcome:
-            let controller = WelcomeViewController()
-            controller.delegate = self
-            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-            navigationController.viewControllers = [controller]
+            if let _ = keystore.mainWallet {
+                setImportWalletView()
+            } else {
+                setWelcomeView()
+            }
         case .importWallet:
-            let controller = ImportWalletViewController(keystore: keystore)
-            controller.delegate = self
-            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
-            navigationController.viewControllers = [controller]
+            if let _ = keystore.mainWallet {
+                setImportWalletView()
+            } else {
+                importMainWallet()
+            }
         case .createInstantWallet:
             createInstantWallet()
         }
     }
 
-    func pushImportWallet() {
+    private func setImportWalletView() {
         let controller = ImportWalletViewController(keystore: keystore)
         controller.delegate = self
-        navigationController.pushViewController(controller, animated: true)
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        navigationController.viewControllers = [controller]
+    }
+
+    private func setWelcomeView() {
+        let controller = WelcomeViewController()
+        controller.delegate = self
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        navigationController.viewControllers = [controller]
+    }
+
+    func pushImportWallet() {
+        if let _ = keystore.mainWallet {
+            let controller = ImportWalletViewController(keystore: keystore)
+            controller.delegate = self
+            navigationController.pushViewController(controller, animated: true)
+        } else {
+            importMainWallet()
+        }
     }
 
     func createInstantWallet() {
@@ -95,6 +115,12 @@ final class WalletCoordinator: Coordinator {
         navigationController.pushViewController(controller, animated: true)
     }
 
+    func importMainWallet() {
+        let controller = ImportMainWalletViewController(keystore: keystore)
+        controller.delegate = self
+        navigationController.pushViewController(controller, animated: true)
+    }
+
     @objc func done() {
         delegate?.didCancel(in: self)
     }
@@ -114,8 +140,8 @@ final class WalletCoordinator: Coordinator {
         navigationController.pushViewController(controller, animated: true)
     }
 
-    func walletCreated(wallet: WalletInfo) {
-        let controller = WalletCreatedController(wallet: wallet)
+    func walletCreated(wallet: WalletInfo, type: WalletDoneType) {
+        let controller = WalletCreatedController(wallet: wallet, type: type)
         controller.delegate = self
         controller.navigationItem.backBarButtonItem = nil
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
@@ -130,9 +156,9 @@ final class WalletCoordinator: Coordinator {
         keystore.store(object: wallet.info, fields: [
             .name(initialName),
             .backup(completedBackup),
-            .mainWallet(true)
+            .mainWallet(true),
         ])
-        walletCreated(wallet: wallet)
+        walletCreated(wallet: wallet, type: .created)
     }
 
     func done(for wallet: WalletInfo) {
@@ -188,5 +214,16 @@ extension WalletCoordinator: VerifyPassphraseViewControllerDelegate {
 extension WalletCoordinator: WalletCreatedControllerDelegate {
     func didPressDone(wallet: WalletInfo, in controller: WalletCreatedController) {
         done(for: wallet)
+    }
+}
+extension WalletCoordinator: ImportMainWalletViewControllerDelegate {
+    func didImportWallet(wallet: WalletInfo, in controller: ImportMainWalletViewController) {
+        let fields: [WalletInfoField] = [
+            .name(R.string.localizable.mainWallet()),
+            .backup(true),
+            .mainWallet(true),
+        ]
+        keystore.store(object: wallet.info, fields: fields)
+        walletCreated(wallet: wallet, type: .imported)
     }
 }

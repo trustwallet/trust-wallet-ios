@@ -97,7 +97,7 @@ final class LocalSchemeCoordinator: Coordinator {
     }
 
     private func account(for session: WalletSession) -> Account? {
-        return session.account.wallet.account
+        return session.account.currentAccount
     }
 }
 

@@ -45,6 +45,13 @@ class InCoordinator: Coordinator {
     }()
     let events: [BranchEvent] = []
 
+    lazy var walletsCoordinator: WalletsCoordinator = {
+        let coordinator = WalletsCoordinator(keystore: keystore)
+        coordinator.start()
+        coordinator.delegate = self
+        return coordinator
+    }()
+
     init(
         navigationController: NavigationController = NavigationController(),
         wallet: WalletInfo,
@@ -166,11 +173,7 @@ class InCoordinator: Coordinator {
     }
 
     func changeWallet() {
-        let coordinator = WalletsCoordinator(keystore: keystore)
-        coordinator.start()
-        coordinator.delegate = self
-        addCoordinator(coordinator)
-        navigationController.present(coordinator.navigationController, animated: true)
+        navigationController.present(walletsCoordinator.navigationController, animated: true)
     }
 
     func showTab(_ selectTab: Tabs) {
@@ -354,11 +357,11 @@ extension InCoordinator: BrowserCoordinatorDelegate {
 extension InCoordinator: WalletsCoordinatorDelegate {
     func didSelect(wallet: WalletInfo, in coordinator: WalletsCoordinator) {
         coordinator.navigationController.dismiss(animated: true)
-        removeCoordinator(coordinator)
+        // removeCoordinator(coordinator)
         restart(for: wallet)
     }
     func didCancel(in coordinator: WalletsCoordinator) {
         navigationController.dismiss(animated: true)
-        removeCoordinator(coordinator)
+        // removeCoordinator(coordinator)
     }
 }

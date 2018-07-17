@@ -56,10 +56,11 @@ class EtherKeystore: Keystore {
                 return "hd-wallet-" + account.address.description
             }
         }
-        keyStore.wallets.forEach { wallet in
+        keyStore.wallets.filter { !$0.accounts.isEmpty }.forEach { wallet in
             let account = wallet.accounts[0]
-            let password = keychain.get(keychainOldKey(for: account)) ?? PasswordGenerator.generateRandom()
-            setPassword(password, for: wallet)
+            if let password = keychain.get(keychainOldKey(for: account)) {
+                setPassword(password, for: wallet)
+            }
         }
         return true
     }
@@ -201,7 +202,14 @@ class EtherKeystore: Keystore {
     }
 
     func createAccout(password: String) -> Wallet {
-        let wallet = try! keyStore.createWallet(password: password, derivationPaths: [Coin.ethereum.derivationPath(at: 0)])
+        let wallet = try! keyStore.createWallet(
+            password: password,
+            derivationPaths: [
+                Coin.ethereum.derivationPath(at: 0),
+                Coin.poa.derivationPath(at: 0),
+                Coin.callisto.derivationPath(at: 0),
+            ]
+        )
         let _ = setPassword(password, for: wallet)
         return wallet
     }
@@ -328,6 +336,22 @@ class EtherKeystore: Keystore {
         }
     }
 
+    func addAccount(to wallet: Wallet, derivationPaths: [DerivationPath]) -> Result<Void, KeystoreError> {
+        guard let password = getPassword(for: wallet) else {
+            return .failure(.failedToDeleteAccount)
+        }
+        try? keyStore.addAccounts(wallet: wallet, derivationPaths: derivationPaths, password: password)
+        return .success(())
+    }
+
+    func update(wallet: Wallet) -> Result<Void, KeystoreError> {
+        guard let password = getPassword(for: wallet) else {
+            return .failure(.failedToDeleteAccount)
+        }
+        try? keyStore.update(wallet: wallet, password: password, newPassword: password)
+        return .success(())
+    }
+
     func signPersonalMessage(_ message: Data, for account: Account) -> Result<Data, KeystoreError> {
         let prefix = "\u{19}Ethereum Signed Message:\n\(message.count)".data(using: .utf8)!
         return signMessage(prefix + message, for: account)
@@ -414,7 +438,7 @@ class EtherKeystore: Keystore {
                 case .backup(let completedBackup):
                     object.completedBackup = completedBackup
                 case .mainWallet(let mainWallet):
-                    object.main = mainWallet
+                    object.mainWallet = mainWallet
                 }
             }
             storage.realm.add(object, update: true)

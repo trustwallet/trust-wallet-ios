@@ -23,20 +23,12 @@ struct WalletStruct {
         }
     }
 
-    var account: Account? {
-        switch type {
-        case .privateKey(let account), .hd(let account):
-            return account.accounts[0]
-        case .address: return .none
-        }
-    }
-
     var description: String {
         switch self.type {
         case .privateKey(let account):
-            return Keys.walletPrivateKey + address.description
+            return Keys.walletPrivateKey + account.identifier
         case .hd(let account):
-            return Keys.walletHD + address.description
+            return Keys.walletHD + account.identifier
         case .address(let address):
             return Keys.address + address.description
         }

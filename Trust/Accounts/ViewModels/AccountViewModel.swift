@@ -8,13 +8,13 @@ import UIKit
 struct AccountViewModel {
     let identiconSize = 60 as CGFloat
     let wallet: WalletInfo
-    let current: WalletInfo?
+    let current: WalletInfo
     let server: RPCServer
 
     init(
         server: RPCServer,
         wallet: WalletInfo,
-        current: WalletInfo?
+        current: WalletInfo
     ) {
         self.server = server
         self.wallet = wallet
@@ -22,7 +22,7 @@ struct AccountViewModel {
     }
 
     var isWatch: Bool {
-        return wallet.wallet.account == .none
+        return current.isWatch
     }
 
     var title: String {

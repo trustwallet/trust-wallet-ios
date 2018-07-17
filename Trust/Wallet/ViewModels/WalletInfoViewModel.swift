@@ -38,8 +38,8 @@ struct WalletInfoViewModel {
             return [
                 FormSection(
                     rows: [
-                        .exportKeystore(wallet.wallet.account!),
-                        .exportPrivateKey(wallet.wallet.account!),
+                        .exportKeystore(wallet.currentAccount!),
+                        .exportPrivateKey(wallet.currentAccount!),
                     ]
                 ),
                 FormSection(
@@ -55,7 +55,7 @@ struct WalletInfoViewModel {
                     rows: [
                         .exportRecoveryPhrase(account),
                         //.exportKeystore(account),
-                        .exportPrivateKey(wallet.wallet.account!),
+                        .exportPrivateKey(wallet.currentAccount!),
                     ]
                 ),
                 FormSection(

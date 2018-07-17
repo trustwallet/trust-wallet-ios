@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import TrustCore
 
 class WalletsViewModel {
 
@@ -9,15 +10,42 @@ class WalletsViewModel {
     private let networks: [WalletInfo] = []
     private let importedWallet: [WalletInfo] = []
 
-    let sections: [[WalletInfo]]
+    var sections: [[WalletAccountViewModel]] = []
 
     init(keystore: Keystore) {
         self.keystore = keystore
+    }
 
-        sections = [
-            keystore.wallets,
-            keystore.wallets,
-        ]
+    func load(completion: (() -> Void)? = .none) {
+        let walletInfo = keystore.mainWallet
+        let wallet = walletInfo?.currentWallet
+
+        DispatchQueue.global(qos: .userInitiated).async {
+
+            if let wallet = wallet {
+                let _ = self.keystore.addAccount(to: wallet, derivationPaths: [
+                    Coin.ethereum.derivationPath(at: 0),
+                    Coin.callisto.derivationPath(at: 0),
+                    Coin.poa.derivationPath(at: 0),
+                    Coin.gochain.derivationPath(at: 0),
+                ])
+            }
+
+            DispatchQueue.main.async {
+                let mainAccounts: [WalletAccountViewModel] = {
+                    guard let walletInfo = walletInfo else { return [] }
+                    return wallet?.accounts.compactMap { WalletAccountViewModel(wallet: walletInfo, account: $0) } ?? []
+                }()
+
+                self.sections = [
+                    mainAccounts,
+                    self.keystore.wallets.filter { !$0.mainWallet }.compactMap {
+                        return WalletAccountViewModel(wallet: $0, account: $0.accounts[0])
+                    },
+                ]
+                completion?()
+            }
+        }
     }
 
     var title: String {
@@ -25,7 +53,7 @@ class WalletsViewModel {
     }
 
     var numberOfSection: Int {
-        return 2
+        return sections.count
     }
 
     func numberOfRows(in section: Int) -> Int {
@@ -46,8 +74,7 @@ class WalletsViewModel {
         return enabled ? StyleLayout.TableView.heightForHeaderInSection : 0.001
     }
 
-    func cellViewModel(for indexPath: IndexPath) -> WalletInfoViewModel {
-        let wallet = sections[indexPath.section][indexPath.row]
-        return WalletInfoViewModel(wallet: wallet)
+    func cellViewModel(for indexPath: IndexPath) -> WalletAccountViewModel {
+        return sections[indexPath.section][indexPath.row]
     }
 }

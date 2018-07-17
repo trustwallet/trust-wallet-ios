@@ -27,6 +27,12 @@ class WalletsViewController: UITableViewController {
         tableView.register(R.nib.walletTableViewCell(), forCellReuseIdentifier: R.nib.walletTableViewCell.name)
 
         navigationItem.title = viewModel.title
+
+        displayLoading()
+        viewModel.load { [weak self] in
+            self?.tableView.reloadData()
+            self?.hideLoading()
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

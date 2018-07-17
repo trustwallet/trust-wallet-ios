@@ -19,9 +19,9 @@ class WalletTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func configure(for viewModel: WalletInfoViewModel) {
-        nameLabel.text = viewModel.wallet.info.name
-        subNameLabel.text = viewModel.wallet.address.description
+    func configure(for viewModel: WalletAccountViewModel) {
+        nameLabel.text = viewModel.title //.wallet.info.name
+        subNameLabel.text = viewModel.subbtitle //.wallet.address.description
         tokenImageView.image = R.image.backup_warning()
     }
 }

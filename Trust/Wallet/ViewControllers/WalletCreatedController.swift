@@ -7,6 +7,18 @@ protocol WalletCreatedControllerDelegate: class {
     func didPressDone(wallet: WalletInfo, in controller: WalletCreatedController)
 }
 
+enum WalletDoneType {
+    case created
+    case imported
+
+    var title: String {
+        switch self {
+        case .created: return R.string.localizable.walletCreated()
+        case .imported: return R.string.localizable.walletCreated()
+        }
+    }
+}
+
 final class WalletCreatedController: UIViewController {
 
     weak var delegate: WalletCreatedControllerDelegate?
@@ -36,9 +48,14 @@ final class WalletCreatedController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
+    let type: WalletDoneType
 
-    init(wallet: WalletInfo) {
+    init(
+        wallet: WalletInfo,
+        type: WalletDoneType
+    ) {
         self.wallet = wallet
+        self.type = type
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -50,7 +67,7 @@ final class WalletCreatedController: UIViewController {
         let stackView = UIStackView(arrangedSubviews: [
             imageView,
             .spacer(),
-            .label(style: .heading, text: R.string.localizable.walletCreated()),
+            .label(style: .heading, text: type.title),
             .spacer(),
             TransactionAppearance.item(
                 title: R.string.localizable.name(),

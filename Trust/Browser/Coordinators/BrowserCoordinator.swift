@@ -271,7 +271,7 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
     }
 
     func didCall(action: DappAction, callbackID: Int) {
-        guard let account = session.account.wallet.account else {
+        guard let account = session.account.currentAccount else {
             self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
             self.navigationController.topViewController?.displayError(error: InCoordinatorError.onlyWatchAccount)
             return

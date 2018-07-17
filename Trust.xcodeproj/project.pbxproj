@@ -329,7 +329,10 @@
 		73ED85A72034BFEF00593BF3 /* UITextFieldAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */; };
 		73ED85A92034C42D00593BF3 /* StringFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ED85A82034C42D00593BF3 /* StringFormatterTest.swift */; };
 		73F2FF3C20557C020021976E /* TrustOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F2FF3B20557C020021976E /* TrustOperation.swift */; };
+		7704836820FDB05A00837735 /* CoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7704836720FDB05A00837735 /* CoinViewModel.swift */; };
 		7712437620FD45440097296E /* ImportMainWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712437520FD45440097296E /* ImportMainWalletViewController.swift */; };
+		7712437820FD8DEF0097296E /* SelectCoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712437720FD8DEF0097296E /* SelectCoinViewController.swift */; };
+		7712437A20FD97730097296E /* WalletAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7712437920FD97730097296E /* WalletAccountViewModel.swift */; };
 		7716EDC320DFB86100773010 /* VerifyPassphraseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7716EDC220DFB86100773010 /* VerifyPassphraseViewController.swift */; };
 		771A8471202F067D00528D28 /* NetworksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A8470202F067D00528D28 /* NetworksViewController.swift */; };
 		771A847320322F2500528D28 /* BrowserConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771A847220322F2500528D28 /* BrowserConfigurationViewController.swift */; };
@@ -821,7 +824,10 @@
 		73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldAdditions.swift; sourceTree = "<group>"; };
 		73ED85A82034C42D00593BF3 /* StringFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFormatterTest.swift; sourceTree = "<group>"; };
 		73F2FF3B20557C020021976E /* TrustOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustOperation.swift; sourceTree = "<group>"; };
+		7704836720FDB05A00837735 /* CoinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinViewModel.swift; sourceTree = "<group>"; };
 		7712437520FD45440097296E /* ImportMainWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportMainWalletViewController.swift; sourceTree = "<group>"; };
+		7712437720FD8DEF0097296E /* SelectCoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCoinViewController.swift; sourceTree = "<group>"; };
+		7712437920FD97730097296E /* WalletAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAccountViewModel.swift; sourceTree = "<group>"; };
 		7716EDC220DFB86100773010 /* VerifyPassphraseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPassphraseViewController.swift; sourceTree = "<group>"; };
 		771A8470202F067D00528D28 /* NetworksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksViewController.swift; sourceTree = "<group>"; };
 		771A847220322F2500528D28 /* BrowserConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserConfigurationViewController.swift; sourceTree = "<group>"; };
@@ -1476,6 +1482,7 @@
 				29AD3D4620EC443D007893C9 /* WalletCreatedController.swift */,
 				29AD3D5020F5B9F9007893C9 /* WalletsViewController.swift */,
 				7712437520FD45440097296E /* ImportMainWalletViewController.swift */,
+				7712437720FD8DEF0097296E /* SelectCoinViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1489,6 +1496,8 @@
 				77872D26202505C00032D687 /* EnterPasswordViewModel.swift */,
 				77EAD88720E1C02200D14AA2 /* WalletInfoViewModel.swift */,
 				29AD3D5620F5BB08007893C9 /* WalletsViewModel.swift */,
+				7712437920FD97730097296E /* WalletAccountViewModel.swift */,
+				7704836720FDB05A00837735 /* CoinViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2962,6 +2971,7 @@
 				29BB94971F6FCD60009B09CC /* SendViewModel.swift in Sources */,
 				296106D01F778A8D0006164B /* TransferType.swift in Sources */,
 				29E14FDB1F7F4F3D00185568 /* Transaction.swift in Sources */,
+				7712437A20FD97730097296E /* WalletAccountViewModel.swift in Sources */,
 				BBF4F9B72029D0B3009E04C0 /* GasViewModel.swift in Sources */,
 				73C41C75201B65AD00243C6C /* LockCreatePasscodeCoordinator.swift in Sources */,
 				7301BA9220A3117000E1AFE5 /* AutoLock.swift in Sources */,
@@ -3146,6 +3156,7 @@
 				298542FB1FBEA03300CB5081 /* SendInputErrors.swift in Sources */,
 				29EB102A1F6CBD23000907A4 /* UIAlertController.swift in Sources */,
 				771A847520322FD700528D28 /* BrowserConfigurationViewModel.swift in Sources */,
+				7704836820FDB05A00837735 /* CoinViewModel.swift in Sources */,
 				296AF9A51F736BA20058AF78 /* Config.swift in Sources */,
 				615F10621FCD3F0F008A45AF /* OnboardingPageStyle.swift in Sources */,
 				73B1A6B6204B4789001F546C /* NonFungibleTokensViewController.swift in Sources */,
@@ -3269,6 +3280,7 @@
 				29E2E33E1F7A2423000CF94A /* TransactionHeaderView.swift in Sources */,
 				291F52BF1F6C874E00B369AB /* AccountsViewController.swift in Sources */,
 				2963B6AF1F9823E6003063C1 /* UnconfirmedTransaction.swift in Sources */,
+				7712437820FD8DEF0097296E /* SelectCoinViewController.swift in Sources */,
 				2996F1431F6C96FF005C33AE /* ImportWalletViewModel.swift in Sources */,
 				291ED08D1F6F5F0A00E7E93A /* KeyStoreError.swift in Sources */,
 				776C1149205D02E800449539 /* TokenViewModel.swift in Sources */,
