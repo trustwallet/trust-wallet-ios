@@ -5,9 +5,35 @@ import TrustCore
 import TrustKeystore
 
 enum WalletType {
+    struct Keys {
+        static let walletPrivateKey = "wallet-private-key-"
+        static let walletHD = "wallet-hd-wallet-"
+        static let address = "wallet-address-"
+    }
+
     case privateKey(Wallet)
     case hd(Wallet)
-    case address(EthereumAddress)
+    case address(Coin, EthereumAddress)
+
+    var address: Address {
+        switch self {
+        case .privateKey(let account), .hd(let account):
+            return account.accounts[0].address
+        case .address(_, let address):
+            return address
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .privateKey(let account):
+            return Keys.walletPrivateKey + account.identifier
+        case .hd(let account):
+            return Keys.walletHD + account.identifier
+        case .address(let coin, let address):
+            return Keys.address + "-" + "\(coin.rawValue)" + "-" + address.description
+        }
+    }
 }
 
 extension WalletType: Equatable {

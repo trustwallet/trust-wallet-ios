@@ -7,15 +7,31 @@ class WalletStorage {
 
     let realm: Realm
 
+    var addresses: [WalletAddress] {
+        return Array(realm.objects(WalletAddress.self))
+    }
+
     init(realm: Realm) {
         self.realm = realm
     }
 
-    func get(for wallet: WalletStruct) -> WalletObject {
-        let firstWallet = realm.objects(WalletObject.self).filter { $0.id == wallet.primaryKey }.first
+    func get(for type: WalletType) -> WalletObject {
+        let firstWallet = realm.objects(WalletObject.self).filter { $0.id == type.description }.first
         guard let foundWallet = firstWallet else {
-            return WalletObject.from(wallet)
+            return WalletObject.from(type)
         }
         return foundWallet
+    }
+
+    func store(address: [WalletAddress]) {
+        try? realm.write {
+            realm.add(address, update: true)
+        }
+    }
+
+    func delete(address: WalletAddress) {
+        try? realm.write {
+            realm.delete(address)
+        }
     }
 }

@@ -80,7 +80,10 @@ class InCoordinator: Coordinator {
 
     func showTabBar(for account: WalletInfo) {
 
-        let migration = MigrationInitializer(account: account.wallet, chainID: config.chainID)
+        var configS = config
+        configS.chainID = account.chainID
+
+        let migration = MigrationInitializer(account: account, chainID: config.chainID)
         migration.perform()
 
         let sharedMigration = SharedMigrationInitializer()
@@ -223,7 +226,7 @@ class InCoordinator: Coordinator {
         let session = tokensCoordinator.session
         let tokenStorage = tokensCoordinator.store
 
-        switch (type, session.account.wallet.type) {
+        switch (type, session.account.type) {
         case (.send(let type), .privateKey(let account)),
              (.send(let type), .hd(let account)):
             let coordinator = SendCoordinator(

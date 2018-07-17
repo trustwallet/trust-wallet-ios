@@ -14,7 +14,7 @@ struct AccountsViewModel {
     ) {
         self.current = current
         let hdWallets = wallets.filter { wallet in
-            switch wallet.wallet.type {
+            switch wallet.type {
             case .hd: return true
             case .privateKey, .address: return false
             }
@@ -26,7 +26,7 @@ struct AccountsViewModel {
         }
 
         let regularWallets = wallets.filter { wallet in
-            switch wallet.wallet.type {
+            switch wallet.type {
             case .privateKey, .address:
                 return true
             case .hd: return false

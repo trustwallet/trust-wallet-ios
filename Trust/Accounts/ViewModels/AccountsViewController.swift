@@ -127,7 +127,7 @@ final class AccountsViewController: UITableViewController {
 
     func delete(wallet: WalletInfo) {
         navigationController?.displayLoading(text: R.string.localizable.deleting())
-        keystore.delete(wallet: wallet.wallet) { [weak self] result in
+        keystore.delete(wallet: wallet) { [weak self] result in
             guard let `self` = self else { return }
             self.navigationController?.hideLoading()
             switch result {

@@ -150,8 +150,8 @@ final class WalletCoordinator: Coordinator {
     }
 
     func showConfirm(for account: Wallet, completedBackup: Bool) {
-        let w = WalletStruct(type: .hd(account))
-        let wallet = WalletInfo(wallet: w, info: WalletObject.from(w))
+        let type = WalletType.hd(account)
+        let wallet = WalletInfo(type: type, info: WalletObject.from(type))
         let initialName = WalletInfo.initialName(index: keystore.wallets.count - 1)
         keystore.store(object: wallet.info, fields: [
             .name(initialName),

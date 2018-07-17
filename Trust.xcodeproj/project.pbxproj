@@ -242,7 +242,6 @@
 		29F1C85A20036968003780D8 /* HelpUsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F1C85920036968003780D8 /* HelpUsCoordinator.swift */; };
 		29F1C85D2003698A003780D8 /* WellDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F1C85C2003698A003780D8 /* WellDoneViewController.swift */; };
 		29F1C85F200369BA003780D8 /* HelpUsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F1C85E200369BA003780D8 /* HelpUsViewModel.swift */; };
-		29F1C863200375D2003780D8 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F1C862200375D2003780D8 /* Wallet.swift */; };
 		29F1C865200384FE003780D8 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F1C864200384FE003780D8 /* Wallet.swift */; };
 		29FA00CC201CA63C002F7DC5 /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FA00CB201CA63C002F7DC5 /* Method.swift */; };
 		29FA00CE201CA64E002F7DC5 /* DappCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FA00CD201CA64E002F7DC5 /* DappCommand.swift */; };
@@ -730,7 +729,6 @@
 		29F1C85920036968003780D8 /* HelpUsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpUsCoordinator.swift; sourceTree = "<group>"; };
 		29F1C85C2003698A003780D8 /* WellDoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WellDoneViewController.swift; sourceTree = "<group>"; };
 		29F1C85E200369BA003780D8 /* HelpUsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpUsViewModel.swift; sourceTree = "<group>"; };
-		29F1C862200375D2003780D8 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		29F1C864200384FE003780D8 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		29FA00CB201CA63C002F7DC5 /* Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
 		29FA00CD201CA64E002F7DC5 /* DappCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DappCommand.swift; sourceTree = "<group>"; };
@@ -1216,7 +1214,6 @@
 				291ED08C1F6F5F0A00E7E93A /* KeyStoreError.swift */,
 				2923D9B41FDA4E07000CF3F8 /* PasswordGenerator.swift */,
 				61C359DF2002AA590097B04D /* TransactionSigning.swift */,
-				29F1C862200375D2003780D8 /* Wallet.swift */,
 				BB3E2A0C20A04F2C000F8B76 /* ENS */,
 			);
 			path = EtherClient;
@@ -3173,7 +3170,6 @@
 				BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */,
 				77E0E773201FAD06009B4B31 /* BrowserURLParser.swift in Sources */,
 				73ACEF0520163F46003DD71D /* LockEnterPasscodeCoordinator.swift in Sources */,
-				29F1C863200375D2003780D8 /* Wallet.swift in Sources */,
 				A2B7ECAA2038122200828E7D /* ExportPrivateKeyCoordinator.swift in Sources */,
 				29E6E06E1FE897EE0079265A /* BrowserViewController.swift in Sources */,
 				2912CCF91F6A830700C6CBE3 /* AppDelegate.swift in Sources */,

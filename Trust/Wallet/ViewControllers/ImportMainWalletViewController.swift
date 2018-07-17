@@ -61,9 +61,8 @@ final class ImportMainWalletViewController: FormViewController {
             }
     }
 
-    func didImport(account: WalletStruct) {
-        let walletInfo = WalletInfo(wallet: account)
-        delegate?.didImportWallet(wallet: walletInfo, in: self)
+    func didImport(account: WalletInfo) {
+        delegate?.didImportWallet(wallet: account, in: self)
     }
 
     func importWallet() {

@@ -17,15 +17,37 @@ final class WalletObject: Object {
         return "id"
     }
 
-    static func from(_ wallet: WalletStruct) -> WalletObject {
+    static func from(_ type: WalletType) -> WalletObject {
         let info = WalletObject()
-        info.id = wallet.primaryKey
+        info.id = type.description
         return info
     }
 }
 
-extension WalletStruct {
-    var primaryKey: String {
-        return description
+final class WalletAddress: Object {
+    @objc dynamic var id: String = ""
+    @objc dynamic var addressString: String = ""
+    @objc dynamic var coinID: Int = 60
+
+    convenience init(
+        coin: Coin,
+        address: Address
+    ) {
+        self.init()
+        self.id = "\(coin.rawValue)" + "-" + address.description
+        self.addressString = address.description
+        self.coinID = coin.rawValue
+    }
+
+    var coin: Coin? {
+        return Coin(rawValue: coinID)
+    }
+
+    var address: EthereumAddress? {
+        return EthereumAddress(string: addressString)
+    }
+
+    override static func primaryKey() -> String? {
+        return "id"
     }
 }

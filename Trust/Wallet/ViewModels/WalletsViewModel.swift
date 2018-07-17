@@ -25,6 +25,7 @@ class WalletsViewModel {
             if let wallet = wallet {
                 let _ = self.keystore.addAccount(to: wallet, derivationPaths: [
                     Coin.ethereum.derivationPath(at: 0),
+                    Coin.ethereumClassic.derivationPath(at: 0),
                     Coin.callisto.derivationPath(at: 0),
                     Coin.poa.derivationPath(at: 0),
                     Coin.gochain.derivationPath(at: 0),
@@ -40,7 +41,7 @@ class WalletsViewModel {
                 self.sections = [
                     mainAccounts,
                     self.keystore.wallets.filter { !$0.mainWallet }.compactMap {
-                        return WalletAccountViewModel(wallet: $0, account: $0.accounts[0])
+                        return WalletAccountViewModel(wallet: $0, account: $0.currentAccount)
                     },
                 ]
                 completion?()

@@ -22,7 +22,7 @@ struct AccountViewModel {
     }
 
     var isWatch: Bool {
-        return current.isWatch
+        return wallet.isWatch
     }
 
     var title: String {

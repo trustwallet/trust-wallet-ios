@@ -33,7 +33,7 @@ struct WalletInfoViewModel {
     }
 
     var sections: [FormSection] {
-        switch wallet.wallet.type {
+        switch wallet.type {
         case .privateKey(let account):
             return [
                 FormSection(
@@ -65,7 +65,7 @@ struct WalletInfoViewModel {
                     ]
                 ),
             ]
-        case .address(let address):
+        case .address(let coin, let address):
             return [
                 FormSection(
                     footer: wallet.address.description,
