@@ -22,8 +22,8 @@ class WalletsViewModel {
 
         DispatchQueue.global(qos: .userInitiated).async {
 
-            if let wallet = wallet {
-                let _ = self.keystore.addAccount(to: wallet, derivationPaths: [
+            if let walletForAccount = wallet {
+                let _ = self.keystore.addAccount(to: walletForAccount, derivationPaths: [
                     Coin.ethereum.derivationPath(at: 0),
                     Coin.ethereumClassic.derivationPath(at: 0),
                     Coin.callisto.derivationPath(at: 0),

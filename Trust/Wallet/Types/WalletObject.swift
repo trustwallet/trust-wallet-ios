@@ -51,4 +51,9 @@ final class WalletAddress: Object {
     override static func primaryKey() -> String? {
         return "id"
     }
+
+    override func isEqual(_ object: Any?) -> Bool {
+        guard let object = object as? WalletAddress else { return false }
+        return object.id == id
+    }
 }

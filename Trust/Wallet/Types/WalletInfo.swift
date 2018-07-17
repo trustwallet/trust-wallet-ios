@@ -9,7 +9,12 @@ struct WalletInfo {
     let info: WalletObject
 
     var address: Address {
-        return currentAccount.address
+        switch type {
+        case .privateKey, .hd:
+            return currentAccount.address
+        case .address(_, let address):
+            return address
+        }
     }
 
     var coin: Coin? {
@@ -33,17 +38,19 @@ struct WalletInfo {
         switch type {
         case .privateKey(let account), .hd(let account):
             return account.accounts
-        case .address: return []
+        case .address(let coin, let address):
+            return []
         }
     }
 
     var currentAccount: Account! {
         NSLog("accounts \(accounts.count)")
+        NSLog("type \(type)")
         switch type {
         case .privateKey, .hd:
             return accounts.filter { $0.description == info.selectedAccount }.first ?? accounts.first!
-        case .address:
-            return Account(wallet: .none, address: address, derivationPath: coin?.derivationPath(at: 0) ?? Coin.ethereum.derivationPath(at: 0))
+        case .address(let coin, let address):
+            return Account(wallet: .none, address: address, derivationPath: coin.derivationPath(at: 0))
         }
     }
 

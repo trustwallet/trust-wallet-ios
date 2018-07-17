@@ -8,7 +8,7 @@ struct CoinViewModel {
     let coin: Coin
 
     var displayName: String {
-        return "\(name) (\(symbol)"
+        return "\(name) (\(symbol))"
     }
 
     var name: String {

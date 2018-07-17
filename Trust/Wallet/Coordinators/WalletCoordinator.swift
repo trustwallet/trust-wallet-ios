@@ -40,7 +40,7 @@ final class WalletCoordinator: Coordinator {
             if let _ = keystore.mainWallet {
                 setImportWalletView()
             } else {
-                importMainWallet()
+                setImportMainWallet()
             }
         case .createInstantWallet:
             createInstantWallet()
@@ -113,6 +113,13 @@ final class WalletCoordinator: Coordinator {
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         navigationController.setNavigationBarHidden(false, animated: true)
         navigationController.pushViewController(controller, animated: true)
+    }
+
+    private func setImportMainWallet() {
+        let controller = ImportMainWalletViewController(keystore: keystore)
+        controller.delegate = self
+        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
+        navigationController.viewControllers = [controller]
     }
 
     func importMainWallet() {

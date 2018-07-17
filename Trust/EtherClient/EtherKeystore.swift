@@ -91,12 +91,12 @@ class EtherKeystore: Keystore {
                     let type = WalletType.hd($0)
                     return WalletInfo(type: type, info: storage.get(for: type))
                 }
-            },
+            }.filter { !$0.accounts.isEmpty },
             storage.addresses.compactMap {
                 guard let coin = $0.coin, let address = $0.address else { return .none }
                 return WalletInfo(type: .address(coin, address))
             },
-        ].flatMap { $0 }.filter { !$0.accounts.isEmpty }.sorted(by: { $0.info.createdAt < $1.info.createdAt })
+        ].flatMap { $0 }.sorted(by: { $0.info.createdAt < $1.info.createdAt })
     }
 
     // Deprecated
@@ -185,12 +185,12 @@ class EtherKeystore: Keystore {
                 return completion(.failure(KeystoreError.duplicateAccount))
             }
         case .address(let address):
-            let addressString = address.description
-            guard !watchAddresses.contains(addressString) else {
+            let watchAddress = WalletAddress(coin: coin, address: address)
+            guard !storage.addresses.contains(watchAddress) else {
                 return completion(.failure(.duplicateAccount))
             }
-            self.watchAddresses = [watchAddresses, [addressString]].flatMap { $0 }
-            completion(.success(WalletInfo(type: .address(Coin.ethereum, address))))
+            storage.store(address: [watchAddress])
+            completion(.success(WalletInfo(type: .address(coin, address))))
         }
     }
 

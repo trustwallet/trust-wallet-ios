@@ -28,10 +28,20 @@ class WalletsViewController: UITableViewController {
         tableView.register(R.nib.walletTableViewCell(), forCellReuseIdentifier: R.nib.walletTableViewCell.name)
 
         navigationItem.title = viewModel.title
+
+        fetch()
     }
 
-    func fetch() {
-        displayLoading()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        fetch(animated: false)
+    }
+
+    func fetch(animated: Bool = true) {
+        if animated {
+            displayLoading()
+        }
         viewModel.load { [weak self] in
             self?.tableView.reloadData()
             self?.hideLoading()
