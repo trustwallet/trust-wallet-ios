@@ -27,7 +27,7 @@ class WalletsViewController: UITableViewController {
         super.viewDidLoad()
 
         tableView.rowHeight = 60
-        tableView.register(R.nib.walletTableViewCell(), forCellReuseIdentifier: R.nib.walletTableViewCell.name)
+        tableView.register(R.nib.walletViewCell(), forCellReuseIdentifier: R.nib.walletViewCell.name)
         navigationItem.title = viewModel.title
 
         fetch()
@@ -50,7 +50,7 @@ class WalletsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.walletTableViewCell.name, for: indexPath) as! WalletTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.walletViewCell.name, for: indexPath) as! WalletViewCell
         cell.viewModel = viewModel.cellViewModel(for: indexPath)
         cell.delegate = self
         return cell
@@ -123,8 +123,8 @@ class WalletsViewController: UITableViewController {
     }
 }
 
-extension WalletsViewController: WalletTableViewCellDelegate {
-    func didPress(viewModel: WalletAccountViewModel, in cell: WalletTableViewCell) {
+extension WalletsViewController: WalletViewCellDelegate {
+    func didPress(viewModel: WalletAccountViewModel, in cell: WalletViewCell) {
         delegate?.didSelectForInfo(wallet: viewModel.wallet, account: viewModel.account, in: self)
     }
 }

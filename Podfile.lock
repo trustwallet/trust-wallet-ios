@@ -12,7 +12,6 @@ PODS:
   - CryptoSwift (0.10.0)
   - Eureka (4.2.0)
   - Fabric (1.7.6)
-  - JdenticonSwift (0.0.1)
   - JSONRPCKit (2.0.0):
     - Result (~> 3.0)
   - KeychainSwift (10.0.0)
@@ -71,7 +70,6 @@ DEPENDENCIES:
   - CryptoSwift (~> 0.10.0)
   - Eureka
   - Fabric
-  - JdenticonSwift
   - JSONRPCKit (from `https://github.com/bricklife/JSONRPCKit.git`)
   - KeychainSwift
   - Kingfisher (~> 4.0)
@@ -102,7 +100,6 @@ SPEC REPOS:
     - CryptoSwift
     - Eureka
     - Fabric
-    - JdenticonSwift
     - KeychainSwift
     - Kingfisher
     - MBProgressHUD
@@ -170,7 +167,6 @@ SPEC CHECKSUMS:
   CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
   Eureka: 0748c7bbb2560130e43c7bfa83e99c98854a1f42
   Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
-  JdenticonSwift: bc532f2761566eb29f26b085e5f72de25bc065ce
   JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
   Kingfisher: 1f9157d9c02b380cbd0b7cc890161195164eb634
@@ -196,6 +192,6 @@ SPEC CHECKSUMS:
   TrustWeb3Provider: 50fa391bdf170feb43dd4419992931510a5751d8
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
-PODFILE CHECKSUM: 0ebbb0545465702864bb0f93186e4823b420449a
+PODFILE CHECKSUM: e339ae67c0cf1b039b3a4751d58316518b2f93fd
 
 COCOAPODS: 1.5.3

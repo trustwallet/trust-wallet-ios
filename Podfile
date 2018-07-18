@@ -28,7 +28,6 @@ target 'Trust' do
   pod 'Branch'
   pod 'SAMKeychain'
   pod 'TrustWeb3Provider', :git=>'https://github.com/TrustWallet/trust-web3-provider', :commit=>'f4e0ebb1b8fa4812637babe85ef975d116543dfd'
-  pod 'JdenticonSwift'
   pod 'URLNavigator'
   pod 'RandomColorSwift'
   pod 'TrustWalletSDK', :git=>'https://github.com/TrustWallet/TrustSDK-iOS', :branch=>'master'

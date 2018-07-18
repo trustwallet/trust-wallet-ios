@@ -3,33 +3,31 @@
 import TrustCore
 import UIKit
 
-protocol AccountViewCellDelegate: class {
-    func accountViewCell(_ cell: AccountViewCell, didTapInfoViewForAccount _: WalletInfo)
+protocol WalletViewCellDelegate: class {
+    func didPress(viewModel: WalletAccountViewModel, in cell: WalletViewCell)
 }
 
-final class AccountViewCell: UITableViewCell {
+final class WalletViewCell: UITableViewCell {
 
     @IBOutlet weak var infoButton: UIButton!
-    @IBOutlet weak var activeView: UIView!
     @IBOutlet weak var glassesImageView: UIImageView!
     @IBOutlet weak var walletTypeImageView: UIImageView!
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var identiconImageView: UIImageView!
 
-    weak var delegate: AccountViewCellDelegate?
+    weak var delegate: WalletViewCellDelegate?
 
-    var viewModel: AccountViewModel? {
+    var viewModel: WalletAccountViewModel? {
         didSet {
             guard let model = viewModel else {
                 return
             }
-            balanceLabel.text = model.subTitle
-            glassesImageView.isHidden = !model.isWatch
-            activeView.isHidden = !model.isActive
             addressLabel.text = model.title
+            balanceLabel.text = model.subbtitle
+            glassesImageView.isHidden = !model.isWatch
             infoButton.tintColor = Colors.lightBlue
-            identiconImageView.image = model.identicon
+            identiconImageView.image = model.image
         }
     }
 
@@ -39,9 +37,7 @@ final class AccountViewCell: UITableViewCell {
     }
 
     @IBAction func infoAction(_ sender: Any) {
-        guard let account = viewModel?.wallet else {
-            return
-        }
-        delegate?.accountViewCell(self, didTapInfoViewForAccount: account)
+        guard let viewModel = viewModel else { return }
+        delegate?.didPress(viewModel: viewModel, in: self)
     }
 }
