@@ -227,3 +227,5 @@
 "CreatingWallet" = "Создание Кошелька";
 "WalletImported" = "Кошелек был импортирован";
 "SelectCoin" = "Выберите Монету";
+"Developer" = "Разработчик";
+"EnableTestNetworks" = "Включить Тестовые Сети";

@@ -128,7 +128,8 @@ final class SettingsViewController: FormViewController, Coordinator {
 
             <<< currencyRow()
             <<< browserRow()
-            <<< analiticsRow()
+            <<< privacyRow()
+            <<< developersRow()
 
             +++ Section(R.string.localizable.settingsJoinCommunityLabelTitle())
 
@@ -244,15 +245,28 @@ final class SettingsViewController: FormViewController, Coordinator {
         }
     }
 
-    private func analiticsRow() -> ButtonRow {
+    private func privacyRow() -> ButtonRow {
         return AppFormAppearance.button { row in
             row.cellStyle = .value1
             row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback {
-                return AnaliticsViewController()
+                return PrivacyViewController()
             }, onDismiss: nil)
         }.cellUpdate { cell, _ in
             cell.imageView?.image = R.image.settings_colorful_privacy()
-            cell.textLabel?.text = NSLocalizedString("settings.privacy.title", value: "Privacy", comment: "")
+            cell.textLabel?.text = R.string.localizable.settingsPrivacyTitle()
+            cell.accessoryType = .disclosureIndicator
+        }
+    }
+
+    private func developersRow() -> ButtonRow {
+        return AppFormAppearance.button { row in
+            row.cellStyle = .value1
+            row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback {
+                return DeveloperViewController()
+            }, onDismiss: nil)
+        }.cellUpdate { cell, _ in
+            cell.imageView?.image = R.image.settings_colorful_privacy()
+            cell.textLabel?.text = R.string.localizable.developer()
             cell.accessoryType = .disclosureIndicator
         }
     }

@@ -278,3 +278,5 @@
 "WalletImported" = "Wallet Imported";
 "SelectCoin" = "Select Coin";
 "ImportMainWallet" = "Import Main Wallet";
+"Developer" = "Developer";
+"EnableTestNetworks" = "Enable Test Networks";
