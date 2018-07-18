@@ -8,7 +8,6 @@ import RealmSwift
 
 protocol SettingsCoordinatorDelegate: class {
     func didRestart(with account: WalletInfo, in coordinator: SettingsCoordinator)
-    func didUpdateAccounts(in coordinator: SettingsCoordinator)
     func didPressURL(_ url: URL, in coordinator: SettingsCoordinator)
     func didCancel(in coordinator: SettingsCoordinator)
 }
@@ -25,23 +24,11 @@ final class SettingsCoordinator: Coordinator {
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
     var coordinators: [Coordinator] = []
 
-    lazy var accountsCoordinator: AccountsCoordinator = {
-        let coordinator = AccountsCoordinator(
-            navigationController: navigationController,
-            keystore: keystore,
-            session: session,
-            balanceCoordinator: balanceCoordinator
-        )
-        coordinator.delegate = self
-        return coordinator
-    }()
-
     lazy var rootViewController: SettingsViewController = {
         let controller = SettingsViewController(
             session: session,
             keystore: keystore,
-            balanceCoordinator: balanceCoordinator,
-            accountsCoordinator: accountsCoordinator
+            balanceCoordinator: balanceCoordinator
         )
         controller.delegate = self
         controller.modalPresentationStyle = .pageSheet
@@ -69,8 +56,6 @@ final class SettingsCoordinator: Coordinator {
         self.walletStorage = walletStorage
         self.balanceCoordinator = balanceCoordinator
         self.sharedRealm = sharedRealm
-
-        addCoordinator(accountsCoordinator)
     }
 
     func start() {
@@ -89,52 +74,11 @@ final class SettingsCoordinator: Coordinator {
         historyStore.clearAll()
     }
 
-    private func presentSwitchNetworkWarning(for server: RPCServer) {
-        var config = session.config
-        let viewModel = SettingsViewModel()
-        let alertViewController = UIAlertController.alertController(
-            title: viewModel.testNetworkWarningTitle,
-            message: viewModel.testNetworkWarningMessage,
-            style: .alert,
-            in: navigationController
-        )
-
-        alertViewController.popoverPresentationController?.sourceView = navigationController.view
-        alertViewController.popoverPresentationController?.sourceRect = navigationController.view.centerRect
-
-        let okAction = UIAlertAction(title: NSLocalizedString("OK", value: "OK", comment: ""), style: .default) { _ in
-            self.switchNetwork(for: server)
-        }
-        let dontShowAgainAction = UIAlertAction(title: viewModel.testNetworkWarningDontShowAgainLabel, style: .default) { _ in
-            config.testNetworkWarningOff = true
-            self.switchNetwork(for: server)
-        }
-
-        alertViewController.addAction(dontShowAgainAction)
-        alertViewController.addAction(okAction)
-        navigationController.present(alertViewController, animated: true, completion: nil)
-    }
-
-    func prepareSwitchNetwork(for server: RPCServer) {
-        if server.networkType != .main && session.config.testNetworkWarningOff == false {
-            presentSwitchNetworkWarning(for: server)
-        } else {
-            switchNetwork(for: server)
-        }
-    }
-
-    func switchNetwork(for server: RPCServer) {
-        var config = session.config
-        config.chainID = server.chainID
-        restart(for: session.account)
-    }
 }
 
 extension SettingsCoordinator: SettingsViewControllerDelegate {
     func didAction(action: SettingsAction, in viewController: SettingsViewController) {
         switch action {
-        case .RPCServer(let server):
-            prepareSwitchNetwork(for: server)
         case .currency:
             restart(for: session.account)
         case .pushNotifications(let change):
@@ -155,30 +99,5 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
             cleadCache()
             CookiesStore.delete()
         }
-    }
-}
-
-extension SettingsCoordinator: AccountsCoordinatorDelegate {
-    func didAddAccount(account: WalletInfo, in coordinator: AccountsCoordinator) {
-        delegate?.didUpdateAccounts(in: self)
-    }
-
-    func didDeleteAccount(account: WalletInfo, in coordinator: AccountsCoordinator) {
-        storage.deleteAll()
-        delegate?.didUpdateAccounts(in: self)
-        guard !coordinator.accountsViewController.hasWallets else { return }
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        delegate?.didCancel(in: self)
-    }
-
-    func didCancel(in coordinator: AccountsCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
-    }
-
-    func didSelectAccount(account: WalletInfo, in coordinator: AccountsCoordinator) {
-        coordinator.navigationController.dismiss(animated: true, completion: nil)
-        removeCoordinator(coordinator)
-        restart(for: account)
     }
 }

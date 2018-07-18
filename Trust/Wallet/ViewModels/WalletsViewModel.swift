@@ -69,11 +69,14 @@ class WalletsViewModel {
     }
 
     func heightForHeader(in section: Int) -> CGFloat {
-        let enabled = numberOfRows(in: section) > 0
-        return enabled ? StyleLayout.TableView.heightForHeaderInSection : 0.001
+        return numberOfRows(in: section) > 0 ? StyleLayout.TableView.heightForHeaderInSection : 0.001
     }
 
     func cellViewModel(for indexPath: IndexPath) -> WalletAccountViewModel {
         return sections[indexPath.section][indexPath.row]
+    }
+
+    func canEditRowAt(for indexPath: IndexPath) -> Bool {
+        return !cellViewModel(for: indexPath).wallet.mainWallet
     }
 }

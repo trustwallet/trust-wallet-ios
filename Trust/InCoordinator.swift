@@ -306,10 +306,6 @@ extension InCoordinator: SettingsCoordinatorDelegate {
         restart(for: account)
     }
 
-    func didUpdateAccounts(in coordinator: SettingsCoordinator) {
-        delegate?.didUpdateAccounts(in: self)
-    }
-
     func didPressURL(_ url: URL, in coordinator: SettingsCoordinator) {
         showTab(.browser(openURL: url))
     }

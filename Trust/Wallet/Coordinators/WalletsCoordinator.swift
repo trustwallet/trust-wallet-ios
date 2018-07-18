@@ -122,6 +122,10 @@ class WalletsCoordinator: Coordinator {
 }
 
 extension WalletsCoordinator: WalletsViewControllerDelegate {
+    func didDeleteAccount(account: WalletInfo, in viewController: WalletsViewController) {
+        viewController.fetch()
+    }
+
     func didSelect(wallet: WalletInfo, account: Account, in controller: WalletsViewController) {
         keystore.store(object: wallet.info, fields: [
             .setAccount(account.description),

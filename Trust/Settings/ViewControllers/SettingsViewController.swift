@@ -65,23 +65,17 @@ final class SettingsViewController: FormViewController, Coordinator {
     }()
 
     let session: WalletSession
-
     let keystore: Keystore
-
     let balanceCoordinator: TokensBalanceService
-
-    weak var accountsCoordinator: AccountsCoordinator?
 
     init(
         session: WalletSession,
         keystore: Keystore,
-        balanceCoordinator: TokensBalanceService,
-        accountsCoordinator: AccountsCoordinator
+        balanceCoordinator: TokensBalanceService
     ) {
         self.session = session
         self.keystore = keystore
         self.balanceCoordinator = balanceCoordinator
-        self.accountsCoordinator = accountsCoordinator
         super.init(nibName: nil, bundle: nil)
         self.chaineStateObservation()
     }
@@ -92,15 +86,8 @@ final class SettingsViewController: FormViewController, Coordinator {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: stateView)
         }
         title = NSLocalizedString("settings.navigation.title", value: "Settings", comment: "")
-        let account = session.account
 
-        form = Section()
-
-            <<< networkRow()
-
-            <<< walletsRow(for: account.address)
-
-            +++ Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))
+        form = Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))
 
             <<< SwitchRow(Values.passcodeRow) { [weak self] in
                 $0.title = self?.viewModel.passcodeTitle
@@ -171,54 +158,6 @@ final class SettingsViewController: FormViewController, Coordinator {
                 $0.value = Bundle.main.fullVersion
                 $0.disabled = true
             }
-    }
-
-    private func networkRow() -> PushRow<RPCServer> {
-        return PushRow<RPCServer> { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            $0.title = strongSelf.viewModel.networkTitle
-            $0.options = strongSelf.viewModel.servers
-            $0.value = RPCServer(chainID: strongSelf.config.chainID)
-            $0.selectorTitle = strongSelf.viewModel.networkTitle
-            $0.displayValueFor = { value in
-                return value?.displayName
-            }
-        }.onChange { [weak self] row in
-            let server = row.value ?? RPCServer.main
-            self?.run(action: .RPCServer(server: server))
-        }.onPresent { _, selectorController in
-            selectorController.enableDeselection = false
-            selectorController.sectionKeyForValue = { option in
-                switch option {
-                case .main, .classic, .callisto, .poa, .gochain:
-                    return ""
-                case .kovan, .ropsten, .rinkeby, .sokol:
-                    return R.string.localizable.settingsNetworkTestLabelTitle()
-                case .custom:
-                    return R.string.localizable.settingsNetworkCustomLabelTitle()
-                }
-            }
-        }.cellSetup { cell, _ in
-            cell.imageView?.image = R.image.settings_colorful_networks()
-        }
-    }
-
-    private func walletsRow(for address: Address) -> ButtonRow {
-        return AppFormAppearance.button { [weak self] row in
-            guard let strongSelf = self, let accountsViewController = strongSelf.accountsCoordinator?.accountsViewController else { return }
-            row.cellStyle = .value1
-            row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
-                return accountsViewController
-            }, onDismiss: nil)
-        }.cellUpdate { cell, _ in
-            cell.textLabel?.textColor = .black
-            cell.imageView?.image = R.image.settings_colorful_wallets()
-            cell.textLabel?.text = R.string.localizable.wallets()
-            cell.detailTextLabel?.text = String(address.description.prefix(10)) + "..."
-            cell.accessoryType = .disclosureIndicator
-        }
     }
 
     private func currencyRow() -> PushRow<Currency> {
