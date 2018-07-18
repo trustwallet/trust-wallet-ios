@@ -7,32 +7,25 @@ import StatefulViewController
 import Result
 import TrustCore
 import RealmSwift
+import TrustKeystore
 
 protocol TransactionsViewControllerDelegate: class {
-    func didPressSend(in viewController: TransactionsViewController)
-    func didPressRequest(in viewController: TransactionsViewController)
     func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController)
-    func didPressDeposit(for account: Wallet, sender: UIView, in viewController: TransactionsViewController)
 }
 
 class TransactionsViewController: UIViewController {
 
     var viewModel: TransactionsViewModel
-    let account: Wallet
     let tableView = TransactionsTableView()
     let refreshControl = UIRefreshControl()
     weak var delegate: TransactionsViewControllerDelegate?
-    var timer: Timer?
-    var updateTransactionsTimer: Timer?
     let session: WalletSession
     let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 
     init(
-        account: Wallet,
         session: WalletSession,
         viewModel: TransactionsViewModel
     ) {
-        self.account = account
         self.session = session
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -65,37 +58,18 @@ class TransactionsViewController: UIViewController {
                 insets: insets,
                 onRetry: { [unowned self] in
                     self.pullToRefresh()
-                },
-                onDeposit: { [unowned self] sender in
-                    self.showDeposit(sender)
                 }
             )
-            view.isDepositAvailable = viewModel.isBuyActionAvailable
             return view
         }()
 
         navigationItem.title = viewModel.title
-        runScheduledTimers()
-        NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.stopTimers), name: .UIApplicationWillResignActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TransactionsViewController.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
-
-        transactionsObservation()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        refreshControl.endRefreshing()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         fetch()
-    }
-
-    private func transactionsObservation() {
-        viewModel.transactionsUpdateObservation { [weak self] in
-            guard let `self` = self else { return }
-            self.tableView.reloadData()
-            self.endLoading()
-            self.refreshControl.endRefreshing()
-            self.tabBarItem.badgeValue = self.viewModel.badgeValue
-        }
     }
 
     @objc func pullToRefresh() {
@@ -108,53 +82,12 @@ class TransactionsViewController: UIViewController {
         viewModel.fetch { [weak self] in
             self?.endLoading()
             self?.refreshControl.endRefreshing()
+            self?.tableView.reloadData()
         }
-    }
-
-    @objc func send() {
-        delegate?.didPressSend(in: self)
-    }
-
-    @objc func request() {
-        delegate?.didPressRequest(in: self)
-    }
-
-    func showDeposit(_ sender: UIButton) {
-        delegate?.didPressDeposit(for: account, sender: sender, in: self)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    @objc func stopTimers() {
-        timer?.invalidate()
-        timer = nil
-        updateTransactionsTimer?.invalidate()
-        updateTransactionsTimer = nil
-        viewModel.invalidateTransactionsObservation()
-    }
-
-    @objc func restartTimers() {
-        runScheduledTimers()
-        transactionsObservation()
-    }
-
-    private func runScheduledTimers() {
-        guard timer == nil, updateTransactionsTimer == nil else {
-            return
-        }
-        timer = Timer.scheduledTimer(timeInterval: 5, target: BlockOperation { [weak self] in
-            self?.viewModel.fetchPending()
-        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
-        updateTransactionsTimer = Timer.scheduledTimer(timeInterval: 15, target: BlockOperation { [weak self] in
-            self?.viewModel.fetchTransactions()
-        }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-        viewModel.invalidateTransactionsObservation()
     }
 }
 

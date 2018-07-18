@@ -30,6 +30,7 @@ final class TokensCoordinator: Coordinator {
         controller.titleView.delegate = self
         controller.navigationItem.leftBarButtonItems = [
             UIBarButtonItem(image: R.image.collectibles(), style: .done, target: self, action: #selector(collectibles)),
+            UIBarButtonItem(image: R.image.collectibles(), style: .done, target: self, action: #selector(transactions)),
         ]
         controller.navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(edit)),
@@ -145,6 +146,11 @@ final class TokensCoordinator: Coordinator {
 
     @objc private func collectibles() {
         navigationController.pushViewController(nonFungibleTokensViewController, animated: true)
+    }
+
+    @objc private func transactions() {
+        let coordinator = TransactionsCoordinator(session: session, storage: transactionsStore, network: network)
+        navigationController.pushCoordinator(coordinator: coordinator, animated: true)
     }
 
     private func didSelectToken(_ token: NonFungibleTokenObject, with backgroundColor: UIColor) {
