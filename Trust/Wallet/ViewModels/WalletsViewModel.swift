@@ -12,7 +12,9 @@ class WalletsViewModel {
 
     var sections: [[WalletAccountViewModel]] = []
 
-    init(keystore: Keystore) {
+    init(
+        keystore: Keystore
+    ) {
         self.keystore = keystore
     }
 
@@ -22,14 +24,10 @@ class WalletsViewModel {
 
         DispatchQueue.global(qos: .userInitiated).async {
 
-            if let walletForAccount = wallet {
-                let _ = self.keystore.addAccount(to: walletForAccount, derivationPaths: [
-                    Coin.ethereum.derivationPath(at: 0),
-                    Coin.ethereumClassic.derivationPath(at: 0),
-                    Coin.callisto.derivationPath(at: 0),
-                    Coin.poa.derivationPath(at: 0),
-                    Coin.gochain.derivationPath(at: 0),
-                ])
+            let coins = Config.current.servers
+            if let walletForAccount = wallet, walletForAccount.accounts.count < coins.count {
+                let derivationPaths = coins.map { $0.derivationPath(at: 0) }
+                let _ = self.keystore.addAccount(to: walletForAccount, derivationPaths: derivationPaths)
             }
 
             DispatchQueue.main.async {

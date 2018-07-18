@@ -177,6 +177,7 @@ class InCoordinator: Coordinator {
     }
 
     func changeWallet() {
+        walletsCoordinator.walletController.tableView.scrollOnTop()
         navigationController.present(walletsCoordinator.navigationController, animated: true)
     }
 

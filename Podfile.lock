@@ -152,7 +152,7 @@ CHECKOUT OPTIONS:
     :commit: 4caee499a817638ce666b0c4448734cf933912f7
     :git: https://github.com/TrustWallet/trust-core
   TrustKeystore:
-    :commit: d22b1097a8761697b58405709ba9fa19c39cd757
+    :commit: 30feafc123885a580b9f0b73ea8f6b9bcca4693f
     :git: https://github.com/TrustWallet/trust-keystore
   TrustWalletSDK:
     :commit: 87242dc2fcc8cb62601e6ee5d1eba5608e0fec94
