@@ -76,4 +76,8 @@ struct WalletInfoViewModel {
             ]
         }
     }
+
+    var canEditName: Bool {
+        return !wallet.mainWallet
+    }
 }
