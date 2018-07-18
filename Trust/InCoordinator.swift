@@ -360,6 +360,10 @@ extension InCoordinator: BrowserCoordinatorDelegate {
 }
 
 extension InCoordinator: WalletsCoordinatorDelegate {
+    func didUpdateAccounts(in coordinator: WalletsCoordinator) {
+        delegate?.didUpdateAccounts(in: self)
+    }
+
     func didSelect(wallet: WalletInfo, in coordinator: WalletsCoordinator) {
         coordinator.navigationController.dismiss(animated: true)
         // removeCoordinator(coordinator)

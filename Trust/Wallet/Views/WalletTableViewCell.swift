@@ -2,26 +2,36 @@
 
 import UIKit
 
+protocol WalletTableViewCellDelegate: class {
+    func didPress(viewModel: WalletAccountViewModel, in cell: WalletTableViewCell)
+}
+
 class WalletTableViewCell: UITableViewCell {
 
     @IBOutlet weak var tokenImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var subNameLabel: UILabel!
+    @IBOutlet weak var infoButton: UIButton!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    weak var delegate: WalletTableViewCellDelegate?
+
+    var viewModel: WalletAccountViewModel? {
+        didSet {
+            guard let model = viewModel else { return }
+
+            nameLabel.text = model.title //.wallet.info.name
+            subNameLabel.text = model.subbtitle //.wallet.address.description
+            tokenImageView.image = R.image.backup_warning()
+        }
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.viewModel = nil
     }
 
-    func configure(for viewModel: WalletAccountViewModel) {
-        nameLabel.text = viewModel.title //.wallet.info.name
-        subNameLabel.text = viewModel.subbtitle //.wallet.address.description
-        tokenImageView.image = R.image.backup_warning()
+    @IBAction func infoButtonPressed(_ sender: Any) {
+        guard let model = viewModel else { return }
+        delegate?.didPress(viewModel: model, in: self)
     }
 }

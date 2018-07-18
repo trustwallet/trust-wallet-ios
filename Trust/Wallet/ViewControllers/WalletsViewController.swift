@@ -5,6 +5,7 @@ import TrustKeystore
 
 protocol WalletsViewControllerDelegate: class {
     func didSelect(wallet: WalletInfo, account: Account, in controller: WalletsViewController)
+    func didSelectForInfo(wallet: WalletInfo, account: Account, in controller: WalletsViewController)
 }
 
 class WalletsViewController: UITableViewController {
@@ -26,7 +27,6 @@ class WalletsViewController: UITableViewController {
 
         tableView.rowHeight = 60
         tableView.register(R.nib.walletTableViewCell(), forCellReuseIdentifier: R.nib.walletTableViewCell.name)
-
         navigationItem.title = viewModel.title
 
         fetch()
@@ -50,7 +50,8 @@ class WalletsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.walletTableViewCell.name, for: indexPath) as! WalletTableViewCell
-        cell.configure(for: viewModel.cellViewModel(for: indexPath))
+        cell.viewModel = viewModel.cellViewModel(for: indexPath)
+        cell.delegate = self
         return cell
     }
 
@@ -79,5 +80,11 @@ class WalletsViewController: UITableViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension WalletsViewController: WalletTableViewCellDelegate {
+    func didPress(viewModel: WalletAccountViewModel, in cell: WalletTableViewCell) {
+        delegate?.didSelectForInfo(wallet: viewModel.wallet, account: viewModel.account, in: self)
     }
 }

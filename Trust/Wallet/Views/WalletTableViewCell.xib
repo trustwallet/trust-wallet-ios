@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14269.14" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14252.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,31 +27,44 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1pU-yG-DqD">
-                        <rect key="frame" x="68" y="8" width="235" height="20.5"/>
+                        <rect key="frame" x="68" y="8" width="193" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SJJ-N2-aHY">
-                        <rect key="frame" x="68" y="34" width="235" height="18"/>
+                        <rect key="frame" x="68" y="34" width="193" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sP2-Hs-SrT">
+                        <rect key="frame" x="269" y="7" width="50" height="46"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="46" id="TQy-hi-3y4"/>
+                            <constraint firstAttribute="width" constant="50" id="d9f-6v-j31"/>
+                        </constraints>
+                        <connections>
+                            <action selector="infoButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="sU5-8V-x7Y"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="sP2-Hs-SrT" firstAttribute="leading" secondItem="SJJ-N2-aHY" secondAttribute="trailing" constant="8" id="0SJ-b5-neU"/>
+                    <constraint firstItem="sP2-Hs-SrT" firstAttribute="leading" secondItem="1pU-yG-DqD" secondAttribute="trailing" constant="8" id="1Qn-nq-yYc"/>
                     <constraint firstItem="apZ-jh-A3s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="DSv-T1-KGT"/>
-                    <constraint firstAttribute="trailing" secondItem="1pU-yG-DqD" secondAttribute="trailing" constant="16" id="E0z-D8-Abo"/>
                     <constraint firstItem="1pU-yG-DqD" firstAttribute="leading" secondItem="apZ-jh-A3s" secondAttribute="trailing" constant="8" id="Gfn-hb-gyZ"/>
+                    <constraint firstAttribute="trailing" secondItem="sP2-Hs-SrT" secondAttribute="trailing" id="HdC-E2-eK5"/>
                     <constraint firstItem="apZ-jh-A3s" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Nj4-Dl-UDI"/>
-                    <constraint firstAttribute="trailing" secondItem="SJJ-N2-aHY" secondAttribute="trailing" constant="16" id="RGA-jj-xUe"/>
                     <constraint firstItem="SJJ-N2-aHY" firstAttribute="leading" secondItem="apZ-jh-A3s" secondAttribute="trailing" constant="8" id="WNs-s1-bqi"/>
-                    <constraint firstItem="1pU-yG-DqD" firstAttribute="top" secondItem="apZ-jh-A3s" secondAttribute="top" id="t3A-z4-q7h"/>
-                    <constraint firstItem="SJJ-N2-aHY" firstAttribute="bottom" secondItem="apZ-jh-A3s" secondAttribute="bottom" id="x6u-hw-vAf"/>
+                    <constraint firstItem="SJJ-N2-aHY" firstAttribute="top" secondItem="1pU-yG-DqD" secondAttribute="bottom" constant="5" id="fgj-GV-2la"/>
+                    <constraint firstItem="sP2-Hs-SrT" firstAttribute="centerY" secondItem="apZ-jh-A3s" secondAttribute="centerY" id="oNL-kh-ba5"/>
+                    <constraint firstItem="SJJ-N2-aHY" firstAttribute="bottom" secondItem="apZ-jh-A3s" secondAttribute="bottom" id="xmv-bW-dCt"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="infoButton" destination="sP2-Hs-SrT" id="u7W-IB-hJV"/>
                 <outlet property="nameLabel" destination="1pU-yG-DqD" id="2NL-EA-dro"/>
                 <outlet property="subNameLabel" destination="SJJ-N2-aHY" id="KfN-d6-NBI"/>
                 <outlet property="tokenImageView" destination="apZ-jh-A3s" id="wF6-fo-rSe"/>
