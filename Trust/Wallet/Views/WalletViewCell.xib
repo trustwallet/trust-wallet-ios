@@ -34,7 +34,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="2t2-qW-Lcu">
-                                <rect key="frame" x="58" y="15.5" width="201" height="41"/>
+                                <rect key="frame" x="58" y="15.5" width="186" height="41"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ETH Wallet" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scJ-RY-qk3" userLabel="Address Lable">
                                         <rect key="frame" x="0.0" y="0.0" width="84" height="20.5"/>
@@ -54,10 +54,10 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wMR-ps-QHM">
-                                <rect key="frame" x="269" y="25" width="49" height="22"/>
+                                <rect key="frame" x="254" y="4" width="64" height="64"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="glasses" translatesAutoresizingMaskIntoConstraints="NO" id="mbU-gV-kxo">
-                                        <rect key="frame" x="0.0" y="2" width="18" height="18"/>
+                                        <rect key="frame" x="0.0" y="23" width="18" height="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" priority="999" constant="18" id="JBT-UD-abn"/>
@@ -65,10 +65,10 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Io-0E-DkX">
-                                        <rect key="frame" x="28" y="0.0" width="21" height="22"/>
+                                        <rect key="frame" x="28" y="0.0" width="36" height="64"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="22" id="luV-hy-3Li"/>
-                                            <constraint firstAttribute="width" constant="21" id="seg-be-uoW"/>
+                                            <constraint firstAttribute="height" constant="64" id="luV-hy-3Li"/>
+                                            <constraint firstAttribute="width" constant="36" id="seg-be-uoW"/>
                                         </constraints>
                                         <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
