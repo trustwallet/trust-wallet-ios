@@ -29,6 +29,7 @@ class WalletsCoordinator: Coordinator {
             action: #selector(dismiss)
         )
         controller.delegate = self
+        controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add))
         return controller
     }()
 
