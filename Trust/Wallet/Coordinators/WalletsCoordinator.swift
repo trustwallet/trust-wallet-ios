@@ -62,9 +62,10 @@ class WalletsCoordinator: Coordinator {
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
-    func showWalletInfo(for wallet: WalletInfo, sender: UIView) {
+    func showWalletInfo(for wallet: WalletInfo, account: Account, sender: UIView) {
         let controller = WalletInfoViewController(
-            wallet: wallet
+            wallet: wallet,
+            account: account
         )
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)
@@ -135,7 +136,7 @@ extension WalletsCoordinator: WalletsViewControllerDelegate {
     }
 
     func didSelectForInfo(wallet: WalletInfo, account: Account, in controller: WalletsViewController) {
-        showWalletInfo(for: wallet, sender: controller.view)
+        showWalletInfo(for: wallet, account: account, sender: controller.view)
     }
 }
 

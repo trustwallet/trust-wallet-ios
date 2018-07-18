@@ -43,4 +43,8 @@ struct CoinViewModel {
         case .gochain: return R.image.ethereum60()
         }
     }
+
+    var walletName: String {
+        return name + " " + R.string.localizable.wallet()
+    }
 }

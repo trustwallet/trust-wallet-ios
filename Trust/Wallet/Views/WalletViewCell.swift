@@ -14,7 +14,7 @@ final class WalletViewCell: UITableViewCell {
     @IBOutlet weak var walletTypeImageView: UIImageView!
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
-    @IBOutlet weak var identiconImageView: UIImageView!
+    @IBOutlet weak var identiconImageView: TokenImageView!
 
     weak var delegate: WalletViewCellDelegate?
 
@@ -31,6 +31,12 @@ final class WalletViewCell: UITableViewCell {
         }
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        updateSeparatorInset()
+    }
+
     override func prepareForReuse() {
         super.prepareForReuse()
         self.viewModel = nil
@@ -39,5 +45,13 @@ final class WalletViewCell: UITableViewCell {
     @IBAction func infoAction(_ sender: Any) {
         guard let viewModel = viewModel else { return }
         delegate?.didPress(viewModel: viewModel, in: self)
+    }
+
+    private func updateSeparatorInset() {
+        separatorInset = UIEdgeInsets(
+            top: 0,
+            left: layoutInsets.left + 76,
+            bottom: 0, right: 0
+        )
     }
 }

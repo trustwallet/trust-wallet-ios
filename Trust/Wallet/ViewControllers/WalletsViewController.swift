@@ -26,7 +26,8 @@ class WalletsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.rowHeight = 60
+        tableView.separatorColor = StyleLayout.TableView.separatorColor
+        tableView.rowHeight = UITableViewAutomaticDimension
         tableView.register(R.nib.walletViewCell(), forCellReuseIdentifier: R.nib.walletViewCell.name)
         navigationItem.title = viewModel.title
 

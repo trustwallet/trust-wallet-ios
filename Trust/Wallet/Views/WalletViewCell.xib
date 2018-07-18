@@ -21,11 +21,11 @@
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JUd-EF-Sra">
                         <rect key="frame" x="16" y="0.0" width="318" height="71.5"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BUP-CU-bxN">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BUP-CU-bxN" customClass="TokenImageView" customModule="Trust" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="12" width="48" height="47.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="b0v-3X-CxK"/>
-                                    <constraint firstAttribute="height" priority="999" constant="36" id="hic-Fd-JLF"/>
+                                    <constraint firstAttribute="height" priority="999" constant="48" id="hic-Fd-JLF"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -33,8 +33,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2t2-qW-Lcu">
-                                <rect key="frame" x="58" y="16" width="201" height="40"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="2t2-qW-Lcu">
+                                <rect key="frame" x="58" y="15.5" width="201" height="41"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ETH Wallet" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scJ-RY-qk3" userLabel="Address Lable">
                                         <rect key="frame" x="0.0" y="0.0" width="84" height="20.5"/>
@@ -43,12 +43,12 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0x12312321" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWW-wY-XEU" userLabel="Balance Lable">
-                                        <rect key="frame" x="0.0" y="25.5" width="120" height="14.5"/>
+                                        <rect key="frame" x="0.0" y="26.5" width="120" height="14.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="120" id="N2F-YM-gUe"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
