@@ -27,9 +27,8 @@ class SelectCoinViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.rowHeight = 60
+        tableView.rowHeight = 64
         tableView.register(R.nib.coinViewCell(), forCellReuseIdentifier: R.nib.coinViewCell.name)
-
         navigationItem.title = viewModel.title
     }
 

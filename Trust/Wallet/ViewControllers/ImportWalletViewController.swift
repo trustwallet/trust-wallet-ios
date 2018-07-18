@@ -13,7 +13,9 @@ final class ImportWalletViewController: FormViewController {
 
     let keystore: Keystore
     let coin: Coin
-    private let viewModel = ImportWalletViewModel()
+    private lazy var viewModel: ImportWalletViewModel = {
+        return ImportWalletViewModel(coin: coin)
+    }()
 
     struct Values {
         static let segment = "segment"
@@ -194,7 +196,7 @@ final class ImportWalletViewController: FormViewController {
             case .privateKey:
                 return .privateKey(privateKey: privateKeyInput)
             case .mnemonic:
-                return .mnemonic(words: words, password: password, derivationPath: Coin.ethereum.derivationPath(at: 0))
+                return .mnemonic(words: words, password: password, derivationPath: coin.derivationPath(at: 0))
             case .address:
                 let address = EthereumAddress(string: addressInput)! // EthereumAddress validated by form view.
                 return .address(address: address)

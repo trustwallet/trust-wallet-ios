@@ -196,7 +196,7 @@ extension WalletCoordinator: WelcomeViewControllerDelegate {
 extension WalletCoordinator: ImportWalletViewControllerDelegate {
     func didImportAccount(account: WalletInfo, fields: [WalletInfoField], in viewController: ImportWalletViewController) {
         keystore.store(object: account.info, fields: fields)
-        didCreateAccount(account: account)
+        walletCreated(wallet: account, type: .imported)
     }
 }
 

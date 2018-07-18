@@ -11,7 +11,7 @@ struct SelectCoinsViewModel {
     }
 
     var title: String {
-        return R.string.localizable.selectCoin()
+        return R.string.localizable.importWalletImportButtonTitle()
     }
 
     var numberOfSection: Int {

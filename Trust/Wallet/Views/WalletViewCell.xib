@@ -11,20 +11,20 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="4vz-JX-rYg" customClass="WalletViewCell" customModule="Trust" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="346" height="60"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="72" id="4vz-JX-rYg" customClass="WalletViewCell" customModule="Trust" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="346" height="72"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4vz-JX-rYg" id="iFR-Po-1R4">
-                <rect key="frame" x="0.0" y="0.0" width="346" height="59.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="346" height="71.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JUd-EF-Sra">
-                        <rect key="frame" x="16" y="0.0" width="318" height="59.5"/>
+                        <rect key="frame" x="16" y="0.0" width="318" height="71.5"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BUP-CU-bxN">
-                                <rect key="frame" x="0.0" y="12" width="36" height="35.5"/>
+                                <rect key="frame" x="0.0" y="12" width="48" height="47.5"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="36" id="b0v-3X-CxK"/>
+                                    <constraint firstAttribute="width" constant="48" id="b0v-3X-CxK"/>
                                     <constraint firstAttribute="height" priority="999" constant="36" id="hic-Fd-JLF"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -34,7 +34,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2t2-qW-Lcu">
-                                <rect key="frame" x="46" y="10" width="213" height="40"/>
+                                <rect key="frame" x="58" y="16" width="201" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ETH Wallet" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scJ-RY-qk3" userLabel="Address Lable">
                                         <rect key="frame" x="0.0" y="0.0" width="84" height="20.5"/>
@@ -54,7 +54,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wMR-ps-QHM">
-                                <rect key="frame" x="269" y="19" width="49" height="22"/>
+                                <rect key="frame" x="269" y="25" width="49" height="22"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="glasses" translatesAutoresizingMaskIntoConstraints="NO" id="mbU-gV-kxo">
                                         <rect key="frame" x="0.0" y="2" width="18" height="18"/>

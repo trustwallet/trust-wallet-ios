@@ -4,18 +4,11 @@ import UIKit
 
 class CoinViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+    @IBOutlet weak var coinImageView: TokenImageView!
+    @IBOutlet weak var coinLabel: UILabel!
 
     func configure(for viewModel: CoinViewModel) {
-        textLabel?.text = viewModel.displayName
+        coinImageView.image = viewModel.image
+        coinLabel.text = viewModel.displayName
     }
 }

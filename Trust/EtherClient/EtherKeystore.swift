@@ -94,7 +94,8 @@ class EtherKeystore: Keystore {
             }.filter { !$0.accounts.isEmpty },
             storage.addresses.compactMap {
                 guard let coin = $0.coin, let address = $0.address else { return .none }
-                return WalletInfo(type: .address(coin, address))
+                let type = WalletType.address(coin, address)
+                return WalletInfo(type: type, info: storage.get(for: type))
             },
         ].flatMap { $0 }.sorted(by: { $0.info.createdAt < $1.info.createdAt })
     }
@@ -438,6 +439,8 @@ class EtherKeystore: Keystore {
     }
 
     func store(object: WalletObject, fields: [WalletInfoField]) {
+        NSLog("object\(object) \(fields)")
+
         try? storage.realm.write {
             for field in fields {
                 switch field {
