@@ -89,7 +89,7 @@ final class TokenViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             containerForImageView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: TokensLayout.cell.stackVericalOffset),
             containerForImageView.widthAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
-            containerForImageView.heightAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
+            containerForImageView.heightAnchor.constraint(lessThanOrEqualToConstant: TokensLayout.cell.imageSize),
             symbolImageView.centerXAnchor.constraint(equalTo: containerForImageView.centerXAnchor),
             symbolImageView.centerYAnchor.constraint(equalTo: containerForImageView.centerYAnchor),
             symbolImageView.widthAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),

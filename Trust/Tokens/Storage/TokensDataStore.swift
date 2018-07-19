@@ -18,6 +18,9 @@ class TokensDataStore {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO"))
             .sorted(byKeyPath: "contract", ascending: true)
     }
+    var tickers: Results<CoinTicker> {
+        return realm.objects(CoinTicker.self).filter("tickersKey == %@", CoinTickerKeyMaker.makeCurrencyKey(for: config)).sorted(byKeyPath: "contract", ascending: true)
+    }
     var nonFungibleTokens: Results<NonFungibleTokenCategory> {
         return realm.objects(NonFungibleTokenCategory.self).sorted(byKeyPath: "name", ascending: true)
     }
@@ -37,6 +40,7 @@ class TokensDataStore {
         return realm.objects(NonFungibleTokenObject.self).map { $0 }
     }
 
+    let tokensQueue = DispatchQueue(label: "TokensDataStore", qos: .utility)
     init(
         realm: Realm,
         config: Config
@@ -54,10 +58,13 @@ class TokensDataStore {
     }
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
-        guard let contract = EthereumAddress(string: token.contract) else { return .none }
-        return tickers().first(where: {
-            return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: contract, currencyKey: $0.tickersKey)
+        return tickers.first(where: {
+            return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: token.address, currencyKey: $0.tickersKey)
         })
+    }
+
+    func coinTicker(by contract: Address) -> CoinTicker? {
+        return tickers.first(where: { $0.contract == contract.description })
     }
 
     func addCustom(token: ERC20Token) {
@@ -72,11 +79,18 @@ class TokensDataStore {
         add(tokens: [newToken])
     }
 
+    func preparedTickers() -> [CoinTicker] {
+        let filteredTickers = tickers.filter { ticker in self.tokens.contains(where: { $0.contract == ticker.contract }) }.sorted(by: { (left, right) -> Bool in
+            return left.contract < right.contract
+        })
+        return filteredTickers
+    }
+
     func add(tokens: [Object]) {
         try? realm.write {
             if let tokenObjects = tokens as? [TokenObject] {
                 let tokenObjectsWithBalance = tokenObjects.map { tokenObject -> TokenObject in
-                    tokenObject.balance = self.getBalance(for: tokenObject, with: self.tickers())
+                    tokenObject.balance = self.getBalance(for: tokenObject, with: Array(tickers))
                     return tokenObject
                 }
                 realm.add(tokenObjectsWithBalance, update: true)
@@ -162,16 +176,6 @@ class TokensDataStore {
         }
     }
 
-    func tickers() -> [CoinTicker] {
-        let coinTickers: [CoinTicker] = tickerResultsByTickersKey.map { $0 }
-
-        guard !coinTickers.isEmpty else {
-            return [CoinTicker]()
-        }
-
-        return coinTickers
-    }
-
     private var tickerResultsByTickersKey: Results<CoinTicker> {
         return realm.objects(CoinTicker.self).filter("tickersKey == %@", CoinTickerKeyMaker.makeCurrencyKey(for: config))
     }
@@ -194,7 +198,7 @@ class TokensDataStore {
     }
 
     func getBalance(for token: TokenObject?) -> Double {
-        return getBalance(for: token, with: self.tickers())
+        return getBalance(for: token, with: Array(tickers))
     }
 
     func getBalance(for token: TokenObject?, with tickers: [CoinTicker]) -> Double {

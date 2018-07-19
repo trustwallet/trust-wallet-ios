@@ -58,7 +58,7 @@ final class BalanceCoordinator {
     private func updateBalance(for token: TokenObject, with value: BigInt?) {
         self.balance = Balance(value: value ?? token.valueBigInt)
         self.currencyRate = CurrencyRate(
-            rates: storage.tickers().map { Rate(code: $0.symbol, price: Double($0.price) ?? 0, contract: $0.contract) }
+            rates: storage.tickers.map { Rate(code: $0.symbol, price: Double($0.price) ?? 0, contract: $0.contract) }
         )
         self.update()
     }

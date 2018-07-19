@@ -16,17 +16,15 @@ final class TokensViewModel: NSObject {
     let store: TokensDataStore
     var tokensNetwork: NetworkProtocol
     let tokens: Results<TokenObject>
+    var tickers: [CoinTicker]
     var tokensObserver: NotificationToken?
     let wallet: WalletInfo
     let transactionStore: TransactionsStorage
+    private var calculationProcessing = false
 
     var headerViewTitle: String {
         guard let coin = wallet.currentAccount.coin else { return "" }
         return CoinViewModel(coin: coin).displayName
-    }
-
-    var headerBalance: String {
-        return amount ?? "0.00"
     }
 
     var headerBalanceTextColor: UIColor {
@@ -76,6 +74,7 @@ final class TokensViewModel: NSObject {
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
         self.transactionStore = transactionStore
+        self.tickers = store.preparedTickers()
         super.init()
     }
 
@@ -83,20 +82,33 @@ final class TokensViewModel: NSObject {
         tokensObserver = tokens.observe(block)
     }
 
-    private var amount: String? {
-        let totalAmount = tokens.lazy.flatMap { [weak self] in
-            self?.amount(for: $0)
-        }.reduce(0, +)
-        return CurrencyFormatter.formatter.string(from: NSNumber(value: totalAmount))
-    }
+    func amount(completion: @escaping (String?) -> Void) {
+        guard !calculationProcessing else { return }
+        calculationProcessing = true
+        store.tokensQueue.async { [weak self] in
+           guard let strongSelf = self else {
+                completion( CurrencyFormatter.formatter.string(from: NSNumber(value: TokenObject.DEFAULT_BALANCE)))
+                return
+           }
+           let realm = try! Realm(configuration: strongSelf.store.realm.configuration)
+           let tokens = realm.objects(TokenObject.self)
+           let tickers = realm.objects(CoinTicker.self)
 
-    private func amount(for token: TokenObject) -> Double {
-        guard let coinTicker = store.coinTicker(for: token) else {
-            return 0
+            let totalAmount = tokens.lazy.flatMap {
+                let token = $0
+                guard let ticker = tickers.first(where: {
+                    return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: token.address, currencyKey: $0.tickersKey)
+                }) else { return .none }
+                let amount = CurrencyFormatter.plainFormatter.string(from: $0.valueBigInt, decimals: $0.decimals).doubleValue
+                let price = Double(ticker.price) ?? 0
+                return amount * price
+            }.reduce(0.0, +)
+
+            DispatchQueue.main.async {
+                self?.calculationProcessing = false
+                completion(CurrencyFormatter.formatter.string(from: NSNumber(value: totalAmount)))
+            }
         }
-        let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
-        let price = Double(coinTicker.price) ?? 0
-        return tokenValue * price
     }
 
     func numberOfItems(for section: Int) -> Int {
@@ -117,7 +129,11 @@ final class TokensViewModel: NSObject {
 
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
-        return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token), store: transactionStore)
+        var ticker: CoinTicker? = nil
+        if tickers.indices.contains(path.row) {
+            ticker = tickers[path.row]
+        }
+        return TokenViewCellViewModel(token: token, ticker: ticker, store: transactionStore)
     }
 
     func updateEthBalance() {
@@ -130,7 +146,7 @@ final class TokensViewModel: NSObject {
         }
     }
 
-    private func tokensInfo() {
+    func tokensInfo() {
         firstly {
             tokensNetwork.tokensList(for: wallet.address)
         }.done { [weak self] tokens in
@@ -151,7 +167,9 @@ final class TokensViewModel: NSObject {
         firstly {
             tokensNetwork.tickers(with: prices)
         }.done { [weak self] tickers in
-            self?.store.saveTickers(tickers: tickers)
+            guard let strongSelf = self else { return }
+            strongSelf.store.saveTickers(tickers: tickers)
+            strongSelf.tickers = strongSelf.store.preparedTickers()
         }.catch { error in
             NSLog("prices \(error)")
         }.finally { [weak self] in
@@ -179,11 +197,6 @@ final class TokensViewModel: NSObject {
                 }
             }
         }
-    }
-
-    func fetch() {
-        tokensInfo()
-        updatePendingTransactions()
     }
 
     func invalidateTokensObservation() {
