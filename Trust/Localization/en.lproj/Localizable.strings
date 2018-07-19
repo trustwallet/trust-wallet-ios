@@ -279,4 +279,6 @@
 "SelectCoin" = "Select Coin";
 "ImportMainWallet" = "Import Main Wallet";
 "Developer" = "Developer";
+"NodeSettings" = "Node Settings";
+"TestNetworks" = "Test Networks";
 "EnableTestNetworks" = "Enable Test Networks";

@@ -163,37 +163,33 @@ enum RPCServer {
         }
     }
 
-    init(name: String) {
-        self = {
-            switch name {
-            case RPCServer.main.name: return .main
-            case RPCServer.classic.name: return .classic
-            case RPCServer.callisto.name: return .callisto
-            case RPCServer.kovan.name: return .kovan
-            case RPCServer.ropsten.name: return .ropsten
-            case RPCServer.rinkeby.name: return .rinkeby
-            case RPCServer.poa.name: return .poa
-            case RPCServer.sokol.name: return .sokol
-            default: return .main
-            }
-        }()
+    init?(name: String) {
+        switch name {
+        case RPCServer.main.name: self = .main
+        case RPCServer.classic.name: self = .classic
+        case RPCServer.callisto.name: self = .callisto
+        case RPCServer.kovan.name: self = .kovan
+        case RPCServer.ropsten.name: self = .ropsten
+        case RPCServer.rinkeby.name: self = .rinkeby
+        case RPCServer.poa.name: self = .poa
+        case RPCServer.sokol.name: self = .sokol
+        default: return nil
+        }
     }
 
-    init(chainID: Int) {
-        self = {
-            switch chainID {
-            case RPCServer.main.chainID: return .main
-            case RPCServer.classic.chainID: return .classic
-            case RPCServer.callisto.chainID: return .callisto
-            case RPCServer.kovan.chainID: return .kovan
-            case RPCServer.ropsten.chainID: return .ropsten
-            case RPCServer.rinkeby.chainID: return .rinkeby
-            case RPCServer.poa.chainID: return .poa
-            case RPCServer.sokol.chainID: return .sokol
-            case RPCServer.gochain.chainID: return .gochain
-            default: return .main
-            }
-        }()
+    init?(chainID: Int) {
+        switch chainID {
+        case RPCServer.main.chainID: self = .main
+        case RPCServer.classic.chainID: self = .classic
+        case RPCServer.callisto.chainID: self = .callisto
+        case RPCServer.kovan.chainID: self = .kovan
+        case RPCServer.ropsten.chainID: self = .ropsten
+        case RPCServer.rinkeby.chainID: self = .rinkeby
+        case RPCServer.poa.chainID: self = .poa
+        case RPCServer.sokol.chainID: self = .sokol
+        case RPCServer.gochain.chainID: self = .gochain
+        default: return nil
+        }
     }
 }
 

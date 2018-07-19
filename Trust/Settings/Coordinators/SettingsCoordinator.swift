@@ -98,6 +98,8 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
         case .clearBrowserCache:
             cleadCache()
             CookiesStore.delete()
+        case .switchServer(let server):
+            restart(for: session.account)
         }
     }
 }

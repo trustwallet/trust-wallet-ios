@@ -60,7 +60,7 @@ struct Config {
     }
 
     var server: RPCServer {
-        return RPCServer(chainID: chainID)
+        return RPCServer(chainID: chainID) ?? .main
     }
 
     var servers: [Coin] {
