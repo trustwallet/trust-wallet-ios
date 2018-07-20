@@ -228,4 +228,6 @@
 "WalletImported" = "Кошелек был импортирован";
 "SelectCoin" = "Выберите Монету";
 "Developer" = "Разработчик";
+"NodeSettings" = "Параметры Узла ";
+"TestNetworks" = "Тестовые Сети";
 "EnableTestNetworks" = "Включить Тестовые Сети";

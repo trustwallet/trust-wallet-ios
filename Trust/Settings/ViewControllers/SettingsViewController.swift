@@ -120,6 +120,9 @@ final class SettingsViewController: FormViewController, Coordinator {
             <<< currencyRow()
             <<< browserRow()
             <<< privacyRow()
+
+            +++ Section()
+
             <<< developersRow()
 
             +++ Section(R.string.localizable.settingsJoinCommunityLabelTitle())
@@ -267,7 +270,9 @@ final class SettingsViewController: FormViewController, Coordinator {
         return AppFormAppearance.button { row in
             row.cellStyle = .value1
             row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback {
-                return DeveloperViewController()
+                let controller = DeveloperViewController()
+                controller.delegate = self
+                return controller
             }, onDismiss: nil)
         }.cellUpdate { cell, _ in
             cell.imageView?.image = R.image.settings_colorful_privacy()
@@ -364,5 +369,11 @@ extension SettingsViewController: Scrollable {
     func scrollOnTop() {
         guard isViewLoaded else { return }
         tableView.scrollOnTop()
+    }
+}
+
+extension SettingsViewController: DeveloperViewControllerDelegate {
+    func didSelect(server: RPCServer, in controller: DeveloperViewController) {
+        delegate?.didAction(action: .switchServer(server), in: self)
     }
 }
