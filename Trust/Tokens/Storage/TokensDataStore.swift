@@ -52,13 +52,13 @@ class TokensDataStore {
                 realm.delete(token)
             }
         }
-
         try? realm.write {
             realm.deleteAll()
         }
-        
         let initialCoins = nativeCoin()
         add(tokens: initialCoins)
+
+        NSLog("tokens \(tokens)")
     }
 
     private func nativeCoin() -> [TokenObject] {
@@ -93,9 +93,9 @@ class TokensDataStore {
         }
     }
 
-    static func getServer(for token: TokenObject) -> RPCServer? {
+    static func getServer(for token: TokenObject) -> RPCServer! {
         guard token.chainID > 0 else {
-            return .none
+            return RPCServer.main
         }
         return RPCServer(chainID: token.chainID)
     }

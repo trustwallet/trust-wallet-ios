@@ -141,7 +141,7 @@ final class TokenViewModel {
     }
 
     func fetch() {
-        getTokenBalance()
+        updateTokenBalance()
         fetchTransactions()
     }
 
@@ -198,13 +198,37 @@ final class TokenViewModel {
         return !tokenTransactionSections.isEmpty
     }
 
-    private func getTokenBalance() {
-        tokensNetwork.tokenBalance(for: token.address) { [weak self] (result) in
-            guard let balance = result, let token = self?.token else {
+    private func updateTokenBalance() {
+        let provider = TokenViewModel.balance(for: token, wallet: session.account)
+        provider.balance().done { [weak self] balance in
+            guard let token = self?.token else {
                 return
             }
-            self?.store.update(balances: [token.address: balance.value])
+            self?.store.update(balances: [provider.addressUpdate: balance])
         }
+    }
+
+    static func balance(for token: TokenObject, wallet: WalletInfo) -> BalanceNetworkProvider {
+        let networkBalance: BalanceNetworkProvider = {
+            if token.isCoin {
+                let acc = wallet.accounts.filter { $0.coin == token.coin }.first!
+                let server = RPCServer(chainID: token.chainID)!
+                return CoinNetworkProvider(
+                    server: server,
+                    address: EthereumAddress(string: acc.address.description)!,
+                    addressUpdate: token.address
+                )
+            } else {
+                let acc = wallet.accounts.filter { $0.coin == token.coin }.first!
+                return TokenNetworkProvider(
+                    server: RPCServer.main,
+                    address: EthereumAddress(string: acc.address.description)!,
+                    contract: token.address,
+                    addressUpdate: token.address
+                )
+            }
+        }()
+        return networkBalance
     }
 
     private func fetchTransactions() {

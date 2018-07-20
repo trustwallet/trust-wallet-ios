@@ -149,8 +149,8 @@ final class TokensCoordinator: Coordinator {
     }
 
     @objc private func transactions() {
-        let coordinator = TransactionsCoordinator(session: session, storage: transactionsStore, network: network)
-        navigationController.pushCoordinator(coordinator: coordinator, animated: true)
+        //let coordinator = TransactionsCoordinator(session: session, storage: transactionsStore, network: network)
+        //navigationController.pushCoordinator(coordinator: coordinator, animated: true)
     }
 
     private func didSelectToken(_ token: NonFungibleTokenObject, with backgroundColor: UIColor) {

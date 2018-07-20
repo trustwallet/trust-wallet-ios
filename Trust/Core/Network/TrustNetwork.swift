@@ -6,6 +6,8 @@ import TrustCore
 import JSONRPCKit
 import APIKit
 import Result
+import BigInt
+
 import enum Result.Result
 
 enum TrustNetworkProtocolError: LocalizedError {
@@ -13,15 +15,14 @@ enum TrustNetworkProtocolError: LocalizedError {
 }
 
 protocol NetworkProtocol: TrustNetworkProtocol {
-    func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void)
     func assets() -> Promise<[NonFungibleTokenCategory]>
     func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]>
-    func ethBalance() -> Promise<Balance>
     func tokensList(for address: Address) -> Promise<[TokenObject]>
     func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
-    func update(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void)
     func search(token: String) -> Promise<[TokenObject]>
 }
+
+
 
 final class TrustNetwork: NetworkProtocol {
 
@@ -76,41 +77,6 @@ final class TrustNetwork: NetworkProtocol {
         )
     }
 
-    func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void) {
-        if contract.description == address.description {
-            balanceService.getBalance(for: address) { result in
-                switch result {
-                case .success(let balance):
-                    completion(balance)
-                case .failure:
-                    completion(nil)
-                }
-            }
-        } else {
-            balanceService.getBalance(for: address, contract: contract) { result in
-                switch result {
-                case .success(let balance):
-                    completion(Balance(value: balance))
-                case .failure:
-                    completion(nil)
-                }
-            }
-        }
-    }
-
-    func ethBalance() -> Promise<Balance> {
-        return Promise { seal in
-            balanceService.getBalance(for: address) { result in
-                switch result {
-                case .success(let balance):
-                    seal.fulfill(balance)
-                case .failure(let error):
-                    seal.reject(error)
-                }
-            }
-        }
-    }
-
     func tokensList(for address: Address) -> Promise<[TokenObject]> {
         return Promise { seal in
             provider.request(.getTokens(server: server, address: address.description)) { result in
@@ -119,7 +85,13 @@ final class TrustNetwork: NetworkProtocol {
                     do {
                         let items = try response.map(ArrayResponse<TokenObjectList>.self).docs
                         let tokens = items.map { $0.contract }
-                        seal.fulfill(tokens)
+                        let newTokens = tokens.map { token -> TokenObject in
+                            let newToken = token
+                            newToken.chainID = self.server.chainID
+                            return newToken
+                        }
+
+                        seal.fulfill(newTokens)
                     } catch {
                         seal.reject(error)
                     }
@@ -179,59 +151,17 @@ final class TrustNetwork: NetworkProtocol {
             case .success(let response):
                 do {
                     let transactions: [Transaction] = try response.map(ArrayResponse<Transaction>.self).docs
-                    completion((transactions, true))
+                    let newTransactions = transactions.map { transaction -> Transaction in
+                        let newTransaction = transaction
+                        newTransaction.chainID = self.server.chainID
+                        return newTransaction
+                    }
+                    completion((newTransactions, true))
                 } catch {
                     completion((nil, false))
                 }
             case .failure:
                 completion((nil, false))
-            }
-        }
-    }
-
-    func update(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void) {
-        let request = GetTransactionRequest(hash: transaction.id)
-        Session.send(EtherServiceRequest(for: server, batch: BatchFactory().create(request))) { [weak self] result in
-            switch result {
-            case .success(let tx):
-                guard let newTransaction = Transaction.from(transaction: tx) else {
-                    return completion(.success((transaction, .pending)))
-                }
-                if newTransaction.blockNumber > 0 {
-                    self?.getReceipt(for: newTransaction, completion: completion)
-                }
-            case .failure(let error):
-                switch error {
-                case .responseError(let error):
-                    guard let error = error as? JSONRPCError else { return }
-                    switch error {
-                    case .responseError:
-                        if transaction.date > Date().addingTimeInterval(TrustNetwork.deleteMissingInternalSeconds) {
-                            completion(.success((transaction, .deleted)))
-                        }
-                    case .resultObjectParseError:
-                        if transaction.date > Date().addingTimeInterval(TrustNetwork.deleteMissingInternalSeconds) {
-                            completion(.success((transaction, .failed)))
-                        }
-                    default: break
-                    }
-                default: break
-                }
-            }
-        }
-    }
-
-    private func getReceipt(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void) {
-        let request = GetTransactionReceiptRequest(hash: transaction.id)
-        Session.send(EtherServiceRequest(for: server, batch: BatchFactory().create(request))) { result in
-            switch result {
-            case .success(let receipt):
-                let newTransaction = transaction
-                newTransaction.gasUsed = receipt.gasUsed
-                let state: TransactionState = receipt.status ? .completed : .failed
-                completion(.success((newTransaction, state)))
-            case .failure(let error):
-                completion(.failure(AnyError(error)))
             }
         }
     }

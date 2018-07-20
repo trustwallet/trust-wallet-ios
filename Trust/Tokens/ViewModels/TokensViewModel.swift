@@ -120,15 +120,10 @@ final class TokensViewModel: NSObject {
         return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token), store: transactionStore)
     }
 
-    func updateEthBalance() {
-        firstly {
-            tokensNetwork.ethBalance()
-        }.done { [weak self] balance in
-            guard let `self` = self, let address = EthereumAddress(string: self.tokensNetwork.address.description) else { return }
-            self.store.update(balances: [address: balance.value])
-        }.catch { error in
-           NSLog("updateEthBalance \(error)")
-        }
+    func updateBalances() {
+        let tokens = Array(self.tokens)
+        NSLog("updateBalances \(tokens.count)")
+        balances(for: tokens)
     }
 
     private func tokensInfo() {
@@ -161,18 +156,23 @@ final class TokensViewModel: NSObject {
     }
 
     private func balances(for tokens: [TokenObject]) {
-
+        let balances: [BalanceNetworkProvider] = tokens.map {
+            return TokenViewModel.balance(for: $0, wallet: wallet)
+        }
         let operationQueue: OperationQueue = OperationQueue()
         operationQueue.qualityOfService = .background
 
-        let balancesOperations = Array(tokens.lazy.map { TokenBalanceOperation(network: self.tokensNetwork, address: $0.address, store: self.store) })
+        let balancesOperations = Array(balances.lazy.map {
+            TokenBalanceOperation(balanceProvider: $0, store: self.store)
+        })
         operationQueue.addOperations(balancesOperations, waitUntilFinished: false)
     }
 
     func updatePendingTransactions() {
         let transactions = transactionStore.pendingObjects
         for transaction in transactions {
-            tokensNetwork.update(for: transaction) { result in
+            let provider = EthereumTransactionsProvider(server: RPCServer.main)
+            provider.update(for: transaction) { result in
                 switch result {
                 case .success(let transaction, let state):
                     self.transactionStore.update(state: state, for: transaction)
