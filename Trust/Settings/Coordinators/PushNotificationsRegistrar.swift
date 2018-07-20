@@ -8,7 +8,7 @@ import TrustCore
 
 final class PushNotificationsRegistrar {
 
-    private let trustProvider = TrustProviderFactory.makeProvider()
+    private let provider = TrustProviderFactory.makeProvider()
     let config = Config()
 
     var isRegisteredForRemoteNotifications: Bool {
@@ -33,7 +33,7 @@ final class PushNotificationsRegistrar {
             preferences: NotificationsViewController.getPreferences()
         )
 
-        trustProvider.request(.unregister(device: device)) { _ in }
+        provider.request(.unregister(device: device)) { _ in }
 
         UIApplication.shared.unregisterForRemoteNotifications()
     }
@@ -50,6 +50,6 @@ final class PushNotificationsRegistrar {
             preferences: NotificationsViewController.getPreferences()
         )
 
-        trustProvider.request(.register(device: device)) { _ in }
+        provider.request(.register(device: device)) { _ in }
     }
 }

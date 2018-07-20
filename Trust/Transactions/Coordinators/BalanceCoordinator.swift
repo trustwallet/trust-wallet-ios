@@ -21,10 +21,12 @@ final class BalanceCoordinator {
     var ethTokenObservation: NotificationToken?
     var viewModel: BalanceViewModel {
         return BalanceViewModel(
+            server: server,
             balance: balance,
             rate: currencyRate
         )
     }
+    let server: RPCServer = RPCServer(chainID: 1) //Refactor
     init(
         account: WalletInfo,
         config: Config,
@@ -39,7 +41,7 @@ final class BalanceCoordinator {
         balanceObservation()
     }
     private func balanceObservation() {
-        guard let token = storage.enabledObject.first(where: { $0.name == config.server.name }) else {
+        guard let token = storage.enabledObject.first(where: { $0.name == server.name }) else {
             return
         }
         updateBalance(for: token, with: nil)

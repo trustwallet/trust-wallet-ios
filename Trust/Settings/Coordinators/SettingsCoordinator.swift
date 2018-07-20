@@ -19,7 +19,6 @@ final class SettingsCoordinator: Coordinator {
     let session: WalletSession
     let storage: TransactionsStorage
     let walletStorage: WalletStorage
-    let balanceCoordinator: TokensBalanceService
     weak var delegate: SettingsCoordinatorDelegate?
     let pushNotificationsRegistrar = PushNotificationsRegistrar()
     var coordinators: [Coordinator] = []
@@ -27,8 +26,7 @@ final class SettingsCoordinator: Coordinator {
     lazy var rootViewController: SettingsViewController = {
         let controller = SettingsViewController(
             session: session,
-            keystore: keystore,
-            balanceCoordinator: balanceCoordinator
+            keystore: keystore
         )
         controller.delegate = self
         controller.modalPresentationStyle = .pageSheet
@@ -45,7 +43,6 @@ final class SettingsCoordinator: Coordinator {
         session: WalletSession,
         storage: TransactionsStorage,
         walletStorage: WalletStorage,
-        balanceCoordinator: TokensBalanceService,
         sharedRealm: Realm
     ) {
         self.navigationController = navigationController
@@ -54,7 +51,6 @@ final class SettingsCoordinator: Coordinator {
         self.session = session
         self.storage = storage
         self.walletStorage = walletStorage
-        self.balanceCoordinator = balanceCoordinator
         self.sharedRealm = sharedRealm
     }
 
@@ -74,6 +70,11 @@ final class SettingsCoordinator: Coordinator {
         historyStore.clearAll()
     }
 
+    private func showWallets() {
+        let coordinator = WalletsCoordinator(keystore: keystore, navigationController: navigationController)
+        coordinator.delegate = self
+        navigationController.pushCoordinator(coordinator: coordinator, animated: true)
+    }
 }
 
 extension SettingsCoordinator: SettingsViewControllerDelegate {
@@ -98,6 +99,23 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
         case .clearBrowserCache:
             cleadCache()
             CookiesStore.delete()
+        case .wallets:
+            showWallets()
         }
+    }
+}
+
+extension SettingsCoordinator: WalletsCoordinatorDelegate {
+    func didCancel(in coordinator: WalletsCoordinator) {
+        coordinator.navigationController.dismiss(animated: true)
+    }
+
+    func didUpdateAccounts(in coordinator: WalletsCoordinator) {
+        //Refactor
+        coordinator.navigationController.dismiss(animated: true)
+    }
+
+    func didSelect(wallet: WalletInfo, in coordinator: WalletsCoordinator) {
+        delegate?.didRestart(with: wallet, in: self)
     }
 }

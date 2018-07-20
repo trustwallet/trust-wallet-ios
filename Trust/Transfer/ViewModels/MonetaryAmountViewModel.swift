@@ -12,7 +12,7 @@ struct MonetaryAmountViewModel {
 
     init(
         amount: String,
-        address: EthereumAddress,
+        address: EthereumAddress?,
         currencyRate: CurrencyRate? = nil,
         formatter: EtherNumberFormatter = .full
     ) {

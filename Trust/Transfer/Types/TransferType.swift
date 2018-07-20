@@ -3,6 +3,11 @@
 import Foundation
 import TrustCore
 
+struct Transfer {
+    let server: RPCServer
+    let type: TransferType
+}
+
 enum TransferType {
     case ether(destination: EthereumAddress?)
     case token(TokenObject)
@@ -26,7 +31,7 @@ extension TransferType {
     func contract() -> EthereumAddress {
         switch self {
         case .ether, .dapp:
-            return EthereumAddress(string: TokensDataStore.etherToken(for: Config()).contract)!
+            return EthereumAddress.zero
         case .nft(let token):
             return token.contractAddress
         case .token(let token):

@@ -65,15 +65,6 @@ class WalletsViewController: UITableViewController {
         return viewModel.numberOfRows(in: section)
     }
 
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let title = viewModel.titleForHeader(in: section) else { return .none }
-        return SectionHeader(title: title)
-    }
-
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return viewModel.heightForHeader(in: section)
-    }
-
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return viewModel.canEditRowAt(for: indexPath)
     }

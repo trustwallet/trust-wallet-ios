@@ -6,17 +6,14 @@ import UIKit
 
 struct RequestViewModel {
 
-    let account: WalletInfo
-    let config: Config
+    let server: RPCServer
     let token: TokenObject
 
     init(
-        account: WalletInfo,
-        config: Config,
+        server: RPCServer,
         token: TokenObject
     ) {
-        self.account = account
-        self.config = config
+        self.server = server
         self.token = token
     }
 
@@ -25,20 +22,20 @@ struct RequestViewModel {
     }
 
     var myAddressText: String {
-        return account.address.description
+        return token.address.description
     }
 
     var shareMyAddressText: String {
         return String(
             format: NSLocalizedString("request.myAddressIs.label.title", value: "My %@ address is: %@", comment: ""),
-            config.server.name, myAddressText
+            server.name, myAddressText
         )
     }
 
     var headlineText: String {
         return String(
             format: NSLocalizedString("request.myPublicaddress.label.title", value: "My Public %@ wallet address", comment: ""),
-            config.server.name
+            server.name
         )
     }
 

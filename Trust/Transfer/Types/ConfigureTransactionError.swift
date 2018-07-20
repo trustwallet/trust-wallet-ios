@@ -5,7 +5,7 @@ import BigInt
 
 enum ConfigureTransactionError: LocalizedError {
     case gasLimitTooHigh
-    case gasFeeTooHigh
+    case gasFeeTooHigh(RPCServer)
 
     var errorDescription: String? {
         switch self {
@@ -18,7 +18,7 @@ enum ConfigureTransactionError: LocalizedError {
                 ),
                 ConfigureTransaction.gasLimitMax
             )
-        case .gasFeeTooHigh:
+        case .gasFeeTooHigh(let server):
             return String(
                 format: NSLocalizedString(
                     "configureTransaction.error.gasFeeHigh",
@@ -26,7 +26,7 @@ enum ConfigureTransactionError: LocalizedError {
                     comment: ""
                 ),
                 EtherNumberFormatter.full.string(from: ConfigureTransaction.gasFeeMax),
-                Config().server.symbol
+                server.symbol
             )
         }
     }

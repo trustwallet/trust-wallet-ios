@@ -62,6 +62,7 @@ final class LocalSchemeCoordinator: Coordinator {
             session: session,
             account: account,
             transaction: transaction,
+            server: RPCServer(chainID: 1), //TODO: Refactor
             forceFetchNonce: true
         )
         let coordinator = ConfirmCoordinator(
@@ -126,7 +127,8 @@ extension LocalSchemeCoordinator: WalletDelegate {
 
     func signTransaction(_ transaction: TrustCore.Transaction, completion: @escaping (Result<Data, WalletSDKError>) -> Void) {
         let transaction = UnconfirmedTransaction(
-            transferType: .ether(destination: .none),
+            //TODO: Refactor
+            transfer: Transfer(server: RPCServer(chainID: 1), type: .ether(destination: .none)),
             value: transaction.amount,
             to: transaction.to,
             data: transaction.payload,

@@ -5,14 +5,14 @@ import Foundation
 struct ConfigureTransactionViewModel {
 
     let config: Config
-    let transferType: TransferType
+    let transfer: Transfer
 
     init(
         config: Config,
-        transferType: TransferType
+        transfer: Transfer
     ) {
         self.config = config
-        self.transferType = transferType
+        self.transfer = transfer
     }
 
     var title: String {
@@ -26,7 +26,7 @@ struct ConfigureTransactionViewModel {
                 value: "With a higher gas price, your transaction fee will be more expensive, but the %@ network will process your transaction faster.",
                 comment: ""
             ),
-            config.server.name
+            transfer.server.name
         )
     }
 
@@ -37,7 +37,7 @@ struct ConfigureTransactionViewModel {
                 value: "The gas limit prevents smart contracts from consuming all your %@. We will try to calculate the gas limit automatically for you, but some smart contracts may require a custom gas limit.",
                 comment: ""
             ),
-            config.server.name
+            transfer.server.name
         )
     }
 }

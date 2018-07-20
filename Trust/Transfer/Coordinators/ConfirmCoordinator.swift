@@ -31,7 +31,8 @@ final class ConfirmCoordinator: RootCoordinator {
             session: session,
             keystore: keystore,
             configurator: configurator,
-            confirmType: type
+            confirmType: type,
+            server: RPCServer(chainID: 1) //Refactor
         )
     }()
 

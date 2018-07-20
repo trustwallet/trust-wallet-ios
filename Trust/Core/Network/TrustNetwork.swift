@@ -9,7 +9,6 @@ import Result
 import enum Result.Result
 
 enum TrustNetworkProtocolError: LocalizedError {
-    case missingPrices
     case missingContractInfo
 }
 
@@ -21,40 +20,36 @@ protocol NetworkProtocol: TrustNetworkProtocol {
     func tokensList(for address: Address) -> Promise<[TokenObject]>
     func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
     func update(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void)
-    func search(token: String, completion: @escaping (([TokenObject]) -> Void))
-    func search(token: String) -> Promise<TokenObject>
+    func search(token: String) -> Promise<[TokenObject]>
 }
 
 final class TrustNetwork: NetworkProtocol {
 
     static let deleteMissingInternalSeconds: Double = 60.0
     static let deleyedTransactionInternalSeconds: Double = 60.0
-    let provider: MoyaProvider<TrustService>
-    let APIProvider: MoyaProvider<TrustAPI>
-    let config: Config
+    let provider: MoyaProvider<TrustAPI>
     let balanceService: TokensBalanceService
     let address: Address
+    let server: RPCServer
 
     required init(
-        provider: MoyaProvider<TrustService>,
-        APIProvider: MoyaProvider<TrustAPI>,
+        provider: MoyaProvider<TrustAPI>,
         balanceService: TokensBalanceService,
         address: Address,
-        config: Config
+        server: RPCServer
     ) {
         self.provider = provider
-        self.APIProvider = APIProvider
         self.balanceService = balanceService
         self.address = address
-        self.config = config
+        self.server = server
     }
 
     func tickers(with tokenPrices: [TokenPrice], completion: @escaping (_ tickers: [CoinTicker]?) -> Void) {
         let tokensPriceToFetch = TokensPrice(
-            currency: config.currency.rawValue,
+            currency: Config.current.currency.rawValue,
             tokens: tokenPrices
         )
-        APIProvider.request(.prices(tokensPriceToFetch)) { result in
+        provider.request(.prices(tokensPriceToFetch)) { result in
             guard case .success(let response) = result else {
                 completion(nil)
                 return
@@ -62,7 +57,7 @@ final class TrustNetwork: NetworkProtocol {
             do {
                 let rawTickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
                 let tickers = rawTickers.map {rawTicker in
-                    return self.getTickerFrom(rawTicker: rawTicker, withKey: CoinTickerKeyMaker.makeCurrencyKey(for: self.config))
+                    return self.getTickerFrom(rawTicker: rawTicker, withKey: CoinTickerKeyMaker.makeCurrencyKey())
                 }
                 completion(tickers)
             } catch {
@@ -82,7 +77,7 @@ final class TrustNetwork: NetworkProtocol {
     }
 
     func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void) {
-        if contract.description == TokensDataStore.etherToken(for: config).address.description {
+        if contract.description == address.description {
             balanceService.getEthBalance(for: address) { result in
                 switch result {
                 case .success(let balance):
@@ -118,7 +113,7 @@ final class TrustNetwork: NetworkProtocol {
 
     func tokensList(for address: Address) -> Promise<[TokenObject]> {
         return Promise { seal in
-            provider.request(.getTokens(address: address.description, showBalance: false)) { result in
+            provider.request(.getTokens(server: server, address: address.description)) { result in
                 switch result {
                 case .success(let response):
                     do {
@@ -138,47 +133,31 @@ final class TrustNetwork: NetworkProtocol {
     func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]> {
         return Promise { seal in
             let tokensPriceToFetch = TokensPrice(
-                currency: config.currency.rawValue,
+                currency: Config.current.currency.rawValue,
                 tokens: tokenPrices
             )
-            APIProvider.request(.prices(tokensPriceToFetch)) { result in
-                guard case .success(let response) = result else {
-                    seal.reject(TrustNetworkProtocolError.missingPrices)
-                    return
-                }
-                do {
-                    let rawTickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
-                    let tickers = rawTickers.map {rawTicker in
-                        return self.getTickerFrom(rawTicker: rawTicker, withKey: CoinTickerKeyMaker.makeCurrencyKey(for: self.config))
+            provider.request(.prices(tokensPriceToFetch)) { result in
+                switch result {
+                case .success(let response):
+                    do {
+                        let rawTickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
+                        let tickers = rawTickers.map { rawTicker in
+                            return self.getTickerFrom(rawTicker: rawTicker, withKey: CoinTickerKeyMaker.makeCurrencyKey())
+                        }
+                        seal.fulfill(tickers)
+                    } catch {
+                        seal.reject(error)
                     }
-                    seal.fulfill(tickers)
-                } catch {
-                   seal.reject(error)
+                case .failure(let error):
+                    seal.reject(error)
                 }
-            }
-        }
-    }
-
-    func tokensList(for address: Address, completion: @escaping (([TokenObject]?)) -> Void) {
-        provider.request(.getTokens(address: address.description, showBalance: false)) { result in
-            switch result {
-            case .success(let response):
-                do {
-                    let items = try response.map(ArrayResponse<TokenObjectList>.self).docs
-                    let tokens = items.map { $0.contract }
-                    completion(tokens)
-                } catch {
-                    completion(nil)
-                }
-            case .failure:
-                completion(nil)
             }
         }
     }
 
     func assets() -> Promise<[NonFungibleTokenCategory]> {
         return Promise { seal in
-            provider.request(.assets(address: address.description)) { result in
+            provider.request(.assets(server: server, address: address.description)) { result in
                 switch result {
                 case .success(let response):
                     do {
@@ -195,7 +174,7 @@ final class TrustNetwork: NetworkProtocol {
     }
 
     func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (([Transaction]?, Bool)) -> Void) {
-        provider.request(.getTransactions(address: address.description, startBlock: startBlock, page: page, contract: contract)) { result in
+        provider.request(.getTransactions(server: server, address: address.description, startBlock: startBlock, page: page, contract: contract)) { result in
             switch result {
             case .success(let response):
                 do {
@@ -212,7 +191,7 @@ final class TrustNetwork: NetworkProtocol {
 
     func update(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void) {
         let request = GetTransactionRequest(hash: transaction.id)
-        Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { [weak self] result in
+        Session.send(EtherServiceRequest(for: server, batch: BatchFactory().create(request))) { [weak self] result in
             switch result {
             case .success(let tx):
                 guard let newTransaction = Transaction.from(transaction: tx) else {
@@ -244,7 +223,7 @@ final class TrustNetwork: NetworkProtocol {
 
     private func getReceipt(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void) {
         let request = GetTransactionReceiptRequest(hash: transaction.id)
-        Session.send(EtherServiceRequest(batch: BatchFactory().create(request))) { result in
+        Session.send(EtherServiceRequest(for: server, batch: BatchFactory().create(request))) { result in
             switch result {
             case .success(let receipt):
                 let newTransaction = transaction
@@ -257,35 +236,14 @@ final class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func search(token: String, completion: @escaping (([TokenObject]) -> Void)) {
-        guard !token.isEmpty else {
-            return completion([])
-        }
-        provider.request(.search(token: token)) { result in
-            switch result {
-            case .success(let response):
-                do {
-                    let tokens = try response.map([TokenObject].self)
-                    completion(tokens)
-                } catch {
-                    completion([])
-                }
-            case .failure: completion([])
-            }
-        }
-    }
-
-    func search(token: String) -> Promise<TokenObject> {
+    func search(token: String) -> Promise<[TokenObject]> {
         return Promise { seal in
-            provider.request(.search(token: token)) { result in
+            provider.request(.search(server: server, token: token)) { result in
                 switch result {
                 case .success(let response):
                     do {
                         let tokens = try response.map([TokenObject].self)
-                        guard let token = tokens.first(where: { $0.address == EthereumAddress(string: token) }) else {
-                             return seal.reject(TrustNetworkProtocolError.missingContractInfo)
-                        }
-                        seal.fulfill(token)
+                        seal.fulfill(tokens)
                     } catch {
                         seal.reject(error)
                     }

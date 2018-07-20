@@ -21,7 +21,7 @@ class ConfirmPaymentViewController: UIViewController {
     private let keystore: Keystore
     let session: WalletSession
     lazy var sendTransactionCoordinator = {
-        return SendTransactionCoordinator(session: self.session, keystore: keystore, confirmType: confirmType)
+        return SendTransactionCoordinator(session: self.session, keystore: keystore, confirmType: confirmType, server: server)
     }()
     lazy var submitButton: UIButton = {
         let button = Button(size: .large, style: .solid)
@@ -31,10 +31,12 @@ class ConfirmPaymentViewController: UIViewController {
         return button
     }()
     lazy var viewModel: ConfirmPaymentViewModel = {
+        //TODO: Refactor
         return ConfirmPaymentViewModel(type: self.confirmType)
     }()
     var configurator: TransactionConfigurator
     let confirmType: ConfirmType
+    let server: RPCServer
     var didCompleted: ((Result<ConfirmResult, AnyError>) -> Void)?
 
     lazy var stackView: UIStackView = {
@@ -59,12 +61,14 @@ class ConfirmPaymentViewController: UIViewController {
         session: WalletSession,
         keystore: Keystore,
         configurator: TransactionConfigurator,
-        confirmType: ConfirmType
+        confirmType: ConfirmType,
+        server: RPCServer
     ) {
         self.session = session
         self.keystore = keystore
         self.configurator = configurator
         self.confirmType = confirmType
+        self.server = server
 
         super.init(nibName: nil, bundle: nil)
 
@@ -174,7 +178,7 @@ class ConfirmPaymentViewController: UIViewController {
         let status = configurator.balanceValidStatus()
         let buttonTitle = viewModel.getActionButtonText(
             status, config: configurator.session.config,
-            transferType: configurator.transaction.transferType
+            transfer: configurator.transaction.transfer
         )
         submitButton.isEnabled = status.sufficient
         submitButton.setTitle(buttonTitle, for: .normal)
@@ -183,8 +187,8 @@ class ConfirmPaymentViewController: UIViewController {
     private func reloadView() {
         let viewModel = ConfirmPaymentDetailsViewModel(
             transaction: configurator.previewTransaction(),
-            currentBalance: session.balance,
-            currencyRate: session.balanceCoordinator.currencyRate
+            currencyRate: session.balanceCoordinator.currencyRate,
+            server: server
         )
         self.configure(for: viewModel)
     }
@@ -196,7 +200,7 @@ class ConfirmPaymentViewController: UIViewController {
     @objc func edit() {
         let controller = ConfigureTransactionViewController(
             configuration: configurator.configuration,
-            transferType: configurator.transaction.transferType,
+            transfer: configurator.transaction.transfer,
             config: session.config,
             currencyRate: session.balanceCoordinator.currencyRate
         )

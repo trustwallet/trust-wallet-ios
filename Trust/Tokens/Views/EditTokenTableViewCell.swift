@@ -24,7 +24,6 @@ final class EditTokenTableViewCell: UITableViewCell {
             tokenEnableSwitch.isOn = viewModel.isEnabled
             tokenContractLabel.text = viewModel.contractText
             tokenContractLabel.isHidden = viewModel.isTokenContractLabelHidden
-            tokenEnableSwitch.isHidden = viewModel.isSwitchHidden
             tokenImageView.kf.setImage(
                 with: viewModel.imageUrl,
                 placeholder: viewModel.placeholderImage

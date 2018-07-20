@@ -10,7 +10,7 @@ protocol WalletsCoordinatorDelegate: class {
     func didUpdateAccounts(in coordinator: WalletsCoordinator)
 }
 
-class WalletsCoordinator: Coordinator {
+class WalletsCoordinator: RootCoordinator {
 
     var coordinators: [Coordinator] = []
     let keystore: Keystore
@@ -23,11 +23,11 @@ class WalletsCoordinator: Coordinator {
 
     lazy var walletController: WalletsViewController = {
         let controller = WalletsViewController(keystore: keystore)
-        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done,
-            target: self,
-            action: #selector(dismiss)
-        )
+//        controller.navigationItem.leftBarButtonItem = UIBarButtonItem(
+//            barButtonSystemItem: .done,
+//            target: self,
+//            action: #selector(dismiss)
+//        )
         controller.delegate = self
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add))
         return controller
@@ -129,9 +129,6 @@ extension WalletsCoordinator: WalletsViewControllerDelegate {
     }
 
     func didSelect(wallet: WalletInfo, account: Account, in controller: WalletsViewController) {
-        keystore.store(object: wallet.info, fields: [
-            .setAccount(account.description),
-        ])
         delegate?.didSelect(wallet: wallet, in: self)
     }
 

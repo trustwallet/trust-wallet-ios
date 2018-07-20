@@ -2,6 +2,7 @@
 
 import Foundation
 import TrustCore
+import RealmSwift
 
 enum RefreshType {
     case balance
@@ -10,33 +11,50 @@ enum RefreshType {
 
 final class WalletSession {
     let account: WalletInfo
-    let balanceCoordinator: BalanceCoordinator
+    lazy var balanceCoordinator: BalanceCoordinator = {
+        return BalanceCoordinator(account: account, config: config, storage: tokensStorage)
+    }()
     let config: Config
     let chainState: ChainState
     var balance: Balance? {
         return balanceCoordinator.balance
     }
+    let realm: Realm
+    let sharedRealm: Realm
 
     var sessionID: String {
-        return "\(account.address.description.lowercased())-\(config.chainID)"
+        return "\(account.address.description.lowercased())-\(account.server.chainID)"
     }
 
     var balanceViewModel: Subscribable<BalanceBaseViewModel> = Subscribable(nil)
-    var nonceProvider: NonceProvider
+
+    // storage
+
+    lazy var walletStorage: WalletStorage = {
+        return WalletStorage(realm: sharedRealm)
+    }()
+    lazy var tokensStorage: TokensDataStore = {
+        return TokensDataStore(realm: realm, account: account)
+    }()
+    lazy var transactionsStorage: TransactionsStorage = {
+        return TransactionsStorage(
+            realm: realm,
+            account: account
+        )
+    }()
 
     init(
         account: WalletInfo,
-        config: Config,
-        balanceCoordinator: BalanceCoordinator,
-        nonceProvider: NonceProvider
+        realm: Realm,
+        sharedRealm: Realm,
+        config: Config
     ) {
         self.account = account
+        self.realm = realm
+        self.sharedRealm = sharedRealm
         self.config = config
-        self.chainState = ChainState(config: config)
-        self.nonceProvider = nonceProvider
-        self.balanceCoordinator = balanceCoordinator
+        self.chainState = ChainState(server: account.server)
         self.chainState.start()
-        self.balanceCoordinator.delegate = self
     }
 
     func refresh() {

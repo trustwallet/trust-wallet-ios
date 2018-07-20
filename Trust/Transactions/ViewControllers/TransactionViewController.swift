@@ -17,7 +17,8 @@ final class TransactionViewController: UIViewController {
             config: self.config,
             chainState: self.session.chainState,
             currentWallet: self.session.account,
-            currencyRate: self.session.balanceCoordinator.currencyRate
+            currencyRate: self.session.balanceCoordinator.currencyRate,
+            server: server
         )
     }()
     let stackViewController = StackViewController()
@@ -25,14 +26,17 @@ final class TransactionViewController: UIViewController {
     let session: WalletSession
     let transaction: Transaction
     let config = Config()
+    let server: RPCServer
     weak var delegate: TransactionViewControllerDelegate?
 
     init(
         session: WalletSession,
-        transaction: Transaction
+        transaction: Transaction,
+        server: RPCServer
     ) {
         self.session = session
         self.transaction = transaction
+        self.server = server
 
         stackViewController.scrollView.alwaysBounceVertical = true
         stackViewController.stackView.spacing = TransactionAppearance.spacing

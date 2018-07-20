@@ -13,13 +13,14 @@ import TrustKeystore
 protocol SendViewControllerDelegate: class {
     func didPressConfirm(
         transaction: UnconfirmedTransaction,
-        transferType: TransferType,
+        transfer: Transfer,
         in viewController: SendViewController
     )
 }
+
 class SendViewController: FormViewController {
     private lazy var viewModel: SendViewModel = {
-        return .init(transferType: transferType, config: session.config, chainState: session.chainState, storage: storage, balance: session.balance)
+        return .init(transfer: transfer, config: session.config, chainState: session.chainState, storage: storage, balance: session.balance)
     }()
     weak var delegate: SendViewControllerDelegate?
     struct Values {
@@ -29,7 +30,7 @@ class SendViewController: FormViewController {
     }
     let session: WalletSession
     let account: Account
-    let transferType: TransferType
+    let transfer: Transfer
     let storage: TokensDataStore
     var addressRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.address) as? TextFloatLabelRow
@@ -53,11 +54,11 @@ class SendViewController: FormViewController {
         session: WalletSession,
         storage: TokensDataStore,
         account: Account,
-        transferType: TransferType = .ether(destination: .none)
+        transfer: Transfer
     ) {
         self.session = session
         self.account = account
-        self.transferType = transferType
+        self.transfer = transfer
         self.storage = storage
         super.init(nibName: nil, bundle: nil)
         title = viewModel.title
@@ -173,7 +174,7 @@ class SendViewController: FormViewController {
             return displayError(error: Errors.invalidAddress)
         }
         let parsedValue: BigInt? = {
-            switch transferType {
+            switch transfer.type {
             case .ether, .dapp, .nft:
                 return EtherNumberFormatter.full.number(from: amountString, units: .ether)
             case .token(let token):
@@ -184,7 +185,7 @@ class SendViewController: FormViewController {
             return displayError(error: SendInputErrors.wrongInput)
         }
         let transaction = UnconfirmedTransaction(
-            transferType: transferType,
+            transfer: transfer,
             value: value,
             to: address,
             data: data,
@@ -192,7 +193,7 @@ class SendViewController: FormViewController {
             gasPrice: viewModel.gasPrice,
             nonce: .none
         )
-        self.delegate?.didPressConfirm(transaction: transaction, transferType: transferType, in: self)
+        self.delegate?.didPressConfirm(transaction: transaction, transfer: transfer, in: self)
     }
     @objc func openReader() {
         let controller = QRCodeReaderViewController()

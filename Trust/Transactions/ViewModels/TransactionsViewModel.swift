@@ -36,12 +36,6 @@ struct TransactionsViewModel {
         return UIColor(hex: "e1e1e1")
     }()
 
-    var isBuyActionAvailable: Bool {
-        switch config.server {
-        case .main, .kovan, .classic, .callisto, .ropsten, .rinkeby, .poa, .sokol, .gochain, .custom: return false
-        }
-    }
-
     var numberOfSections: Int {
         return storage.transactionSections.count
     }
@@ -104,7 +98,8 @@ struct TransactionsViewModel {
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
-        return TransactionCellViewModel(transaction: storage.transactionSections[indexPath.section].items[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account)
+        return TransactionCellViewModel(transaction: storage.transactionSections[indexPath.section].items[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account, server: RPCServer(chainID: 1))
+        //Refactor
     }
 
     func statBlock() -> Int {

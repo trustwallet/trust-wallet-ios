@@ -284,7 +284,9 @@ extension BrowserViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard let command = DappAction.fromMessage(message) else { return }
         let requester = DAppRequester(title: webView.title, url: webView.url)
-        let action = DappAction.fromCommand(command, requester: requester)
+        //TODO: Refactor
+        let transfer = Transfer(server: RPCServer(chainID: 1), type: .dapp(requester))
+        let action = DappAction.fromCommand(command, transfer: transfer)
 
         delegate?.didCall(action: action, callbackID: command.id)
     }

@@ -16,21 +16,21 @@ enum TokenAction {
 class TokensDataStore {
     var tokens: Results<TokenObject> {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO"))
-            .sorted(byKeyPath: "contract", ascending: true)
+            .sorted(byKeyPath: "createdAt", ascending: true)
     }
     var nonFungibleTokens: Results<NonFungibleTokenCategory> {
         return realm.objects(NonFungibleTokenCategory.self).sorted(byKeyPath: "name", ascending: true)
     }
-    let config: Config
     let realm: Realm
+    let account: WalletInfo
     var objects: [TokenObject] {
         return realm.objects(TokenObject.self)
-            .sorted(byKeyPath: "contract", ascending: true)
+            .sorted(byKeyPath: "createdAt", ascending: true)
             .filter { !$0.contract.isEmpty }
     }
     var enabledObject: [TokenObject] {
         return realm.objects(TokenObject.self)
-            .sorted(byKeyPath: "contract", ascending: true)
+            .sorted(byKeyPath: "createdAt", ascending: true)
             .filter { !$0.isDisabled }
     }
     var nonFungibleObjects: [NonFungibleTokenObject] {
@@ -39,18 +39,64 @@ class TokensDataStore {
 
     init(
         realm: Realm,
-        config: Config
+        account: WalletInfo
     ) {
-        self.config = config
         self.realm = realm
+        self.account = account
         self.addEthToken()
     }
 
     private func addEthToken() {
-        let etherToken = TokensDataStore.etherToken(for: config)
-        if objects.first(where: { $0 == etherToken }) == nil {
-            add(tokens: [etherToken])
+        if let token = realm.object(ofType: TokenObject.self, forPrimaryKey: EthereumAddress.zero.description) {
+            try? realm.write {
+                realm.delete(token)
+            }
         }
+
+        try? realm.write {
+            realm.deleteAll()
+        }
+        
+        let initialCoins = nativeCoin()
+        add(tokens: initialCoins)
+    }
+
+    private func nativeCoin() -> [TokenObject] {
+        return account.accounts.compactMap { ac in
+            guard let coin = ac.coin, let server = getServer(for: coin) else {
+                return .none
+            }
+            let viewModel = CoinViewModel(coin: coin)
+
+            return TokenObject(
+                contract: server.contract,
+                name: viewModel.name,
+                coin: coin.rawValue,
+                chainID: server.chainID,
+                symbol: viewModel.symbol,
+                decimals: server.decimals,
+                value: "0",
+                isCustom: false
+            )
+        }
+    }
+
+    private func getServer(for coin: Coin) -> RPCServer? {
+        switch coin {
+        case .ethereum: return RPCServer.main
+        case .ethereumClassic: return RPCServer.classic
+        case .poa: return RPCServer.poa
+        case .callisto: return RPCServer.callisto
+        case .gochain: return RPCServer.gochain
+        case .bitcoin: return .none
+        }
+    }
+
+    static func getServer(for token: TokenObject) -> RPCServer? {
+        guard token.chainID > 0 else {
+            return .none
+        }
+        return RPCServer(chainID: token.chainID)
     }
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
@@ -173,24 +219,13 @@ class TokensDataStore {
     }
 
     private var tickerResultsByTickersKey: Results<CoinTicker> {
-        return realm.objects(CoinTicker.self).filter("tickersKey == %@", CoinTickerKeyMaker.makeCurrencyKey(for: config))
+        return realm.objects(CoinTicker.self).filter("tickersKey == %@", CoinTickerKeyMaker.makeCurrencyKey())
     }
 
     func deleteAllExistingTickers() {
         try? realm.write {
             realm.delete(tickerResultsByTickersKey)
         }
-    }
-
-    static func etherToken(for config: Config = .current) -> TokenObject {
-        return TokenObject(
-            contract: config.server.address.description,
-            name: config.server.name,
-            symbol: config.server.symbol,
-            decimals: config.server.decimals,
-            value: "0",
-            isCustom: false
-        )
     }
 
     func getBalance(for token: TokenObject?) -> Double {

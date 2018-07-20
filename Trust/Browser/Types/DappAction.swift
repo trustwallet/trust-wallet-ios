@@ -15,12 +15,12 @@ enum DappAction {
 }
 
 extension DappAction {
-    static func fromCommand(_ command: DappCommand, requester: DAppRequester) -> DappAction {
+    static func fromCommand(_ command: DappCommand, transfer: Transfer) -> DappAction {
         switch command.name {
         case .signTransaction:
-            return .signTransaction(DappAction.makeUnconfirmedTransaction(command.object, requester: requester))
+            return .signTransaction(DappAction.makeUnconfirmedTransaction(command.object, transfer: transfer))
         case .sendTransaction:
-            return .sendTransaction(DappAction.makeUnconfirmedTransaction(command.object, requester: requester))
+            return .sendTransaction(DappAction.makeUnconfirmedTransaction(command.object, transfer: transfer))
         case .signMessage:
             let data = command.object["data"]?.value ?? ""
             return .signMessage(data)
@@ -35,7 +35,7 @@ extension DappAction {
         }
     }
 
-    private static func makeUnconfirmedTransaction(_ object: [String: DappCommandObjectValue], requester: DAppRequester) -> UnconfirmedTransaction {
+    private static func makeUnconfirmedTransaction(_ object: [String: DappCommandObjectValue], transfer: Transfer) -> UnconfirmedTransaction {
         let to = EthereumAddress(string: object["to"]?.value ?? "")
         let value = BigInt((object["value"]?.value ?? "0").drop0x, radix: 16) ?? BigInt()
         let nonce: BigInt? = {
@@ -53,7 +53,7 @@ extension DappAction {
         let data = Data(hex: object["data"]?.value ?? "0x")
 
         return UnconfirmedTransaction(
-            transferType: .dapp(requester),
+            transfer: transfer,
             value: value,
             to: to,
             data: data,

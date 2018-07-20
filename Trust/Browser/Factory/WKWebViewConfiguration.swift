@@ -24,8 +24,8 @@ extension WKWebViewConfiguration {
         js +=
         """
         const addressHex = "\(address)"
-        const rpcURL = "\(sessionConfig.server.rpcURL.absoluteString)"
-        const chainID = "\(sessionConfig.chainID)"
+        const rpcURL = "\(account.server.rpcURL.absoluteString)"
+        const chainID = "\(account.server.chainID)"
 
         function executeCallback (id, error, value) {
             Trust.executeCallback(id, error, value)

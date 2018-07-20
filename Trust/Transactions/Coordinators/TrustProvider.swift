@@ -15,15 +15,7 @@ struct TrustProviderFactory {
 //        ),
     ]
 
-    static func makeProvider() -> MoyaProvider<TrustService> {
-        let manager = Manager(
-            configuration: URLSessionConfiguration.default,
-            serverTrustPolicyManager: ServerTrustPolicyManager(policies: policies)
-        )
-        return MoyaProvider<TrustService>(manager: manager)
-    }
-
-    static func makeAPIProvider() -> MoyaProvider<TrustAPI> {
+    static func makeProvider() -> MoyaProvider<TrustAPI> {
         let manager = Manager(
             configuration: URLSessionConfiguration.default,
             serverTrustPolicyManager: ServerTrustPolicyManager(policies: policies)

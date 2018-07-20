@@ -3,6 +3,7 @@
 import Foundation
 import BigInt
 import RealmSwift
+import TrustCore
 
 final class TokenViewModel {
 
@@ -55,12 +56,6 @@ final class TokenViewModel {
             shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals),
             symbol
         )
-    }
-
-    var isBuyActionAvailable: Bool {
-        switch config.server {
-        case .main, .kovan, .classic, .callisto, .ropsten, .rinkeby, .poa, .sokol, .gochain, .custom: return false
-        }
     }
 
     var numberOfSections: Int {
@@ -194,7 +189,8 @@ final class TokenViewModel {
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
-        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account)
+        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account, server: RPCServer(chainID: 1))
+        //TODO: Refactor
     }
 
     func hasContent() -> Bool {
@@ -212,7 +208,9 @@ final class TokenViewModel {
 
     private func fetchTransactions() {
         let contract: String? = {
-            guard TokensDataStore.etherToken() != token else { return .none }
+            guard let _ = token.coin else {
+                return .none
+            }
             return token.contract
         }()
 
@@ -223,7 +221,7 @@ final class TokenViewModel {
     }
 
     private func prepareDataSource(for token: TokenObject) {
-        if TokensDataStore.etherToken(for: session.config) == token {
+        if token.coin != nil {
             tokenTransactions = transactionsStore.realm.objects(Transaction.self).filter(NSPredicate(format: "localizedOperations.@count == 0")).sorted(byKeyPath: "date", ascending: false)
         } else {
             tokenTransactions = transactionsStore.realm.objects(Transaction.self).filter(NSPredicate(format: "%K ==[cd] %@", "to", token.contract)).sorted(byKeyPath: "date", ascending: false)

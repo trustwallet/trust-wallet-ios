@@ -5,14 +5,11 @@ import TrustCore
 
 struct ImportWalletViewModel {
 
-    private let config: Config
     private let coin: CoinViewModel
 
     init(
-        config: Config = Config(),
         coin: Coin
     ) {
-        self.config = config
         self.coin = CoinViewModel(coin: coin)
     }
 
@@ -33,6 +30,6 @@ struct ImportWalletViewModel {
     }
 
     var watchAddressPlaceholder: String {
-        return String(format: NSLocalizedString("import.wallet.watch.placeholder", value: "%@ Address", comment: ""), config.server.name)
+        return String(format: NSLocalizedString("import.wallet.watch.placeholder", value: "%@ Address", comment: ""), coin.name)
     }
 }

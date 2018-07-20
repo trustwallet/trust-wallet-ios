@@ -7,16 +7,16 @@ struct BalanceViewModel: BalanceBaseViewModel {
 
     let balance: Balance?
     let rate: CurrencyRate?
-    let config: Config
+    let server: RPCServer
 
     init(
+        server: RPCServer,
         balance: Balance? = .none,
-        rate: CurrencyRate? = .none,
-        config: Config = Config()
+        rate: CurrencyRate? = .none
     ) {
+        self.server = server
         self.balance = balance
         self.rate = rate
-        self.config = config
     }
 
     var amount: Double {
@@ -26,14 +26,14 @@ struct BalanceViewModel: BalanceBaseViewModel {
 
     var amountString: String {
         guard let balance = balance else { return "--" }
-        guard !balance.isZero else { return "0.00 \(config.server.symbol)" }
-        return "\(balance.amountFull) \(config.server.symbol)"
+        guard !balance.isZero else { return "0.00 \(server.symbol)" }
+        return "\(balance.amountFull) \(server.symbol)"
     }
 
     var currencyAmount: String? {
         guard let rate = rate else { return nil }
         guard
-            let currentRate = (rate.rates.filter { $0.contract == config.server.address.description }.first),
+            let currentRate = (rate.rates.filter { $0.contract == server.address.description }.first),
             currentRate.price > 0,
             amount > 0
         else { return nil }
@@ -50,6 +50,6 @@ struct BalanceViewModel: BalanceBaseViewModel {
     }
 
     var symbol: String {
-        return config.server.symbol
+        return server.symbol
     }
 }

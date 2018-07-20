@@ -112,7 +112,7 @@ final class TokensViewModel: NSObject {
     }
 
     func canDisable(for path: IndexPath) -> Bool {
-        return item(for: path) != TokensDataStore.etherToken()
+        return true
     }
 
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
@@ -124,7 +124,8 @@ final class TokensViewModel: NSObject {
         firstly {
             tokensNetwork.ethBalance()
         }.done { [weak self] balance in
-            self?.store.update(balances: [TokensDataStore.etherToken().address: balance.value])
+            //TODO Refactor
+            //self?.store.update(balances: [TokensDataStore.etherToken().address: balance.value])
         }.catch { error in
            NSLog("updateEthBalance \(error)")
         }

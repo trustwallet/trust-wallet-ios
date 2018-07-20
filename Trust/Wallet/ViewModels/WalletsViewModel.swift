@@ -10,7 +10,7 @@ class WalletsViewModel {
     private let networks: [WalletInfo] = []
     private let importedWallet: [WalletInfo] = []
 
-    var sections: [[WalletAccountViewModel]] = []
+    var sections: [WalletAccountViewModel] = []
 
     init(
         keystore: Keystore
@@ -31,17 +31,22 @@ class WalletsViewModel {
             }
 
             DispatchQueue.main.async {
-                let mainAccounts: [WalletAccountViewModel] = {
-                    guard let walletInfo = walletInfo else { return [] }
-                    return wallet?.accounts.compactMap { WalletAccountViewModel(wallet: walletInfo, account: $0) } ?? []
-                }()
+//                let mainAccounts: [WalletAccountViewModel] = {
+//                    guard let walletInfo = walletInfo else { return [] }
+//                    return wallet?.accounts.compactMap { WalletAccountViewModel(wallet: walletInfo, account: $0) } ?? []
+//                }()
+//
+//                self.sections = [
+//                    mainAccounts,
+//                    self.keystore.wallets.filter { !$0.mainWallet }.compactMap {
+//                        return WalletAccountViewModel(wallet: $0, account: $0.currentAccount)
+//                    },
+//                ]
 
-                self.sections = [
-                    mainAccounts,
-                    self.keystore.wallets.filter { !$0.mainWallet }.compactMap {
-                        return WalletAccountViewModel(wallet: $0, account: $0.currentAccount)
-                    },
-                ]
+                self.sections = self.keystore.wallets.compactMap {
+                    return WalletAccountViewModel(wallet: $0, account: $0.currentAccount)
+                }
+
                 completion?()
             }
         }
@@ -52,31 +57,18 @@ class WalletsViewModel {
     }
 
     var numberOfSection: Int {
-        return sections.count
+        return 1
     }
 
     func numberOfRows(in section: Int) -> Int {
-        return sections[section].count
-    }
-
-    func titleForHeader(in section: Int) -> String? {
-        let enabled = numberOfRows(in: section) > 0
-        switch section {
-        case 0: return enabled ? R.string.localizable.mainWallet() : .none
-        case 1: return enabled ? R.string.localizable.importedWallets() : .none
-        default: return .none
-        }
-    }
-
-    func heightForHeader(in section: Int) -> CGFloat {
-        return numberOfRows(in: section) > 0 ? StyleLayout.TableView.heightForHeaderInSection : 0.001
+        return sections.count
     }
 
     func cellViewModel(for indexPath: IndexPath) -> WalletAccountViewModel {
-        return sections[indexPath.section][indexPath.row]
+        return sections[indexPath.row]
     }
 
     func canEditRowAt(for indexPath: IndexPath) -> Bool {
-        return !cellViewModel(for: indexPath).wallet.mainWallet
+        return false //(cellViewModel(for: indexPath).wallet != walletInfo?.currentWallet) ?? false
     }
 }

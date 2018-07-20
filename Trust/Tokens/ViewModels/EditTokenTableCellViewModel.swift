@@ -46,19 +46,9 @@ struct EditTokenTableCellViewModel {
         return !token.isDisabled
     }
 
-    private var isAvailableForChange: Bool {
-        // One version had an option to disable ETH token. Adding functionality to enable it back.
-        if token.contract == TokensDataStore.etherToken(for: config).contract && token.isDisabled == true {
-            return false
-        }
-        return token.contract == TokensDataStore.etherToken(for: config).contract ? true : false
-    }
-
     var contractText: String? {
-        if !isAvailableForChange {
-            return token.contract
-        }
-        return .none
+        guard !token.isCoin else { return .none }
+        return token.contract
     }
 
     var isTokenContractLabelHidden: Bool {
@@ -66,9 +56,5 @@ struct EditTokenTableCellViewModel {
             return true
         }
         return false
-    }
-
-    var isSwitchHidden: Bool {
-        return isAvailableForChange || !isLocal
     }
 }

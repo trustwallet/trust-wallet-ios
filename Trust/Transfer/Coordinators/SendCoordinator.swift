@@ -12,7 +12,7 @@ protocol SendCoordinatorDelegate: class {
 }
 
 final class SendCoordinator: RootCoordinator {
-    let transferType: TransferType
+    let transfer: Transfer
     let session: WalletSession
     let account: Account
     let navigationController: NavigationController
@@ -29,12 +29,11 @@ final class SendCoordinator: RootCoordinator {
             session: session,
             storage: storage,
             account: account,
-            transferType: transferType
+            transfer: transfer
         )
         controller.navigationItem.backBarButtonItem = nil
-        controller.navigationItem.titleView = BalanceTitleView.make(from: self.session, transferType)
         controller.hidesBottomBarWhenPushed = true
-        switch transferType {
+        switch transfer.type {
         case .ether(let destination):
             controller.addressRow?.value = destination?.description
             controller.addressRow?.cell.row.updateCell()
@@ -45,14 +44,14 @@ final class SendCoordinator: RootCoordinator {
     }()
 
     init(
-        transferType: TransferType,
+        transfer:  Transfer,
         navigationController: NavigationController = NavigationController(),
         session: WalletSession,
         keystore: Keystore,
         storage: TokensDataStore,
         account: Account
     ) {
-        self.transferType = transferType
+        self.transfer = transfer
         self.navigationController = navigationController
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
@@ -63,11 +62,12 @@ final class SendCoordinator: RootCoordinator {
 }
 
 extension SendCoordinator: SendViewControllerDelegate {
-    func didPressConfirm(transaction: UnconfirmedTransaction, transferType: TransferType, in viewController: SendViewController) {
+    func didPressConfirm(transaction: UnconfirmedTransaction, transfer: Transfer, in viewController: SendViewController) {
         let configurator = TransactionConfigurator(
             session: session,
             account: account,
-            transaction: transaction
+            transaction: transaction,
+            server: RPCServer(chainID: 1) //Refactor
         )
 
         let coordinator = ConfirmCoordinator(

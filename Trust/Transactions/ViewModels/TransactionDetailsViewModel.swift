@@ -23,6 +23,7 @@ struct TransactionDetailsViewModel {
     private let shortFormatter = EtherNumberFormatter.short
     private let fullFormatter = EtherNumberFormatter.full
     private let currencyRate: CurrencyRate?
+    private let server: RPCServer
     private var monetaryAmountViewModel: MonetaryAmountViewModel {
         return MonetaryAmountViewModel(
             amount: transactionViewModel.shortValue.amount,
@@ -35,7 +36,8 @@ struct TransactionDetailsViewModel {
         config: Config,
         chainState: ChainState,
         currentWallet: WalletInfo,
-        currencyRate: CurrencyRate?
+        currencyRate: CurrencyRate?,
+        server: RPCServer
     ) {
         self.transaction = transaction
         self.config = config
@@ -45,8 +47,10 @@ struct TransactionDetailsViewModel {
             transaction: transaction,
             config: config,
             chainState: chainState,
-            currentWallet: currentWallet
+            currentWallet: currentWallet,
+            server: server
         )
+        self.server = server
     }
 
     var title: String {
@@ -80,7 +84,7 @@ struct TransactionDetailsViewModel {
     }
 
     var detailsURL: URL? {
-        return ConfigExplorer(server: config.server).transactionURL(for: transaction.id)
+        return ConfigExplorer(server: server).transactionURL(for: transaction.id)
     }
 
     var transactionID: String {
@@ -132,7 +136,7 @@ struct TransactionDetailsViewModel {
             }
         }()
 
-        return GasViewModel(fee: gasFee, server: config.server, currencyRate: currencyRate, formatter: fullFormatter)
+        return GasViewModel(fee: gasFee, server: server, currencyRate: currencyRate, formatter: fullFormatter)
     }
 
     var gasFee: String {

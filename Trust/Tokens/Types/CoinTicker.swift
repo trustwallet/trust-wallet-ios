@@ -73,7 +73,7 @@ struct CoinTickerKeyMaker {
         return "\(symbol)_\(contract)_\(currencyKey)"
     }
 
-    static func makeCurrencyKey(for config: Config) -> String {
-        return "tickers-" + config.currency.rawValue + "-" + String(config.chainID)
+    static func makeCurrencyKey() -> String {
+        return "tickers-" + Config.current.currency.rawValue
     }
 }

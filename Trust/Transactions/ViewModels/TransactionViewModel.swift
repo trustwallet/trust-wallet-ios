@@ -13,17 +13,19 @@ struct TransactionViewModel {
     private let shortFormatter = EtherNumberFormatter.short
     private let balanceFormatter = EtherNumberFormatter.balance
     private let fullFormatter = EtherNumberFormatter.full
-
+    private let server: RPCServer
     init(
         transaction: Transaction,
         config: Config,
         chainState: ChainState,
-        currentWallet: WalletInfo
+        currentWallet: WalletInfo,
+        server: RPCServer
     ) {
         self.transaction = transaction
         self.config = config
         self.chainState = chainState
         self.currentWallet = currentWallet
+        self.server = server
     }
 
     var transactionFrom: String {
@@ -79,7 +81,7 @@ struct TransactionViewModel {
         }
         return TransactionValue(
             amount: formatter.string(from: BigInt(transaction.value) ?? BigInt()),
-            symbol: config.server.symbol
+            symbol: server.symbol
         )
     }
 

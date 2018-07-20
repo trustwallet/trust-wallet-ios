@@ -22,7 +22,7 @@ class FakeTokensNetwork: NetworkProtocol {
     var account: Trust.WalletInfo
     var config: Config
     
-    required init(provider: MoyaProvider<TrustService>, APIProvider: MoyaProvider<TrustAPI>, balanceService: TokensBalanceService, account: Trust.WalletInfo, config: Config) {
+    required init(provider: MoyaProvider<TrustAPI>, balanceService: TokensBalanceService, account: Trust.WalletInfo, config: Config) {
         self.provider = provider
         self.APIProvider = APIProvider
         self.balanceService = balanceService

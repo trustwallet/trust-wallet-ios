@@ -7,16 +7,14 @@ import TrustCore
 final class MigrationInitializer: Initializer {
 
     let account: WalletInfo
-    let chainID: Int
     lazy var config: Realm.Configuration = {
-        return RealmConfiguration.configuration(for: account, chainID: chainID)
+        return RealmConfiguration.configuration(for: account)
     }()
 
     init(
-        account: WalletInfo, chainID: Int
+        account: WalletInfo
     ) {
         self.account = account
-        self.chainID = chainID
     }
 
     func perform() {

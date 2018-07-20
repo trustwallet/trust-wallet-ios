@@ -12,14 +12,14 @@ final class ChainState {
         static let gasPrice = "gasPrice"
     }
 
-    let config: Config
+    let server: RPCServer
 
     private var latestBlockKey: String {
-        return "\(config.chainID)-" + Keys.latestBlock
+        return "\(server.chainID)-" + Keys.latestBlock
     }
 
     private var gasPriceBlockKey: String {
-        return "\(config.chainID)-" + Keys.gasPrice
+        return "\(server.chainID)-" + Keys.gasPrice
     }
 
     var chainStateCompletion: ((Bool, Int) -> Void)?
@@ -45,10 +45,10 @@ final class ChainState {
     var updateLatestBlock: Timer?
 
     init(
-        config: Config = Config()
+        server: RPCServer
     ) {
-        self.config = config
-        self.defaults = config.defaults
+        self.server = server
+        self.defaults = Config.current.defaults
         NotificationCenter.default.addObserver(self, selector: #selector(ChainState.stopTimers), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ChainState.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
         runScheduledTimers()
@@ -81,7 +81,7 @@ final class ChainState {
     }
 
     private func getLastBlock() {
-        let request = EtherServiceRequest(batch: BatchFactory().create(BlockNumberRequest()), timeoutInterval: 5.0)
+        let request = EtherServiceRequest(for: server, batch: BatchFactory().create(BlockNumberRequest()), timeoutInterval: 5.0)
         Session.send(request) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
@@ -95,7 +95,7 @@ final class ChainState {
     }
 
     private func getGasPrice() {
-        let request = EtherServiceRequest(batch: BatchFactory().create(GasPriceRequest()))
+        let request = EtherServiceRequest(for: server, batch: BatchFactory().create(GasPriceRequest()))
         Session.send(request) { [weak self] result in
             switch result {
             case .success(let balance):

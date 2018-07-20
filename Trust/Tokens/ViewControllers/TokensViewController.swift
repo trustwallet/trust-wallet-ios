@@ -40,15 +40,6 @@ final class TokensViewController: UIViewController {
         return footer
     }()
 
-    lazy var footerView: ButtonsFooterView = {
-        let footerView = ButtonsFooterView(
-            frame: .zero
-        )
-        footerView.translatesAutoresizingMaskIntoConstraints = false
-        footerView.setTopBorder()
-        return footerView
-    }()
-
     lazy var titleView: WalletTitleView = {
         let view = WalletTitleView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -75,16 +66,11 @@ final class TokensViewController: UIViewController {
         tableView.separatorColor = StyleLayout.TableView.separatorColor
         tableView.backgroundColor = .white
         view.addSubview(tableView)
-        view.addSubview(footerView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: footerView.topAnchor),
-
-            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            footerView.bottomAnchor.constraint(equalTo: view.layoutGuide.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)

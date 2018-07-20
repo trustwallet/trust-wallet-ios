@@ -23,9 +23,9 @@ struct SendViewModel {
     }()
     /// decimals of a `SendViewModel` to represent amount of digits after coma.
     lazy var decimals: Int = {
-        switch self.transferType {
+        switch self.transfer.type {
         case .ether, .dapp, .nft:
-            return config.server.decimals
+            return transfer.server.decimals
         case .token(let token):
             return token.decimals
         }
@@ -41,7 +41,7 @@ struct SendViewModel {
         return chainState.gasPrice
     }
     /// transferType of a `SendViewModel` to know if it is token or ETH.
-    let transferType: TransferType
+    let transfer: Transfer
     /// config of a `SendViewModel` to know configuration of the current account.
     let config: Config
     let chainState: ChainState
@@ -49,13 +49,13 @@ struct SendViewModel {
     /// current wallet balance
     let balance: Balance?
     init(
-        transferType: TransferType,
+        transfer: Transfer,
         config: Config,
         chainState: ChainState,
         storage: TokensDataStore,
         balance: Balance?
     ) {
-        self.transferType = transferType
+        self.transfer = transfer
         self.config = config
         self.chainState = chainState
         self.storage = storage
@@ -65,17 +65,17 @@ struct SendViewModel {
         return "Send \(symbol)"
     }
     var symbol: String {
-        return transferType.symbol(server: config.server)
+        return transfer.server.symbol
     }
     var destinationAddress: EthereumAddress {
-        return transferType.contract()
+        return transfer.type.contract()
     }
     var backgroundColor: UIColor {
         return .white
     }
 
     var views: [SendViewType] {
-        switch transferType {
+        switch transfer.type {
         case .ether, .dapp, .token:
             return [.address, .amount]
         case .nft(let token):
@@ -107,7 +107,7 @@ struct SendViewModel {
     /// - Returns: `String` that represent amount to send.
     mutating func sendMaxAmount() -> String {
         var max: Decimal? = 0
-        switch transferType {
+        switch transfer.type {
         case .ether, .dapp, .nft: max = EtherNumberFormatter.full.decimal(from: balance?.value ?? 0, decimals: decimals)
         case .token(let token): max = EtherNumberFormatter.full.decimal(from: token.valueBigInt, decimals: decimals)
         }

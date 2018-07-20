@@ -130,12 +130,12 @@ final class Transaction: Object, Decodable {
         return EthereumAddress(string: from)
     }
 
-    var contractAddress: EthereumAddress {
+    var contractAddress: EthereumAddress? {
         guard
             let operation = operation,
             let contract = operation.contract,
             let contractAddress = EthereumAddress(string: contract) else {
-            return TokensDataStore.etherToken().address
+                return .none
         }
         return contractAddress
     }

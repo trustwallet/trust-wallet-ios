@@ -21,15 +21,18 @@ final class RequestCoordinator: RootCoordinator {
         return UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
     }()
     private lazy var viewModel: RequestViewModel = {
-        return RequestViewModel(account: session.account, config: session.config, token: token)
+        return RequestViewModel(server: server, token: token)
     }()
     private let token: TokenObject
+    private let server: RPCServer
 
     init(
         session: WalletSession,
+        server: RPCServer,
         token: TokenObject
     ) {
         self.session = session
+        self.server = server
         self.token = token
     }
 

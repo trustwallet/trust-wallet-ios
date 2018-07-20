@@ -5,7 +5,8 @@ import UIKit
 import TrustCore
 
 protocol TokensCoordinatorDelegate: class {
-    func didPress(for type: PaymentFlow, in coordinator: TokensCoordinator)
+    func didPressSend(for token: TokenObject, in coordinator: TokensCoordinator)
+    func didPressRequest(for token: TokenObject, in coordinator: TokensCoordinator)
     func didPress(url: URL, in coordinator: TokensCoordinator)
     func didPressDiscover(in coordinator: TokensCoordinator)
     func didPressChangeWallet(in coordinator: TokensCoordinator)
@@ -18,19 +19,16 @@ final class TokensCoordinator: Coordinator {
     let keystore: Keystore
     var coordinators: [Coordinator] = []
     let store: TokensDataStore
-    let network: NetworkProtocol
     let transactionsStore: TransactionsStorage
 
     lazy var tokensViewController: TokensViewController = {
         let tokensViewModel = TokensViewModel(wallet: session.account, store: store, tokensNetwork: network, transactionStore: transactionsStore)
         let controller = TokensViewController(viewModel: tokensViewModel)
-        controller.footerView.requestButton.addTarget(self, action: #selector(request), for: .touchUpInside)
-        controller.footerView.sendButton.addTarget(self, action: #selector(send), for: .touchUpInside)
         controller.delegate = self
         controller.titleView.delegate = self
         controller.navigationItem.leftBarButtonItems = [
             UIBarButtonItem(image: R.image.collectibles(), style: .done, target: self, action: #selector(collectibles)),
-            UIBarButtonItem(image: R.image.feed(), style: .done, target: self, action: #selector(transactions)),
+            //UIBarButtonItem(image: R.image.feed(), style: .done, target: self, action: #selector(transactions)),
         ]
         controller.navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(edit)),
@@ -49,12 +47,21 @@ final class TokensCoordinator: Coordinator {
         return self.tokensViewController
     }()
 
+    lazy var network: NetworkProtocol = {
+        let balanceCoordinator = TokensBalanceService()
+        return TrustNetwork(
+            provider: TrustProviderFactory.makeProvider(),
+            balanceService: balanceCoordinator,
+            address: session.account.currentAccount.address,
+            server: RPCServer(chainID: 1) //Refactor
+        )
+    }()
+
     init(
         navigationController: NavigationController = NavigationController(),
         session: WalletSession,
         keystore: Keystore,
         tokensStorage: TokensDataStore,
-        network: NetworkProtocol,
         transactionsStore: TransactionsStorage
     ) {
         self.navigationController = navigationController
@@ -62,7 +69,6 @@ final class TokensCoordinator: Coordinator {
         self.session = session
         self.keystore = keystore
         self.store = tokensStorage
-        self.network = network
         self.transactionsStore = transactionsStore
     }
 
@@ -126,20 +132,13 @@ final class TokensCoordinator: Coordinator {
         navigationController.pushViewController(controller, animated: true)
     }
 
-    @objc func request() {
-        delegate?.didPress(for: .request(token: TokensDataStore.etherToken(for: session.config)), in: self)
-    }
-
-    @objc func send() {
-        delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
-    }
-
     private func openURL(_ url: URL) {
         delegate?.didPress(url: url, in: self)
     }
 
     func addTokenContract(for contract: EthereumAddress) {
-        let _ = network.search(token: contract.description).done { [weak self] token in
+        let _ = network.search(token: contract.description).done { [weak self] tokens in
+            guard let token = tokens.first else { return }
             self?.store.add(tokens: [token])
         }
     }
@@ -212,21 +211,19 @@ extension TokensCoordinator: NonFungibleTokensViewControllerDelegate {
 
 extension TokensCoordinator: TokenViewControllerDelegate {
     func didPressSend(for token: TokenObject, in controller: UIViewController) {
-        if TokensDataStore.etherToken(for: session.config) == token {
-            delegate?.didPress(for: .send(type: .ether(destination: .none)), in: self)
-        } else {
-            delegate?.didPress(for: .send(type: .token(token)), in: self)
-        }
+        delegate?.didPressSend(for: token, in: self)
     }
 
     func didPressRequest(for token: TokenObject, in controller: UIViewController) {
-        delegate?.didPress(for: .request(token: token), in: self)
+        delegate?.didPressRequest(for: token, in: self)
     }
 
     func didPress(transaction: Transaction, in controller: UIViewController) {
+        //TODO: Refactor
         let controller = TransactionViewController(
             session: session,
-            transaction: transaction
+            transaction: transaction,
+            server: RPCServer(chainID: 1)
         )
         controller.delegate = self
         NavigationController.openFormSheet(
@@ -247,7 +244,8 @@ extension TokensCoordinator: NFTokenViewControllerDelegate {
     }
 
     func didPressToken(token: NonFungibleTokenObject, in viewController: NFTokenViewController) {
-        delegate?.didPress(for: .send(type: .nft(token)), in: self)
+        //TODO: Refactor
+        //delegate?.didPress(for: Transfer(server: RPCServer(chainID: 1), type: .send(type: .nft(token)), in: self)
     }
 }
 

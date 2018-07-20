@@ -6,19 +6,23 @@ import JSONRPCKit
 
 struct EtherServiceRequest<Batch: JSONRPCKit.Batch>: APIKit.Request {
     let batch: Batch
-
+    let server: RPCServer
     typealias Response = Batch.Responses
 
     var timeoutInterval: Double
 
-    init(batch: Batch, timeoutInterval: Double = 30.0) {
+    init(
+        for server: RPCServer,
+        batch: Batch,
+        timeoutInterval: Double = 30.0
+    ) {
+        self.server = server
         self.batch = batch
         self.timeoutInterval = timeoutInterval
     }
 
     var baseURL: URL {
-        let config = Config()
-        return config.server.rpcURL
+        return server.rpcURL
     }
 
     var method: HTTPMethod {

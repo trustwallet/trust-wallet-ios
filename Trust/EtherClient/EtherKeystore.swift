@@ -439,8 +439,6 @@ class EtherKeystore: Keystore {
     }
 
     func store(object: WalletObject, fields: [WalletInfoField]) {
-        NSLog("object\(object) \(fields)")
-
         try? storage.realm.write {
             for field in fields {
                 switch field {
@@ -450,8 +448,6 @@ class EtherKeystore: Keystore {
                     object.completedBackup = completedBackup
                 case .mainWallet(let mainWallet):
                     object.mainWallet = mainWallet
-                case .setAccount(let account):
-                    object.selectedAccount = account
                 }
             }
             storage.realm.add(object, update: true)

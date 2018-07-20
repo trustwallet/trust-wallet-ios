@@ -18,7 +18,8 @@ struct TransactionCellViewModel {
         transaction: Transaction,
         config: Config,
         chainState: ChainState,
-        currentWallet: WalletInfo
+        currentWallet: WalletInfo,
+        server: RPCServer
     ) {
         self.transaction = transaction
         self.config = config
@@ -28,7 +29,8 @@ struct TransactionCellViewModel {
             transaction: transaction,
             config: config,
             chainState: chainState,
-            currentWallet: currentWallet
+            currentWallet: currentWallet,
+            server: server
         )
     }
 

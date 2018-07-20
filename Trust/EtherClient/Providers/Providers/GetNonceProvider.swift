@@ -8,6 +8,7 @@ import Result
 
 final class GetNonceProvider: NonceProvider {
     let storage: TransactionsStorage
+    let server: RPCServer
     var remoteNonce: BigInt? = .none
     var latestNonce: BigInt? {
         guard let nonce = storage.latestTransaction?.nonce else {
@@ -29,9 +30,11 @@ final class GetNonceProvider: NonceProvider {
     }
 
     init(
-        storage: TransactionsStorage
+        storage: TransactionsStorage,
+        server: RPCServer
     ) {
         self.storage = storage
+        self.server = server
 
         fetchLatestNonce()
     }
@@ -59,7 +62,7 @@ final class GetNonceProvider: NonceProvider {
     }
 
     func fetch(completion: @escaping (Result<BigInt, AnyError>) -> Void) {
-        let request = EtherServiceRequest(batch: BatchFactory().create(GetTransactionCountRequest(
+        let request = EtherServiceRequest(for: server, batch: BatchFactory().create(GetTransactionCountRequest(
             address: storage.account.address.description,
             state: "latest"
         )))

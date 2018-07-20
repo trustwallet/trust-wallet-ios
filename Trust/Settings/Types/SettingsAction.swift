@@ -7,4 +7,5 @@ enum SettingsAction {
     case pushNotifications(NotificationChanged)
     case clearBrowserCache
     case openURL(URL)
+    case wallets
 }

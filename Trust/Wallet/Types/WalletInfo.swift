@@ -46,11 +46,10 @@ struct WalletInfo {
     }
 
     var currentAccount: Account! {
-        NSLog("accounts \(accounts.count)")
-        NSLog("type \(type)")
+        //Refactor
         switch type {
         case .privateKey, .hd:
-            return accounts.filter { $0.description == info.selectedAccount }.first ?? accounts.first!
+            return accounts[0] //.filter { $0.description == info.selectedAccount }.first ?? accounts.first!
         case .address(let coin, let address):
             return Account(wallet: .none, address: address, derivationPath: coin.derivationPath(at: 0))
         }
@@ -86,19 +85,8 @@ struct WalletInfo {
         return type.description
     }
 
-    var chainID: Int {
-        switch coin {
-        case .none: return -1
-        case .some(let coin):
-            switch coin {
-            case .poa: return RPCServer.poa.chainID
-            case .bitcoin: return 0
-            case .ethereum: return RPCServer.main.chainID
-            case .ethereumClassic: return RPCServer.classic.chainID
-            case .callisto: return RPCServer.callisto.chainID
-            case .gochain: return RPCServer.gochain.chainID
-            }
-        }
+    var server: RPCServer {
+        return RPCServer(chainID: 1)
     }
 }
 
