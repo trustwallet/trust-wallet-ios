@@ -20,18 +20,18 @@ protocol SendViewControllerDelegate: class {
 
 class SendViewController: FormViewController {
     private lazy var viewModel: SendViewModel = {
-        return .init(transfer: transfer, config: session.config, chainState: session.chainState, storage: storage, balance: session.balance)
+        return .init(transfer: transfer, config: session.config, chainState: chainState, storage: storage, balance: session.balance)
     }()
     weak var delegate: SendViewControllerDelegate?
     struct Values {
         static let address = "address"
         static let amount = "amount"
-        static let collectible = "collectible"
     }
     let session: WalletSession
     let account: Account
     let transfer: Transfer
     let storage: TokensDataStore
+    let chainState: ChainState
     var addressRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.address) as? TextFloatLabelRow
     }
@@ -54,12 +54,14 @@ class SendViewController: FormViewController {
         session: WalletSession,
         storage: TokensDataStore,
         account: Account,
-        transfer: Transfer
+        transfer: Transfer,
+        chainState: ChainState
     ) {
         self.session = session
         self.account = account
         self.transfer = transfer
         self.storage = storage
+        self.chainState = chainState
         super.init(nibName: nil, bundle: nil)
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
@@ -94,8 +96,6 @@ class SendViewController: FormViewController {
             return addressField()
         case .amount:
             return amountField()
-        case .collectible(let token):
-            return collectibleField(with: token)
         }
     }
 
@@ -144,19 +144,6 @@ class SendViewController: FormViewController {
         }
     }
 
-    func collectibleField(with token: NonFungibleTokenObject) -> SendNFTRow {
-        let cell = SendNFTRow(tag: Values.collectible)
-        let viewModel = NFTDetailsViewModel(token: token)
-        cell.cellSetup { cell, _ in
-            cell.tokenImage.kf.setImage(
-                with: viewModel.imageURL,
-                placeholder: viewModel.placeholder
-            )
-            cell.label.text = viewModel.title
-        }
-        return cell
-    }
-
     func clear() {
         let fields = [addressRow, amountRow]
         for field in fields {
@@ -175,7 +162,7 @@ class SendViewController: FormViewController {
         }
         let parsedValue: BigInt? = {
             switch transfer.type {
-            case .ether, .dapp, .nft:
+            case .ether, .dapp:
                 return EtherNumberFormatter.full.number(from: amountString, units: .ether)
             case .token(let token):
                 return EtherNumberFormatter.full.number(from: amountString, decimals: token.decimals)

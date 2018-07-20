@@ -12,10 +12,9 @@ enum RefreshType {
 final class WalletSession {
     let account: WalletInfo
     lazy var balanceCoordinator: BalanceCoordinator = {
-        return BalanceCoordinator(account: account, config: config, storage: tokensStorage)
+        return BalanceCoordinator(account: account, config: config, storage: tokensStorage, server: RPCServer.main)
     }()
     let config: Config
-    let chainState: ChainState
     var balance: Balance? {
         return balanceCoordinator.balance
     }
@@ -53,16 +52,10 @@ final class WalletSession {
         self.realm = realm
         self.sharedRealm = sharedRealm
         self.config = config
-        self.chainState = ChainState(server: account.server)
-        self.chainState.start()
     }
 
     func refresh() {
         balanceCoordinator.refresh()
-    }
-
-    func stop() {
-        chainState.stop()
     }
 }
 

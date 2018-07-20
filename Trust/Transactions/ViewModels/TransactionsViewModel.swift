@@ -98,7 +98,8 @@ struct TransactionsViewModel {
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
-        return TransactionCellViewModel(transaction: storage.transactionSections[indexPath.section].items[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account, server: RPCServer(chainID: 1))
+        let server = RPCServer(chainID: 1)!
+        return TransactionCellViewModel(transaction: storage.transactionSections[indexPath.section].items[indexPath.row], config: config, chainState: ChainState(server: server), currentWallet: session.account, server: server)
         //Refactor
     }
 

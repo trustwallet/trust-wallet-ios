@@ -124,8 +124,8 @@ final class TokensViewModel: NSObject {
         firstly {
             tokensNetwork.ethBalance()
         }.done { [weak self] balance in
-            //TODO Refactor
-            //self?.store.update(balances: [TokensDataStore.etherToken().address: balance.value])
+            guard let `self` = self, let address = EthereumAddress(string: self.tokensNetwork.address.description) else { return }
+            self.store.update(balances: [address: balance.value])
         }.catch { error in
            NSLog("updateEthBalance \(error)")
         }

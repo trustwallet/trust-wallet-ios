@@ -48,12 +48,13 @@ final class TokensCoordinator: Coordinator {
     }()
 
     lazy var network: NetworkProtocol = {
-        let balanceCoordinator = TokensBalanceService()
+        let server = RPCServer(chainID: 1)! //Refactor
+        let balanceCoordinator = TokensBalanceService(server: server)
         return TrustNetwork(
             provider: TrustProviderFactory.makeProvider(),
             balanceService: balanceCoordinator,
             address: session.account.currentAccount.address,
-            server: RPCServer(chainID: 1) //Refactor
+            server: server
         )
     }()
 
@@ -223,7 +224,7 @@ extension TokensCoordinator: TokenViewControllerDelegate {
         let controller = TransactionViewController(
             session: session,
             transaction: transaction,
-            server: RPCServer(chainID: 1)
+            server: RPCServer(chainID: 1)!
         )
         controller.delegate = self
         NavigationController.openFormSheet(
@@ -241,11 +242,6 @@ extension TokensCoordinator: TokenViewControllerDelegate {
 extension TokensCoordinator: NFTokenViewControllerDelegate {
     func didPressLink(url: URL, in viewController: NFTokenViewController) {
         openURL(url)
-    }
-
-    func didPressToken(token: NonFungibleTokenObject, in viewController: NFTokenViewController) {
-        //TODO: Refactor
-        //delegate?.didPress(for: Transfer(server: RPCServer(chainID: 1), type: .send(type: .nft(token)), in: self)
     }
 }
 

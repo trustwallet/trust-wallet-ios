@@ -21,19 +21,16 @@ final class RequestCoordinator: RootCoordinator {
         return UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
     }()
     private lazy var viewModel: RequestViewModel = {
-        return RequestViewModel(server: server, token: token)
+        return RequestViewModel(coinTypeViewModel: coinTypeViewModel)
     }()
-    private let token: TokenObject
-    private let server: RPCServer
+    private let coinTypeViewModel: CoinTypeViewModel
 
     init(
         session: WalletSession,
-        server: RPCServer,
-        token: TokenObject
+        coinTypeViewModel: CoinTypeViewModel
     ) {
         self.session = session
-        self.server = server
-        self.token = token
+        self.coinTypeViewModel = coinTypeViewModel
     }
 
     @objc func share(_ sender: UIBarButtonItem) {

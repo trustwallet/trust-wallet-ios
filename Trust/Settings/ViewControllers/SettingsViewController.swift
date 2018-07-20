@@ -373,7 +373,4 @@ extension SettingsViewController: Scrollable {
 }
 
 extension SettingsViewController: DeveloperViewControllerDelegate {
-    func didSelect(server: RPCServer, in controller: DeveloperViewController) {
-        delegate?.didAction(action: .switchServer(server), in: self)
-    }
 }

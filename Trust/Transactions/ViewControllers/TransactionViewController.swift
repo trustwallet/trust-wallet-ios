@@ -15,7 +15,7 @@ final class TransactionViewController: UIViewController {
         return TransactionDetailsViewModel(
             transaction: self.transaction,
             config: self.config,
-            chainState: self.session.chainState,
+            chainState: ChainState(server: server),
             currentWallet: self.session.account,
             currencyRate: self.session.balanceCoordinator.currencyRate,
             server: server

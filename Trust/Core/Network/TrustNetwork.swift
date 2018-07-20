@@ -78,7 +78,7 @@ final class TrustNetwork: NetworkProtocol {
 
     func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void) {
         if contract.description == address.description {
-            balanceService.getEthBalance(for: address) { result in
+            balanceService.getBalance(for: address) { result in
                 switch result {
                 case .success(let balance):
                     completion(balance)
@@ -100,7 +100,7 @@ final class TrustNetwork: NetworkProtocol {
 
     func ethBalance() -> Promise<Balance> {
         return Promise { seal in
-            balanceService.getEthBalance(for: address) { result in
+            balanceService.getBalance(for: address) { result in
                 switch result {
                 case .success(let balance):
                     seal.fulfill(balance)

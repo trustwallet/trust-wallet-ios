@@ -49,7 +49,7 @@ struct WalletInfo {
         //Refactor
         switch type {
         case .privateKey, .hd:
-            return accounts[0] //.filter { $0.description == info.selectedAccount }.first ?? accounts.first!
+            return accounts.first //.filter { $0.description == info.selectedAccount }.first ?? accounts.first!
         case .address(let coin, let address):
             return Account(wallet: .none, address: address, derivationPath: coin.derivationPath(at: 0))
         }
@@ -86,7 +86,7 @@ struct WalletInfo {
     }
 
     var server: RPCServer {
-        return RPCServer(chainID: 1)
+        return RPCServer(chainID: 1)! 
     }
 }
 

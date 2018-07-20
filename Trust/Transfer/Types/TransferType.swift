@@ -11,7 +11,6 @@ struct Transfer {
 enum TransferType {
     case ether(destination: EthereumAddress?)
     case token(TokenObject)
-    case nft(NonFungibleTokenObject)
     case dapp(DAppRequester)
 }
 
@@ -20,8 +19,6 @@ extension TransferType {
         switch self {
         case .ether, .dapp:
             return server.symbol
-        case .nft:
-            return "" //Doesn't really need :)
         case .token(let token):
             return token.symbol
         }
@@ -32,8 +29,6 @@ extension TransferType {
         switch self {
         case .ether, .dapp:
             return EthereumAddress.zero
-        case .nft(let token):
-            return token.contractAddress
         case .token(let token):
             return token.contractAddress
         }

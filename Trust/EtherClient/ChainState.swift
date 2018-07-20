@@ -49,30 +49,11 @@ final class ChainState {
     ) {
         self.server = server
         self.defaults = Config.current.defaults
-        NotificationCenter.default.addObserver(self, selector: #selector(ChainState.stopTimers), name: .UIApplicationWillResignActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ChainState.restartTimers), name: .UIApplicationDidBecomeActive, object: nil)
-        runScheduledTimers()
-    }
-    func start() {
         fetch()
     }
 
-    func stop() {
-        updateLatestBlock?.invalidate()
-        updateLatestBlock = nil
-    }
-    @objc func stopTimers() {
-        updateLatestBlock?.invalidate()
-        updateLatestBlock = nil
-    }
-    @objc func restartTimers() {
-        runScheduledTimers()
-    }
-    private func runScheduledTimers() {
-        guard updateLatestBlock == nil else {
-            return
-        }
-        self.updateLatestBlock = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(fetch), userInfo: nil, repeats: true)
+    func start() {
+        fetch()
     }
 
     @objc func fetch() {
@@ -110,10 +91,5 @@ final class ChainState {
         let block = latestBlock - fromBlock
         guard latestBlock != 0, block >= 0 else { return nil }
         return max(1, block)
-    }
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-        updateLatestBlock?.invalidate()
-        updateLatestBlock = nil
     }
 }

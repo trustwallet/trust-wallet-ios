@@ -10,6 +10,11 @@ struct TokenObjectList: Decodable {
     let contract: TokenObject
 }
 
+enum TokenObjectType: String {
+    case coin
+    case erc20
+}
+
 final class TokenObject: Object, Decodable {
     static let DEFAULT_BALANCE = 0.00
 
@@ -17,6 +22,7 @@ final class TokenObject: Object, Decodable {
     @objc dynamic var name: String = ""
     @objc dynamic var coinInt: Int = -1
     @objc dynamic var chainID: Int = -1
+    @objc dynamic var type: String = TokenObjectType.coin.rawValue
     @objc dynamic var symbol: String = ""
     @objc dynamic var decimals: Int = 0
     @objc dynamic var value: String = ""
@@ -30,6 +36,7 @@ final class TokenObject: Object, Decodable {
         name: String = "",
         coin: Int = -1,
         chainID: Int = -1,
+        type: TokenObjectType,
         symbol: String = "",
         decimals: Int = 0,
         value: String,
@@ -41,6 +48,7 @@ final class TokenObject: Object, Decodable {
         self.name = name
         self.coinInt = coin
         self.chainID = chainID
+        self.type = type.rawValue
         self.symbol = symbol
         self.decimals = decimals
         self.value = value
@@ -64,7 +72,7 @@ final class TokenObject: Object, Decodable {
         if let convertedAddress = EthereumAddress(string: contract)?.description {
             contract = convertedAddress
         }
-        self.init(contract: contract, name: name, coin: -1, chainID: -1, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
+        self.init(contract: contract, name: name, coin: -1, chainID: -1, type: .erc20, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
     }
 
     required init() {
@@ -130,5 +138,9 @@ final class TokenObject: Object, Decodable {
 
     var isCoin: Bool {
         return coin != nil
+    }
+
+    var tokenType: TokenObjectType {
+        return TokenObjectType(rawValue: type) ?? .coin
     }
 }

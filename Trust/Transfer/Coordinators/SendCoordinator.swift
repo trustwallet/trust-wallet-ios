@@ -17,7 +17,6 @@ final class SendCoordinator: RootCoordinator {
     let account: Account
     let navigationController: NavigationController
     let keystore: Keystore
-    let storage: TokensDataStore
     var coordinators: [Coordinator] = []
     weak var delegate: SendCoordinatorDelegate?
     var rootViewController: UIViewController {
@@ -27,9 +26,10 @@ final class SendCoordinator: RootCoordinator {
     private lazy var controller: SendViewController = {
         let controller = SendViewController(
             session: session,
-            storage: storage,
+            storage: session.tokensStorage,
             account: account,
-            transfer: transfer
+            transfer: transfer,
+            chainState: chainState
         )
         controller.navigationItem.backBarButtonItem = nil
         controller.hidesBottomBarWhenPushed = true
@@ -37,18 +37,23 @@ final class SendCoordinator: RootCoordinator {
         case .ether(let destination):
             controller.addressRow?.value = destination?.description
             controller.addressRow?.cell.row.updateCell()
-        case .token, .dapp, .nft: break
+        case .token, .dapp: break
         }
         controller.delegate = self
         return controller
     }()
 
+    lazy var chainState: ChainState = {
+        let state = ChainState(server: transfer.server)
+        state.fetch()
+        return state
+    }()
+
     init(
-        transfer:  Transfer,
+        transfer: Transfer,
         navigationController: NavigationController = NavigationController(),
         session: WalletSession,
         keystore: Keystore,
-        storage: TokensDataStore,
         account: Account
     ) {
         self.transfer = transfer
@@ -57,7 +62,6 @@ final class SendCoordinator: RootCoordinator {
         self.session = session
         self.account = account
         self.keystore = keystore
-        self.storage = storage
     }
 }
 
@@ -67,7 +71,8 @@ extension SendCoordinator: SendViewControllerDelegate {
             session: session,
             account: account,
             transaction: transaction,
-            server: RPCServer(chainID: 1) //Refactor
+            server: transfer.server,
+            chainState: ChainState(server: transfer.server)
         )
 
         let coordinator = ConfirmCoordinator(
@@ -76,7 +81,8 @@ extension SendCoordinator: SendViewControllerDelegate {
             configurator: configurator,
             keystore: keystore,
             account: account,
-            type: .signThenSend
+            type: .signThenSend,
+            server: transfer.server
         )
         coordinator.didCompleted = { [weak self] result in
             guard let `self` = self else { return }

@@ -43,7 +43,7 @@ final class BrowserCoordinator: NSObject, Coordinator {
     }()
 
     lazy var browserViewController: BrowserViewController = {
-        let controller = BrowserViewController(account: session.account, config: session.config)
+        let controller = BrowserViewController(account: session.account, config: session.config, server: .main)
         controller.delegate = self
         controller.webView.uiDelegate = self
         return controller
@@ -97,14 +97,16 @@ final class BrowserCoordinator: NSObject, Coordinator {
             session: session,
             account: account,
             transaction: transaction,
-            server: server
+            server: server,
+            chainState: ChainState(server: server)
         )
         let coordinator = ConfirmCoordinator(
             session: session,
             configurator: configurator,
             keystore: keystore,
             account: account,
-            type: type
+            type: type,
+            server: server
         )
         addCoordinator(coordinator)
         coordinator.didCompleted = { [unowned self] result in
@@ -272,7 +274,6 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
     }
 
     func didCall(action: DappAction, callbackID: Int) {
-        let server = RPCServer(chainID: 1) //Refactor
         guard let account = session.account.currentAccount else {
             self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
             self.navigationController.topViewController?.displayError(error: InCoordinatorError.onlyWatchAccount)
@@ -280,9 +281,9 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
         }
         switch action {
         case .signTransaction(let unconfirmedTransaction):
-            executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .signThenSend, server: server)
+            executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .signThenSend, server: browserViewController.server)
         case .sendTransaction(let unconfirmedTransaction):
-            executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .signThenSend, server: server)
+            executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .signThenSend, server: browserViewController.server)
         case .signMessage(let hexMessage):
             signMessage(with: .message(Data(hex: hexMessage)), account: account, callbackID: callbackID)
         case .signPersonalMessage(let hexMessage):

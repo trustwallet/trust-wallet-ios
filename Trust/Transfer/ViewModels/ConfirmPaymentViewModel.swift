@@ -39,7 +39,7 @@ struct ConfirmPaymentViewModel {
         let networkSymbol = transfer.server.symbol
 
         switch transfer.type {
-        case .ether, .dapp, .nft:
+        case .ether, .dapp:
             return String(format: format, networkSymbol)
         case .token(let token):
             switch status {

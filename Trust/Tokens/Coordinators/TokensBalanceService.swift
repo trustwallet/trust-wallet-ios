@@ -9,7 +9,13 @@ import TrustCore
 
 public class TokensBalanceService {
 
-    let server = RPCServer(chainID: 1)
+    let server: RPCServer
+
+    init(
+        server: RPCServer
+    ) {
+        self.server = server
+    }
 
     func getBalance(
         for address: Address,
@@ -36,7 +42,7 @@ public class TokensBalanceService {
         }
     }
 
-    func getEthBalance(
+    func getBalance(
         for address: Address,
         completion: @escaping (Result<Balance, AnyError>) -> Void
     ) {

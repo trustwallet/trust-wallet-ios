@@ -51,7 +51,7 @@ struct DeveloperViewModel {
 }
 
 protocol DeveloperViewControllerDelegate: class {
-    func didSelect(server: RPCServer, in controller: DeveloperViewController)
+    //func didSelect(server: RPCServer, in controller: DeveloperViewController)
 }
 
 final class DeveloperViewController: FormViewController {

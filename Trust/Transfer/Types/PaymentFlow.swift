@@ -4,5 +4,5 @@ import Foundation
 
 enum PaymentFlow {
     case send(type: Transfer)
-    case request(token: TokenObject)
+    case request(TokenObject)
 }

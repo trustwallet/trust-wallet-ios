@@ -27,6 +27,7 @@ final class TransactionConfigurator {
     let transaction: UnconfirmedTransaction
     let forceFetchNonce: Bool
     let server: RPCServer
+    let chainState: ChainState
     var configuration: TransactionConfiguration {
         didSet {
             configurationUpdate.value = configuration
@@ -45,18 +46,20 @@ final class TransactionConfigurator {
         account: Account,
         transaction: UnconfirmedTransaction,
         server: RPCServer,
+        chainState: ChainState,
         forceFetchNonce: Bool = false
     ) {
         self.session = session
         self.account = account
         self.transaction = transaction
         self.server = server
+        self.chainState = chainState
         self.forceFetchNonce = forceFetchNonce
         self.requestEstimateGas = transaction.gasLimit == .none
 
         let data: Data = TransactionConfigurator.data(for: transaction, from: account.address)
         let calculatedGasLimit = transaction.gasLimit ?? TransactionConfigurator.gasLimit(for: transaction.transfer.type)
-        let calculatedGasPrice = min(max(transaction.gasPrice ?? session.chainState.gasPrice ?? GasPriceConfiguration.default, GasPriceConfiguration.min), GasPriceConfiguration.max)
+        let calculatedGasPrice = min(max(transaction.gasPrice ?? chainState.gasPrice ?? GasPriceConfiguration.default, GasPriceConfiguration.min), GasPriceConfiguration.max)
 
         self.configuration = TransactionConfiguration(
             gasPrice: calculatedGasPrice,
@@ -74,9 +77,6 @@ final class TransactionConfigurator {
             return transaction.data ?? Data()
         case .token:
             return ERC20Encoder.encodeTransfer(to: to, tokens: transaction.value.magnitude)
-        case .nft(let token):
-            let tokenID = BigUInt(token.id) ?? 0
-            return ERC721Encoder.encodeTransferFrom(from: from, to: to, tokenId: tokenID)
         }
     }
 
@@ -86,7 +86,7 @@ final class TransactionConfigurator {
             return GasLimitConfiguration.default
         case .token:
             return GasLimitConfiguration.tokenTransfer
-        case .dapp, .nft:
+        case .dapp:
             return GasLimitConfiguration.dappTransfer
         }
     }
@@ -192,19 +192,18 @@ final class TransactionConfigurator {
         let value: BigInt = {
             switch transaction.transfer.type {
             case .ether, .dapp: return valueToSend()
-            case .token, .nft: return 0
+            case .token: return 0
             }
         }()
         let address: EthereumAddress? = {
             switch transaction.transfer.type {
             case .ether, .dapp: return transaction.to
             case .token(let token): return token.contractAddress
-            case .nft(let token): return token.contractAddress
             }
         }()
         let localizedObject: LocalizedOperationObject? = {
             switch transaction.transfer.type {
-            case .ether, .dapp, .nft: return .none
+            case .ether, .dapp: return .none
             case .token(let token):
                 return LocalizedOperationObject(
                     from: account.address.description,
@@ -251,7 +250,7 @@ final class TransactionConfigurator {
 
         //We check if it is ETH or token operation.
         switch transaction.transfer.type {
-        case .ether, .dapp, .nft:
+        case .ether, .dapp:
             if transaction.value > balance.value {
                 etherSufficient = false
                 gasSufficient = false

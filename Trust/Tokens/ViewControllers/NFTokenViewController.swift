@@ -6,7 +6,6 @@ import StackViewController
 import Kingfisher
 
 protocol NFTokenViewControllerDelegate: class {
-    func didPressToken(token: NonFungibleTokenObject, in viewController: NFTokenViewController)
     func didPressLink(url: URL, in viewController: NFTokenViewController)
 }
 
@@ -111,7 +110,7 @@ final class NFTokenViewController: UIViewController {
     }
 
     @objc func sendTap() {
-        delegate?.didPressToken(token: token, in: self)
+        
     }
 
     @objc func internalTap() {

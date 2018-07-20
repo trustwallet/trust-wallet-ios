@@ -180,16 +180,17 @@ final class TokenViewModel {
         }
 
         if NSCalendar.current.isDateInToday(date) {
-            return NSLocalizedString("Today", value: "Today", comment: "")
+            return R.string.localizable.today()
         }
         if NSCalendar.current.isDateInYesterday(date) {
-            return NSLocalizedString("Yesterday", value: "Yesterday", comment: "")
+            return R.string.localizable.yesterday()
         }
         return stringDate
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
-        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: session.chainState, currentWallet: session.account, server: RPCServer(chainID: 1))
+        let server = RPCServer(chainID: 1)!
+        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: ChainState(server: server), currentWallet: session.account, server: server)
         //TODO: Refactor
     }
 

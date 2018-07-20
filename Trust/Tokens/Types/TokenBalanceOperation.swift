@@ -33,6 +33,7 @@ final class TokenBalanceOperation: TrustOperation {
                 self?.finish(true)
                 return
             }
+            NSLog("balance \(balance)")
             strongSelf.updateModel(with: balance)
         }
     }

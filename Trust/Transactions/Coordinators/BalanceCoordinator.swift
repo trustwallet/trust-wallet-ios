@@ -26,15 +26,17 @@ final class BalanceCoordinator {
             rate: currencyRate
         )
     }
-    let server: RPCServer = RPCServer(chainID: 1) //Refactor
+    let server: RPCServer
     init(
         account: WalletInfo,
         config: Config,
-        storage: TokensDataStore
+        storage: TokensDataStore,
+        server: RPCServer
     ) {
         self.account = account
         self.config = config
         self.storage = storage
+        self.server = server
         balanceObservation()
     }
     func refresh() {

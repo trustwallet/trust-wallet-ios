@@ -22,6 +22,10 @@ final class LocalSchemeCoordinator: Coordinator {
         return TrustWalletSDK(delegate: self)
     }()
 
+    lazy var server: RPCServer = {
+        return RPCServer(chainID: 1)!
+    }()
+
     init(
         navigationController: NavigationController = NavigationController(),
         keystore: Keystore,
@@ -62,7 +66,8 @@ final class LocalSchemeCoordinator: Coordinator {
             session: session,
             account: account,
             transaction: transaction,
-            server: RPCServer(chainID: 1), //TODO: Refactor
+            server: server,
+            chainState: ChainState(server: server),
             forceFetchNonce: true
         )
         let coordinator = ConfirmCoordinator(
@@ -70,7 +75,8 @@ final class LocalSchemeCoordinator: Coordinator {
             configurator: configurator,
             keystore: keystore,
             account: account,
-            type: type
+            type: type,
+            server: server
         )
         addCoordinator(coordinator)
         coordinator.didCompleted = { [unowned self] result in
@@ -127,8 +133,7 @@ extension LocalSchemeCoordinator: WalletDelegate {
 
     func signTransaction(_ transaction: TrustCore.Transaction, completion: @escaping (Result<Data, WalletSDKError>) -> Void) {
         let transaction = UnconfirmedTransaction(
-            //TODO: Refactor
-            transfer: Transfer(server: RPCServer(chainID: 1), type: .ether(destination: .none)),
+            transfer: Transfer(server: server, type: .ether(destination: .none)),
             value: transaction.amount,
             to: transaction.to,
             data: transaction.payload,

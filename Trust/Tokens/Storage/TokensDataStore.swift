@@ -73,6 +73,7 @@ class TokensDataStore {
                 name: viewModel.name,
                 coin: coin.rawValue,
                 chainID: server.chainID,
+                type: .coin,
                 symbol: viewModel.symbol,
                 decimals: server.decimals,
                 value: "0",
@@ -110,6 +111,7 @@ class TokensDataStore {
         let newToken = TokenObject(
             contract: token.contract.description,
             name: token.name,
+            type: .erc20,
             symbol: token.symbol,
             decimals: token.decimals,
             value: "0",
