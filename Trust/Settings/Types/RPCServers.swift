@@ -3,84 +3,50 @@
 import Foundation
 import TrustCore
 
-enum NetworkType {
-    case main
-    case test
-    case custom
-}
-
 enum RPCServer {
     case main
-    case kovan
-    case ropsten
-    case rinkeby
     case poa
-    case sokol
     case classic
     case callisto
     case gochain
-    case custom(CustomRPC)
 
     var id: String {
         switch self {
         case .main: return "ethereum"
-        case .kovan: return "kovan"
-        case .ropsten: return "ropsten"
-        case .rinkeby: return "rinkeby"
         case .poa: return "poa"
-        case .sokol: return "sokol"
         case .classic: return "classic"
         case .callisto: return "callisto"
         case .gochain: return "gochain"
-        case .custom: return "custom"
         }
     }
 
     var chainID: Int {
         switch self {
         case .main: return 1
-        case .kovan: return 42
-        case .ropsten: return 3
-        case .rinkeby: return 4
         case .poa: return 99
-        case .sokol: return 77
         case .classic: return 61
         case .callisto: return 820
         case .gochain: return 60
-        case .custom(let custom):
-            return custom.chainID
         }
     }
 
     var contract: String {
         switch self {
         case .main: return "0x000000000000000000000000000000000000003c"
-        case .kovan: return "0x0000000000000000000000000000000000000000"
-        case .ropsten: return "0x0000000000000000000000000000000000000000"
-        case .rinkeby: return "0x0000000000000000000000000000000000000000"
         case .poa: return "0x00000000000000000000000000000000000000AC"
-        case .sokol: return "0x0000000000000000000000000000000000000000"
         case .classic: return "0x000000000000000000000000000000000000003D"
         case .callisto: return "0x0000000000000000000000000000000000000334"
         case .gochain: return "0x00000000000000000000000000000000000017aC"
-        case .custom:
-            return "0x0000000000000000000000000000000000000000"
         }
     }
 
     var name: String {
         switch self {
         case .main: return "Ethereum"
-        case .kovan: return "Kovan"
-        case .ropsten: return "Ropsten"
-        case .rinkeby: return "Rinkeby"
         case .poa: return "POA Network"
-        case .sokol: return "Sokol"
         case .classic: return "Ethereum Classic"
         case .callisto: return "Callisto"
         case .gochain: return "GoChain"
-        case .custom(let custom):
-            return custom.name
         }
     }
 
@@ -88,26 +54,13 @@ enum RPCServer {
         return "\(self.name) (\(self.symbol))"
     }
 
-    var networkType: NetworkType {
-        switch self {
-        case .main, .poa, .classic, .callisto, .gochain: return .main
-        case .kovan, .ropsten, .rinkeby, .sokol: return .test
-        case .custom: return .custom
-        }
-    }
-
     var symbol: String {
         switch self {
         case .main: return "ETH"
         case .classic: return "ETC"
         case .callisto: return "CLO"
-        case .ropsten, .rinkeby: return "ETH"
-        case .kovan: return "KETH"
         case .poa: return "POA"
-        case .sokol: return "SPOA"
         case .gochain: return "GO"
-        case .custom(let custom):
-            return custom.symbol
         }
     }
 
@@ -125,14 +78,8 @@ enum RPCServer {
             case .main: return "https://mainnet.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .classic: return "https://web3.gastracker.io"
             case .callisto: return "https://clo-geth.0xinfra.com"
-            case .kovan: return "https://kovan.infura.io/llyrtzQ3YhkdESt2Fzrk"
-            case .ropsten: return "https://ropsten.infura.io/llyrtzQ3YhkdESt2Fzrk"
-            case .rinkeby: return "https://rinkeby.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .poa: return "https://poa.infura.io"
-            case .sokol: return "https://sokol.poa.network"
             case .gochain: return "https://rpc.gochain.io"
-            case .custom(let custom):
-                return custom.endpoint
             }
         }()
         return URL(string: urlString)!
@@ -142,13 +89,8 @@ enum RPCServer {
         let urlString: String = {
             switch self {
             case .main: return "wss://mainnet.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
-            case .ropsten: return "wss://ropsten.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
-            case .rinkeby: return "wss://rinkeby.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
-            case .kovan: return "wss://kovan.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
             case .poa: return "wss://poa.infura.io"
-            case .sokol: return "wss://localhost"
             case .classic, .callisto, .gochain: return "wss://localhost"
-            case .custom(let custom): return custom.wssEndpoint
             }
         }()
         return URL(string: urlString)!
@@ -160,14 +102,8 @@ enum RPCServer {
             case .main: return "https://api.trustwalletapp.com"
             case .classic: return "https://classic.trustwalletapp.com"
             case .callisto: return "https://callisto.trustwalletapp.com"
-            case .kovan: return "https://kovan.trustwalletapp.com"
-            case .ropsten: return "https://ropsten.trustwalletapp.com"
-            case .rinkeby: return "https://rinkeby.trustwalletapp.com"
             case .poa: return "https://poa.trustwalletapp.com"
-            case .sokol: return "https://trust-sokol.herokuapp.com"
             case .gochain: return "https://gochain.trustwalletapp.com"
-            case .custom:
-                return "" // Enable? make optional
             }
         }()
         return URL(string: urlString)!
@@ -178,19 +114,14 @@ enum RPCServer {
         switch self {
         case .main:
             return EthereumAddress(string: "0x314159265dd8dbb310642f98f50c066173c1259b")!
-        case .ropsten:
-            return EthereumAddress(string: "0x112234455c3a32fd11230c42e7bccd4a84e02010")!
-        case .rinkeby:
-            return EthereumAddress(string: "0xe7410170f87102df0055eb195163a03b7f2bff4a")!
-        case .classic, .poa, .kovan, .callisto, .sokol, .custom, .gochain:
+        case .classic, .poa, .callisto, .gochain:
             return EthereumAddress.zero
         }
     }
 
     var openseaPath: String {
         switch self {
-        case .main, .classic, .poa, .kovan, .callisto, .sokol, .custom, .ropsten, .gochain: return  Constants.dappsOpenSea
-        case .rinkeby: return Constants.dappsRinkebyOpenSea
+        case .main, .classic, .poa, .callisto, .gochain: return  Constants.dappsOpenSea
         }
     }
 
@@ -199,11 +130,7 @@ enum RPCServer {
         case RPCServer.main.name: self = .main
         case RPCServer.classic.name: self = .classic
         case RPCServer.callisto.name: self = .callisto
-        case RPCServer.kovan.name: self = .kovan
-        case RPCServer.ropsten.name: self = .ropsten
-        case RPCServer.rinkeby.name: self = .rinkeby
         case RPCServer.poa.name: self = .poa
-        case RPCServer.sokol.name: self = .sokol
         default: return nil
         }
     }
@@ -213,11 +140,7 @@ enum RPCServer {
         case RPCServer.main.chainID: self = .main
         case RPCServer.classic.chainID: self = .classic
         case RPCServer.callisto.chainID: self = .callisto
-        case RPCServer.kovan.chainID: self = .kovan
-        case RPCServer.ropsten.chainID: self = .ropsten
-        case RPCServer.rinkeby.chainID: self = .rinkeby
         case RPCServer.poa.chainID: self = .poa
-        case RPCServer.sokol.chainID: self = .sokol
         case RPCServer.gochain.chainID: self = .gochain
         default: return nil
         }
@@ -230,17 +153,11 @@ enum RPCServer {
     func opensea(with contract: String, and id: String) -> URL? {
         return URL(string: (openseaPath + "/assets/\(contract)/\(id)"))
     }
-
-//    static func get(for coin: Coin) -> RPCServer {
-//
-//    }
 }
 
 extension RPCServer: Equatable {
     static func == (lhs: RPCServer, rhs: RPCServer) -> Bool {
         switch (lhs, rhs) {
-        case (let .custom(lhs), let .custom(rhs)):
-            return lhs == rhs
         case (let lhs, let rhs):
             return lhs.chainID == rhs.chainID
         }
