@@ -15,14 +15,13 @@ enum TrustNetworkProtocolError: LocalizedError {
 }
 
 protocol NetworkProtocol: TrustNetworkProtocol {
-    func assets() -> Promise<[NonFungibleTokenCategory]>
+    func assets(for address: Address) -> Promise<[NonFungibleTokenCategory]>
     func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]>
+
     func tokensList(for address: Address) -> Promise<[TokenObject]>
-    func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
+    func transactions(for address: Address, on server: RPCServer, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
     func search(token: String) -> Promise<[TokenObject]>
 }
-
-
 
 final class TrustNetwork: NetworkProtocol {
 
@@ -31,18 +30,15 @@ final class TrustNetwork: NetworkProtocol {
     let provider: MoyaProvider<TrustAPI>
     let balanceService: TokensBalanceService
     let address: Address
-    let server: RPCServer
 
     required init(
         provider: MoyaProvider<TrustAPI>,
         balanceService: TokensBalanceService,
-        address: Address,
-        server: RPCServer
+        address: Address
     ) {
         self.provider = provider
         self.balanceService = balanceService
         self.address = address
-        self.server = server
     }
 
     func tickers(with tokenPrices: [TokenPrice], completion: @escaping (_ tickers: [CoinTicker]?) -> Void) {
@@ -79,19 +75,13 @@ final class TrustNetwork: NetworkProtocol {
 
     func tokensList(for address: Address) -> Promise<[TokenObject]> {
         return Promise { seal in
-            provider.request(.getTokens(server: server, address: address.description)) { result in
+            provider.request(.getTokens(address: [address.description])) { result in
                 switch result {
                 case .success(let response):
                     do {
                         let items = try response.map(ArrayResponse<TokenObjectList>.self).docs
                         let tokens = items.map { $0.contract }
-                        let newTokens = tokens.map { token -> TokenObject in
-                            let newToken = token
-                            newToken.chainID = self.server.chainID
-                            return newToken
-                        }
-
-                        seal.fulfill(newTokens)
+                        seal.fulfill(tokens)
                     } catch {
                         seal.reject(error)
                     }
@@ -127,9 +117,9 @@ final class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func assets() -> Promise<[NonFungibleTokenCategory]> {
+    func assets(for address: Address) -> Promise<[NonFungibleTokenCategory]> {
         return Promise { seal in
-            provider.request(.assets(server: server, address: address.description)) { result in
+            provider.request(.assets(address: address.description)) { result in
                 switch result {
                 case .success(let response):
                     do {
@@ -145,7 +135,7 @@ final class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (([Transaction]?, Bool)) -> Void) {
+    func transactions(for address: Address, on server: RPCServer, startBlock: Int, page: Int, contract: String?, completion: @escaping (([Transaction]?, Bool)) -> Void) {
         provider.request(.getTransactions(server: server, address: address.description, startBlock: startBlock, page: page, contract: contract)) { result in
             switch result {
             case .success(let response):
@@ -153,7 +143,7 @@ final class TrustNetwork: NetworkProtocol {
                     let transactions: [Transaction] = try response.map(ArrayResponse<Transaction>.self).docs
                     let newTransactions = transactions.map { transaction -> Transaction in
                         let newTransaction = transaction
-                        newTransaction.chainID = self.server.chainID
+                        newTransaction.chainID = server.chainID
                         return newTransaction
                     }
                     completion((newTransactions, true))
@@ -168,7 +158,7 @@ final class TrustNetwork: NetworkProtocol {
 
     func search(token: String) -> Promise<[TokenObject]> {
         return Promise { seal in
-            provider.request(.search(server: server, token: token)) { result in
+            provider.request(.search(token: token)) { result in
                 switch result {
                 case .success(let response):
                     do {

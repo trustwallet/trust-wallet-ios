@@ -61,6 +61,7 @@ final class TokenObject: Object, Decodable {
         case name
         case symbol
         case decimals
+        case chainID
     }
 
     convenience required init(from decoder: Decoder) throws {
@@ -69,10 +70,11 @@ final class TokenObject: Object, Decodable {
         let name = try container.decode(String.self, forKey: .name)
         let symbol = try container.decode(String.self, forKey: .symbol)
         let decimals = try container.decode(Int.self, forKey: .decimals)
+        let chainID = try container.decode(Int.self, forKey: .chainID)
         if let convertedAddress = EthereumAddress(string: contract)?.description {
             contract = convertedAddress
         }
-        self.init(contract: contract, name: name, coin: -1, chainID: -1, type: .erc20, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
+        self.init(contract: contract, name: name, coin: -1, chainID: chainID, type: .erc20, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
     }
 
     required init() {

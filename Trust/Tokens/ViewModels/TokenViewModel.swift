@@ -62,6 +62,10 @@ final class TokenViewModel {
         return tokenTransactionSections.count
     }
 
+    var server: RPCServer {
+        return TokensDataStore.getServer(for: token)
+    }
+
     init(
         token: TokenObject,
         config: Config = Config(),
@@ -219,9 +223,10 @@ final class TokenViewModel {
                     addressUpdate: token.address
                 )
             } else {
+                let server = TokensDataStore.getServer(for: token)!
                 let acc = wallet.accounts.filter { $0.coin == token.coin }.first!
                 return TokenNetworkProvider(
-                    server: RPCServer.main,
+                    server: server,
                     address: EthereumAddress(string: acc.address.description)!,
                     contract: token.address,
                     addressUpdate: token.address
@@ -239,7 +244,7 @@ final class TokenViewModel {
             return token.contract
         }()
 
-        tokensNetwork.transactions(for: session.account.address, startBlock: 1, page: 0, contract: contract) { result in
+        tokensNetwork.transactions(for: session.account.address, on: server, startBlock: 1, page: 0, contract: contract) { result in
             guard let transactions = result.0 else { return }
             self.transactionsStore.add(transactions)
         }
@@ -247,9 +252,13 @@ final class TokenViewModel {
 
     private func prepareDataSource(for token: TokenObject) {
         if token.coin != nil {
-            tokenTransactions = transactionsStore.realm.objects(Transaction.self).filter(NSPredicate(format: "localizedOperations.@count == 0")).sorted(byKeyPath: "date", ascending: false)
+            tokenTransactions = transactionsStore.realm.objects(Transaction.self)
+                .filter(NSPredicate(format: "localizedOperations.@count == 0 && chainID = %d", server.chainID))
+                .sorted(byKeyPath: "date", ascending: false)
         } else {
-            tokenTransactions = transactionsStore.realm.objects(Transaction.self).filter(NSPredicate(format: "%K ==[cd] %@", "to", token.contract)).sorted(byKeyPath: "date", ascending: false)
+            tokenTransactions = transactionsStore.realm.objects(Transaction.self)
+                .filter(NSPredicate(format: "%K ==[cd] %@ && chainID = %d", "to", token.contract, server.chainID))
+                .sorted(byKeyPath: "date", ascending: false)
         }
         updateSections()
     }

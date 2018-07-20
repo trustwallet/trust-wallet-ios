@@ -53,8 +53,7 @@ final class TokensCoordinator: Coordinator {
         return TrustNetwork(
             provider: TrustProviderFactory.makeProvider(),
             balanceService: balanceCoordinator,
-            address: session.account.currentAccount.address,
-            server: server
+            address: session.account.currentAccount.address
         )
     }()
 
