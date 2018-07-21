@@ -281,7 +281,7 @@ class InCoordinator: Coordinator {
             switch token.type {
             case .coin:
                 return Transfer(server: server, type: .ether(token, destination: .none))
-            case .erc20:
+            case .ERC20:
                 return Transfer(server: server, type: .token(token))
             }
         }()

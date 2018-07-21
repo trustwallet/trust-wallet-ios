@@ -115,7 +115,7 @@ class TokensDataStore {
             priceID: token.contract.description,
             name: token.name,
             coin: token.coin,
-            type: .erc20,
+            type: .ERC20,
             symbol: token.symbol,
             decimals: token.decimals,
             value: "0",

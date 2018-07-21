@@ -10,9 +10,9 @@ struct TokenObjectList: Decodable {
     let contract: TokenObject
 }
 
-enum TokenObjectType: Int {
+enum TokenObjectType: String {
     case coin
-    case erc20
+    case ERC20 = "ERC20"
 }
 
 final class TokenObject: Object, Decodable {
@@ -28,7 +28,7 @@ final class TokenObject: Object, Decodable {
         set { rawCoin = newValue.rawValue }
     }
 
-    @objc private dynamic var rawType = -1
+    @objc private dynamic var rawType = ""
     public var type: TokenObjectType {
         get { return TokenObjectType(rawValue: rawType) ?? .coin }
         set { rawType = newValue.rawValue }
@@ -132,7 +132,7 @@ final class TokenObject: Object, Decodable {
         switch type {
         case .coin:
             return formatter.image(for: coin)
-        case .erc20:
+        case .ERC20:
             return formatter.image(for: contract)
         }
     }
@@ -153,7 +153,7 @@ final class TokenObject: Object, Decodable {
 extension TokenObjectType: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        let rawType = try container.decode(Int.self)
+        let rawType = try container.decode(String.self)
         guard let type = TokenObjectType(rawValue: rawType) else {
             throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid type")
         }

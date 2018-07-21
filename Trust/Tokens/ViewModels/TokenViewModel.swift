@@ -233,7 +233,7 @@ final class TokenViewModel {
                     address: EthereumAddress(string: account.address.description)!,
                     addressUpdate: token.address
                 )
-            case .erc20:
+            case .ERC20:
                 let first = wallet.accounts.filter { $0.coin == token.coin }.first
                 guard let account = first  else { return .none }
                 return TokenNetworkProvider(
@@ -265,7 +265,7 @@ final class TokenViewModel {
         let contract: String? = {
             switch token.type {
             case .coin: return .none
-            case .erc20: return token.contract
+            case .ERC20: return token.contract
             }
         }()
 
@@ -281,7 +281,7 @@ final class TokenViewModel {
             tokenTransactions = transactionsStore.realm.objects(Transaction.self)
                 .filter(NSPredicate(format: "rawCoin = %d && localizedOperations.@count == 0", server.coin.rawValue))
                 .sorted(byKeyPath: "date", ascending: false)
-        case .erc20:
+        case .ERC20:
             tokenTransactions = transactionsStore.realm.objects(Transaction.self)
                 .filter(NSPredicate(format: "rawCoin = %d && %K ==[cd] %@", server.coin.rawValue, "to", token.contract))
                 .sorted(byKeyPath: "date", ascending: false)

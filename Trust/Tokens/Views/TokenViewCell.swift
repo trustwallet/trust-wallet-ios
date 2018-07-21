@@ -155,7 +155,7 @@ final class TokenViewCell: UITableViewCell {
                 switch token.type {
                 case .coin:
                     return $0.coin == token.coin && $0.localizedOperations.isEmpty
-                case .erc20:
+                case .ERC20:
                     return $0.contractAddress == token.contractAddress
                 }
             }

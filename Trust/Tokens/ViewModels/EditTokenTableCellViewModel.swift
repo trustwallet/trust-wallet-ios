@@ -50,7 +50,7 @@ struct EditTokenTableCellViewModel {
         switch token.type {
         case .coin:
             return .none
-        case .erc20:
+        case .ERC20:
             return token.contract
         }
     }
