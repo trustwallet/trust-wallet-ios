@@ -114,7 +114,7 @@ class TokensDataStore {
             contract: token.contract.description,
             priceID: token.contract.description,
             name: token.name,
-            coin: .poa, //TODO
+            coin: token.coin,
             type: .erc20,
             symbol: token.symbol,
             decimals: token.decimals,

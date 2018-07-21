@@ -29,7 +29,6 @@ final class CoinNetworkProvider: BalanceNetworkProvider {
             Session.send(request) { result in
                 switch result {
                 case .success(let balance):
-                    NSLog("balance \(balance), \(self.addressUpdate)")
                     seal.fulfill(balance.value)
                 case .failure(let error):
                     seal.reject(error)

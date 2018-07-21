@@ -273,3 +273,12 @@
 "MainWallet" = "メインウォレット";
 "ImportedWallets" = "インポートウォレット";
 "BackupPhrase" = "バックアップ フレーズ";
+"Address" = "アドレス";
+"CreatingWallet" = "ウォレットを作成中";
+"WalletImported" = "ウォレットがインポートされました";
+"SelectCoin" = "コインを選択";
+"ImportMainWallet" = "メインウォレットをインポート";
+"Developer" = "開発者";
+"NodeSettings" = "ノード設定";
+"TestNetworks" = "テストネットワーク";
+"EnableTestNetworks" = "テストネットワークを有効にする";

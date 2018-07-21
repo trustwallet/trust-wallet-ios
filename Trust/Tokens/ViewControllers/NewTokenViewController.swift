@@ -15,6 +15,7 @@ final class NewTokenViewController: FormViewController {
     private var viewModel: NewTokenViewModel
 
     private struct Values {
+        static let network = "network"
         static let contract = "contract"
         static let name = "name"
         static let symbol = "symbol"
@@ -22,6 +23,10 @@ final class NewTokenViewController: FormViewController {
     }
 
     weak var delegate: NewTokenViewControllerDelegate?
+
+    private var networkRow: PushRow<RPCServer>? {
+        return form.rowBy(tag: Values.network) as? PushRow<RPCServer>
+    }
 
     private var contractRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.contract) as? TextFloatLabelRow
@@ -38,7 +43,10 @@ final class NewTokenViewController: FormViewController {
 
     private let token: ERC20Token?
 
-    init(token: ERC20Token?, viewModel: NewTokenViewModel) {
+    init(
+        token: ERC20Token?,
+        viewModel: NewTokenViewModel
+    ) {
         self.token = token
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -55,6 +63,8 @@ final class NewTokenViewController: FormViewController {
         )
 
         form = Section()
+
+            <<< networks()
 
             +++ Section()
 
@@ -95,6 +105,21 @@ final class NewTokenViewController: FormViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(finish))
     }
 
+    private func networks() -> PushRow<RPCServer> {
+        return PushRow<RPCServer> {
+                $0.tag = Values.network
+                $0.title = R.string.localizable.network()
+                $0.selectorTitle = R.string.localizable.network()
+                $0.options = [.main, .poa, .classic, .gochain]
+                $0.value = .main
+                $0.displayValueFor = { value in
+                    return value?.name
+                }
+            }.onPresent { _, selectorController in
+                selectorController.enableDeselection = false
+            }
+        }
+
     @objc func finish() {
         guard form.validate().isEmpty else {
             return
@@ -104,6 +129,7 @@ final class NewTokenViewController: FormViewController {
         let name = nameRow?.value ?? ""
         let symbol = symbolRow?.value ?? ""
         let decimals = Int(decimalsRow?.value ?? "") ?? 0
+        let coin = (networkRow?.value ?? RPCServer.main).coin
 
         guard let address = EthereumAddress(string: contract) else {
             return displayError(error: Errors.invalidAddress)
@@ -113,7 +139,8 @@ final class NewTokenViewController: FormViewController {
             contract: address,
             name: name,
             symbol: symbol,
-            decimals: decimals
+            decimals: decimals,
+            coin: coin
         )
         delegate?.didAddToken(token: token, in: self)
     }

@@ -7,4 +7,5 @@ struct ERC20Token {
     let name: String
     let symbol: String
     let decimals: Int
+    let coin: Coin
 }
