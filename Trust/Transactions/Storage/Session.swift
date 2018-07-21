@@ -22,7 +22,7 @@ final class WalletSession {
     let sharedRealm: Realm
 
     var sessionID: String {
-        return "\(account.address.description.lowercased())-\(account.server.chainID)"
+        return "\(account.description))"
     }
 
     var balanceViewModel: Subscribable<BalanceBaseViewModel> = Subscribable(nil)

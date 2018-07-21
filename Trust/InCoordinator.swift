@@ -25,9 +25,9 @@ struct CoinTypeViewModel {
 
     var account: Account {
         switch type {
-        case .coin(let account,_):
+        case .coin(let account, _):
             return account
-        case .tokenOf(let account,_):
+        case .tokenOf(let account, _):
             return account
         }
     }

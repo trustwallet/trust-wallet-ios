@@ -211,9 +211,7 @@ final class TokenViewModel {
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
-        let server = RPCServer(chainID: 1)!
-        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: ChainState(server: server), currentWallet: session.account, server: server)
-        //TODO: Refactor
+        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: ChainState(server: server), currentWallet: session.account, server: token.coin!.server)
     }
 
     func hasContent() -> Bool {
@@ -222,10 +220,7 @@ final class TokenViewModel {
 
     private func updateTokenBalance() {
         let provider = TokenViewModel.balance(for: token, wallet: session.account)
-        provider.balance().done { [weak self] balance in
-            guard let token = self?.token else {
-                return
-            }
+        let _ = provider.balance().done { [weak self] balance in
             self?.store.update(balances: [provider.addressUpdate: balance])
         }
     }

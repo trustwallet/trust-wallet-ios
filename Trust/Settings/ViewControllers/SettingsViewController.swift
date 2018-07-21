@@ -156,7 +156,7 @@ final class SettingsViewController: FormViewController, Coordinator {
     }
 
     private func walletsRow(for address: Address) -> ButtonRow {
-        return AppFormAppearance.button { [weak self] row in
+        return AppFormAppearance.button { row in
             row.cellStyle = .value1
         }.cellUpdate { cell, _ in
             cell.textLabel?.textColor = .black
@@ -164,7 +164,7 @@ final class SettingsViewController: FormViewController, Coordinator {
             cell.textLabel?.text = R.string.localizable.wallets()
             cell.detailTextLabel?.text = String(address.description.prefix(10)) + "..."
             cell.accessoryType = .disclosureIndicator
-        }.onCellSelection { (cell, row) in
+        }.onCellSelection { (_, _) in
             self.delegate?.didAction(action: .wallets, in: self)
         }
     }

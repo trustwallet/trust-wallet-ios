@@ -100,7 +100,6 @@ import RealmSwift
 //    func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
 //        let server = RPCServer(chainID: 1)!
 //        return TransactionCellViewModel(transaction: storage.transactionSections[indexPath.section].items[indexPath.row], config: config, chainState: ChainState(server: server), currentWallet: session.account, server: server)
-//        //Refactor
 //    }
 //
 //    func statBlock() -> Int {
