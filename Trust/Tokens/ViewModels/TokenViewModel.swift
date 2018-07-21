@@ -50,6 +50,10 @@ final class TokenViewModel {
         return .white
     }()
 
+    lazy var transactionsProvider: EthereumTransactionsProvider = {
+        return EthereumTransactionsProvider(server: server)
+    }()
+
     var amount: String {
         return String(
             format: "%@ %@",
@@ -85,6 +89,14 @@ final class TokenViewModel {
 
     var ticker: CoinTicker? {
         return store.coinTicker(for: token)
+    }
+
+    var allTransactions: [Transaction] {
+        return Array(tokenTransactions!)
+    }
+
+    var pendingTransactions: [Transaction] {
+        return Array(tokenTransactions!.filter { $0.state == TransactionState.pending })
     }
 
     // Market Price
@@ -147,6 +159,12 @@ final class TokenViewModel {
     func fetch() {
         updateTokenBalance()
         fetchTransactions()
+        updatePending()
+
+        for id in allTransactions {
+            NSLog("allTransactions \(id.id)")
+            NSLog("allTransactions \(id.uniqueID)")
+        }
     }
 
     func tokenObservation(with completion: @escaping (() -> Void)) {
@@ -216,17 +234,15 @@ final class TokenViewModel {
         let networkBalance: BalanceNetworkProvider = {
             if token.isCoin {
                 let acc = wallet.accounts.filter { $0.coin == token.coin }.first!
-                let server = RPCServer(chainID: token.chainID)!
                 return CoinNetworkProvider(
-                    server: server,
+                    server: token.coin!.server,
                     address: EthereumAddress(string: acc.address.description)!,
                     addressUpdate: token.address
                 )
             } else {
-                let server = TokensDataStore.getServer(for: token)!
                 let acc = wallet.accounts.filter { $0.coin == token.coin }.first!
                 return TokenNetworkProvider(
-                    server: server,
+                    server: token.coin!.server,
                     address: EthereumAddress(string: acc.address.description)!,
                     contract: token.address,
                     addressUpdate: token.address
@@ -234,6 +250,20 @@ final class TokenViewModel {
             }
         }()
         return networkBalance
+    }
+
+    func updatePending() {
+        let transactions = pendingTransactions
+
+        for transaction in transactions {
+            transactionsProvider.update(for: transaction) { result in
+                switch result {
+                case .success(let transaction, let state):
+                    self.transactionsStore.update(state: state, for: transaction)
+                case .failure: break
+                }
+            }
+        }
     }
 
     private func fetchTransactions() {

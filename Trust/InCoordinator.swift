@@ -277,23 +277,23 @@ class InCoordinator: Coordinator {
         let session = tokensCoordinator.session
 
         let transfer: Transfer = {
+            let server = token.coin!.server
             if token.isCoin {
-                let server = RPCServer(chainID: token.chainID)!
-                let transfer = Transfer(server: server, type: .ether(destination: .none))
+                let transfer = Transfer(server: server, type: .ether(token, destination: .none))
                 return transfer
             } else {
-                let server = RPCServer.main
-                let transfer = Transfer(server: server, type: .token(token))
-                return transfer
+                return Transfer(server: server, type: .token(token))
             }
         }()
+
+        let acc = session.account.accounts.filter { $0.coin == token.coin }.first!
 
         let coordinator = SendCoordinator(
             transfer: transfer,
             navigationController: nav,
             session: session,
             keystore: keystore,
-            account: session.account.currentAccount
+            account: acc
         )
         coordinator.delegate = self
         addCoordinator(coordinator)
@@ -318,8 +318,7 @@ class InCoordinator: Coordinator {
     }
 
     private func handlePendingTransaction(transaction: SentTransaction) {
-        guard let address = initialWallet.address as? EthereumAddress else { return }
-        let transaction = SentTransaction.from(from: address, transaction: transaction)
+        let transaction = SentTransaction.from(transaction: transaction)
         tokensCoordinator?.transactionsStore.add([transaction])
     }
 
@@ -384,9 +383,8 @@ extension InCoordinator: TokensCoordinatorDelegate {
     }
 
     func didPressDiscover(in coordinator: TokensCoordinator) {
-        //Refactor
-        //guard let url = Config().openseaURL else { return }
-        //showTab(.browser(openURL: url))
+        guard let url = RPCServer.main.openseaURL else { return }
+        showTab(.browser(openURL: url))
     }
 
     func didPress(url: URL, in coordinator: TokensCoordinator) {

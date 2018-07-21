@@ -15,10 +15,11 @@ final class TransactionViewController: UIViewController {
         return TransactionDetailsViewModel(
             transaction: self.transaction,
             config: self.config,
-            chainState: ChainState(server: server),
+            chainState: ChainState(server: tokenViewModel.server),
             currentWallet: self.session.account,
             currencyRate: self.session.balanceCoordinator.currencyRate,
-            server: server
+            server: tokenViewModel.server,
+            token: tokenViewModel.token
         )
     }()
     let stackViewController = StackViewController()
@@ -26,17 +27,17 @@ final class TransactionViewController: UIViewController {
     let session: WalletSession
     let transaction: Transaction
     let config = Config()
-    let server: RPCServer
+    let tokenViewModel: TokenViewModel
     weak var delegate: TransactionViewControllerDelegate?
 
     init(
         session: WalletSession,
         transaction: Transaction,
-        server: RPCServer
+        tokenViewModel: TokenViewModel
     ) {
         self.session = session
         self.transaction = transaction
-        self.server = server
+        self.tokenViewModel = tokenViewModel
 
         stackViewController.scrollView.alwaysBounceVertical = true
         stackViewController.stackView.spacing = TransactionAppearance.spacing

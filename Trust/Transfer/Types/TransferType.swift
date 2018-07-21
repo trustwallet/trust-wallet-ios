@@ -9,9 +9,9 @@ struct Transfer {
 }
 
 enum TransferType {
-    case ether(destination: EthereumAddress?)
+    case ether(TokenObject, destination: EthereumAddress?)
     case token(TokenObject)
-    case dapp(DAppRequester)
+    case dapp(TokenObject, DAppRequester)
 }
 
 extension TransferType {
@@ -24,13 +24,14 @@ extension TransferType {
         }
     }
 
-    // Used to fetch pricing for specific token
-    func contract() -> EthereumAddress {
+    var priceID: String {
         switch self {
-        case .ether, .dapp:
-            return EthereumAddress.zero
+        case .ether(let token, _):
+            return token.priceID
+        case .dapp(let token, _):
+            return token.priceID
         case .token(let token):
-            return token.contractAddress
+            return token.priceID
         }
     }
 }

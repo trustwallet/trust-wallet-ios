@@ -99,6 +99,8 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
         case .clearBrowserCache:
             cleadCache()
             CookiesStore.delete()
+        case .clearTransactions:
+            session.transactionsStorage.deleteAll()
         case .wallets:
             showWallets()
         }

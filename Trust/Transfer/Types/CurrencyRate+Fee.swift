@@ -5,11 +5,11 @@ import BigInt
 import TrustCore
 
 extension CurrencyRate {
-    func estimate(fee: String, with address: EthereumAddress) -> Double? {
+    func estimate(fee: String, with id: String) -> Double? {
         guard let feeInDouble = Double(fee) else {
             return nil
         }
-        guard let price = self.rates.filter({ $0.contract == address.description }).first else {
+        guard let price = self.rates.filter({ $0.contract == id }).first else {
             return nil
         }
         return price.price * feeInDouble

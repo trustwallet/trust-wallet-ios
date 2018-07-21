@@ -17,11 +17,10 @@ final class TokensViewModel: NSObject {
     var tokensNetwork: NetworkProtocol
     let tokens: Results<TokenObject>
     var tokensObserver: NotificationToken?
-    let wallet: WalletInfo
     let transactionStore: TransactionsStorage
-
+    let session: WalletSession
     var headerViewTitle: String {
-        guard let coin = wallet.currentAccount.coin else { return "" }
+        guard let coin = session.account.currentAccount.coin else { return "" }
         return CoinViewModel(coin: coin).displayName
     }
 
@@ -61,17 +60,23 @@ final class TokensViewModel: NSObject {
         return UIFont.systemFont(ofSize: 13, weight: .light)
     }
 
+    var all: [TokenViewModel] {
+        return Array(tokens).map { token in
+            return TokenViewModel(token: token, config: config, store: store, transactionsStore: transactionStore, tokensNetwork: tokensNetwork, session: session)
+        }
+    }
+
     weak var delegate: TokensViewModelDelegate?
 
     init(
+        session: WalletSession,
         config: Config = Config(),
-        wallet: WalletInfo,
         store: TokensDataStore,
         tokensNetwork: NetworkProtocol,
         transactionStore: TransactionsStorage
     ) {
+        self.session = session
         self.config = config
-        self.wallet = wallet
         self.store = store
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
@@ -128,7 +133,7 @@ final class TokensViewModel: NSObject {
 
     private func tokensInfo() {
         firstly {
-            tokensNetwork.tokensList(for: wallet.address)
+            tokensNetwork.tokensList(for: session.account.address)
         }.done { [weak self] tokens in
              self?.store.update(tokens: tokens, action: .updateInfo)
         }.catch { error in
@@ -157,7 +162,7 @@ final class TokensViewModel: NSObject {
 
     private func balances(for tokens: [TokenObject]) {
         let balances: [BalanceNetworkProvider] = tokens.map {
-            return TokenViewModel.balance(for: $0, wallet: wallet)
+            return TokenViewModel.balance(for: $0, wallet: session.account)
         }
         let operationQueue: OperationQueue = OperationQueue()
         operationQueue.qualityOfService = .background
@@ -169,17 +174,7 @@ final class TokensViewModel: NSObject {
     }
 
     func updatePendingTransactions() {
-        let transactions = transactionStore.pendingObjects
-        for transaction in transactions {
-            let provider = EthereumTransactionsProvider(server: RPCServer.main)
-            provider.update(for: transaction) { result in
-                switch result {
-                case .success(let transaction, let state):
-                    self.transactionStore.update(state: state, for: transaction)
-                case .failure: break
-                }
-            }
-        }
+        all.forEach { $0.updatePending() }
     }
 
     func fetch() {

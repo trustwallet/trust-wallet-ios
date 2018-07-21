@@ -8,7 +8,6 @@ struct TransactionViewModel {
 
     private let transaction: Transaction
     private let config: Config
-    private let chainState: ChainState
     private let currentWallet: WalletInfo
     private let shortFormatter = EtherNumberFormatter.short
     private let balanceFormatter = EtherNumberFormatter.balance
@@ -17,13 +16,11 @@ struct TransactionViewModel {
     init(
         transaction: Transaction,
         config: Config,
-        chainState: ChainState,
         currentWallet: WalletInfo,
         server: RPCServer
     ) {
         self.transaction = transaction
         self.config = config
-        self.chainState = chainState
         self.currentWallet = currentWallet
         self.server = server
     }
@@ -43,10 +40,6 @@ struct TransactionViewModel {
             return .incoming
         }
         return .outgoing
-    }
-
-    var confirmations: Int? {
-        return chainState.confirmations(fromBlock: transaction.blockNumber)
     }
 
     var amountTextColor: UIColor {

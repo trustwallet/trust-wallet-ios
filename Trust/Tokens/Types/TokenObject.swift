@@ -19,9 +19,9 @@ final class TokenObject: Object, Decodable {
     static let DEFAULT_BALANCE = 0.00
 
     @objc dynamic var contract: String = ""
+    @objc dynamic var priceID: String = ""
     @objc dynamic var name: String = ""
     @objc dynamic var coinInt: Int = -1
-    @objc dynamic var chainID: Int = -1
     @objc dynamic var type: String = TokenObjectType.coin.rawValue
     @objc dynamic var symbol: String = ""
     @objc dynamic var decimals: Int = 0
@@ -33,9 +33,9 @@ final class TokenObject: Object, Decodable {
 
     convenience init(
         contract: String = "",
+        priceID: String,
         name: String = "",
-        coin: Int = -1,
-        chainID: Int = -1,
+        coin: Coin,
         type: TokenObjectType,
         symbol: String = "",
         decimals: Int = 0,
@@ -45,9 +45,9 @@ final class TokenObject: Object, Decodable {
     ) {
         self.init()
         self.contract = contract
+        self.priceID = priceID
         self.name = name
-        self.coinInt = coin
-        self.chainID = chainID
+        self.coinInt = coin.rawValue
         self.type = type.rawValue
         self.symbol = symbol
         self.decimals = decimals
@@ -61,7 +61,6 @@ final class TokenObject: Object, Decodable {
         case name
         case symbol
         case decimals
-        case chainID
     }
 
     convenience required init(from decoder: Decoder) throws {
@@ -70,11 +69,10 @@ final class TokenObject: Object, Decodable {
         let name = try container.decode(String.self, forKey: .name)
         let symbol = try container.decode(String.self, forKey: .symbol)
         let decimals = try container.decode(Int.self, forKey: .decimals)
-        let chainID = try container.decode(Int.self, forKey: .chainID)
         if let convertedAddress = EthereumAddress(string: contract)?.description {
             contract = convertedAddress
         }
-        self.init(contract: contract, name: name, coin: -1, chainID: chainID, type: .erc20, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
+        self.init(contract: contract, priceID: contract, name: name, coin: .ethereum, type: .erc20, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
     }
 
     required init() {

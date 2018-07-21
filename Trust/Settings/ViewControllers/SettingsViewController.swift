@@ -373,4 +373,7 @@ extension SettingsViewController: Scrollable {
 }
 
 extension SettingsViewController: DeveloperViewControllerDelegate {
+    func didClearTransactions(in controller: DeveloperViewController) {
+        delegate?.didAction(action: .clearTransactions, in: self)
+    }
 }

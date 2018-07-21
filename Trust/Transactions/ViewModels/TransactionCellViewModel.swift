@@ -28,14 +28,9 @@ struct TransactionCellViewModel {
         self.transactionViewModel = TransactionViewModel(
             transaction: transaction,
             config: config,
-            chainState: chainState,
             currentWallet: currentWallet,
             server: server
         )
-    }
-
-    var confirmations: Int? {
-        return chainState.confirmations(fromBlock: transaction.blockNumber)
     }
 
     private var operationTitle: String? {

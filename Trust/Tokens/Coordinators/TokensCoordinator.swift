@@ -22,7 +22,7 @@ final class TokensCoordinator: Coordinator {
     let transactionsStore: TransactionsStorage
 
     lazy var tokensViewController: TokensViewController = {
-        let tokensViewModel = TokensViewModel(wallet: session.account, store: store, tokensNetwork: network, transactionStore: transactionsStore)
+        let tokensViewModel = TokensViewModel(session: session, store: store, tokensNetwork: network, transactionStore: transactionsStore)
         let controller = TokensViewController(viewModel: tokensViewModel)
         controller.delegate = self
         controller.titleView.delegate = self
@@ -48,12 +48,8 @@ final class TokensCoordinator: Coordinator {
     }()
 
     lazy var network: NetworkProtocol = {
-        let server = RPCServer(chainID: 1)! //Refactor
-        let balanceCoordinator = TokensBalanceService(server: server)
         return TrustNetwork(
-            provider: TrustProviderFactory.makeProvider(),
-            balanceService: balanceCoordinator,
-            address: session.account.currentAccount.address
+            provider: TrustProviderFactory.makeProvider()
         )
     }()
 
@@ -210,20 +206,11 @@ extension TokensCoordinator: NonFungibleTokensViewControllerDelegate {
 }
 
 extension TokensCoordinator: TokenViewControllerDelegate {
-    func didPressSend(for token: TokenObject, in controller: UIViewController) {
-        delegate?.didPressSend(for: token, in: self)
-    }
-
-    func didPressRequest(for token: TokenObject, in controller: UIViewController) {
-        delegate?.didPressRequest(for: token, in: self)
-    }
-
-    func didPress(transaction: Transaction, in controller: UIViewController) {
-        //TODO: Refactor
+    func didPress(viewModel: TokenViewModel, transaction: Transaction, in controller: UIViewController) {
         let controller = TransactionViewController(
             session: session,
             transaction: transaction,
-            server: RPCServer(chainID: 1)!
+            tokenViewModel: viewModel
         )
         controller.delegate = self
         NavigationController.openFormSheet(
@@ -231,6 +218,13 @@ extension TokensCoordinator: TokenViewControllerDelegate {
             in: navigationController,
             barItem: UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         )
+    }
+    func didPressSend(for token: TokenObject, in controller: UIViewController) {
+        delegate?.didPressSend(for: token, in: self)
+    }
+
+    func didPressRequest(for token: TokenObject, in controller: UIViewController) {
+        delegate?.didPressRequest(for: token, in: self)
     }
 
     func didPressInfo(for token: TokenObject, in controller: UIViewController) {

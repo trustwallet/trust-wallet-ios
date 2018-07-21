@@ -34,7 +34,7 @@ final class SendCoordinator: RootCoordinator {
         controller.navigationItem.backBarButtonItem = nil
         controller.hidesBottomBarWhenPushed = true
         switch transfer.type {
-        case .ether(let destination):
+        case .ether(_, let destination):
             controller.addressRow?.value = destination?.description
             controller.addressRow?.cell.row.updateCell()
         case .token, .dapp: break

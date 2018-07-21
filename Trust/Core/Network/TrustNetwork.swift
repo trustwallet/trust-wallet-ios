@@ -28,17 +28,11 @@ final class TrustNetwork: NetworkProtocol {
     static let deleteMissingInternalSeconds: Double = 60.0
     static let deleyedTransactionInternalSeconds: Double = 60.0
     let provider: MoyaProvider<TrustAPI>
-    let balanceService: TokensBalanceService
-    let address: Address
 
-    required init(
-        provider: MoyaProvider<TrustAPI>,
-        balanceService: TokensBalanceService,
-        address: Address
+    init(
+        provider: MoyaProvider<TrustAPI>
     ) {
         self.provider = provider
-        self.balanceService = balanceService
-        self.address = address
     }
 
     func tickers(with tokenPrices: [TokenPrice], completion: @escaping (_ tickers: [CoinTicker]?) -> Void) {

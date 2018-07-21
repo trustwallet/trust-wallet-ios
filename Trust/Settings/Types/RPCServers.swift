@@ -30,7 +30,7 @@ enum RPCServer {
         }
     }
 
-    var contract: String {
+    var priceID: String {
         switch self {
         case .main: return "0x000000000000000000000000000000000000003c"
         case .poa: return "0x00000000000000000000000000000000000000AC"
@@ -152,6 +152,16 @@ enum RPCServer {
 
     func opensea(with contract: String, and id: String) -> URL? {
         return URL(string: (openseaPath + "/assets/\(contract)/\(id)"))
+    }
+
+    var coin: Coin {
+        switch self {
+        case .main: return Coin.ethereum
+        case .classic: return Coin.ethereumClassic
+        case .callisto: return Coin.callisto
+        case .poa: return Coin.poa
+        case .gochain: return Coin.gochain
+        }
     }
 }
 

@@ -57,13 +57,6 @@ class TransactionsStorage {
 
     func add(_ items: [Transaction]) {
         try! realm.write {
-
-            for tr in items {
-                if tr.chainID  < 1 {
-                    fatalError()
-                }
-            }
-
             realm.add(items, update: true)
         }
     }

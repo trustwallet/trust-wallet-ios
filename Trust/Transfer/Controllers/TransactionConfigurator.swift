@@ -35,9 +35,7 @@ final class TransactionConfigurator {
     }
     var requestEstimateGas: Bool
 
-    lazy var nonceProvider: NonceProvider = {
-        return GetNonceProvider(storage: session.transactionsStorage, server: server)
-    }()
+    let nonceProvider: NonceProvider
 
     var configurationUpdate: Subscribable<TransactionConfiguration> = Subscribable(nil)
 
@@ -61,16 +59,18 @@ final class TransactionConfigurator {
         let calculatedGasLimit = transaction.gasLimit ?? TransactionConfigurator.gasLimit(for: transaction.transfer.type)
         let calculatedGasPrice = min(max(transaction.gasPrice ?? chainState.gasPrice ?? GasPriceConfiguration.default, GasPriceConfiguration.min), GasPriceConfiguration.max)
 
+        let nonceProvider = GetNonceProvider(storage: session.transactionsStorage, server: server)
+        self.nonceProvider = nonceProvider
+
         self.configuration = TransactionConfiguration(
             gasPrice: calculatedGasPrice,
             gasLimit: calculatedGasLimit,
             data: data,
-            nonce: transaction.nonce ?? -1 //Refactor BigInt(nonceProvider.nextNonce ?? -1)
+            nonce: transaction.nonce ?? BigInt(nonceProvider.nextNonce ?? -1)
         )
     }
 
     private static func data(for transaction: UnconfirmedTransaction, from: Address) -> Data {
-        guard let from = from as? EthereumAddress else { return Data() }
         guard let to = transaction.to else { return Data() }
         switch transaction.transfer.type {
         case .ether, .dapp:

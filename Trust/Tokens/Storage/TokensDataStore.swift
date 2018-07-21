@@ -53,7 +53,7 @@ class TokensDataStore {
             }
         }
         try? realm.write {
-            realm.deleteAll()
+            //realm.deleteAll()
         }
         let initialCoins = nativeCoin()
         add(tokens: initialCoins)
@@ -63,41 +63,43 @@ class TokensDataStore {
 
     private func nativeCoin() -> [TokenObject] {
         return account.accounts.compactMap { ac in
-            guard let coin = ac.coin, let server = getServer(for: coin) else {
+            guard let coin = ac.coin else {
                 return .none
             }
             let viewModel = CoinViewModel(coin: coin)
 
             return TokenObject(
-                contract: server.contract,
+                contract: coin.server.priceID,
+                priceID: coin.server.priceID,
                 name: viewModel.name,
-                coin: coin.rawValue,
-                chainID: server.chainID,
+                coin: coin,
                 type: .coin,
                 symbol: viewModel.symbol,
-                decimals: server.decimals,
+                decimals: coin.server.decimals,
                 value: "0",
                 isCustom: false
             )
         }
     }
 
-    private func getServer(for coin: Coin) -> RPCServer? {
-        switch coin {
-        case .ethereum: return RPCServer.main
-        case .ethereumClassic: return RPCServer.classic
-        case .poa: return RPCServer.poa
-        case .callisto: return RPCServer.callisto
-        case .gochain: return RPCServer.gochain
-        case .bitcoin: return .none
-        }
+    static func token(for server: RPCServer) -> TokenObject {
+        let coin = server.coin
+        let viewModel = CoinViewModel(coin: server.coin)
+        return TokenObject(
+            contract: server.priceID,
+            priceID: server.priceID,
+            name: viewModel.name,
+            coin: coin,
+            type: .coin,
+            symbol: viewModel.symbol,
+            decimals: server.decimals,
+            value: "0",
+            isCustom: false
+        )
     }
 
     static func getServer(for token: TokenObject) -> RPCServer! {
-        guard token.chainID > 0 else {
-            return RPCServer.main
-        }
-        return RPCServer(chainID: token.chainID)
+        return token.coin!.server
     }
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
@@ -110,7 +112,9 @@ class TokensDataStore {
     func addCustom(token: ERC20Token) {
         let newToken = TokenObject(
             contract: token.contract.description,
+            priceID: token.contract.description,
             name: token.name,
+            coin: .ethereum, //TODO
             type: .erc20,
             symbol: token.symbol,
             decimals: token.decimals,
@@ -252,5 +256,18 @@ class TokensDataStore {
         }
 
         return amountInDecimal.doubleValue * price
+    }
+}
+
+extension Coin {
+    var server: RPCServer {
+        switch self {
+        case .bitcoin: return RPCServer.main //TODO
+        case .ethereum: return RPCServer.main
+        case .ethereumClassic: return RPCServer.classic
+        case .gochain: return RPCServer.gochain
+        case .callisto: return RPCServer.callisto
+        case .poa: return RPCServer.poa
+        }
     }
 }

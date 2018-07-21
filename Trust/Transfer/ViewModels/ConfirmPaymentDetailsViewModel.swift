@@ -14,7 +14,7 @@ struct ConfirmPaymentDetailsViewModel {
     private var monetaryAmountViewModel: MonetaryAmountViewModel {
         return MonetaryAmountViewModel(
             amount: amount,
-            address: transaction.transfer.type.contract(),
+            priceID: transaction.transfer.type.priceID,
             currencyRate: currencyRate
         )
     }
@@ -68,7 +68,7 @@ struct ConfirmPaymentDetailsViewModel {
 
     var requesterText: String {
         switch transaction.transfer.type {
-        case .dapp(let request):
+        case .dapp(_, let request):
             return request.url?.absoluteString ?? ""
         case .ether, .token:
             return transaction.address?.description ?? ""

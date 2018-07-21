@@ -24,10 +24,11 @@ struct TransactionDetailsViewModel {
     private let fullFormatter = EtherNumberFormatter.full
     private let currencyRate: CurrencyRate?
     private let server: RPCServer
+    private let token: TokenObject
     private var monetaryAmountViewModel: MonetaryAmountViewModel {
         return MonetaryAmountViewModel(
             amount: transactionViewModel.shortValue.amount,
-            address: transaction.contractAddress,
+            priceID: token.priceID,
             currencyRate: currencyRate
         )
     }
@@ -37,7 +38,8 @@ struct TransactionDetailsViewModel {
         chainState: ChainState,
         currentWallet: WalletInfo,
         currencyRate: CurrencyRate?,
-        server: RPCServer
+        server: RPCServer,
+        token: TokenObject
     ) {
         self.transaction = transaction
         self.config = config
@@ -46,11 +48,11 @@ struct TransactionDetailsViewModel {
         self.transactionViewModel = TransactionViewModel(
             transaction: transaction,
             config: config,
-            chainState: chainState,
             currentWallet: currentWallet,
             server: server
         )
         self.server = server
+        self.token = token
     }
 
     var title: String {
