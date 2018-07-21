@@ -64,7 +64,7 @@ struct SendViewModel {
         return "Send \(symbol)"
     }
     var symbol: String {
-        return transfer.server.symbol
+        return transfer.type.token.symbol
     }
     var backgroundColor: UIColor {
         return .white

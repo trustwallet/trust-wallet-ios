@@ -43,7 +43,7 @@ final class BrowserCoordinator: NSObject, Coordinator {
     }()
 
     lazy var browserViewController: BrowserViewController = {
-        let controller = BrowserViewController(account: session.account, config: session.config, server: .main)
+        let controller = BrowserViewController(account: session.account, config: session.config, server: server)
         controller.delegate = self
         controller.webView.uiDelegate = self
         return controller
@@ -61,6 +61,10 @@ final class BrowserCoordinator: NSObject, Coordinator {
     var urlParser: BrowserURLParser {
         let engine = SearchEngine(rawValue: preferences.get(for: .browserSearchEngine)) ?? .default
         return BrowserURLParser(engine: engine)
+    }
+
+    var server: RPCServer {
+        return .main
     }
 
     weak var delegate: BrowserCoordinatorDelegate?

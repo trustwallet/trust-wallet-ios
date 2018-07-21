@@ -34,4 +34,15 @@ extension TransferType {
             return token.priceID
         }
     }
+
+    var token: TokenObject {
+        switch self {
+        case .ether(let token, _):
+            return token
+        case .dapp(let token, _):
+            return token
+        case .token(let token):
+            return token
+        }
+    }
 }
