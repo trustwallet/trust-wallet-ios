@@ -50,7 +50,7 @@ final class WalletViewCell: UITableViewCell {
     private func updateSeparatorInset() {
         separatorInset = UIEdgeInsets(
             top: 0,
-            left: layoutInsets.left + 76,
+            left: layoutInsets.left + 80,
             bottom: 0, right: 0
         )
     }

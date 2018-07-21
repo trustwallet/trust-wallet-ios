@@ -126,9 +126,7 @@ final class TokensViewModel: NSObject {
     }
 
     func updateBalances() {
-        let tokens = Array(self.tokens)
-        NSLog("updateBalances \(tokens.count)")
-        balances(for: tokens)
+        balances(for: Array(self.tokens))
     }
 
     private func tokensInfo() {
@@ -174,7 +172,7 @@ final class TokensViewModel: NSObject {
     }
 
     func updatePendingTransactions() {
-        //all.forEach { $0.updatePending() }
+        all.forEach { $0.updatePending() }
     }
 
     func fetch() {

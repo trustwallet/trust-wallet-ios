@@ -14,7 +14,7 @@ enum WalletDoneType {
     var title: String {
         switch self {
         case .created: return R.string.localizable.walletCreated()
-        case .imported: return R.string.localizable.walletCreated()
+        case .imported: return "Wallet Imported"
         }
     }
 }

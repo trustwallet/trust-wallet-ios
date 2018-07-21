@@ -82,14 +82,14 @@ final class NewTokenViewController: FormViewController {
             <<< AppFormAppearance.textFieldFloat(tag: Values.name) { [unowned self] in
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
-                $0.title = NSLocalizedString("Name", value: "Name", comment: "")
+                $0.title = R.string.localizable.name()
                 $0.value = self.viewModel.name
             }
 
             <<< AppFormAppearance.textFieldFloat(tag: Values.symbol) { [unowned self] in
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnDemand
-                $0.title = NSLocalizedString("Symbol", value: "Symbol", comment: "")
+                $0.title = R.string.localizable.symbol()
                 $0.value = self.viewModel.symbol
             }
 
@@ -97,7 +97,7 @@ final class NewTokenViewController: FormViewController {
                 $0.add(rule: RuleRequired())
                 $0.add(rule: RuleMaxLength(maxLength: 32))
                 $0.validationOptions = .validatesOnDemand
-                $0.title = NSLocalizedString("Decimals", value: "Decimals", comment: "")
+                $0.title = R.string.localizable.decimals()
                 $0.cell.textField.keyboardType = .decimalPad
                 $0.value = self.viewModel.decimals
             }
@@ -115,10 +115,9 @@ final class NewTokenViewController: FormViewController {
                 $0.displayValueFor = { value in
                     return value?.name
                 }
-            }.onPresent { _, selectorController in
-                selectorController.enableDeselection = false
-            }
-        }
+        }.onPresent { _, selectorController in
+            selectorController.enableDeselection = false
+        }}
 
     @objc func finish() {
         guard form.validate().isEmpty else {

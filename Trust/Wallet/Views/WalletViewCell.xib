@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="346" height="71.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JUd-EF-Sra">
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="JUd-EF-Sra">
                         <rect key="frame" x="16" y="0.0" width="318" height="71.5"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BUP-CU-bxN" customClass="TokenImageView" customModule="Trust" customModuleProvider="target">
@@ -34,7 +34,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="2t2-qW-Lcu">
-                                <rect key="frame" x="58" y="15.5" width="186" height="41"/>
+                                <rect key="frame" x="63" y="15.5" width="176" height="41"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ETH Wallet" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scJ-RY-qk3" userLabel="Address Lable">
                                         <rect key="frame" x="0.0" y="0.0" width="84" height="20.5"/>
