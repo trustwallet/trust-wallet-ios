@@ -81,13 +81,13 @@ final class DeveloperViewController: FormViewController {
 
         form +++ Section()
 
-        <<< SwitchRow {
-            $0.title = R.string.localizable.enableTestNetworks()
-            $0.value = self.preferencesController.get(for: .testNetworks)
-        }.onChange { [weak self] row in
-            guard let enabled = row.value else { return }
-            self?.preferencesController.set(value: enabled, for: .testNetworks)
-        }
+//        <<< SwitchRow {
+//            $0.title = R.string.localizable.enableTestNetworks()
+//            $0.value = self.preferencesController.get(for: .testNetworks)
+//        }.onChange { [weak self] row in
+//            guard let enabled = row.value else { return }
+//            self?.preferencesController.set(value: enabled, for: .testNetworks)
+//        }
 
         <<< AppFormAppearance.button { [weak self] in
             $0.title = "Clear Transactions"

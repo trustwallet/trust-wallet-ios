@@ -47,8 +47,12 @@ struct EditTokenTableCellViewModel {
     }
 
     var contractText: String? {
-        guard !token.isCoin else { return .none }
-        return token.contract
+        switch token.type {
+        case .coin:
+            return .none
+        case .erc20:
+            return token.contract
+        }
     }
 
     var isTokenContractLabelHidden: Bool {

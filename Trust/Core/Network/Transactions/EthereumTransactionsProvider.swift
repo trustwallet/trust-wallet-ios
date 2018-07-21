@@ -23,7 +23,7 @@ class EthereumTransactionsProvider: TransactionsNetworkProvider {
             switch result {
             case .success(let tx):
                 NSLog("result \(tx)")
-                guard let newTransaction = Transaction.from(transaction: tx, chainID: self.server.chainID) else {
+                guard let newTransaction = Transaction.from(transaction: tx, coin: self.server.coin) else {
                     return completion(.success((transaction, .pending)))
                 }
                 if newTransaction.blockNumber > 0 {

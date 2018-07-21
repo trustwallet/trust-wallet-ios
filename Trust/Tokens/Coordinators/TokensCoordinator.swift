@@ -26,13 +26,6 @@ final class TokensCoordinator: Coordinator {
         let controller = TokensViewController(viewModel: tokensViewModel)
         controller.delegate = self
         controller.titleView.delegate = self
-        controller.navigationItem.leftBarButtonItems = [
-            UIBarButtonItem(image: R.image.collectibles(), style: .done, target: self, action: #selector(collectibles)),
-            //UIBarButtonItem(image: R.image.feed(), style: .done, target: self, action: #selector(transactions)),
-        ]
-        controller.navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(edit)),
-        ]
         return controller
     }()
     lazy var nonFungibleTokensViewController: NonFungibleTokensViewController = {
@@ -41,10 +34,20 @@ final class TokensCoordinator: Coordinator {
         controller.delegate = self
         return controller
     }()
+
+    lazy var masterViewController: WalletViewController = {
+        let masterViewController = WalletViewController(
+            tokensViewController: tokensViewController,
+            nonFungibleTokensViewController: nonFungibleTokensViewController
+        )
+        masterViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(edit))
+        return masterViewController
+    }()
+
     weak var delegate: TokensCoordinatorDelegate?
 
-    lazy var rootViewController: TokensViewController = {
-        return self.tokensViewController
+    lazy var rootViewController: WalletViewController = {
+        return masterViewController
     }()
 
     lazy var network: NetworkProtocol = {

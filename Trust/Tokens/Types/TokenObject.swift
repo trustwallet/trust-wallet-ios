@@ -10,7 +10,7 @@ struct TokenObjectList: Decodable {
     let contract: TokenObject
 }
 
-enum TokenObjectType: String {
+enum TokenObjectType: Int {
     case coin
     case erc20
 }
@@ -21,8 +21,19 @@ final class TokenObject: Object, Decodable {
     @objc dynamic var contract: String = ""
     @objc dynamic var priceID: String = ""
     @objc dynamic var name: String = ""
-    @objc dynamic var coinInt: Int = -1
-    @objc dynamic var type: String = TokenObjectType.coin.rawValue
+
+    @objc private dynamic var rawCoin = -1
+    public var coin: Coin {
+        get { return Coin(rawValue: rawCoin)! }
+        set { rawCoin = newValue.rawValue }
+    }
+
+    @objc private dynamic var rawType = -1
+    public var type: TokenObjectType {
+        get { return TokenObjectType(rawValue: rawType) ?? .coin }
+        set { rawType = newValue.rawValue }
+    }
+
     @objc dynamic var symbol: String = ""
     @objc dynamic var decimals: Int = 0
     @objc dynamic var value: String = ""
@@ -47,8 +58,8 @@ final class TokenObject: Object, Decodable {
         self.contract = contract
         self.priceID = priceID
         self.name = name
-        self.coinInt = coin.rawValue
-        self.type = type.rawValue
+        self.coin = coin
+        self.type = type
         self.symbol = symbol
         self.decimals = decimals
         self.value = value
@@ -61,6 +72,8 @@ final class TokenObject: Object, Decodable {
         case name
         case symbol
         case decimals
+        case type
+        case coin
     }
 
     convenience required init(from decoder: Decoder) throws {
@@ -69,10 +82,12 @@ final class TokenObject: Object, Decodable {
         let name = try container.decode(String.self, forKey: .name)
         let symbol = try container.decode(String.self, forKey: .symbol)
         let decimals = try container.decode(Int.self, forKey: .decimals)
+        let coin = try container.decode(Coin.self, forKey: .coin)
+        let type = try container.decode(TokenObjectType.self, forKey: .type)
         if let convertedAddress = EthereumAddress(string: contract)?.description {
             contract = convertedAddress
         }
-        self.init(contract: contract, priceID: contract, name: name, coin: .ethereum, type: .erc20, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
+        self.init(contract: contract, priceID: contract, name: name, coin: coin, type: type, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
     }
 
     required init() {
@@ -100,7 +115,7 @@ final class TokenObject: Object, Decodable {
     }
 
     override static func ignoredProperties() -> [String] {
-        return ["type"]
+        return ["type", "coin"]
     }
 
     override func isEqual(_ object: Any?) -> Bool {
@@ -114,10 +129,12 @@ final class TokenObject: Object, Decodable {
 
     var imagePath: String {
         let formatter = ImageURLFormatter()
-        guard let coin = coin else {
+        switch type {
+        case .coin:
+            return formatter.image(for: coin)
+        case .erc20:
             return formatter.image(for: contract)
         }
-        return formatter.image(for: coin)
     }
 
     var imageURL: URL? {
@@ -131,16 +148,20 @@ final class TokenObject: Object, Decodable {
     var contractAddress: EthereumAddress {
         return EthereumAddress(string: contract)!
     }
+}
 
-    var coin: Coin? {
-        return Coin(rawValue: coinInt)
+extension TokenObjectType: Codable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawType = try container.decode(Int.self)
+        guard let type = TokenObjectType(rawValue: rawType) else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid type")
+        }
+        self = type
     }
 
-    var isCoin: Bool {
-        return coin != nil
-    }
-
-    var tokenType: TokenObjectType {
-        return TokenObjectType(rawValue: type) ?? .coin
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(self.rawValue)
     }
 }

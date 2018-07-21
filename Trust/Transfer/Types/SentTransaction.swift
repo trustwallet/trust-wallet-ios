@@ -22,7 +22,7 @@ extension SentTransaction {
             gasUsed: "",
             nonce: Int(transaction.original.nonce),
             date: Date(),
-            chainID: transaction.original.chainID,
+            coin: transaction.original.account.coin!,
             localizedOperations: [transaction.original.localizedObject].compactMap { $0 },
             state: .pending
         )

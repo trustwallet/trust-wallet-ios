@@ -9,7 +9,6 @@ enum TrustAPI {
 
     case getTransaction(server: RPCServer, ID: String)
 
-
     // all
     case prices(TokensPrice)
 
@@ -64,7 +63,7 @@ extension TrustAPI: TargetType {
         switch self {
         case .prices: return .post
         case .getTransactions: return .get
-        case .getTokens: return .get
+        case .getTokens: return .post
         case .getTransaction: return .get
         case .getAllTransactions: return .post
         case .register: return .post
@@ -87,8 +86,8 @@ extension TrustAPI: TargetType {
         case .getAllTransactions(let addresses):
             return .requestParameters(parameters: ["address": addresses], encoding: URLEncoding())
         case .getTokens(let value):
-            return .requestParameters(parameters: [:
-                //"address": value.address,
+            return .requestParameters(parameters: [
+                "60": value,
             ], encoding: URLEncoding())
         case .getTransaction:
             return .requestPlain

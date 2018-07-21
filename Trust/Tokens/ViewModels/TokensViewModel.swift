@@ -161,7 +161,7 @@ final class TokensViewModel: NSObject {
     }
 
     private func balances(for tokens: [TokenObject]) {
-        let balances: [BalanceNetworkProvider] = tokens.map {
+        let balances: [BalanceNetworkProvider] = tokens.compactMap {
             return TokenViewModel.balance(for: $0, wallet: session.account)
         }
         let operationQueue: OperationQueue = OperationQueue()
@@ -174,7 +174,7 @@ final class TokensViewModel: NSObject {
     }
 
     func updatePendingTransactions() {
-        all.forEach { $0.updatePending() }
+        //all.forEach { $0.updatePending() }
     }
 
     func fetch() {

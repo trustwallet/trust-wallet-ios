@@ -44,7 +44,7 @@ extension PendingTransaction {
 extension Transaction {
     static func from(
         transaction: PendingTransaction,
-        chainID: Int
+        coin: Coin
     ) -> Transaction? {
         guard
             let from = EthereumAddress(string: transaction.from) else {
@@ -62,7 +62,7 @@ extension Transaction {
             gasUsed: "",
             nonce: transaction.nonce,
             date: Date(),
-            chainID: chainID,
+            coin: coin,
             localizedOperations: [],
             state: .pending
         )

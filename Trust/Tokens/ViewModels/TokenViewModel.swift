@@ -211,7 +211,7 @@ final class TokenViewModel {
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
-        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: ChainState(server: server), currentWallet: session.account, server: token.coin!.server)
+        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: ChainState(server: server), currentWallet: session.account, server: token.coin.server)
     }
 
     func hasContent() -> Bool {
@@ -219,26 +219,31 @@ final class TokenViewModel {
     }
 
     private func updateTokenBalance() {
-        let provider = TokenViewModel.balance(for: token, wallet: session.account)
+        guard let provider = TokenViewModel.balance(for: token, wallet: session.account) else {
+            return
+        }
         let _ = provider.balance().done { [weak self] balance in
             self?.store.update(balances: [provider.addressUpdate: balance])
         }
     }
 
-    static func balance(for token: TokenObject, wallet: WalletInfo) -> BalanceNetworkProvider {
-        let networkBalance: BalanceNetworkProvider = {
-            if token.isCoin {
-                let acc = wallet.accounts.filter { $0.coin == token.coin }.first!
+    static func balance(for token: TokenObject, wallet: WalletInfo) -> BalanceNetworkProvider? {
+        let networkBalance: BalanceNetworkProvider? = {
+            switch token.type {
+            case .coin:
+                let first = wallet.accounts.filter { $0.coin == token.coin }.first
+                guard let account = first  else { return .none }
                 return CoinNetworkProvider(
-                    server: token.coin!.server,
-                    address: EthereumAddress(string: acc.address.description)!,
+                    server: token.coin.server,
+                    address: EthereumAddress(string: account.address.description)!,
                     addressUpdate: token.address
                 )
-            } else {
-                let acc = wallet.accounts.filter { $0.coin == token.coin }.first!
+            case .erc20:
+                let first = wallet.accounts.filter { $0.coin == token.coin }.first
+                guard let account = first  else { return .none }
                 return TokenNetworkProvider(
-                    server: token.coin!.server,
-                    address: EthereumAddress(string: acc.address.description)!,
+                    server: token.coin.server,
+                    address: EthereumAddress(string: account.address.description)!,
                     contract: token.address,
                     addressUpdate: token.address
                 )
@@ -263,10 +268,10 @@ final class TokenViewModel {
 
     private func fetchTransactions() {
         let contract: String? = {
-            guard let _ = token.coin else {
-                return .none
+            switch token.type {
+            case .coin: return .none
+            case .erc20: return token.contract
             }
-            return token.contract
         }()
 
         tokensNetwork.transactions(for: session.account.address, on: server, startBlock: 1, page: 0, contract: contract) { result in
@@ -276,13 +281,14 @@ final class TokenViewModel {
     }
 
     private func prepareDataSource(for token: TokenObject) {
-        if token.coin != nil {
+        switch token.type {
+        case .coin:
             tokenTransactions = transactionsStore.realm.objects(Transaction.self)
-                .filter(NSPredicate(format: "localizedOperations.@count == 0 && chainID = %d", server.chainID))
+                .filter(NSPredicate(format: "rawCoin = %d && localizedOperations.@count == 0", server.coin.rawValue))
                 .sorted(byKeyPath: "date", ascending: false)
-        } else {
+        case .erc20:
             tokenTransactions = transactionsStore.realm.objects(Transaction.self)
-                .filter(NSPredicate(format: "%K ==[cd] %@ && chainID = %d", "to", token.contract, server.chainID))
+                .filter(NSPredicate(format: "rawCoin = %d && %K ==[cd] %@", server.coin.rawValue, "to", token.contract))
                 .sorted(byKeyPath: "date", ascending: false)
         }
         updateSections()

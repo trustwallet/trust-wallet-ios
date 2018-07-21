@@ -59,7 +59,6 @@ final class WalletInfoViewController: FormViewController {
         }.cellUpdate { [weak self] cell, _ in
             cell.textField.placeholder = self?.viewModel.nameTitle
             cell.textField.rightViewMode = .always
-            cell.isUserInteractionEnabled = self?.viewModel.canEditName ?? false
         }
 
         for types in viewModel.sections {

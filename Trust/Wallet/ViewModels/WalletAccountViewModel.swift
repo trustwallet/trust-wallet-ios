@@ -10,13 +10,6 @@ struct WalletAccountViewModel {
     let account: Account
 
     var title: String {
-        guard !wallet.mainWallet else {
-            guard let coin = account.coin else {
-                return R.string.localizable.transactionCellUnknownTitle()
-            }
-            let viewModel = CoinViewModel(coin: coin)
-            return viewModel.name + " (" + viewModel.symbol + ")"
-        }
         guard wallet.info.name.isEmpty else {
             return wallet.info.name
         }
@@ -34,6 +27,10 @@ struct WalletAccountViewModel {
     var image: UIImage? {
         guard let coin = account.coin else { return .none }
         return CoinViewModel(coin: coin).image
+    }
+
+    var canDelete: Bool {
+        return !wallet.mainWallet
     }
 }
 

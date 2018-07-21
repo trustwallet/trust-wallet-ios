@@ -277,27 +277,33 @@ class InCoordinator: Coordinator {
         let session = tokensCoordinator.session
 
         let transfer: Transfer = {
-            let server = token.coin!.server
-            if token.isCoin {
-                let transfer = Transfer(server: server, type: .ether(token, destination: .none))
-                return transfer
-            } else {
+            let server = token.coin.server
+            switch token.type {
+            case .coin:
+                return Transfer(server: server, type: .ether(token, destination: .none))
+            case .erc20:
                 return Transfer(server: server, type: .token(token))
             }
         }()
 
-        let acc = session.account.accounts.filter { $0.coin == token.coin }.first!
+        switch session.account.type {
+        case .privateKey, .hd:
+            let first = session.account.accounts.filter { $0.coin == token.coin }.first
+            guard let account = first else { return }
 
-        let coordinator = SendCoordinator(
-            transfer: transfer,
-            navigationController: nav,
-            session: session,
-            keystore: keystore,
-            account: acc
-        )
-        coordinator.delegate = self
-        addCoordinator(coordinator)
-        nav.pushCoordinator(coordinator: coordinator, animated: true)
+            let coordinator = SendCoordinator(
+                transfer: transfer,
+                navigationController: nav,
+                session: session,
+                keystore: keystore,
+                account: account
+            )
+            coordinator.delegate = self
+            addCoordinator(coordinator)
+            nav.pushCoordinator(coordinator: coordinator, animated: true)
+        case .address:
+            nav.displayError(error: InCoordinatorError.onlyWatchAccount)
+        }
     }
 
     func requestFlow(for token: TokenObject) {
@@ -305,16 +311,20 @@ class InCoordinator: Coordinator {
         let nav = tokensCoordinator.navigationController
         let session = tokensCoordinator.session
 
-        guard let coin = token.coin else { return }
-        let acc = session.account.accounts.filter { $0.coin == coin }.first!
+        let first = session.account.accounts.filter { $0.coin == token.coin }.first
+        guard let account = first else { return }
 
-        let viewModel = CoinTypeViewModel(type: .coin(acc, token))
+        let viewModel = CoinTypeViewModel(type: .coin(account, token))
         let coordinator = RequestCoordinator(
             session: session,
             coinTypeViewModel: viewModel
         )
         addCoordinator(coordinator)
         nav.pushCoordinator(coordinator: coordinator, animated: true)
+
+        if case .address = session.account.type {
+            coordinator.rootViewController.displayError(error: InCoordinatorError.onlyWatchAccount)
+        }
     }
 
     private func handlePendingTransaction(transaction: SentTransaction) {

@@ -9,10 +9,6 @@ struct ImageURLFormatter {
         return Constants.images + "/coins/\(coin.rawValue).png"
     }
 
-    func image(chainID: Int) -> String {
-        return Constants.images + "/tokens/ethereum-\(chainID).png"
-    }
-
     func image(for contract: String) -> String {
         return Constants.images + "/tokens/\(contract.lowercased()).png"
     }

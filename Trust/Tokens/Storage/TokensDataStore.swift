@@ -58,7 +58,7 @@ class TokensDataStore {
         let initialCoins = nativeCoin()
         add(tokens: initialCoins)
 
-        NSLog("tokens \(tokens)")
+        NSLog(" tokens \(tokens)")
     }
 
     private func nativeCoin() -> [TokenObject] {
@@ -99,7 +99,7 @@ class TokensDataStore {
     }
 
     static func getServer(for token: TokenObject) -> RPCServer! {
-        return token.coin!.server
+        return token.coin.server
     }
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
@@ -114,7 +114,7 @@ class TokensDataStore {
             contract: token.contract.description,
             priceID: token.contract.description,
             name: token.name,
-            coin: .ethereum, //TODO
+            coin: .poa, //TODO
             type: .erc20,
             symbol: token.symbol,
             decimals: token.decimals,

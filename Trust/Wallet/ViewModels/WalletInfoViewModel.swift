@@ -33,9 +33,6 @@ struct WalletInfoViewModel {
     }
 
     var name: String {
-        guard !wallet.mainWallet else {
-            return CoinViewModel(coin: wallet.coin ?? .ethereum).displayName
-        }
         return wallet.info.name
     }
 
@@ -66,7 +63,7 @@ struct WalletInfoViewModel {
                     rows: [
                         .exportRecoveryPhrase(account),
                         //.exportKeystore(account),
-                        .exportPrivateKey(currentAccount),
+                        //.exportPrivateKey(currentAccount),
                     ]
                 ),
                 FormSection(
@@ -86,9 +83,5 @@ struct WalletInfoViewModel {
                 ),
             ]
         }
-    }
-
-    var canEditName: Bool {
-        return !wallet.mainWallet
     }
 }

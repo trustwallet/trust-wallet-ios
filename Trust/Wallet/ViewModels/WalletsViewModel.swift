@@ -16,6 +16,10 @@ class WalletsViewModel {
         keystore: Keystore
     ) {
         self.keystore = keystore
+
+        self.sections = keystore.wallets.compactMap {
+            return WalletAccountViewModel(wallet: $0, account: $0.currentAccount)
+        }
     }
 
     func load(completion: (() -> Void)? = .none) {
@@ -69,6 +73,6 @@ class WalletsViewModel {
     }
 
     func canEditRowAt(for indexPath: IndexPath) -> Bool {
-        return false //(cellViewModel(for: indexPath).wallet != walletInfo?.currentWallet) ?? false
+        return cellViewModel(for: indexPath).canDelete
     }
 }

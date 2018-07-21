@@ -137,7 +137,7 @@ final class TrustNetwork: NetworkProtocol {
                     let transactions: [Transaction] = try response.map(ArrayResponse<Transaction>.self).docs
                     let newTransactions = transactions.map { transaction -> Transaction in
                         let newTransaction = transaction
-                        newTransaction.chainID = server.chainID
+                        newTransaction.coin = server.coin
                         return newTransaction
                     }
                     completion((newTransactions, true))

@@ -281,7 +281,7 @@ extension ImportWalletViewController: QRCodeReaderDelegate {
 
 extension WalletInfo {
     static var emptyName: String {
-        return "ETH " + R.string.localizable.wallet()
+        return "Unnamed " + R.string.localizable.wallet()
     }
 
     static func initialName(index numberOfWallets: Int) -> String {

@@ -17,7 +17,13 @@ final class Transaction: Object, Decodable {
     @objc dynamic var nonce: Int = 0
     @objc dynamic var date = Date()
     @objc dynamic var internalState: Int = TransactionState.completed.rawValue
-    @objc dynamic var chainID: Int = -1
+
+    @objc private dynamic var rawCoin = -1
+    public var coin: Coin {
+        get { return Coin(rawValue: rawCoin)! }
+        set { rawCoin = newValue.rawValue }
+    }
+
     var localizedOperations = List<LocalizedOperationObject>()
 
     convenience init(
@@ -31,7 +37,7 @@ final class Transaction: Object, Decodable {
         gasUsed: String,
         nonce: Int,
         date: Date,
-        chainID: Int,
+        coin: Coin,
         localizedOperations: [LocalizedOperationObject],
         state: TransactionState
     ) {
@@ -47,7 +53,7 @@ final class Transaction: Object, Decodable {
         self.gasUsed = gasUsed
         self.nonce = nonce
         self.date = date
-        self.chainID = chainID
+        self.coin = coin
         self.internalState = state.rawValue
 
         let list = List<LocalizedOperationObject>()
@@ -113,7 +119,7 @@ final class Transaction: Object, Decodable {
             gasUsed: gasUsed,
             nonce: rawNonce,
             date: Date(timeIntervalSince1970: TimeInterval(timeStamp) ?? 0),
-            chainID: -1,
+            coin: .ethereum,
             localizedOperations: operations,
             state: state
         )
