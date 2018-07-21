@@ -160,11 +160,6 @@ final class TokenViewModel {
         updateTokenBalance()
         fetchTransactions()
         updatePending()
-
-        for id in allTransactions {
-            NSLog("allTransactions \(id.id)")
-            NSLog("allTransactions \(id.uniqueID)")
-        }
     }
 
     func tokenObservation(with completion: @escaping (() -> Void)) {

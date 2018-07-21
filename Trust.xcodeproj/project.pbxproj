@@ -374,7 +374,6 @@
 		7778713C2086AD9900CF7303 /* BigInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7778713B2086AD9900CF7303 /* BigInt.swift */; };
 		7778713E2086F93700CF7303 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7778713D2086F93700CF7303 /* Colors.swift */; };
 		777871402086F94A00CF7303 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7778713F2086F94A00CF7303 /* AppStyle.swift */; };
-		77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D222023F43B0032D687 /* TransactionsTracker.swift */; };
 		77872D25202505B70032D687 /* EnterPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D24202505B70032D687 /* EnterPasswordViewController.swift */; };
 		77872D27202505C00032D687 /* EnterPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D26202505C00032D687 /* EnterPasswordViewModel.swift */; };
 		77872D292025116E0032D687 /* EnterPasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77872D282025116E0032D687 /* EnterPasswordCoordinator.swift */; };
@@ -865,7 +864,6 @@
 		7778713B2086AD9900CF7303 /* BigInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigInt.swift; sourceTree = "<group>"; };
 		7778713D2086F93700CF7303 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		7778713F2086F94A00CF7303 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
-		77872D222023F43B0032D687 /* TransactionsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTracker.swift; sourceTree = "<group>"; };
 		77872D24202505B70032D687 /* EnterPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewController.swift; sourceTree = "<group>"; };
 		77872D26202505C00032D687 /* EnterPasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordViewModel.swift; sourceTree = "<group>"; };
 		77872D282025116E0032D687 /* EnterPasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPasswordCoordinator.swift; sourceTree = "<group>"; };
@@ -1713,7 +1711,6 @@
 				295996191FADB79300DB66A8 /* TokenTransfer.swift */,
 				2963A2891FC402940095447D /* LocalizedOperationObject.swift */,
 				294DFBA21FE0E2EA004CEB56 /* TransactionValue.swift */,
-				77872D222023F43B0032D687 /* TransactionsTracker.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2867,7 +2864,6 @@
 				29358DA91F79FD1C00925D61 /* CALayer.swift in Sources */,
 				29C80D491FB51C380037B1E0 /* Dictionary.swift in Sources */,
 				BB767E2E205E10FD00263658 /* Debounce.swift in Sources */,
-				77872D232023F43B0032D687 /* TransactionsTracker.swift in Sources */,
 				776C1147205CF6DF00449539 /* TokenHeaderView.swift in Sources */,
 				BB3E2A0B20A03D22000F8B76 /* ENSStore.swift in Sources */,
 				29FA00CE201CA64E002F7DC5 /* DappCommand.swift in Sources */,
