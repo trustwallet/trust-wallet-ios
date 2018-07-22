@@ -76,7 +76,7 @@ final class SettingsViewController: FormViewController, Coordinator {
 
         form = Section()
 
-            <<< walletsRow(for: session.account.address)
+            <<< walletsRow(for: session.account)
 
             +++ Section(NSLocalizedString("settings.security.label.title", value: "Security", comment: ""))
 
@@ -121,10 +121,6 @@ final class SettingsViewController: FormViewController, Coordinator {
             <<< browserRow()
             <<< privacyRow()
 
-            +++ Section()
-
-            <<< developersRow()
-
             +++ Section(R.string.localizable.settingsJoinCommunityLabelTitle())
 
             <<< linkProvider(type: .twitter)
@@ -148,6 +144,10 @@ final class SettingsViewController: FormViewController, Coordinator {
 
             +++ Section()
 
+            <<< developersRow()
+
+            +++ Section()
+
             <<< TextRow {
                 $0.title = R.string.localizable.settingsVersionLabelTitle()
                 $0.value = Bundle.main.fullVersion
@@ -155,14 +155,15 @@ final class SettingsViewController: FormViewController, Coordinator {
             }
     }
 
-    private func walletsRow(for address: Address) -> ButtonRow {
+    private func walletsRow(for wallet: WalletInfo) -> ButtonRow {
+        let viewModel = WalletInfoViewModel(wallet: wallet)
         return AppFormAppearance.button { row in
             row.cellStyle = .value1
         }.cellUpdate { cell, _ in
             cell.textLabel?.textColor = .black
             cell.imageView?.image = R.image.settings_colorful_wallets()
             cell.textLabel?.text = R.string.localizable.wallets()
-            cell.detailTextLabel?.text = String(address.description.prefix(10)) + "..."
+            cell.detailTextLabel?.text = String(viewModel.name.prefix(14))
             cell.accessoryType = .disclosureIndicator
         }.onCellSelection { (_, _) in
             self.delegate?.didAction(action: .wallets, in: self)
@@ -275,7 +276,7 @@ final class SettingsViewController: FormViewController, Coordinator {
                 return controller
             }, onDismiss: nil)
         }.cellUpdate { cell, _ in
-            cell.imageView?.image = R.image.settings_colorful_privacy()
+            cell.imageView?.image = R.image.settings_colorful_developer()
             cell.textLabel?.text = R.string.localizable.developer()
             cell.accessoryType = .disclosureIndicator
         }

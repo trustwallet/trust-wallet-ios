@@ -49,7 +49,7 @@ final class EditTokenViewModel {
     }
 
     func searchNetwork(token: String, completion: (([TokenObject]) -> Void)?) {
-        network.search(token: token).done { [weak self] tokens in
+        network.search(query: token).done { [weak self] tokens in
             var filterSet = Set<TokenObject>()
             if let localSet = self?.localSet {
                 filterSet = localSet

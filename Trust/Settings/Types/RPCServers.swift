@@ -40,6 +40,13 @@ enum RPCServer {
         }
     }
 
+    var isDisabledByDefault: Bool {
+        switch self {
+        case .main: return false
+        case .poa, .classic, .callisto, .gochain: return true
+        }
+    }
+
     var name: String {
         switch self {
         case .main: return "Ethereum"

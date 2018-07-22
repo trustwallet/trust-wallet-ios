@@ -13,7 +13,7 @@ enum TrustAPI {
     case prices(TokensPrice)
 
     case getAllTransactions(addresses: [String: String])
-    case search(token: String)
+    case search(query: String, [String: [String]])
     case assets(address: String)
 
     case getTokens([String: [String]])
@@ -54,8 +54,8 @@ extension TrustAPI: TargetType {
             return "/push/unregister"
         case .assets:
             return "/assets"
-        case .search:
-            return "/tokens/list"
+        case .search(let query, _):
+            return "/tokens/list/\(query)"
         }
     }
 
@@ -69,7 +69,7 @@ extension TrustAPI: TargetType {
         case .register: return .post
         case .unregister: return .post
         case .assets: return .get
-        case .search: return .get
+        case .search: return .post
         }
     }
 
@@ -96,7 +96,7 @@ extension TrustAPI: TargetType {
         case .assets(let value):
             return .requestParameters(parameters: ["address": value], encoding: URLEncoding())
         case .search(let value):
-            return .requestParameters(parameters: ["query": value], encoding: URLEncoding())
+            return .requestJSONEncodable(value.1)
         }
     }
 

@@ -30,6 +30,10 @@ struct WalletInfo {
         }
     }
 
+    var multiWallet: Bool {
+        return accounts.count > 1
+    }
+
     var mainWallet: Bool {
         return info.mainWallet
     }

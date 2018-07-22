@@ -24,7 +24,7 @@
 "emptyView.noTokens.label.title" = "You haven't received any tokens yet!";
 "errorView.description.label.title" = "Something went wrong... Try again.";
 "export.backup.button.title" = "Backup Wallet";
-"export.controlYourMoney.label.title" = "Since only you control your money, you must backup your wallet in case this app is deleted, or your device is lost.";
+"export.controlYourMoney.label.title" = "Since only you control your money, you'll need to save your backup keystore in case this app is deleted.";
 "export.enterCurrentPassword.textField.title" = "Enter current password to export your wallet";
 "export.enterPassword.textField.title" = "Enter password to encrypt your wallet";
 "export.neverStored.label.title" = "Your wallet is never saved to cloud storage or standard device backups.";
@@ -283,3 +283,4 @@
 "TestNetworks" = "Test Networks";
 "EnableTestNetworks" = "Enable Test Networks";
 "Network" = "Network";
+"MultiCoinWallet" = "Multi-Coin Wallet";

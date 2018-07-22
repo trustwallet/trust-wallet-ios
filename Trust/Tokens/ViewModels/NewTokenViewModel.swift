@@ -44,7 +44,7 @@ struct NewTokenViewModel {
     func info(for contract: String) -> Promise<TokenObject> {
         return Promise { seal in
             firstly {
-                tokensNetwork.search(token: contract).firstValue
+                tokensNetwork.search(query: contract).firstValue
             }.done { token in
                 seal.fulfill(token)
             }.catch { error in

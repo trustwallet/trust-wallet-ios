@@ -52,7 +52,8 @@ final class TokensCoordinator: Coordinator {
 
     lazy var network: NetworkProtocol = {
         return TrustNetwork(
-            provider: TrustProviderFactory.makeProvider()
+            provider: TrustProviderFactory.makeProvider(),
+            wallet: session.account
         )
     }()
 
@@ -136,7 +137,7 @@ final class TokensCoordinator: Coordinator {
     }
 
     func addTokenContract(for contract: EthereumAddress) {
-        let _ = network.search(token: contract.description).done { [weak self] tokens in
+        let _ = network.search(query: contract.description).done { [weak self] tokens in
             guard let token = tokens.first else { return }
             self?.store.add(tokens: [token])
         }

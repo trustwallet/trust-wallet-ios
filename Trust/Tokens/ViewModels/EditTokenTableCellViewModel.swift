@@ -51,7 +51,7 @@ struct EditTokenTableCellViewModel {
         case .coin:
             return .none
         case .ERC20:
-            return token.contract
+            return token.contract + " (ERC20) "
         }
     }
 
@@ -60,5 +60,9 @@ struct EditTokenTableCellViewModel {
             return true
         }
         return false
+    }
+
+    var isSwitchHidden: Bool {
+        return !isLocal
     }
 }

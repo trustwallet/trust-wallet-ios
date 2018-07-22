@@ -24,7 +24,7 @@ final class ImportWalletViewController: FormViewController {
         static let password = "password"
         static let name = "name"
         static let watch = "watch"
-        static let mnemonic = "mnemonic"
+        static let phrase = "phrase"
     }
 
     var segmentRow: SegmentedRow<String>? {
@@ -33,8 +33,8 @@ final class ImportWalletViewController: FormViewController {
     var keystoreRow: TextAreaRow? {
         return form.rowBy(tag: Values.keystore)
     }
-    var mnemonicRow: TextAreaRow? {
-        return form.rowBy(tag: Values.mnemonic)
+    var phraseRow: TextAreaRow? {
+        return form.rowBy(tag: Values.phrase)
     }
     var privateKeyRow: TextAreaRow? {
         return form.rowBy(tag: Values.privateKey)
@@ -90,7 +90,7 @@ final class ImportWalletViewController: FormViewController {
                     ImportSelectionType.privateKey.title,
                     ImportSelectionType.address.title,
                 ]
-                $0.value = ImportSelectionType.keystore.title
+                $0.value = ImportSelectionType.mnemonic.title
             }
 
             // Keystore JSON
@@ -131,7 +131,7 @@ final class ImportWalletViewController: FormViewController {
                     return self?.segmentRow?.value != ImportSelectionType.mnemonic.title
                 })
             }
-            <<< AppFormAppearance.textArea(tag: Values.mnemonic) { [weak self] in
+            <<< AppFormAppearance.textArea(tag: Values.phrase) { [weak self] in
                 $0.placeholder = self?.viewModel.mnemonicPlaceholder
                 $0.textAreaHeight = .fixed(cellHeight: 140)
                 $0.add(rule: RuleRequired())
@@ -182,9 +182,9 @@ final class ImportWalletViewController: FormViewController {
         let privateKeyInput = privateKeyRow?.value?.trimmed ?? ""
         let password = passwordRow?.value ?? ""
         let addressInput = addressRow?.value?.trimmed ?? ""
-        let mnemonicInput = mnemonicRow?.value?.trimmed ?? ""
+        let phraseInput = phraseRow?.value?.trimmed ?? ""
         let name = nameRow?.value?.trimmed ?? ""
-        let words = mnemonicInput.components(separatedBy: " ").map { $0.trimmed.lowercased() }
+        let words = phraseInput.components(separatedBy: " ").map { $0.trimmed.lowercased() }
 
         displayLoading(text: NSLocalizedString("importWallet.importingIndicator.label.title", value: "Importing wallet...", comment: ""), animated: false)
 
@@ -241,8 +241,8 @@ final class ImportWalletViewController: FormViewController {
             addressRow?.value = result.address
             addressRow?.reload()
         case .mnemonic:
-            mnemonicRow?.value = string
-            mnemonicRow?.reload()
+            phraseRow?.value = string
+            phraseRow?.reload()
         }
     }
 

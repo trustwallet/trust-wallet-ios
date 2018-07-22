@@ -56,7 +56,13 @@ class TokensDataStore {
             //realm.deleteAll()
         }
         let initialCoins = nativeCoin()
-        add(tokens: initialCoins)
+
+        for token in initialCoins {
+            if let _ = realm.object(ofType: TokenObject.self, forPrimaryKey: token.contractAddress.description) {
+            } else {
+                add(tokens: [token])
+            }
+        }
 
         NSLog(" tokens \(tokens)")
     }
@@ -67,6 +73,12 @@ class TokensDataStore {
                 return .none
             }
             let viewModel = CoinViewModel(coin: coin)
+            let isDisabled: Bool = {
+                if !account.mainWallet {
+                    return false
+                }
+                return coin.server.isDisabledByDefault
+            }()
 
             return TokenObject(
                 contract: coin.server.priceID,
@@ -77,7 +89,8 @@ class TokensDataStore {
                 symbol: viewModel.symbol,
                 decimals: coin.server.decimals,
                 value: "0",
-                isCustom: false
+                isCustom: false,
+                isDisabled: isDisabled
             )
         }
     }

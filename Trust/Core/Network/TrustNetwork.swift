@@ -19,9 +19,9 @@ protocol NetworkProtocol: TrustNetworkProtocol {
     func assets(for address: Address) -> Promise<[NonFungibleTokenCategory]>
     func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]>
 
-    func tokensList(for accounts: [Account]) -> Promise<[TokenObject]>
+    func tokensList() -> Promise<[TokenObject]>
     func transactions(for address: Address, on server: RPCServer, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
-    func search(token: String) -> Promise<[TokenObject]>
+    func search(query: String) -> Promise<[TokenObject]>
 }
 
 final class TrustNetwork: NetworkProtocol {
@@ -29,11 +29,18 @@ final class TrustNetwork: NetworkProtocol {
     static let deleteMissingInternalSeconds: Double = 60.0
     static let deleyedTransactionInternalSeconds: Double = 60.0
     let provider: MoyaProvider<TrustAPI>
+    let wallet: WalletInfo
+
+    private var dict: [String: [String]] {
+        return TrustRequestFormatter.toAddresses(from: wallet.accounts)
+    }
 
     init(
-        provider: MoyaProvider<TrustAPI>
+        provider: MoyaProvider<TrustAPI>,
+        wallet: WalletInfo
     ) {
         self.provider = provider
+        self.wallet = wallet
     }
 
     func tickers(with tokenPrices: [TokenPrice], completion: @escaping (_ tickers: [CoinTicker]?) -> Void) {
@@ -68,9 +75,7 @@ final class TrustNetwork: NetworkProtocol {
         )
     }
 
-    func tokensList(for accounts: [Account]) -> Promise<[TokenObject]> {
-        let dict = TrustRequestFormatter.toAddresses(from: accounts)
-
+    func tokensList() -> Promise<[TokenObject]> {
         return Promise { seal in
             provider.request(.getTokens(dict)) { result in
                 switch result {
@@ -153,13 +158,13 @@ final class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func search(token: String) -> Promise<[TokenObject]> {
+    func search(query: String) -> Promise<[TokenObject]> {
         return Promise { seal in
-            provider.request(.search(token: token)) { result in
+            provider.request(.search(query: query, dict)) { result in
                 switch result {
                 case .success(let response):
                     do {
-                        let tokens = try response.map([TokenObject].self)
+                        let tokens = try response.map(ArrayResponse<TokenObject>.self).docs
                         seal.fulfill(tokens)
                     } catch {
                         seal.reject(error)

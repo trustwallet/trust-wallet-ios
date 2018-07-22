@@ -389,6 +389,7 @@
 		779141CF21027CE8007E8E16 /* EthereumTransactionsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779141CE21027CE8007E8E16 /* EthereumTransactionsProvider.swift */; };
 		779141D22102F44D007E8E16 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779141D12102F44D007E8E16 /* WalletViewController.swift */; };
 		779141D621040B63007E8E16 /* TrustRequestFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779141D521040B63007E8E16 /* TrustRequestFormatter.swift */; };
+		779141D821045571007E8E16 /* WalletCreatedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779141D721045571007E8E16 /* WalletCreatedViewModel.swift */; };
 		77A6D8A120C4DE06000A9ADC /* TrustAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A6D8A020C4DE06000A9ADC /* TrustAPI.swift */; };
 		77B1EAFF20639DEB007970AA /* NFTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B1EAFE20639DEB007970AA /* NFTokenViewController.swift */; };
 		77B1EB012063A198007970AA /* NFTDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B1EB002063A198007970AA /* NFTDetailsViewModel.swift */; };
@@ -880,6 +881,7 @@
 		779141CE21027CE8007E8E16 /* EthereumTransactionsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumTransactionsProvider.swift; sourceTree = "<group>"; };
 		779141D12102F44D007E8E16 /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
 		779141D521040B63007E8E16 /* TrustRequestFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustRequestFormatter.swift; sourceTree = "<group>"; };
+		779141D721045571007E8E16 /* WalletCreatedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCreatedViewModel.swift; sourceTree = "<group>"; };
 		779891EA207C10C7008890B8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		77A6D8A020C4DE06000A9ADC /* TrustAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustAPI.swift; sourceTree = "<group>"; };
 		77B1EAFE20639DEB007970AA /* NFTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTokenViewController.swift; sourceTree = "<group>"; };
@@ -1408,6 +1410,7 @@
 				7712437920FD97730097296E /* WalletAccountViewModel.swift */,
 				7704836720FDB05A00837735 /* CoinViewModel.swift */,
 				7704836D20FE9B4000837735 /* SelectCoinsViewModel.swift */,
+				779141D721045571007E8E16 /* WalletCreatedViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -3044,6 +3047,7 @@
 				29C0FCE1200DA94A004A13CB /* SignMessageCoordinator.swift in Sources */,
 				BB3B86BD204CE9730061FCBA /* URLNavigatorCoordinator.swift in Sources */,
 				732C51462062B625007134C7 /* ScriptMessageProxy.swift in Sources */,
+				779141D821045571007E8E16 /* WalletCreatedViewModel.swift in Sources */,
 				29B933F81F8609FF009FCABB /* PaymentFlow.swift in Sources */,
 				29A13E331F6B1B7A00E432A2 /* Styles.swift in Sources */,
 				A2E895D020953404003D5303 /* QRGenerator.swift in Sources */,
