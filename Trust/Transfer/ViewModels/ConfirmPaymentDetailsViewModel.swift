@@ -14,7 +14,7 @@ struct ConfirmPaymentDetailsViewModel {
     private var monetaryAmountViewModel: MonetaryAmountViewModel {
         return MonetaryAmountViewModel(
             amount: amount,
-            priceID: transaction.transfer.type.priceID,
+            contract: transaction.transfer.type.contract,
             currencyRate: currencyRate
         )
     }

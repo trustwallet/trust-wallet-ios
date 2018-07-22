@@ -28,7 +28,7 @@ struct TransactionDetailsViewModel {
     private var monetaryAmountViewModel: MonetaryAmountViewModel {
         return MonetaryAmountViewModel(
             amount: transactionViewModel.shortValue.amount,
-            priceID: token.priceID,
+            contract: token.contract,
             currencyRate: currencyRate
         )
     }

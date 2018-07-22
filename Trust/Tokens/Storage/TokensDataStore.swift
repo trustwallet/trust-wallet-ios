@@ -82,7 +82,6 @@ class TokensDataStore {
 
             return TokenObject(
                 contract: coin.server.priceID,
-                priceID: coin.server.priceID,
                 name: viewModel.name,
                 coin: coin,
                 type: .coin,
@@ -100,7 +99,6 @@ class TokensDataStore {
         let viewModel = CoinViewModel(coin: server.coin)
         return TokenObject(
             contract: server.priceID,
-            priceID: server.priceID,
             name: viewModel.name,
             coin: coin,
             type: .coin,
@@ -125,7 +123,6 @@ class TokensDataStore {
     func addCustom(token: ERC20Token) {
         let newToken = TokenObject(
             contract: token.contract.description,
-            priceID: token.contract.description,
             name: token.name,
             coin: token.coin,
             type: .ERC20,

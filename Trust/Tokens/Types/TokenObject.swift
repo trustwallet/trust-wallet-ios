@@ -19,7 +19,6 @@ final class TokenObject: Object, Decodable {
     static let DEFAULT_BALANCE = 0.00
 
     @objc dynamic var contract: String = ""
-    @objc dynamic var priceID: String = ""
     @objc dynamic var name: String = ""
 
     @objc private dynamic var rawCoin = -1
@@ -44,7 +43,6 @@ final class TokenObject: Object, Decodable {
 
     convenience init(
         contract: String = "",
-        priceID: String,
         name: String = "",
         coin: Coin,
         type: TokenObjectType,
@@ -56,7 +54,6 @@ final class TokenObject: Object, Decodable {
     ) {
         self.init()
         self.contract = contract
-        self.priceID = priceID
         self.name = name
         self.coin = coin
         self.rawCoin = coin.rawValue
@@ -89,7 +86,7 @@ final class TokenObject: Object, Decodable {
         if let convertedAddress = EthereumAddress(string: contract)?.description {
             contract = convertedAddress
         }
-        self.init(contract: contract, priceID: contract, name: name, coin: coin, type: type, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
+        self.init(contract: contract, name: name, coin: coin, type: type, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
     }
 
     required init() {

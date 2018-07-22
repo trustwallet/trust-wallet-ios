@@ -24,14 +24,15 @@ extension TransferType {
         }
     }
 
-    var priceID: String {
+    //used for pricing
+    var contract: String {
         switch self {
         case .ether(let token, _):
-            return token.priceID
+            return token.contract
         case .dapp(let token, _):
-            return token.priceID
+            return token.contract
         case .token(let token):
-            return token.priceID
+            return token.contract
         }
     }
 

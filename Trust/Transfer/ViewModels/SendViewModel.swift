@@ -148,14 +148,14 @@ struct SendViewModel {
     }
     /// Get pair price with ticker
     func currentPairPrice() -> Decimal? {
-        guard let currentTokenInfo = storage.tickers().first(where: { $0.contract == transfer.type.priceID }), let price = Decimal(string: currentTokenInfo.price) else {
+        guard let currentTokenInfo = storage.tickers().first(where: { $0.contract == transfer.type.contract }), let price = Decimal(string: currentTokenInfo.price) else {
             return nil
         }
         return price
     }
     /// If ther is ticker for this pair show fiat view.
     func isFiatViewHidden() -> Bool {
-        guard let currentTokenInfo = storage.tickers().first(where: { $0.contract == transfer.type.priceID }), let price = Decimal(string: currentTokenInfo.price), price > 0 else {
+        guard let currentTokenInfo = storage.tickers().first(where: { $0.contract == transfer.type.contract }), let price = Decimal(string: currentTokenInfo.price), price > 0 else {
             return true
         }
         return false
