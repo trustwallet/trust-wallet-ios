@@ -21,7 +21,7 @@ class SelectCoinViewController: UITableViewController {
         coins: [Coin]
     ) {
         self.coins = coins
-        super.init(nibName: nil, bundle: nil)
+        super.init(style: .grouped)
     }
 
     override func viewDidLoad() {

@@ -69,12 +69,7 @@ final class TrustNetwork: NetworkProtocol {
     }
 
     func tokensList(for accounts: [Account]) -> Promise<[TokenObject]> {
-        var dict: [String: [String]] = [:]
-
-        for account in accounts {
-            guard let coin = account.coin else { break }
-            dict["\(coin.rawValue)"] = [account.address.description]
-        }
+        let dict = TrustRequestFormatter.toAddresses(from: accounts)
 
         return Promise { seal in
             provider.request(.getTokens(dict)) { result in

@@ -52,6 +52,7 @@ struct DeveloperViewModel {
 
 protocol DeveloperViewControllerDelegate: class {
     func didClearTransactions(in controller: DeveloperViewController)
+    func didClearTokens(in controller: DeveloperViewController)
 }
 
 final class DeveloperViewController: FormViewController {
@@ -94,6 +95,16 @@ final class DeveloperViewController: FormViewController {
         }.onCellSelection { [weak self] _, _ in
             guard let `self` = self else { return }
             self.delegate?.didClearTransactions(in: self)
+        }.cellUpdate { cell, _ in
+            cell.textLabel?.textAlignment = .left
+            cell.textLabel?.textColor = .black
+        }
+
+        <<< AppFormAppearance.button { [weak self] in
+            $0.title = "Clear Tokens"
+        }.onCellSelection { [weak self] _, _ in
+            guard let `self` = self else { return }
+            self.delegate?.didClearTokens(in: self)
         }.cellUpdate { cell, _ in
             cell.textLabel?.textAlignment = .left
             cell.textLabel?.textColor = .black

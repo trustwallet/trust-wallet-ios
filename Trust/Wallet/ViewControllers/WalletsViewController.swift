@@ -20,7 +20,7 @@ class WalletsViewController: UITableViewController {
     init(keystore: Keystore) {
         self.keystore = keystore
 
-        super.init(nibName: nil, bundle: nil)
+        super.init(style: .grouped)
     }
 
     override func viewDidLoad() {

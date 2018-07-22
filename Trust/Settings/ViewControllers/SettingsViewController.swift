@@ -376,4 +376,8 @@ extension SettingsViewController: DeveloperViewControllerDelegate {
     func didClearTransactions(in controller: DeveloperViewController) {
         delegate?.didAction(action: .clearTransactions, in: self)
     }
+
+    func didClearTokens(in controller: DeveloperViewController) {
+        delegate?.didAction(action: .clearTokens, in: self)
+    }
 }

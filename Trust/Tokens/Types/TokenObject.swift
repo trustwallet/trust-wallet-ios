@@ -59,7 +59,9 @@ final class TokenObject: Object, Decodable {
         self.priceID = priceID
         self.name = name
         self.coin = coin
+        self.rawCoin = coin.rawValue
         self.type = type
+        self.rawType = type.rawValue
         self.symbol = symbol
         self.decimals = decimals
         self.value = value
