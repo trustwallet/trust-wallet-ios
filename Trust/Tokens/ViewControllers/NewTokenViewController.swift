@@ -41,18 +41,11 @@ final class NewTokenViewController: FormViewController {
         return form.rowBy(tag: Values.decimals) as? TextFloatLabelRow
     }
 
-    private let token: ERC20Token?
-
     init(
-        token: ERC20Token?,
         viewModel: NewTokenViewModel
     ) {
-        self.token = token
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-
-        networkRow?.value = viewModel.token?.coin.server
-        networkRow?.reload()
     }
 
     override func viewDidLoad() {
