@@ -50,6 +50,9 @@ final class NewTokenViewController: FormViewController {
         self.token = token
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+
+        networkRow?.value = viewModel.token?.coin.server
+        networkRow?.reload()
     }
 
     override func viewDidLoad() {

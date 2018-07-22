@@ -143,6 +143,13 @@ final class TokenObject: Object, Decodable {
         return URL(string: imagePath)
     }
 
+    var placeholder: UIImage? {
+        switch type {
+        case .coin: return R.image.ethereum_logo_256()
+        case .ERC20: return R.image.erc20()
+        }
+    }
+
     var displayName: String {
         return "\(self.name) (\(self.symbol))"
     }

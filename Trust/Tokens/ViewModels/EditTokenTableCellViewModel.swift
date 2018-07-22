@@ -35,7 +35,7 @@ struct EditTokenTableCellViewModel {
     }
 
     var placeholderImage: UIImage? {
-        return R.image.ethereum_logo_256()
+        return token.placeholder
     }
 
     var imageUrl: URL? {

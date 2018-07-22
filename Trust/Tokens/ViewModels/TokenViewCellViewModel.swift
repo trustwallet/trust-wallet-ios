@@ -77,7 +77,7 @@ struct TokenViewCellViewModel {
     }
 
     var placeholderImage: UIImage? {
-        return R.image.ethereum_logo_256()
+        return token.placeholder
     }
 
     // Market Price

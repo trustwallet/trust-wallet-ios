@@ -29,7 +29,7 @@ final class TokenViewModel {
     }
 
     var imagePlaceholder: UIImage? {
-        return R.image.ethereum_logo_256()
+        return token.placeholder
     }
 
     private var symbol: String {
