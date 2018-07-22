@@ -30,6 +30,7 @@ class WalletsViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.register(R.nib.walletViewCell(), forCellReuseIdentifier: R.nib.walletViewCell.name)
         navigationItem.title = viewModel.title
+        tableView.tableFooterView = UIView()
 
         fetch()
     }

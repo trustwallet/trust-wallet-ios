@@ -3,6 +3,7 @@
 import PromiseKit
 import Moya
 import TrustCore
+import TrustKeystore
 import JSONRPCKit
 import APIKit
 import Result
@@ -18,7 +19,7 @@ protocol NetworkProtocol: TrustNetworkProtocol {
     func assets(for address: Address) -> Promise<[NonFungibleTokenCategory]>
     func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]>
 
-    func tokensList(for address: Address) -> Promise<[TokenObject]>
+    func tokensList(for accounts: [Account]) -> Promise<[TokenObject]>
     func transactions(for address: Address, on server: RPCServer, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
     func search(token: String) -> Promise<[TokenObject]>
 }
@@ -67,9 +68,16 @@ final class TrustNetwork: NetworkProtocol {
         )
     }
 
-    func tokensList(for address: Address) -> Promise<[TokenObject]> {
+    func tokensList(for accounts: [Account]) -> Promise<[TokenObject]> {
+        var dict: [String: [String]] = [:]
+
+        for account in accounts {
+            guard let coin = account.coin else { break }
+            dict["\(coin.rawValue)"] = [account.address.description]
+        }
+
         return Promise { seal in
-            provider.request(.getTokens(address: [address.description])) { result in
+            provider.request(.getTokens(dict)) { result in
                 switch result {
                 case .success(let response):
                     do {

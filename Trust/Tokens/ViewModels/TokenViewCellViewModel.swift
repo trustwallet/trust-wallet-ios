@@ -94,7 +94,7 @@ struct TokenViewCellViewModel {
         return TokensLayout.cell.marketPrice(for: ticker)
     }
 
-    var imageUrl: URL? {
-        return URL(string: token.imagePath)
+    var imageURL: URL? {
+        return token.imageURL
     }
 }

@@ -93,8 +93,8 @@ class EtherKeystore: Keystore {
                 }
             }.filter { !$0.accounts.isEmpty },
             storage.addresses.compactMap {
-                guard let coin = $0.coin, let address = $0.address else { return .none }
-                let type = WalletType.address(coin, address)
+                guard let address = $0.address else { return .none }
+                let type = WalletType.address($0.coin, address)
                 return WalletInfo(type: type, info: storage.get(for: type))
             },
         ].flatMap { $0 }.sorted(by: { $0.info.createdAt < $1.info.createdAt })
@@ -216,6 +216,8 @@ class EtherKeystore: Keystore {
                 Coin.ethereum.derivationPath(at: 0),
                 Coin.poa.derivationPath(at: 0),
                 Coin.callisto.derivationPath(at: 0),
+                Coin.gochain.derivationPath(at: 0),
+                Coin.ethereumClassic.derivationPath(at: 0),
             ]
         )
         let _ = setPassword(password, for: wallet)
@@ -317,31 +319,34 @@ class EtherKeystore: Keystore {
         }
     }
 
-    func delete(wallet: WalletInfo) -> Result<Void, KeystoreError> {
-        switch wallet.type {
-        case .privateKey(let w), .hd(let w):
-            guard let password = getPassword(for: w) else {
-                return .failure(.failedToDeleteAccount)
-            }
-            do {
-                try keyStore.delete(wallet: w, password: password)
-                return .success(())
-            } catch {
-                return .failure(.failedToDeleteAccount)
-            }
-        case .address(let coin, let address):
-            let walletAddress = WalletAddress(coin: coin, address: address)
-            storage.delete(address: walletAddress)
+    private func delete(wallet: Wallet) -> Result<Void, KeystoreError> {
+        guard let password = getPassword(for: wallet) else {
+            return .failure(.failedToDeleteAccount)
+        }
+        do {
+            try keyStore.delete(wallet: wallet, password: password)
             return .success(())
+        } catch {
+            return .failure(.failedToDeleteAccount)
         }
     }
 
     func delete(wallet: WalletInfo, completion: @escaping (Result<Void, KeystoreError>) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            let result = self.delete(wallet: wallet)
-            DispatchQueue.main.async {
-                completion(result)
+        switch wallet.type {
+        case .privateKey(let w), .hd(let w):
+            DispatchQueue.global(qos: .userInitiated).async {
+                let result = self.delete(wallet: w)
+                DispatchQueue.main.async {
+                    completion(result)
+                }
             }
+        case .address(_, let address):
+            let first = storage.realm.objects(WalletAddress.self).filter { $0.address == address }.first
+            guard let walletAddress = first else {
+                return completion(.failure(KeystoreError.accountNotFound))
+            }
+            storage.delete(address: walletAddress)
+            return completion(.success(()))
         }
     }
 

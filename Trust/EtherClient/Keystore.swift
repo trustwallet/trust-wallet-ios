@@ -23,7 +23,6 @@ protocol Keystore {
     func exportData(account: Account, password: String, newPassword: String) -> Result<Data, KeystoreError>
     func exportPrivateKey(account: Account, completion: @escaping (Result<Data, KeystoreError>) -> Void)
     func exportMnemonic(wallet: Wallet, completion: @escaping (Result<[String], KeystoreError>) -> Void)
-    func delete(wallet: WalletInfo) -> Result<Void, KeystoreError>
     func delete(wallet: WalletInfo, completion: @escaping (Result<Void, KeystoreError>) -> Void)
     func signPersonalMessage(_ data: Data, for account: Account) -> Result<Data, KeystoreError>
     func signMessage(_ message: Data, for account: Account) -> Result<Data, KeystoreError>

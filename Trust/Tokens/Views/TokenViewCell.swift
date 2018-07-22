@@ -133,7 +133,7 @@ final class TokenViewCell: UITableViewCell {
         currencyAmountLabel.font = viewModel.currencyAmountFont
 
         symbolImageView.kf.setImage(
-            with: viewModel.imageUrl,
+            with: viewModel.imageURL,
             placeholder: viewModel.placeholderImage
         )
 

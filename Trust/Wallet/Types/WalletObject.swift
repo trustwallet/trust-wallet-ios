@@ -27,7 +27,11 @@ final class WalletObject: Object {
 final class WalletAddress: Object {
     @objc dynamic var id: String = ""
     @objc dynamic var addressString: String = ""
-    @objc dynamic var coinID: Int = 60
+    @objc private dynamic var rawCoin = -1
+    public var coin: Coin {
+        get { return Coin(rawValue: rawCoin) ?? .ethereum }
+        set { rawCoin = newValue.rawValue }
+    }
 
     convenience init(
         coin: Coin,
@@ -36,11 +40,7 @@ final class WalletAddress: Object {
         self.init()
         self.id = "\(coin.rawValue)" + "-" + address.description
         self.addressString = address.description
-        self.coinID = coin.rawValue
-    }
-
-    var coin: Coin? {
-        return Coin(rawValue: coinID)
+        self.coin = coin
     }
 
     var address: EthereumAddress? {
@@ -49,6 +49,10 @@ final class WalletAddress: Object {
 
     override static func primaryKey() -> String? {
         return "id"
+    }
+
+    override static func ignoredProperties() -> [String] {
+        return ["coin"]
     }
 
     override func isEqual(_ object: Any?) -> Bool {

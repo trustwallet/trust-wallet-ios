@@ -9,7 +9,7 @@ struct Config {
         static let currencyID = "currencyID"
     }
 
-    static let dbMigrationSchemaVersion: UInt64 = 72
+    static let dbMigrationSchemaVersion: UInt64 = 73
 
     static let current: Config = Config()
 

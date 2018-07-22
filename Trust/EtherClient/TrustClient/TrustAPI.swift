@@ -16,7 +16,7 @@ enum TrustAPI {
     case search(token: String)
     case assets(address: String)
 
-    case getTokens(address: [String])
+    case getTokens([String: [String]])
 
     case register(device: PushDevice)
     case unregister(device: PushDevice)
@@ -86,9 +86,7 @@ extension TrustAPI: TargetType {
         case .getAllTransactions(let addresses):
             return .requestParameters(parameters: ["address": addresses], encoding: URLEncoding())
         case .getTokens(let value):
-            return .requestParameters(parameters: [
-                "60": value,
-            ], encoding: URLEncoding())
+            return .requestJSONEncodable(value)
         case .getTransaction:
             return .requestPlain
         case .register(let device):

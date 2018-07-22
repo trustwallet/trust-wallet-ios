@@ -12,7 +12,7 @@ struct TokenObjectList: Decodable {
 
 enum TokenObjectType: String {
     case coin
-    case ERC20 = "ERC20"
+    case ERC20
 }
 
 final class TokenObject: Object, Decodable {
@@ -30,7 +30,7 @@ final class TokenObject: Object, Decodable {
 
     @objc private dynamic var rawType = ""
     public var type: TokenObjectType {
-        get { return TokenObjectType(rawValue: rawType) ?? .coin }
+        get { return TokenObjectType(rawValue: rawType)! }
         set { rawType = newValue.rawValue }
     }
 
@@ -127,7 +127,7 @@ final class TokenObject: Object, Decodable {
         return name.isEmpty ? symbol : (name + " (" + symbol + ")")
     }
 
-    var imagePath: String {
+    private var imagePath: String {
         let formatter = ImageURLFormatter()
         switch type {
         case .coin:

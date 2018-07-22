@@ -131,7 +131,7 @@ final class TokensViewModel: NSObject {
 
     private func tokensInfo() {
         firstly {
-            tokensNetwork.tokensList(for: session.account.address)
+            tokensNetwork.tokensList(for: session.account.accounts)
         }.done { [weak self] tokens in
              self?.store.update(tokens: tokens, action: .updateInfo)
         }.catch { error in
