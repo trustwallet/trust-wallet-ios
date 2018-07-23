@@ -271,7 +271,7 @@ final class SettingsViewController: FormViewController, Coordinator {
     private func developersRow() -> ButtonRow {
         return AppFormAppearance.button { row in
             row.cellStyle = .value1
-            row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback { [weak self] in 
+            row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback {[weak self] in
                 let controller = DeveloperViewController()
                 controller.delegate = self
                 return controller
