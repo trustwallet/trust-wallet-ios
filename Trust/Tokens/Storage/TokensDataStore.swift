@@ -63,8 +63,8 @@ class TokensDataStore {
     }
 
     private func nativeCoin() -> [TokenObject] {
-        return account.accounts.compactMap { account in
-            guard let coin = account.coin else {
+        return account.accounts.compactMap { ac in
+            guard let coin = ac.coin else {
                 return .none
             }
             let viewModel = CoinViewModel(coin: coin)
