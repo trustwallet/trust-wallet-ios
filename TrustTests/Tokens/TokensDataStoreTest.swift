@@ -4,7 +4,7 @@ import XCTest
 @testable import Trust
 
 class TokensDataStoreTest: XCTestCase {
-    var tokensDataStore = TokensDataStore(realm: .make(), account: .make())
+    var tokensDataStore = FakeTokensDataStore()
 
     func testGetAndSetTickers() {
         XCTAssertEqual(0, tokensDataStore.tickers().count)
