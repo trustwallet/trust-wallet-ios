@@ -118,7 +118,7 @@ final class TokensViewModel: NSObject {
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
         let ticker: CoinTicker? = tickers.first { (ticker) -> Bool in
-            return ticker.contract == token.address.eip55String
+            return ticker.contract == token.address.description
         }
         return TokenViewCellViewModel(token: token, ticker: ticker, store: transactionStore)
     }
