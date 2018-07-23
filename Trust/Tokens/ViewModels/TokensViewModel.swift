@@ -20,10 +20,6 @@ final class TokensViewModel: NSObject {
     var tokensObserver: NotificationToken?
     let transactionStore: TransactionsStorage
     let session: WalletSession
-    var headerViewTitle: String {
-        guard let coin = session.account.currentAccount.coin else { return "" }
-        return CoinViewModel(coin: coin).displayName
-    }
 
     var headerBalance: String {
         return amount ?? "0.00"

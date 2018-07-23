@@ -72,7 +72,6 @@ final class TokensViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-        titleView.title = viewModel.headerViewTitle
         sheduleBalanceUpdate()
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
