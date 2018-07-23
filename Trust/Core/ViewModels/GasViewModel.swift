@@ -27,7 +27,7 @@ struct GasViewModel {
     }
 
     var feeCurrency: Double? {
-        return currencyRate?.estimate(fee: formatter.string(from: fee), with: server.priceID)
+        return currencyRate?.estimate(fee: formatter.string(from: fee), with: server.priceID.description)
     }
 
     var monetaryFee: String? {

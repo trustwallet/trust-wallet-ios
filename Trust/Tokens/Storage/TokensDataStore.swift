@@ -81,7 +81,7 @@ class TokensDataStore {
             }()
 
             return TokenObject(
-                contract: coin.server.priceID,
+                contract: coin.server.priceID.description,
                 name: viewModel.name,
                 coin: coin,
                 type: .coin,
@@ -98,7 +98,7 @@ class TokensDataStore {
         let coin = server.coin
         let viewModel = CoinViewModel(coin: server.coin)
         return TokenObject(
-            contract: server.priceID,
+            contract: server.priceID.description,
             name: viewModel.name,
             coin: coin,
             type: .coin,

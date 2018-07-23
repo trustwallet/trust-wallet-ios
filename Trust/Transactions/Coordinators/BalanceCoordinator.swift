@@ -29,7 +29,7 @@ final class BalanceCoordinator {
         return Balance(value: token.valueBigInt)
     }
 
-    func balance(for contract: EthereumAddress) -> Balance? {
+    func balance(for contract: Address) -> Balance? {
         guard let token = storage.realm.object(ofType: TokenObject.self, forPrimaryKey: contract.description) else {
             return .none
         }
