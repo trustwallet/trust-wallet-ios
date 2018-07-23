@@ -16,7 +16,7 @@ enum TokenAction {
 class TokensDataStore {
     var tokens: Results<TokenObject> {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO"))
-            .sorted(byKeyPath: "createdAt", ascending: true)
+            .sorted(byKeyPath: "order", ascending: true)
     }
     var nonFungibleTokens: Results<NonFungibleTokenCategory> {
         return realm.objects(NonFungibleTokenCategory.self).sorted(byKeyPath: "name", ascending: true)
@@ -25,12 +25,12 @@ class TokensDataStore {
     let account: WalletInfo
     var objects: [TokenObject] {
         return realm.objects(TokenObject.self)
-            .sorted(byKeyPath: "createdAt", ascending: true)
+            .sorted(byKeyPath: "order", ascending: true)
             .filter { !$0.contract.isEmpty }
     }
     var enabledObject: [TokenObject] {
         return realm.objects(TokenObject.self)
-            .sorted(byKeyPath: "createdAt", ascending: true)
+            .sorted(byKeyPath: "order", ascending: true)
             .filter { !$0.isDisabled }
     }
     var nonFungibleObjects: [NonFungibleTokenObject] {
@@ -43,18 +43,18 @@ class TokensDataStore {
     ) {
         self.realm = realm
         self.account = account
-        self.addEthToken()
+        self.addNativeCoins()
     }
 
-    private func addEthToken() {
+    private func addNativeCoins() {
         if let token = realm.object(ofType: TokenObject.self, forPrimaryKey: EthereumAddress.zero.description) {
             try? realm.write {
                 realm.delete(token)
             }
         }
-        try? realm.write {
-            //realm.deleteAll()
-        }
+//        try? realm.write {
+//            realm.deleteAll()
+//        }
         let initialCoins = nativeCoin()
 
         for token in initialCoins {
@@ -63,8 +63,6 @@ class TokensDataStore {
                 add(tokens: [token])
             }
         }
-
-        NSLog(" tokens \(tokens)")
     }
 
     private func nativeCoin() -> [TokenObject] {
@@ -89,7 +87,8 @@ class TokensDataStore {
                 decimals: coin.server.decimals,
                 value: "0",
                 isCustom: false,
-                isDisabled: isDisabled
+                isDisabled: isDisabled,
+                order: coin.rawValue
             )
         }
     }

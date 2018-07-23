@@ -40,6 +40,7 @@ final class TokenObject: Object, Decodable {
     @objc dynamic var isDisabled: Bool = false
     @objc dynamic var balance: Double = DEFAULT_BALANCE
     @objc dynamic var createdAt: Date = Date()
+    @objc dynamic var order: Int = 100000
 
     convenience init(
         contract: String = "",
@@ -50,7 +51,8 @@ final class TokenObject: Object, Decodable {
         decimals: Int = 0,
         value: String,
         isCustom: Bool = false,
-        isDisabled: Bool = false
+        isDisabled: Bool = false,
+        order: Int = 0
     ) {
         self.init()
         self.contract = contract
@@ -64,6 +66,7 @@ final class TokenObject: Object, Decodable {
         self.value = value
         self.isCustom = isCustom
         self.isDisabled = isDisabled
+        self.order = order
     }
 
     private enum TokenObjectCodingKeys: String, CodingKey {

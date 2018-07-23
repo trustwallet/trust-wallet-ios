@@ -18,8 +18,7 @@ final class EditTokensViewController: UITableViewController {
     lazy var viewModel: EditTokenViewModel = {
         return EditTokenViewModel(
             network: network,
-            storage: storage,
-            config: session.config
+            storage: storage
         )
     }()
     weak var delegate: EditTokensViewControllerDelegate?
@@ -121,7 +120,6 @@ final class EditTokensViewController: UITableViewController {
         cell.viewModel = EditTokenTableCellViewModel(
             token: token.token,
             coinTicker: storage.coinTicker(for: token.token),
-            config: session.config,
             isLocal: token.local
         )
         cell.selectionStyle = token.local ? .none : .default

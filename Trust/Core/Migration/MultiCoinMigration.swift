@@ -36,10 +36,10 @@ class MultiCoinMigration {
     }
 
     func start() {
-        if appTracker.completeMultiCoinMigration == false {
+        if appTracker.launchCountTotal > 0, appTracker.completeMultiCoinMigration == false {
             self.runMigrate()
-            appTracker.completeMultiCoinMigration = true
         }
+        appTracker.completeMultiCoinMigration = true
     }
 
     //TODO: Just run this once

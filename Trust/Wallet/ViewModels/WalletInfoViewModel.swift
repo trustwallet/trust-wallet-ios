@@ -72,6 +72,7 @@ struct WalletInfoViewModel {
                 FormSection(
                     rows: [
                         .exportRecoveryPhrase(account),
+                        .exportPrivateKey(wallet.currentAccount),
                     ]
                 ),
                 FormSection(

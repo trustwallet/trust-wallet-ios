@@ -45,7 +45,7 @@ final class AppTracker {
     }
 
     func start() {
-        launchCountTotal += launchCountTotal
+        launchCountTotal += launchCountTotal + 1
         launchCountForCurrentBuild += 1
     }
 

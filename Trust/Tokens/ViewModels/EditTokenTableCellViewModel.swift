@@ -7,18 +7,15 @@ struct EditTokenTableCellViewModel {
 
     let token: TokenObject
     let coinTicker: CoinTicker?
-    let config: Config
     let isLocal: Bool
 
     init(
         token: TokenObject,
         coinTicker: CoinTicker?,
-        config: Config,
         isLocal: Bool = true
     ) {
         self.token = token
         self.coinTicker = coinTicker
-        self.config = config
         self.isLocal = isLocal
     }
 

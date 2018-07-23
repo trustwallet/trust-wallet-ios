@@ -9,21 +9,19 @@ final class EditTokenViewModel {
 
     let network: NetworkProtocol
     let storage: TokensDataStore
-    let config: Config
 
     private var tokens: Results<TokenObject> {
-        return storage.realm.objects(TokenObject.self).sorted(byKeyPath: "isDisabled", ascending: true)
+        return storage.realm.objects(TokenObject.self).sorted(byKeyPath: "order", ascending: true)
     }
 
     var localSet = Set<TokenObject>()
 
-    init(network: NetworkProtocol,
-         storage: TokensDataStore,
-         config: Config
+    init(
+        network: NetworkProtocol,
+        storage: TokensDataStore
     ) {
         self.network = network
         self.storage = storage
-        self.config = config
 
         self.localSet = Set(tokens)
     }
