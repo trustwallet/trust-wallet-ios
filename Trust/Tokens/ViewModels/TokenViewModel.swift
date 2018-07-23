@@ -206,7 +206,8 @@ final class TokenViewModel {
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
-        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: ChainState(server: server), currentWallet: session.account, server: token.coin.server)
+        let first = session.account.accounts.filter { $0.coin == token.coin }.first!
+        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: ChainState(server: server), currentAccount: first, server: token.coin.server)
     }
 
     func hasContent() -> Bool {
@@ -269,7 +270,10 @@ final class TokenViewModel {
             }
         }()
 
-        tokensNetwork.transactions(for: session.account.address, on: server, startBlock: 1, page: 0, contract: contract) { result in
+        let first = session.account.accounts.filter { $0.coin == token.coin }.first
+        guard let account = first else { return }
+
+        tokensNetwork.transactions(for: account.address, on: server, startBlock: 1, page: 0, contract: contract) { result in
             guard let transactions = result.0 else { return }
             self.transactionsStore.add(transactions)
         }

@@ -30,6 +30,7 @@ extension BalanceStatus {
     }
 
     var sufficient: Bool {
+        //TODO: Refactor
         return true
         switch self {
         case .ether(let etherSufficient, let gasSufficient):

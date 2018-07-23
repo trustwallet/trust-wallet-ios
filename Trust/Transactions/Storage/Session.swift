@@ -15,17 +15,12 @@ final class WalletSession {
         return BalanceCoordinator(account: account, config: config, storage: tokensStorage, server: RPCServer.main)
     }()
     let config: Config
-    var balance: Balance? {
-        return balanceCoordinator.balance
-    }
     let realm: Realm
     let sharedRealm: Realm
 
     var sessionID: String {
         return "\(account.description))"
     }
-
-    var balanceViewModel: Subscribable<BalanceBaseViewModel> = Subscribable(nil)
 
     // storage
 
@@ -52,15 +47,5 @@ final class WalletSession {
         self.realm = realm
         self.sharedRealm = sharedRealm
         self.config = config
-    }
-
-    func refresh() {
-        balanceCoordinator.refresh()
-    }
-}
-
-extension WalletSession: BalanceCoordinatorDelegate {
-    func didUpdate(viewModel: BalanceViewModel) {
-        balanceViewModel.value = viewModel
     }
 }

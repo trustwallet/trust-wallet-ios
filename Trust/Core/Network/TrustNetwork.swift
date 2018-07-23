@@ -70,7 +70,6 @@ final class TrustNetwork: NetworkProtocol {
 
     private func getTickerFrom(rawTicker: CoinTicker, withKey tickersKey: String) -> CoinTicker {
         return CoinTicker(
-            symbol: rawTicker.symbol,
             price: rawTicker.price,
             percent_change_24h: rawTicker.percent_change_24h,
             contract: EthereumAddress(string: rawTicker.contract) ?? EthereumAddress.zero, // This should not happen

@@ -125,8 +125,8 @@ struct ConfirmPaymentDetailsViewModel {
         switch transaction.transfer.type {
         case .token(let token):
             return balanceFormatter.string(from: transaction.value, decimals: token.decimals)
-        case .ether, .dapp:
-            return balanceFormatter.string(from: transaction.value)
+        case .ether(let token, _), .dapp(let token, _):
+            return balanceFormatter.string(from: transaction.value, decimals: token.decimals)
         }
     }
 

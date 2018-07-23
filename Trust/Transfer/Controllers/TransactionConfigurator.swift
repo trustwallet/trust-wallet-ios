@@ -163,13 +163,19 @@ final class TransactionConfigurator {
     }
     func valueToSend() -> BigInt {
         var value = transaction.value
-        if let balance = session.balance?.value,
-            balance == transaction.value {
-            value = transaction.value - configuration.gasLimit * configuration.gasPrice
-            //We work only with positive numbers.
-            if value.sign == .minus {
-                value = BigInt(value.magnitude)
+        switch transaction.transfer.type.token.type {
+        case .coin:
+            let balance = session.balanceCoordinator.balance(for: transaction.transfer.type.token)
+            if let balance = balance?.value,
+                balance == transaction.value {
+                value = transaction.value - configuration.gasLimit * configuration.gasPrice
+                //We work only with positive numbers.
+                if value.sign == .minus {
+                    value = BigInt(value.magnitude)
+                }
             }
+        case .ERC20:
+            return value
         }
         return value
     }
@@ -242,7 +248,9 @@ final class TransactionConfigurator {
         var gasSufficient = true
         var tokenSufficient = true
 
-        guard let balance = session.balance else {
+        let currentBalance = session.balanceCoordinator.balance(for: self.transaction.transfer.type.token)
+
+        guard let balance = currentBalance  else {
             return .ether(etherSufficient: etherSufficient, gasSufficient: gasSufficient)
         }
         let transaction = previewTransaction()

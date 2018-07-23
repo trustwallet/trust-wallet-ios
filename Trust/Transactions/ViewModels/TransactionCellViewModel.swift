@@ -3,13 +3,14 @@
 import BigInt
 import Foundation
 import UIKit
+import TrustKeystore
 
 struct TransactionCellViewModel {
 
     private let transaction: Transaction
     private let config: Config
     private let chainState: ChainState
-    private let currentWallet: WalletInfo
+    private let currentAccount: Account
     private let shortFormatter = EtherNumberFormatter.short
 
     private let transactionViewModel: TransactionViewModel
@@ -18,17 +19,17 @@ struct TransactionCellViewModel {
         transaction: Transaction,
         config: Config,
         chainState: ChainState,
-        currentWallet: WalletInfo,
+        currentAccount: Account,
         server: RPCServer
     ) {
         self.transaction = transaction
         self.config = config
         self.chainState = chainState
-        self.currentWallet = currentWallet
+        self.currentAccount = currentAccount
         self.transactionViewModel = TransactionViewModel(
             transaction: transaction,
             config: config,
-            currentWallet: currentWallet,
+            currentAccount: currentAccount,
             server: server
         )
     }

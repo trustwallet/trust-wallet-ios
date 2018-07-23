@@ -12,11 +12,13 @@ protocol TransactionViewControllerDelegate: class {
 final class TransactionViewController: UIViewController {
 
     private lazy var viewModel: TransactionDetailsViewModel = {
+        let first = session.account.accounts.filter { $0.coin == tokenViewModel.token.coin }.first!
+        //guard let account = first else { return }
         return TransactionDetailsViewModel(
             transaction: self.transaction,
             config: self.config,
             chainState: ChainState(server: tokenViewModel.server),
-            currentWallet: self.session.account,
+            currentAccount: first,
             currencyRate: self.session.balanceCoordinator.currencyRate,
             server: tokenViewModel.server,
             token: tokenViewModel.token

@@ -4,6 +4,7 @@ import BigInt
 import Foundation
 import UIKit
 import TrustCore
+import TrustKeystore
 
 struct TransactionDetailsViewModel {
 
@@ -36,7 +37,7 @@ struct TransactionDetailsViewModel {
         transaction: Transaction,
         config: Config,
         chainState: ChainState,
-        currentWallet: WalletInfo,
+        currentAccount: Account,
         currencyRate: CurrencyRate?,
         server: RPCServer,
         token: TokenObject
@@ -48,7 +49,7 @@ struct TransactionDetailsViewModel {
         self.transactionViewModel = TransactionViewModel(
             transaction: transaction,
             config: config,
-            currentWallet: currentWallet,
+            currentAccount: currentAccount,
             server: server
         )
         self.server = server

@@ -116,7 +116,7 @@ class TokensDataStore {
     func coinTicker(for token: TokenObject) -> CoinTicker? {
         guard let contract = EthereumAddress(string: token.contract) else { return .none }
         return tickers().first(where: {
-            return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: contract, currencyKey: $0.tickersKey)
+            return $0.key == CoinTickerKeyMaker.makePrimaryKey(contract: contract, currencyKey: $0.tickersKey)
         })
     }
 
