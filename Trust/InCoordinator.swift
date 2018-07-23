@@ -256,27 +256,6 @@ class InCoordinator: Coordinator {
         deviceChecker.start()
     }
 
-//    func showPaymentFlow(for type: PaymentFlow) {
-//        guard let tokensCoordinator = tokensCoordinator else { return }
-//        let nav = tokensCoordinator.navigationController
-//        let session = tokensCoordinator.session
-//        let tokenStorage = tokensCoordinator.store
-//
-//        guard let coin = token.coin else { return }
-//        let acc = session.account.accounts.filter { $0.coin == coin }.first!
-//
-//        switch (type, session.account.type) {
-//        case (.send(let type), .privateKey(let account)),
-//             (.send(let type), .hd(let account)):
-//
-//
-//        case (.request(let token), _):
-//
-//        case (.send, .address):
-//            nav.displayError(error: InCoordinatorError.onlyWatchAccount)
-//        }
-//    }
-
     func sendFlow(for token: TokenObject) {
         guard let tokensCoordinator = tokensCoordinator else { return }
         let nav = tokensCoordinator.navigationController

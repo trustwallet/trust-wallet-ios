@@ -94,7 +94,13 @@ class AppCoordinator: NSObject, Coordinator {
 
     private func migrations() {
         let multiCoinCigration = MultiCoinMigration(keystore: keystore, appTracker: appTracker)
-        multiCoinCigration.start()
+        let run = multiCoinCigration.start()
+        if run {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
+                //TODO
+                //self.navigationController.displayError(error: KeystoreError.accountNotFound)
+            }
+        }
     }
 
     func handleNotifications() {
