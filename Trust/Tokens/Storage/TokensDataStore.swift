@@ -71,7 +71,11 @@ class TokensDataStore {
     func preparedTickres() -> [CoinTicker] {
         let filteredTickers = tickers.filter { ticker in self.tokens.contains(where: { $0.contract == ticker.contract }) }
         return Array(filteredTickers)
-     }
+    }
+
+    func coinTicker(by contract: String) -> CoinTicker? {
+        return tickers.first(where: { $0.contract == contract })
+    }
 
     private func nativeCoin() -> [TokenObject] {
         return account.accounts.compactMap { ac in
