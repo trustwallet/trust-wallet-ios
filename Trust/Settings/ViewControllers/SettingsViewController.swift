@@ -165,8 +165,9 @@ final class SettingsViewController: FormViewController, Coordinator {
             cell.textLabel?.text = R.string.localizable.wallets()
             cell.detailTextLabel?.text = String(viewModel.name.prefix(14))
             cell.accessoryType = .disclosureIndicator
-        }.onCellSelection { (_, _) in
-            self.delegate?.didAction(action: .wallets, in: self)
+        }.onCellSelection { [weak self] (_, _) in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.didAction(action: .wallets, in: strongSelf)
         }
     }
 
@@ -270,7 +271,7 @@ final class SettingsViewController: FormViewController, Coordinator {
     private func developersRow() -> ButtonRow {
         return AppFormAppearance.button { row in
             row.cellStyle = .value1
-            row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback {
+            row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback {[weak self] in
                 let controller = DeveloperViewController()
                 controller.delegate = self
                 return controller

@@ -120,6 +120,7 @@ extension SettingsCoordinator: WalletsCoordinatorDelegate {
     }
 
     func didSelect(wallet: WalletInfo, in coordinator: WalletsCoordinator) {
+        coordinator.navigationController.removeChildCoordinators()
         delegate?.didRestart(with: wallet, in: self)
     }
 }

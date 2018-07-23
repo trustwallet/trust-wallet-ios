@@ -116,6 +116,10 @@ public class NavigationController: UIViewController {
         childNavigationController.setNavigationBarHidden(hidden, animated: animated)
     }
 
+    func removeChildCoordinators() {
+        viewControllersToChildCoordinators.removeAll()
+    }
+
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         var preferredStyle: UIStatusBarStyle
 
