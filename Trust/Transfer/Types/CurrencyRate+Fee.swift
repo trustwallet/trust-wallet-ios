@@ -9,7 +9,7 @@ extension CurrencyRate {
         guard let feeInDouble = Double(fee) else {
             return nil
         }
-        guard let price = self.rates[id] else {
+        guard let price = rates[id] else {
             return nil
         }
         return price * feeInDouble

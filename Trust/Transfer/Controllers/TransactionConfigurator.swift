@@ -248,7 +248,8 @@ final class TransactionConfigurator {
         var gasSufficient = true
         var tokenSufficient = true
 
-        let currentBalance = session.balanceCoordinator.balance(for: self.transaction.transfer.type.token)
+        // fetching price of the coin, not the erc20 token.
+        let currentBalance = session.balanceCoordinator.balance(for: self.transaction.transfer.type.token.coin.server.address)
 
         guard let balance = currentBalance  else {
             return .ether(etherSufficient: etherSufficient, gasSufficient: gasSufficient)

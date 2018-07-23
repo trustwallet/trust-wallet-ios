@@ -6,6 +6,7 @@ import JSONRPCKit
 import Result
 import BigInt
 import RealmSwift
+import TrustCore
 
 final class BalanceCoordinator {
     let storage: TokensDataStore
@@ -25,6 +26,13 @@ final class BalanceCoordinator {
     }
 
     func balance(for token: TokenObject) -> Balance? {
+        return Balance(value: token.valueBigInt)
+    }
+
+    func balance(for contract: EthereumAddress) -> Balance? {
+        guard let token = storage.realm.object(ofType: TokenObject.self, forPrimaryKey: contract.description) else {
+            return .none
+        }
         return Balance(value: token.valueBigInt)
     }
 }
