@@ -35,7 +35,6 @@ PODS:
   - R.swift (4.0.0):
     - R.swift.Library (~> 4.0.0)
   - R.swift.Library (4.0.0)
-  - RandomColorSwift (1.0.0)
   - Realm (3.7.1):
     - Realm/Headers (= 3.7.1)
   - Realm/Headers (3.7.1)
@@ -78,7 +77,6 @@ DEPENDENCIES:
   - PromiseKit (~> 6.0)
   - QRCodeReaderViewController (from `https://github.com/yannickl/QRCodeReaderViewController.git`, branch `master`)
   - R.swift
-  - RandomColorSwift
   - RealmSwift
   - SAMKeychain
   - SeedStackViewController
@@ -107,7 +105,6 @@ SPEC REPOS:
     - PromiseKit
     - R.swift
     - R.swift.Library
-    - RandomColorSwift
     - Realm
     - RealmSwift
     - Result
@@ -176,7 +173,6 @@ SPEC CHECKSUMS:
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
-  RandomColorSwift: 9f85058b721665d52d239ca166a913e083506444
   Realm: 906be37d52f17f25484ac01643a7f26a9d3bfbd5
   RealmSwift: 1c2b6bae3dc55bb87e080ffa96537d71442f6dce
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
@@ -192,6 +188,6 @@ SPEC CHECKSUMS:
   TrustWeb3Provider: 50fa391bdf170feb43dd4419992931510a5751d8
   URLNavigator: af5582fbbb3586c958be16835d799bfdb23a4793
 
-PODFILE CHECKSUM: e339ae67c0cf1b039b3a4751d58316518b2f93fd
+PODFILE CHECKSUM: 5f60c2a43f30d6192f158b09df8deacbccb2c773
 
 COCOAPODS: 1.5.3

@@ -52,9 +52,6 @@ class TokensDataStore {
                 realm.delete(token)
             }
         }
-//        try? realm.write {
-//            realm.deleteAll()
-//        }
         let initialCoins = nativeCoin()
 
         for token in initialCoins {
@@ -66,8 +63,8 @@ class TokensDataStore {
     }
 
     private func nativeCoin() -> [TokenObject] {
-        return account.accounts.compactMap { ac in
-            guard let coin = ac.coin else {
+        return account.accounts.compactMap { account in
+            guard let coin = account.coin else {
                 return .none
             }
             let viewModel = CoinViewModel(coin: coin)
