@@ -64,7 +64,10 @@ final class BrowserCoordinator: NSObject, Coordinator {
     }
 
     var server: RPCServer {
-        return .main
+        if session.account.multiWallet {
+            return .main
+        }
+        return session.account.coin!.server
     }
 
     weak var delegate: BrowserCoordinatorDelegate?

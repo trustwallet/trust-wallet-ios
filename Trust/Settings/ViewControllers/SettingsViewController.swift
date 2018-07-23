@@ -249,7 +249,7 @@ final class SettingsViewController: FormViewController, Coordinator {
         }.cellUpdate { cell, _ in
             cell.textLabel?.textColor = .black
             cell.imageView?.image = R.image.settings_colorful_dappbrowser()
-            cell.textLabel?.text = NSLocalizedString("settings.browser.title", value: "DApp Browser", comment: "")
+            cell.textLabel?.text = R.string.localizable.settingsBrowserTitle()
             cell.accessoryType = .disclosureIndicator
         }
     }

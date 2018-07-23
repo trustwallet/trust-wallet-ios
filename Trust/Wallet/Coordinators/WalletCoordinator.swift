@@ -169,7 +169,7 @@ final class WalletCoordinator: Coordinator {
     func showConfirm(for account: Wallet, completedBackup: Bool) {
         let type = WalletType.hd(account)
         let wallet = WalletInfo(type: type, info: WalletObject.from(type))
-        let initialName = WalletInfo.initialName(index: keystore.wallets.count - 1)
+        let initialName = R.string.localizable.mainWallet()
         keystore.store(object: wallet.info, fields: [
             .name(initialName),
             .backup(completedBackup),

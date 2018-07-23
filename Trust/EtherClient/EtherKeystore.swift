@@ -66,7 +66,7 @@ class EtherKeystore: Keystore {
         let addresses = watchAddresses.compactMap {
             EthereumAddress(string: $0)
         }.compactMap {
-            WalletAddress(coin: Coin.ethereum, address: $0)
+            WalletAddress(coin: .ethereum, address: $0)
         }
         storage.store(address: addresses)
         return true
