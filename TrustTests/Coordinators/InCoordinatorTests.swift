@@ -22,7 +22,7 @@ class InCoordinatorTests: XCTestCase {
         XCTAssertNotNil(tabbarController)
 
         XCTAssert((tabbarController?.viewControllers?[0] as? UINavigationController)?.viewControllers[0] is MasterBrowserViewController)
-        XCTAssert((tabbarController?.viewControllers?[1] as? UINavigationController)?.viewControllers[0] is TokensViewController)
+        XCTAssert((tabbarController?.viewControllers?[1] as? UINavigationController)?.viewControllers[0] is WalletViewController)
         XCTAssert((tabbarController?.viewControllers?[2] as? UINavigationController)?.viewControllers[0] is SettingsViewController)
     }
 
@@ -103,6 +103,6 @@ class InCoordinatorTests: XCTestCase {
 
         let viewController = (coordinator.tabBarController?.selectedViewController as? UINavigationController)?.viewControllers[0]
 
-        XCTAssert(viewController is TokensViewController)
+        XCTAssert(viewController is WalletViewController)
     }
 }

@@ -96,6 +96,6 @@ class TokensDataStoreTest: XCTestCase {
 
         let coinTicker = tokensDataStore.coinTicker(for: token)
 
-        XCTAssertEqual("0x0000000000000000000000000000000000000001_tickers-USD-1", coinTicker?.key)
+        XCTAssertEqual("0x0000000000000000000000000000000000000001_tickers-USD", coinTicker?.key)
     }
 }

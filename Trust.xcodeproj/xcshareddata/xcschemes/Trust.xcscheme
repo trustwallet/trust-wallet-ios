@@ -45,16 +45,7 @@
                   Identifier = "GetNonceProviderTests">
                </Test>
                <Test
-                  Identifier = "InCoordinatorTests">
-               </Test>
-               <Test
-                  Identifier = "InitialWalletCreationCoordinatorTests">
-               </Test>
-               <Test
                   Identifier = "SendViewModelTest">
-               </Test>
-               <Test
-                  Identifier = "TokensDataStoreTest">
                </Test>
                <Test
                   Identifier = "TypedMessageEncodingTests">
