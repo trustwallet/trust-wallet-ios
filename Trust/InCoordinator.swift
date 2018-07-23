@@ -386,10 +386,6 @@ extension InCoordinator: TokensCoordinatorDelegate {
     func didPress(url: URL, in coordinator: TokensCoordinator) {
         showTab(.browser(openURL: url))
     }
-
-    func didPressChangeWallet(in coordinator: TokensCoordinator) {
-        changeWallet()
-    }
 }
 
 extension InCoordinator: SendCoordinatorDelegate {

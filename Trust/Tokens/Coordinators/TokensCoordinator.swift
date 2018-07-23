@@ -9,7 +9,6 @@ protocol TokensCoordinatorDelegate: class {
     func didPressRequest(for token: TokenObject, in coordinator: TokensCoordinator)
     func didPress(url: URL, in coordinator: TokensCoordinator)
     func didPressDiscover(in coordinator: TokensCoordinator)
-    func didPressChangeWallet(in coordinator: TokensCoordinator)
 }
 
 final class TokensCoordinator: Coordinator {
@@ -25,7 +24,6 @@ final class TokensCoordinator: Coordinator {
         let tokensViewModel = TokensViewModel(session: session, store: store, tokensNetwork: network, transactionStore: transactionsStore)
         let controller = TokensViewController(viewModel: tokensViewModel)
         controller.delegate = self
-        controller.titleView.delegate = self
         return controller
     }()
     lazy var nonFungibleTokensViewController: NonFungibleTokensViewController = {
@@ -241,13 +239,6 @@ extension TokensCoordinator: TransactionViewControllerDelegate {
         navigationController.dismiss(animated: true, completion: nil)
     }
 }
-
-extension TokensCoordinator: WalletTitleViewDelegate {
-    func didTap(in view: WalletTitleView) {
-        delegate?.didPressChangeWallet(in: self)
-    }
-}
-
 extension TokensCoordinator: EditTokensViewControllerDelegate {
     func didDelete(token: TokenObject, in controller: EditTokensViewController) {
         store.delete(tokens: [token])

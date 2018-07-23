@@ -38,12 +38,6 @@ final class TokensViewController: UIViewController {
         return footer
     }()
 
-    lazy var titleView: WalletTitleView = {
-        let view = WalletTitleView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +72,6 @@ final class TokensViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-        navigationItem.titleView = titleView
         titleView.title = viewModel.headerViewTitle
         sheduleBalanceUpdate()
         NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)

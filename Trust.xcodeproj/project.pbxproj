@@ -148,7 +148,6 @@
 		29AD3D5120F5B9F9007893C9 /* WalletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD3D5020F5B9F9007893C9 /* WalletsViewController.swift */; };
 		29AD3D5720F5BB08007893C9 /* WalletsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD3D5620F5BB08007893C9 /* WalletsViewModel.swift */; };
 		29AD3D5920F5BD97007893C9 /* WalletsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD3D5820F5BD97007893C9 /* WalletsCoordinator.swift */; };
-		29AD3D5C20F6D2E3007893C9 /* WalletTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD3D5B20F6D2E3007893C9 /* WalletTitleView.swift */; };
 		29AD8A041F93D6CD008E10E7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD8A031F93D6CD008E10E7 /* Constants.swift */; };
 		29AD8A061F93DC8C008E10E7 /* PushDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD8A051F93DC8C008E10E7 /* PushDevice.swift */; };
 		29AD8A091F93F8B2008E10E7 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD8A081F93F8B2008E10E7 /* Session.swift */; };
@@ -629,7 +628,6 @@
 		29AD3D5020F5B9F9007893C9 /* WalletsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsViewController.swift; sourceTree = "<group>"; };
 		29AD3D5620F5BB08007893C9 /* WalletsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsViewModel.swift; sourceTree = "<group>"; };
 		29AD3D5820F5BD97007893C9 /* WalletsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsCoordinator.swift; sourceTree = "<group>"; };
-		29AD3D5B20F6D2E3007893C9 /* WalletTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTitleView.swift; sourceTree = "<group>"; };
 		29AD8A031F93D6CD008E10E7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		29AD8A051F93DC8C008E10E7 /* PushDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushDevice.swift; sourceTree = "<group>"; };
 		29AD8A071F93E1F0008E10E7 /* Trust.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Trust.entitlements; sourceTree = "<group>"; };
@@ -2178,7 +2176,6 @@
 				771AA963200D5EDB00D25403 /* WordCollectionViewCell.swift */,
 				771AA965200D5F1900D25403 /* WordCollectionViewCell.xib */,
 				77EAD88920E4803D00D14AA2 /* PassphraseBackgroundShadow.swift */,
-				29AD3D5B20F6D2E3007893C9 /* WalletTitleView.swift */,
 				7704836920FE99B600837735 /* CoinViewCell.swift */,
 				7704836A20FE99B600837735 /* CoinViewCell.xib */,
 			);
@@ -2828,7 +2825,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				29C70C7F20199AEB0072E454 /* WKWebViewConfiguration.swift in Sources */,
-				29AD3D5C20F6D2E3007893C9 /* WalletTitleView.swift in Sources */,
 				73ACEF0120163ED4003DD71D /* LockViewModel.swift in Sources */,
 				29AD8A041F93D6CD008E10E7 /* Constants.swift in Sources */,
 				29FF12FE1F75EA3F00AFD326 /* Keystore.swift in Sources */,
