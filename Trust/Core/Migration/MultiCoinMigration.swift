@@ -36,7 +36,7 @@ class MultiCoinMigration {
     }
 
     func start() -> Bool {
-        if appTracker.launchCountTotal > 0, appTracker.completeMultiCoinMigration == false {
+        if !keystore.wallets.isEmpty, appTracker.completeMultiCoinMigration == false {
             return self.runMigrate()
         }
         appTracker.completeMultiCoinMigration = true

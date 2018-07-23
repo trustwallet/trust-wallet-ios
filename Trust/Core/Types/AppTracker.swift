@@ -8,7 +8,7 @@ final class AppTracker {
         static let launchCountForCurrentBuild = "launchCountForCurrentBuild-" + String(Bundle.main.buildNumberInt)
         static let completedSharing = "completedSharing"
         static let completedRating = "completedRating"
-        static let completeMultiCoinMigration = "completeMultiCoinMigration"
+        static let completeMultiCoinMigration = "completeMultiCoinMigrationKey"
     }
 
     let defaults: UserDefaults
@@ -55,6 +55,7 @@ final class AppTracker {
         launchCountForCurrentBuild: \(launchCountForCurrentBuild)
         completedRating: \(completedRating)
         completedSharing: \(completedSharing)
+        completeMultiCoinMigration: \(completeMultiCoinMigration)
         """
     }
 }
