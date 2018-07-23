@@ -22,7 +22,7 @@ class TokensDataStore {
         return realm.objects(NonFungibleTokenCategory.self).sorted(byKeyPath: "name", ascending: true)
     }
     var tickers: Results<CoinTicker> {
-        return realm.objects(CoinTicker.self).filter("tickersKey == %@", CoinTickerKeyMaker.makeCurrencyKey()).sorted(byKeyPath: "contract", ascending: true)
+        return realm.objects(CoinTicker.self).filter("tickersKey == %@", CoinTickerKeyMaker.makeCurrencyKey())
     }
     let realm: Realm
     let account: WalletInfo
@@ -69,10 +69,8 @@ class TokensDataStore {
     }
 
     func preparedTickres() -> [CoinTicker] {
-        let filteredTickers = tickers.filter { ticker in self.tokens.contains(where: { $0.contract == ticker.contract }) }.sorted(by: { (left, right) -> Bool in
-                return left.contract < right.contract
-        })
-        return filteredTickers
+        let filteredTickers = tickers.filter { ticker in self.tokens.contains(where: { $0.contract == ticker.contract }) }
+        return Array(filteredTickers)
      }
 
     private func nativeCoin() -> [TokenObject] {
