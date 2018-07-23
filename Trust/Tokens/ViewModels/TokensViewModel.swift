@@ -5,6 +5,7 @@ import UIKit
 import RealmSwift
 import TrustCore
 import PromiseKit
+import TrustKeystore
 
 protocol TokensViewModelDelegate: class {
     func refresh()

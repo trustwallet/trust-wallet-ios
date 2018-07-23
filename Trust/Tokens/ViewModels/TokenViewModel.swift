@@ -3,6 +3,7 @@
 import Foundation
 import BigInt
 import RealmSwift
+import TrustKeystore
 import TrustCore
 
 final class TokenViewModel {
@@ -69,6 +70,10 @@ final class TokenViewModel {
     var server: RPCServer {
         return TokensDataStore.getServer(for: token)
     }
+
+    lazy var currentAccount: Account = {
+        return session.account.accounts.filter { $0.coin == token.coin }.first!
+    }()
 
     init(
         token: TokenObject,
@@ -206,8 +211,8 @@ final class TokenViewModel {
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
-        let first = session.account.accounts.filter { $0.coin == token.coin }.first!
-        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: ChainState(server: server), currentAccount: first, server: token.coin.server)
+
+        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: ChainState(server: server), currentAccount: currentAccount, server: token.coin.server)
     }
 
     func hasContent() -> Bool {
@@ -224,19 +229,17 @@ final class TokenViewModel {
     }
 
     static func balance(for token: TokenObject, wallet: WalletInfo) -> BalanceNetworkProvider? {
+        let first = wallet.accounts.filter { $0.coin == token.coin }.first
+        guard let account = first else { return .none }
         let networkBalance: BalanceNetworkProvider? = {
             switch token.type {
             case .coin:
-                let first = wallet.accounts.filter { $0.coin == token.coin }.first
-                guard let account = first  else { return .none }
                 return CoinNetworkProvider(
                     server: token.coin.server,
                     address: EthereumAddress(string: account.address.description)!,
                     addressUpdate: token.address
                 )
             case .ERC20:
-                let first = wallet.accounts.filter { $0.coin == token.coin }.first
-                guard let account = first  else { return .none }
                 return TokenNetworkProvider(
                     server: token.coin.server,
                     address: EthereumAddress(string: account.address.description)!,
@@ -269,11 +272,7 @@ final class TokenViewModel {
             case .ERC20: return token.contract
             }
         }()
-
-        let first = session.account.accounts.filter { $0.coin == token.coin }.first
-        guard let account = first else { return }
-
-        tokensNetwork.transactions(for: account.address, on: server, startBlock: 1, page: 0, contract: contract) { result in
+        tokensNetwork.transactions(for: currentAccount.address, on: server, startBlock: 1, page: 0, contract: contract) { result in
             guard let transactions = result.0 else { return }
             self.transactionsStore.add(transactions)
         }
