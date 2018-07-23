@@ -8,6 +8,7 @@ final class AppTracker {
         static let launchCountForCurrentBuild = "launchCountForCurrentBuild-" + String(Bundle.main.buildNumberInt)
         static let completedSharing = "completedSharing"
         static let completedRating = "completedRating"
+        static let completeMultiCoinMigration = "completeMultiCoinMigration"
     }
 
     let defaults: UserDefaults
@@ -30,6 +31,11 @@ final class AppTracker {
     var completedSharing: Bool {
         get { return defaults.bool(forKey: Keys.completedSharing) }
         set { return defaults.set(newValue, forKey: Keys.completedSharing) }
+    }
+
+    var completeMultiCoinMigration: Bool {
+        get { return defaults.bool(forKey: Keys.completeMultiCoinMigration) }
+        set { return defaults.set(newValue, forKey: Keys.completeMultiCoinMigration) }
     }
 
     init(

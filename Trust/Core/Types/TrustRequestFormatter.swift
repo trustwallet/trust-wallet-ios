@@ -12,4 +12,8 @@ struct TrustRequestFormatter {
         }
         return dict
     }
+
+    static func networks(from accounts: [Account]) -> [Int] {
+        return accounts.compactMap { $0.coin?.rawValue }
+    }
 }

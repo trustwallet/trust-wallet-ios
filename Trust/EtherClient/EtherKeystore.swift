@@ -16,7 +16,6 @@ class EtherKeystore: Keystore {
     struct Keys {
         static let recentlyUsedAddress: String = "recentlyUsedAddress"
         static let recentlyUsedWallet: String = "recentlyUsedWallet"
-        static let watchAddresses = "watchAddresses"
     }
 
     private let keychain: KeychainSwift
@@ -39,37 +38,6 @@ class EtherKeystore: Keystore {
         self.keyStore = try! KeyStore(keyDirectory: keysDirectory)
         self.userDefaults = userDefaults
         self.storage = storage
-
-        runMigrate()
-    }
-
-    //TODO: Just run this once
-    @discardableResult func runMigrate() -> Bool {
-        func keychainOldKey(for account: Account) -> String {
-            guard let wallet = account.wallet else {
-                return account.address.description.lowercased()
-            }
-            switch wallet.type {
-            case .encryptedKey:
-                return account.address.description.lowercased()
-            case .hierarchicalDeterministicWallet:
-                return "hd-wallet-" + account.address.description
-            }
-        }
-        keyStore.wallets.filter { !$0.accounts.isEmpty }.forEach { wallet in
-            if let account = wallet.accounts.first, let password = keychain.get(keychainOldKey(for: account)) {
-                setPassword(password, for: wallet)
-            }
-        }
-
-        // Move string addresses to WalletAddress
-        let addresses = watchAddresses.compactMap {
-            EthereumAddress(string: $0)
-        }.compactMap {
-            WalletAddress(coin: .ethereum, address: $0)
-        }
-        storage.store(address: addresses)
-        return true
     }
 
     var hasWallets: Bool {
@@ -99,18 +67,6 @@ class EtherKeystore: Keystore {
             },
         ].flatMap { $0 }.sorted(by: { $0.info.createdAt < $1.info.createdAt })
     }
-
-    // Deprecated
-    private var watchAddresses: [String] {
-        set {
-            let data = NSKeyedArchiver.archivedData(withRootObject: newValue)
-            return userDefaults.set(data, forKey: Keys.watchAddresses)
-        }
-        get {
-            guard let data = userDefaults.data(forKey: Keys.watchAddresses) else { return [] }
-            return NSKeyedUnarchiver.unarchiveObject(with: data) as? [String] ?? []
-        }
-     }
 
     var recentlyUsedWallet: WalletInfo? {
         set {

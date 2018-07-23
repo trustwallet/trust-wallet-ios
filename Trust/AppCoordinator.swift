@@ -39,6 +39,7 @@ class AppCoordinator: NSObject, Coordinator {
 
     func start() {
         inializers()
+        migrations()
         appTracker.start()
         handleNotifications()
         applyStyle()
@@ -89,6 +90,11 @@ class AppCoordinator: NSObject, Coordinator {
         if !keystore.hasWallets {
            lock.clear()
         }
+    }
+
+    private func migrations() {
+        let multiCoinCigration = MultiCoinMigration(keystore: keystore, appTracker: appTracker)
+        multiCoinCigration.start()
     }
 
     func handleNotifications() {

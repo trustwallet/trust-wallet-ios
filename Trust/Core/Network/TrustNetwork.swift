@@ -34,6 +34,9 @@ final class TrustNetwork: NetworkProtocol {
     private var dict: [String: [String]] {
         return TrustRequestFormatter.toAddresses(from: wallet.accounts)
     }
+    private var networks: [Int] {
+        return TrustRequestFormatter.networks(from: wallet.accounts)
+    }
 
     init(
         provider: MoyaProvider<TrustAPI>,
@@ -160,7 +163,7 @@ final class TrustNetwork: NetworkProtocol {
 
     func search(query: String) -> Promise<[TokenObject]> {
         return Promise { seal in
-            provider.request(.search(query: query, dict)) { result in
+            provider.request(.search(query: query, networks: networks)) { result in
                 switch result {
                 case .success(let response):
                     do {
