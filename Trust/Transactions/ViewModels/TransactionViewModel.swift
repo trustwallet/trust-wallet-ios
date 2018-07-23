@@ -3,13 +3,13 @@
 import Foundation
 import UIKit
 import BigInt
+import TrustKeystore
 
 struct TransactionViewModel {
 
     private let transaction: Transaction
     private let config: Config
-    private let chainState: ChainState
-    private let currentWallet: WalletInfo
+    private let currentAccount: Account
     private let shortFormatter = EtherNumberFormatter.short
     private let balanceFormatter = EtherNumberFormatter.balance
     private let fullFormatter = EtherNumberFormatter.full
@@ -17,14 +17,12 @@ struct TransactionViewModel {
     init(
         transaction: Transaction,
         config: Config,
-        chainState: ChainState,
-        currentWallet: WalletInfo,
+        currentAccount: Account,
         server: RPCServer
     ) {
         self.transaction = transaction
         self.config = config
-        self.chainState = chainState
-        self.currentWallet = currentWallet
+        self.currentAccount = currentAccount
         self.server = server
     }
 
@@ -39,14 +37,10 @@ struct TransactionViewModel {
     }
 
     var direction: TransactionDirection {
-        if currentWallet.address.description == transactionTo || currentWallet.address.description.lowercased() == transactionTo.lowercased() {
+        if currentAccount.address.description == transactionTo || currentAccount.address.description.lowercased() == transactionTo.lowercased() {
             return .incoming
         }
         return .outgoing
-    }
-
-    var confirmations: Int? {
-        return chainState.confirmations(fromBlock: transaction.blockNumber)
     }
 
     var amountTextColor: UIColor {

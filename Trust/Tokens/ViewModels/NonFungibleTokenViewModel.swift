@@ -61,7 +61,7 @@ final class NonFungibleTokenViewModel {
     func fetchAssets() -> Promise<[NonFungibleTokenCategory]> {
         return Promise { seal in
             firstly {
-                tokensNetwork.assets()
+                tokensNetwork.assets(for: self.address)
             }.done { [weak self] tokens in
                 self?.storage.add(tokens: tokens)
                 seal.fulfill(tokens)

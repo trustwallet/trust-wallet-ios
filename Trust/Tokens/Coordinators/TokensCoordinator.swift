@@ -22,17 +22,10 @@ final class TokensCoordinator: Coordinator {
     let transactionsStore: TransactionsStorage
 
     lazy var tokensViewController: TokensViewController = {
-        let tokensViewModel = TokensViewModel(wallet: session.account, store: store, tokensNetwork: network, transactionStore: transactionsStore)
+        let tokensViewModel = TokensViewModel(session: session, store: store, tokensNetwork: network, transactionStore: transactionsStore)
         let controller = TokensViewController(viewModel: tokensViewModel)
         controller.delegate = self
         controller.titleView.delegate = self
-        controller.navigationItem.leftBarButtonItems = [
-            UIBarButtonItem(image: R.image.collectibles(), style: .done, target: self, action: #selector(collectibles)),
-            //UIBarButtonItem(image: R.image.feed(), style: .done, target: self, action: #selector(transactions)),
-        ]
-        controller.navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(edit)),
-        ]
         return controller
     }()
     lazy var nonFungibleTokensViewController: NonFungibleTokensViewController = {
@@ -41,20 +34,26 @@ final class TokensCoordinator: Coordinator {
         controller.delegate = self
         return controller
     }()
+
+    lazy var masterViewController: WalletViewController = {
+        let masterViewController = WalletViewController(
+            tokensViewController: tokensViewController,
+            nonFungibleTokensViewController: nonFungibleTokensViewController
+        )
+        masterViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(edit))
+        return masterViewController
+    }()
+
     weak var delegate: TokensCoordinatorDelegate?
 
-    lazy var rootViewController: TokensViewController = {
-        return self.tokensViewController
+    lazy var rootViewController: WalletViewController = {
+        return masterViewController
     }()
 
     lazy var network: NetworkProtocol = {
-        let server = RPCServer(chainID: 1)! //Refactor
-        let balanceCoordinator = TokensBalanceService(server: server)
         return TrustNetwork(
             provider: TrustProviderFactory.makeProvider(),
-            balanceService: balanceCoordinator,
-            address: session.account.currentAccount.address,
-            server: server
+            wallet: session.account
         )
     }()
 
@@ -82,8 +81,8 @@ final class TokensCoordinator: Coordinator {
     }
 
     func newTokenViewController(token: ERC20Token?) -> NewTokenViewController {
-        let viewModel = NewTokenViewModel(token: token, tokensNetwork: network)
-        let controller = NewTokenViewController(token: token, viewModel: viewModel)
+        let viewModel = NewTokenViewModel(token: token, session: session, tokensNetwork: network)
+        let controller = NewTokenViewController(viewModel: viewModel)
         controller.delegate = self
         return controller
     }
@@ -93,7 +92,7 @@ final class TokensCoordinator: Coordinator {
             guard let address = EthereumAddress(string: token.contract) else {
                 return .none
             }
-            return ERC20Token(contract: address, name: token.name, symbol: token.symbol, decimals: token.decimals)
+            return ERC20Token(contract: address, name: token.name, symbol: token.symbol, decimals: token.decimals, coin: token.coin)
         }()
         return newTokenViewController(token: token)
     }
@@ -129,6 +128,7 @@ final class TokensCoordinator: Coordinator {
             storage: store,
             network: network
         )
+        controller.delegate = self
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
         navigationController.pushViewController(controller, animated: true)
     }
@@ -138,7 +138,7 @@ final class TokensCoordinator: Coordinator {
     }
 
     func addTokenContract(for contract: EthereumAddress) {
-        let _ = network.search(token: contract.description).done { [weak self] tokens in
+        let _ = network.search(query: contract.description).done { [weak self] tokens in
             guard let token = tokens.first else { return }
             self?.store.add(tokens: [token])
         }
@@ -149,8 +149,8 @@ final class TokensCoordinator: Coordinator {
     }
 
     @objc private func transactions() {
-        let coordinator = TransactionsCoordinator(session: session, storage: transactionsStore, network: network)
-        navigationController.pushCoordinator(coordinator: coordinator, animated: true)
+        //let coordinator = TransactionsCoordinator(session: session, storage: transactionsStore, network: network)
+        //navigationController.pushCoordinator(coordinator: coordinator, animated: true)
     }
 
     private func didSelectToken(_ token: NonFungibleTokenObject, with backgroundColor: UIColor) {
@@ -166,6 +166,10 @@ final class TokensCoordinator: Coordinator {
 }
 
 extension TokensCoordinator: TokensViewControllerDelegate {
+    func didRequest(token: TokenObject, in viewController: UIViewController) {
+        delegate?.didPressRequest(for: token, in: self)
+    }
+
     func didSelect(token: TokenObject, in viewController: UIViewController) {
         let controller = TokenViewController(
             viewModel: TokenViewModel(token: token, store: store, transactionsStore: transactionsStore, tokensNetwork: network, session: session)
@@ -173,18 +177,6 @@ extension TokensCoordinator: TokensViewControllerDelegate {
         controller.delegate = self
         controller.navigationItem.backBarButtonItem = .back
         navigationController.pushViewController(controller, animated: true)
-    }
-
-    func didDelete(token: TokenObject, in viewController: UIViewController) {
-        store.delete(tokens: [token])
-    }
-
-    func didDisable(token: TokenObject, in viewController: UIViewController) {
-        store.update(tokens: [token], action: .disable(true))
-    }
-
-    func didEdit(token: TokenObject, in viewController: UIViewController) {
-        editToken(token)
     }
 
     func didPressAddToken(in viewController: UIViewController) {
@@ -211,20 +203,11 @@ extension TokensCoordinator: NonFungibleTokensViewControllerDelegate {
 }
 
 extension TokensCoordinator: TokenViewControllerDelegate {
-    func didPressSend(for token: TokenObject, in controller: UIViewController) {
-        delegate?.didPressSend(for: token, in: self)
-    }
-
-    func didPressRequest(for token: TokenObject, in controller: UIViewController) {
-        delegate?.didPressRequest(for: token, in: self)
-    }
-
-    func didPress(transaction: Transaction, in controller: UIViewController) {
-        //TODO: Refactor
+    func didPress(viewModel: TokenViewModel, transaction: Transaction, in controller: UIViewController) {
         let controller = TransactionViewController(
             session: session,
             transaction: transaction,
-            server: RPCServer(chainID: 1)!
+            tokenViewModel: viewModel
         )
         controller.delegate = self
         NavigationController.openFormSheet(
@@ -232,6 +215,13 @@ extension TokensCoordinator: TokenViewControllerDelegate {
             in: navigationController,
             barItem: UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         )
+    }
+    func didPressSend(for token: TokenObject, in controller: UIViewController) {
+        delegate?.didPressSend(for: token, in: self)
+    }
+
+    func didPressRequest(for token: TokenObject, in controller: UIViewController) {
+        delegate?.didPressRequest(for: token, in: self)
     }
 
     func didPressInfo(for token: TokenObject, in controller: UIViewController) {
@@ -255,5 +245,20 @@ extension TokensCoordinator: TransactionViewControllerDelegate {
 extension TokensCoordinator: WalletTitleViewDelegate {
     func didTap(in view: WalletTitleView) {
         delegate?.didPressChangeWallet(in: self)
+    }
+}
+
+extension TokensCoordinator: EditTokensViewControllerDelegate {
+    func didDelete(token: TokenObject, in controller: EditTokensViewController) {
+        store.delete(tokens: [token])
+        controller.fetch()
+    }
+
+    func didDisable(token: TokenObject, in controller: EditTokensViewController) {
+        store.update(tokens: [token], action: .disable(true))
+    }
+
+    func didEdit(token: TokenObject, in controller: EditTokensViewController) {
+        editToken(token)
     }
 }

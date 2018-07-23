@@ -20,7 +20,7 @@ class WalletsViewController: UITableViewController {
     init(keystore: Keystore) {
         self.keystore = keystore
 
-        super.init(nibName: nil, bundle: nil)
+        super.init(style: .grouped)
     }
 
     override func viewDidLoad() {
@@ -30,6 +30,7 @@ class WalletsViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.register(R.nib.walletViewCell(), forCellReuseIdentifier: R.nib.walletViewCell.name)
         navigationItem.title = viewModel.title
+        tableView.tableFooterView = UIView()
 
         fetch()
     }
@@ -41,13 +42,8 @@ class WalletsViewController: UITableViewController {
     }
 
     func fetch(animated: Bool = true) {
-        if animated {
-            displayLoading()
-        }
-        viewModel.load { [weak self] in
-            self?.tableView.reloadData()
-            self?.hideLoading()
-        }
+        viewModel.refresh()
+        tableView.reloadData()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

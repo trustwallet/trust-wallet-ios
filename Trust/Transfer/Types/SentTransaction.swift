@@ -10,11 +10,11 @@ struct SentTransaction {
 }
 
 extension SentTransaction {
-    static func from(from: EthereumAddress, transaction: SentTransaction) -> Transaction {
+    static func from(transaction: SentTransaction) -> Transaction {
         return Transaction(
             id: transaction.id,
             blockNumber: 0,
-            from: from.description,
+            from: transaction.original.account.address.description,
             to: transaction.original.to?.description ?? "",
             value: transaction.original.value.description,
             gas: transaction.original.gasLimit.description,
@@ -22,6 +22,7 @@ extension SentTransaction {
             gasUsed: "",
             nonce: Int(transaction.original.nonce),
             date: Date(),
+            coin: transaction.original.account.coin!,
             localizedOperations: [transaction.original.localizedObject].compactMap { $0 },
             state: .pending
         )

@@ -23,36 +23,3 @@ final class WalletObject: Object {
         return info
     }
 }
-
-final class WalletAddress: Object {
-    @objc dynamic var id: String = ""
-    @objc dynamic var addressString: String = ""
-    @objc dynamic var coinID: Int = 60
-
-    convenience init(
-        coin: Coin,
-        address: Address
-    ) {
-        self.init()
-        self.id = "\(coin.rawValue)" + "-" + address.description
-        self.addressString = address.description
-        self.coinID = coin.rawValue
-    }
-
-    var coin: Coin? {
-        return Coin(rawValue: coinID)
-    }
-
-    var address: EthereumAddress? {
-        return EthereumAddress(string: addressString)
-    }
-
-    override static func primaryKey() -> String? {
-        return "id"
-    }
-
-    override func isEqual(_ object: Any?) -> Bool {
-        guard let object = object as? WalletAddress else { return false }
-        return object.id == id
-    }
-}

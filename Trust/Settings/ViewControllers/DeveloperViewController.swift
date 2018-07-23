@@ -51,7 +51,8 @@ struct DeveloperViewModel {
 }
 
 protocol DeveloperViewControllerDelegate: class {
-    //func didSelect(server: RPCServer, in controller: DeveloperViewController)
+    func didClearTransactions(in controller: DeveloperViewController)
+    func didClearTokens(in controller: DeveloperViewController)
 }
 
 final class DeveloperViewController: FormViewController {
@@ -80,12 +81,33 @@ final class DeveloperViewController: FormViewController {
 //        }
 
         form +++ Section()
-            <<< SwitchRow {
-                $0.title = R.string.localizable.enableTestNetworks()
-                $0.value = self.preferencesController.get(for: .testNetworks)
-        }.onChange { [weak self] row in
-            guard let enabled = row.value else { return }
-            self?.preferencesController.set(value: enabled, for: .testNetworks)
+
+//        <<< SwitchRow {
+//            $0.title = R.string.localizable.enableTestNetworks()
+//            $0.value = self.preferencesController.get(for: .testNetworks)
+//        }.onChange { [weak self] row in
+//            guard let enabled = row.value else { return }
+//            self?.preferencesController.set(value: enabled, for: .testNetworks)
+//        }
+
+        <<< AppFormAppearance.button { [weak self] in
+            $0.title = "Clear Transactions"
+        }.onCellSelection { [weak self] _, _ in
+            guard let `self` = self else { return }
+            self.delegate?.didClearTransactions(in: self)
+        }.cellUpdate { cell, _ in
+            cell.textLabel?.textAlignment = .left
+            cell.textLabel?.textColor = .black
+        }
+
+        <<< AppFormAppearance.button { [weak self] in
+            $0.title = "Clear Tokens"
+        }.onCellSelection { [weak self] _, _ in
+            guard let `self` = self else { return }
+            self.delegate?.didClearTokens(in: self)
+        }.cellUpdate { cell, _ in
+            cell.textLabel?.textAlignment = .left
+            cell.textLabel?.textColor = .black
         }
     }
 

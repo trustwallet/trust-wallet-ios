@@ -4,28 +4,18 @@ import Foundation
 import TrustCore
 import RealmSwift
 
-enum RefreshType {
-    case balance
-    case ethBalance
-}
-
 final class WalletSession {
     let account: WalletInfo
     lazy var balanceCoordinator: BalanceCoordinator = {
-        return BalanceCoordinator(account: account, config: config, storage: tokensStorage, server: RPCServer.main)
+        return BalanceCoordinator(storage: tokensStorage)
     }()
     let config: Config
-    var balance: Balance? {
-        return balanceCoordinator.balance
-    }
     let realm: Realm
     let sharedRealm: Realm
 
     var sessionID: String {
-        return "\(account.address.description.lowercased())-\(account.server.chainID)"
+        return "\(account.description))"
     }
-
-    var balanceViewModel: Subscribable<BalanceBaseViewModel> = Subscribable(nil)
 
     // storage
 
@@ -52,15 +42,5 @@ final class WalletSession {
         self.realm = realm
         self.sharedRealm = sharedRealm
         self.config = config
-    }
-
-    func refresh() {
-        balanceCoordinator.refresh()
-    }
-}
-
-extension WalletSession: BalanceCoordinatorDelegate {
-    func didUpdate(viewModel: BalanceViewModel) {
-        balanceViewModel.value = viewModel
     }
 }

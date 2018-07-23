@@ -14,7 +14,7 @@ struct ConfirmPaymentDetailsViewModel {
     private var monetaryAmountViewModel: MonetaryAmountViewModel {
         return MonetaryAmountViewModel(
             amount: amount,
-            address: transaction.transfer.type.contract(),
+            contract: transaction.transfer.type.contract,
             currencyRate: currencyRate
         )
     }
@@ -68,7 +68,7 @@ struct ConfirmPaymentDetailsViewModel {
 
     var requesterText: String {
         switch transaction.transfer.type {
-        case .dapp(let request):
+        case .dapp(_, let request):
             return request.url?.absoluteString ?? ""
         case .ether, .token:
             return transaction.address?.description ?? ""
@@ -114,7 +114,7 @@ struct ConfirmPaymentDetailsViewModel {
         let feeDouble = gasViewModel.feeCurrency ?? 0
         let amountDouble = monetaryAmountViewModel.amountCurrency ?? 0
 
-        let rate = CurrencyRate(rates: [])
+        let rate = CurrencyRate(rates: [:])
         guard let totalAmount = rate.format(fee: feeDouble + amountDouble) else {
             return "--"
         }
@@ -125,8 +125,8 @@ struct ConfirmPaymentDetailsViewModel {
         switch transaction.transfer.type {
         case .token(let token):
             return balanceFormatter.string(from: transaction.value, decimals: token.decimals)
-        case .ether, .dapp:
-            return balanceFormatter.string(from: transaction.value)
+        case .ether(let token, _), .dapp(let token, _):
+            return balanceFormatter.string(from: transaction.value, decimals: token.decimals)
         }
     }
 

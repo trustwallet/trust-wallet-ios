@@ -64,8 +64,7 @@ class WalletsCoordinator: RootCoordinator {
 
     func showWalletInfo(for wallet: WalletInfo, account: Account, sender: UIView) {
         let controller = WalletInfoViewController(
-            wallet: wallet,
-            account: account
+            wallet: wallet
         )
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)

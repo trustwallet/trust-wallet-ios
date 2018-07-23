@@ -3,32 +3,35 @@
 import Foundation
 import UIKit
 import Moya
+import RealmSwift
 
 final class EditTokenViewModel {
 
     let network: NetworkProtocol
     let storage: TokensDataStore
-    let config: Config
+
+    private var tokens: Results<TokenObject> {
+        return storage.realm.objects(TokenObject.self).sorted(byKeyPath: "order", ascending: true)
+    }
 
     var localSet = Set<TokenObject>()
 
-    init(network: NetworkProtocol,
-         storage: TokensDataStore,
-         config: Config
+    init(
+        network: NetworkProtocol,
+        storage: TokensDataStore
     ) {
         self.network = network
         self.storage = storage
-        self.config = config
 
-        self.localSet = Set(storage.objects)
+        self.localSet = Set(tokens)
     }
 
     var title: String {
-        return NSLocalizedString("Tokens", value: "Tokens", comment: "")
+        return R.string.localizable.tokens()
     }
 
     var searchPlaceholder: String {
-        return NSLocalizedString("editTokens.searchBar.placeholder.title", value: "Search tokens", comment: "")
+        return R.string.localizable.editTokensSearchBarPlaceholderTitle()
     }
 
     var numberOfSections: Int {
@@ -36,15 +39,19 @@ final class EditTokenViewModel {
     }
 
     func numberOfRowsInSection(_ section: Int) -> Int {
-        return storage.objects.count
+        return tokens.count
     }
 
     func token(for indexPath: IndexPath) -> (token: TokenObject, local: Bool) {
-        return (storage.objects[indexPath.row], true)
+        return (tokens[indexPath.row], true)
+    }
+
+    func canEdit(for path: IndexPath) -> Bool {
+        return tokens[path.row].isCustom
     }
 
     func searchNetwork(token: String, completion: (([TokenObject]) -> Void)?) {
-        network.search(token: token).done { [weak self] tokens in
+        network.search(query: token).done { [weak self] tokens in
             var filterSet = Set<TokenObject>()
             if let localSet = self?.localSet {
                 filterSet = localSet

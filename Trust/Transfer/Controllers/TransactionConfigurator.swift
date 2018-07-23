@@ -35,9 +35,7 @@ final class TransactionConfigurator {
     }
     var requestEstimateGas: Bool
 
-    lazy var nonceProvider: NonceProvider = {
-        return GetNonceProvider(storage: session.transactionsStorage, server: server)
-    }()
+    let nonceProvider: NonceProvider
 
     var configurationUpdate: Subscribable<TransactionConfiguration> = Subscribable(nil)
 
@@ -61,16 +59,18 @@ final class TransactionConfigurator {
         let calculatedGasLimit = transaction.gasLimit ?? TransactionConfigurator.gasLimit(for: transaction.transfer.type)
         let calculatedGasPrice = min(max(transaction.gasPrice ?? chainState.gasPrice ?? GasPriceConfiguration.default, GasPriceConfiguration.min), GasPriceConfiguration.max)
 
+        let nonceProvider = GetNonceProvider(storage: session.transactionsStorage, server: server, address: account.address)
+        self.nonceProvider = nonceProvider
+
         self.configuration = TransactionConfiguration(
             gasPrice: calculatedGasPrice,
             gasLimit: calculatedGasLimit,
             data: data,
-            nonce: transaction.nonce ?? -1 //Refactor BigInt(nonceProvider.nextNonce ?? -1)
+            nonce: transaction.nonce ?? BigInt(nonceProvider.nextNonce ?? -1)
         )
     }
 
     private static func data(for transaction: UnconfirmedTransaction, from: Address) -> Data {
-        guard let from = from as? EthereumAddress else { return Data() }
         guard let to = transaction.to else { return Data() }
         switch transaction.transfer.type {
         case .ether, .dapp:
@@ -163,13 +163,19 @@ final class TransactionConfigurator {
     }
     func valueToSend() -> BigInt {
         var value = transaction.value
-        if let balance = session.balance?.value,
-            balance == transaction.value {
-            value = transaction.value - configuration.gasLimit * configuration.gasPrice
-            //We work only with positive numbers.
-            if value.sign == .minus {
-                value = BigInt(value.magnitude)
+        switch transaction.transfer.type.token.type {
+        case .coin:
+            let balance = session.balanceCoordinator.balance(for: transaction.transfer.type.token)
+            if let balance = balance?.value,
+                balance == transaction.value {
+                value = transaction.value - configuration.gasLimit * configuration.gasPrice
+                //We work only with positive numbers.
+                if value.sign == .minus {
+                    value = BigInt(value.magnitude)
+                }
             }
+        case .ERC20:
+            return value
         }
         return value
     }
@@ -242,7 +248,10 @@ final class TransactionConfigurator {
         var gasSufficient = true
         var tokenSufficient = true
 
-        guard let balance = session.balance else {
+        // fetching price of the coin, not the erc20 token.
+        let currentBalance = session.balanceCoordinator.balance(for: self.transaction.transfer.type.token.coin.server.priceID)
+
+        guard let balance = currentBalance  else {
             return .ether(etherSufficient: etherSufficient, gasSufficient: gasSufficient)
         }
         let transaction = previewTransaction()

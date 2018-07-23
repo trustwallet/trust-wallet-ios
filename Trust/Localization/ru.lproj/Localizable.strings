@@ -231,3 +231,5 @@
 "NodeSettings" = "Параметры Узла ";
 "TestNetworks" = "Тестовые Сети";
 "EnableTestNetworks" = "Включить Тестовые Сети";
+"Network" = "Сеть";
+"MultiCoinWallet" = "Мульти-монетный кошелек";

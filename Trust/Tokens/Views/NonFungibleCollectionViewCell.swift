@@ -1,7 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import UIKit
-import RandomColorSwift
 
 final class NonFungibleCollectionViewCell: UICollectionViewCell {
 
@@ -17,7 +16,7 @@ final class NonFungibleCollectionViewCell: UICollectionViewCell {
         self.layer.shadowRadius = 2
         self.layer.shadowOpacity = 0.4
         self.layer.masksToBounds = false
-        imageViewBackground.backgroundColor = randomColor(hue: .random, luminosity: .light).withAlphaComponent(0.3)
+        imageViewBackground.backgroundColor = .randomPastelColor()
     }
 
     func configure(with viewModel: NonFungibleCollectionViewCellModel) {

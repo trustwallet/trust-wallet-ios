@@ -77,7 +77,7 @@ struct TokenViewCellViewModel {
     }
 
     var placeholderImage: UIImage? {
-        return R.image.ethereum_logo_256()
+        return token.placeholder
     }
 
     // Market Price
@@ -94,7 +94,7 @@ struct TokenViewCellViewModel {
         return TokensLayout.cell.marketPrice(for: ticker)
     }
 
-    var imageUrl: URL? {
-        return URL(string: token.imagePath)
+    var imageURL: URL? {
+        return token.imageURL
     }
 }

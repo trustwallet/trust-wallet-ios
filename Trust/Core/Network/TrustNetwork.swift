@@ -3,9 +3,12 @@
 import PromiseKit
 import Moya
 import TrustCore
+import TrustKeystore
 import JSONRPCKit
 import APIKit
 import Result
+import BigInt
+
 import enum Result.Result
 
 enum TrustNetworkProtocolError: LocalizedError {
@@ -13,14 +16,12 @@ enum TrustNetworkProtocolError: LocalizedError {
 }
 
 protocol NetworkProtocol: TrustNetworkProtocol {
-    func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void)
-    func assets() -> Promise<[NonFungibleTokenCategory]>
+    func assets(for address: Address) -> Promise<[NonFungibleTokenCategory]>
     func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]>
-    func ethBalance() -> Promise<Balance>
-    func tokensList(for address: Address) -> Promise<[TokenObject]>
-    func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
-    func update(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void)
-    func search(token: String) -> Promise<[TokenObject]>
+
+    func tokensList() -> Promise<[TokenObject]>
+    func transactions(for address: Address, on server: RPCServer, startBlock: Int, page: Int, contract: String?, completion: @escaping (_ result: ([Transaction]?, Bool)) -> Void)
+    func search(query: String) -> Promise<[TokenObject]>
 }
 
 final class TrustNetwork: NetworkProtocol {
@@ -28,20 +29,21 @@ final class TrustNetwork: NetworkProtocol {
     static let deleteMissingInternalSeconds: Double = 60.0
     static let deleyedTransactionInternalSeconds: Double = 60.0
     let provider: MoyaProvider<TrustAPI>
-    let balanceService: TokensBalanceService
-    let address: Address
-    let server: RPCServer
+    let wallet: WalletInfo
 
-    required init(
+    private var dict: [String: [String]] {
+        return TrustRequestFormatter.toAddresses(from: wallet.accounts)
+    }
+    private var networks: [Int] {
+        return TrustRequestFormatter.networks(from: wallet.accounts)
+    }
+
+    init(
         provider: MoyaProvider<TrustAPI>,
-        balanceService: TokensBalanceService,
-        address: Address,
-        server: RPCServer
+        wallet: WalletInfo
     ) {
         self.provider = provider
-        self.balanceService = balanceService
-        self.address = address
-        self.server = server
+        self.wallet = wallet
     }
 
     func tickers(with tokenPrices: [TokenPrice], completion: @escaping (_ tickers: [CoinTicker]?) -> Void) {
@@ -68,7 +70,6 @@ final class TrustNetwork: NetworkProtocol {
 
     private func getTickerFrom(rawTicker: CoinTicker, withKey tickersKey: String) -> CoinTicker {
         return CoinTicker(
-            symbol: rawTicker.symbol,
             price: rawTicker.price,
             percent_change_24h: rawTicker.percent_change_24h,
             contract: EthereumAddress(string: rawTicker.contract) ?? EthereumAddress.zero, // This should not happen
@@ -76,44 +77,9 @@ final class TrustNetwork: NetworkProtocol {
         )
     }
 
-    func tokenBalance(for contract: Address, completion: @escaping (_ result: Balance?) -> Void) {
-        if contract.description == address.description {
-            balanceService.getBalance(for: address) { result in
-                switch result {
-                case .success(let balance):
-                    completion(balance)
-                case .failure:
-                    completion(nil)
-                }
-            }
-        } else {
-            balanceService.getBalance(for: address, contract: contract) { result in
-                switch result {
-                case .success(let balance):
-                    completion(Balance(value: balance))
-                case .failure:
-                    completion(nil)
-                }
-            }
-        }
-    }
-
-    func ethBalance() -> Promise<Balance> {
+    func tokensList() -> Promise<[TokenObject]> {
         return Promise { seal in
-            balanceService.getBalance(for: address) { result in
-                switch result {
-                case .success(let balance):
-                    seal.fulfill(balance)
-                case .failure(let error):
-                    seal.reject(error)
-                }
-            }
-        }
-    }
-
-    func tokensList(for address: Address) -> Promise<[TokenObject]> {
-        return Promise { seal in
-            provider.request(.getTokens(server: server, address: address.description)) { result in
+            provider.request(.getTokens(dict)) { result in
                 switch result {
                 case .success(let response):
                     do {
@@ -155,9 +121,9 @@ final class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func assets() -> Promise<[NonFungibleTokenCategory]> {
+    func assets(for address: Address) -> Promise<[NonFungibleTokenCategory]> {
         return Promise { seal in
-            provider.request(.assets(server: server, address: address.description)) { result in
+            provider.request(.assets(address: address.description)) { result in
                 switch result {
                 case .success(let response):
                     do {
@@ -173,13 +139,18 @@ final class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func transactions(for address: Address, startBlock: Int, page: Int, contract: String?, completion: @escaping (([Transaction]?, Bool)) -> Void) {
+    func transactions(for address: Address, on server: RPCServer, startBlock: Int, page: Int, contract: String?, completion: @escaping (([Transaction]?, Bool)) -> Void) {
         provider.request(.getTransactions(server: server, address: address.description, startBlock: startBlock, page: page, contract: contract)) { result in
             switch result {
             case .success(let response):
                 do {
                     let transactions: [Transaction] = try response.map(ArrayResponse<Transaction>.self).docs
-                    completion((transactions, true))
+                    let newTransactions = transactions.map { transaction -> Transaction in
+                        let newTransaction = transaction
+                        newTransaction.coin = server.coin
+                        return newTransaction
+                    }
+                    completion((newTransactions, true))
                 } catch {
                     completion((nil, false))
                 }
@@ -189,60 +160,13 @@ final class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func update(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void) {
-        let request = GetTransactionRequest(hash: transaction.id)
-        Session.send(EtherServiceRequest(for: server, batch: BatchFactory().create(request))) { [weak self] result in
-            switch result {
-            case .success(let tx):
-                guard let newTransaction = Transaction.from(transaction: tx) else {
-                    return completion(.success((transaction, .pending)))
-                }
-                if newTransaction.blockNumber > 0 {
-                    self?.getReceipt(for: newTransaction, completion: completion)
-                }
-            case .failure(let error):
-                switch error {
-                case .responseError(let error):
-                    guard let error = error as? JSONRPCError else { return }
-                    switch error {
-                    case .responseError:
-                        if transaction.date > Date().addingTimeInterval(TrustNetwork.deleteMissingInternalSeconds) {
-                            completion(.success((transaction, .deleted)))
-                        }
-                    case .resultObjectParseError:
-                        if transaction.date > Date().addingTimeInterval(TrustNetwork.deleteMissingInternalSeconds) {
-                            completion(.success((transaction, .failed)))
-                        }
-                    default: break
-                    }
-                default: break
-                }
-            }
-        }
-    }
-
-    private func getReceipt(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void) {
-        let request = GetTransactionReceiptRequest(hash: transaction.id)
-        Session.send(EtherServiceRequest(for: server, batch: BatchFactory().create(request))) { result in
-            switch result {
-            case .success(let receipt):
-                let newTransaction = transaction
-                newTransaction.gasUsed = receipt.gasUsed
-                let state: TransactionState = receipt.status ? .completed : .failed
-                completion(.success((newTransaction, state)))
-            case .failure(let error):
-                completion(.failure(AnyError(error)))
-            }
-        }
-    }
-
-    func search(token: String) -> Promise<[TokenObject]> {
+    func search(query: String) -> Promise<[TokenObject]> {
         return Promise { seal in
-            provider.request(.search(server: server, token: token)) { result in
+            provider.request(.search(query: query, networks: networks)) { result in
                 switch result {
                 case .success(let response):
                     do {
-                        let tokens = try response.map([TokenObject].self)
+                        let tokens = try response.map(ArrayResponse<TokenObject>.self).docs
                         seal.fulfill(tokens)
                     } catch {
                         seal.reject(error)

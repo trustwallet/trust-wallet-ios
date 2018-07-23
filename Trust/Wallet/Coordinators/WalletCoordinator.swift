@@ -145,11 +145,11 @@ final class WalletCoordinator: Coordinator {
     }
 
     func walletCreated(wallet: WalletInfo, type: WalletDoneType) {
-        let controller = WalletCreatedController(wallet: wallet, type: type)
+        let controller = WalletCreatedController(viewModel: WalletCreatedViewModel(wallet: wallet, type: type))
         controller.delegate = self
         controller.navigationItem.backBarButtonItem = nil
         controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        navigationController.setNavigationBarHidden(false, animated: true)
+        navigationController.setNavigationBarHidden(true, animated: true)
         navigationController.pushViewController(controller, animated: true)
     }
 
@@ -169,7 +169,7 @@ final class WalletCoordinator: Coordinator {
     func showConfirm(for account: Wallet, completedBackup: Bool) {
         let type = WalletType.hd(account)
         let wallet = WalletInfo(type: type, info: WalletObject.from(type))
-        let initialName = WalletInfo.initialName(index: keystore.wallets.count - 1)
+        let initialName = R.string.localizable.mainWallet()
         keystore.store(object: wallet.info, fields: [
             .name(initialName),
             .backup(completedBackup),

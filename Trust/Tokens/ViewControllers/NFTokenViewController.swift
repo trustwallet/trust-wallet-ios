@@ -110,7 +110,7 @@ final class NFTokenViewController: UIViewController {
     }
 
     @objc func sendTap() {
-        
+
     }
 
     @objc func internalTap() {

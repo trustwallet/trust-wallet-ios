@@ -18,14 +18,11 @@ struct FormSection {
 struct WalletInfoViewModel {
 
     let wallet: WalletInfo
-    let currentAccount: Account
 
     init(
-        wallet: WalletInfo,
-        account: Account
+        wallet: WalletInfo
     ) {
         self.wallet = wallet
-        self.currentAccount = account
     }
 
     var title: String {
@@ -33,8 +30,8 @@ struct WalletInfoViewModel {
     }
 
     var name: String {
-        guard !wallet.mainWallet else {
-            return CoinViewModel(coin: wallet.coin ?? .ethereum).displayName
+        if wallet.info.name.isEmpty {
+            return WalletInfo.emptyName
         }
         return wallet.info.name
     }
@@ -49,28 +46,38 @@ struct WalletInfoViewModel {
             return [
                 FormSection(
                     rows: [
-                        .exportKeystore(currentAccount),
-                        .exportPrivateKey(currentAccount),
+                        .exportKeystore(wallet.currentAccount),
+                        .exportPrivateKey(wallet.currentAccount),
                     ]
                 ),
                 FormSection(
-                    footer: currentAccount.address.description,
+                    footer: wallet.currentAccount.address.description,
                     rows: [
                         .copyAddress(wallet.address),
                     ]
                 ),
             ]
         case .hd(let account):
+            if wallet.multiWallet {
+                return [
+                    FormSection(
+                        footer: R.string.localizable.multiCoinWallet(),
+                        rows: [
+                            .exportRecoveryPhrase(account),
+                        ]
+                    ),
+                ]
+            }
             return [
                 FormSection(
                     rows: [
                         .exportRecoveryPhrase(account),
-                        //.exportKeystore(account),
-                        .exportPrivateKey(currentAccount),
+                        .exportKeystore(wallet.currentAccount),
+                        .exportPrivateKey(wallet.currentAccount),
                     ]
                 ),
                 FormSection(
-                    footer: currentAccount.address.description,
+                    footer: wallet.currentAccount.address.description,
                     rows: [
                         .copyAddress(wallet.address),
                     ]
@@ -79,16 +86,12 @@ struct WalletInfoViewModel {
         case .address(_, let address):
             return [
                 FormSection(
-                    footer: currentAccount.address.description,
+                    footer: wallet.currentAccount.address.description,
                     rows: [
                         .copyAddress(address),
                     ]
                 ),
             ]
         }
-    }
-
-    var canEditName: Bool {
-        return !wallet.mainWallet
     }
 }

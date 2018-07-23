@@ -18,13 +18,12 @@ enum WalletInfoField {
 final class WalletInfoViewController: FormViewController {
 
     lazy var viewModel: WalletInfoViewModel = {
-        return WalletInfoViewModel(wallet: wallet, account: currentAccount)
+        return WalletInfoViewModel(wallet: wallet)
     }()
     var segmentRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.name)
     }
     let wallet: WalletInfo
-    let currentAccount: Account
 
     weak var delegate: WalletInfoViewControllerDelegate?
 
@@ -37,11 +36,9 @@ final class WalletInfoViewController: FormViewController {
     }()
 
     init(
-        wallet: WalletInfo,
-        account: Account
+        wallet: WalletInfo
     ) {
         self.wallet = wallet
-        self.currentAccount = account
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -59,7 +56,6 @@ final class WalletInfoViewController: FormViewController {
         }.cellUpdate { [weak self] cell, _ in
             cell.textField.placeholder = self?.viewModel.nameTitle
             cell.textField.rightViewMode = .always
-            cell.isUserInteractionEnabled = self?.viewModel.canEditName ?? false
         }
 
         for types in viewModel.sections {

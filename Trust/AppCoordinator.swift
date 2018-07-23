@@ -39,6 +39,7 @@ class AppCoordinator: NSObject, Coordinator {
 
     func start() {
         inializers()
+        migrations()
         appTracker.start()
         handleNotifications()
         applyStyle()
@@ -88,6 +89,17 @@ class AppCoordinator: NSObject, Coordinator {
         //We should clean passcode if there is no wallets. This step is required for app reinstall.
         if !keystore.hasWallets {
            lock.clear()
+        }
+    }
+
+    private func migrations() {
+        let multiCoinCigration = MultiCoinMigration(keystore: keystore, appTracker: appTracker)
+        let run = multiCoinCigration.start()
+        if run {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
+                //TODO
+                //self.navigationController.displayError(error: KeystoreError.accountNotFound)
+            }
         }
     }
 

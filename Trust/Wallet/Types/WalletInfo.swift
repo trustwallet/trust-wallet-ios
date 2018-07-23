@@ -30,6 +30,10 @@ struct WalletInfo {
         }
     }
 
+    var multiWallet: Bool {
+        return accounts.count > 1
+    }
+
     var mainWallet: Bool {
         return info.mainWallet
     }
@@ -46,7 +50,6 @@ struct WalletInfo {
     }
 
     var currentAccount: Account! {
-        //Refactor
         switch type {
         case .privateKey, .hd:
             return accounts.first //.filter { $0.description == info.selectedAccount }.first ?? accounts.first!
@@ -83,10 +86,6 @@ struct WalletInfo {
 
     var description: String {
         return type.description
-    }
-
-    var server: RPCServer {
-        return RPCServer(chainID: 1)! 
     }
 }
 

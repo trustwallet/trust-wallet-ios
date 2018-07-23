@@ -16,7 +16,7 @@ enum TokenAction {
 class TokensDataStore {
     var tokens: Results<TokenObject> {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO"))
-            .sorted(byKeyPath: "createdAt", ascending: true)
+            .sorted(byKeyPath: "order", ascending: true)
     }
     var nonFungibleTokens: Results<NonFungibleTokenCategory> {
         return realm.objects(NonFungibleTokenCategory.self).sorted(byKeyPath: "name", ascending: true)
@@ -25,12 +25,12 @@ class TokensDataStore {
     let account: WalletInfo
     var objects: [TokenObject] {
         return realm.objects(TokenObject.self)
-            .sorted(byKeyPath: "createdAt", ascending: true)
+            .sorted(byKeyPath: "order", ascending: true)
             .filter { !$0.contract.isEmpty }
     }
     var enabledObject: [TokenObject] {
         return realm.objects(TokenObject.self)
-            .sorted(byKeyPath: "createdAt", ascending: true)
+            .sorted(byKeyPath: "order", ascending: true)
             .filter { !$0.isDisabled }
     }
     var nonFungibleObjects: [NonFungibleTokenObject] {
@@ -43,67 +43,79 @@ class TokensDataStore {
     ) {
         self.realm = realm
         self.account = account
-        self.addEthToken()
+        self.addNativeCoins()
     }
 
-    private func addEthToken() {
+    private func addNativeCoins() {
         if let token = realm.object(ofType: TokenObject.self, forPrimaryKey: EthereumAddress.zero.description) {
             try? realm.write {
                 realm.delete(token)
             }
         }
-
-        try? realm.write {
-            realm.deleteAll()
-        }
-        
+//        try? realm.write {
+//            realm.deleteAll()
+//        }
         let initialCoins = nativeCoin()
-        add(tokens: initialCoins)
+
+        for token in initialCoins {
+            if let _ = realm.object(ofType: TokenObject.self, forPrimaryKey: token.contractAddress.description) {
+            } else {
+                add(tokens: [token])
+            }
+        }
     }
 
     private func nativeCoin() -> [TokenObject] {
         return account.accounts.compactMap { ac in
-            guard let coin = ac.coin, let server = getServer(for: coin) else {
+            guard let coin = ac.coin else {
                 return .none
             }
             let viewModel = CoinViewModel(coin: coin)
+            let isDisabled: Bool = {
+                if !account.mainWallet {
+                    return false
+                }
+                return coin.server.isDisabledByDefault
+            }()
 
             return TokenObject(
-                contract: server.contract,
+                contract: coin.server.priceID.description,
                 name: viewModel.name,
-                coin: coin.rawValue,
-                chainID: server.chainID,
+                coin: coin,
                 type: .coin,
                 symbol: viewModel.symbol,
-                decimals: server.decimals,
+                decimals: coin.server.decimals,
                 value: "0",
-                isCustom: false
+                isCustom: false,
+                isDisabled: isDisabled,
+                order: coin.rawValue
             )
         }
     }
 
-    private func getServer(for coin: Coin) -> RPCServer? {
-        switch coin {
-        case .ethereum: return RPCServer.main
-        case .ethereumClassic: return RPCServer.classic
-        case .poa: return RPCServer.poa
-        case .callisto: return RPCServer.callisto
-        case .gochain: return RPCServer.gochain
-        case .bitcoin: return .none
-        }
+    static func token(for server: RPCServer) -> TokenObject {
+        let coin = server.coin
+        let viewModel = CoinViewModel(coin: server.coin)
+        return TokenObject(
+            contract: server.priceID.description,
+            name: viewModel.name,
+            coin: coin,
+            type: .coin,
+            symbol: viewModel.symbol,
+            decimals: server.decimals,
+            value: "0",
+            isCustom: false
+        )
     }
 
-    static func getServer(for token: TokenObject) -> RPCServer? {
-        guard token.chainID > 0 else {
-            return .none
-        }
-        return RPCServer(chainID: token.chainID)
+    static func getServer(for token: TokenObject) -> RPCServer! {
+        return token.coin.server
     }
 
     func coinTicker(for token: TokenObject) -> CoinTicker? {
         guard let contract = EthereumAddress(string: token.contract) else { return .none }
         return tickers().first(where: {
-            return $0.key == CoinTickerKeyMaker.makePrimaryKey(symbol: $0.symbol, contract: contract, currencyKey: $0.tickersKey)
+            return $0.key == CoinTickerKeyMaker.makePrimaryKey(contract: contract, currencyKey: $0.tickersKey)
         })
     }
 
@@ -111,7 +123,8 @@ class TokensDataStore {
         let newToken = TokenObject(
             contract: token.contract.description,
             name: token.name,
-            type: .erc20,
+            coin: token.coin,
+            type: .ERC20,
             symbol: token.symbol,
             decimals: token.decimals,
             value: "0",
@@ -194,6 +207,8 @@ class TokensDataStore {
                         "name": token.name,
                         "symbol": token.symbol,
                         "decimals": token.decimals,
+                        "rawType": token.type.rawValue,
+                        "rawCoin": token.coin.rawValue,
                     ]
                     realm.create(TokenObject.self, value: update, update: true)
                 }
@@ -252,5 +267,18 @@ class TokensDataStore {
         }
 
         return amountInDecimal.doubleValue * price
+    }
+}
+
+extension Coin {
+    var server: RPCServer {
+        switch self {
+        case .bitcoin: return RPCServer.main //TODO
+        case .ethereum: return RPCServer.main
+        case .ethereumClassic: return RPCServer.classic
+        case .gochain: return RPCServer.gochain
+        case .callisto: return RPCServer.callisto
+        case .poa: return RPCServer.poa
+        }
     }
 }

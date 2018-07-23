@@ -5,6 +5,7 @@ import UIKit
 import RealmSwift
 import TrustCore
 import PromiseKit
+import TrustKeystore
 
 protocol TokensViewModelDelegate: class {
     func refresh()
@@ -17,11 +18,10 @@ final class TokensViewModel: NSObject {
     var tokensNetwork: NetworkProtocol
     let tokens: Results<TokenObject>
     var tokensObserver: NotificationToken?
-    let wallet: WalletInfo
     let transactionStore: TransactionsStorage
-
+    let session: WalletSession
     var headerViewTitle: String {
-        guard let coin = wallet.currentAccount.coin else { return "" }
+        guard let coin = session.account.currentAccount.coin else { return "" }
         return CoinViewModel(coin: coin).displayName
     }
 
@@ -61,17 +61,23 @@ final class TokensViewModel: NSObject {
         return UIFont.systemFont(ofSize: 13, weight: .light)
     }
 
+    var all: [TokenViewModel] {
+        return Array(tokens).map { token in
+            return TokenViewModel(token: token, config: config, store: store, transactionsStore: transactionStore, tokensNetwork: tokensNetwork, session: session)
+        }
+    }
+
     weak var delegate: TokensViewModelDelegate?
 
     init(
+        session: WalletSession,
         config: Config = Config(),
-        wallet: WalletInfo,
         store: TokensDataStore,
         tokensNetwork: NetworkProtocol,
         transactionStore: TransactionsStorage
     ) {
+        self.session = session
         self.config = config
-        self.wallet = wallet
         self.store = store
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
@@ -111,29 +117,18 @@ final class TokensViewModel: NSObject {
         return tokens[path.row].isCustom
     }
 
-    func canDisable(for path: IndexPath) -> Bool {
-        return true
-    }
-
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
         return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token), store: transactionStore)
     }
 
-    func updateEthBalance() {
-        firstly {
-            tokensNetwork.ethBalance()
-        }.done { [weak self] balance in
-            guard let `self` = self, let address = EthereumAddress(string: self.tokensNetwork.address.description) else { return }
-            self.store.update(balances: [address: balance.value])
-        }.catch { error in
-           NSLog("updateEthBalance \(error)")
-        }
+    func updateBalances() {
+        balances(for: Array(self.tokens))
     }
 
     private func tokensInfo() {
         firstly {
-            tokensNetwork.tokensList(for: wallet.address)
+            tokensNetwork.tokensList()
         }.done { [weak self] tokens in
              self?.store.update(tokens: tokens, action: .updateInfo)
         }.catch { error in
@@ -161,25 +156,20 @@ final class TokensViewModel: NSObject {
     }
 
     private func balances(for tokens: [TokenObject]) {
-
+        let balances: [BalanceNetworkProvider] = tokens.compactMap {
+            return TokenViewModel.balance(for: $0, wallet: session.account)
+        }
         let operationQueue: OperationQueue = OperationQueue()
         operationQueue.qualityOfService = .background
 
-        let balancesOperations = Array(tokens.lazy.map { TokenBalanceOperation(network: self.tokensNetwork, address: $0.address, store: self.store) })
+        let balancesOperations = Array(balances.lazy.map {
+            TokenBalanceOperation(balanceProvider: $0, store: self.store)
+        })
         operationQueue.addOperations(balancesOperations, waitUntilFinished: false)
     }
 
     func updatePendingTransactions() {
-        let transactions = transactionStore.pendingObjects
-        for transaction in transactions {
-            tokensNetwork.update(for: transaction) { result in
-                switch result {
-                case .success(let transaction, let state):
-                    self.transactionStore.update(state: state, for: transaction)
-                case .failure: break
-                }
-            }
-        }
+        all.forEach { $0.updatePending() }
     }
 
     func fetch() {

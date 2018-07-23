@@ -25,9 +25,9 @@ struct CoinTypeViewModel {
 
     var account: Account {
         switch type {
-        case .coin(let account,_):
+        case .coin(let account, _):
             return account
-        case .tokenOf(let account,_):
+        case .tokenOf(let account, _):
             return account
         }
     }
@@ -149,6 +149,12 @@ class InCoordinator: Coordinator {
         )
         session.transactionsStorage.removeTransactions(for: [.failed, .unknown])
 
+        let coins = Config.current.servers
+        if let wallet = account.currentWallet, account.accounts.count < coins.count, account.mainWallet {
+            let derivationPaths = coins.map { $0.derivationPath(at: 0) }
+            let _ = self.keystore.addAccount(to: wallet, derivationPaths: derivationPaths)
+        }
+
         let tabBarController = TabBarController()
         tabBarController.tabBar.isTranslucent = false
 
@@ -250,54 +256,39 @@ class InCoordinator: Coordinator {
         deviceChecker.start()
     }
 
-//    func showPaymentFlow(for type: PaymentFlow) {
-//        guard let tokensCoordinator = tokensCoordinator else { return }
-//        let nav = tokensCoordinator.navigationController
-//        let session = tokensCoordinator.session
-//        let tokenStorage = tokensCoordinator.store
-//
-//        guard let coin = token.coin else { return }
-//        let acc = session.account.accounts.filter { $0.coin == coin }.first!
-//
-//        switch (type, session.account.type) {
-//        case (.send(let type), .privateKey(let account)),
-//             (.send(let type), .hd(let account)):
-//
-//
-//        case (.request(let token), _):
-//
-//        case (.send, .address):
-//            nav.displayError(error: InCoordinatorError.onlyWatchAccount)
-//        }
-//    }
-
     func sendFlow(for token: TokenObject) {
         guard let tokensCoordinator = tokensCoordinator else { return }
         let nav = tokensCoordinator.navigationController
         let session = tokensCoordinator.session
 
         let transfer: Transfer = {
-            if token.isCoin {
-                let server = RPCServer(chainID: token.chainID)!
-                let transfer = Transfer(server: server, type: .ether(destination: .none))
-                return transfer
-            } else {
-                let server = RPCServer.main
-                let transfer = Transfer(server: server, type: .token(token))
-                return transfer
+            let server = token.coin.server
+            switch token.type {
+            case .coin:
+                return Transfer(server: server, type: .ether(token, destination: .none))
+            case .ERC20:
+                return Transfer(server: server, type: .token(token))
             }
         }()
 
-        let coordinator = SendCoordinator(
-            transfer: transfer,
-            navigationController: nav,
-            session: session,
-            keystore: keystore,
-            account: session.account.currentAccount
-        )
-        coordinator.delegate = self
-        addCoordinator(coordinator)
-        nav.pushCoordinator(coordinator: coordinator, animated: true)
+        switch session.account.type {
+        case .privateKey, .hd:
+            let first = session.account.accounts.filter { $0.coin == token.coin }.first
+            guard let account = first else { return }
+
+            let coordinator = SendCoordinator(
+                transfer: transfer,
+                navigationController: nav,
+                session: session,
+                keystore: keystore,
+                account: account
+            )
+            coordinator.delegate = self
+            addCoordinator(coordinator)
+            nav.pushCoordinator(coordinator: coordinator, animated: true)
+        case .address:
+            nav.displayError(error: InCoordinatorError.onlyWatchAccount)
+        }
     }
 
     func requestFlow(for token: TokenObject) {
@@ -305,21 +296,24 @@ class InCoordinator: Coordinator {
         let nav = tokensCoordinator.navigationController
         let session = tokensCoordinator.session
 
-        guard let coin = token.coin else { return }
-        let acc = session.account.accounts.filter { $0.coin == coin }.first!
+        let first = session.account.accounts.filter { $0.coin == token.coin }.first
+        guard let account = first else { return }
 
-        let viewModel = CoinTypeViewModel(type: .coin(acc, token))
+        let viewModel = CoinTypeViewModel(type: .coin(account, token))
         let coordinator = RequestCoordinator(
             session: session,
             coinTypeViewModel: viewModel
         )
         addCoordinator(coordinator)
         nav.pushCoordinator(coordinator: coordinator, animated: true)
+
+        if case .address = session.account.type {
+            coordinator.rootViewController.displayError(error: InCoordinatorError.onlyWatchAccount)
+        }
     }
 
     private func handlePendingTransaction(transaction: SentTransaction) {
-        guard let address = initialWallet.address as? EthereumAddress else { return }
-        let transaction = SentTransaction.from(from: address, transaction: transaction)
+        let transaction = SentTransaction.from(transaction: transaction)
         tokensCoordinator?.transactionsStore.add([transaction])
     }
 
@@ -384,9 +378,8 @@ extension InCoordinator: TokensCoordinatorDelegate {
     }
 
     func didPressDiscover(in coordinator: TokensCoordinator) {
-        //Refactor
-        //guard let url = Config().openseaURL else { return }
-        //showTab(.browser(openURL: url))
+        guard let url = RPCServer.main.openseaURL else { return }
+        showTab(.browser(openURL: url))
     }
 
     func didPress(url: URL, in coordinator: TokensCoordinator) {

@@ -20,7 +20,7 @@ enum Analitics: String {
         case .crashlytics:
             return NSLocalizedString("settings.analitics.crashlytics.description", value: "Help Trust developers to improve its product and service by automatically sending crash reports.", comment: "")
         case .branch:
-            return NSLocalizedString("settings.analitics.branch.description", value: "Help Trust improve user engagment by sharing deep links redirects.", comment: "")
+            return NSLocalizedString("settings.analitics.branch.description", value: "Help Trust improve user engagement by sharing deep links redirects.", comment: "")
         case .answer:
             return NSLocalizedString("settings.analitics.answer.description", value: "Help Trust improve user experience by sharing app daily diagnostic.", comment: "")
         }

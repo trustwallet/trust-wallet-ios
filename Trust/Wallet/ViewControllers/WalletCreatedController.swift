@@ -7,22 +7,9 @@ protocol WalletCreatedControllerDelegate: class {
     func didPressDone(wallet: WalletInfo, in controller: WalletCreatedController)
 }
 
-enum WalletDoneType {
-    case created
-    case imported
-
-    var title: String {
-        switch self {
-        case .created: return R.string.localizable.walletCreated()
-        case .imported: return R.string.localizable.walletCreated()
-        }
-    }
-}
-
 final class WalletCreatedController: UIViewController {
 
     weak var delegate: WalletCreatedControllerDelegate?
-    let wallet: WalletInfo
 
     lazy var doneButton: UIButton = {
         let button = Button(size: .large, style: .solid)
@@ -48,14 +35,13 @@ final class WalletCreatedController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    let type: WalletDoneType
+
+    let viewModel: WalletCreatedViewModel
 
     init(
-        wallet: WalletInfo,
-        type: WalletDoneType
+        viewModel: WalletCreatedViewModel
     ) {
-        self.wallet = wallet
-        self.type = type
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -67,16 +53,16 @@ final class WalletCreatedController: UIViewController {
         let stackView = UIStackView(arrangedSubviews: [
             imageView,
             .spacer(),
-            .label(style: .heading, text: type.title),
+            .label(style: .heading, text: viewModel.type.title),
             .spacer(),
             TransactionAppearance.item(
                 title: R.string.localizable.name(),
-                subTitle: wallet.info.name
+                subTitle: viewModel.title
             ),
             .spacer(),
             TransactionAppearance.item(
                 title: R.string.localizable.myWalletAddress(),
-                subTitle: wallet.address.description
+                subTitle: viewModel.subtitle
             ),
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,7 +88,7 @@ final class WalletCreatedController: UIViewController {
     }
 
     @objc func doneAction() {
-        delegate?.didPressDone(wallet: wallet, in: self)
+        delegate?.didPressDone(wallet: viewModel.wallet, in: self)
     }
 
     required init?(coder aDecoder: NSCoder) {
