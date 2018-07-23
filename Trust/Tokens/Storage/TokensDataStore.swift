@@ -137,7 +137,7 @@ class TokensDataStore {
         try? realm.write {
             if let tokenObjects = tokens as? [TokenObject] {
                 let tokenObjectsWithBalance = tokenObjects.map { tokenObject -> TokenObject in
-                    tokenObject.balance = self.getBalance(for: tokenObject, with: Array(tickers))
+                    tokenObject.balance = self.getBalance(for: tokenObject)
                     return tokenObject
                 }
                 realm.add(tokenObjectsWithBalance, update: true)
@@ -236,26 +236,9 @@ class TokensDataStore {
     }
 
     func getBalance(for token: TokenObject?) -> Double {
-        return getBalance(for: token, with: Array(tickers))
-    }
-
-    func getBalance(for token: TokenObject?, with tickers: [CoinTicker]) -> Double {
-        guard let token = token else {
+        guard let token = token, let ticker = coinTicker(by: token.address), let amountInBigInt = BigInt(token.value), let amountInDecimal = EtherNumberFormatter.full.decimal(from: amountInBigInt, decimals: token.decimals), let price = Double(ticker.price) else {
             return TokenObject.DEFAULT_BALANCE
         }
-
-        guard let ticker = tickers.first(where: { $0.contract == token.contract }) else {
-            return TokenObject.DEFAULT_BALANCE
-        }
-
-        guard let amountInBigInt = BigInt(token.value), let price = Double(ticker.price) else {
-            return TokenObject.DEFAULT_BALANCE
-        }
-
-        guard let amountInDecimal = EtherNumberFormatter.full.decimal(from: amountInBigInt, decimals: token.decimals) else {
-            return TokenObject.DEFAULT_BALANCE
-        }
-
         return amountInDecimal.doubleValue * price
     }
 }
