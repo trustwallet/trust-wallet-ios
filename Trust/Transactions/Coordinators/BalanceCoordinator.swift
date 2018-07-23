@@ -12,7 +12,7 @@ final class BalanceCoordinator {
     let storage: TokensDataStore
     var currencyRate: CurrencyRate {
         var rates: [String: Double] = [:]
-        storage.tickers().forEach { ticker in
+        storage.tickers.forEach { ticker in
             rates[ticker.contract] = Double(ticker.price) ?? 0
         }
         return CurrencyRate(
