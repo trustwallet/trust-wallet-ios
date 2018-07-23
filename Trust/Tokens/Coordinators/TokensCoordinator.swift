@@ -239,6 +239,7 @@ extension TokensCoordinator: TransactionViewControllerDelegate {
         navigationController.dismiss(animated: true, completion: nil)
     }
 }
+
 extension TokensCoordinator: EditTokensViewControllerDelegate {
     func didDelete(token: TokenObject, in controller: EditTokensViewController) {
         store.delete(tokens: [token])

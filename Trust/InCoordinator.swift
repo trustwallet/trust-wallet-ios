@@ -94,12 +94,6 @@ class InCoordinator: Coordinator {
     }()
     let events: [BranchEvent] = []
 
-    lazy var walletsCoordinator: WalletsCoordinator = {
-        let coordinator = WalletsCoordinator(keystore: keystore)
-        coordinator.delegate = self
-        return coordinator
-    }()
-
     init(
         navigationController: NavigationController = NavigationController(),
         wallet: WalletInfo,
@@ -124,8 +118,6 @@ class InCoordinator: Coordinator {
 
         helpUsCoordinator.start()
         addCoordinator(helpUsCoordinator)
-
-        walletsCoordinator.start()
     }
 
     func showTabBar(for account: WalletInfo) {
@@ -210,11 +202,6 @@ class InCoordinator: Coordinator {
         self.localSchemeCoordinator = localSchemeCoordinator
 
         observePendingTransactions(from: session.transactionsStorage)
-    }
-
-    func changeWallet() {
-        walletsCoordinator.walletController.tableView.scrollOnTop()
-        navigationController.present(walletsCoordinator.navigationController, animated: true)
     }
 
     func showTab(_ selectTab: Tabs) {
