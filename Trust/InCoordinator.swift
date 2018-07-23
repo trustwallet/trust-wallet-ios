@@ -149,6 +149,7 @@ class InCoordinator: Coordinator {
         )
         session.transactionsStorage.removeTransactions(for: [.failed, .unknown])
 
+        // Create coins based on supported networks
         let coins = Config.current.servers
         if let wallet = account.currentWallet, account.accounts.count < coins.count, account.mainWallet {
             let derivationPaths = coins.map { $0.derivationPath(at: 0) }
