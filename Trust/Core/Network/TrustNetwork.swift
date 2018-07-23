@@ -46,28 +46,6 @@ final class TrustNetwork: NetworkProtocol {
         self.wallet = wallet
     }
 
-    func tickers(with tokenPrices: [TokenPrice], completion: @escaping (_ tickers: [CoinTicker]?) -> Void) {
-        let tokensPriceToFetch = TokensPrice(
-            currency: Config.current.currency.rawValue,
-            tokens: tokenPrices
-        )
-        provider.request(.prices(tokensPriceToFetch)) { result in
-            guard case .success(let response) = result else {
-                completion(nil)
-                return
-            }
-            do {
-                let rawTickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
-                let tickers = rawTickers.map {rawTicker in
-                    return self.getTickerFrom(rawTicker: rawTicker, withKey: CoinTickerKeyMaker.makeCurrencyKey())
-                }
-                completion(tickers)
-            } catch {
-                completion(nil)
-            }
-        }
-    }
-
     private func getTickerFrom(rawTicker: CoinTicker, withKey tickersKey: String) -> CoinTicker {
         return CoinTicker(
             price: rawTicker.price,
