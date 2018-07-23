@@ -81,7 +81,7 @@ final class TokensCoordinator: Coordinator {
     }
 
     func newTokenViewController(token: ERC20Token?) -> NewTokenViewController {
-        let viewModel = NewTokenViewModel(token: token, tokensNetwork: network)
+        let viewModel = NewTokenViewModel(token: token, session: session, tokensNetwork: network)
         let controller = NewTokenViewController(viewModel: viewModel)
         controller.delegate = self
         return controller

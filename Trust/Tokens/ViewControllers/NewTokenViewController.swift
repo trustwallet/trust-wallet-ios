@@ -13,7 +13,6 @@ protocol NewTokenViewControllerDelegate: class {
 final class NewTokenViewController: FormViewController {
 
     private var viewModel: NewTokenViewModel
-
     private struct Values {
         static let network = "network"
         static let contract = "contract"
@@ -57,60 +56,63 @@ final class NewTokenViewController: FormViewController {
             pasteAction: { [unowned self] in self.pasteAction() },
             qrAction: { [unowned self] in self.openReader() }
         )
+        let section = Section()
 
-        form = Section()
+        if viewModel.networkSelectorAvailable {
+            section.append(networks())
+        }
 
-            <<< networks()
+        form = section
 
-            +++ Section()
+        +++ Section()
 
-            <<< AppFormAppearance.textFieldFloat(tag: Values.contract) { [unowned self] in
-                $0.add(rule: EthereumAddressRule())
-                $0.validationOptions = .validatesOnDemand
-                $0.title = R.string.localizable.contractAddress()
-                $0.value = self.viewModel.contract
-            }.cellUpdate { cell, _ in
-                cell.textField.textAlignment = .left
-                cell.textField.rightView = recipientRightView
-                cell.textField.rightViewMode = .always
-            }
+        <<< AppFormAppearance.textFieldFloat(tag: Values.contract) { [unowned self] in
+            $0.add(rule: EthereumAddressRule())
+            $0.validationOptions = .validatesOnDemand
+            $0.title = R.string.localizable.contractAddress()
+            $0.value = self.viewModel.contract
+        }.cellUpdate { cell, _ in
+            cell.textField.textAlignment = .left
+            cell.textField.rightView = recipientRightView
+            cell.textField.rightViewMode = .always
+        }
 
-            <<< AppFormAppearance.textFieldFloat(tag: Values.name) { [unowned self] in
-                $0.add(rule: RuleRequired())
-                $0.validationOptions = .validatesOnDemand
-                $0.title = R.string.localizable.name()
-                $0.value = self.viewModel.name
-            }
+        <<< AppFormAppearance.textFieldFloat(tag: Values.name) { [unowned self] in
+            $0.add(rule: RuleRequired())
+            $0.validationOptions = .validatesOnDemand
+            $0.title = R.string.localizable.name()
+            $0.value = self.viewModel.name
+        }
 
-            <<< AppFormAppearance.textFieldFloat(tag: Values.symbol) { [unowned self] in
-                $0.add(rule: RuleRequired())
-                $0.validationOptions = .validatesOnDemand
-                $0.title = R.string.localizable.symbol()
-                $0.value = self.viewModel.symbol
-            }
+        <<< AppFormAppearance.textFieldFloat(tag: Values.symbol) { [unowned self] in
+            $0.add(rule: RuleRequired())
+            $0.validationOptions = .validatesOnDemand
+            $0.title = R.string.localizable.symbol()
+            $0.value = self.viewModel.symbol
+        }
 
-            <<< AppFormAppearance.textFieldFloat(tag: Values.decimals) { [unowned self] in
-                $0.add(rule: RuleRequired())
-                $0.add(rule: RuleMaxLength(maxLength: 32))
-                $0.validationOptions = .validatesOnDemand
-                $0.title = R.string.localizable.decimals()
-                $0.cell.textField.keyboardType = .decimalPad
-                $0.value = self.viewModel.decimals
-            }
+        <<< AppFormAppearance.textFieldFloat(tag: Values.decimals) { [unowned self] in
+            $0.add(rule: RuleRequired())
+            $0.add(rule: RuleMaxLength(maxLength: 32))
+            $0.validationOptions = .validatesOnDemand
+            $0.title = R.string.localizable.decimals()
+            $0.cell.textField.keyboardType = .decimalPad
+            $0.value = self.viewModel.decimals
+        }
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(finish))
     }
 
     private func networks() -> PushRow<RPCServer> {
         return PushRow<RPCServer> {
-                $0.tag = Values.network
-                $0.title = R.string.localizable.network()
-                $0.selectorTitle = R.string.localizable.network()
-                $0.options = [.main, .poa, .classic, .gochain]
-                $0.value = .main
-                $0.displayValueFor = { value in
-                    return value?.name
-                }
+            $0.tag = Values.network
+            $0.title = R.string.localizable.network()
+            $0.selectorTitle = R.string.localizable.network()
+            $0.options = viewModel.networks
+            $0.value = viewModel.network
+            $0.displayValueFor = { value in
+                return value?.name
+            }
         }.onPresent { _, selectorController in
             selectorController.enableDeselection = false
         }}
