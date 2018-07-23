@@ -16,7 +16,7 @@ final class NonFungibleCollectionViewCell: UICollectionViewCell {
         self.layer.shadowRadius = 2
         self.layer.shadowOpacity = 0.4
         self.layer.masksToBounds = false
-        imageViewBackground.backgroundColor = UIColor.randomPastelColor()
+        imageViewBackground.backgroundColor = .randomPastelColor()
     }
 
     func configure(with viewModel: NonFungibleCollectionViewCellModel) {
