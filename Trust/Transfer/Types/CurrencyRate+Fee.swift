@@ -9,10 +9,10 @@ extension CurrencyRate {
         guard let feeInDouble = Double(fee) else {
             return nil
         }
-        guard let price = self.rates.filter({ $0.contract == id }).first else {
+        guard let price = self.rates[id] else {
             return nil
         }
-        return price.price * feeInDouble
+        return price * feeInDouble
     }
 
     func format(fee: Double, formatter: NumberFormatter = CurrencyFormatter.formatter) -> String? {

@@ -50,19 +50,6 @@ final class CoinTicker: Object, Decodable {
     }
 }
 
-extension CoinTicker {
-    func rate() -> CurrencyRate {
-        return CurrencyRate(
-            rates: [
-                Rate(
-                    price: Double(price) ?? 0,
-                    contract: contract
-                ),
-            ]
-        )
-    }
-}
-
 struct CoinTickerKeyMaker {
     static func makePrimaryKey(contract: EthereumAddress, currencyKey: String) -> String {
         return "\(contract)_\(currencyKey)"

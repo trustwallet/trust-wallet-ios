@@ -114,7 +114,7 @@ struct ConfirmPaymentDetailsViewModel {
         let feeDouble = gasViewModel.feeCurrency ?? 0
         let amountDouble = monetaryAmountViewModel.amountCurrency ?? 0
 
-        let rate = CurrencyRate(rates: [])
+        let rate = CurrencyRate(rates: [:])
         guard let totalAmount = rate.format(fee: feeDouble + amountDouble) else {
             return "--"
         }

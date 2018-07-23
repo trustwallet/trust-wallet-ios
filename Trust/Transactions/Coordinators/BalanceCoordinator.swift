@@ -8,25 +8,20 @@ import BigInt
 import RealmSwift
 
 final class BalanceCoordinator {
-    let account: WalletInfo
     let storage: TokensDataStore
-    let config: Config
     var currencyRate: CurrencyRate {
+        var rates: [String: Double] = [:]
+        storage.tickers().forEach { ticker in
+            rates[ticker.contract] = Double(ticker.price) ?? 0
+        }
         return CurrencyRate(
-            rates: storage.tickers().map { Rate(price: Double($0.price) ?? 0, contract: $0.contract) }
+            rates: rates
         )
     }
-    let server: RPCServer
     init(
-        account: WalletInfo,
-        config: Config,
-        storage: TokensDataStore,
-        server: RPCServer
+        storage: TokensDataStore
     ) {
-        self.account = account
-        self.config = config
         self.storage = storage
-        self.server = server
     }
 
     func balance(for token: TokenObject) -> Balance? {

@@ -4,15 +4,10 @@ import Foundation
 import TrustCore
 import RealmSwift
 
-enum RefreshType {
-    case balance
-    case ethBalance
-}
-
 final class WalletSession {
     let account: WalletInfo
     lazy var balanceCoordinator: BalanceCoordinator = {
-        return BalanceCoordinator(account: account, config: config, storage: tokensStorage, server: RPCServer.main)
+        return BalanceCoordinator(storage: tokensStorage)
     }()
     let config: Config
     let realm: Realm
