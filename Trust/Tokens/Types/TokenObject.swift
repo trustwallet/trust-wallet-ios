@@ -17,6 +17,7 @@ enum TokenObjectType: String {
 
 final class TokenObject: Object, Decodable {
     static let DEFAULT_BALANCE = 0.00
+    static let DEFAULT_ORDER = 100000
 
     @objc dynamic var contract: String = ""
     @objc dynamic var name: String = ""
@@ -40,7 +41,7 @@ final class TokenObject: Object, Decodable {
     @objc dynamic var isDisabled: Bool = false
     @objc dynamic var balance: Double = DEFAULT_BALANCE
     @objc dynamic var createdAt: Date = Date()
-    @objc dynamic var order: Int = 100000
+    @objc dynamic var order: Int = DEFAULT_ORDER
 
     convenience init(
         contract: String = "",
@@ -52,7 +53,7 @@ final class TokenObject: Object, Decodable {
         value: String,
         isCustom: Bool = false,
         isDisabled: Bool = false,
-        order: Int = 0
+        order: Int = DEFAULT_ORDER
     ) {
         self.init()
         self.contract = contract

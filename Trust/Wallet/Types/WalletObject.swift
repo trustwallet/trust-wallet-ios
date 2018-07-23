@@ -25,7 +25,7 @@ final class WalletObject: Object {
 }
 
 final class WalletAddress: Object {
-    @objc dynamic var id: String = ""
+    @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var addressString: String = ""
     @objc private dynamic var rawCoin = -1
     public var coin: Coin {
@@ -38,7 +38,6 @@ final class WalletAddress: Object {
         address: Address
     ) {
         self.init()
-        self.id = "\(coin.rawValue)" + "-" + address.description
         self.addressString = address.description
         self.coin = coin
     }
@@ -57,6 +56,6 @@ final class WalletAddress: Object {
 
     override func isEqual(_ object: Any?) -> Bool {
         guard let object = object as? WalletAddress else { return false }
-        return object.id == id
+        return object.address == address
     }
 }

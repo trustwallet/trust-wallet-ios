@@ -84,6 +84,10 @@
                             <constraint firstAttribute="bottom" secondItem="BUP-CU-bxN" secondAttribute="bottom" constant="12" id="y12-Cd-Pet"/>
                         </constraints>
                     </stackView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jYv-Ok-x0E">
+                        <rect key="frame" x="54" y="11" width="16" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="JUd-EF-Sra" firstAttribute="top" secondItem="iFR-Po-1R4" secondAttribute="top" id="0Qw-Iq-hqe"/>
@@ -102,6 +106,7 @@
                 <outlet property="glassesImageView" destination="mbU-gV-kxo" id="Ry7-WR-mb2"/>
                 <outlet property="identiconImageView" destination="BUP-CU-bxN" id="j77-1f-TUd"/>
                 <outlet property="infoButton" destination="0Io-0E-DkX" id="FjW-Cs-BT6"/>
+                <outlet property="selectedImageView" destination="jYv-Ok-x0E" id="nTi-6e-Uuc"/>
                 <outlet property="walletTypeImageView" destination="mbU-gV-kxo" id="B3W-b6-OAX"/>
             </connections>
             <point key="canvasLocation" x="-151" y="-68.5"/>

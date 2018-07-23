@@ -23,6 +23,7 @@ final class ExportPrivateKeyViewConroller: UIViewController {
         label.adjustsFontSizeToFitWidth = true
         label.text = viewModel.headlineText
         label.textColor = Colors.red
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
 
@@ -33,6 +34,7 @@ final class ExportPrivateKeyViewConroller: UIViewController {
         label.textColor = Colors.red
         label.textAlignment = .center
         label.numberOfLines = 0
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
 

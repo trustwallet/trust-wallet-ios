@@ -42,13 +42,8 @@ class WalletsViewController: UITableViewController {
     }
 
     func fetch(animated: Bool = true) {
-        if animated {
-            displayLoading()
-        }
-        viewModel.load { [weak self] in
-            self?.tableView.reloadData()
-            self?.hideLoading()
-        }
+        viewModel.refresh()
+        tableView.reloadData()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

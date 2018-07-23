@@ -61,7 +61,6 @@ final class NewTokenViewController: FormViewController {
         if viewModel.networkSelectorAvailable {
             section.append(networks())
         }
-
         form = section
 
         +++ Section()

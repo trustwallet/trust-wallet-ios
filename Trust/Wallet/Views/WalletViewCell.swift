@@ -15,7 +15,8 @@ final class WalletViewCell: UITableViewCell {
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var identiconImageView: TokenImageView!
-
+    @IBOutlet weak var selectedImageView: UIImageView!
+    
     weak var delegate: WalletViewCellDelegate?
 
     var viewModel: WalletAccountViewModel? {
@@ -28,6 +29,7 @@ final class WalletViewCell: UITableViewCell {
             glassesImageView.isHidden = !model.isWatch
             infoButton.tintColor = Colors.lightBlue
             identiconImageView.image = model.image
+            selectedImageView.image = model.selectedImage
         }
     }
 

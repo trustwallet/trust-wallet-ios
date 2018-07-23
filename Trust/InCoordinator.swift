@@ -149,6 +149,12 @@ class InCoordinator: Coordinator {
         )
         session.transactionsStorage.removeTransactions(for: [.failed, .unknown])
 
+        let coins = Config.current.servers
+        if let wallet = account.currentWallet, account.accounts.count < coins.count, account.mainWallet {
+            let derivationPaths = coins.map { $0.derivationPath(at: 0) }
+            let _ = self.keystore.addAccount(to: wallet, derivationPaths: derivationPaths)
+        }
+
         let tabBarController = TabBarController()
         tabBarController.tabBar.isTranslucent = false
 

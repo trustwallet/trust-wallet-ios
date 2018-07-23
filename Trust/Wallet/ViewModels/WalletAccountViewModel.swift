@@ -8,6 +8,7 @@ import TrustCore
 struct WalletAccountViewModel {
     let wallet: WalletInfo
     let account: Account
+    let currentWallet: WalletInfo?
 
     var title: String {
         if wallet.multiWallet {
@@ -36,6 +37,13 @@ struct WalletAccountViewModel {
             return R.image.trust_icon()
         }
         return CoinViewModel(coin: coin).image
+    }
+
+    var selectedImage: UIImage? {
+        if currentWallet == wallet {
+            return R.image.blueCheck()
+        }
+        return .none
     }
 
     var canDelete: Bool {
