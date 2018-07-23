@@ -165,8 +165,9 @@ final class SettingsViewController: FormViewController, Coordinator {
             cell.textLabel?.text = R.string.localizable.wallets()
             cell.detailTextLabel?.text = String(viewModel.name.prefix(14))
             cell.accessoryType = .disclosureIndicator
-        }.onCellSelection { (_, _) in
-            self.delegate?.didAction(action: .wallets, in: self)
+        }.onCellSelection { [weak self] (_, _) in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.didAction(action: .wallets, in: strongSelf)
         }
     }
 
