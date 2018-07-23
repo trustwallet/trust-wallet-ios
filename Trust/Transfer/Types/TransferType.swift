@@ -46,4 +46,15 @@ extension TransferType {
             return token
         }
     }
+
+    var address: EthereumAddress {
+        switch self {
+        case .ether(let token, _):
+            return token.address
+        case .dapp(let token, _):
+            return token.address
+        case .token(let token):
+            return token.address
+        }
+    }
 }

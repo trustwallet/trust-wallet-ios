@@ -17,7 +17,6 @@ final class TokensViewModel: NSObject {
     let store: TokensDataStore
     var tokensNetwork: NetworkProtocol
     let tokens: Results<TokenObject>
-    var tickers: [CoinTicker]
     var tokensObserver: NotificationToken?
     let transactionStore: TransactionsStorage
     let session: WalletSession
@@ -78,7 +77,6 @@ final class TokensViewModel: NSObject {
         self.store = store
         self.tokensNetwork = tokensNetwork
         self.tokens = store.tokens
-        self.tickers = store.preparedTickres()
         self.transactionStore = transactionStore
         super.init()
     }
@@ -95,7 +93,7 @@ final class TokensViewModel: NSObject {
     }
 
     private func amount(for token: TokenObject) -> Double {
-        guard let coinTicker = store.coinTicker(for: token) else {
+        guard let coinTicker = store.coinTicker(by: token.address) else {
             return 0
         }
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
@@ -117,9 +115,7 @@ final class TokensViewModel: NSObject {
 
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
-        let ticker: CoinTicker? = tickers.first { (ticker) -> Bool in
-            return ticker.contract == token.address.description
-        }
+        let ticker = store.coinTicker(by: token.address)
         return TokenViewCellViewModel(token: token, ticker: ticker, store: transactionStore)
     }
 
@@ -150,7 +146,6 @@ final class TokensViewModel: NSObject {
         }.done { [weak self] tickers in
             guard let strongSelf = self else { return }
             strongSelf.store.saveTickers(tickers: tickers)
-            strongSelf.tickers = strongSelf.store.preparedTickres()
         }.catch { error in
             NSLog("prices \(error)")
         }.finally { [weak self] in

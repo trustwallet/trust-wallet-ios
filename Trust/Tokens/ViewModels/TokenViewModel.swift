@@ -93,7 +93,7 @@ final class TokenViewModel {
     }
 
     var ticker: CoinTicker? {
-        return store.coinTicker(for: token)
+        return store.coinTicker(by: token.address)
     }
 
     var allTransactions: [Transaction] {

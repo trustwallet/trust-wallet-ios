@@ -68,13 +68,8 @@ class TokensDataStore {
         }
     }
 
-    func preparedTickres() -> [CoinTicker] {
-        let filteredTickers = tickers.filter { ticker in self.tokens.contains(where: { $0.contract == ticker.contract }) }
-        return Array(filteredTickers)
-    }
-
-    func coinTicker(by contract: String) -> CoinTicker? {
-        return tickers.first(where: { $0.contract == contract })
+    func coinTicker(by contract: EthereumAddress) -> CoinTicker? {
+        return realm.object(ofType: CoinTicker.self, forPrimaryKey: CoinTickerKeyMaker.makePrimaryKey(contract: contract, currencyKey: CoinTickerKeyMaker.makeCurrencyKey()))
     }
 
     private func nativeCoin() -> [TokenObject] {
@@ -122,13 +117,6 @@ class TokensDataStore {
 
     static func getServer(for token: TokenObject) -> RPCServer! {
         return token.coin.server
-    }
-
-    func coinTicker(for token: TokenObject) -> CoinTicker? {
-        guard let contract = EthereumAddress(string: token.contract) else { return .none }
-        return tickers.first(where: {
-            return $0.key == CoinTickerKeyMaker.makePrimaryKey(contract: contract, currencyKey: $0.tickersKey)
-        })
     }
 
     func addCustom(token: ERC20Token) {
