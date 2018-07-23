@@ -38,4 +38,23 @@ extension UIColor {
     static func random() -> UIColor {
         return UIColor(red: .random(), green: .random(), blue: .random(), alpha: 0.7)
     }
+
+    static func randomPastelColor(withMixedColor mixColor: UIColor? = UIColor.white) -> UIColor {
+
+        var red: CGFloat = .randomColor()
+        var green: CGFloat = .randomColor()
+        var blue: CGFloat = .randomColor()
+
+        if let mixColor = mixColor {
+            var mixRed: CGFloat = 0
+            var mixGreen: CGFloat = 0
+            var mixBlue: CGFloat = 0
+            mixColor.getRed(&mixRed, green: &mixGreen, blue: &mixBlue, alpha: nil)
+            red = (red + mixRed) / 2
+            green = (green + mixGreen) / 2
+            blue = (blue + mixBlue) / 2
+        }
+
+        return UIColor(red: red, green: green, blue: blue, alpha: 1)
+    }
 }
