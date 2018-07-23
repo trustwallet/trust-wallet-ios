@@ -44,7 +44,19 @@ final class TokensViewController: UIViewController {
         return view
     }()
 
-    let tableView: UITableView
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = StyleLayout.TableView.separatorColor
+        tableView.backgroundColor = .white
+        tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
+        tableView.tableHeaderView = header
+        tableView.tableFooterView = footer
+        tableView.addSubview(refreshControl)
+        return tableView
+    }()
+
     let refreshControl = UIRefreshControl()
     weak var delegate: TokensViewControllerDelegate?
     var etherFetchTimer: Timer?
@@ -54,15 +66,10 @@ final class TokensViewController: UIViewController {
         viewModel: TokensViewModel
     ) {
         self.viewModel = viewModel
-        tableView = UITableView(frame: .zero, style: .plain)
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = StyleLayout.TableView.separatorColor
-        tableView.backgroundColor = .white
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -70,11 +77,7 @@ final class TokensViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
-        tableView.addSubview(refreshControl)
-        tableView.tableHeaderView = header
-        tableView.tableFooterView = footer
         navigationItem.titleView = titleView
         titleView.title = viewModel.headerViewTitle
         sheduleBalanceUpdate()
@@ -128,9 +131,7 @@ final class TokensViewController: UIViewController {
                 self?.tableView.reloadData()
             case .error: break
             }
-            if strongSelf.refreshControl.isRefreshing {
-                strongSelf.refreshControl.endRefreshing()
-            }
+            strongSelf.refreshControl.endRefreshing()
             self?.refreshHeaderView()
         }
     }
@@ -192,7 +193,6 @@ extension TokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TokenViewCell.identifier, for: indexPath) as! TokenViewCell
         cell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
-        cell.contentView.isExclusiveTouch = true
         cell.isExclusiveTouch = true
         return cell
     }
@@ -207,7 +207,6 @@ extension TokensViewController: TokensViewModelDelegate {
         self.refreshHeaderView()
     }
 }
-
 extension TokensViewController: Scrollable {
     func scrollOnTop() {
         tableView.scrollOnTop()
