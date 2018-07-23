@@ -3,6 +3,12 @@
 import Foundation
 import UIKit
 
+protocol EditTokensViewControllerDelegate: class {
+    func didDelete(token: TokenObject, in controller: EditTokensViewController)
+    func didEdit(token: TokenObject, in controller: EditTokensViewController)
+    func didDisable(token: TokenObject, in controller: EditTokensViewController)
+}
+
 final class EditTokensViewController: UITableViewController {
 
     let session: WalletSession
@@ -16,6 +22,7 @@ final class EditTokensViewController: UITableViewController {
             config: session.config
         )
     }()
+    weak var delegate: EditTokensViewControllerDelegate?
 
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: self.searchResultsController)
@@ -68,10 +75,14 @@ final class EditTokensViewController: UITableViewController {
         return .lightContent
     }
 
+    func fetch() {
+        tableView.reloadData()
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        tableView.reloadData()
+        fetch()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -121,6 +132,21 @@ final class EditTokensViewController: UITableViewController {
         searchResultsController.localResults = localResults
         viewModel.searchNetwork(token: token) { [weak self] (tokens) in
             self?.searchResultsController.remoteResults = tokens
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let token = viewModel.token(for: indexPath)
+        let delete = UITableViewRowAction(style: .destructive, title: R.string.localizable.delete()) { [unowned self] (_, _) in
+            self.delegate?.didDelete(token: token.token, in: self)
+        }
+        let edit = UITableViewRowAction(style: .normal, title: R.string.localizable.edit()) { [unowned self] (_, _) in
+            self.delegate?.didEdit(token: token.token, in: self)
+        }
+        if viewModel.canEdit(for: indexPath) {
+            return [delete, edit]
+        } else {
+            return []
         }
     }
 }

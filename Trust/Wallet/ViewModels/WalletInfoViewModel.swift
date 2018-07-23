@@ -30,6 +30,9 @@ struct WalletInfoViewModel {
     }
 
     var name: String {
+        if wallet.info.name.isEmpty {
+            return WalletInfo.emptyName
+        }
         return wallet.info.name
     }
 

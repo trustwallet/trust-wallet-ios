@@ -9,9 +9,7 @@ import RealmSwift
 protocol TokensViewControllerDelegate: class {
     func didPressAddToken( in viewController: UIViewController)
     func didSelect(token: TokenObject, in viewController: UIViewController)
-    func didDelete(token: TokenObject, in viewController: UIViewController)
-    func didEdit(token: TokenObject, in viewController: UIViewController)
-    func didDisable(token: TokenObject, in viewController: UIViewController)
+    func didRequest(token: TokenObject, in viewController: UIViewController)
 }
 
 final class TokensViewController: UIViewController {
@@ -173,26 +171,19 @@ extension TokensViewController: UITableViewDelegate {
         let token = viewModel.item(for: indexPath)
         delegate?.didSelect(token: token, in: self)
     }
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let token = viewModel.item(for: indexPath)
-        let delete = UITableViewRowAction(style: .destructive, title: R.string.localizable.delete()) {[unowned self] (_, _) in
-            self.delegate?.didDelete(token: token, in: self)
-        }
-        let edit = UITableViewRowAction(style: .normal, title: R.string.localizable.edit()) {[unowned self] (_, _) in
-            self.delegate?.didEdit(token: token, in: self)
-        }
-        let disable = UITableViewRowAction(style: .normal, title: R.string.localizable.disable()) {[unowned self] (_, _) in
-            self.delegate?.didDisable(token: token, in: self)
-        }
 
-        if viewModel.canEdit(for: indexPath) {
-            return [delete, disable, edit]
-        } else if viewModel.canDisable(for: indexPath) {
-            return [disable]
-        } else {
-            return []
+    @available(iOS 11.0, *)
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let token = viewModel.item(for: indexPath)
+        let deleteAction = UIContextualAction(style: .normal, title: R.string.localizable.transactionsReceiveButtonTitle()) { _, _, handler in
+            self.delegate?.didRequest(token: token, in: self)
+            handler(true)
         }
+        deleteAction.backgroundColor = Colors.lightBlue
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
     }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return TokensLayout.tableView.height
     }
@@ -205,6 +196,7 @@ extension TokensViewController: UITableViewDataSource {
         cell.isExclusiveTouch = true
         return cell
     }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.tokens.count
     }

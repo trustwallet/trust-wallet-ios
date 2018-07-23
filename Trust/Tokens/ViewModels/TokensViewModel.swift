@@ -116,10 +116,6 @@ final class TokensViewModel: NSObject {
         return tokens[path.row].isCustom
     }
 
-    func canDisable(for path: IndexPath) -> Bool {
-        return true
-    }
-
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
         return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token), store: transactionStore)

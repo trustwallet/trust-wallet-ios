@@ -48,6 +48,10 @@ final class EditTokenViewModel {
         return (tokens[indexPath.row], true)
     }
 
+    func canEdit(for path: IndexPath) -> Bool {
+        return tokens[path.row].isCustom
+    }
+
     func searchNetwork(token: String, completion: (([TokenObject]) -> Void)?) {
         network.search(query: token).done { [weak self] tokens in
             var filterSet = Set<TokenObject>()

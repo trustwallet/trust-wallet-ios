@@ -128,6 +128,7 @@ final class TokensCoordinator: Coordinator {
             storage: store,
             network: network
         )
+        controller.delegate = self
         controller.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
         navigationController.pushViewController(controller, animated: true)
     }
@@ -165,6 +166,10 @@ final class TokensCoordinator: Coordinator {
 }
 
 extension TokensCoordinator: TokensViewControllerDelegate {
+    func didRequest(token: TokenObject, in viewController: UIViewController) {
+        delegate?.didPressRequest(for: token, in: self)
+    }
+
     func didSelect(token: TokenObject, in viewController: UIViewController) {
         let controller = TokenViewController(
             viewModel: TokenViewModel(token: token, store: store, transactionsStore: transactionsStore, tokensNetwork: network, session: session)
@@ -172,18 +177,6 @@ extension TokensCoordinator: TokensViewControllerDelegate {
         controller.delegate = self
         controller.navigationItem.backBarButtonItem = .back
         navigationController.pushViewController(controller, animated: true)
-    }
-
-    func didDelete(token: TokenObject, in viewController: UIViewController) {
-        store.delete(tokens: [token])
-    }
-
-    func didDisable(token: TokenObject, in viewController: UIViewController) {
-        store.update(tokens: [token], action: .disable(true))
-    }
-
-    func didEdit(token: TokenObject, in viewController: UIViewController) {
-        editToken(token)
     }
 
     func didPressAddToken(in viewController: UIViewController) {
@@ -252,5 +245,20 @@ extension TokensCoordinator: TransactionViewControllerDelegate {
 extension TokensCoordinator: WalletTitleViewDelegate {
     func didTap(in view: WalletTitleView) {
         delegate?.didPressChangeWallet(in: self)
+    }
+}
+
+extension TokensCoordinator: EditTokensViewControllerDelegate {
+    func didDelete(token: TokenObject, in controller: EditTokensViewController) {
+        store.delete(tokens: [token])
+        controller.fetch()
+    }
+
+    func didDisable(token: TokenObject, in controller: EditTokensViewController) {
+        store.update(tokens: [token], action: .disable(true))
+    }
+
+    func didEdit(token: TokenObject, in controller: EditTokensViewController) {
+        editToken(token)
     }
 }
