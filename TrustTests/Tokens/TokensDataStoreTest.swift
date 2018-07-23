@@ -4,7 +4,7 @@ import XCTest
 @testable import Trust
 
 class TokensDataStoreTest: XCTestCase {
-    var tokensDataStore = TokensDataStore(realm: .make(), config: .make())
+    var tokensDataStore = TokensDataStore(realm: .make(), account: .make())
 
     func testGetAndSetTickers() {
         XCTAssertEqual(0, tokensDataStore.tickers().count)
@@ -32,7 +32,7 @@ class TokensDataStoreTest: XCTestCase {
         XCTAssertEqual(0, tokensDataStore.tickers().count)
 
         let coinTickers = [
-            CoinTicker.make(currencyKey: CoinTickerKeyMaker.makeCurrencyKey(for: Config.make()))
+            CoinTicker.make(currencyKey: CoinTickerKeyMaker.makeCurrencyKey()),
         ]
 
         tokensDataStore.saveTickers(tickers: coinTickers)
@@ -49,6 +49,8 @@ class TokensDataStoreTest: XCTestCase {
     func testGetBalance() {
         var tokenObject = TokenObject(
             contract: "0x0000000000000000000000000000000000000001",
+            coin: .ethereum,
+            type: .coin,
             decimals: 2,
             value: "10000"
         )
@@ -62,6 +64,8 @@ class TokensDataStoreTest: XCTestCase {
 
         tokenObject = TokenObject(
             contract: "0x0000000000000000000000000000000000000002",
+            coin: .ethereum,
+            type: .coin,
             decimals: 3,
             value: "20000"
         )
@@ -70,6 +74,8 @@ class TokensDataStoreTest: XCTestCase {
 
         tokenObject = TokenObject(
             contract: "contract that doesn't match any",
+            coin: .ethereum,
+            type: .coin,
             decimals: 4,
             value: "30000"
         )
@@ -81,10 +87,15 @@ class TokensDataStoreTest: XCTestCase {
     func testGetCoinTickerForAParticularToken() {
         tokensDataStore.saveTickers(tickers: FakeCoinTickerFactory.make2DuplicateCionTickersWithDifferentKey())
 
-        let token = TokenObject(contract: "0x0000000000000000000000000000000000000001", name: "", symbol: "symbol1", decimals: 18, value: "", isCustom: false, isDisabled: false)
+        let token = TokenObject(
+            contract: "0x0000000000000000000000000000000000000001",
+            name: "",
+            coin: .ethereum,
+            type: .coin,
+            symbol: "symbol1", decimals: 18, value: "", isCustom: false, isDisabled: false)
 
         let coinTicker = tokensDataStore.coinTicker(for: token)
 
-        XCTAssertEqual("symbol1_0x0000000000000000000000000000000000000001_tickers-USD-1", coinTicker?.key)
+        XCTAssertEqual("0x0000000000000000000000000000000000000001_tickers-USD-1", coinTicker?.key)
     }
 }

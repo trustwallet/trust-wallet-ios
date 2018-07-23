@@ -145,10 +145,8 @@
 "lock.enter.passcode.view.model.try.after.one.minute" = "Essayez après 1 minute.";
 "Name" = "Nom";
 "send.action.copy.transaction.title" = "Copier l'ID de transaction";
-"settings.dappbroser.button.title" = "Navigateur DApps";
 "settings.emailUsReadFAQ.button.title" = "Envoyez-nous un e-mail (Lisez d'abord la FAQ)";
 "settings.faq.button.title" = "FAQ";
-"settings.wallets.balance" = "Solde: %@ ETH";
 "transaction.cell.failed.title" = "Échec";
 "transaction.cell.pending.title" = "En attente";
 "transactions.receive.button.title" = "Recevoir";
@@ -275,3 +273,12 @@
 "BackupPhrase" = "Phrase de sauvegarde";
 "Address" = "Adresse";
 "CreatingWallet" = "Créer un portefeuille";
+"WalletImported" = "Portefeuille importé";
+"SelectCoin" = "Sélectionnez la monnaie";
+"ImportMainWallet" = "Importer le portefeuille principal";
+"Developer" = "Développeur";
+"NodeSettings" = "Réglages du nœud";
+"TestNetworks" = "Réseaux de test";
+"EnableTestNetworks" = "Activer les réseaux de test";
+"Network" = "Réseau";
+"MultiCoinWallet" = "Portefeuille multi-monnaies";

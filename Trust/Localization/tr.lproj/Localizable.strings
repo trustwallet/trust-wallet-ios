@@ -145,10 +145,8 @@
 "lock.enter.passcode.view.model.try.after.one.minute" = "1 dakika sonra deneyin.";
 "Name" = "Ad";
 "send.action.copy.transaction.title" = "İşlem Numarasını Kopyala";
-"settings.dappbroser.button.title" = "DApps Tarayıcısı";
 "settings.emailUsReadFAQ.button.title" = "Bize E-posta Gönderin (Önce SSS'yi okuyun)";
 "settings.faq.button.title" = "SSS";
-"settings.wallets.balance" = "Bakiye: %@ ETH";
 "transaction.cell.failed.title" = "Başarısız oldu";
 "transaction.cell.pending.title" = "Bekleyen";
 "transactions.receive.button.title" = "Al";

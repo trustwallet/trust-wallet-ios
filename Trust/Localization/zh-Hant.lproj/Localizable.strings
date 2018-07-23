@@ -146,10 +146,8 @@
 "lock.enter.passcode.view.model.try.after.one.minute" = "請1分鐘後再試。";
 "Name" = "名稱";
 "send.action.copy.transaction.title" = "複製交易 ID";
-"settings.dappbroser.button.title" = "DApps 瀏覽器";
 "settings.emailUsReadFAQ.button.title" = "郵件我們 (請先閱讀 FAQ)";
 "settings.faq.button.title" = "常見問題";
-"settings.wallets.balance" = "餘額: %@";
 "transaction.cell.failed.title" = "失敗";
 "transaction.cell.pending.title" = "等待";
 "transactions.receive.button.title" = "接收";

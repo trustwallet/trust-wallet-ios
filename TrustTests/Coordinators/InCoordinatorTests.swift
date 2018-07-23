@@ -27,8 +27,14 @@ class InCoordinatorTests: XCTestCase {
     }
 
     func testChangeRecentlyUsedAccount() {
-        let account1: Trust.WalletInfo = WalletInfo(wallet: .make(type: .address(EthereumAddress(string: "0x1000000000000000000000000000000000000000")!)))
-        let account2: Trust.WalletInfo = WalletInfo(wallet: .make(type: .address(EthereumAddress(string: "0x2000000000000000000000000000000000000000")!)))
+        let account1: Trust.WalletInfo = WalletInfo(
+            type: .address(.ethereum, EthereumAddress(string: "0x1000000000000000000000000000000000000000")!),
+            info: .make()
+        )
+        let account2: Trust.WalletInfo = WalletInfo(
+            type: .address(.ethereum, EthereumAddress(string: "0x2000000000000000000000000000000000000000")!),
+            info: .make()
+        )
 
         let keystore = FakeKeystore(
             wallets: [
@@ -61,7 +67,7 @@ class InCoordinatorTests: XCTestCase {
         )
         coordinator.showTabBar(for: .make())
 
-        coordinator.showPaymentFlow(for: .send(type: .ether(destination: .none)))
+        coordinator.sendFlow(for: .make())
 
         // Needs to inject navigation controller to wallet coordinator
         // let controller = coordinator.tokensCoordinator?.navigationController.viewControllers.last
@@ -77,7 +83,7 @@ class InCoordinatorTests: XCTestCase {
         )
         coordinator.showTabBar(for: .make())
 
-        coordinator.showPaymentFlow(for: .request(token: .make()))
+        coordinator.requestFlow(for: .make())
 
         // Needs to inject navigation controller to wallet coordinator
         // let controller = coordinator.tokensCoordinator?.navigationController.viewControllers.last

@@ -145,10 +145,8 @@
 "lock.enter.passcode.view.model.try.after.one.minute" = "1分後に試してください。";
 "Name" = "名称";
 "send.action.copy.transaction.title" = "トランザクション ID をコピー";
-"settings.dappbroser.button.title" = "DAppsブラウザ";
 "settings.emailUsReadFAQ.button.title" = "メールで問い合わせる(よくある質問をまずお読みください)";
 "settings.faq.button.title" = "よくある質問";
-"settings.wallets.balance" = "残高: %@ ETH";
 "transaction.cell.failed.title" = "失敗";
 "transaction.cell.pending.title" = "保留中";
 "transactions.receive.button.title" = "受信する";

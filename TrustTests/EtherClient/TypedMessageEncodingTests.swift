@@ -16,17 +16,17 @@ class TypedMessageEncodingTests: XCTestCase {
         let keystore = FakeEtherKeystore()
 
         let privateKey = PrivateKey(data: Data(hexString: "0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318")!)!
-        let result = keystore.importPrivateKey(privateKey: privateKey, password: TestKeyStore.password)
+        let result = keystore.importPrivateKey(privateKey: privateKey, password: TestKeyStore.password, coin: .ethereum)
 
         guard case let .success(account) = result else {
             return XCTFail()
         }
-        self.account = account.account!
+        self.account = account.currentAccount!
     }
 
     func testValue_none() {
         let privateKey = PrivateKey(data: Data(hexString: "0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318")!)!
-        let result = keystore.importPrivateKey(privateKey: privateKey, password: TestKeyStore.password)
+        let result = keystore.importPrivateKey(privateKey: privateKey, password: TestKeyStore.password, coin: .ethereum)
         guard case let .success(account1) = result else {
             return XCTFail()
         }

@@ -5,10 +5,10 @@ import Foundation
 
 extension ChainState {
     static func make(
-        config: Config = .make()
+        server: RPCServer = .make()
     ) -> ChainState {
         return ChainState(
-            config: config
+            server: .make()
         )
     }
 }

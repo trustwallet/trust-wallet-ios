@@ -43,9 +43,13 @@ class WalletCoordinatorTests: XCTestCase {
     }
 
     func testPushImportWallet() {
+        let walletObject = WalletObject()
+        walletObject.mainWallet = true
+
+        let wallet = WalletInfo.make(type: .privateKey(.make()), info: walletObject)
         let coordinator = WalletCoordinator(
             navigationController: FakeNavigationController(),
-            keystore: FakeKeystore()
+            keystore: FakeKeystore(wallets: [wallet])
         )
 
         coordinator.start(.welcome)

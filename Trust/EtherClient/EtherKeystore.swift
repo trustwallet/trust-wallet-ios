@@ -275,7 +275,7 @@ class EtherKeystore: Keystore {
         }
     }
 
-    private func delete(wallet: Wallet) -> Result<Void, KeystoreError> {
+    func delete(wallet: Wallet) -> Result<Void, KeystoreError> {
         guard let password = getPassword(for: wallet) else {
             return .failure(.failedToDeleteAccount)
         }

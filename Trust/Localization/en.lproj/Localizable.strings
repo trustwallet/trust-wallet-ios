@@ -145,10 +145,8 @@
 "lock.enter.passcode.view.model.try.after.one.minute" = "Try after 1 minute.";
 "Name" = "Name";
 "send.action.copy.transaction.title" = "Copy Transaction ID";
-"settings.dappbroser.button.title" = "DApps Browser";
 "settings.emailUsReadFAQ.button.title" = "Email Us (Read FAQ first)";
 "settings.faq.button.title" = "FAQ";
-"settings.wallets.balance" = "Balance: %@ ETH";
 "transaction.cell.failed.title" = "Failed";
 "transaction.cell.pending.title" = "Pending";
 "transactions.receive.button.title" = "Receive";
@@ -253,7 +251,7 @@
 "Manage" = "Manage";
 "passphrase.seed.label.title" = "These 12 words are the only way to restore your Trust wallet. \nSave them somewhere safe and secret.";
 "settings.analitics.answer.description" = "Help Trust improve user experience by sharing app daily diagnostic.";
-"settings.analitics.branch.description" = "Help Trust improve user engagment by sharing deep links redirects.";
+"settings.analitics.branch.description" = "Help Trust improve user engagement by sharing deep links redirects.";
 "settings.analitics.crashlytics.description" = "Help Trust developers to improve its product and service by automatically sending crash reports.";
 "settings.privacy.title" = "Privacy";
 "Skip" = "Skip";

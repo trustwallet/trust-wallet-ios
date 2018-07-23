@@ -145,10 +145,8 @@
 "lock.enter.passcode.view.model.try.after.one.minute" = "Versuchen Sie es in 1 Minute erneut";
 "Name" = "Name";
 "send.action.copy.transaction.title" = "Transaktions-ID kopieren";
-"settings.dappbroser.button.title" = "DApps Browser";
 "settings.emailUsReadFAQ.button.title" = "Schreiben Sie uns eine Email (Lies zuerst die FAQ)";
 "settings.faq.button.title" = "FAQ";
-"settings.wallets.balance" = "Balance: %@ ETH";
 "transaction.cell.failed.title" = "Abgewiesen";
 "transaction.cell.pending.title" = "Wird bearbeitet...";
 "transactions.receive.button.title" = "Einzahlen";

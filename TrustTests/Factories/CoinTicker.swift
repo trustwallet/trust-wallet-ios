@@ -6,7 +6,6 @@ import TrustCore
 
 extension CoinTicker {
     static func make(
-            symbol: String = "symbol",
             price: String = "0",
             percent_change_24h: String = "0",
             contract: EthereumAddress = .zero,
@@ -14,7 +13,6 @@ extension CoinTicker {
             key: String? = nil
         ) -> CoinTicker {
         let coinTicker = CoinTicker(
-            symbol: symbol,
             price: price,
             percent_change_24h: percent_change_24h,
             contract: contract,

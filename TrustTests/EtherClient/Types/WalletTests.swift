@@ -7,20 +7,20 @@ import TrustCore
 class WalletTests: XCTestCase {
 
     func testPrivateKeyAddressDescription() {
-        let wallet = WalletStruct(type: .privateKey(.make()))
+        let wallet = WalletType.privateKey(.make())
 
-        XCTAssertEqual("wallet-private-key-\(wallet.address.description)", wallet.description)
+        XCTAssertEqual("wallet-private-key-\(wallet.description)", wallet.description)
     }
 
     func testHDWalletAddressDescription() {
-        let wallet = WalletStruct(type: .hd(.make()))
+        let wallet = WalletType.hd(.make())
 
-        XCTAssertEqual("wallet-hd-wallet-\(wallet.address.description)", wallet.description)
+        XCTAssertEqual("wallet-hd-wallet-\(wallet.description)", wallet.description)
     }
 
     func testWalletAddressDescription() {
-        let wallet = WalletStruct(type: .address(.make()))
+        let wallet = WalletType.address(.ethereum, .make())
 
-        XCTAssertEqual("wallet-address-\(wallet.address.description)", wallet.description)
+        XCTAssertEqual("wallet-address-\(wallet.description)", wallet.description)
     }
 }

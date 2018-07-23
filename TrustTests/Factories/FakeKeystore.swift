@@ -7,42 +7,65 @@ import TrustCore
 import Result
 
 struct FakeKeystore: Keystore {
-    func importPrivateKey(privateKey: PrivateKey, password: String) -> Result<WalletStruct, KeystoreError> {
-        return .failure(KeystoreError.accountNotFound)
+    var mainWallet: WalletInfo? {
+        return wallets.filter { $0.mainWallet }.first
     }
 
-    func importWallet(type: ImportType, completion: @escaping (Result<WalletStruct, KeystoreError>) -> Void) {
-
-    }
-
-    func delete(wallet: WalletStruct) -> Result<Void, KeystoreError> {
-        return .success(())
-    }
-
-    func delete(wallet: WalletStruct, completion: @escaping (Result<Void, KeystoreError>) -> Void) {
-
+    var storage: WalletStorage {
+        return WalletStorage(realm: .make())
     }
 
     func createAccount(with password: String, completion: @escaping (Result<Wallet, KeystoreError>) -> Void) {
-        //TODO: Implement
+        //
     }
 
-    func importKeystore(value: String, password: String, newPassword: String, completion: @escaping (Result<WalletStruct, KeystoreError>) -> Void) {
-        //TODO: Implement
+    func importWallet(type: ImportType, coin: Coin, completion: @escaping (Result<WalletInfo, KeystoreError>) -> Void) {
+        //
+    }
+
+    func importKeystore(value: String, password: String, newPassword: String, coin: Coin, completion: @escaping (Result<WalletInfo, KeystoreError>) -> Void) {
+        //
     }
 
     func createAccout(password: String) -> Wallet {
         return .make()
     }
 
-    func importKeystore(value: String, password: String, newPassword: String) -> Result<WalletStruct, KeystoreError> {
-        return .success(WalletStruct(type: .privateKey(.make())))
+    func importKeystore(value: String, password: String, newPassword: String, coin: Coin) -> Result<WalletInfo, KeystoreError> {
+        return .failure(KeystoreError.accountNotFound)
+    }
+
+    func importPrivateKey(privateKey: PrivateKey, password: String, coin: Coin) -> Result<WalletInfo, KeystoreError> {
+        return .failure(KeystoreError.accountNotFound)
     }
 
     func exportMnemonic(wallet: Wallet, completion: @escaping (Result<[String], KeystoreError>) -> Void) {
-        //TODO: Implement
+        //
     }
 
+    func delete(wallet: Wallet) -> Result<Void, KeystoreError> {
+        return .failure(KeystoreError.accountNotFound)
+    }
+
+    func delete(wallet: WalletInfo, completion: @escaping (Result<Void, KeystoreError>) -> Void) {
+        ///
+    }
+
+    func getPassword(for account: Wallet) -> String? {
+        return "test"
+    }
+
+    func setPassword(_ password: String, for account: Wallet) -> Bool {
+        return true
+    }
+
+    func addAccount(to wallet: Wallet, derivationPaths: [DerivationPath]) -> Result<Void, KeystoreError> {
+        return .failure(KeystoreError.accountNotFound)
+    }
+
+    func update(wallet: Wallet) -> Result<Void, KeystoreError> {
+        return .failure(KeystoreError.accountNotFound)
+    }
 
     var hasWallets: Bool {
         return wallets.count > 0

@@ -10,12 +10,12 @@ class AppCoordinatorTests: XCTestCase {
             window: UIWindow(),
             keystore: FakeKeystore()
         )
-        
+
         coordinator.start()
 
         XCTAssertTrue(coordinator.navigationController.viewControllers[0] is WelcomeViewController)
     }
-    
+
     func testStartWithAccounts() {
         let coordinator = AppCoordinator(
             window: UIWindow(),
@@ -23,13 +23,13 @@ class AppCoordinatorTests: XCTestCase {
                 wallets: [.make()]
             )
         )
-        
+
         coordinator.start()
 
         XCTAssertEqual(1, coordinator.coordinators.count)
         XCTAssertTrue(coordinator.navigationController.viewControllers[0] is UITabBarController)
     }
-    
+
     func testReset() {
         let coordinator = AppCoordinator(
             window: UIWindow(),
@@ -38,9 +38,9 @@ class AppCoordinatorTests: XCTestCase {
             )
         )
         coordinator.start()
-        
+
         coordinator.reset()
-        
+
         XCTAssertTrue(coordinator.navigationController.viewControllers[0] is WelcomeViewController)
     }
 
@@ -51,9 +51,9 @@ class AppCoordinatorTests: XCTestCase {
             navigationController: FakeNavigationController()
         )
         coordinator.start()
-        
+
         coordinator.showInitialWalletCoordinator(entryPoint: .createInstantWallet)
-        
+
         XCTAssertTrue(coordinator.navigationController.viewControllers[0] is WelcomeViewController)
     }
 
@@ -78,7 +78,7 @@ class AppCoordinatorTests: XCTestCase {
             navigationController: FakeNavigationController()
         )
         coordinator.start()
-        
+
         coordinator.showTransactions(for: .make())
 
         XCTAssertEqual(1, coordinator.coordinators.count)

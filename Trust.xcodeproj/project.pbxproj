@@ -389,6 +389,7 @@
 		779141D821045571007E8E16 /* WalletCreatedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779141D721045571007E8E16 /* WalletCreatedViewModel.swift */; };
 		779141DB21055B72007E8E16 /* MultiCoinMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779141DA21055B72007E8E16 /* MultiCoinMigration.swift */; };
 		779141DD2105CA83007E8E16 /* WalletAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779141DC2105CA83007E8E16 /* WalletAddress.swift */; };
+		779141DF21063DCE007E8E16 /* RPCServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779141DE21063DCE007E8E16 /* RPCServer.swift */; };
 		77A6D8A120C4DE06000A9ADC /* TrustAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A6D8A020C4DE06000A9ADC /* TrustAPI.swift */; };
 		77B1EAFF20639DEB007970AA /* NFTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B1EAFE20639DEB007970AA /* NFTokenViewController.swift */; };
 		77B1EB012063A198007970AA /* NFTDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B1EB002063A198007970AA /* NFTDetailsViewModel.swift */; };
@@ -880,6 +881,7 @@
 		779141D721045571007E8E16 /* WalletCreatedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCreatedViewModel.swift; sourceTree = "<group>"; };
 		779141DA21055B72007E8E16 /* MultiCoinMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiCoinMigration.swift; sourceTree = "<group>"; };
 		779141DC2105CA83007E8E16 /* WalletAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAddress.swift; sourceTree = "<group>"; };
+		779141DE21063DCE007E8E16 /* RPCServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCServer.swift; sourceTree = "<group>"; };
 		779891EA207C10C7008890B8 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		77A6D8A020C4DE06000A9ADC /* TrustAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustAPI.swift; sourceTree = "<group>"; };
 		77B1EAFE20639DEB007970AA /* NFTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTokenViewController.swift; sourceTree = "<group>"; };
@@ -1065,7 +1067,6 @@
 				7391DC8F2038C070002C5ADE /* Browser */,
 				77872D2A202514930032D687 /* Wallet */,
 				CCA4FE301FD3652100749AE4 /* Core */,
-				299B5E3C1FD143300051361C /* Export */,
 				BB3864A1208F1C3000CBF773 /* Extensions */,
 				299B5E351FCBCDE10051361C /* Transfer */,
 				299573A01FA1F35B006F17FD /* Foundation */,
@@ -1609,21 +1610,6 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		299B5E3C1FD143300051361C /* Export */ = {
-			isa = PBXGroup;
-			children = (
-				299B5E3D1FD143350051361C /* ViewModels */,
-			);
-			path = Export;
-			sourceTree = "<group>";
-		};
-		299B5E3D1FD143350051361C /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		29A13E261F6A901600E432A2 /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
@@ -1971,6 +1957,7 @@
 				4E9A9D0720B2C52500180054 /* CoinTicker.swift */,
 				77EAD89420EAF19F00D14AA2 /* WalletInfo.swift */,
 				77EAD89620EAF1FD00D14AA2 /* WalletObject.swift */,
+				779141DE21063DCE007E8E16 /* RPCServer.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -3242,6 +3229,7 @@
 				298542FE1FBEADEF00CB5081 /* TransactionViewModelTests.swift in Sources */,
 				295B61D61FE7FC8300642E60 /* FakeTokensDataStore.swift in Sources */,
 				7391DC962038C135002C5ADE /* SendViewModelTest.swift in Sources */,
+				779141DF21063DCE007E8E16 /* RPCServer.swift in Sources */,
 				291E8FBF1F7DEA85003F0ECF /* EtherKeystoreTests.swift in Sources */,
 				732E0F542022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift in Sources */,
 				77EAD89520EAF19F00D14AA2 /* WalletInfo.swift in Sources */,

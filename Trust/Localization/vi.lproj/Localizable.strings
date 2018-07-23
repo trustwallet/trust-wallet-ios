@@ -145,10 +145,8 @@
 "lock.enter.passcode.view.model.try.after.one.minute" = "Thử lại sau 1 phút.";
 "Name" = "Tên";
 "send.action.copy.transaction.title" = "Sao chép ID giao dịch";
-"settings.dappbroser.button.title" = "Trình duyệt DApps";
 "settings.emailUsReadFAQ.button.title" = "Gửi Email cho chúng tôi (hãy đọc FAQ trước)";
 "settings.faq.button.title" = "Câu hỏi thường gặp";
-"settings.wallets.balance" = "Số dư: %@ ETH";
 "transaction.cell.failed.title" = "Thất bại";
 "transaction.cell.pending.title" = "Đang chờ xử lý";
 "transactions.receive.button.title" = "Nhận";
