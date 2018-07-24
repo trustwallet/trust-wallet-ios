@@ -218,7 +218,7 @@ final class TokenViewModel {
             return
         }
         let _ = provider.balance().done { [weak self] balance in
-            self?.store.update(balances: [provider.addressUpdate: balance])
+            self?.store.update(balance: balance, for: provider.addressUpdate)
         }
     }
 
