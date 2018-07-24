@@ -56,6 +56,12 @@ final class TokensViewController: UIViewController {
     var etherFetchTimer: Timer?
     let intervalToETHRefresh = 10.0
 
+    lazy var fetchClosure: () -> Void = {
+        return debounce(delay: .seconds(7), action: { [weak self] () in
+            self?.viewModel.fetch()
+        })
+    }()
+
     init(
         viewModel: TokensViewModel
     ) {
@@ -83,21 +89,26 @@ final class TokensViewController: UIViewController {
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
         footer.textLabel.text = viewModel.footerTitle
+
+        fetch(force: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.applyTintAdjustment()
-        fetch()
     }
 
     @objc func pullToRefresh() {
         refreshControl.beginRefreshing()
-        fetch()
+        fetch(force: true)
     }
 
-    func fetch() {
-        viewModel.fetch()
+    func fetch(force: Bool = false) {
+        if force {
+            viewModel.fetch()
+        } else {
+            fetchClosure()
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -142,7 +153,6 @@ final class TokensViewController: UIViewController {
     private func sheduleBalanceUpdate() {
         guard etherFetchTimer == nil else { return }
         etherFetchTimer = Timer.scheduledTimer(timeInterval: intervalToETHRefresh, target: BlockOperation { [weak self] in
-            //self?.viewModel.updateBalances()
             self?.viewModel.updatePendingTransactions()
         }, selector: #selector(Operation.main), userInfo: nil, repeats: true)
     }

@@ -233,7 +233,11 @@ class TokensDataStore {
     }
 
     func getBalance(for token: TokenObject?) -> Double {
-        guard let token = token, let ticker = coinTicker(by: token.address), let amountInBigInt = BigInt(token.value), let amountInDecimal = EtherNumberFormatter.full.decimal(from: amountInBigInt, decimals: token.decimals), let price = Double(ticker.price) else {
+        guard let token = token,
+            let ticker = coinTicker(by: token.address),
+            let amountInBigInt = BigInt(token.value),
+            let amountInDecimal = EtherNumberFormatter.full.decimal(from: amountInBigInt, decimals: token.decimals),
+            let price = Double(ticker.price) else {
             return TokenObject.DEFAULT_BALANCE
         }
         return amountInDecimal.doubleValue * price
