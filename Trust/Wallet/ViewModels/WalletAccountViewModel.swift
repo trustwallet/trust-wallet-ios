@@ -47,7 +47,7 @@ struct WalletAccountViewModel {
     }
 
     var canDelete: Bool {
-        return !wallet.mainWallet
+        return !wallet.mainWallet && currentWallet != wallet
     }
 }
 

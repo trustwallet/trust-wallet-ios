@@ -36,7 +36,8 @@ class MultiCoinMigration {
     }
 
     func start() -> Bool {
-        if !keystore.wallets.isEmpty, appTracker.completeMultiCoinMigration == false {
+        if !keystore.wallets.isEmpty && appTracker.completeMultiCoinMigration == false {
+            appTracker.completeMultiCoinMigration = true
             return self.runMigrate()
         }
         appTracker.completeMultiCoinMigration = true
@@ -57,8 +58,13 @@ class MultiCoinMigration {
             }
         }
         keystore.wallets.filter { !$0.accounts.isEmpty }.forEach { wallet in
-            if let account = wallet.accounts.first, let password = keychain.get(keychainOldKey(for: account)), let wallet = wallet.currentWallet {
-                let _ = keystore.setPassword(password, for: wallet)
+            switch wallet.type {
+            case .hd, .privateKey:
+                if let account = wallet.accounts.first, let password = keychain.get(keychainOldKey(for: account)), let walletI = account.wallet {
+                    let _ = keystore.setPassword(password, for: walletI)
+                }
+            case .address:
+                break
             }
         }
 
