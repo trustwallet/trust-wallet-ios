@@ -112,6 +112,8 @@ final class TokenViewCell: UITableViewCell {
 
     func configure(viewModel: TokenViewCellViewModel) {
 
+        containerForImageView.badge(text: nil)
+
         titleLabel.text = viewModel.title
         titleLabel.textColor = viewModel.titleTextColor
         titleLabel.font = viewModel.titleFont
