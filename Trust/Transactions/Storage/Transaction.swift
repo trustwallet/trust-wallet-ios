@@ -77,6 +77,7 @@ final class Transaction: Object, Decodable {
         case timeStamp // Convert from timestamp
         case operations // Operations needs custom decoding
         case error // Only to throw
+        case coin
     }
 
     convenience required init(from decoder: Decoder) throws {
@@ -87,6 +88,7 @@ final class Transaction: Object, Decodable {
         let to = try container.decode(String.self, forKey: .to)
         let value = try container.decode(String.self, forKey: .value)
         let gas = try container.decode(String.self, forKey: .gas)
+        let coin = try container.decode(Coin.self, forKey: .coin)
         let gasPrice = try container.decode(String.self, forKey: .gasPrice)
         let gasUsed = try container.decode(String.self, forKey: .gasUsed)
         let rawNonce = try container.decode(Int.self, forKey: .nonce)
@@ -119,7 +121,7 @@ final class Transaction: Object, Decodable {
             gasUsed: gasUsed,
             nonce: rawNonce,
             date: Date(timeIntervalSince1970: TimeInterval(timeStamp) ?? 0),
-            coin: .ethereum,
+            coin: coin,
             localizedOperations: operations,
             state: state
         )

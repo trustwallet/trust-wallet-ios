@@ -123,13 +123,8 @@ final class TrustNetwork: NetworkProtocol {
             switch result {
             case .success(let response):
                 do {
-                    let transactions: [Transaction] = try response.map(ArrayResponse<Transaction>.self).docs
-                    let newTransactions = transactions.map { transaction -> Transaction in
-                        let newTransaction = transaction
-                        newTransaction.coin = server.coin
-                        return newTransaction
-                    }
-                    completion((newTransactions, true))
+                    let transactions = try response.map(ArrayResponse<Transaction>.self).docs
+                    completion((transactions, true))
                 } catch {
                     completion((nil, false))
                 }
