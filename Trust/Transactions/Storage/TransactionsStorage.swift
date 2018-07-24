@@ -80,13 +80,14 @@ class TransactionsStorage {
     }
 
     func delete(_ items: [Transaction]) {
-        try! realm.write {
+        try? realm.write {
             realm.delete(items)
         }
     }
 
     func update(state: TransactionState, for transaction: Transaction) {
-        try! realm.write {
+        NSLog("transaction \(transaction)")
+        try? realm.write {
             let tempObject = transaction
             tempObject.internalState = state.rawValue
             realm.add(tempObject, update: true)
@@ -95,13 +96,13 @@ class TransactionsStorage {
 
     func removeTransactions(for states: [TransactionState]) {
         let objects = realm.objects(Transaction.self).filter { states.contains($0.state) }
-        try! realm.write {
+        try? realm.write {
             realm.delete(objects)
         }
     }
 
     func deleteAll() {
-        try! realm.write {
+        try? realm.write {
             realm.delete(realm.objects(Transaction.self))
         }
     }

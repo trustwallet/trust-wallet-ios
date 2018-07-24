@@ -18,12 +18,10 @@ class EthereumTransactionsProvider: TransactionsNetworkProvider {
     func update(for transaction: Transaction, completion: @escaping (Result<(Transaction, TransactionState), AnyError>) -> Void) {
         let request = GetTransactionRequest(hash: transaction.id)
         Session.send(EtherServiceRequest(for: server, batch: BatchFactory().create(request))) { [weak self] result in
-            NSLog("result \(result)")
             guard let `self` = self else { return }
             switch result {
             case .success(let tx):
-                NSLog("result \(tx)")
-                guard let newTransaction = Transaction.from(transaction: tx, coin: self.server.coin) else {
+                guard let newTransaction = Transaction.from(initialTransaction: transaction, transaction: tx, coin: self.server.coin) else {
                     return completion(.success((transaction, .pending)))
                 }
                 if newTransaction.blockNumber > 0 {
