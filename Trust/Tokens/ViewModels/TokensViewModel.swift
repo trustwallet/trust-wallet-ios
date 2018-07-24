@@ -21,8 +21,8 @@ final class TokensViewModel: NSObject {
     let transactionStore: TransactionsStorage
     let session: WalletSession
 
-    var headerBalance: String {
-        return amount ?? "0.00"
+    var defaultBalanceText: String? {
+        return CurrencyFormatter.formatter.string(from: NSNumber(value: TokenObject.DEFAULT_BALANCE))
     }
 
     var headerBalanceTextColor: UIColor {
