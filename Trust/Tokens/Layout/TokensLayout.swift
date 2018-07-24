@@ -39,10 +39,8 @@ struct TokensLayout {
             return CurrencyFormatter.formatter.string(from: NSNumber(value: price))
         }
 
-        static func totalFiatAmount(for ticker: CoinTicker?, token: TokenObject) -> String? {
-            guard let ticker = ticker, let price = Double(ticker.price), price > 0 else { return nil }
-            let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
-            let amount = tokenValue * price
+        static func totalFiatAmount(token: TokenObject) -> String? {
+            let amount = token.balance
             guard amount > 0 else { return nil }
             return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
         }

@@ -119,7 +119,7 @@ final class TokenViewModel {
     }
 
     var totalFiatAmount: String? {
-        guard let value = TokensLayout.cell.totalFiatAmount(for: ticker, token: token) else { return .none }
+        guard let value = TokensLayout.cell.totalFiatAmount(token: token) else { return .none }
         return " (" + value + ")"
     }
 
