@@ -10,16 +10,6 @@ class FakeTokensDataStore: TokensDataStore {
         let realm = Realm.make()
         self.init(realm: realm, account: .make())
     }
-
-    func makeFakeTicker() -> [CoinTicker]  {
-        let price = 947.102
-        let coinTiekcer = CoinTicker.make(price: "\(price)", percent_change_24h: "-2.39", contract: .make(address: "0x0000000000000000000000000000000000000001"))
-        return [coinTiekcer]
-    }
-
-    func tickers() -> [CoinTicker] {
-        return makeFakeTicker()
-    }
 }
 
 class FakeCoinTickerFactory {
