@@ -96,11 +96,30 @@ class AppCoordinator: NSObject, Coordinator {
         let multiCoinCigration = MultiCoinMigration(keystore: keystore, appTracker: appTracker)
         let run = multiCoinCigration.start()
         if run {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
-                //TODO
-                //self.navigationController.displayError(error: KeystoreError.accountNotFound)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.showMigrationMessage()
             }
         }
+    }
+
+    private func showMigrationMessage() {
+        let alertController = UIAlertController(
+            title: "Great News! Big Update! 🚀",
+            message: "We have made a huge progress towards supporting and simplifying management of your tokens across blockchains. \n\nTake a look on how to create Multi-Coin Wallet in Trust!",
+            preferredStyle: UIAlertControllerStyle.alert
+        )
+        alertController.popoverPresentationController?.sourceView = self.navigationController.view
+        alertController.addAction(
+            UIAlertAction(
+                title: R.string.localizable.learnMore(),
+                style: UIAlertActionStyle.default,
+                handler: { [weak self] _ in
+                    let url = URL(string: "https://medium.com/p/fa50f258274b")
+                    self?.inCoordinator?.showTab(.browser(openURL: url))
+                }
+            )
+        )
+        navigationController.present(alertController, animated: true, completion: nil)
     }
 
     func handleNotifications() {
