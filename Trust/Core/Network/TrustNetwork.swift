@@ -46,12 +46,13 @@ final class TrustNetwork: NetworkProtocol {
         self.wallet = wallet
     }
 
-    private func getTickerFrom(rawTicker: CoinTicker, withKey tickersKey: String) -> CoinTicker {
+    private func getTickerFrom(rawTicker: CoinTicker) -> CoinTicker? {
+        guard let contract = EthereumAddress(string: rawTicker.contract) else { return .none }
         return CoinTicker(
             price: rawTicker.price,
             percent_change_24h: rawTicker.percent_change_24h,
-            contract: EthereumAddress(string: rawTicker.contract) ?? EthereumAddress.zero, // This should not happen
-            tickersKey: tickersKey
+            contract: contract,
+            tickersKey: CoinTickerKeyMaker.makeCurrencyKey()
         )
     }
 
@@ -85,8 +86,8 @@ final class TrustNetwork: NetworkProtocol {
                 case .success(let response):
                     do {
                         let rawTickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
-                        let tickers = rawTickers.map { rawTicker in
-                            return self.getTickerFrom(rawTicker: rawTicker, withKey: CoinTickerKeyMaker.makeCurrencyKey())
+                        let tickers = rawTickers.compactMap { rawTicker in
+                            return self.getTickerFrom(rawTicker: rawTicker)
                         }
                         seal.fulfill(tickers)
                     } catch {
