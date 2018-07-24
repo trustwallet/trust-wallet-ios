@@ -231,7 +231,7 @@ class TokensDataStore {
         return amountInDecimal.doubleValue * price
     }
 
-    func cleanBalance() {
+    func clearBalance() {
         try? realm.write {
             let defaultBalanceTokens = tokens.map { token -> TokenObject in
                 let tempToken = token
