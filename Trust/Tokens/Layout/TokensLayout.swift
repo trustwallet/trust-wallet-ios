@@ -46,10 +46,5 @@ struct TokensLayout {
             guard amount > 0 else { return nil }
             return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
         }
-
-        static func currencyAmount(for ticker: CoinTicker?, token: TokenObject) -> String? {
-            guard let ticker = ticker, let price = Double(ticker.price), price > 0 else { return .none }
-            return CurrencyFormatter.formatter.string(from: NSNumber(value: price))
-        }
     }
 }

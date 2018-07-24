@@ -131,10 +131,6 @@ final class TokenViewModel {
         return UIFont.systemFont(ofSize: 14, weight: .regular)
     }
 
-    var currencyAmount: String? {
-        return TokensLayout.cell.currencyAmount(for: ticker, token: token)
-    }
-
     var amountTextColor: UIColor {
         return TokensLayout.cell.amountTextColor
     }
@@ -152,9 +148,6 @@ final class TokenViewModel {
     }
 
     var percentChange: String? {
-        guard let _ = currencyAmount else {
-            return .none
-        }
         return TokensLayout.cell.percentChange(for: ticker)
     }
 
