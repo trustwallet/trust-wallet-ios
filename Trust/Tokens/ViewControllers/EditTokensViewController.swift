@@ -119,7 +119,7 @@ final class EditTokensViewController: UITableViewController {
     private func configCell(_ cell: EditTokenTableViewCell, token: (token: TokenObject, local: Bool)) {
         cell.viewModel = EditTokenTableCellViewModel(
             token: token.token,
-            coinTicker: storage.coinTicker(for: token.token),
+            coinTicker: storage.coinTicker(by: token.token.address),
             isLocal: token.local
         )
         cell.selectionStyle = token.local ? .none : .default

@@ -93,7 +93,7 @@ final class TokensViewModel: NSObject {
     }
 
     private func amount(for token: TokenObject) -> Double {
-        guard let coinTicker = store.coinTicker(for: token) else {
+        guard let coinTicker = store.coinTicker(by: token.address) else {
             return 0
         }
         let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
@@ -115,7 +115,8 @@ final class TokensViewModel: NSObject {
 
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
-        return TokenViewCellViewModel(token: token, ticker: store.coinTicker(for: token), store: transactionStore)
+        let ticker = store.coinTicker(by: token.address)
+        return TokenViewCellViewModel(token: token, ticker: ticker, store: transactionStore)
     }
 
     func updateBalances() {
@@ -143,7 +144,8 @@ final class TokensViewModel: NSObject {
         firstly {
             tokensNetwork.tickers(with: prices)
         }.done { [weak self] tickers in
-            self?.store.saveTickers(tickers: tickers)
+            guard let strongSelf = self else { return }
+            strongSelf.store.saveTickers(tickers: tickers)
         }.catch { error in
             NSLog("prices \(error)")
         }.finally { [weak self] in
