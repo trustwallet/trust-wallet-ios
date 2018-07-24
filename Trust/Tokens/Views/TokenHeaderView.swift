@@ -22,6 +22,12 @@ final class TokenHeaderView: UIView {
         return label
     }()
 
+    lazy var totalAmountLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     lazy var fiatAmountLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textColor = Colors.black
@@ -61,7 +67,7 @@ final class TokenHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let amountStack = UIStackView(arrangedSubviews: [amountLabel])
+        let amountStack = UIStackView(arrangedSubviews: [amountLabel, fiatAmountLabel])
         amountStack.translatesAutoresizingMaskIntoConstraints = false
         amountStack.axis = .horizontal
 
@@ -82,7 +88,7 @@ final class TokenHeaderView: UIView {
         container.addArrangedSubview(.spacer(height: StyleLayout.sideMargin * 2))
         container.addArrangedSubview(imageView)
         container.addArrangedSubview(.spacer(height: 12))
-        container.addArrangedSubview(amountLabel)
+        container.addArrangedSubview(amountStack)
         container.addArrangedSubview(.spacer(height: 12))
         container.addArrangedSubview(marketPriceStack)
         container.addArrangedSubview(.spacer(height: 12))

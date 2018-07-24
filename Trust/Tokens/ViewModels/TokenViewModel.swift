@@ -119,7 +119,8 @@ final class TokenViewModel {
     }
 
     var totalFiatAmount: String? {
-        return TokensLayout.cell.totalFiatAmount(for: ticker, token: token)
+        guard let value = TokensLayout.cell.totalFiatAmount(for: ticker, token: token) else { return .none }
+        return " (" + value + ")"
     }
 
     var fiatAmountTextColor: UIColor {
