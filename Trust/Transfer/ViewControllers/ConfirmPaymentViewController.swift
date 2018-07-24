@@ -44,8 +44,6 @@ class ConfirmPaymentViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 0
         stackView.axis = .vertical
-        //stackView.alignment = .top
-        //stackView.distribution
         return stackView
     }()
 
@@ -222,7 +220,7 @@ class ConfirmPaymentViewController: UIViewController {
 
 extension ConfirmPaymentViewController: StatefulViewController {
     func hasContent() -> Bool {
-        return true
+        return false
     }
 }
 

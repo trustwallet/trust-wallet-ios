@@ -17,13 +17,6 @@ class TransactionsStorage {
         return realm.objects(Transaction.self).filter(NSPredicate(format: "id!=''")).sorted(byKeyPath: "date", ascending: false)
     }
 
-    var latestTransaction: Transaction? {
-        return realm.objects(Transaction.self)
-            .filter(NSPredicate(format: "from == %@", account.address.description))
-            .sorted(byKeyPath: "nonce", ascending: false)
-            .first
-    }
-
     let titleFormmater: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d yyyy"
@@ -41,6 +34,13 @@ class TransactionsStorage {
     ) {
         self.realm = realm
         self.account = account
+    }
+
+    func latestTransaction(for address: Address) -> Transaction? {
+        return transactions
+            .filter(NSPredicate(format: "from == %@", address.description))
+            .sorted(byKeyPath: "nonce", ascending: false)
+            .first
     }
 
     var completedObjects: [Transaction] {
