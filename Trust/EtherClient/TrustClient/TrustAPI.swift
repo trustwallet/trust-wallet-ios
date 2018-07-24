@@ -49,9 +49,9 @@ extension TrustAPI: TargetType {
         case .getTransaction(let value):
             return "/\(value.server.id)/transactions/\(value.ID)"
         case .register:
-            return "/push/register"
+            return "/notifications/register"
         case .unregister:
-            return "/push/unregister"
+            return "/notifications/unregister"
         case .assets:
             return "/assets"
         case .search:

@@ -82,10 +82,8 @@ final class NotificationsViewController: FormViewController {
     }
 
     static func getPreferences() -> Preferences {
-        let preferencesController = PreferencesController()
-        let preferences = Preferences(
-            isAirdrop: preferencesController.get(for: .airdropNotifications)
-        )
+        //let preferencesController = PreferencesController()
+        let preferences = Preferences()
         return preferences
     }
 

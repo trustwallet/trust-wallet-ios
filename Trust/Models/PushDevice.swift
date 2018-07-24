@@ -10,7 +10,7 @@ enum DeviceType: String, Encodable {
 struct PushDevice: Encodable {
     let deviceID: String
     let token: String
-    let wallets: [String]
+    let networks: [Int: [String]]
     let type: DeviceType = .ios
     let preferences: Preferences
 }
