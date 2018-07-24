@@ -21,16 +21,16 @@ final class TokensViewModel: NSObject {
     let transactionStore: TransactionsStorage
     let session: WalletSession
 
-    var headerBalance: String {
-        return amount ?? "0.00"
-    }
-
     var headerBalanceTextColor: UIColor {
         return Colors.black
     }
 
     var headerBackgroundColor: UIColor {
         return Colors.veryVeryLightGray
+    }
+
+    var defaultBalanceText: String? {
+        return CurrencyFormatter.formatter.string(from: NSNumber(value: TokenObject.DEFAULT_BALANCE))
     }
 
     var headerBalanceFont: UIFont {
@@ -85,20 +85,25 @@ final class TokensViewModel: NSObject {
         tokensObserver = tokens.observe(block)
     }
 
-    private var amount: String? {
-        let totalAmount = tokens.lazy.flatMap { [weak self] in
-            self?.amount(for: $0)
-        }.reduce(0, +)
-        return CurrencyFormatter.formatter.string(from: NSNumber(value: totalAmount))
-    }
+    func amount(completion: @escaping (String?) -> Void) {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+          guard let strongSelf = self else {
+                completion(CurrencyFormatter.formatter.string(from: NSNumber(value: TokenObject.DEFAULT_BALANCE)))
+                return
+          }
 
-    private func amount(for token: TokenObject) -> Double {
-        guard let coinTicker = store.coinTicker(by: token.address) else {
-            return 0
+          let realm = try! Realm(configuration: strongSelf.store.realm.configuration)
+          let tokens = realm.objects(TokenObject.self)
+
+          let totalAmount = tokens.lazy.flatMap {
+              guard let ticker = strongSelf.store.coinTicker(by: $0.address, and: realm) else { return .none }
+              let amount = CurrencyFormatter.plainFormatter.string(from: $0.valueBigInt, decimals: $0.decimals).doubleValue
+              let price = Double(ticker.price) ?? 0
+              return amount * price }.reduce(0.0, +)
+           DispatchQueue.main.async {
+                completion(CurrencyFormatter.formatter.string(from: NSNumber(value: totalAmount)))
+           }
         }
-        let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
-        let price = Double(coinTicker.price) ?? 0
-        return tokenValue * price
     }
 
     func numberOfItems(for section: Int) -> Int {

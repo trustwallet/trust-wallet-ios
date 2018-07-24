@@ -65,8 +65,12 @@ class TokensDataStore {
         }
     }
 
-    func coinTicker(by contract: EthereumAddress) -> CoinTicker? {
-        return realm.object(ofType: CoinTicker.self, forPrimaryKey: CoinTickerKeyMaker.makePrimaryKey(contract: contract, currencyKey: CoinTickerKeyMaker.makeCurrencyKey()))
+    func coinTicker(by contract: EthereumAddress, and instance: Realm? = nil) -> CoinTicker? {
+        var realmInstance = realm
+        if let bgInstance = instance {
+            realmInstance = bgInstance
+        }
+        return realmInstance.object(ofType: CoinTicker.self, forPrimaryKey: CoinTickerKeyMaker.makePrimaryKey(contract: contract, currencyKey: CoinTickerKeyMaker.makeCurrencyKey()))
     }
 
     private func nativeCoin() -> [TokenObject] {
