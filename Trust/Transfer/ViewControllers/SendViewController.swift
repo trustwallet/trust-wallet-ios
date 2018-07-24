@@ -267,7 +267,7 @@ extension SendViewController: QRCodeReaderDelegate {
         }
 
         if let value = result.params["amount"] {
-            amountRow?.value = EtherNumberFormatter.full.string(from: BigInt(value) ?? BigInt(), units: .ether)
+            amountRow?.value = value
         } else {
             amountRow?.value = ""
         }
