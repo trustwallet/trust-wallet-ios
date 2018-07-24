@@ -212,8 +212,14 @@ final class TokenViewModel {
     }
 
     func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
-
-        return TransactionCellViewModel(transaction: tokenTransactionSections[indexPath.section].items[indexPath.row], config: config, chainState: ChainState(server: server), currentAccount: currentAccount, server: token.coin.server)
+        return TransactionCellViewModel(
+            transaction: tokenTransactionSections[indexPath.section].items[indexPath.row],
+            config: config,
+            chainState: ChainState(server: server),
+            currentAccount: currentAccount,
+            server: token.coin.server,
+            token: token
+        )
     }
 
     func hasContent() -> Bool {
@@ -283,7 +289,7 @@ final class TokenViewModel {
         switch token.type {
         case .coin:
             tokenTransactions = transactionsStore.realm.objects(Transaction.self)
-                .filter(NSPredicate(format: "rawCoin = %d && localizedOperations.@count == 0", server.coin.rawValue))
+                .filter(NSPredicate(format: "rawCoin = %d", server.coin.rawValue))
                 .sorted(byKeyPath: "date", ascending: false)
         case .ERC20:
             tokenTransactions = transactionsStore.realm.objects(Transaction.self)

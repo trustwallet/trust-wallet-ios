@@ -50,7 +50,8 @@ struct TransactionDetailsViewModel {
             transaction: transaction,
             config: config,
             currentAccount: currentAccount,
-            server: server
+            server: server,
+            token: token
         )
         self.server = server
         self.token = token
@@ -95,28 +96,32 @@ struct TransactionDetailsViewModel {
     }
 
     var transactionIDLabelTitle: String {
-        return NSLocalizedString("transaction.id.label.title", value: "Transaction #", comment: "")
+        return R.string.localizable.transactionIdLabelTitle()
     }
 
     var address: String {
-        if transaction.toAddress == nil {
-            return EthereumAddress.zero.description
-        }
-        if transactionViewModel.direction == .incoming {
-            return transaction.from
-        } else {
-            guard let to = transaction.operation?.to else {
-                return transaction.to
+        switch token.type {
+        case .coin:
+            if transactionViewModel.direction == .incoming {
+                return transaction.from
             }
-            return to
+            return transaction.to
+        case .ERC20:
+            if transaction.toAddress == nil {
+                return EthereumAddress.zero.description
+            }
+            if transactionViewModel.direction == .incoming {
+                return transaction.from
+            }
+            return transaction.operation?.to ?? transaction.to
         }
     }
 
     var addressTitle: String {
         if transactionViewModel.direction == .incoming {
-            return NSLocalizedString("transaction.sender.label.title", value: "Sender", comment: "")
+            return R.string.localizable.transactionSenderLabelTitle()
         } else {
-            return NSLocalizedString("transaction.recipient.label.title", value: "Recipient", comment: "")
+            return R.string.localizable.transactionSenderLabelTitle()
         }
     }
 

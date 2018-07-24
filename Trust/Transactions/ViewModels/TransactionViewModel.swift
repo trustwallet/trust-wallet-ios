@@ -14,26 +14,34 @@ struct TransactionViewModel {
     private let balanceFormatter = EtherNumberFormatter.balance
     private let fullFormatter = EtherNumberFormatter.full
     private let server: RPCServer
+    private let token: TokenObject
+
     init(
         transaction: Transaction,
         config: Config,
         currentAccount: Account,
-        server: RPCServer
+        server: RPCServer,
+        token: TokenObject
     ) {
         self.transaction = transaction
         self.config = config
         self.currentAccount = currentAccount
         self.server = server
+        self.token = token
     }
 
     var transactionFrom: String {
-        guard let operation = transaction.operation else { return transaction.from }
-        return operation.from
+        switch token.type {
+        case .coin: return transaction.from
+        case .ERC20: return transaction.operation?.from ?? transaction.from
+        }
     }
 
     var transactionTo: String {
-        guard let operation = transaction.operation else { return transaction.to }
-        return operation.to
+        switch token.type {
+        case .coin: return transaction.to
+        case .ERC20: return transaction.operation?.to ?? transaction.to
+        }
     }
 
     var direction: TransactionDirection {
@@ -67,14 +75,23 @@ struct TransactionViewModel {
     }
 
     private func transactionValue(for formatter: EtherNumberFormatter) -> TransactionValue {
-        if let operation = transaction.operation, let symbol = operation.symbol {
-            return TransactionValue(
-                amount: formatter.string(from: BigInt(operation.value) ?? BigInt(), decimals: operation.decimals),
-                symbol: symbol
-            )
+        switch token.type {
+        case .coin:
+            return transactionValue
+        case .ERC20:
+            if let operation = transaction.operation, let symbol = operation.symbol {
+                return TransactionValue(
+                    amount: formatter.string(from: BigInt(operation.value) ?? BigInt(), decimals: operation.decimals),
+                    symbol: symbol
+                )
+            }
+            return transactionValue
         }
+    }
+
+    private var transactionValue: TransactionValue {
         return TransactionValue(
-            amount: formatter.string(from: BigInt(transaction.value) ?? BigInt()),
+            amount: EtherNumberFormatter.short.string(from: BigInt(transaction.value) ?? BigInt()),
             symbol: server.symbol
         )
     }
