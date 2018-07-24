@@ -36,6 +36,6 @@ final class WalletAddress: Object {
 
     override func isEqual(_ object: Any?) -> Bool {
         guard let object = object as? WalletAddress else { return false }
-        return object.address == address
+        return object.address == address && object.coin == address?.coin
     }
 }
