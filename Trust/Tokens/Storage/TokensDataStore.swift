@@ -242,6 +242,17 @@ class TokensDataStore {
         }
         return amountInDecimal.doubleValue * price
     }
+
+    func cleanBalance() {
+        try? realm.write {
+            let defaultBalanceTokens = tokens.map { token -> TokenObject in
+                let tempToken = token
+                tempToken.balance = TokenObject.DEFAULT_BALANCE
+                return tempToken
+            }
+            realm.add(defaultBalanceTokens, update: true)
+        }
+    }
 }
 
 extension Coin {
