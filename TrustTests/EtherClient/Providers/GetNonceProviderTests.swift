@@ -27,6 +27,21 @@ class GetNonceProviderTests: XCTestCase {
         XCTAssertEqual(BigInt(1), provider.nextNonce)
     }
 
+    func testTransactionsSplitByCoins() {
+        let storage = FakeTransactionsStorage()
+        storage.add([
+            .make(nonce: 0, coin: .poa),
+        ])
+        let provider = GetNonceProvider(
+            storage: storage,
+            server: .make(),
+            address: EthereumAddress.make()
+        )
+
+        XCTAssertNil(provider.latestNonce)
+        XCTAssertNil(provider.nextNonce)
+    }
+
     func testExistMultipleTransactions() {
         let storage = FakeTransactionsStorage()
         storage.add([.make(nonce: 5),.make(nonce: 6)])

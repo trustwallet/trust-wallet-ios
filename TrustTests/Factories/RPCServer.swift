@@ -4,7 +4,9 @@ import Foundation
 @testable import Trust
 
 extension RPCServer {
-    static func make() -> RPCServer {
-        return RPCServer.main
+    static func make(
+        server: RPCServer = .main
+    ) -> RPCServer {
+        return server
     }
 }

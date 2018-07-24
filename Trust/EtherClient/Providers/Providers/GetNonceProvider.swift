@@ -13,7 +13,7 @@ final class GetNonceProvider: NonceProvider {
     let address: Address
     var remoteNonce: BigInt? = .none
     var latestNonce: BigInt? {
-        guard let nonce = storage.latestTransaction(for: address)?.nonce else {
+        guard let nonce = storage.latestTransaction(for: address, coin: server.coin)?.nonce else {
             return .none
         }
         let remoteNonceInt = remoteNonce ?? BigInt(-1)
