@@ -42,12 +42,6 @@
                   Identifier = "AppCoordinatorTests">
                </Test>
                <Test
-                  Identifier = "GetNonceProviderTests">
-               </Test>
-               <Test
-                  Identifier = "SendViewModelTest">
-               </Test>
-               <Test
                   Identifier = "TokensDataStoreTest">
                </Test>
                <Test

@@ -26,7 +26,7 @@ class SendViewModelTest: XCTestCase {
         sendViewModel.pairRate = 298981.983212
         sendViewModel.currentPair = sendViewModel.currentPair.swapPair()
         let cryptoRepresentation = sendViewModel.pairRateRepresantetion()
-        XCTAssertEqual("~ \(expectedCryptoResult) ETH", cryptoRepresentation)
+        XCTAssertEqual("~ \(expectedCryptoResult) \(sendViewModel.transfer.type.token.symbol)", cryptoRepresentation)
     }
     func testUpdatePairRate() {
         XCTAssertEqual(0.0, sendViewModel.pairRate)
