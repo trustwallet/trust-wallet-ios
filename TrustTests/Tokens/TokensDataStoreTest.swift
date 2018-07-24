@@ -57,10 +57,10 @@ class TokensDataStoreTest: XCTestCase {
 
         let coinTickers = FakeCoinTickerFactory.make3UniqueCionTickers()
 
-        XCTAssertEqual(1000.00, tokensDataStore.getBalance(for: tokenObject, with: coinTickers))
+        XCTAssertEqual(1000.00, tokensDataStore.getBalance(for: tokenObject))
 
-        XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject, with: [CoinTicker(price: "", contract: .make())]))
-        XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject, with: [CoinTicker]()))
+        XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject))
+        XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject))
 
         tokenObject = TokenObject(
             contract: "0x0000000000000000000000000000000000000002",
@@ -70,7 +70,7 @@ class TokensDataStoreTest: XCTestCase {
             value: "20000"
         )
 
-        XCTAssertEqual(400.00, tokensDataStore.getBalance(for: tokenObject, with: coinTickers))
+        XCTAssertEqual(400.00, tokensDataStore.getBalance(for: tokenObject))
 
         tokenObject = TokenObject(
             contract: "contract that doesn't match any",
@@ -80,7 +80,7 @@ class TokensDataStoreTest: XCTestCase {
             value: "30000"
         )
 
-        XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject, with: coinTickers))
+        XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject))
     }
 
     // This test checks that even the key generation algorithm changes, coinTicker(for:) still can pick up the correct CoinTicker object without needing to delete the old CoinTicker records since they have old key.
@@ -94,7 +94,7 @@ class TokensDataStoreTest: XCTestCase {
             type: .coin,
             symbol: "symbol1", decimals: 18, value: "", isCustom: false, isDisabled: false)
 
-        let coinTicker = tokensDataStore.coinTicker(for: token)
+        let coinTicker = tokensDataStore.coinTicker(by: token.address)
 
         XCTAssertEqual("0x0000000000000000000000000000000000000001_tickers-USD", coinTicker?.key)
     }

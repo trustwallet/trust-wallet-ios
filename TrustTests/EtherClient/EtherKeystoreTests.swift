@@ -23,6 +23,7 @@ class EtherKeystoreTests: XCTestCase {
         let account = keystore.createAccout(password: password)
         let retrivedPassword = keystore.getPassword(for: account)
 
+        XCTAssertEqual(5, account.accounts.count)
         XCTAssertEqual(password, retrivedPassword)
         XCTAssertEqual(1, keystore.wallets.count)
     }

@@ -48,6 +48,9 @@
                   Identifier = "SendViewModelTest">
                </Test>
                <Test
+                  Identifier = "TokensDataStoreTest">
+               </Test>
+               <Test
                   Identifier = "TypedMessageEncodingTests">
                </Test>
                <Test

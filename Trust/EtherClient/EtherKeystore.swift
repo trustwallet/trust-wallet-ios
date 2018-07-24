@@ -166,15 +166,10 @@ class EtherKeystore: Keystore {
     }
 
     func createAccout(password: String) -> Wallet {
+        let derivationPaths = Config.current.servers.map { $0.derivationPath(at: 0) }
         let wallet = try! keyStore.createWallet(
             password: password,
-            derivationPaths: [
-                Coin.ethereum.derivationPath(at: 0),
-                Coin.poa.derivationPath(at: 0),
-                Coin.callisto.derivationPath(at: 0),
-                Coin.gochain.derivationPath(at: 0),
-                Coin.ethereumClassic.derivationPath(at: 0),
-            ]
+            derivationPaths: derivationPaths
         )
         let _ = setPassword(password, for: wallet)
         return wallet

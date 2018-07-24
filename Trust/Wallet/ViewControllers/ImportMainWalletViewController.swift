@@ -19,10 +19,10 @@ final class ImportMainWalletViewController: FormViewController {
         static let password = "password"
     }
 
-    var mnemonicRow: TextAreaRow? {
+    private var mnemonicRow: TextAreaRow? {
         return form.rowBy(tag: Values.mnemonic)
     }
-    var passwordRow: TextFloatLabelRow? {
+    private var passwordRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.password)
     }
     weak var delegate: ImportMainWalletViewControllerDelegate?
@@ -70,7 +70,7 @@ final class ImportMainWalletViewController: FormViewController {
         let validatedError = mnemonicRow?.section?.form?.validate()
         guard let errors = validatedError, errors.isEmpty else { return }
 
-        let password = passwordRow?.value ?? ""
+        let password = ""//passwordRow?.value ?? ""
         let mnemonicInput = mnemonicRow?.value?.trimmed ?? ""
         let words = mnemonicInput.components(separatedBy: " ").map { $0.trimmed.lowercased() }
 
@@ -78,15 +78,34 @@ final class ImportMainWalletViewController: FormViewController {
 
         let importType = ImportType.mnemonic(words: words, password: password, derivationPath: Coin.ethereum.derivationPath(at: 0))
 
-        keystore.importWallet(type: importType, coin: .ethereum) { result in
-            self.hideLoading(animated: false)
-            switch result {
-            case .success(let account):
-                self.didImport(account: account)
-            case .failure(let error):
-                self.displayError(error: error)
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.keystore.importWallet(type: importType, coin: .ethereum) { result in
+                switch result {
+                case .success(let account):
+                    self.addWallets(wallet: account)
+                    DispatchQueue.main.async {
+                        self.hideLoading(animated: false)
+                        self.didImport(account: account)
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self.hideLoading(animated: false)
+                        self.displayError(error: error)
+                    }
+                }
             }
         }
+    }
+
+    @discardableResult
+    func addWallets(wallet: WalletInfo) -> Bool {
+        // Create coins based on supported networks
+        guard let w = wallet.currentWallet else {
+            return false
+        }
+        let derivationPaths = Config.current.servers.map { $0.derivationPath(at: 0) }
+        let _ = keystore.addAccount(to: w, derivationPaths: derivationPaths)
+        return true
     }
 
     @objc func openReader() {
