@@ -9,6 +9,7 @@ final class TokensHeaderView: UIView {
         let label = UILabel(frame: .zero)
         label.textColor = Colors.black
         label.textAlignment = .center
+        label.text = CurrencyFormatter.formatter.string(from: NSNumber(value: TokenObject.DEFAULT_BALANCE))
         return label
     }()
 
