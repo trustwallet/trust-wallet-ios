@@ -21,6 +21,7 @@ final class TokensViewController: UIViewController {
         header.amountLabel.textColor = viewModel.headerBalanceTextColor
         header.backgroundColor = viewModel.headerBackgroundColor
         header.amountLabel.font = viewModel.headerBalanceFont
+        header.amountLabel.text = viewModel.defaultBalanceText
         header.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
         return header
     }()

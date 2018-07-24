@@ -29,6 +29,10 @@ final class TokensViewModel: NSObject {
         return Colors.veryVeryLightGray
     }
 
+    var defaultBalanceText: String? {
+        return CurrencyFormatter.formatter.string(from: NSNumber(value: TokenObject.DEFAULT_BALANCE))
+    }
+
     var headerBalanceFont: UIFont {
         return UIFont.systemFont(ofSize: 28, weight: .medium)
     }
