@@ -46,8 +46,6 @@ extension TrustAPI: TargetType {
             return "/tokens"
         case .getAllTransactions:
             return "/transactions"
-        case .getTransaction(let value):
-            return "/\(value.server.id)/transactions/\(value.ID)"
         case .register:
             return "/notifications/register"
         case .unregister:
@@ -64,7 +62,6 @@ extension TrustAPI: TargetType {
         case .prices: return .post
         case .getTransactions: return .get
         case .getTokens: return .post
-        case .getTransaction: return .get
         case .getAllTransactions: return .post
         case .register: return .post
         case .unregister: return .post
@@ -87,8 +84,6 @@ extension TrustAPI: TargetType {
             return .requestParameters(parameters: ["address": addresses], encoding: URLEncoding())
         case .getTokens(let value):
             return .requestJSONEncodable(value)
-        case .getTransaction:
-            return .requestPlain
         case .register(let device):
             return .requestJSONEncodable(device)
         case .unregister(let device):
