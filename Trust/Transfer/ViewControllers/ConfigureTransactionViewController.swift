@@ -13,7 +13,7 @@ class ConfigureTransactionViewController: FormViewController {
     let configuration: TransactionConfiguration
     let config: Config
     let transfer: Transfer
-    let currencyRate: CurrencyRate?
+    let session: WalletSession
     private let fullFormatter = EtherNumberFormatter.full
 
     struct Values {
@@ -64,7 +64,7 @@ class ConfigureTransactionViewController: FormViewController {
     }
 
     private var gasViewModel: GasViewModel {
-        return GasViewModel(fee: totalFee, server: transfer.server, currencyRate: currencyRate, formatter: fullFormatter)
+        return GasViewModel(fee: totalFee, server: transfer.server, store: session.tokensStorage, formatter: fullFormatter)
     }
 
     weak var delegate: ConfigureTransactionViewControllerDelegate?
@@ -73,12 +73,12 @@ class ConfigureTransactionViewController: FormViewController {
         configuration: TransactionConfiguration,
         transfer: Transfer,
         config: Config,
-        currencyRate: CurrencyRate?
+        session: WalletSession
     ) {
         self.configuration = configuration
         self.transfer = transfer
         self.config = config
-        self.currencyRate = currencyRate
+        self.session = session
 
         super.init(nibName: nil, bundle: nil)
 

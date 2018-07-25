@@ -52,8 +52,6 @@
 		2931122E1FC94E4200966EEA /* SettingsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2931122D1FC94E4200966EEA /* SettingsError.swift */; };
 		293112351FC9A0D500966EEA /* CallRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112341FC9A0D500966EEA /* CallRequest.swift */; };
 		293112371FC9A24600966EEA /* UIGestureRecognizer+Closure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293112361FC9A24600966EEA /* UIGestureRecognizer+Closure.swift */; };
-		2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */; };
-		2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */; };
 		293248841F88CCD2008A9818 /* SplashState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293248831F88CCD2008A9818 /* SplashState.swift */; };
 		293248861F88CCE6008A9818 /* SplashError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293248851F88CCE6008A9818 /* SplashError.swift */; };
 		29336FE71F6B245D005E3BFC /* WelcomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A13E271F6A903500E432A2 /* WelcomeViewModelTests.swift */; };
@@ -267,6 +265,9 @@
 		732E0F502022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */; };
 		732E0F522022754600B39C1F /* FakeLockProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F512022754600B39C1F /* FakeLockProtocol.swift */; };
 		732E0F542022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */; };
+		733AFC7A2108B4A000C0AE35 /* FeesCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733AFC792108B4A000C0AE35 /* FeesCalculations.swift */; };
+		733AFC7C210907DE00C0AE35 /* GasViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733AFC7B210907DE00C0AE35 /* GasViewModelTest.swift */; };
+		733AFC822109093900C0AE35 /* GasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733AFC812109093900C0AE35 /* GasViewModel.swift */; };
 		734AFD1520F1558800864E8E /* NotificationBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734AFD1420F1558800864E8E /* NotificationBadge.swift */; };
 		735AB03D2073BF2100EEEDDD /* TokenBalanceOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735AB03C2073BF2100EEEDDD /* TokenBalanceOperation.swift */; };
 		736D6ECF20DBD946008C2CC4 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736D6ECE20DBD946008C2CC4 /* PrivacyViewController.swift */; };
@@ -448,7 +449,6 @@
 		BB3E2A1020A12592000F8B76 /* ENSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3E2A0F20A12592000F8B76 /* ENSManager.swift */; };
 		BB58B92D206F70E800A70A3C /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB58B92C206F70E800A70A3C /* HistoryStore.swift */; };
 		BB58B92F206F70FE00A70A3C /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB58B92E206F70FE00A70A3C /* History.swift */; };
-		BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */; };
 		BB767E2E205E10FD00263658 /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB767E2D205E10FD00263658 /* Debounce.swift */; };
 		BB8E747920818E5E001BA99A /* SearchTokenResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8E747820818E5E001BA99A /* SearchTokenResultsController.swift */; };
 		BBAA2A3B2058155100B0878C /* TypedMessageEncodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAA2A3A2058155100B0878C /* TypedMessageEncodingTests.swift */; };
@@ -532,8 +532,6 @@
 		2931122D1FC94E4200966EEA /* SettingsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsError.swift; sourceTree = "<group>"; };
 		293112341FC9A0D500966EEA /* CallRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallRequest.swift; sourceTree = "<group>"; };
 		293112361FC9A24600966EEA /* UIGestureRecognizer+Closure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer+Closure.swift"; sourceTree = "<group>"; };
-		2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRate.swift; sourceTree = "<group>"; };
-		2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceCoordinator.swift; sourceTree = "<group>"; };
 		293248831F88CCD2008A9818 /* SplashState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashState.swift; sourceTree = "<group>"; };
 		293248851F88CCE6008A9818 /* SplashError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashError.swift; sourceTree = "<group>"; };
 		29358D9E1F78D5B700925D61 /* Screenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screenshots.swift; sourceTree = "<group>"; };
@@ -756,6 +754,9 @@
 		732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
 		732E0F512022754600B39C1F /* FakeLockProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeLockProtocol.swift; sourceTree = "<group>"; };
 		732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockCreatePasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
+		733AFC792108B4A000C0AE35 /* FeesCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeesCalculations.swift; sourceTree = "<group>"; };
+		733AFC7B210907DE00C0AE35 /* GasViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasViewModelTest.swift; sourceTree = "<group>"; };
+		733AFC812109093900C0AE35 /* GasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasViewModel.swift; sourceTree = "<group>"; };
 		734AFD1420F1558800864E8E /* NotificationBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBadge.swift; sourceTree = "<group>"; };
 		735AB03C2073BF2100EEEDDD /* TokenBalanceOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBalanceOperation.swift; sourceTree = "<group>"; };
 		736D6ECE20DBD946008C2CC4 /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
@@ -943,7 +944,6 @@
 		BB3E2A0F20A12592000F8B76 /* ENSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSManager.swift; sourceTree = "<group>"; };
 		BB58B92C206F70E800A70A3C /* HistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStore.swift; sourceTree = "<group>"; };
 		BB58B92E206F70FE00A70A3C /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
-		BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrencyRate+Fee.swift"; sourceTree = "<group>"; };
 		BB767E2D205E10FD00263658 /* Debounce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debounce.swift; sourceTree = "<group>"; };
 		BB8E747820818E5E001BA99A /* SearchTokenResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTokenResultsController.swift; sourceTree = "<group>"; };
 		BBAA2A3A2058155100B0878C /* TypedMessageEncodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedMessageEncodingTests.swift; sourceTree = "<group>"; };
@@ -1299,7 +1299,6 @@
 		2977CAE31F7E0B3F009682A0 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				2932045D1F8EEE760095B7C1 /* BalanceCoordinator.swift */,
 				613D048A1FDE162B008DE72E /* TrustProvider.swift */,
 				7704837120FFD30B00837735 /* TransactionsCoordinator.swift */,
 			);
@@ -1683,7 +1682,6 @@
 				29BDF1A01FEE51A80023A45F /* GasLimitConfiguration.swift */,
 				29FF6D6A2011D2AF00A3011C /* InCoordinatorError.swift */,
 				29C70C702016C7780072E454 /* SentTransaction.swift */,
-				BB5D6A9D20232EE8000FC5AB /* CurrencyRate+Fee.swift */,
 				BB03A86C20416AF600649DA0 /* BalanceStatus.swift */,
 				294BB5102086CE4A00430EFA /* DAppRequster.swift */,
 			);
@@ -1811,6 +1809,7 @@
 				777871352085D77000CF7303 /* BranchEventParser.swift */,
 				777871372085D7A600CF7303 /* BranchEvent.swift */,
 				779141D521040B63007E8E16 /* TrustRequestFormatter.swift */,
+				733AFC792108B4A000C0AE35 /* FeesCalculations.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -1897,7 +1896,6 @@
 				293248851F88CCE6008A9818 /* SplashError.swift */,
 				296AF9A41F736BA20058AF78 /* Config.swift */,
 				296AF9A61F736EC70058AF78 /* RPCServers.swift */,
-				2932045B1F8DCD6E0095B7C1 /* CurrencyRate.swift */,
 				290B2B661F9266630053C83E /* SettingsAction.swift */,
 				29AD8A031F93D6CD008E10E7 /* Constants.swift */,
 				298542F41FBD8E6A00CB5081 /* ConfigExplorer.swift */,
@@ -1959,6 +1957,7 @@
 				77EAD89420EAF19F00D14AA2 /* WalletInfo.swift */,
 				77EAD89620EAF1FD00D14AA2 /* WalletObject.swift */,
 				779141DE21063DCE007E8E16 /* RPCServer.swift */,
+				733AFC812109093900C0AE35 /* GasViewModel.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -2149,6 +2148,7 @@
 			isa = PBXGroup;
 			children = (
 				771A8484203242B400528D28 /* InCoordinatorViewModelTests.swift */,
+				733AFC7B210907DE00C0AE35 /* GasViewModelTest.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -3050,7 +3050,6 @@
 				77CB839A206CEED7006F34A8 /* Size.swift in Sources */,
 				294DFBA91FE6EBFB004CEB56 /* NewTokenViewController.swift in Sources */,
 				29B933F51F860074009FCABB /* SendTransactionCoordinator.swift in Sources */,
-				2932045C1F8DCD6E0095B7C1 /* CurrencyRate.swift in Sources */,
 				291F52A51F6B762300B369AB /* EtherServiceRequest.swift in Sources */,
 				CCA4FE361FD4282400749AE4 /* DeviceChecker.swift in Sources */,
 				732086B9201508690047F605 /* SplashCoordinator.swift in Sources */,
@@ -3075,7 +3074,6 @@
 				735AB03D2073BF2100EEEDDD /* TokenBalanceOperation.swift in Sources */,
 				296FC59B20B68FF600B923EF /* ExportPhraseViewModel.swift in Sources */,
 				775C00B520195BFB001B5EBC /* BrowserAction.swift in Sources */,
-				BB5D6A9E20232EE8000FC5AB /* CurrencyRate+Fee.swift in Sources */,
 				77E0E773201FAD06009B4B31 /* BrowserURLParser.swift in Sources */,
 				73ACEF0520163F46003DD71D /* LockEnterPasscodeCoordinator.swift in Sources */,
 				A2B7ECAA2038122200828E7D /* ExportPrivateKeyCoordinator.swift in Sources */,
@@ -3149,7 +3147,6 @@
 				771A847320322F2500528D28 /* BrowserConfigurationViewController.swift in Sources */,
 				29DBF2A31F9DBFF400327C60 /* BackupCoordinator.swift in Sources */,
 				2963B6C11F9AE0E4003063C1 /* Data.swift in Sources */,
-				2932045E1F8EEE760095B7C1 /* BalanceCoordinator.swift in Sources */,
 				77CB8398206B8E1C006F34A8 /* ScanQRCodeCoordinator.swift in Sources */,
 				29AD3D5920F5BD97007893C9 /* WalletsCoordinator.swift in Sources */,
 				2912CD321F6A83EE00C6CBE3 /* WelcomeViewController.swift in Sources */,
@@ -3179,6 +3176,7 @@
 				BB03A86D20416AF600649DA0 /* BalanceStatus.swift in Sources */,
 				29D03F1D1F712183006E548C /* Button.swift in Sources */,
 				CCCD74FD1FD2D38D004A087D /* CheckDeviceCoordinator.swift in Sources */,
+				733AFC7A2108B4A000C0AE35 /* FeesCalculations.swift in Sources */,
 				73BAA8D3201B2FF800D6DD75 /* LockEnterPasscodeViewController.swift in Sources */,
 				29E2E33E1F7A2423000CF94A /* TransactionHeaderView.swift in Sources */,
 				2963B6AF1F9823E6003063C1 /* UnconfirmedTransaction.swift in Sources */,
@@ -3199,6 +3197,7 @@
 				29F1C85620036887003780D8 /* AppTrackerTests.swift in Sources */,
 				29BDF19F1FEE51650023A45F /* GasLimitConfigurationTests.swift in Sources */,
 				73200B642040B9D700118A82 /* CryptoAddressValidatorTest.swift in Sources */,
+				733AFC7C210907DE00C0AE35 /* GasViewModelTest.swift in Sources */,
 				290B2B6C1F92C35B0053C83E /* RPCServerTests.swift in Sources */,
 				29FF13031F75EB7500AFD326 /* Account.swift in Sources */,
 				29BDF1941FEE43AA0023A45F /* TransactionConfiguratorTests.swift in Sources */,
@@ -3206,6 +3205,7 @@
 				298995002053D52700576B8B /* FakeRealm.swift in Sources */,
 				776C1142205BAFA800449539 /* ExportPrivateKeyCoordinatorTests.swift in Sources */,
 				2923D9B71FDA5E51000CF3F8 /* PasswordGeneratorTests.swift in Sources */,
+				733AFC822109093900C0AE35 /* GasViewModel.swift in Sources */,
 				BBAA2A3B2058155100B0878C /* TypedMessageEncodingTests.swift in Sources */,
 				77EAD89720EAF1FD00D14AA2 /* WalletObject.swift in Sources */,
 				29F1C865200384FE003780D8 /* Wallet.swift in Sources */,

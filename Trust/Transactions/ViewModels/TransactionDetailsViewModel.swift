@@ -23,14 +23,14 @@ struct TransactionDetailsViewModel {
     private let chainState: ChainState
     private let shortFormatter = EtherNumberFormatter.short
     private let fullFormatter = EtherNumberFormatter.full
-    private let currencyRate: CurrencyRate?
+    private let session: WalletSession
     private let server: RPCServer
     private let token: TokenObject
     private var monetaryAmountViewModel: MonetaryAmountViewModel {
         return MonetaryAmountViewModel(
             amount: transactionViewModel.shortValue.amount,
-            contract: token.contract,
-            currencyRate: currencyRate
+            contract: token.address,
+            session: session
         )
     }
     init(
@@ -38,14 +38,14 @@ struct TransactionDetailsViewModel {
         config: Config,
         chainState: ChainState,
         currentAccount: Account,
-        currencyRate: CurrencyRate?,
+        session: WalletSession,
         server: RPCServer,
         token: TokenObject
     ) {
         self.transaction = transaction
         self.config = config
         self.chainState = chainState
-        self.currencyRate = currencyRate
+        self.session = session
         self.transactionViewModel = TransactionViewModel(
             transaction: transaction,
             config: config,
@@ -144,7 +144,7 @@ struct TransactionDetailsViewModel {
             }
         }()
 
-        return GasViewModel(fee: gasFee, server: server, currencyRate: currencyRate, formatter: fullFormatter)
+        return GasViewModel(fee: gasFee, server: server, store: session.tokensStorage, formatter: fullFormatter)
     }
 
     var gasFee: String {

@@ -6,7 +6,7 @@ import BigInt
 struct ConfirmPaymentDetailsViewModel {
 
     let transaction: PreviewTransaction
-    let currencyRate: CurrencyRate?
+    let session: WalletSession
     let config: Config
     let server: RPCServer
     private let fullFormatter = EtherNumberFormatter.full
@@ -14,24 +14,24 @@ struct ConfirmPaymentDetailsViewModel {
     private var monetaryAmountViewModel: MonetaryAmountViewModel {
         return MonetaryAmountViewModel(
             amount: amount,
-            contract: transaction.transfer.type.contract,
-            currencyRate: currencyRate
+            contract: transaction.transfer.type.address,
+            session: session
         )
     }
     init(
         transaction: PreviewTransaction,
         config: Config = Config(),
-        currencyRate: CurrencyRate?,
+        session: WalletSession,
         server: RPCServer
     ) {
         self.transaction = transaction
         self.config = config
-        self.currencyRate = currencyRate
+        self.session = session
         self.server = server
     }
 
     private var gasViewModel: GasViewModel {
-        return GasViewModel(fee: totalFee, server: server, currencyRate: currencyRate, formatter: fullFormatter)
+        return GasViewModel(fee: totalFee, server: server, store: session.tokensStorage, formatter: fullFormatter)
     }
 
     private var totalViewModel: GasViewModel {
@@ -42,7 +42,7 @@ struct ConfirmPaymentDetailsViewModel {
             value += transaction.value
         }
 
-        return GasViewModel(fee: value, server: server, currencyRate: currencyRate, formatter: fullFormatter)
+        return GasViewModel(fee: value, server: server, store: session.tokensStorage, formatter: fullFormatter)
     }
 
     private var totalFee: BigInt {
@@ -114,8 +114,7 @@ struct ConfirmPaymentDetailsViewModel {
         let feeDouble = gasViewModel.feeCurrency ?? 0
         let amountDouble = monetaryAmountViewModel.amountCurrency ?? 0
 
-        let rate = CurrencyRate(rates: [:])
-        guard let totalAmount = rate.format(fee: feeDouble + amountDouble) else {
+        guard let totalAmount = FeeCalculator.format(fee: feeDouble + amountDouble) else {
             return "--"
         }
         return totalAmount

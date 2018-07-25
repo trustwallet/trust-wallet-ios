@@ -6,29 +6,32 @@ import TrustCore
 
 struct MonetaryAmountViewModel {
     let amount: String
-    let contract: String
-    let currencyRate: CurrencyRate?
+    let contract: Address
+    let session: WalletSession
     let formatter: EtherNumberFormatter
 
     init(
         amount: String,
-        contract: String,
-        currencyRate: CurrencyRate? = nil,
+        contract: Address,
+        session: WalletSession,
         formatter: EtherNumberFormatter = .full
     ) {
         self.amount = amount
         self.contract = contract
-        self.currencyRate = currencyRate
+        self.session = session
         self.formatter = formatter
     }
 
     var amountCurrency: Double? {
-        return currencyRate?.estimate(fee: amount, with: contract)
+        guard let price = session.tokensStorage.coinTicker(by: contract)?.price else {
+            return .none
+        }
+        return FeeCalculator.estimate(fee: amount, with: price)
     }
 
     var amountText: String? {
         guard let amountCurrency = amountCurrency,
-            let result = currencyRate?.format(fee: amountCurrency) else {
+            let result = FeeCalculator.format(fee: amountCurrency) else {
             return .none
         }
         return "(\(result))"
