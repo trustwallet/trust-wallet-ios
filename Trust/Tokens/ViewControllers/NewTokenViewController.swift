@@ -52,10 +52,11 @@ final class NewTokenViewController: FormViewController {
 
         title = viewModel.title
 
-        let recipientRightView = FieldAppereance.addressFieldRightView(
-            pasteAction: { [unowned self] in self.pasteAction() },
-            qrAction: { [unowned self] in self.openReader() }
-        )
+        let recipientRightView = AddressFieldView()
+        recipientRightView.translatesAutoresizingMaskIntoConstraints = false
+        recipientRightView.pasteButton.addTarget(self, action: #selector(pasteAction), for: .touchUpInside)
+        recipientRightView.qrButton.addTarget(self, action: #selector(openReader), for: .touchUpInside)
+
         let section = Section()
 
         if viewModel.networkSelectorAvailable {

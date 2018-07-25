@@ -74,10 +74,10 @@ final class ImportWalletViewController: FormViewController {
             }
         }
 
-        let recipientRightView = FieldAppereance.addressFieldRightView(
-            pasteAction: { [unowned self] in self.pasteAddressAction() },
-            qrAction: { [unowned self] in self.openReader() }
-        )
+        let recipientRightView = AddressFieldView()
+        recipientRightView.translatesAutoresizingMaskIntoConstraints = false
+        recipientRightView.pasteButton.addTarget(self, action: #selector(pasteAddressAction), for: .touchUpInside)
+        recipientRightView.qrButton.addTarget(self, action: #selector(openReader), for: .touchUpInside)
 
         let initialName = WalletInfo.initialName(index: keystore.wallets.count)
 

@@ -101,10 +101,11 @@ class SendViewController: FormViewController {
     }
 
     func addressField() -> TextFloatLabelRow {
-        let recipientRightView = FieldAppereance.addressFieldRightView(
-            pasteAction: { [unowned self] in self.pasteAction() },
-            qrAction: { [unowned self] in self.openReader() }
-        )
+        let recipientRightView = AddressFieldView()
+        recipientRightView.translatesAutoresizingMaskIntoConstraints = false
+        recipientRightView.pasteButton.addTarget(self, action: #selector(pasteAction), for: .touchUpInside)
+        recipientRightView.qrButton.addTarget(self, action: #selector(openReader), for: .touchUpInside)
+
         return AppFormAppearance.textFieldFloat(tag: Values.address) {
             $0.add(rule: EthereumAddressRule())
             $0.validationOptions = .validatesOnDemand
