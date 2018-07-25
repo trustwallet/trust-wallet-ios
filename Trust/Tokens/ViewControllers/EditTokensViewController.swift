@@ -118,7 +118,7 @@ final class EditTokensViewController: UITableViewController {
 
     private func configCell(_ cell: EditTokenTableViewCell, token: (token: TokenObject, local: Bool)) {
         cell.viewModel = EditTokenTableCellViewModel(
-            token: token.token,
+            viewModel: TokenObjectViewModel(token: token.token),
             coinTicker: storage.coinTicker(by: token.token.address),
             isLocal: token.local
         )

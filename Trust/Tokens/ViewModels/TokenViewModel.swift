@@ -20,17 +20,20 @@ final class TokenViewModel {
     private var transactionToken: NotificationToken?
 
     let token: TokenObject
+    private lazy var tokenObjectViewModel: TokenObjectViewModel = {
+        return TokenObjectViewModel(token: token)
+    }()
 
     var title: String {
-        return token.displayName
+        return tokenObjectViewModel.title
     }
 
     var imageURL: URL? {
-        return token.imageURL
+        return tokenObjectViewModel.imageURL
     }
 
     var imagePlaceholder: UIImage? {
-        return token.placeholder
+        return tokenObjectViewModel.placeholder
     }
 
     private var symbol: String {

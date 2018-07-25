@@ -348,6 +348,8 @@
 		7722CEDD20A4F757004DFDBA /* LocalSchemeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7722CEDC20A4F757004DFDBA /* LocalSchemeCoordinator.swift */; };
 		772C6DB12107FF3800FCE4F1 /* AddressFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C6DB02107FF3800FCE4F1 /* AddressFieldView.swift */; };
 		772C6DB3210913ED00FCE4F1 /* TokensPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C6DB2210913ED00FCE4F1 /* TokensPrice.swift */; };
+		772C6DB52109161E00FCE4F1 /* TokenObjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C6DB42109161E00FCE4F1 /* TokenObjectViewModel.swift */; };
+		772C6DB9210918C400FCE4F1 /* TokenObjectViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C6DB8210918C400FCE4F1 /* TokenObjectViewModelTest.swift */; };
 		773B8DB620716EB000D05690 /* NonceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B8DB520716EAF00D05690 /* NonceProvider.swift */; };
 		773B8DB920716EFF00D05690 /* GetNonceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B8DB820716EFF00D05690 /* GetNonceProvider.swift */; };
 		773B8DBC207184CD00D05690 /* GetNonceProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B8DBB207184CD00D05690 /* GetNonceProviderTests.swift */; };
@@ -840,6 +842,8 @@
 		7722CEDC20A4F757004DFDBA /* LocalSchemeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSchemeCoordinator.swift; sourceTree = "<group>"; };
 		772C6DB02107FF3800FCE4F1 /* AddressFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressFieldView.swift; sourceTree = "<group>"; };
 		772C6DB2210913ED00FCE4F1 /* TokensPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPrice.swift; sourceTree = "<group>"; };
+		772C6DB42109161E00FCE4F1 /* TokenObjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenObjectViewModel.swift; sourceTree = "<group>"; };
+		772C6DB8210918C400FCE4F1 /* TokenObjectViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenObjectViewModelTest.swift; sourceTree = "<group>"; };
 		773B8DB520716EAF00D05690 /* NonceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonceProvider.swift; sourceTree = "<group>"; };
 		773B8DB820716EFF00D05690 /* GetNonceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNonceProvider.swift; sourceTree = "<group>"; };
 		773B8DBB207184CD00D05690 /* GetNonceProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNonceProviderTests.swift; sourceTree = "<group>"; };
@@ -1457,6 +1461,7 @@
 				776C1148205D02E800449539 /* TokenViewModel.swift */,
 				77B1EB002063A198007970AA /* NFTDetailsViewModel.swift */,
 				73DE7B34209884AB00AE04E6 /* NonFungibleCollectionViewCellModel.swift */,
+				772C6DB42109161E00FCE4F1 /* TokenObjectViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2000,6 +2005,7 @@
 		73200B712048A7DA00118A82 /* Tokens */ = {
 			isa = PBXGroup;
 			children = (
+				772C6DB7210918B000FCE4F1 /* ViewModels */,
 				4EEE540C207996EF007D300D /* TokensDataStoreTest.swift */,
 				73200B722048A7FC00118A82 /* TokensViewModelTest.swift */,
 			);
@@ -2209,6 +2215,14 @@
 				77CB8397206B8E1C006F34A8 /* ScanQRCodeCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		772C6DB7210918B000FCE4F1 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				772C6DB8210918C400FCE4F1 /* TokenObjectViewModelTest.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		773B8DB320716E9C00D05690 /* Providers */ = {
@@ -2836,6 +2850,7 @@
 				2963B6B11F9891F5003063C1 /* UIButton.swift in Sources */,
 				29F114F21FA7966300114A29 /* PrivateKeyRule.swift in Sources */,
 				BB3E2A0E20A04F4B000F8B76 /* ENSRecord.swift in Sources */,
+				772C6DB52109161E00FCE4F1 /* TokenObjectViewModel.swift in Sources */,
 				77E81D962036883B00534C99 /* NotificationsViewModel.swift in Sources */,
 				7778713E2086F93700CF7303 /* Colors.swift in Sources */,
 				296106C41F7640C50006164B /* TokenViewCellViewModel.swift in Sources */,
@@ -3204,6 +3219,7 @@
 				29FF13081F75F0AE00AFD326 /* AppCoordinatorTests.swift in Sources */,
 				298995002053D52700576B8B /* FakeRealm.swift in Sources */,
 				776C1142205BAFA800449539 /* ExportPrivateKeyCoordinatorTests.swift in Sources */,
+				772C6DB9210918C400FCE4F1 /* TokenObjectViewModelTest.swift in Sources */,
 				2923D9B71FDA5E51000CF3F8 /* PasswordGeneratorTests.swift in Sources */,
 				733AFC822109093900C0AE35 /* GasViewModel.swift in Sources */,
 				BBAA2A3B2058155100B0878C /* TypedMessageEncodingTests.swift in Sources */,

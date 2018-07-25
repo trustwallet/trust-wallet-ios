@@ -7,23 +7,22 @@ import BigInt
 struct TokenViewCellViewModel {
 
     private let shortFormatter = EtherNumberFormatter.short
-
-    let token: TokenObject
-    let ticker: CoinTicker?
+    let viewModel: TokenObjectViewModel
+    private let ticker: CoinTicker?
     let store: TransactionsStorage
 
     init(
-        token: TokenObject,
+        viewModel: TokenObjectViewModel,
         ticker: CoinTicker?,
         store: TransactionsStorage
     ) {
-        self.token = token
+        self.viewModel = viewModel
         self.ticker = ticker
         self.store = store
     }
 
     var title: String {
-        return token.title
+        return viewModel.title
     }
 
     var titleFont: UIFont {
@@ -35,11 +34,11 @@ struct TokenViewCellViewModel {
     }
 
     var amount: String {
-        return shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
+        return shortFormatter.string(from: BigInt(viewModel.token.value) ?? BigInt(), decimals: viewModel.token.decimals)
     }
 
     var currencyAmount: String? {
-        return TokensLayout.cell.totalFiatAmount(token: token)
+        return TokensLayout.cell.totalFiatAmount(token: viewModel.token)
     }
 
     var amountFont: UIFont {
@@ -77,7 +76,7 @@ struct TokenViewCellViewModel {
     }
 
     var placeholderImage: UIImage? {
-        return token.placeholder
+        return viewModel.placeholder
     }
 
     // Market Price
@@ -95,6 +94,6 @@ struct TokenViewCellViewModel {
     }
 
     var imageURL: URL? {
-        return token.imageURL
+        return viewModel.imageURL
     }
 }

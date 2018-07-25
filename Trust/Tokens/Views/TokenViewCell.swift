@@ -112,7 +112,7 @@ final class TokenViewCell: UITableViewCell {
 
     func configure(viewModel: TokenViewCellViewModel) {
 
-        containerForImageView.badge(text: badgeText(for: viewModel.token, in: viewModel.store))
+        containerForImageView.badge(text: badgeText(for: viewModel.viewModel.token, in: viewModel.store))
 
         titleLabel.text = viewModel.title
         titleLabel.textColor = viewModel.titleTextColor
@@ -140,7 +140,7 @@ final class TokenViewCell: UITableViewCell {
         )
 
         backgroundColor = viewModel.backgroundColor
-        observePendingTransactions(from: viewModel.store, with: viewModel.token)
+        observePendingTransactions(from: viewModel.store, with: viewModel.viewModel.token)
     }
 
     private func updateSeparatorInset() {

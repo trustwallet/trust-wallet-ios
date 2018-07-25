@@ -130,35 +130,6 @@ final class TokenObject: Object, Decodable {
         return object.contract == self.contract
     }
 
-    var title: String {
-        return name.isEmpty ? symbol : (name + " (" + symbol + ")")
-    }
-
-    private var imagePath: String {
-        let formatter = ImageURLFormatter()
-        switch type {
-        case .coin:
-            return formatter.image(for: coin)
-        case .ERC20:
-            return formatter.image(for: contract)
-        }
-    }
-
-    var imageURL: URL? {
-        return URL(string: imagePath)
-    }
-
-    var placeholder: UIImage? {
-        switch type {
-        case .coin: return R.image.ethereum_logo_256()
-        case .ERC20: return R.image.erc20()
-        }
-    }
-
-    var displayName: String {
-        return "\(self.name) (\(self.symbol))"
-    }
-
     var contractAddress: EthereumAddress {
         return EthereumAddress(string: contract)!
     }

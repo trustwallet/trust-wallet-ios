@@ -104,8 +104,11 @@ final class TokensViewModel: NSObject {
 
     func cellViewModel(for path: IndexPath) -> TokenViewCellViewModel {
         let token = tokens[path.row]
-        let ticker = store.coinTicker(by: token.address)
-        return TokenViewCellViewModel(token: token, ticker: ticker, store: transactionStore)
+        return TokenViewCellViewModel(
+            viewModel: TokenObjectViewModel(token: token),
+            ticker: store.coinTicker(by: token.address),
+            store: transactionStore
+        )
     }
 
     func updateBalances() {

@@ -5,14 +5,21 @@ import Foundation
 import TrustCore
 
 extension TokenObject {
-    static func make() -> TokenObject {
+    static func make(
+        contract: Address = EthereumAddress.zero,
+        name: String = "Viktor",
+        coin: Coin = .ethereum,
+        type: TokenObjectType = .coin,
+        symbol: String = "VIK",
+        value: String = ""
+    ) -> TokenObject {
         return TokenObject(
-            contract: EthereumAddress.zero.description,
-            name: "Viktor",
-            coin: .ethereum,
-            type: .coin,
-            symbol: "VIK",
-            value: ""
+            contract: contract.description,
+            name: name,
+            coin: coin,
+            type: type,
+            symbol: symbol,
+            value: value
         )
     }
 }

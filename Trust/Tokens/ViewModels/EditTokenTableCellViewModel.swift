@@ -5,22 +5,22 @@ import UIKit
 
 struct EditTokenTableCellViewModel {
 
-    let token: TokenObject
-    let coinTicker: CoinTicker?
-    let isLocal: Bool
+    private let viewModel: TokenObjectViewModel
+    private let coinTicker: CoinTicker?
+    private let isLocal: Bool
 
     init(
-        token: TokenObject,
+        viewModel: TokenObjectViewModel,
         coinTicker: CoinTicker?,
         isLocal: Bool = true
     ) {
-        self.token = token
+        self.viewModel = viewModel
         self.coinTicker = coinTicker
         self.isLocal = isLocal
     }
 
     var title: String {
-        return token.title
+        return viewModel.title
     }
 
     var titleFont: UIFont {
@@ -32,23 +32,23 @@ struct EditTokenTableCellViewModel {
     }
 
     var placeholderImage: UIImage? {
-        return token.placeholder
+        return viewModel.placeholder
     }
 
     var imageUrl: URL? {
-        return token.imageURL
+        return viewModel.imageURL
     }
 
     var isEnabled: Bool {
-        return !token.isDisabled
+        return !viewModel.token.isDisabled
     }
 
     var contractText: String? {
-        switch token.type {
+        switch viewModel.token.type {
         case .coin:
             return .none
         case .ERC20:
-            return token.contract + " (ERC20) "
+            return viewModel.token.contract + " (ERC20) "
         }
     }
 
