@@ -4,30 +4,16 @@ import Foundation
 import Moya
 
 enum TrustAPI {
-
     case getTransactions(server: RPCServer, address: String, startBlock: Int, page: Int, contract: String?)
 
     // all
     case prices(TokensPrice)
-
     case getAllTransactions(addresses: [String: String])
     case search(query: String, networks: [Int])
     case assets(address: String)
-
     case getTokens([String: [String]])
-
     case register(device: PushDevice)
     case unregister(device: PushDevice)
-}
-
-struct TokensPrice: Encodable {
-    let currency: String
-    let tokens: [TokenPrice]
-}
-
-struct TokenPrice: Encodable {
-    let contract: String
-    let symbol: String
 }
 
 extension TrustAPI: TargetType {
