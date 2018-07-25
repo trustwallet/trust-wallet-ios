@@ -70,7 +70,7 @@ class TokensDataStoreTest: XCTestCase {
             value: "0"
         )
 
-        XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject))
+        XCTAssertEqual(0.00, tokensDataStore.getBalance(for: tokenObject.address, with: tokenObject.valueBigInt, and: tokenObject.decimals))
     }
 
     // This test checks that even the key generation algorithm changes, coinTicker(for:) still can pick up the correct CoinTicker object without needing to delete the old CoinTicker records since they have old key.
