@@ -2,7 +2,7 @@
 
 import UIKit
 
-struct FeeCalculations {
+struct FeeCalculator {
 
     static func estimate(fee: String, with price: String) -> Double? {
         guard let feeInDouble = Double(fee) else {

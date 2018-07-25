@@ -26,12 +26,12 @@ struct MonetaryAmountViewModel {
         guard let price = session.tokensStorage.coinTicker(by: contract)?.price else {
             return .none
         }
-        return FeeCalculations.estimate(fee: amount, with: price)
+        return FeeCalculator.estimate(fee: amount, with: price)
     }
 
     var amountText: String? {
         guard let amountCurrency = amountCurrency,
-            let result = FeeCalculations.format(fee: amountCurrency) else {
+            let result = FeeCalculator.format(fee: amountCurrency) else {
             return .none
         }
         return "(\(result))"
