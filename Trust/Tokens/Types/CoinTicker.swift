@@ -51,7 +51,7 @@ final class CoinTicker: Object, Decodable {
 }
 
 struct CoinTickerKeyMaker {
-    static func makePrimaryKey(contract: EthereumAddress, currencyKey: String) -> String {
+    static func makePrimaryKey(contract: Address, currencyKey: String) -> String {
         return "\(contract)_\(currencyKey)"
     }
 

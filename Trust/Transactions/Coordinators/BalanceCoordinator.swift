@@ -30,7 +30,7 @@ final class BalanceCoordinator {
     }
 
     func balance(for contract: Address) -> Balance? {
-        guard let token = storage.realm.object(ofType: TokenObject.self, forPrimaryKey: contract.description) else {
+        guard let token = storage.getToken(for: contract) else {
             return .none
         }
         return Balance(value: token.valueBigInt)

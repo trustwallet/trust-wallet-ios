@@ -36,9 +36,6 @@ class TokensDataStore {
             .sorted(byKeyPath: "order", ascending: true)
             .filter { !$0.isDisabled }
     }
-    var nonFungibleObjects: [NonFungibleTokenObject] {
-        return realm.objects(NonFungibleTokenObject.self).map { $0 }
-    }
 
     init(
         realm: Realm,
@@ -50,7 +47,7 @@ class TokensDataStore {
     }
 
     private func addNativeCoins() {
-        if let token = realm.object(ofType: TokenObject.self, forPrimaryKey: EthereumAddress.zero.description) {
+        if let token = getToken(for: EthereumAddress.zero) {
             try? realm.write {
                 realm.delete(token)
             }
@@ -58,14 +55,18 @@ class TokensDataStore {
         let initialCoins = nativeCoin()
 
         for token in initialCoins {
-            if let _ = realm.object(ofType: TokenObject.self, forPrimaryKey: token.contractAddress.description) {
+            if let _ = getToken(for: token.contractAddress) {
             } else {
                 add(tokens: [token])
             }
         }
     }
 
-    func coinTicker(by contract: EthereumAddress) -> CoinTicker? {
+    func getToken(for address: Address) -> TokenObject? {
+        return realm.object(ofType: TokenObject.self, forPrimaryKey: address.description)
+    }
+
+    func coinTicker(by contract: Address) -> CoinTicker? {
         return realm.object(ofType: CoinTicker.self, forPrimaryKey: CoinTickerKeyMaker.makePrimaryKey(contract: contract, currencyKey: CoinTickerKeyMaker.makeCurrencyKey()))
     }
 
@@ -161,18 +162,17 @@ class TokensDataStore {
     }
 
     //Background update of the Realm model.
-    func update(balance: BigInt, for address: EthereumAddress) {
-        if let tokenToUpdate = enabledObject.first(where: { $0.contract == address.description }) {
-            let tokenBalance = self.getBalance(for: tokenToUpdate)
-
-            self.realm.writeAsync(obj: tokenToUpdate) { (realm, _ ) in
+    func update(balance: BigInt, for address: Address) {
+        if let token = getToken(for: address) {
+            let tokenBalance = self.getBalance(for: token)
+            self.realm.writeAsync(obj: token) { (realm, _ ) in
                 let update = self.objectToUpdate(for: (address, balance), tokenBalance: tokenBalance)
                 realm.create(TokenObject.self, value: update, update: true)
             }
         }
     }
 
-    private func objectToUpdate(for balance: (key: EthereumAddress, value: BigInt), tokenBalance: Double) -> [String: Any] {
+    private func objectToUpdate(for balance: (key: Address, value: BigInt), tokenBalance: Double) -> [String: Any] {
         return [
             "contract": balance.key.description,
             "value": balance.value.description,
