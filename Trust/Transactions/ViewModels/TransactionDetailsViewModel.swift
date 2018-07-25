@@ -144,7 +144,7 @@ struct TransactionDetailsViewModel {
             }
         }()
 
-        return GasViewModel(fee: gasFee, server: server, session: session, formatter: fullFormatter)
+        return GasViewModel(fee: gasFee, server: server, store: session.tokensStorage, formatter: fullFormatter)
     }
 
     var gasFee: String {

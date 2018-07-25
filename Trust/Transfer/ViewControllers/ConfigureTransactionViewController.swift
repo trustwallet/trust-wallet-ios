@@ -64,7 +64,7 @@ class ConfigureTransactionViewController: FormViewController {
     }
 
     private var gasViewModel: GasViewModel {
-        return GasViewModel(fee: totalFee, server: transfer.server, session: session, formatter: fullFormatter)
+        return GasViewModel(fee: totalFee, server: transfer.server, store: session.tokensStorage, formatter: fullFormatter)
     }
 
     weak var delegate: ConfigureTransactionViewControllerDelegate?
