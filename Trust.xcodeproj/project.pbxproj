@@ -266,6 +266,8 @@
 		732E0F522022754600B39C1F /* FakeLockProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F512022754600B39C1F /* FakeLockProtocol.swift */; };
 		732E0F542022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */; };
 		733AFC7A2108B4A000C0AE35 /* FeesCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733AFC792108B4A000C0AE35 /* FeesCalculations.swift */; };
+		733AFC7C210907DE00C0AE35 /* GasViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733AFC7B210907DE00C0AE35 /* GasViewModelTest.swift */; };
+		733AFC822109093900C0AE35 /* GasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733AFC812109093900C0AE35 /* GasViewModel.swift */; };
 		734AFD1520F1558800864E8E /* NotificationBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734AFD1420F1558800864E8E /* NotificationBadge.swift */; };
 		735AB03D2073BF2100EEEDDD /* TokenBalanceOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735AB03C2073BF2100EEEDDD /* TokenBalanceOperation.swift */; };
 		736D6ECF20DBD946008C2CC4 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736D6ECE20DBD946008C2CC4 /* PrivacyViewController.swift */; };
@@ -752,6 +754,8 @@
 		732E0F512022754600B39C1F /* FakeLockProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeLockProtocol.swift; sourceTree = "<group>"; };
 		732E0F532022786400B39C1F /* LockCreatePasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockCreatePasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
 		733AFC792108B4A000C0AE35 /* FeesCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeesCalculations.swift; sourceTree = "<group>"; };
+		733AFC7B210907DE00C0AE35 /* GasViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasViewModelTest.swift; sourceTree = "<group>"; };
+		733AFC812109093900C0AE35 /* GasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasViewModel.swift; sourceTree = "<group>"; };
 		734AFD1420F1558800864E8E /* NotificationBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBadge.swift; sourceTree = "<group>"; };
 		735AB03C2073BF2100EEEDDD /* TokenBalanceOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBalanceOperation.swift; sourceTree = "<group>"; };
 		736D6ECE20DBD946008C2CC4 /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
@@ -1950,6 +1954,7 @@
 				77EAD89420EAF19F00D14AA2 /* WalletInfo.swift */,
 				77EAD89620EAF1FD00D14AA2 /* WalletObject.swift */,
 				779141DE21063DCE007E8E16 /* RPCServer.swift */,
+				733AFC812109093900C0AE35 /* GasViewModel.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -2140,6 +2145,7 @@
 			isa = PBXGroup;
 			children = (
 				771A8484203242B400528D28 /* InCoordinatorViewModelTests.swift */,
+				733AFC7B210907DE00C0AE35 /* GasViewModelTest.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -3187,6 +3193,7 @@
 				29F1C85620036887003780D8 /* AppTrackerTests.swift in Sources */,
 				29BDF19F1FEE51650023A45F /* GasLimitConfigurationTests.swift in Sources */,
 				73200B642040B9D700118A82 /* CryptoAddressValidatorTest.swift in Sources */,
+				733AFC7C210907DE00C0AE35 /* GasViewModelTest.swift in Sources */,
 				290B2B6C1F92C35B0053C83E /* RPCServerTests.swift in Sources */,
 				29FF13031F75EB7500AFD326 /* Account.swift in Sources */,
 				29BDF1941FEE43AA0023A45F /* TransactionConfiguratorTests.swift in Sources */,
@@ -3194,6 +3201,7 @@
 				298995002053D52700576B8B /* FakeRealm.swift in Sources */,
 				776C1142205BAFA800449539 /* ExportPrivateKeyCoordinatorTests.swift in Sources */,
 				2923D9B71FDA5E51000CF3F8 /* PasswordGeneratorTests.swift in Sources */,
+				733AFC822109093900C0AE35 /* GasViewModel.swift in Sources */,
 				BBAA2A3B2058155100B0878C /* TypedMessageEncodingTests.swift in Sources */,
 				77EAD89720EAF1FD00D14AA2 /* WalletObject.swift in Sources */,
 				29F1C865200384FE003780D8 /* Wallet.swift in Sources */,
