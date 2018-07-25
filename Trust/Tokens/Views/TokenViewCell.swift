@@ -112,7 +112,7 @@ final class TokenViewCell: UITableViewCell {
 
     func configure(viewModel: TokenViewCellViewModel) {
 
-        containerForImageView.badge(text: nil)
+        containerForImageView.badge(text: badgeText(for: viewModel.token, in: viewModel.store))
 
         titleLabel.text = viewModel.title
         titleLabel.textColor = viewModel.titleTextColor
@@ -153,16 +153,21 @@ final class TokenViewCell: UITableViewCell {
 
     private func observePendingTransactions(from storage: TransactionsStorage, with token: TokenObject) {
         pendingTokenTransactionsObserver = storage.transactions.observe { [weak self] _ in
-            let items = storage.pendingObjects.filter {
-                switch token.type {
-                case .coin:
-                    return $0.coin == token.coin && $0.localizedOperations.isEmpty
-                case .ERC20:
-                    return $0.contractAddress == token.contractAddress
-                }
-            }
-            self?.containerForImageView.badge(text: items.isEmpty ? nil : String(items.count))
+            guard let `self` = self else { return }
+            self.containerForImageView.badge(text: self.badgeText(for: token, in: storage))
         }
+    }
+
+    func badgeText(for token: TokenObject, in storage: TransactionsStorage) -> String? {
+        let items = storage.pendingObjects.filter {
+            switch token.type {
+            case .coin:
+                return $0.coin == token.coin && $0.localizedOperations.isEmpty
+            case .ERC20:
+                return $0.contractAddress == token.contractAddress
+            }
+        }
+        return items.isEmpty ? .none : String(items.count)
     }
 
     deinit {
