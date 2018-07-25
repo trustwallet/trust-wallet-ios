@@ -42,13 +42,7 @@
                   Identifier = "AppCoordinatorTests">
                </Test>
                <Test
-                  Identifier = "TokensDataStoreTest">
-               </Test>
-               <Test
                   Identifier = "TypedMessageEncodingTests">
-               </Test>
-               <Test
-                  Identifier = "WalletCoordinatorTests">
                </Test>
             </SkippedTests>
          </TestableReference>
