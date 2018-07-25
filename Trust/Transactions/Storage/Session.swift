@@ -6,9 +6,6 @@ import RealmSwift
 
 final class WalletSession {
     let account: WalletInfo
-    lazy var balanceCoordinator: BalanceCoordinator = {
-        return BalanceCoordinator(storage: tokensStorage)
-    }()
     let config: Config
     let realm: Realm
     let sharedRealm: Realm
@@ -16,8 +13,6 @@ final class WalletSession {
     var sessionID: String {
         return "\(account.description))"
     }
-
-    // storage
 
     lazy var walletStorage: WalletStorage = {
         return WalletStorage(realm: sharedRealm)

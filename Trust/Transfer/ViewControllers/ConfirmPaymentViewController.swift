@@ -185,7 +185,7 @@ class ConfirmPaymentViewController: UIViewController {
     private func reloadView() {
         let viewModel = ConfirmPaymentDetailsViewModel(
             transaction: configurator.previewTransaction(),
-            currencyRate: session.balanceCoordinator.currencyRate,
+            session: session,
             server: server
         )
         self.configure(for: viewModel)
@@ -200,7 +200,7 @@ class ConfirmPaymentViewController: UIViewController {
             configuration: configurator.configuration,
             transfer: configurator.transaction.transfer,
             config: session.config,
-            currencyRate: session.balanceCoordinator.currencyRate
+            session: session
         )
         controller.delegate = self
         self.navigationController?.pushViewController(controller, animated: true)

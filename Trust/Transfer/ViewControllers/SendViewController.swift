@@ -20,7 +20,7 @@ protocol SendViewControllerDelegate: class {
 
 class SendViewController: FormViewController {
     private lazy var viewModel: SendViewModel = {
-        let balance = session.balanceCoordinator.balance(for: transfer.type.token)
+        let balance = Balance(value: transfer.type.token.valueBigInt)
         return .init(transfer: transfer, config: session.config, chainState: chainState, storage: storage, balance: balance)
     }()
     weak var delegate: SendViewControllerDelegate?

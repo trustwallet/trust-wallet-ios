@@ -17,7 +17,7 @@ final class TransactionViewController: UIViewController {
             config: self.config,
             chainState: ChainState(server: tokenViewModel.server),
             currentAccount: tokenViewModel.currentAccount,
-            currencyRate: session.balanceCoordinator.currencyRate,
+            session: session,
             server: tokenViewModel.server,
             token: tokenViewModel.token
         )

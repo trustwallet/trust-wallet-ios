@@ -6,18 +6,18 @@ import BigInt
 struct GasViewModel {
     let fee: BigInt
     let server: RPCServer
-    let currencyRate: CurrencyRate?
+    let session: WalletSession
     let formatter: EtherNumberFormatter
 
     init(
         fee: BigInt,
         server: RPCServer,
-        currencyRate: CurrencyRate? = nil,
+        session: WalletSession,
         formatter: EtherNumberFormatter = .full
     ) {
         self.fee = fee
         self.server = server
-        self.currencyRate = currencyRate
+        self.session = session
         self.formatter = formatter
     }
 
@@ -27,12 +27,15 @@ struct GasViewModel {
     }
 
     var feeCurrency: Double? {
-        return currencyRate?.estimate(fee: formatter.string(from: fee), with: server.priceID.description)
+        guard let price = session.tokensStorage.coinTicker(by: server.priceID)?.price else {
+            return .none
+        }
+        return FeesCalculations.estimate(fee: formatter.string(from: fee), with: price)
     }
 
     var monetaryFee: String? {
         guard let feeInCurrency = feeCurrency,
-            let fee = currencyRate?.format(fee: feeInCurrency) else {
+            let fee = FeesCalculations.format(fee: feeInCurrency) else {
             return .none
         }
         return fee
