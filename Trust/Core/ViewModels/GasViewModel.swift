@@ -30,12 +30,12 @@ struct GasViewModel {
         guard let price = session.tokensStorage.coinTicker(by: server.priceID)?.price else {
             return .none
         }
-        return FeesCalculations.estimate(fee: formatter.string(from: fee), with: price)
+        return FeeCalculations.estimate(fee: formatter.string(from: fee), with: price)
     }
 
     var monetaryFee: String? {
         guard let feeInCurrency = feeCurrency,
-            let fee = FeesCalculations.format(fee: feeInCurrency) else {
+            let fee = FeeCalculations.format(fee: feeInCurrency) else {
             return .none
         }
         return fee
