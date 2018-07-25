@@ -7,8 +7,6 @@ enum TrustAPI {
 
     case getTransactions(server: RPCServer, address: String, startBlock: Int, page: Int, contract: String?)
 
-    case getTransaction(server: RPCServer, ID: String)
-
     // all
     case prices(TokensPrice)
 
