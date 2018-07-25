@@ -86,19 +86,8 @@ final class TokensViewModel: NSObject {
     }
 
     private var amount: String? {
-        let totalAmount = tokens.lazy.flatMap { [weak self] in
-            self?.amount(for: $0)
-        }.reduce(0, +)
+        let totalAmount = tokens.lazy.map { $0.balance }.reduce(0.0, +)
         return CurrencyFormatter.formatter.string(from: NSNumber(value: totalAmount))
-    }
-
-    private func amount(for token: TokenObject) -> Double {
-        guard let coinTicker = store.coinTicker(by: token.address) else {
-            return 0
-        }
-        let tokenValue = CurrencyFormatter.plainFormatter.string(from: token.valueBigInt, decimals: token.decimals).doubleValue
-        let price = Double(coinTicker.price) ?? 0
-        return tokenValue * price
     }
 
     func numberOfItems(for section: Int) -> Int {

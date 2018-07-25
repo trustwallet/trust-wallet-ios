@@ -172,18 +172,6 @@ class TokensDataStore {
         }
     }
 
-    func update(balances: [EthereumAddress: BigInt]) {
-        for balance in balances {
-            let token = realm.object(ofType: TokenObject.self, forPrimaryKey: balance.key.description)
-            let tokenBalance = self.getBalance(for: token)
-
-            try? realm.write {
-                let update = objectToUpdate(for: balance, tokenBalance: tokenBalance)
-                realm.create(TokenObject.self, value: update, update: true)
-            }
-        }
-    }
-
     private func objectToUpdate(for balance: (key: EthereumAddress, value: BigInt), tokenBalance: Double) -> [String: Any] {
         return [
             "contract": balance.key.description,
@@ -241,6 +229,17 @@ class TokensDataStore {
             return TokenObject.DEFAULT_BALANCE
         }
         return amountInDecimal.doubleValue * price
+    }
+
+    func clearBalance() {
+        try? realm.write {
+            let defaultBalanceTokens = tokens.map { token -> TokenObject in
+                let tempToken = token
+                tempToken.balance = TokenObject.DEFAULT_BALANCE
+                return tempToken
+            }
+            realm.add(defaultBalanceTokens, update: true)
+        }
     }
 }
 

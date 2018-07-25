@@ -119,7 +119,7 @@ final class TokenViewModel {
     }
 
     var totalFiatAmount: String? {
-        guard let value = TokensLayout.cell.totalFiatAmount(for: ticker, token: token) else { return .none }
+        guard let value = TokensLayout.cell.totalFiatAmount(token: token) else { return .none }
         return " (" + value + ")"
     }
 
@@ -129,10 +129,6 @@ final class TokenViewModel {
 
     var fiatAmountFont: UIFont {
         return UIFont.systemFont(ofSize: 14, weight: .regular)
-    }
-
-    var currencyAmount: String? {
-        return TokensLayout.cell.currencyAmount(for: ticker, token: token)
     }
 
     var amountTextColor: UIColor {
@@ -152,9 +148,6 @@ final class TokenViewModel {
     }
 
     var percentChange: String? {
-        guard let _ = currencyAmount else {
-            return .none
-        }
         return TokensLayout.cell.percentChange(for: ticker)
     }
 
@@ -231,7 +224,7 @@ final class TokenViewModel {
             return
         }
         let _ = provider.balance().done { [weak self] balance in
-            self?.store.update(balances: [provider.addressUpdate: balance])
+            self?.store.update(balance: balance, for: provider.addressUpdate)
         }
     }
 

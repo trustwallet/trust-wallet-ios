@@ -81,6 +81,7 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
     func didAction(action: SettingsAction, in viewController: SettingsViewController) {
         switch action {
         case .currency:
+            session.tokensStorage.clearBalance()
             restart(for: session.account)
         case .pushNotifications(let change):
             switch change {
