@@ -28,6 +28,16 @@ class EtherKeystoreTests: XCTestCase {
         XCTAssertEqual(1, keystore.wallets.count)
     }
 
+    func testTwoWallets() {
+        let keystore = FakeEtherKeystore()
+        let password = "test"
+
+        let _ = keystore.createAccout(password: password)
+        let _ = keystore.createAccout(password: password)
+
+        XCTAssertEqual(2, keystore.wallets.count)
+    }
+
     func testSetAndGetPasswordForAccount() {
         let keystore = FakeEtherKeystore()
         let password = "test"

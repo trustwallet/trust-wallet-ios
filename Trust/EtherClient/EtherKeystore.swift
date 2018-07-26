@@ -291,8 +291,8 @@ class EtherKeystore: Keystore {
                     completion(result)
                 }
             }
-        case .address(_, let address):
-            let first = storage.realm.objects(WalletAddress.self).filter { $0.address == address }.first
+        case .address(let coin, let address):
+            let first = storage.realm.objects(WalletAddress.self).filter { $0.address == address && $0.coin == coin }.first
             guard let walletAddress = first else {
                 return completion(.failure(KeystoreError.accountNotFound))
             }

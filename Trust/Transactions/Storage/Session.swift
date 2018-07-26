@@ -27,6 +27,13 @@ final class WalletSession {
         )
     }()
 
+    lazy var currentRPC: RPCServer = {
+        if account.multiWallet {
+            return .main
+        }
+        return account.coin!.server
+    }()
+
     init(
         account: WalletInfo,
         realm: Realm,

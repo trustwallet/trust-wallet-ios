@@ -124,28 +124,7 @@ enum RPCServer {
 
     var openseaPath: String {
         switch self {
-        case .main, .classic, .poa, .callisto, .gochain: return  Constants.dappsOpenSea
-        }
-    }
-
-    init?(name: String) {
-        switch name {
-        case RPCServer.main.name: self = .main
-        case RPCServer.classic.name: self = .classic
-        case RPCServer.callisto.name: self = .callisto
-        case RPCServer.poa.name: self = .poa
-        default: return nil
-        }
-    }
-
-    init?(chainID: Int) {
-        switch chainID {
-        case RPCServer.main.chainID: self = .main
-        case RPCServer.classic.chainID: self = .classic
-        case RPCServer.callisto.chainID: self = .callisto
-        case RPCServer.poa.chainID: self = .poa
-        case RPCServer.gochain.chainID: self = .gochain
-        default: return nil
+        case .main, .classic, .poa, .callisto, .gochain: return Constants.dappsOpenSea
         }
     }
 

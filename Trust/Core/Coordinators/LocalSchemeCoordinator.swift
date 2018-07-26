@@ -23,7 +23,7 @@ final class LocalSchemeCoordinator: Coordinator {
     }()
 
     lazy var server: RPCServer = {
-        return RPCServer(chainID: 1)!
+        return session.currentRPC
     }()
 
     init(
