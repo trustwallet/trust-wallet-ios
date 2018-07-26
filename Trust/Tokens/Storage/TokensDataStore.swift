@@ -135,7 +135,7 @@ class TokensDataStore {
         try? realm.write {
             if let tokenObjects = tokens as? [TokenObject] {
                 let tokenObjectsWithBalance = tokenObjects.map { tokenObject -> TokenObject in
-                    tokenObject.balance = self.getBalance(for: tokenObject)
+                    tokenObject.balance = self.getBalance(for: tokenObject.address, with: tokenObject.valueBigInt, and: tokenObject.decimals)
                     return tokenObject
                 }
                 realm.add(tokenObjectsWithBalance, update: true)
@@ -164,7 +164,7 @@ class TokensDataStore {
     //Background update of the Realm model.
     func update(balance: BigInt, for address: Address) {
         if let token = getToken(for: address) {
-            let tokenBalance = self.getBalance(for: token)
+            let tokenBalance = getBalance(for: token.address, with: balance, and: token.decimals)
             self.realm.writeAsync(obj: token) { (realm, _ ) in
                 let update = self.objectToUpdate(for: (address, balance), tokenBalance: tokenBalance)
                 realm.create(TokenObject.self, value: update, update: true)
@@ -220,11 +220,9 @@ class TokensDataStore {
         }
     }
 
-    func getBalance(for token: TokenObject?) -> Double {
-        guard let token = token,
-            let ticker = coinTicker(by: token.address),
-            let amountInBigInt = BigInt(token.value),
-            let amountInDecimal = EtherNumberFormatter.full.decimal(from: amountInBigInt, decimals: token.decimals),
+    func getBalance(for address: Address, with value: BigInt, and decimals: Int) -> Double {
+        guard let ticker = coinTicker(by: address),
+            let amountInDecimal = EtherNumberFormatter.full.decimal(from: value, decimals: decimals),
             let price = Double(ticker.price) else {
             return TokenObject.DEFAULT_BALANCE
         }

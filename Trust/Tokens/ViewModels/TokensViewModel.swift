@@ -125,9 +125,7 @@ final class TokensViewModel: NSObject {
         }.finally { [weak self] in
             guard let strongSelf = self else { return }
             let tokens = strongSelf.store.objects
-            let enabledTokens = strongSelf.store.enabledObject
             strongSelf.prices(for: tokens)
-            strongSelf.balances(for: enabledTokens)
         }
     }
 
@@ -141,7 +139,9 @@ final class TokensViewModel: NSObject {
         }.catch { error in
             NSLog("prices \(error)")
         }.finally { [weak self] in
-            self?.delegate?.refresh()
+            guard let strongSelf = self else { return }
+            let enabledTokens = strongSelf.store.enabledObject
+            strongSelf.balances(for: enabledTokens)
         }
     }
 
@@ -155,6 +155,13 @@ final class TokensViewModel: NSObject {
         let balancesOperations = Array(balances.lazy.map {
             TokenBalanceOperation(balanceProvider: $0, store: self.store)
         })
+
+        operationQueue.operations.onFinish { [weak self] in
+            DispatchQueue.main.async {
+                self?.delegate?.refresh()
+            }
+        }
+
         operationQueue.addOperations(balancesOperations, waitUntilFinished: false)
     }
 
