@@ -37,11 +37,6 @@
                BlueprintName = "TrustTests"
                ReferencedContainer = "container:Trust.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "AppCoordinatorTests">
-               </Test>
-            </SkippedTests>
          </TestableReference>
          <TestableReference
             skipped = "YES">
