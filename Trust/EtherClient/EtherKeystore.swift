@@ -305,8 +305,12 @@ class EtherKeystore: Keystore {
         guard let password = getPassword(for: wallet) else {
             return .failure(.failedToDeleteAccount)
         }
-        try? keyStore.addAccounts(wallet: wallet, derivationPaths: derivationPaths, password: password)
-        return .success(())
+        do {
+            let _ = try keyStore.addAccounts(wallet: wallet, derivationPaths: derivationPaths, password: password)
+            return .success(())
+        } catch {
+            return .failure(KeystoreError.failedToAddAccounts)
+        }
     }
 
     func update(wallet: Wallet) -> Result<Void, KeystoreError> {

@@ -90,7 +90,7 @@ final class DeveloperViewController: FormViewController {
 //            self?.preferencesController.set(value: enabled, for: .testNetworks)
 //        }
 
-        <<< AppFormAppearance.button { [weak self] in
+        <<< AppFormAppearance.button {
             $0.title = "Clear Transactions"
         }.onCellSelection { [weak self] _, _ in
             guard let `self` = self else { return }
@@ -100,7 +100,7 @@ final class DeveloperViewController: FormViewController {
             cell.textLabel?.textColor = .black
         }
 
-        <<< AppFormAppearance.button { [weak self] in
+        <<< AppFormAppearance.button {
             $0.title = "Clear Tokens"
         }.onCellSelection { [weak self] _, _ in
             guard let `self` = self else { return }

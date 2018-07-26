@@ -17,6 +17,7 @@ enum KeystoreError: LocalizedError {
     case failedToSignTypedMessage
     case failedToExportPrivateKey
     case invalidMnemonicPhrase
+    case failedToAddAccounts
 
     var errorDescription: String? {
         switch self {
@@ -48,6 +49,8 @@ enum KeystoreError: LocalizedError {
             return "Failed to export private key"
         case .invalidMnemonicPhrase:
             return "Invalid mnemonic phrase"
+        case .failedToAddAccounts:
+            return "Faield to add accounts"
         }
     }
 }

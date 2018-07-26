@@ -41,9 +41,6 @@
                <Test
                   Identifier = "AppCoordinatorTests">
                </Test>
-               <Test
-                  Identifier = "TypedMessageEncodingTests">
-               </Test>
             </SkippedTests>
          </TestableReference>
          <TestableReference

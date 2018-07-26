@@ -16,7 +16,7 @@ final class WalletViewCell: UITableViewCell {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var identiconImageView: TokenImageView!
     @IBOutlet weak var selectedImageView: UIImageView!
-    
+
     weak var delegate: WalletViewCellDelegate?
 
     var viewModel: WalletAccountViewModel? {
