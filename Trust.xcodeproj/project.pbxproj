@@ -350,6 +350,8 @@
 		772C6DB3210913ED00FCE4F1 /* TokensPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C6DB2210913ED00FCE4F1 /* TokensPrice.swift */; };
 		772C6DB52109161E00FCE4F1 /* TokenObjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C6DB42109161E00FCE4F1 /* TokenObjectViewModel.swift */; };
 		772C6DB9210918C400FCE4F1 /* TokenObjectViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C6DB8210918C400FCE4F1 /* TokenObjectViewModelTest.swift */; };
+		772C6DBB210A842200FCE4F1 /* AuthenticateUserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C6DBA210A842200FCE4F1 /* AuthenticateUserCoordinator.swift */; };
+		772C6DBF210A8B9B00FCE4F1 /* AuthenticateUserCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772C6DBE210A8B9B00FCE4F1 /* AuthenticateUserCoordinatorTests.swift */; };
 		773B8DB620716EB000D05690 /* NonceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B8DB520716EAF00D05690 /* NonceProvider.swift */; };
 		773B8DB920716EFF00D05690 /* GetNonceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B8DB820716EFF00D05690 /* GetNonceProvider.swift */; };
 		773B8DBC207184CD00D05690 /* GetNonceProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B8DBB207184CD00D05690 /* GetNonceProviderTests.swift */; };
@@ -844,6 +846,8 @@
 		772C6DB2210913ED00FCE4F1 /* TokensPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensPrice.swift; sourceTree = "<group>"; };
 		772C6DB42109161E00FCE4F1 /* TokenObjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenObjectViewModel.swift; sourceTree = "<group>"; };
 		772C6DB8210918C400FCE4F1 /* TokenObjectViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenObjectViewModelTest.swift; sourceTree = "<group>"; };
+		772C6DBA210A842200FCE4F1 /* AuthenticateUserCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateUserCoordinator.swift; sourceTree = "<group>"; };
+		772C6DBE210A8B9B00FCE4F1 /* AuthenticateUserCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateUserCoordinatorTests.swift; sourceTree = "<group>"; };
 		773B8DB520716EAF00D05690 /* NonceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonceProvider.swift; sourceTree = "<group>"; };
 		773B8DB820716EFF00D05690 /* GetNonceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNonceProvider.swift; sourceTree = "<group>"; };
 		773B8DBB207184CD00D05690 /* GetNonceProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNonceProviderTests.swift; sourceTree = "<group>"; };
@@ -1066,6 +1070,7 @@
 		2912CD0E1F6A830700C6CBE3 /* TrustTests */ = {
 			isa = PBXGroup;
 			children = (
+				772C6DBC210A8B8100FCE4F1 /* Lock */,
 				73200B712048A7DA00118A82 /* Tokens */,
 				7391DC932038C11C002C5ADE /* Send */,
 				7391DC8F2038C070002C5ADE /* Browser */,
@@ -2091,6 +2096,7 @@
 			children = (
 				73ACEF0420163F46003DD71D /* LockEnterPasscodeCoordinator.swift */,
 				73C41C74201B65AD00243C6C /* LockCreatePasscodeCoordinator.swift */,
+				772C6DBA210A842200FCE4F1 /* AuthenticateUserCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -2223,6 +2229,22 @@
 				772C6DB8210918C400FCE4F1 /* TokenObjectViewModelTest.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		772C6DBC210A8B8100FCE4F1 /* Lock */ = {
+			isa = PBXGroup;
+			children = (
+				772C6DBD210A8B8600FCE4F1 /* Coordinators */,
+			);
+			path = Lock;
+			sourceTree = "<group>";
+		};
+		772C6DBD210A8B8600FCE4F1 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				772C6DBE210A8B9B00FCE4F1 /* AuthenticateUserCoordinatorTests.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		773B8DB320716E9C00D05690 /* Providers */ = {
@@ -2895,6 +2917,7 @@
 				7301BA9220A3117000E1AFE5 /* AutoLock.swift in Sources */,
 				296106C81F7646590006164B /* TokensViewModel.swift in Sources */,
 				299B5E471FD2C87F0051361C /* ConfigureTransactionError.swift in Sources */,
+				772C6DBB210A842200FCE4F1 /* AuthenticateUserCoordinator.swift in Sources */,
 				77E81D94203687FB00534C99 /* NotificationsViewController.swift in Sources */,
 				296FC59920B6874800B923EF /* ExportPhraseCoordinator.swift in Sources */,
 				615F10561FCBEF2E008A45AF /* OnboardingPageViewModel.swift in Sources */,
@@ -3278,6 +3301,7 @@
 				293E62731FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift in Sources */,
 				778EA5FD2050A5ED00E81F7F /* WalletTests.swift in Sources */,
 				29FF130A1F75F67200AFD326 /* Address.swift in Sources */,
+				772C6DBF210A8B9B00FCE4F1 /* AuthenticateUserCoordinatorTests.swift in Sources */,
 				771A8522203588C900528D28 /* ConfirmPaymentViewModelTests.swift in Sources */,
 				73ED85A92034C42D00593BF3 /* StringFormatterTest.swift in Sources */,
 				7778713A2085DB2900CF7303 /* BranchEventParserTests.swift in Sources */,
@@ -3465,7 +3489,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 277;
+				CURRENT_PROJECT_VERSION = 278;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
@@ -3493,7 +3517,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 277;
+				CURRENT_PROJECT_VERSION = 278;
 				DEVELOPMENT_TEAM = 9873B38DWV;
 				ENABLE_BITCODE = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
