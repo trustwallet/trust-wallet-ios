@@ -104,7 +104,7 @@
 		296421991F70C1F900EB363B /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296421981F70C1F900EB363B /* EmptyView.swift */; };
 		296AF9A31F733AB30058AF78 /* WalletCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9A21F733AB30058AF78 /* WalletCoordinator.swift */; };
 		296AF9A51F736BA20058AF78 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9A41F736BA20058AF78 /* Config.swift */; };
-		296AF9A71F736EC70058AF78 /* RPCServers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9A61F736EC70058AF78 /* RPCServers.swift */; };
+		296AF9A71F736EC70058AF78 /* RPCServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9A61F736EC70058AF78 /* RPCServer.swift */; };
 		296AF9A91F737F6F0058AF78 /* SendRawTransactionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9A81F737F6F0058AF78 /* SendRawTransactionRequest.swift */; };
 		296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */; };
 		296FC59920B6874800B923EF /* ExportPhraseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296FC59820B6874800B923EF /* ExportPhraseCoordinator.swift */; };
@@ -586,7 +586,7 @@
 		296421981F70C1F900EB363B /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		296AF9A21F733AB30058AF78 /* WalletCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCoordinator.swift; sourceTree = "<group>"; };
 		296AF9A41F736BA20058AF78 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		296AF9A61F736EC70058AF78 /* RPCServers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCServers.swift; sourceTree = "<group>"; };
+		296AF9A61F736EC70058AF78 /* RPCServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCServer.swift; sourceTree = "<group>"; };
 		296AF9A81F737F6F0058AF78 /* SendRawTransactionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRawTransactionRequest.swift; sourceTree = "<group>"; };
 		296AF9AA1F7380920058AF78 /* GetTransactionCountRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionCountRequest.swift; sourceTree = "<group>"; };
 		296FC59820B6874800B923EF /* ExportPhraseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPhraseCoordinator.swift; sourceTree = "<group>"; };
@@ -1900,7 +1900,7 @@
 				293248831F88CCD2008A9818 /* SplashState.swift */,
 				293248851F88CCE6008A9818 /* SplashError.swift */,
 				296AF9A41F736BA20058AF78 /* Config.swift */,
-				296AF9A61F736EC70058AF78 /* RPCServers.swift */,
+				296AF9A61F736EC70058AF78 /* RPCServer.swift */,
 				290B2B661F9266630053C83E /* SettingsAction.swift */,
 				29AD8A031F93D6CD008E10E7 /* Constants.swift */,
 				298542F41FBD8E6A00CB5081 /* ConfigExplorer.swift */,
@@ -3098,7 +3098,7 @@
 				77EAD89220EAC0B800D14AA2 /* WalletStorage.swift in Sources */,
 				615F105D1FCBF55E008A45AF /* OnboardingCollectionViewController.swift in Sources */,
 				29A0E1851F706B8C00BAAAED /* String.swift in Sources */,
-				296AF9A71F736EC70058AF78 /* RPCServers.swift in Sources */,
+				296AF9A71F736EC70058AF78 /* RPCServer.swift in Sources */,
 				771A847A2032344D00528D28 /* PreferencesController.swift in Sources */,
 				296AF9A91F737F6F0058AF78 /* SendRawTransactionRequest.swift in Sources */,
 				293112121FC4F48400966EEA /* ServiceProvider.swift in Sources */,
