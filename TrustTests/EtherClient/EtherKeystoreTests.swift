@@ -92,6 +92,38 @@ class EtherKeystoreTests: XCTestCase {
         XCTAssertEqual(2, keystore.wallets.count)
     }
 
+    func testImportMnemonic() {
+        let keystore = FakeEtherKeystore()
+
+        // TODO. Move this into sync calls
+        let coin = Coin.ethereum
+        keystore.importWallet(type: ImportType.mnemonic(words: ["often", "tobacco", "bread", "scare", "imitate", "song", "kind", "common", "bar", "forest", "yard", "wisdom"], password: "", derivationPath: coin.derivationPath(at: 0)), coin: .ethereum) { result  in
+            switch result {
+            case .success(let wallet):
+                XCTAssertEqual(1, keystore.wallets.count)
+                XCTAssertEqual("0x33F44330cc4253cCd4ce4224186DB9baCe2190ea", wallet.address.description)
+            case .failure:
+                XCTFail()
+            }
+        }
+    }
+
+    func testImportMnemonicWithPassword() {
+        let keystore = FakeEtherKeystore()
+
+        // TODO. Move this into sync calls
+        let coin = Coin.ethereum
+        keystore.importWallet(type: ImportType.mnemonic(words: ["often", "tobacco", "bread", "scare", "imitate", "song", "kind", "common", "bar", "forest", "yard", "wisdom"], password: "test123", derivationPath: coin.derivationPath(at: 0)), coin: .ethereum) { result  in
+            switch result {
+            case .success(let wallet):
+                XCTAssertEqual(1, keystore.wallets.count)
+                XCTAssertEqual("0x5f9763AF89b1De8d44F3739d55C00dD6a21C2Cb6", wallet.address.description)
+            case .failure:
+                XCTFail()
+            }
+        }
+    }
+
     func testImportFailInvalidPassword() {
         let keystore = FakeEtherKeystore()
 
