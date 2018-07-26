@@ -68,7 +68,7 @@ class AppCoordinatorTests: XCTestCase {
         coordinator.start()
         coordinator.showInitialWalletCoordinator(entryPoint: .importWallet)
 
-        XCTAssertTrue((coordinator.navigationController.presentedViewController as? NavigationController)?.viewControllers[0] is ImportWalletViewController)
+        XCTAssertTrue((coordinator.navigationController.presentedViewController as? NavigationController)?.viewControllers[0] is ImportMainWalletViewController)
     }
 
     func testShowTransactions() {
