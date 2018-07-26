@@ -45,7 +45,7 @@ final class TransactionConfigurator {
         transaction: UnconfirmedTransaction,
         server: RPCServer,
         chainState: ChainState,
-        forceFetchNonce: Bool = false
+        forceFetchNonce: Bool = true
     ) {
         self.session = session
         self.account = account
