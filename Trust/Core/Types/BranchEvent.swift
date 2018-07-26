@@ -10,7 +10,7 @@ enum BranchEventName: String {
 
 enum BranchEvent {
     case openURL(URL)
-    case newToken(EthereumAddress)
+    case newToken(Address)
 
     var params: [String: String] {
         switch self {
@@ -38,7 +38,7 @@ extension BranchEvent: Equatable {
         case (let .openURL(lhs), let .openURL(rhs)):
             return lhs == rhs
         case (let .newToken(lhs), let .newToken(rhs)):
-            return lhs == rhs
+            return lhs.description == rhs.description
         case (_, .openURL),
              (_, .newToken):
             return false

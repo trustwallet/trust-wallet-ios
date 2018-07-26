@@ -135,7 +135,7 @@ final class TokensCoordinator: Coordinator {
         delegate?.didPress(url: url, in: self)
     }
 
-    func addTokenContract(for contract: EthereumAddress) {
+    func addTokenContract(for contract: Address) {
         let _ = network.search(query: contract.description).done { [weak self] tokens in
             guard let token = tokens.first else { return }
             self?.store.add(tokens: [token])
