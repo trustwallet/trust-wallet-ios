@@ -8,24 +8,20 @@ import APIKit
 import JSONRPCKit
 
 final class CoinNetworkProvider: BalanceNetworkProvider {
-
     let server: RPCServer
-    let address: Address
-    let addressUpdate: EthereumAddress
+    let addressUpdate: Address
 
     init(
         server: RPCServer,
-        address: Address,
-        addressUpdate: EthereumAddress
+        addressUpdate: Address
     ) {
         self.server = server
-        self.address = address
         self.addressUpdate = addressUpdate
     }
 
     func balance() -> Promise<BigInt> {
         return Promise { seal in
-            let request = EtherServiceRequest(for: server, batch: BatchFactory().create(BalanceRequest(address: address.description)))
+            let request = EtherServiceRequest(for: server, batch: BatchFactory().create(BalanceRequest(address: addressUpdate.description)))
             Session.send(request) { result in
                 switch result {
                 case .success(let balance):

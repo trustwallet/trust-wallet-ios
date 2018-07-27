@@ -38,7 +38,7 @@ class WalletsViewModel {
 
         for wallet in self.keystore.wallets {
             guard let server = wallet.coin?.server else { continue }
-            valueProviders.append((CoinNetworkProvider(server: server, address: wallet.currentAccount.address, addressUpdate: EthereumAddress.zero), wallet.info))
+            valueProviders.append((CoinNetworkProvider(server: server, addressUpdate: wallet.currentAccount.address), wallet.info))
         }
 
         let operations = valueProviders.compactMap {

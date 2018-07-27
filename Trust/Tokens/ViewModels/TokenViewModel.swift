@@ -239,8 +239,7 @@ final class TokenViewModel {
             case .coin:
                 return CoinNetworkProvider(
                     server: token.coin.server,
-                    address: EthereumAddress(string: account.address.description)!,
-                    addressUpdate: token.address
+                    addressUpdate: EthereumAddress(string: account.address.description)!
                 )
             case .ERC20:
                 return TokenNetworkProvider(
