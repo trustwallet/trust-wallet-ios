@@ -3,10 +3,12 @@
 import Foundation
 import TrustKeystore
 import TrustCore
+import BigInt
 
 struct WalletInfo {
     let type: WalletType
     let info: WalletObject
+    private let shortFormatter = EtherNumberFormatter.short
 
     var address: Address {
         switch type {
@@ -77,10 +79,10 @@ struct WalletInfo {
     }
 
     var value: String {
-        guard !info.value.isEmpty else {
+        guard !info.value.isEmpty, let server = coin?.server else {
             return  WalletInfo.format(value: "0.0")
         }
-        return WalletInfo.format(value: info.value)
+        return WalletInfo.format(value: shortFormatter.string(from: BigInt(info.value) ?? BigInt(), decimals: server.decimals))
     }
 
     init(

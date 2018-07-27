@@ -7,14 +7,17 @@ import BigInt
 
 final class WalletValueOperation: TrustOperation {
     private var balanceProvider: BalanceNetworkProvider
-    private let store: WalletStorage
+    private let keystore: Keystore
+    private let wallet: WalletObject
 
     init(
         balanceProvider: BalanceNetworkProvider,
-        store: WalletStorage
+        keystore: Keystore,
+        wallet: WalletObject
         ) {
         self.balanceProvider = balanceProvider
-        self.store = store
+        self.keystore = keystore
+        self.wallet = wallet
     }
 
     override func main() {
@@ -27,7 +30,7 @@ final class WalletValueOperation: TrustOperation {
 
     private func updateValue() {
         executing(true)
-        balanceProvider.balance().done { [weak self] balance in
+        _ = balanceProvider.balance().done { [weak self] balance in
             guard let strongSelf = self else {
                 self?.executing(false)
                 self?.finish(true)
@@ -38,7 +41,7 @@ final class WalletValueOperation: TrustOperation {
     }
 
     private func updateModel(with balance: BigInt) {
-       // self.store.update(balance: balance, for: balanceProvider.addressUpdate)
+        self.keystore.store(object: wallet, fields: [.value(balance.description)])
         self.executing(false)
         self.finish(true)
     }

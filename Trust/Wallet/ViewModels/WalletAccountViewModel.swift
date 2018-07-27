@@ -20,11 +20,15 @@ struct WalletAccountViewModel {
         return WalletInfo.emptyName
     }
 
-    var subbtitle: String {
+    var address: String {
         guard wallet.multiWallet else {
              return account.address.description
         }
         return R.string.localizable.multiCoinWallet()
+    }
+
+    var value: String {
+        return wallet.value
     }
 
     var isWatch: Bool {

@@ -268,6 +268,7 @@
 		733AFC7A2108B4A000C0AE35 /* FeesCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733AFC792108B4A000C0AE35 /* FeesCalculations.swift */; };
 		733AFC7C210907DE00C0AE35 /* GasViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733AFC7B210907DE00C0AE35 /* GasViewModelTest.swift */; };
 		733AFC822109093900C0AE35 /* GasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733AFC812109093900C0AE35 /* GasViewModel.swift */; };
+		733AFC84210A97BC00C0AE35 /* WalletValueOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733AFC83210A97BC00C0AE35 /* WalletValueOperation.swift */; };
 		734AFD1520F1558800864E8E /* NotificationBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734AFD1420F1558800864E8E /* NotificationBadge.swift */; };
 		735AB03D2073BF2100EEEDDD /* TokenBalanceOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735AB03C2073BF2100EEEDDD /* TokenBalanceOperation.swift */; };
 		736D6ECF20DBD946008C2CC4 /* PrivacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736D6ECE20DBD946008C2CC4 /* PrivacyViewController.swift */; };
@@ -759,6 +760,7 @@
 		733AFC792108B4A000C0AE35 /* FeesCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeesCalculations.swift; sourceTree = "<group>"; };
 		733AFC7B210907DE00C0AE35 /* GasViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasViewModelTest.swift; sourceTree = "<group>"; };
 		733AFC812109093900C0AE35 /* GasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasViewModel.swift; sourceTree = "<group>"; };
+		733AFC83210A97BC00C0AE35 /* WalletValueOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletValueOperation.swift; sourceTree = "<group>"; };
 		734AFD1420F1558800864E8E /* NotificationBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBadge.swift; sourceTree = "<group>"; };
 		735AB03C2073BF2100EEEDDD /* TokenBalanceOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBalanceOperation.swift; sourceTree = "<group>"; };
 		736D6ECE20DBD946008C2CC4 /* PrivacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyViewController.swift; sourceTree = "<group>"; };
@@ -1253,6 +1255,7 @@
 				77EAD88B20E4B16A00D14AA2 /* WalletInfo.swift */,
 				77EAD88D20E4BF1B00D14AA2 /* WalletObject.swift */,
 				779141DC2105CA83007E8E16 /* WalletAddress.swift */,
+				733AFC83210A97BC00C0AE35 /* WalletValueOperation.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2917,6 +2920,7 @@
 				299B5E341FCBC5180051361C /* ConfirmPaymentViewModel.swift in Sources */,
 				772C6DB3210913ED00FCE4F1 /* TokensPrice.swift in Sources */,
 				902CAB5B2051835E00F96FFE /* BookmarkViewCell.swift in Sources */,
+				733AFC84210A97BC00C0AE35 /* WalletValueOperation.swift in Sources */,
 				771AA94E1FF971CD00D25403 /* DappAction.swift in Sources */,
 				29F1C8471FEB6664003780D8 /* EditTokenTableViewCell.swift in Sources */,
 				296106C21F76403A0006164B /* TokenViewCell.swift in Sources */,

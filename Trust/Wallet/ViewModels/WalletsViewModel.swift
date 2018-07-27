@@ -4,6 +4,10 @@ import Foundation
 import UIKit
 import TrustCore
 
+protocol WalletsViewModelProtocol: class {
+    func update()
+}
+
 class WalletsViewModel {
 
     private let keystore: Keystore
@@ -11,6 +15,7 @@ class WalletsViewModel {
     private let importedWallet: [WalletInfo] = []
 
     var sections: [WalletAccountViewModel] = []
+    weak var delegate: WalletsViewModelProtocol?
 
     init(
         keystore: Keystore
@@ -22,6 +27,31 @@ class WalletsViewModel {
         self.sections = self.keystore.wallets.compactMap {
             return WalletAccountViewModel(wallet: $0, account: $0.currentAccount, currentWallet: keystore.recentlyUsedWallet)
         }
+    }
+
+    func fetchValues() {
+
+        let operationQueue: OperationQueue = OperationQueue()
+        operationQueue.qualityOfService = .background
+
+        var valueProviders = [(CoinNetworkProvider, WalletObject)]()
+
+        for wallet in self.keystore.wallets {
+            guard let server = wallet.coin?.server else { continue }
+            valueProviders.append((CoinNetworkProvider(server: server, address: wallet.currentAccount.address, addressUpdate: EthereumAddress.zero), wallet.info))
+        }
+
+        let operations = valueProviders.compactMap {
+            WalletValueOperation(balanceProvider: $0.0, keystore: keystore, wallet: $0.1)
+        }
+
+        operationQueue.operations.onFinish { [weak self] in
+            DispatchQueue.main.async {
+                self?.delegate?.update()
+            }
+        }
+
+        operationQueue.addOperations(operations, waitUntilFinished: false)
     }
 
     var title: String {
