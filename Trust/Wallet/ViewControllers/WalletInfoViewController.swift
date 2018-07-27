@@ -13,7 +13,7 @@ enum WalletInfoField {
     case name(String)
     case backup(Bool)
     case mainWallet(Bool)
-    case value(String)
+    case balance(String)
 }
 
 final class WalletInfoViewController: FormViewController {

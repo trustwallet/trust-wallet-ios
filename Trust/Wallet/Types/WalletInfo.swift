@@ -79,10 +79,10 @@ struct WalletInfo {
     }
 
     var value: String {
-        guard !info.value.isEmpty, let server = coin?.server else {
-            return  WalletInfo.format(value: "0.0")
+        guard !info.balance.isEmpty, let server = coin?.server else {
+            return  WalletInfo.format(value: "0.0", server: .main)
         }
-        return WalletInfo.format(value: shortFormatter.string(from: BigInt(info.value) ?? BigInt(), decimals: server.decimals))
+        return WalletInfo.format(value: shortFormatter.string(from: BigInt(info.balance) ?? BigInt(), decimals: server.decimals), server: server)
     }
 
     init(
@@ -105,7 +105,7 @@ extension WalletInfo: Equatable {
 }
 
 extension WalletInfo {
-    static func format(value: String, server: RPCServer = .main) -> String {
+    static func format(value: String, server: RPCServer) -> String {
         return "\(value) \(server.symbol)"
     }
 }

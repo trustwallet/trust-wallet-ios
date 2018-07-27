@@ -41,7 +41,7 @@ final class WalletValueOperation: TrustOperation {
     }
 
     private func updateModel(with balance: BigInt) {
-        self.keystore.store(object: wallet, fields: [.value(balance.description)])
+        self.keystore.store(object: wallet, fields: [.balance(balance.description)])
         self.executing(false)
         self.finish(true)
     }
