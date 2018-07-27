@@ -39,7 +39,7 @@ class WalletsViewController: UITableViewController {
     }
 
     func fetch() {
-        viewModel.fetchValues()
+        viewModel.fetchBalances()
         viewModel.refresh()
         tableView.reloadData()
     }

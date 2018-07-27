@@ -29,7 +29,7 @@ class WalletsViewModel {
         }
     }
 
-    func fetchValues() {
+    func fetchBalances() {
 
         let operationQueue: OperationQueue = OperationQueue()
         operationQueue.qualityOfService = .background
