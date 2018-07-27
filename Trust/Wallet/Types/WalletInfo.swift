@@ -36,6 +36,10 @@ struct WalletInfo {
         return accounts.count > 1
     }
 
+    var isBalanceHidden: Bool {
+        return multiWallet
+    }
+
     var mainWallet: Bool {
         return info.mainWallet
     }
