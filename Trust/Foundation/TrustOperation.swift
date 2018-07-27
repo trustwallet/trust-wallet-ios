@@ -4,38 +4,44 @@ import UIKit
 
 class TrustOperation: Operation {
 
-    private var _executing = false {
-        willSet {
-            willChangeValue(forKey: "isExecuting")
-        }
-        didSet {
-            didChangeValue(forKey: "isExecuting")
-        }
+    enum KVOProperties {
+        static let isFinished = "isFinished"
+        static let isExecuting = "isExecuting"
     }
 
-    override var isExecuting: Bool {
-        return _executing
-    }
+    private var _finished = false
+    private var _isExecuting = false
 
-    private var _finished = false {
-        willSet {
-            willChangeValue(forKey: "isFinished")
-        }
-
-        didSet {
-            didChangeValue(forKey: "isFinished")
+    override public var isFinished: Bool {
+        get { return _finished }
+        set {
+            willChangeValue(forKey: KVOProperties.isFinished)
+            _finished = newValue
+            didChangeValue(forKey: KVOProperties.isFinished)
         }
     }
 
-    override var isFinished: Bool {
-        return _finished
+    override public var isExecuting: Bool {
+        get { return _isExecuting }
+        set {
+            willChangeValue(forKey: KVOProperties.isExecuting)
+            _isExecuting = newValue
+            didChangeValue(forKey: KVOProperties.isExecuting)
+        }
     }
 
-    func executing(_ executing: Bool) {
-        _executing = executing
+    func finish() {
+        isExecuting = false
+        isFinished = true
     }
 
-    func finish(_ finished: Bool) {
-        _finished = finished
+    override func start() {
+        if isCancelled {
+            finish()
+
+        } else {
+            isExecuting = true
+            main()
+        }
     }
 }

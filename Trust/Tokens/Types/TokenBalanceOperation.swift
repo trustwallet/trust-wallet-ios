@@ -16,19 +16,13 @@ final class TokenBalanceOperation: TrustOperation {
     }
 
     override func main() {
-        guard isCancelled == false else {
-            finish(true)
-            return
-        }
         updateBalance()
     }
 
     private func updateBalance() {
-        executing(true)
         balanceProvider.balance().done { [weak self] balance in
             guard let strongSelf = self else {
-                self?.executing(false)
-                self?.finish(true)
+                self?.finish()
                 return
             }
             strongSelf.updateModel(with: balance)
@@ -37,7 +31,6 @@ final class TokenBalanceOperation: TrustOperation {
 
     private func updateModel(with balance: BigInt) {
         self.store.update(balance: balance, for: balanceProvider.addressUpdate)
-        self.executing(false)
-        self.finish(true)
+        self.finish()
     }
 }
