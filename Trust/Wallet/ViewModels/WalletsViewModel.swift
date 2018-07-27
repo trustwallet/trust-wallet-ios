@@ -15,6 +15,7 @@ class WalletsViewModel {
     private let importedWallet: [WalletInfo] = []
 
     var sections: [WalletAccountViewModel] = []
+    private let operationQueue: OperationQueue = OperationQueue()
     weak var delegate: WalletsViewModelProtocol?
 
     init(
@@ -31,8 +32,7 @@ class WalletsViewModel {
 
     func fetchBalances() {
 
-        let operationQueue: OperationQueue = OperationQueue()
-        operationQueue.qualityOfService = .background
+        guard operationQueue.operationCount == 0 else { return }
 
         var valueProviders = [(CoinNetworkProvider, WalletObject)]()
 
@@ -41,13 +41,13 @@ class WalletsViewModel {
             valueProviders.append((CoinNetworkProvider(server: server, addressUpdate: wallet.currentAccount.address), wallet.info))
         }
 
-        let operations = valueProviders.compactMap {
-            WalletValueOperation(balanceProvider: $0.0, keystore: keystore, wallet: $0.1)
+        let operations: [WalletValueOperation] = valueProviders.compactMap {
+            return  WalletValueOperation(balanceProvider: $0.0, keystore: keystore, wallet: $0.1)
         }
 
-        operationQueue.operations.onFinish { [weak self] in
+        operations.onFinish { [weak self] in
             DispatchQueue.main.async {
-                self?.delegate?.update()
+                 self?.delegate?.update()
             }
         }
 
