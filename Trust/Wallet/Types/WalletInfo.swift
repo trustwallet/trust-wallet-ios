@@ -76,6 +76,13 @@ struct WalletInfo {
         }
     }
 
+    var value: String {
+        guard !info.value.isEmpty else {
+            return  WalletInfo.format(value: "0.0")
+        }
+        return WalletInfo.format(value: info.value)
+    }
+
     init(
         type: WalletType,
         info: WalletObject? = .none
@@ -92,5 +99,11 @@ struct WalletInfo {
 extension WalletInfo: Equatable {
     static func == (lhs: WalletInfo, rhs: WalletInfo) -> Bool {
         return lhs.type.description == rhs.type.description
+    }
+}
+
+extension WalletInfo {
+    static func format(value: String, server: RPCServer = .main) -> String {
+        return "\(value) \(server.symbol)"
     }
 }
