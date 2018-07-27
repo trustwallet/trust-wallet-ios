@@ -12,13 +12,13 @@ final class TokenNetworkProvider: BalanceNetworkProvider {
     let server: RPCServer
     let address: EthereumAddress
     let contract: EthereumAddress
-    let addressUpdate: Address
+    let addressUpdate: EthereumAddress
 
     init(
         server: RPCServer,
         address: EthereumAddress,
         contract: EthereumAddress,
-        addressUpdate: Address
+        addressUpdate: EthereumAddress
     ) {
         self.server = server
         self.address = address

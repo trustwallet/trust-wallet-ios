@@ -7,20 +7,17 @@ import BigInt
 import APIKit
 import JSONRPCKit
 
-final class CoinNetworkProvider: BalanceNetworkProvider {
+final class WalletBalanceProvider {
 
     let server: RPCServer
     let address: Address
-    let addressUpdate: EthereumAddress
 
     init(
         server: RPCServer,
-        address: Address,
-        addressUpdate: EthereumAddress
-    ) {
+        address: Address
+        ) {
         self.server = server
         self.address = address
-        self.addressUpdate = addressUpdate
     }
 
     func balance() -> Promise<BigInt> {

@@ -6,12 +6,12 @@ import TrustCore
 import BigInt
 
 final class WalletValueOperation: TrustOperation {
-    private var balanceProvider: BalanceNetworkProvider
+    private var balanceProvider: WalletBalanceProvider
     private let keystore: Keystore
     private let wallet: WalletObject
 
     init(
-        balanceProvider: BalanceNetworkProvider,
+        balanceProvider: WalletBalanceProvider,
         keystore: Keystore,
         wallet: WalletObject
         ) {

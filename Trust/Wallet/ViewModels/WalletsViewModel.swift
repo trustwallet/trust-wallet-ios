@@ -34,11 +34,11 @@ class WalletsViewModel {
 
         guard operationQueue.operationCount == 0 else { return }
 
-        var valueProviders = [(CoinNetworkProvider, WalletObject)]()
+        var valueProviders = [(WalletBalanceProvider, WalletObject)]()
 
         for wallet in self.keystore.wallets {
             guard let server = wallet.coin?.server else { continue }
-            valueProviders.append((CoinNetworkProvider(server: server, addressUpdate: wallet.currentAccount.address), wallet.info))
+            valueProviders.append((WalletBalanceProvider(server: server, address: wallet.currentAccount.address), wallet.info))
         }
 
         let operations: [WalletValueOperation] = valueProviders.compactMap {
