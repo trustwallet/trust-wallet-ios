@@ -31,7 +31,7 @@ final class WalletViewCell: UITableViewCell {
             infoButton.tintColor = Colors.lightBlue
             identiconImageView.image = model.image
             selectedImageView.image = model.selectedImage
-            balance.isHidden = model.wallet.isBalanceHidden
+            balance.isHidden = model.isBalanceHidden
             balance.text = model.value
         }
     }

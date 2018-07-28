@@ -20,6 +20,10 @@ struct WalletAccountViewModel {
         return WalletInfo.emptyName
     }
 
+    var isBalanceHidden: Bool {
+        return wallet.multiWallet
+    }
+
     var address: String {
         guard wallet.multiWallet else {
              return account.address.description
