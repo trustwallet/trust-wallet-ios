@@ -4,11 +4,13 @@ import Foundation
 import UIKit
 import TrustKeystore
 import TrustCore
+import BigInt
 
 struct WalletAccountViewModel {
     let wallet: WalletInfo
     let account: Account
     let currentWallet: WalletInfo?
+    private let shortFormatter = EtherNumberFormatter.short
 
     var title: String {
         if wallet.multiWallet {
@@ -31,8 +33,11 @@ struct WalletAccountViewModel {
         return R.string.localizable.multiCoinWallet()
     }
 
-    var value: String {
-        return wallet.value
+    var balance: String {
+        guard !wallet.info.balance.isEmpty, let server = wallet.coin?.server else {
+            return  WalletInfo.format(value: "0.0", server: .main)
+        }
+        return WalletInfo.format(value: shortFormatter.string(from: BigInt(wallet.info.balance) ?? BigInt(), decimals: server.decimals), server: server)
     }
 
     var isWatch: Bool {

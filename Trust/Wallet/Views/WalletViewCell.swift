@@ -32,7 +32,7 @@ final class WalletViewCell: UITableViewCell {
             identiconImageView.image = model.image
             selectedImageView.image = model.selectedImage
             balance.isHidden = model.isBalanceHidden
-            balance.text = model.value
+            balance.text = model.balance
         }
     }
 

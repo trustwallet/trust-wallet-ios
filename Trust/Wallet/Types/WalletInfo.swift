@@ -8,7 +8,6 @@ import BigInt
 struct WalletInfo {
     let type: WalletType
     let info: WalletObject
-    private let shortFormatter = EtherNumberFormatter.short
 
     var address: Address {
         switch type {
@@ -76,13 +75,6 @@ struct WalletInfo {
         case .address:
             return true
         }
-    }
-
-    var value: String {
-        guard !info.balance.isEmpty, let server = coin?.server else {
-            return  WalletInfo.format(value: "0.0", server: .main)
-        }
-        return WalletInfo.format(value: shortFormatter.string(from: BigInt(info.balance) ?? BigInt(), decimals: server.decimals), server: server)
     }
 
     init(
