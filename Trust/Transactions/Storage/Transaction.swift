@@ -20,8 +20,8 @@ final class Transaction: Object, Decodable {
 
     @objc private dynamic var rawCoin = -1
     public var coin: Coin {
-        get { return Coin(rawValue: rawCoin)! }
-        set { rawCoin = newValue.rawValue }
+        get { return Coin(coinType: rawCoin) }
+        set { rawCoin = newValue.coinType }
     }
 
     var localizedOperations = List<LocalizedOperationObject>()
@@ -88,7 +88,7 @@ final class Transaction: Object, Decodable {
         let to = try container.decode(String.self, forKey: .to)
         let value = try container.decode(String.self, forKey: .value)
         let gas = try container.decode(String.self, forKey: .gas)
-        let coin = try container.decode(Coin.self, forKey: .coin)
+        let coin = try container.decode(Int.self, forKey: .coin)
         let gasPrice = try container.decode(String.self, forKey: .gasPrice)
         let gasUsed = try container.decode(String.self, forKey: .gasUsed)
         let rawNonce = try container.decode(Int.self, forKey: .nonce)
@@ -121,7 +121,7 @@ final class Transaction: Object, Decodable {
             gasUsed: gasUsed,
             nonce: rawNonce,
             date: Date(timeIntervalSince1970: TimeInterval(timeStamp) ?? 0),
-            coin: coin,
+            coin: Coin(coinType: coin),
             localizedOperations: operations,
             state: state
         )

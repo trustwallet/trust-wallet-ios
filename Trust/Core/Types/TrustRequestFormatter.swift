@@ -8,12 +8,12 @@ struct TrustRequestFormatter {
         var dict: [String: [String]] = [:]
         for account in accounts {
             guard let coin = account.coin else { break }
-            dict["\(coin.rawValue)"] = [account.address.description]
+            dict["\(coin.coinType)"] = [account.address.description]
         }
         return dict
     }
 
     static func networks(from accounts: [Account]) -> [Int] {
-        return accounts.compactMap { $0.coin?.rawValue }
+        return accounts.compactMap { $0.coin?.coinType }
     }
 }

@@ -6,7 +6,7 @@ import TrustCore
 struct ImageURLFormatter {
 
     func image(for coin: Coin) -> String {
-        return Constants.images + "/coins/\(coin.rawValue).png"
+        return Constants.images + "/coins/\(coin.coinType).png"
     }
 
     func image(for contract: String) -> String {

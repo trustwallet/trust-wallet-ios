@@ -20,11 +20,10 @@ struct WalletInfo {
     var coin: Coin? {
         switch type {
         case .privateKey, .hd:
-            guard let account = currentAccount,
-                let coin = Coin(rawValue: account.derivationPath.coinType) else {
-                    return .none
+            guard let account = currentAccount else {
+                return .none
             }
-            return coin
+            return Coin(coinType: account.derivationPath.coinType)
         case .address(let coin, _):
             return coin
         }

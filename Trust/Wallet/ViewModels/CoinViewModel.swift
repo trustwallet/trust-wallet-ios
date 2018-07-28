@@ -19,6 +19,7 @@ struct CoinViewModel {
         case .poa: return "POA Network"
         case .callisto: return "Callisto"
         case .gochain: return "GoChain"
+        default: return "Unknown"
         }
     }
 
@@ -30,6 +31,7 @@ struct CoinViewModel {
         case .poa: return "POA"
         case .gochain: return "GO"
         case .bitcoin: return "Bitcoin"
+        default: return "Unknown"
         }
     }
 
@@ -41,6 +43,7 @@ struct CoinViewModel {
         case .poa: return R.image.ethereum99()
         case .callisto: return R.image.ethereum820()
         case .gochain: return R.image.ethereum60()
+        default: return .none
         }
     }
 

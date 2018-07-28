@@ -153,9 +153,9 @@ class AppCoordinator: NSObject, Coordinator {
         wallets.forEach { wallet in
             for account in wallet.accounts {
                 guard let coin = account.coin else { break }
-                var elements: [String] = result[coin.rawValue] ?? []
+                var elements: [String] = result[coin.coinType] ?? []
                 elements.append(account.address.description)
-                result[coin.rawValue] = elements
+                result[coin.coinType] = elements
             }
         }
         return result

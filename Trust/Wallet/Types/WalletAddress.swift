@@ -9,8 +9,8 @@ final class WalletAddress: Object {
     @objc dynamic var addressString: String = ""
     @objc private dynamic var rawCoin = -1
     public var coin: Coin {
-        get { return Coin(rawValue: rawCoin) ?? .ethereum }
-        set { rawCoin = newValue.rawValue }
+        get { return Coin(coinType: rawCoin) ?? .ethereum }
+        set { rawCoin = newValue.coinType }
     }
 
     convenience init(
@@ -36,6 +36,6 @@ final class WalletAddress: Object {
 
     override func isEqual(_ object: Any?) -> Bool {
         guard let object = object as? WalletAddress else { return false }
-        return object.address == address && object.coin == address?.coin
+        return object.address == address
     }
 }

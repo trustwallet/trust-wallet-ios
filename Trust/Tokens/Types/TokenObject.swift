@@ -24,8 +24,8 @@ final class TokenObject: Object, Decodable {
 
     @objc private dynamic var rawCoin = -1
     public var coin: Coin {
-        get { return Coin(rawValue: rawCoin)! }
-        set { rawCoin = newValue.rawValue }
+        get { return Coin(coinType: rawCoin) }
+        set { rawCoin = newValue.coinType }
     }
 
     @objc private dynamic var rawType = ""
@@ -59,7 +59,7 @@ final class TokenObject: Object, Decodable {
         self.contract = contract
         self.name = name
         self.coin = coin
-        self.rawCoin = coin.rawValue
+        self.rawCoin = coin.coinType
         self.type = type
         self.rawType = type.rawValue
         self.symbol = symbol
@@ -85,12 +85,12 @@ final class TokenObject: Object, Decodable {
         let name = try container.decode(String.self, forKey: .name)
         let symbol = try container.decode(String.self, forKey: .symbol)
         let decimals = try container.decode(Int.self, forKey: .decimals)
-        let coin = try container.decode(Coin.self, forKey: .coin)
+        let coin = try container.decode(Int.self, forKey: .coin)
         let type = try container.decode(TokenObjectType.self, forKey: .type)
         if let convertedAddress = EthereumAddress(string: contract)?.description {
             contract = convertedAddress
         }
-        self.init(contract: contract, name: name, coin: coin, type: type, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
+        self.init(contract: contract, name: name, coin: Coin(coinType: coin), type: type, symbol: symbol, decimals: decimals, value: "0", isCustom: false, isDisabled: false)
     }
 
     required init() {

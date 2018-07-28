@@ -26,7 +26,7 @@ class WalletTests: XCTestCase {
         let address: EthereumAddress = .make()
         let walletType = WalletType.address(coin, address)
 
-        XCTAssertEqual("wallet-address-\(coin.rawValue)-\(address.description)", walletType.description)
+        XCTAssertEqual("wallet-address-\(coin.coinType)-\(address.description)", walletType.description)
     }
 }
 

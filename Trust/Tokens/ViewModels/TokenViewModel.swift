@@ -285,11 +285,11 @@ final class TokenViewModel {
         switch token.type {
         case .coin:
             tokenTransactions = transactionsStore.realm.objects(Transaction.self)
-                .filter(NSPredicate(format: "rawCoin = %d", server.coin.rawValue))
+                .filter(NSPredicate(format: "rawCoin = %d", server.coin.coinType))
                 .sorted(byKeyPath: "date", ascending: false)
         case .ERC20:
             tokenTransactions = transactionsStore.realm.objects(Transaction.self)
-                .filter(NSPredicate(format: "rawCoin = %d && %K ==[cd] %@", server.coin.rawValue, "to", token.contract))
+                .filter(NSPredicate(format: "rawCoin = %d && %K ==[cd] %@", server.coin.coinType, "to", token.contract))
                 .sorted(byKeyPath: "date", ascending: false)
         }
         updateSections()

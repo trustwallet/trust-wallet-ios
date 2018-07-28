@@ -118,7 +118,7 @@ class EtherKeystore: Keystore {
             let privateKeyData = PrivateKey(data: Data(hexString: privateKey)!)!
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
-                    let wallet = try self.keyStore.import(privateKey: privateKeyData, password: newPassword, coin: coin)
+                    let wallet = try self.keyStore.import(privateKey: privateKeyData, password: newPassword)
                     self.setPassword(newPassword, for: wallet)
                     DispatchQueue.main.async {
                         completion(.success(WalletInfo(type: .privateKey(wallet))))
@@ -177,7 +177,7 @@ class EtherKeystore: Keystore {
 
     func importPrivateKey(privateKey: PrivateKey, password: String, coin: Coin) -> Result<WalletInfo, KeystoreError> {
         do {
-            let wallet = try keyStore.import(privateKey: privateKey, password: password, coin: coin)
+            let wallet = try keyStore.import(privateKey: privateKey, password: password)
             let w = WalletInfo(type: .privateKey(wallet))
             let _ = setPassword(password, for: wallet)
             return .success(w)
@@ -192,7 +192,7 @@ class EtherKeystore: Keystore {
         }
         do {
             //TODO: Blockchain. Pass blockchain ID
-            let wallet = try keyStore.import(json: data, password: password, newPassword: newPassword, coin: coin)
+            let wallet = try keyStore.import(json: data, password: password, newPassword: newPassword)
             let _ = setPassword(newPassword, for: wallet)
             return .success(WalletInfo(type: .hd(wallet)))
         } catch {

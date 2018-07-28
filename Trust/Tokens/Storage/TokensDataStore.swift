@@ -93,7 +93,7 @@ class TokensDataStore {
                 value: "0",
                 isCustom: false,
                 isDisabled: isDisabled,
-                order: coin.rawValue
+                order: coin.coinType
             )
         }
     }
@@ -193,7 +193,7 @@ class TokensDataStore {
                         "symbol": token.symbol,
                         "decimals": token.decimals,
                         "rawType": token.type.rawValue,
-                        "rawCoin": token.coin.rawValue,
+                        "rawCoin": token.coin.coinType,
                     ]
                     realm.create(TokenObject.self, value: update, update: true)
                 }
@@ -250,6 +250,7 @@ extension Coin {
         case .gochain: return RPCServer.gochain
         case .callisto: return RPCServer.callisto
         case .poa: return RPCServer.poa
+        default: return RPCServer.main
         }
     }
 }

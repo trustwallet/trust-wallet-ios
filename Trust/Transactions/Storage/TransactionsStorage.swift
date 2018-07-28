@@ -38,7 +38,7 @@ class TransactionsStorage {
 
     func latestTransaction(for address: Address, coin: Coin) -> Transaction? {
         return transactions
-            .filter(NSPredicate(format: "from == %@ && rawCoin == %d", address.description, coin.rawValue))
+            .filter(NSPredicate(format: "from == %@ && rawCoin == %d", address.description, coin.coinType))
             .sorted(byKeyPath: "nonce", ascending: false)
             .first
     }

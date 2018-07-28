@@ -8,7 +8,7 @@ import TrustCore
 
 extension Wallet {
     static func k() -> KeystoreKey {
-        var key = try! KeystoreKey(password: "hello", for: .ethereum)
+        var key = try! KeystoreKey(password: "hello", key: PrivateKey())
         key.activeAccounts.append(.make())
         return key
     }
@@ -23,7 +23,7 @@ extension Wallet {
             keyURL: url,
             key: key
         )
-        let _ = try! wallet.getAccount(password: "hello")
+        let _ = try! wallet.getAccount(password: "hello", coin: .ethereum)
         return wallet
     }
 }

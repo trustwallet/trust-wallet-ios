@@ -53,7 +53,7 @@ struct WalletAccountViewModel {
 
 extension Account {
     var coin: Coin? {
-        return Coin(rawValue: derivationPath.coinType)
+        return Coin(coinType: derivationPath.coinType)
     }
 
     var description: String {
