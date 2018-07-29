@@ -408,6 +408,8 @@ class EtherKeystore: Keystore {
                     object.completedBackup = completedBackup
                 case .mainWallet(let mainWallet):
                     object.mainWallet = mainWallet
+                case .balance(let balance):
+                    object.balance = balance
                 }
             }
             storage.realm.add(object, update: true)

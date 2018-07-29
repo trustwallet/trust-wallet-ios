@@ -13,35 +13,33 @@ class WalletsViewController: UITableViewController {
 
     let keystore: Keystore
     lazy var viewModel: WalletsViewModel = {
-        return WalletsViewModel(keystore: keystore)
+        let model = WalletsViewModel(keystore: keystore)
+        model.delegate = self
+        return model
     }()
     weak var delegate: WalletsViewControllerDelegate?
 
     init(keystore: Keystore) {
         self.keystore = keystore
-
         super.init(style: .grouped)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         tableView.separatorColor = StyleLayout.TableView.separatorColor
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.register(R.nib.walletViewCell(), forCellReuseIdentifier: R.nib.walletViewCell.name)
         navigationItem.title = viewModel.title
         tableView.tableFooterView = UIView()
-
-        fetch()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        fetch(animated: false)
+        fetch()
     }
 
-    func fetch(animated: Bool = true) {
+    func fetch() {
+        viewModel.fetchBalances()
         viewModel.refresh()
         tableView.reloadData()
     }
@@ -114,5 +112,12 @@ class WalletsViewController: UITableViewController {
 extension WalletsViewController: WalletViewCellDelegate {
     func didPress(viewModel: WalletAccountViewModel, in cell: WalletViewCell) {
         delegate?.didSelectForInfo(wallet: viewModel.wallet, account: viewModel.account, in: self)
+    }
+}
+
+extension WalletsViewController: WalletsViewModelProtocol {
+    func update() {
+        viewModel.refresh()
+        tableView.reloadData()
     }
 }

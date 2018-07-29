@@ -3,6 +3,7 @@
 import Foundation
 import TrustKeystore
 import TrustCore
+import BigInt
 
 struct WalletInfo {
     let type: WalletType
@@ -92,5 +93,11 @@ struct WalletInfo {
 extension WalletInfo: Equatable {
     static func == (lhs: WalletInfo, rhs: WalletInfo) -> Bool {
         return lhs.type.description == rhs.type.description
+    }
+}
+
+extension WalletInfo {
+    static func format(value: String, server: RPCServer) -> String {
+        return "\(value) \(server.symbol)"
     }
 }
