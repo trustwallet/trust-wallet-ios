@@ -269,11 +269,13 @@ extension SendViewController: QRCodeReaderDelegate {
 
         if let value = result.params["amount"] {
             amountRow?.value = value
+            let amount = viewModel.decimalAmount(with: value)
+            viewModel.updatePairPrice(with: amount)
         } else {
             amountRow?.value = ""
+            viewModel.pairRate = 0.0
         }
         amountRow?.reload()
-        viewModel.pairRate = 0.0
         updatePriceSection()
     }
 }
