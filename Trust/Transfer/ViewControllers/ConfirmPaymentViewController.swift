@@ -23,6 +23,9 @@ class ConfirmPaymentViewController: UIViewController {
     lazy var sendTransactionCoordinator = {
         return SendTransactionCoordinator(session: self.session, keystore: keystore, confirmType: confirmType, server: server)
     }()
+    lazy var confirmEnterPasscodeCoordinator: LockEnterPasscodeCoordinator = {
+        return LockEnterPasscodeCoordinator(model: LockEnterPasscodeViewModel())
+    }()
     lazy var submitButton: UIButton = {
         let button = Button(size: .large, style: .solid)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -207,13 +210,19 @@ class ConfirmPaymentViewController: UIViewController {
     }
 
     @objc func send() {
-        self.displayLoading()
+        confirmEnterPasscodeCoordinator.start { [weak self] (success, _) in
+            if success {
+                self?.displayLoading()
 
-        let transaction = configurator.signTransaction
-        self.sendTransactionCoordinator.send(transaction: transaction) { [weak self] result in
-            guard let `self` = self else { return }
-            self.didCompleted?(result)
-            self.hideLoading()
+                guard let transaction = self?.configurator.signTransaction else {
+                    return
+                }
+                self?.sendTransactionCoordinator.send(transaction: transaction) { [weak self] result in
+                    guard let `self` = self else { return }
+                    self.didCompleted?(result)
+                    self.hideLoading()
+                }
+            }
         }
     }
 }
