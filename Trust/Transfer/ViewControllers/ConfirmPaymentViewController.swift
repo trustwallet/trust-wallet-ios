@@ -129,6 +129,13 @@ class ConfirmPaymentViewController: UIViewController {
             TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
             .spacer(height: TransactionAppearance.spacing),
             TransactionAppearance.item(
+                title: detailsViewModel.walletNameTitle,
+                subTitle: detailsViewModel.currentWalletName
+            ),
+            .spacer(height: TransactionAppearance.spacing),
+            TransactionAppearance.divider(color: Colors.lightGray, alpha: 0.3),
+            .spacer(height: TransactionAppearance.spacing),
+            TransactionAppearance.item(
                 title: detailsViewModel.paymentFromTitle,
                 subTitle: configurator.account.address.description
             ),
@@ -185,6 +192,7 @@ class ConfirmPaymentViewController: UIViewController {
     private func reloadView() {
         let viewModel = ConfirmPaymentDetailsViewModel(
             transaction: configurator.previewTransaction(),
+            keystore: keystore,
             session: session,
             server: server
         )

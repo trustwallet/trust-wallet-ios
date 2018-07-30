@@ -216,6 +216,7 @@
 "Are you sure you would like to delete?" = "你确定要删除吗？";
 "confirmPayment.amount.label.title" = "数量";
 "confirmPayment.dapp.label.title" = "DApp";
+"confirmPayment.walletTitle.label.title" = "钱包标题";
 "DuckDuckGo" = "DuckDuckGo";
 "Google" = "谷歌";
 "IncomingTransaction" = "传入交易";

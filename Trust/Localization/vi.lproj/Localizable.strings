@@ -216,6 +216,7 @@
 "Are you sure you would like to delete?" = "Bạn có chắc chắn muốn xóa không?";
 "confirmPayment.amount.label.title" = "Số lượng";
 "confirmPayment.dapp.label.title" = "Ứng dụng phân tán";
+"confirmPayment.walletTitle.label.title" = "Tiêu đề Wallet";
 "DuckDuckGo" = "DuckDuckGo";
 "Google" = "Google";
 "IncomingTransaction" = "Giao dịch gửi đến";
