@@ -216,7 +216,7 @@
 "Are you sure you would like to delete?" = "本当に削除してもよろしいですか？";
 "confirmPayment.amount.label.title" = "数量";
 "confirmPayment.dapp.label.title" = "DApp";
-"confirmPayment.walletTitle.label.title" = "ウォレットタイトル";
+"confirmPayment.walletTitle.label.title" = "ウォレットから";
 "DuckDuckGo" = "DuckDuckGo";
 "Google" = "Google";
 "IncomingTransaction" = "受信中のトランザクション";

@@ -216,7 +216,7 @@
 "Are you sure you would like to delete?" = "Sind Sie sicher, dass Sie löschen möchten?";
 "confirmPayment.amount.label.title" = "Betrag";
 "confirmPayment.dapp.label.title" = "DApp";
-"confirmPayment.walletTitle.label.title" = "Brieftaschentitel";
+"confirmPayment.walletTitle.label.title" = "Aus Brieftasche";
 "DuckDuckGo" = "DuckDuckGo";
 "Google" = "Google";
 "IncomingTransaction" = "Eingehende Transaktion";

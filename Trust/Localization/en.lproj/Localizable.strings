@@ -216,7 +216,7 @@
 "Are you sure you would like to delete?" = "Are you sure you would like to delete?";
 "confirmPayment.amount.label.title" = "Amount";
 "confirmPayment.dapp.label.title" = "DApp";
-"confirmPayment.walletTitle.label.title" = "Wallet Title";
+"confirmPayment.walletTitle.label.title" = "From Wallet";
 "DuckDuckGo" = "DuckDuckGo";
 "Google" = "Google";
 "IncomingTransaction" = "Incoming Transaction";

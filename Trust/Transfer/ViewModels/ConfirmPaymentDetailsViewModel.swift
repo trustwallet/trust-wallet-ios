@@ -57,13 +57,23 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     var walletNameTitle: String {
-        return NSLocalizedString("confirmPayment.walletTitle.label.title", value: "Wallet Title", comment: "")
+        return NSLocalizedString("confirmPayment.walletTitle.label.title", value: "From Wallet", comment: "")
+    }
+
+    private var currentWallet: WalletInfo? {
+        return keystore.recentlyUsedWallet ?? keystore.wallets.first
     }
 
     var currentWalletName: String {
-        return keystore.mainWallet?.info.name
-            ?? keystore.wallets.first?.info.name
-            ?? ""
+        return currentWallet?.info.name ?? ""
+    }
+
+    var currentWalletAddress: String {
+        return currentWallet?.address.description ?? ""
+    }
+
+    var currentWalletDescriptionString: String {
+        return currentWalletName + " " + ("(\(currentWalletAddress))")
     }
 
     var paymentFromTitle: String {
