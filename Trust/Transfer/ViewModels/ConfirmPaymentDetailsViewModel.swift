@@ -61,7 +61,7 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     var currentWalletName: String {
-        return keystore.recentlyUsedWallet?.info.name
+        return keystore.mainWallet?.info.name
             ?? keystore.wallets.first?.info.name
             ?? ""
     }
