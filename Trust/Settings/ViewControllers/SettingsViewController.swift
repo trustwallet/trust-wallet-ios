@@ -16,6 +16,7 @@ final class SettingsViewController: FormViewController, Coordinator {
         static let currencyPopularKey = "0"
         static let currencyAllKey = "1"
         static let passcodeRow = "PasscodeRow"
+        static let passcodeTransactionLockRow = "PasscodeTransactionLockRow"
     }
 
     private var config = Config()
@@ -95,6 +96,18 @@ final class SettingsViewController: FormViewController, Coordinator {
                 }
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_colorful_security()
+            }
+
+            <<< SwitchRow(Values.passcodeTransactionLockRow) { [weak self] in
+                $0.title = self?.viewModel.verifyTransactionsWithPasscodeTitle
+                $0.value = self?.viewModel.isPasscodeTransactionLockEnabled
+            }.onChange { [unowned self] row in
+                if let value = row.value {
+                    self.viewModel.isPasscodeTransactionLockEnabled = value
+                    row.updateCell()
+                }
+            }.cellSetup { cell, _ in
+                    cell.imageView?.image = R.image.settings_colorful_security()
             }
 
             <<< autoLockRow

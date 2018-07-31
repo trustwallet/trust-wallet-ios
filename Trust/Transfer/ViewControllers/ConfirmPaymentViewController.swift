@@ -212,7 +212,12 @@ class ConfirmPaymentViewController: UIViewController {
     }
 
     @objc func send() {
-        if true {
+        guard let needsPasscodeCheck = PreferencesController()
+            .get(for: PreferenceOption.isPasscodeTransactionLockEnabled.key) as? Bool else {
+            return
+        }
+
+        if needsPasscodeCheck {
             delegate?.confirmPaymentControllerNeedsAuthentication(self)
         } else {
             sendTransaction()

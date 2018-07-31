@@ -48,6 +48,26 @@ struct SettingsViewModel {
         }
     }
 
+    var isPasscodeTransactionLockEnabled: Bool {
+        get {
+            let option = PreferenceOption.isPasscodeTransactionLockEnabled
+            guard let boolValue = PreferencesController()
+                .get(for: option.key) as? Bool else {
+                PreferencesController().set(value: false, for: option)
+                return false
+            }
+            return boolValue
+        }
+        set {
+            PreferencesController().set(value: newValue, for: PreferenceOption.isPasscodeTransactionLockEnabled)
+        }
+    }
+
+    var verifyTransactionsWithPasscodeTitle: String {
+        return "Lock Transactions"
+//        return NSLocalizedString("settings.verifyTransactions.label.title", value: "Verify Transactions with Passcode", comment: "")
+    }
+
     var networkTitle: String {
         return NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
     }
