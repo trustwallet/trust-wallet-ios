@@ -142,6 +142,7 @@
 "lock.enter.passcode.view.model.incorrect.passcode" = "パスコードが間違っています。残り%li回試行できます。";
 "lock.enter.passcode.view.model.initial" = "パスコードを入力してください。";
 "lock.enter.passcode.view.model.touch.id" = "Touch IDでログイン";
+"lock.authenticate.enter.passcode.view.model.touch.id" = "タッチIDによる認証"
 "lock.enter.passcode.view.model.try.after.one.minute" = "1分後に試してください。";
 "Name" = "名称";
 "send.action.copy.transaction.title" = "トランザクション ID をコピー";

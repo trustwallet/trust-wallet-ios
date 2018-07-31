@@ -143,6 +143,7 @@
 "lock.enter.passcode.view.model.incorrect.passcode" = "密碼不正確。你還有 %d 次嘗試機會。";
 "lock.enter.passcode.view.model.initial" = "請輸入密碼。";
 "lock.enter.passcode.view.model.touch.id" = "使用 Touch ID 登錄";
+"lock.authenticate.enter.passcode.view.model.touch.id" = "使用Touch ID進行身份驗證"
 "lock.enter.passcode.view.model.try.after.one.minute" = "請1分鐘後再試。";
 "Name" = "名稱";
 "send.action.copy.transaction.title" = "複製交易 ID";

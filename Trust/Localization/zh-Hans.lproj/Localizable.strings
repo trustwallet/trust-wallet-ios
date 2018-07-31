@@ -142,6 +142,7 @@
 "lock.enter.passcode.view.model.incorrect.passcode" = "密码不正确。你还有 %d 次尝试机会。";
 "lock.enter.passcode.view.model.initial" = "请输入密码。";
 "lock.enter.passcode.view.model.touch.id" = "使用 Touch ID 登录";
+"lock.authenticate.enter.passcode.view.model.touch.id" = "使用Touch ID进行身份验证"
 "lock.enter.passcode.view.model.try.after.one.minute" = "请1分钟后再试。";
 "Name" = "名称";
 "send.action.copy.transaction.title" = "复制交易 ID";

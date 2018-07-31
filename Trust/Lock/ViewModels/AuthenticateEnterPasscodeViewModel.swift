@@ -10,7 +10,6 @@ final class AuthenticateEnterPasscodeViewModel: LockViewModel, EnterPasscodeView
         return NSLocalizedString("lock.enter.passcode.view.model.try.after.one.minute", value: "Try after 1 minute.", comment: "")
     }
     var loginReason: String {
-        return "Authenticating with Touch ID"
-        //    let loginReason = NSLocalizedString("lock.enter.passcode.view.model.touch.id", value: "Logging in with Touch ID", comment: "")
+        return NSLocalizedString("lock.authenticate.enter.passcode.view.model.touch.id", value: "Authenticating with Touch ID", comment: "")
     }
 }

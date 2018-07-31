@@ -142,6 +142,7 @@
 "lock.enter.passcode.view.model.incorrect.passcode" = "Falsche PIN. Sie haben %d Versuche.";
 "lock.enter.passcode.view.model.initial" = "Geben Sie Ihre PIN ein";
 "lock.enter.passcode.view.model.touch.id" = "Mit Touch ID anmelden";
+"lock.authenticate.enter.passcode.view.model.touch.id" = "Authentifizieren mit Touch ID"
 "lock.enter.passcode.view.model.try.after.one.minute" = "Versuchen Sie es in 1 Minute erneut";
 "Name" = "Name";
 "send.action.copy.transaction.title" = "Transaktions-ID kopieren";

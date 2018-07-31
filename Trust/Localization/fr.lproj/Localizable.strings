@@ -142,6 +142,7 @@
 "lock.enter.passcode.view.model.incorrect.passcode" = "Code d'accès incorrect. Il vous reste %li tentatives.";
 "lock.enter.passcode.view.model.initial" = "Entrez votre code d'accès.";
 "lock.enter.passcode.view.model.touch.id" = "Se connecter avec Touch ID";
+"lock.authenticate.enter.passcode.view.model.touch.id" = "Authentification avec Touch ID"
 "lock.enter.passcode.view.model.try.after.one.minute" = "Essayez après 1 minute.";
 "Name" = "Nom";
 "send.action.copy.transaction.title" = "Copier l'ID de transaction";
