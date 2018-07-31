@@ -3,11 +3,13 @@
 import UIKit
 import LocalAuthentication
 
+typealias UnlockResult = ((_ success: Bool, _ bioUnlock: Bool) -> Void)
+
 final class LockEnterPasscodeViewController: LockPasscodeViewController {
     private lazy var lockEnterPasscodeViewModel: LockEnterPasscodeViewModel = {
         return self.model as! LockEnterPasscodeViewModel
     }()
-    var unlockWithResult: ((_ success: Bool, _ bioUnlock: Bool) -> Void)?
+    var unlockWithResult: UnlockResult?
     private var context: LAContext!
     override func viewDidLoad() {
         super.viewDidLoad()

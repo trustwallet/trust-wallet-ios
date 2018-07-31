@@ -16,15 +16,17 @@ enum ConfirmResult {
     case sentTransaction(SentTransaction)
 }
 
+protocol ConfirmPaymentAuthenticationDelegate: class {
+    func confirmPaymentControllerNeedsAuthentication(_ controller: ConfirmPaymentViewController)
+}
+
 class ConfirmPaymentViewController: UIViewController {
 
     private let keystore: Keystore
     let session: WalletSession
+    public weak var delegate: ConfirmPaymentAuthenticationDelegate?
     lazy var sendTransactionCoordinator = {
         return SendTransactionCoordinator(session: self.session, keystore: keystore, confirmType: confirmType, server: server)
-    }()
-    lazy var confirmEnterPasscodeCoordinator: LockEnterPasscodeCoordinator = {
-        return LockEnterPasscodeCoordinator(model: LockEnterPasscodeViewModel())
     }()
     lazy var submitButton: UIButton = {
         let button = Button(size: .large, style: .solid)
@@ -40,7 +42,7 @@ class ConfirmPaymentViewController: UIViewController {
     var configurator: TransactionConfigurator
     let confirmType: ConfirmType
     let server: RPCServer
-    var didCompleted: ((Result<ConfirmResult, AnyError>) -> Void)?
+    var didComplete: ((Result<ConfirmResult, AnyError>) -> Void)?
 
     lazy var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -210,19 +212,20 @@ class ConfirmPaymentViewController: UIViewController {
     }
 
     @objc func send() {
-        confirmEnterPasscodeCoordinator.start { [weak self] (success, _) in
-            if success {
-                self?.displayLoading()
+        if true {
+            delegate?.confirmPaymentControllerNeedsAuthentication(self)
+        } else {
+            sendTransaction()
+        }
+    }
 
-                guard let transaction = self?.configurator.signTransaction else {
-                    return
-                }
-                self?.sendTransactionCoordinator.send(transaction: transaction) { [weak self] result in
-                    guard let `self` = self else { return }
-                    self.didCompleted?(result)
-                    self.hideLoading()
-                }
-            }
+    public func sendTransaction() {
+        self.displayLoading()
+        let transaction = self.configurator.signTransaction
+        self.sendTransactionCoordinator.send(transaction: transaction) { [weak self] result in
+            guard let `self` = self else { return }
+            self.didComplete?(result)
+            self.hideLoading()
         }
     }
 }
