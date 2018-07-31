@@ -59,6 +59,7 @@
 "settings.feedback.email.title" = "Trust Feedback";
 "settings.navigation.title" = "Einstellungen";
 "settings.network.button.title" = "Netzwerk";
+"settings.lockTransactions.label.title" = "Transaktionen authentifizieren";
 "settings.openSourceDevelopment.label.title" = "Open-Source-Entwicklung";
 "settings.privacyPolicy.button.title" = "Datenschutzbestimmungen";
 "settings.pushNotifications.button.title" = "Push-Benachrichtigungen";

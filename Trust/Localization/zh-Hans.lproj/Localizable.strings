@@ -59,6 +59,7 @@
 "settings.feedback.email.title" = "Trust 反馈";
 "settings.navigation.title" = "设置";
 "settings.network.button.title" = "网络";
+"settings.lockTransactions.label.title" = "验证交易";
 "settings.openSourceDevelopment.label.title" = "开源式开发";
 "settings.privacyPolicy.button.title" = "隐私政策";
 "settings.pushNotifications.button.title" = "推送通知";

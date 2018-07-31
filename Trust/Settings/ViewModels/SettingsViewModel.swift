@@ -64,8 +64,7 @@ struct SettingsViewModel {
     }
 
     var verifyTransactionsWithPasscodeTitle: String {
-        return "Lock Transactions"
-//        return NSLocalizedString("settings.verifyTransactions.label.title", value: "Verify Transactions with Passcode", comment: "")
+        return NSLocalizedString("settings.lockTransactions.label.title", value: "Authenticate Transactions", comment: "")
     }
 
     var networkTitle: String {

@@ -60,6 +60,7 @@
 "settings.feedback.email.title" = "Trust 反饋";
 "settings.navigation.title" = "設置";
 "settings.network.button.title" = "網絡";
+"settings.lockTransactions.label.title" = "驗證交易";
 "settings.openSourceDevelopment.label.title" = "開源式開發";
 "settings.privacyPolicy.button.title" = "隱私政策";
 "settings.pushNotifications.button.title" = "推送通知";

@@ -59,6 +59,7 @@
 "settings.feedback.email.title" = "Phản hồi tới Trust";
 "settings.navigation.title" = "Cài đặt";
 "settings.network.button.title" = "Mạng lưới";
+"settings.lockTransactions.label.title" = "Xác thực giao dịch";
 "settings.openSourceDevelopment.label.title" = "Phát triển nguồn mở";
 "settings.privacyPolicy.button.title" = "Chính sách bảo mật";
 "settings.pushNotifications.button.title" = "Các thông báo đẩy";

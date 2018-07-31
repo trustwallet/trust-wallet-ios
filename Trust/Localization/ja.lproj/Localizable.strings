@@ -59,6 +59,7 @@
 "settings.feedback.email.title" = "Trust フィードバック";
 "settings.navigation.title" = "設定";
 "settings.network.button.title" = "ネットワーク";
+"settings.lockTransactions.label.title" = "トランザクションの認証";
 "settings.openSourceDevelopment.label.title" = "オープンソース開発";
 "settings.privacyPolicy.button.title" = "個人情報保護方針";
 "settings.pushNotifications.button.title" = "プッシュ通知";

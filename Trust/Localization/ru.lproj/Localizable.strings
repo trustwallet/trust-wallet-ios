@@ -60,6 +60,7 @@
 "settings.feedback.email.title" = "Обратная связь ";
 "settings.navigation.title" = "Настройки";
 "settings.network.button.title" = "Сеть";
+"settings.lockTransactions.label.title" = "Аутентификация транзакций";
 "settings.openSourceDevelopment.label.title" = "Разработка с открытым исходным кодом";
 "settings.privacyPolicy.button.title" = "Политика Конфиденциальности";
 "settings.pushNotifications.button.title" = "Push-Уведомления";
