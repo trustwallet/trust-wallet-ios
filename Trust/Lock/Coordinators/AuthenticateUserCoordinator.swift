@@ -7,7 +7,7 @@ final class AuthenticateUserCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     private var waitForUnlockResult: UnlockResult?
     let navigationController: NavigationController
-    private let model: LockEnterPasscodeViewModel
+    private let model: AuthenticateEnterPasscodeViewModel
     private let lock: LockInterface
     private lazy var lockEnterPasscodeViewController: LockEnterPasscodeViewController = {
         return LockEnterPasscodeViewController(model: model)
@@ -15,7 +15,7 @@ final class AuthenticateUserCoordinator: Coordinator {
 
     init(
         navigationController: NavigationController,
-        model: LockEnterPasscodeViewModel = LockEnterPasscodeViewModel(),
+        model: AuthenticateEnterPasscodeViewModel = AuthenticateEnterPasscodeViewModel(),
         lock: LockInterface = Lock()
     ) {
         self.navigationController = navigationController

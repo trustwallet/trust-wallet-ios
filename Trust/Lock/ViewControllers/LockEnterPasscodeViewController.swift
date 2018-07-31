@@ -6,8 +6,8 @@ import LocalAuthentication
 typealias UnlockResult = ((_ success: Bool, _ bioUnlock: Bool) -> Void)
 
 final class LockEnterPasscodeViewController: LockPasscodeViewController {
-    private lazy var lockEnterPasscodeViewModel: LockEnterPasscodeViewModel = {
-        return self.model as! LockEnterPasscodeViewModel
+    private lazy var lockEnterPasscodeViewModel: EnterPasscodeViewModelInterface = {
+        return self.model as! EnterPasscodeViewModelInterface
     }()
     var unlockWithResult: UnlockResult?
     private var context: LAContext!

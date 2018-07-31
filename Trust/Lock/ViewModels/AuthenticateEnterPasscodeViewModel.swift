@@ -1,8 +1,8 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import UIKit
+import Foundation
 
-final class LockEnterPasscodeViewModel: LockViewModel, EnterPasscodeViewModelInterface {
+final class AuthenticateEnterPasscodeViewModel: LockViewModel, EnterPasscodeViewModelInterface {
     var initialLabelText: String {
         return NSLocalizedString("lock.enter.passcode.view.model.initial", value: "Enter your passcode.", comment: "")
     }
@@ -10,6 +10,7 @@ final class LockEnterPasscodeViewModel: LockViewModel, EnterPasscodeViewModelInt
         return NSLocalizedString("lock.enter.passcode.view.model.try.after.one.minute", value: "Try after 1 minute.", comment: "")
     }
     var loginReason: String {
-        return NSLocalizedString("lock.enter.passcode.view.model.touch.id", value: "Logging in with Touch ID", comment: "")
+        return "Authenticating with Touch ID"
+        //    let loginReason = NSLocalizedString("lock.enter.passcode.view.model.touch.id", value: "Logging in with Touch ID", comment: "")
     }
 }
