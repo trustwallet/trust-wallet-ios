@@ -152,7 +152,7 @@ final class TokensCoordinator: Coordinator {
     }
 
     private func didSelectToken(_ token: NonFungibleTokenObject, with backgroundColor: UIColor) {
-        let controller = NFTokenViewController(token: token)
+        let controller = NFTokenViewController(token: token, server: session.currentRPC)
         controller.delegate = self
         controller.imageView.backgroundColor = backgroundColor
         navigationController.pushViewController(controller, animated: true)
