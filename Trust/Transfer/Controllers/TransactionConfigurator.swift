@@ -196,7 +196,7 @@ final class TransactionConfigurator {
     var signTransaction: SignTransaction {
         let value: BigInt = {
             switch transaction.transfer.type {
-            case .ether, .dapp: return transaction.value
+            case .ether, .dapp: return valueToSend()
             case .token: return 0
             }
         }()
