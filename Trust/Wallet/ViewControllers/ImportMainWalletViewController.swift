@@ -8,6 +8,7 @@ import TrustCore
 
 protocol ImportMainWalletViewControllerDelegate: class {
     func didImportWallet(wallet: WalletInfo, in controller: ImportMainWalletViewController)
+    func didSkipImport(in controller: ImportMainWalletViewController)
 }
 
 final class ImportMainWalletViewController: FormViewController {
@@ -37,29 +38,29 @@ final class ImportMainWalletViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = NSLocalizedString("ImportMainWallet", value: "Import Main Wallet", comment: "")
+        title = R.string.localizable.importMainWallet()
         navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(title: R.string.localizable.skip(), style: .plain, target: self, action: #selector(skip)),
             UIBarButtonItem(image: R.image.qr_code_icon(), style: .done, target: self, action: #selector(openReader)),
         ]
 
-        form
-            +++ Section()
+        form +++ Section()
 
-            // Mnemonic
-            +++ Section(footer: ImportSelectionType.mnemonic.footerTitle)
-            <<< AppFormAppearance.textArea(tag: Values.mnemonic) {
-                $0.placeholder = R.string.localizable.importWalletMnemonicPlaceholder()
-                $0.textAreaHeight = .fixed(cellHeight: 140)
-                $0.add(rule: RuleRequired())
-                $0.cell.textView?.autocapitalizationType = .none
-            }
+        // Mnemonic
+        +++ Section(footer: ImportSelectionType.mnemonic.footerTitle)
+        <<< AppFormAppearance.textArea(tag: Values.mnemonic) {
+            $0.placeholder = R.string.localizable.backupPhrase()
+            $0.textAreaHeight = .fixed(cellHeight: 140)
+            $0.add(rule: RuleRequired())
+            $0.cell.textView?.autocapitalizationType = .none
+        }
 
-            +++ Section()
-            <<< ButtonRow(R.string.localizable.importWalletImportButtonTitle()) {
-                $0.title = $0.tag
-            }.onCellSelection { [weak self] _, _ in
-                self?.importWallet()
-            }
+        +++ Section()
+        <<< ButtonRow(R.string.localizable.importWalletImportButtonTitle()) {
+            $0.title = $0.tag
+        }.onCellSelection { [weak self] _, _ in
+            self?.importWallet()
+        }
     }
 
     func didImport(account: WalletInfo) {
@@ -112,6 +113,10 @@ final class ImportMainWalletViewController: FormViewController {
         let controller = QRCodeReaderViewController()
         controller.delegate = self
         present(controller, animated: true, completion: nil)
+    }
+
+    @objc private func skip() {
+        self.delegate?.didSkipImport(in: self)
     }
 
     required init?(coder aDecoder: NSCoder) {
