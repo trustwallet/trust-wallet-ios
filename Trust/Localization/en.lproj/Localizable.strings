@@ -212,7 +212,7 @@
 "configureTransaction.dataField.label.title" = "Data (Optional). %@";
 "Nonce" = "Nonce";
 "transaction.recipient.label.title" = "Recipient";
-"transaction.sender.label.title" = "From";
+"transaction.sender.label.title" = "Sender";
 "Are you sure you would like to delete?" = "Are you sure you would like to delete?";
 "confirmPayment.amount.label.title" = "Amount";
 "confirmPayment.dapp.label.title" = "DApp";

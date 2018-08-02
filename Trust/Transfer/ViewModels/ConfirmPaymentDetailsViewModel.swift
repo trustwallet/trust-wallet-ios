@@ -66,7 +66,7 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     var paymentFromTitle: String {
-        return NSLocalizedString("transaction.sender.label.title", value: "From", comment: "")
+        return R.string.localizable.transactionSenderLabelTitle()
     }
 
     var requesterTitle: String {
