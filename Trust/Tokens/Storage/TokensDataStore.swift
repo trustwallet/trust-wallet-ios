@@ -18,6 +18,11 @@ class TokensDataStore {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO"))
             .sorted(byKeyPath: "order", ascending: true)
     }
+    // tokens that needs balance and value update
+    var tokensBalance: Results<TokenObject> {
+        return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO || rawType = \"coin\""))
+            .sorted(byKeyPath: "order", ascending: true)
+    }
     var nonFungibleTokens: Results<NonFungibleTokenCategory> {
         return realm.objects(NonFungibleTokenCategory.self).sorted(byKeyPath: "name", ascending: true)
     }

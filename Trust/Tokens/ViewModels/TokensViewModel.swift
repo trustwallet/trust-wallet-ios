@@ -112,7 +112,7 @@ final class TokensViewModel: NSObject {
     }
 
     func updateBalances() {
-        balances(for: Array(self.tokens))
+        balances(for: Array(store.tokensBalance))
     }
 
     private func tokensInfo() {
@@ -124,7 +124,7 @@ final class TokensViewModel: NSObject {
             NSLog("tokensInfo \(error)")
         }.finally { [weak self] in
             guard let strongSelf = self else { return }
-            let tokens = strongSelf.store.objects
+            let tokens = Array(strongSelf.store.tokensBalance)
             strongSelf.prices(for: tokens)
         }
     }
@@ -140,8 +140,7 @@ final class TokensViewModel: NSObject {
             NSLog("prices \(error)")
         }.finally { [weak self] in
             guard let strongSelf = self else { return }
-            let enabledTokens = strongSelf.store.enabledObject
-            strongSelf.balances(for: enabledTokens)
+            strongSelf.balances(for: tokens)
         }
     }
 
