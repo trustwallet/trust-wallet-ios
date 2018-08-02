@@ -59,6 +59,23 @@ final class SettingsViewController: FormViewController, Coordinator {
         }
     }()
 
+    lazy var passcodeTransactionLockRow: SwitchRow = {
+        return SwitchRow(Values.passcodeTransactionLockRow) { [weak self] in
+            $0.title = self?.viewModel.verifyTransactionsWithPasscodeTitle
+            $0.value = self?.viewModel.isPasscodeTransactionLockEnabled
+            $0.hidden = Condition.function([Values.passcodeRow], { form in
+                return !((form.rowBy(tag: Values.passcodeRow) as? SwitchRow)?.value ?? false)
+            })
+        }.onChange { [unowned self] row in
+            if let value = row.value {
+                self.viewModel.isPasscodeTransactionLockEnabled = value
+                row.updateCell()
+            }
+        }.cellSetup { cell, _ in
+            cell.imageView?.image = R.image.settings_colorful_security()
+        }
+    }()
+
     let session: WalletSession
     let keystore: Keystore
 
@@ -93,22 +110,13 @@ final class SettingsViewController: FormViewController, Coordinator {
                 } else {
                     self.lock.deletePasscode()
                     self.updateAutoLockRow(with: AutoLock.immediate)
+                    self.updatePasscodeTransactionLockRow(enabled: false)
                 }
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_colorful_security()
             }
 
-            <<< SwitchRow(Values.passcodeTransactionLockRow) { [weak self] in
-                $0.title = self?.viewModel.verifyTransactionsWithPasscodeTitle
-                $0.value = self?.viewModel.isPasscodeTransactionLockEnabled
-            }.onChange { [unowned self] row in
-                if let value = row.value {
-                    self.viewModel.isPasscodeTransactionLockEnabled = value
-                    row.updateCell()
-                }
-            }.cellSetup { cell, _ in
-                    cell.imageView?.image = R.image.settings_colorful_security()
-            }
+            <<< passcodeTransactionLockRow
 
             <<< autoLockRow
 
@@ -339,6 +347,12 @@ final class SettingsViewController: FormViewController, Coordinator {
     private func updateAutoLockRow(with type: AutoLock) {
         self.autoLockRow.value = type
         self.autoLockRow.reload()
+    }
+
+    private func updatePasscodeTransactionLockRow(enabled: Bool) {
+        self.viewModel.isPasscodeTransactionLockEnabled = enabled
+        self.passcodeTransactionLockRow.value = enabled
+        self.passcodeTransactionLockRow.reload()
     }
 
     func run(action: SettingsAction) {
