@@ -189,6 +189,7 @@
 "import.wallet.watch.placeholder" = "Địa chỉ %@";
 "settings.joinCommunity.label.title" = "Tham gia cộng đồng";
 "settings.support.title" = "Hỗ trợ";
+"settings.helpCenter.title" = "Help Center";
 "tokens.token.edit.navigation.title" = "Thêm đồng tiền mã hóa tùy chỉnh.";
 "wallet.section.hdWallet.title" = "Ví HD";
 "wallets.export.alertSheet.title" = "Xuất khóa cá nhân";

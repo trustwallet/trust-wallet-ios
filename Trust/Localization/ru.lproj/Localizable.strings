@@ -171,6 +171,7 @@
 "import.wallet.watch.placeholder" = "%@ Адрес";
 "settings.joinCommunity.label.title" = "Вступить в сообщество";
 "settings.support.title" = "Поддержка";
+"settings.helpCenter.title" = "Центр поддержки";
 "tokens.token.edit.navigation.title" = "Редактировать токен пользователя";
 "wallet.section.hdWallet.title" = "HD-кошелек";
 "wallets.export.alertSheet.title" = "Экспортировать приватный ключ";
