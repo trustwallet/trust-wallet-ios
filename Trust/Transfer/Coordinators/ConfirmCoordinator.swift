@@ -84,11 +84,19 @@ final class ConfirmCoordinator: RootCoordinator {
 
 extension ConfirmCoordinator: ConfirmPaymentAuthenticationDelegate {
     func confirmPaymentControllerNeedsAuthentication(_ controller: ConfirmPaymentViewController) {
-        authenticateUserCoordinator.start { [weak self] (success, _) in
-            if success {
-                self?.controller.sendTransaction()
-                self?.authenticateUserCoordinator.stop()
+        guard let needsPasscodeCheck = PreferencesController()
+            .get(for: PreferenceOption.isPasscodeTransactionLockEnabled.key) as? Bool else {
+                return
+        }
+        if needsPasscodeCheck {
+            authenticateUserCoordinator.start { [weak self] (success, _) in
+                if success {
+                    self?.controller.sendTransaction()
+                    self?.authenticateUserCoordinator.stop()
+                }
             }
+        } else {
+            self.controller.sendTransaction()
         }
     }
 }
