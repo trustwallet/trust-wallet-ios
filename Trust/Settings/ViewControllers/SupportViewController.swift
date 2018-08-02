@@ -28,20 +28,17 @@ final class SupportViewController: FormViewController {
 
             <<< link(
                 title: R.string.localizable.settingsFaqButtonTitle(),
-                value: "https://trustwalletapp.com/faq.html",
-                image: R.image.settings_colorful_faq()
+                value: "https://trustwalletapp.com/faq.html"
             )
 
             <<< link(
                 title: R.string.localizable.settingsPrivacyTitle(),
-                value: "https://trustwalletapp.com/privacy-policy.html",
-                image: R.image.settings_colorful_privacy_and_policy()
+                value: "https://trustwalletapp.com/privacy-policy.html"
             )
 
             <<< link(
                 title: R.string.localizable.settingsTermsOfServiceButtonTitle(),
-                value: "https://trustwalletapp.com/terms.html",
-                image: R.image.settings_colorful_terms_of_service()
+                value: "https://trustwalletapp.com/terms.html"
             )
 
             <<< AppFormAppearance.button { button in
@@ -49,14 +46,12 @@ final class SupportViewController: FormViewController {
             }.onCellSelection { [weak self] _, _  in
                 self?.sendUsEmail()
             }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_colorful_email()
             }
     }
 
     private func link(
         title: String,
-        value: String,
-        image: UIImage?
+        value: String
     ) -> ButtonRow {
         return AppFormAppearance.button {
             $0.title = title
@@ -65,7 +60,7 @@ final class SupportViewController: FormViewController {
             guard let `self` = self, let value = row.value, let url = URL(string: value) else { return }
             self.delegate?.didPressURL(url, in: self)
         }.cellSetup { cell, _ in
-            cell.imageView?.image = image
+
         }
     }
 
