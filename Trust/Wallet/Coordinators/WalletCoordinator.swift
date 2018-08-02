@@ -243,6 +243,10 @@ extension WalletCoordinator: ImportMainWalletViewControllerDelegate {
         keystore.store(object: wallet.info, fields: fields)
         walletCreated(wallet: wallet, type: .imported)
     }
+
+    func didSkipImport(in controller: ImportMainWalletViewController) {
+        pushSelectCoin()
+    }
 }
 
 extension WalletCoordinator: SelectCoinViewControllerDelegate {

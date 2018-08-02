@@ -166,17 +166,17 @@ final class TransactionConfigurator {
         switch transaction.transfer.type.token.type {
         case .coin:
             let balance = Balance(value: transaction.transfer.type.token.valueBigInt)
-            if balance.value == transaction.value {
+            if !balance.value.isZero && balance.value == transaction.value {
                 value = transaction.value - configuration.gasLimit * configuration.gasPrice
                 //We work only with positive numbers.
                 if value.sign == .minus {
                     value = BigInt(value.magnitude)
                 }
             }
+            return value
         case .ERC20:
             return value
         }
-        return value
     }
 
     func previewTransaction() -> PreviewTransaction {
@@ -248,9 +248,10 @@ final class TransactionConfigurator {
         var tokenSufficient = true
 
         // fetching price of the coin, not the erc20 token.
-        let currentBalance = session.tokensStorage.getToken(for: self.transaction.transfer.type.token.coin.server.priceID)?.valueBalance
+        let coin = session.tokensStorage.getToken(for: self.transaction.transfer.type.token.coin.server.priceID)
+        let currentBalance = coin?.valueBalance
 
-        guard let balance = currentBalance  else {
+        guard let balance = currentBalance else {
             return .ether(etherSufficient: etherSufficient, gasSufficient: gasSufficient)
         }
         let transaction = previewTransaction()

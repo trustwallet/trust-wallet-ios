@@ -7,6 +7,7 @@ import TrustCore
 import BigInt
 
 struct WalletAccountViewModel {
+    let keystore: Keystore
     let wallet: WalletInfo
     let account: Account
     let currentWallet: WalletInfo?
@@ -60,7 +61,7 @@ struct WalletAccountViewModel {
     }
 
     var canDelete: Bool {
-        return !wallet.mainWallet && currentWallet != wallet
+        return currentWallet != wallet // || keystore.wallets.count == 1
     }
 }
 
