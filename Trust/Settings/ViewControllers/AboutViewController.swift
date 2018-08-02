@@ -26,22 +26,12 @@ final class AboutViewController: FormViewController {
 
         form +++ Section()
 
-            <<< link(
-                title: NSLocalizedString("settings.sourceCode.button.title", value: "Source Code", comment: ""),
-                value: "https://github.com/TrustWallet/trust-wallet-ios"
-            )
+            <<< linkProvider(type: .sourceCode)
 
             +++ Section()
 
-            <<< link(
-                title: R.string.localizable.settingsPrivacyTitle(),
-                value: "https://trustwalletapp.com/privacy-policy.html"
-            )
-
-            <<< link(
-                title: R.string.localizable.settingsTermsOfServiceButtonTitle(),
-                value: "https://trustwalletapp.com/terms.html"
-            )
+            <<< linkProvider(type: .privacyPolicy)
+            <<< linkProvider(type: .termsOfService)
 
             +++ Section()
 
@@ -65,27 +55,18 @@ final class AboutViewController: FormViewController {
 
             +++ Section(R.string.localizable.poweredBy())
 
-            <<< link(
-                title: NSLocalizedString("Infura", value: "Infura", comment: ""),
-                value: "https://infura.io/"
-            )
-
-            <<< link(
-                title: NSLocalizedString("OpenSea", value: "OpenSea", comment: ""),
-                value: Constants.dappsOpenSea
-            )
+            <<< linkProvider(type: .infura)
+            <<< linkProvider(type: .dappsOpenSea)
     }
 
-    private func link(
-        title: String,
-        value: String
+    private func linkProvider(
+        type: URLServiceProvider
     ) -> ButtonRow {
         return AppFormAppearance.button {
-            $0.title = title
-            $0.value = value
-        }.onCellSelection { [weak self] (_, row) in
-            guard let `self` = self, let value = row.value, let url = URL(string: value) else { return }
-            self.delegate?.didPressURL(url, in: self)
+            $0.title = type.title
+        }.onCellSelection { [weak self] (_, _) in
+            guard let `self` = self else { return }
+            self.delegate?.didPressURL(type.remoteURL, in: self)
         }.cellUpdate({ (cell, _) in
                 cell.accessoryType = .disclosureIndicator
                 cell.textLabel?.textAlignment = .left
