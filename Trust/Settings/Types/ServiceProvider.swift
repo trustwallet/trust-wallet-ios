@@ -2,12 +2,14 @@
 
 import Foundation
 import UIKit
+import Rswift
 
 enum URLServiceProvider {
     case twitter
     case telegram
     case facebook
     case discord
+    case helpCenter
 
     var title: String {
         switch self {
@@ -15,6 +17,7 @@ enum URLServiceProvider {
         case .telegram: return "Telegram Group"
         case .facebook: return "Facebook"
         case .discord: return "Discord"
+        case .helpCenter: return R.string.localizable.settingsHelpCenterTitle()
         }
     }
 
@@ -27,6 +30,7 @@ enum URLServiceProvider {
         case .facebook:
             return URL(string: "fb://profile?id=\(Constants.facebookUsername)")
         case .discord: return nil
+        case .helpCenter: return nil
         }
     }
 
@@ -44,6 +48,8 @@ enum URLServiceProvider {
             return "https://www.facebook.com/\(Constants.facebookUsername)"
         case .discord:
             return "https://discord.gg/ahPWeHk"
+        case .helpCenter:
+            return "https://help.trustwalletapp.com"
         }
     }
 
@@ -53,6 +59,7 @@ enum URLServiceProvider {
         case .telegram: return R.image.settings_colorful_telegram()
         case .facebook: return R.image.settings_colorful_facebook()
         case .discord: return R.image.settings_colorful_discord()
+        case .helpCenter: return R.image.settings_colorful_help_center()
         }
     }
 }
