@@ -197,7 +197,6 @@
 "Are you sure you would like to delete?" = "Вы уверены, что хотите удалить?";
 "confirmPayment.amount.label.title" = "Сумма";
 "confirmPayment.dapp.label.title" = "DApp";
-"confirmPayment.walletTitle.label.title" = "Из кошелька";
 "DuckDuckGo" = "DuckDuckGo";
 "Google" = "Google";
 "IncomingTransaction" = "Входящая транзакция";
