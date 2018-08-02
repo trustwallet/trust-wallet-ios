@@ -53,16 +53,8 @@ struct ConfirmPaymentDetailsViewModel {
         return transaction.gasLimit
     }
 
-    var currentWalletName: String {
-        return session.account.info.name
-    }
-
-    var currentWalletAddress: String {
-        return session.account.address.description
-    }
-
     var currentWalletDescriptionString: String {
-        return currentWalletName + " " + ("(\(currentWalletAddress))")
+        return session.account.info.name + " " + ("(\(session.account.address.description))")
     }
 
     var paymentFromTitle: String {
