@@ -9,7 +9,6 @@ struct ConfirmPaymentDetailsViewModel {
     let session: WalletSession
     let config: Config
     let server: RPCServer
-    let keystore: Keystore
     private let fullFormatter = EtherNumberFormatter.full
     private let balanceFormatter = EtherNumberFormatter.balance
     private var monetaryAmountViewModel: MonetaryAmountViewModel {
@@ -22,13 +21,11 @@ struct ConfirmPaymentDetailsViewModel {
     init(
         transaction: PreviewTransaction,
         config: Config = Config(),
-        keystore: Keystore,
         session: WalletSession,
         server: RPCServer
     ) {
         self.transaction = transaction
         self.config = config
-        self.keystore = keystore
         self.session = session
         self.server = server
     }
@@ -56,20 +53,12 @@ struct ConfirmPaymentDetailsViewModel {
         return transaction.gasLimit
     }
 
-    var walletNameTitle: String {
-        return NSLocalizedString("confirmPayment.walletTitle.label.title", value: "From Wallet", comment: "")
-    }
-
-    private var currentWallet: WalletInfo? {
-        return keystore.recentlyUsedWallet ?? keystore.wallets.first
-    }
-
     var currentWalletName: String {
-        return currentWallet?.info.name ?? ""
+        return session.account.info.name
     }
 
     var currentWalletAddress: String {
-        return currentWallet?.address.description ?? ""
+        return session.account.address.description
     }
 
     var currentWalletDescriptionString: String {
@@ -77,7 +66,7 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     var paymentFromTitle: String {
-        return NSLocalizedString("transaction.sender.label.title", value: "Sender", comment: "")
+        return NSLocalizedString("transaction.sender.label.title", value: "From", comment: "")
     }
 
     var requesterTitle: String {
