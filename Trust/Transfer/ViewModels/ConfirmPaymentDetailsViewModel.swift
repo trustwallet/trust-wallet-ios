@@ -66,7 +66,7 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     var paymentFromTitle: String {
-        return R.string.localizable.transactionSenderLabelTitle()
+        return R.string.localizable.transactionFromLabelTitle()
     }
 
     var requesterTitle: String {
