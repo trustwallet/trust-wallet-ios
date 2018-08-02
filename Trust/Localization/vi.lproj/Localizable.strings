@@ -143,7 +143,7 @@
 "lock.enter.passcode.view.model.incorrect.passcode" = "Mật mã không chính xác. Bạn còn %d lần thử.";
 "lock.enter.passcode.view.model.initial" = "Nhập mã khóa của bạn.";
 "lock.enter.passcode.view.model.touch.id" = "Đăng nhập bằng Vân tay";
-"lock.authenticate.enter.passcode.view.model.touch.id" = "Xác thực bằng ID cảm ứng"
+"lock.authenticate.enter.passcode.view.model.touch.id" = "Xác thực bằng ID cảm ứng";
 "lock.enter.passcode.view.model.try.after.one.minute" = "Thử lại sau 1 phút.";
 "Name" = "Tên";
 "send.action.copy.transaction.title" = "Sao chép ID giao dịch";

@@ -4,12 +4,12 @@ import Foundation
 
 final class AuthenticateEnterPasscodeViewModel: LockViewModel, EnterPasscodeViewModelInterface {
     var initialLabelText: String {
-        return NSLocalizedString("lock.enter.passcode.view.model.initial", value: "Enter your passcode.", comment: "")
+        return R.string.localizable.lockEnterPasscodeViewModelInitial()
     }
     var tryAfterOneMinute: String {
-        return NSLocalizedString("lock.enter.passcode.view.model.try.after.one.minute", value: "Try after 1 minute.", comment: "")
+        return R.string.localizable.lockEnterPasscodeViewModelTryAfterOneMinute()
     }
     var loginReason: String {
-        return NSLocalizedString("lock.authenticate.enter.passcode.view.model.touch.id", value: "Authenticating with Touch ID", comment: "")
+        return R.string.localizable.lockAuthenticateEnterPasscodeViewModelTouchId()
     }
 }
