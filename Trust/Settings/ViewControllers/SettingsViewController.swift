@@ -324,12 +324,6 @@ extension SettingsViewController: LockCreatePasscodeCoordinatorDelegate {
     }
 }
 
-extension SettingsViewController: SupportViewControllerDelegate {
-    func didPressURL(_ url: URL, in controller: SupportViewController) {
-        openURLInBrowser(url)
-    }
-}
-
 extension SettingsViewController: AboutViewControllerDelegate {
     func didPressURL(_ url: URL, in controller: AboutViewController) {
         openURLInBrowser(url)
