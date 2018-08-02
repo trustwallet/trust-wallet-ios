@@ -29,6 +29,10 @@ final class SettingsViewController: FormViewController, Coordinator {
         return lock.isPasscodeSet()
     }
 
+    var passcodeRow: SwitchRow? {
+        return form.rowBy(tag: Values.passcodeRow) as? SwitchRow
+    }
+
     lazy var viewModel: SettingsViewModel = {
         return SettingsViewModel(isDebug: isDebug)
     }()
@@ -45,8 +49,8 @@ final class SettingsViewController: FormViewController, Coordinator {
             $0.displayValueFor = { value in
                 return value?.displayName
             }
-            $0.hidden = Condition.function([Values.passcodeRow], { form in
-                return !((form.rowBy(tag: Values.passcodeRow) as? SwitchRow)?.value ?? false)
+            $0.hidden = Condition.function([Values.passcodeRow], { [weak self] form in
+                return !(self?.passcodeRow?.value ?? false)
             })
         }.onChange { [weak self] row in
             let autoLockType = row.value ?? AutoLock.immediate
@@ -63,8 +67,8 @@ final class SettingsViewController: FormViewController, Coordinator {
         return SwitchRow(Values.passcodeTransactionLockRow) { [weak self] in
             $0.title = self?.viewModel.verifyTransactionsWithPasscodeTitle
             $0.value = self?.viewModel.isPasscodeTransactionLockEnabled
-            $0.hidden = Condition.function([Values.passcodeRow], { form in
-                return !((form.rowBy(tag: Values.passcodeRow) as? SwitchRow)?.value ?? false)
+            $0.hidden = Condition.function([Values.passcodeRow], { [weak self] form in
+                return !(self?.passcodeRow?.value ?? false)
             })
         }.onChange { [unowned self] row in
             if let value = row.value {
@@ -350,9 +354,9 @@ final class SettingsViewController: FormViewController, Coordinator {
     }
 
     private func updatePasscodeTransactionLockRow(enabled: Bool) {
-        self.viewModel.isPasscodeTransactionLockEnabled = enabled
-        self.passcodeTransactionLockRow.value = enabled
-        self.passcodeTransactionLockRow.reload()
+        viewModel.isPasscodeTransactionLockEnabled = enabled
+        passcodeTransactionLockRow.value = enabled
+        passcodeTransactionLockRow.reload()
     }
 
     func run(action: SettingsAction) {
