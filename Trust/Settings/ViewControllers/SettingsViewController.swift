@@ -49,7 +49,7 @@ final class SettingsViewController: FormViewController, Coordinator {
             $0.displayValueFor = { value in
                 return value?.displayName
             }
-            $0.hidden = Condition.function([Values.passcodeRow], { [weak self] form in
+            $0.hidden = Condition.function([Values.passcodeRow], { [weak self] _ in
                 return !(self?.passcodeRow?.value ?? false)
             })
         }.onChange { [weak self] row in
@@ -66,13 +66,13 @@ final class SettingsViewController: FormViewController, Coordinator {
     lazy var passcodeTransactionLockRow: SwitchRow = {
         return SwitchRow(Values.passcodeTransactionLockRow) { [weak self] in
             $0.title = self?.viewModel.verifyTransactionsWithPasscodeTitle
-            $0.value = self?.viewModel.isPasscodeTransactionLockEnabled
-            $0.hidden = Condition.function([Values.passcodeRow], { [weak self] form in
+            $0.value = self?.lock.shouldAuthorizeTransactions()
+            $0.hidden = Condition.function([Values.passcodeRow], { [weak self] _ in
                 return !(self?.passcodeRow?.value ?? false)
             })
         }.onChange { [unowned self] row in
             if let value = row.value {
-                self.viewModel.isPasscodeTransactionLockEnabled = value
+                self.lock.setShouldAuthorizeTransactions(enabled: value)
                 row.updateCell()
             }
         }.cellSetup { cell, _ in
@@ -329,7 +329,7 @@ final class SettingsViewController: FormViewController, Coordinator {
     }
 
     private func updatePasscodeTransactionLockRow(enabled: Bool) {
-        viewModel.isPasscodeTransactionLockEnabled = enabled
+        lock.setShouldAuthorizeTransactions(enabled: enabled)
         passcodeTransactionLockRow.value = enabled
         passcodeTransactionLockRow.reload()
     }

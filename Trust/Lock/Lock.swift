@@ -7,6 +7,7 @@ import KeychainSwift
 protocol LockInterface {
     func isPasscodeSet() -> Bool
     func shouldShowProtection() -> Bool
+    func shouldAuthorizeTransactions() -> Bool
 }
 
 final class Lock: LockInterface {
@@ -20,10 +21,15 @@ final class Lock: LockInterface {
     private let maxAttemptTime = "maxAttemptTime"
     private let autoLockType = "autoLockType"
     private let autoLockTime = "autoLockTime"
+    private let authorizeTransactions = "authorizeTransactions"
     private let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
 
     func shouldShowProtection() -> Bool {
         return isPasscodeSet() && autoLockTriggered()
+    }
+
+    func shouldAuthorizeTransactions() -> Bool {
+        return isPasscodeSet() && authorizeTransactionsValue()
     }
 
     func isPasscodeSet() -> Bool {
@@ -32,6 +38,14 @@ final class Lock: LockInterface {
 
     func currentPasscode() -> String? {
         return SAMKeychain.password(forService: Keys.service, account: Keys.account)
+    }
+
+    func authorizeTransactionsValue() -> Bool {
+        if let value = keychain.getBool(authorizeTransactions) {
+            return value
+        }
+        setShouldAuthorizeTransactions(enabled: false)
+        return false
     }
 
     func isPasscodeValid(passcode: String) -> Bool {
@@ -65,6 +79,10 @@ final class Lock: LockInterface {
 
     func setPasscode(passcode: String) {
         SAMKeychain.setPassword(passcode, forService: Keys.service, account: Keys.account)
+    }
+
+    func setShouldAuthorizeTransactions(enabled: Bool) {
+        keychain.set(enabled, forKey: authorizeTransactions)
     }
 
     func deletePasscode() {

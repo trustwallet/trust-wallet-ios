@@ -48,21 +48,6 @@ struct SettingsViewModel {
         }
     }
 
-    var isPasscodeTransactionLockEnabled: Bool {
-        get {
-            let option = PreferenceOption.isPasscodeTransactionLockEnabled
-            guard let boolValue = PreferencesController()
-                .get(for: option.key) as? Bool else {
-                PreferencesController().set(value: false, for: option)
-                return false
-            }
-            return boolValue
-        }
-        set {
-            PreferencesController().set(value: newValue, for: PreferenceOption.isPasscodeTransactionLockEnabled)
-        }
-    }
-
     var verifyTransactionsWithPasscodeTitle: String {
         return R.string.localizable.settingsLockTransactionsLabelTitle()
     }
