@@ -18,9 +18,9 @@ class ConfirmPaymentDetailsViewModelTests: XCTestCase {
             session: session,
             server: .make()
         )
-        
-        let description = session.account.info.name + " " + "(\(session.account.address.description))"
-        
+        let address = session.account.address.description
+        let description = session.account.info.name + " " + "(\(address.prefix(10))...\(address.suffix(8)))"
+
         XCTAssertEqual(description, viewModel.currentWalletDescriptionString)
     }
 }

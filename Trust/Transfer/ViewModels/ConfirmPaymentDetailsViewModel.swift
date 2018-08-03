@@ -54,7 +54,8 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     var currentWalletDescriptionString: String {
-        return session.account.info.name + " " + ("(\(session.account.address.description))")
+        let address = session.account.address.description
+        return session.account.info.name + " " + ("(\(address.prefix(10))...\(address.suffix(8)))")
     }
 
     var paymentFromTitle: String {
