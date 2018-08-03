@@ -36,7 +36,9 @@ enum URLServiceProvider {
         case .twitter:
             return URL(string: "twitter://user?screen_name=\(Constants.twitterUsername)")!
         case .telegram:
-            return URL(string: "tg://resolve?domain=\(Constants.telegramUsername)")
+            let languageCode = NSLocale.preferredLanguageCode ?? ""
+            let telegramUsername = Constants.localizedTelegramUsernames[languageCode] ?? Constants.defaultTelegramUsername
+            return URL(string: "tg://resolve?domain=\(telegramUsername)")
         case .facebook:
             return URL(string: "fb://profile?id=\(Constants.facebookUsername)")
         case .discord: return nil
@@ -58,7 +60,9 @@ enum URLServiceProvider {
         case .twitter:
             return "https://twitter.com/\(Constants.twitterUsername)"
         case .telegram:
-            return "https://telegram.me/\(Constants.telegramUsername)"
+            let languageCode = NSLocale.preferredLanguageCode ?? ""
+            let telegramUsername = Constants.localizedTelegramUsernames[languageCode] ?? Constants.defaultTelegramUsername
+            return "https://telegram.me/\(telegramUsername)"
         case .facebook:
             return "https://www.facebook.com/\(Constants.facebookUsername)"
         case .discord:
