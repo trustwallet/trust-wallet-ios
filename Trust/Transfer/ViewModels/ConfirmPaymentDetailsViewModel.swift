@@ -53,8 +53,13 @@ struct ConfirmPaymentDetailsViewModel {
         return transaction.gasLimit
     }
 
+    var currentWalletDescriptionString: String {
+        let address = session.account.address.description
+        return session.account.info.name + " " + ("(\(address.prefix(10))...\(address.suffix(8)))")
+    }
+
     var paymentFromTitle: String {
-        return NSLocalizedString("transaction.sender.label.title", value: "Sender", comment: "")
+        return R.string.localizable.transactionFromLabelTitle()
     }
 
     var requesterTitle: String {

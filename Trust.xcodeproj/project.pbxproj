@@ -38,6 +38,7 @@
 		291F52B71F6B870400B369AB /* CastError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52B61F6B870400B369AB /* CastError.swift */; };
 		291F52B91F6B880F00B369AB /* EtherKeystore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52B81F6B880F00B369AB /* EtherKeystore.swift */; };
 		291F9EA020FF3C6B00D5266A /* DeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F9E9F20FF3C6B00D5266A /* DeveloperViewController.swift */; };
+		291F9EA3211408F600D5266A /* PreviewTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F9EA2211408F600D5266A /* PreviewTransaction.swift */; };
 		2923D9B11FDA49D8000CF3F8 /* Initializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B01FDA49D8000CF3F8 /* Initializer.swift */; };
 		2923D9B31FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B21FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift */; };
 		2923D9B51FDA4E07000CF3F8 /* PasswordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B41FDA4E07000CF3F8 /* PasswordGenerator.swift */; };
@@ -249,6 +250,7 @@
 		61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */; };
 		61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */; };
 		664D11A12007D59F0041A0B0 /* EstimateGasRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */; };
+		71A433702113860900985ADC /* ConfirmPaymentDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A4336F2113860900985ADC /* ConfirmPaymentDetailsViewModelTests.swift */; };
 		7301BA9220A3117000E1AFE5 /* AutoLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7301BA9120A3117000E1AFE5 /* AutoLock.swift */; };
 		7301BA9620AB1E5600E1AFE5 /* CookiesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7301BA9520AB1E5600E1AFE5 /* CookiesStore.swift */; };
 		7302405C204C65DF00B327DF /* NonFungibleTokenCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7302405B204C65DF00B327DF /* NonFungibleTokenCategory.swift */; };
@@ -522,6 +524,7 @@
 		291F52B61F6B870400B369AB /* CastError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastError.swift; sourceTree = "<group>"; };
 		291F52B81F6B880F00B369AB /* EtherKeystore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherKeystore.swift; sourceTree = "<group>"; };
 		291F9E9F20FF3C6B00D5266A /* DeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperViewController.swift; sourceTree = "<group>"; };
+		291F9EA2211408F600D5266A /* PreviewTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTransaction.swift; sourceTree = "<group>"; };
 		2923D9B01FDA49D8000CF3F8 /* Initializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializer.swift; sourceTree = "<group>"; };
 		2923D9B21FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipBackupFilesInitializer.swift; sourceTree = "<group>"; };
 		2923D9B41FDA4E07000CF3F8 /* PasswordGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordGenerator.swift; sourceTree = "<group>"; };
@@ -742,6 +745,7 @@
 		61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherNumberFormatterTests.swift; sourceTree = "<group>"; };
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateGasRequest.swift; sourceTree = "<group>"; };
+		71A4336F2113860900985ADC /* ConfirmPaymentDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPaymentDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		7301BA9120A3117000E1AFE5 /* AutoLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLock.swift; sourceTree = "<group>"; };
 		7301BA9520AB1E5600E1AFE5 /* CookiesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookiesStore.swift; sourceTree = "<group>"; };
 		7302405B204C65DF00B327DF /* NonFungibleTokenCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenCategory.swift; sourceTree = "<group>"; };
@@ -1606,6 +1610,7 @@
 			children = (
 				299B5E371FCBCDF70051361C /* RequestViewModelTests.swift */,
 				771A8521203588C900528D28 /* ConfirmPaymentViewModelTests.swift */,
+				71A4336F2113860900985ADC /* ConfirmPaymentDetailsViewModelTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1967,6 +1972,7 @@
 				77EAD89620EAF1FD00D14AA2 /* WalletObject.swift */,
 				779141DE21063DCE007E8E16 /* RPCServer.swift */,
 				733AFC812109093900C0AE35 /* GasViewModel.swift */,
+				291F9EA2211408F600D5266A /* PreviewTransaction.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -3253,6 +3259,7 @@
 				2912CD101F6A830700C6CBE3 /* TrustTests.swift in Sources */,
 				29FF130D1F7626E800AFD326 /* FakeNavigationController.swift in Sources */,
 				299573A41FA27A15006F17FD /* TestKeyStore.swift in Sources */,
+				71A433702113860900985ADC /* ConfirmPaymentDetailsViewModelTests.swift in Sources */,
 				CCA4FE3A1FD42B4100749AE4 /* FakeJailbreakChecker.swift in Sources */,
 				4E9A9D0820B2C52500180054 /* CoinTicker.swift in Sources */,
 				29F114F81FA8165200114A29 /* SendCoordinatorTests.swift in Sources */,
@@ -3281,6 +3288,7 @@
 				29FF13011F75EAD900AFD326 /* FakeKeystore.swift in Sources */,
 				732E0F522022754600B39C1F /* FakeLockProtocol.swift in Sources */,
 				2961BD091FB14B6D00C4B840 /* Config.swift in Sources */,
+				291F9EA3211408F600D5266A /* PreviewTransaction.swift in Sources */,
 				290B2B6E1F92C3980053C83E /* UserDefaults.swift in Sources */,
 				77872D2D202514AD0032D687 /* EnterPasswordCoordinatorTests.swift in Sources */,
 				771A8485203242B400528D28 /* InCoordinatorViewModelTests.swift in Sources */,
