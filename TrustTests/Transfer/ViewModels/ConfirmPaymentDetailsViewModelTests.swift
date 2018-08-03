@@ -5,26 +5,14 @@ import Realm
 import RealmSwift
 import BigInt
 @testable import Trust
+import TrustCore
 
 class ConfirmPaymentDetailsViewModelTests: XCTestCase {
 
     func testActionButtonTitleOnSignAndSend() {
-        let bigInt = BigInt("11274902618710000000000")!
         
-        let transaction = PreviewTransaction(
-            value: bigInt,
-            account: .make(),
-            address: .make(),
-            contract: .make(),
-            nonce: bigInt,
-            data: Data(),
-            gasPrice: bigInt,
-            gasLimit: bigInt,
-            transfer: .init(server: .make(), type: .ether(.make(), destination: .none))
-        )
-        
-        let session = WalletSession.make(realm: .make(), sharedRealm: .make())
-        
+        let transaction: PreviewTransaction = .make(address: EthereumAddress.zero)
+        let session: WalletSession = .make()
         let viewModel = ConfirmPaymentDetailsViewModel(
             transaction: transaction,
             session: session,
@@ -35,5 +23,4 @@ class ConfirmPaymentDetailsViewModelTests: XCTestCase {
         
         XCTAssertEqual(description, viewModel.currentWalletDescriptionString)
     }
-
 }

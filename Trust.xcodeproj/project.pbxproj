@@ -38,6 +38,7 @@
 		291F52B71F6B870400B369AB /* CastError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52B61F6B870400B369AB /* CastError.swift */; };
 		291F52B91F6B880F00B369AB /* EtherKeystore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F52B81F6B880F00B369AB /* EtherKeystore.swift */; };
 		291F9EA020FF3C6B00D5266A /* DeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F9E9F20FF3C6B00D5266A /* DeveloperViewController.swift */; };
+		291F9EA3211408F600D5266A /* PreviewTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F9EA2211408F600D5266A /* PreviewTransaction.swift */; };
 		2923D9B11FDA49D8000CF3F8 /* Initializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B01FDA49D8000CF3F8 /* Initializer.swift */; };
 		2923D9B31FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B21FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift */; };
 		2923D9B51FDA4E07000CF3F8 /* PasswordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923D9B41FDA4E07000CF3F8 /* PasswordGenerator.swift */; };
@@ -525,6 +526,7 @@
 		291F52B61F6B870400B369AB /* CastError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastError.swift; sourceTree = "<group>"; };
 		291F52B81F6B880F00B369AB /* EtherKeystore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherKeystore.swift; sourceTree = "<group>"; };
 		291F9E9F20FF3C6B00D5266A /* DeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperViewController.swift; sourceTree = "<group>"; };
+		291F9EA2211408F600D5266A /* PreviewTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewTransaction.swift; sourceTree = "<group>"; };
 		2923D9B01FDA49D8000CF3F8 /* Initializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializer.swift; sourceTree = "<group>"; };
 		2923D9B21FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipBackupFilesInitializer.swift; sourceTree = "<group>"; };
 		2923D9B41FDA4E07000CF3F8 /* PasswordGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordGenerator.swift; sourceTree = "<group>"; };
@@ -1976,6 +1978,7 @@
 				77EAD89620EAF1FD00D14AA2 /* WalletObject.swift */,
 				779141DE21063DCE007E8E16 /* RPCServer.swift */,
 				733AFC812109093900C0AE35 /* GasViewModel.swift */,
+				291F9EA2211408F600D5266A /* PreviewTransaction.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -3293,6 +3296,7 @@
 				29FF13011F75EAD900AFD326 /* FakeKeystore.swift in Sources */,
 				732E0F522022754600B39C1F /* FakeLockProtocol.swift in Sources */,
 				2961BD091FB14B6D00C4B840 /* Config.swift in Sources */,
+				291F9EA3211408F600D5266A /* PreviewTransaction.swift in Sources */,
 				290B2B6E1F92C3980053C83E /* UserDefaults.swift in Sources */,
 				77872D2D202514AD0032D687 /* EnterPasswordCoordinatorTests.swift in Sources */,
 				771A8485203242B400528D28 /* InCoordinatorViewModelTests.swift in Sources */,
