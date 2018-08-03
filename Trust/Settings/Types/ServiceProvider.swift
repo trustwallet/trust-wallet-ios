@@ -36,9 +36,7 @@ enum URLServiceProvider {
         case .twitter:
             return URL(string: "twitter://user?screen_name=\(Constants.twitterUsername)")!
         case .telegram:
-            let languageCode = NSLocale.preferredLanguageCode ?? ""
-            let telegramUsername = Constants.localizedTelegramUsernames[languageCode] ?? Constants.defaultTelegramUsername
-            return URL(string: "tg://resolve?domain=\(telegramUsername)")
+            return URL(string: "tg://resolve?domain=\(preferredTelegramUsername())")
         case .facebook:
             return URL(string: "fb://profile?id=\(Constants.facebookUsername)")
         case .discord: return nil
@@ -60,9 +58,7 @@ enum URLServiceProvider {
         case .twitter:
             return "https://twitter.com/\(Constants.twitterUsername)"
         case .telegram:
-            let languageCode = NSLocale.preferredLanguageCode ?? ""
-            let telegramUsername = Constants.localizedTelegramUsernames[languageCode] ?? Constants.defaultTelegramUsername
-            return "https://telegram.me/\(telegramUsername)"
+            return "https://telegram.me/\(preferredTelegramUsername())"
         case .facebook:
             return "https://www.facebook.com/\(Constants.facebookUsername)"
         case .discord:
@@ -95,5 +91,10 @@ enum URLServiceProvider {
         case .infura: return nil
         case .dappsOpenSea: return nil
         }
+    }
+
+    private func preferredTelegramUsername() -> String {
+        let languageCode = NSLocale.preferredLanguageCode ?? ""
+        return Constants.localizedTelegramUsernames[languageCode] ?? Constants.defaultTelegramUsername
     }
 }
