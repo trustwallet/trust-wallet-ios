@@ -128,22 +128,25 @@ final class SettingsViewController: FormViewController, Coordinator {
             <<< linkProvider(type: .discord)
 
             +++ Section()
+            <<< linkProvider(type: .helpCenter)
 
-            <<< AppFormAppearance.button { button in
-                button.title = R.string.localizable.shareWithFriends()
-                button.cell.imageView?.image = R.image.settings_colorful_share()
-            }.onCellSelection { [unowned self] cell, _  in
-                self.helpUsCoordinator.presentSharing(in: self, from: cell.contentView)
-            }
+            +++ Section()
+            <<< shareWithFriendsRow()
 
             +++ Section()
             <<< aboutRow()
 
             +++ Section()
-            <<< linkProvider(type: .helpCenter)
-
-            +++ Section()
             <<< developersRow()
+    }
+
+    private func shareWithFriendsRow() -> ButtonRow {
+        return AppFormAppearance.button { button in
+            button.title = R.string.localizable.shareWithFriends()
+            button.cell.imageView?.image = R.image.settings_colorful_share()
+        }.onCellSelection { [unowned self] cell, _  in
+            self.helpUsCoordinator.presentSharing(in: self, from: cell.contentView)
+        }
     }
 
     private func walletsRow(for wallet: WalletInfo) -> ButtonRow {
