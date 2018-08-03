@@ -10,8 +10,8 @@ extension WalletSession {
     static func make(
         account: Trust.WalletInfo = .make(),
         config: Config = .make(),
-        realm: Realm,
-        sharedRealm: Realm
+        realm: Realm = .make(),
+        sharedRealm: Realm = .make()
     ) -> WalletSession {
         return WalletSession(
             account: account,
