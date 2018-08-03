@@ -75,6 +75,7 @@ final class WalletCoordinator: Coordinator {
         keystore.createAccount(with: password) { result in
             switch result {
             case .success(let account):
+                self.markAsMainWallet(for: account)
                 self.keystore.exportMnemonic(wallet: account) { mnemonicResult in
                     self.navigationController.topViewController?.hideLoading(animated: false)
                     switch mnemonicResult {
@@ -166,16 +167,31 @@ final class WalletCoordinator: Coordinator {
         navigationController.viewControllers = [controller]
     }
 
-    func showConfirm(for account: Wallet, completedBackup: Bool) {
+    private func markAsMainWallet(for account: Wallet) {
         let type = WalletType.hd(account)
-        let wallet = WalletInfo(type: type, info: WalletObject.from(type))
+        let wallet = WalletInfo(type: type, info: keystore.storage.get(for: type))
+        markAsMainWallet(for: wallet)
+    }
+
+    private func markAsMainWallet(for wallet: WalletInfo) {
         let initialName = R.string.localizable.mainWallet()
         keystore.store(object: wallet.info, fields: [
             .name(initialName),
-            .backup(completedBackup),
             .mainWallet(true),
         ])
-        walletCreated(wallet: wallet, type: .created)
+    }
+
+    private func showConfirm(for account: Wallet, completedBackup: Bool) {
+        let type = WalletType.hd(account)
+        let wallet = WalletInfo(type: type, info: keystore.storage.get(for: type))
+        showConfirm(for: wallet, type: .created, completedBackup: completedBackup)
+    }
+
+    private func showConfirm(for wallet: WalletInfo, type: WalletDoneType, completedBackup: Bool) {
+        keystore.store(object: wallet.info, fields: [
+            .backup(completedBackup),
+        ])
+        walletCreated(wallet: wallet, type: type)
     }
 
     func done(for wallet: WalletInfo) {
@@ -235,13 +251,8 @@ extension WalletCoordinator: WalletCreatedControllerDelegate {
 }
 extension WalletCoordinator: ImportMainWalletViewControllerDelegate {
     func didImportWallet(wallet: WalletInfo, in controller: ImportMainWalletViewController) {
-        let fields: [WalletInfoField] = [
-            .name(R.string.localizable.mainWallet()),
-            .backup(true),
-            .mainWallet(true),
-        ]
-        keystore.store(object: wallet.info, fields: fields)
-        walletCreated(wallet: wallet, type: .imported)
+        markAsMainWallet(for: wallet)
+        showConfirm(for: wallet, type: .imported, completedBackup: true)
     }
 
     func didSkipImport(in controller: ImportMainWalletViewController) {
