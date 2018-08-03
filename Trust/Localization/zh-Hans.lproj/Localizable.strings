@@ -59,7 +59,6 @@
 "settings.feedback.email.title" = "Trust 反馈";
 "settings.navigation.title" = "设置";
 "settings.network.button.title" = "网络";
-"settings.lockTransactions.label.title" = "验证交易";
 "settings.openSourceDevelopment.label.title" = "开源式开发";
 "settings.privacyPolicy.button.title" = "隐私政策";
 "settings.pushNotifications.button.title" = "推送通知";
@@ -143,7 +142,6 @@
 "lock.enter.passcode.view.model.incorrect.passcode" = "密码不正确。你还有 %d 次尝试机会。";
 "lock.enter.passcode.view.model.initial" = "请输入密码。";
 "lock.enter.passcode.view.model.touch.id" = "使用 Touch ID 登录";
-"lock.authenticate.enter.passcode.view.model.touch.id" = "使用Touch ID进行身份验证";
 "lock.enter.passcode.view.model.try.after.one.minute" = "请1分钟后再试。";
 "Name" = "名称";
 "send.action.copy.transaction.title" = "复制交易 ID";
