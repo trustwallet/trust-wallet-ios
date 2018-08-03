@@ -19,9 +19,11 @@ final class LockEnterPasscodeViewController: LockPasscodeViewController {
         if lock.incorrectMaxAttemptTimeIsSet() {
             lockView.lockTitle.text = lockEnterPasscodeViewModel.tryAfterOneMinute
             maxAttemptTimerValidation()
+        } else {
+            showBiometricAuth()
         }
     }
-    func showBioMerickAuth() {
+    private func showBiometricAuth() {
         self.context = LAContext()
         self.touchValidation()
     }
@@ -54,8 +56,13 @@ final class LockEnterPasscodeViewController: LockPasscodeViewController {
         self.hideKeyboard()
     }
     private func maxAttemptTimerValidation() {
+        // if there is no recordedMaxAttemptTime user has logged successfuly previous time
+        guard let maxAttemptTimer = lock.recordedMaxAttemptTime() else {
+            self.lockView.lockTitle.text = lockEnterPasscodeViewModel.initialLabelText
+            self.showKeyboard()
+            return
+        }
         let now = Date()
-        let maxAttemptTimer = lock.recordedMaxAttemptTime()
         let interval = now.timeIntervalSince(maxAttemptTimer)
         //if interval is greater or equal 60 seconds we give 1 attempt.
         if interval >= 60 {

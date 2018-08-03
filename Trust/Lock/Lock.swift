@@ -90,10 +90,11 @@ final class Lock: LockInterface {
         keychain.set(String(numberOfAttemptsSoFar), forKey: passcodeAttempts)
     }
 
-    func recordedMaxAttemptTime() -> Date {
-        //This method is called only when we knew that maxAttemptTime is set. So no worries with !.
-        let timeString = keychain.get(maxAttemptTime)!
-        return dateFormatter().date(from: timeString)!
+    func recordedMaxAttemptTime() -> Date? {
+        guard let timeString = keychain.get(maxAttemptTime) else {
+            return nil
+        }
+        return dateFormatter().date(from: timeString)
     }
 
     func incorrectMaxAttemptTimeIsSet() -> Bool {

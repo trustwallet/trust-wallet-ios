@@ -35,8 +35,6 @@ final class AuthenticateUserCoordinator: Coordinator {
     }
 
     func showAuthentication() {
-        lockEnterPasscodeViewController.showKeyboard()
-        lockEnterPasscodeViewController.showBioMerickAuth()
         lockEnterPasscodeViewController.cleanUserInput()
     }
 
