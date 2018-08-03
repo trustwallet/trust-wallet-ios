@@ -90,7 +90,7 @@ final class LockEnterPasscodeViewController: LockPasscodeViewController {
                     self.lockView.lockTitle.text = self.lockEnterPasscodeViewModel.initialLabelText
                     self.unlock(withResult: true, bioUnlock: true)
                  } else {
-                    self.showKeyboard()
+                    self.maxAttemptTimerValidation()
                 }
             }
         }

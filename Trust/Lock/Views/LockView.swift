@@ -28,6 +28,7 @@ final class LockView: UIView {
         lockTitle.font = UIFont.systemFont(ofSize: 19)
         lockTitle.textAlignment = .center
         lockTitle.translatesAutoresizingMaskIntoConstraints = false
+        lockTitle.numberOfLines = 0
     }
     private func applyConstraints() {
         characterView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
