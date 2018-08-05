@@ -5,3 +5,11 @@
 "MainWallet" = "Основний Гаманець";
 "Address" = "Адреса";
 "CreatingWallet" = "Створення Гаманця";
+"WalletImported" = "Гаманець імпортований";
+"SelectCoin" = "Виберіть монету";
+"ImportMainWallet" = "Імпортувати основний гаманець";
+"TestNetworks" = "Тестові мережі";
+"EnableTestNetworks" = "Увімкнути тестові мережі";
+"Network" = "Мережа";
+"LearnMore" = "Дізнатися більше";
+"settings.helpCenter.title" = "Довідковий центр";

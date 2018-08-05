@@ -189,7 +189,6 @@
 "import.wallet.watch.placeholder" = "%@ Address";
 "settings.joinCommunity.label.title" = "Join Community";
 "settings.support.title" = "Support";
-"settings.helpCenter.title" = "Help Center";
 "tokens.token.edit.navigation.title" = "Edit Custom Token";
 "wallet.section.hdWallet.title" = "HD Wallet";
 "wallets.export.alertSheet.title" = "Export Private Key";
@@ -284,3 +283,7 @@
 "Network" = "Network";
 "MultiCoinWallet" = "Multi-Coin Wallet";
 "LearnMore" = "Learn More";
+"settings.helpCenter.title" = "Help Center";
+"DailyUsage" = "Daily Usage";
+"DeferredDeepLinking" = "Deferred Deep Linking";
+"CrashReports" = "Crash Reports";

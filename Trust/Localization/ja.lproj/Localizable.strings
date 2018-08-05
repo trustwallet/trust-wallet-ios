@@ -189,7 +189,6 @@
 "import.wallet.watch.placeholder" = "%@アドレス";
 "settings.joinCommunity.label.title" = "コミュニティに参加する";
 "settings.support.title" = "サポート";
-"settings.helpCenter.title" = "Help Center";
 "tokens.token.edit.navigation.title" = "カスタムトークンの編集";
 "wallet.section.hdWallet.title" = "HDウォレット";
 "wallets.export.alertSheet.title" = "秘密鍵のエクスポート";
@@ -283,3 +282,5 @@
 "EnableTestNetworks" = "テストネットワークを有効にする";
 "Network" = "ネットワーク";
 "MultiCoinWallet" = "マルチコインウォレット";
+"LearnMore" = "さらに詳しく知る";
+"settings.helpCenter.title" = "ヘルプセンター";
