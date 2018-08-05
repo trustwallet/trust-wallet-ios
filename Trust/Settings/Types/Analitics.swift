@@ -10,7 +10,7 @@ enum Analitics: String {
     var title: String {
         switch self {
         case .answer: return "Daily usage"
-        case .branch: return "Deffered deep linking"
+        case .branch: return "Deferred deep linking"
         case .crashlytics: return "Crash reports"
         }
     }
