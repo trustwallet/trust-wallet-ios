@@ -1,24 +1,34 @@
 .DEFAULT_GOAL := bootstrap
 
-exists_pod = $(shell command -v pod 2> /dev/null)
+exists_bundler = $(shell command -v bundle 2> /dev/null)
+bundle_check = $(shell bundle check 1> /dev/null; echo $$?)
 
 install_env:
 
-ifeq "${exists_pod}" ""
-	sudo gem install cocoapods
+ifeq "${exists_bundler}" ""
+	sudo gem install bundler
 endif
 
 	@echo "All dependencies was installed"
 
 install:
 
-ifeq "${exists_pod}" ""
-	@echo "Cocopods is not installed. Use `make install_env`"
+ifeq "${exists_bundler}" ""
+	@echo "Bundler is not installed. Use `make install_env`"
 endif
 
-	pod install --repo-update
+ifneq ($(bundle_check), 0)
+	bundle install
+endif
+
+	bundle exec pod install --repo-update
 
 bootstrap: install
 
 release:
-	fastlane release
+
+ifeq "${exists_bundler}" ""
+	@echo "Bundler is not installed. Use `make install_env`"
+endif
+
+	bundle exec fastlane release
