@@ -16,7 +16,7 @@ enum TrustNetworkProtocolError: LocalizedError {
 }
 
 protocol NetworkProtocol: TrustNetworkProtocol {
-    func assets(for address: Address) -> Promise<[NonFungibleTokenCategory]>
+    func collectibles() -> Promise<[NonFungibleTokenCategory]>
     func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]>
 
     func tokensList() -> Promise<[TokenObject]>
@@ -100,9 +100,9 @@ final class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func assets(for address: Address) -> Promise<[NonFungibleTokenCategory]> {
+    func collectibles() -> Promise<[NonFungibleTokenCategory]> {
         return Promise { seal in
-            provider.request(.assets(address: address.description)) { result in
+            provider.request(.collectibles(dict)) { result in
                 switch result {
                 case .success(let response):
                     do {

@@ -10,7 +10,7 @@ enum TrustAPI {
     case prices(TokensPrice)
     case getAllTransactions(addresses: [String: String])
     case search(query: String, networks: [Int])
-    case assets(address: String)
+    case collectibles([String: [String]])
     case getTokens([String: [String]])
     case register(device: PushDevice)
     case unregister(device: PushDevice)
@@ -34,8 +34,8 @@ extension TrustAPI: TargetType {
             return "/notifications/register"
         case .unregister:
             return "/notifications/unregister"
-        case .assets:
-            return "/assets"
+        case .collectibles:
+            return "/collectibles"
         case .search:
             return "/tokens/list"
         }
@@ -49,7 +49,7 @@ extension TrustAPI: TargetType {
         case .getAllTransactions: return .post
         case .register: return .post
         case .unregister: return .post
-        case .assets: return .get
+        case .collectibles: return .post
         case .search: return .get
         }
     }
@@ -66,14 +66,12 @@ extension TrustAPI: TargetType {
             return .requestParameters(parameters: params, encoding: URLEncoding())
         case .getAllTransactions(let addresses):
             return .requestParameters(parameters: ["address": addresses], encoding: URLEncoding())
-        case .getTokens(let value):
-            return .requestJSONEncodable(value)
         case .register(let device):
             return .requestJSONEncodable(device)
         case .unregister(let device):
             return .requestJSONEncodable(device)
-        case .assets(let value):
-            return .requestParameters(parameters: ["address": value], encoding: URLEncoding())
+        case .collectibles(let value), .getTokens(let value):
+            return .requestJSONEncodable(value)
         case .search(let query, let networks):
             let networkString =  networks.map { String($0) }.joined(separator: ",")
             return .requestParameters(parameters: ["query": query, "networks": networkString], encoding: URLEncoding())
