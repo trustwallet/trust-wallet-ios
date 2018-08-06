@@ -171,18 +171,21 @@ final class NewTokenViewController: FormViewController {
         firstly {
             viewModel.info(for: contract)
         }.done { [weak self] token in
-            self?.nameRow?.value = token.name
-            self?.decimalsRow?.value = token.decimals.description
-            self?.symbolRow?.value = token.symbol
-            self?.nameRow?.reload()
-            self?.decimalsRow?.reload()
-            self?.symbolRow?.reload()
+            self?.reloadFields(with: token)
         }.ensure { [weak self] in
             self?.hideLoading()
         }.catch {_ in
             //We could not find any info about this contract.This error is already logged in crashlytics.
         }
+    }
 
+    private func reloadFields(with token: TokenObject) {
+        self.nameRow?.value = token.name
+        self.decimalsRow?.value = token.decimals.description
+        self.symbolRow?.value = token.symbol
+        self.nameRow?.reload()
+        self.decimalsRow?.reload()
+        self.symbolRow?.reload()
     }
 
     required init?(coder aDecoder: NSCoder) {

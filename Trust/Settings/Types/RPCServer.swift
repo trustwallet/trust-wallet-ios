@@ -88,17 +88,6 @@ enum RPCServer {
         return URL(string: urlString)!
     }
 
-    var wssURL: URL {
-        let urlString: String = {
-            switch self {
-            case .main: return "wss://mainnet.infura.io/ws/llyrtzQ3YhkdESt2Fzrk"
-            case .poa: return "wss://poa.infura.io"
-            case .classic, .callisto, .gochain: return "wss://localhost"
-            }
-        }()
-        return URL(string: urlString)!
-    }
-
     var remoteURL: URL {
         let urlString: String = {
             switch self {

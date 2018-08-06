@@ -189,7 +189,6 @@
 "import.wallet.watch.placeholder" = "%@ Adresse";
 "settings.joinCommunity.label.title" = "Der Community beitreten";
 "settings.support.title" = "Support";
-"settings.helpCenter.title" = "Help Center";
 "tokens.token.edit.navigation.title" = "Ein benutzerdefiniertes Token bearbeiten";
 "wallet.section.hdWallet.title" = "HD Wallet";
 "wallets.export.alertSheet.title" = "Privaten Schlüssel exportieren";

@@ -9,20 +9,20 @@ enum Analitics: String {
 
     var title: String {
         switch self {
-        case .answer: return "Daily usage"
-        case .branch: return "Deffered deep linking"
-        case .crashlytics: return "Crash reports"
+        case .answer: return R.string.localizable.dailyUsage()
+        case .branch: return R.string.localizable.deferredDeepLinking()
+        case .crashlytics: return R.string.localizable.crashReports()
         }
     }
 
     var description: String {
         switch self {
         case .crashlytics:
-            return NSLocalizedString("settings.analitics.crashlytics.description", value: "Help Trust developers to improve its product and service by automatically sending crash reports.", comment: "")
+            return R.string.localizable.settingsAnaliticsCrashlyticsDescription()
         case .branch:
-            return NSLocalizedString("settings.analitics.branch.description", value: "Help Trust improve user engagement by sharing deep links redirects.", comment: "")
+            return R.string.localizable.settingsAnaliticsBranchDescription()
         case .answer:
-            return NSLocalizedString("settings.analitics.answer.description", value: "Help Trust improve user experience by sharing app daily diagnostic.", comment: "")
+            return R.string.localizable.settingsAnaliticsAnswerDescription()
         }
     }
 

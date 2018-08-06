@@ -44,12 +44,12 @@ final class SignMessageCoordinator: Coordinator {
 
     private func makeAlertController(with type: SignMesageType) -> UIAlertController {
         let alertController = UIAlertController(
-            title: NSLocalizedString("", value: "Confirm signing this message:", comment: ""),
+            title: NSLocalizedString("Confirm signing this message:", value: "Confirm signing this message:", comment: ""),
             message: message(for: type),
             preferredStyle: .alert
         )
         let signAction = UIAlertAction(
-            title: NSLocalizedString("OK", value: "OK", comment: ""),
+            title: R.string.localizable.oK(),
             style: .default
         ) { [weak self] _ in
             guard let `self` = self else { return }

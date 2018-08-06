@@ -171,7 +171,6 @@
 "import.wallet.watch.placeholder" = "%@ Адрес";
 "settings.joinCommunity.label.title" = "Вступить в сообщество";
 "settings.support.title" = "Поддержка";
-"settings.helpCenter.title" = "Центр поддержки";
 "tokens.token.edit.navigation.title" = "Редактировать токен пользователя";
 "wallet.section.hdWallet.title" = "HD-кошелек";
 "wallets.export.alertSheet.title" = "Экспортировать приватный ключ";
@@ -258,3 +257,7 @@
 "Network" = "Сеть";
 "MultiCoinWallet" = "Мульти-монетный кошелек";
 "LearnMore" = "Подробнее";
+"settings.helpCenter.title" = "Центр поддержки";
+"DailyUsage" = "Ежедневное использование";
+"DeferredDeepLinking" = "Deferred Deep Linking";
+"CrashReports" = "Отчеты О Сбоях";
