@@ -189,7 +189,6 @@
 "import.wallet.watch.placeholder" = "%@ 地址";
 "settings.joinCommunity.label.title" = "加入社区";
 "settings.support.title" = "支持我们";
-"settings.helpCenter.title" = "Help Center";
 "tokens.token.edit.navigation.title" = "编辑自定义通证";
 "wallet.section.hdWallet.title" = "HD 钱包";
 "wallets.export.alertSheet.title" = "导出私钥";

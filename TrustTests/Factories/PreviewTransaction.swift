@@ -4,14 +4,16 @@ import Foundation
 import BigInt
 @testable import Trust
 import TrustCore
+import TrustKeystore
 
 extension PreviewTransaction {
     static func make(
+        account: Account = .make(),
         address: Address = EthereumAddress.zero
     ) -> PreviewTransaction {
         return PreviewTransaction(
             value: BigInt(),
-            account: .make(),
+            account: account,
             address: EthereumAddress.zero,
             contract: EthereumAddress.zero,
             nonce: BigInt(),

@@ -354,7 +354,7 @@ class EtherKeystore: Keystore {
 
     func signTransaction(_ transaction: SignTransaction) -> Result<Data, KeystoreError> {
         let account = transaction.account
-        guard let password = getPassword(for: account.wallet!) else {
+        guard let wallet  = account.wallet, let password = getPassword(for: wallet) else {
             return .failure(.failedToSignTransaction)
         }
         let signer: Signer

@@ -189,7 +189,6 @@
 "import.wallet.watch.placeholder" = "%@ Adresse";
 "settings.joinCommunity.label.title" = "Rejoindre la communauté";
 "settings.support.title" = "Support";
-"settings.helpCenter.title" = "Help Center";
 "tokens.token.edit.navigation.title" = "Modifier le jeton personnalisé";
 "wallet.section.hdWallet.title" = "Portefeuille HD";
 "wallets.export.alertSheet.title" = "Exporter la clé privée";
@@ -283,3 +282,5 @@
 "EnableTestNetworks" = "Activer les réseaux de test";
 "Network" = "Réseau";
 "MultiCoinWallet" = "Portefeuille multi-monnaies";
+"LearnMore" = "En savoir plus";
+"settings.helpCenter.title" = "Centre d'aide";
