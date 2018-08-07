@@ -72,7 +72,7 @@ class EtherKeystoreTests: XCTestCase {
             return XCTFail()
         }
 
-        XCTAssertEqual("0x5E9c27156a612a2D516C74c7a80af107856F8539", account.address.description)
+        XCTAssertEqual("0x5E9c27156a612a2D516C74c7a80af107856F8539", account.accounts[0].address.description)
         XCTAssertEqual(1, keystore.wallets.count)
     }
 
@@ -97,8 +97,8 @@ class EtherKeystoreTests: XCTestCase {
             return XCTFail()
         }
 
-        XCTAssertEqual("0x5E9c27156a612a2D516C74c7a80af107856F8539", account1.address.description)
-        XCTAssertEqual("0x5E9c27156a612a2D516C74c7a80af107856F8539", account2.address.description)
+        XCTAssertEqual("0x5E9c27156a612a2D516C74c7a80af107856F8539", account1.accounts[0].address.description)
+        XCTAssertEqual("0x5E9c27156a612a2D516C74c7a80af107856F8539", account2.accounts[0].address.description)
         XCTAssertEqual(2, keystore.wallets.count)
     }
 
@@ -111,7 +111,7 @@ class EtherKeystoreTests: XCTestCase {
             switch result {
             case .success(let wallet):
                 XCTAssertEqual(1, keystore.wallets.count)
-                XCTAssertEqual("0x33F44330cc4253cCd4ce4224186DB9baCe2190ea", wallet.address.description)
+                XCTAssertEqual("0x33F44330cc4253cCd4ce4224186DB9baCe2190ea", wallet.accounts[0].address.description)
             case .failure:
                 XCTFail()
             }
@@ -127,7 +127,7 @@ class EtherKeystoreTests: XCTestCase {
             switch result {
             case .success(let wallet):
                 XCTAssertEqual(1, keystore.wallets.count)
-                XCTAssertEqual("0x5f9763AF89b1De8d44F3739d55C00dD6a21C2Cb6", wallet.address.description)
+                XCTAssertEqual("0x5f9763AF89b1De8d44F3739d55C00dD6a21C2Cb6", wallet.accounts[0].address.description)
             case .failure:
                 XCTFail()
             }
@@ -167,13 +167,13 @@ class EtherKeystoreTests: XCTestCase {
             return XCTFail()
         }
 
-        let retreivePassword = keystore.getPassword(for: account.currentWallet!)
+        let retreivePassword = keystore.getPassword(for: account)
 
         XCTAssertEqual(newPassword, retreivePassword)
-        XCTAssertEqual("0x5E9c27156a612a2D516C74c7a80af107856F8539", account.address.description)
+        XCTAssertEqual("0x5E9c27156a612a2D516C74c7a80af107856F8539", account.accounts[0].address.description)
         XCTAssertEqual(1, keystore.wallets.count)
 
-        let exportResult = keystore.export(account: account.currentAccount, password: newPassword, newPassword: "test2")
+        let exportResult = keystore.export(account: account.accounts[0], password: newPassword, newPassword: "test2")
 
         guard case .success = exportResult else {
             return XCTAssertFalse(true)
@@ -243,7 +243,7 @@ class EtherKeystoreTests: XCTestCase {
             return XCTFail()
         }
 
-        let signResult = keystore.signPersonalMessage("Some data".data(using: .utf8)!, for: account.currentAccount)
+        let signResult = keystore.signPersonalMessage("Some data".data(using: .utf8)!, for: account.accounts[0])
 
         guard case let .success(data) = signResult else {
             return XCTFail()
@@ -268,7 +268,7 @@ class EtherKeystoreTests: XCTestCase {
             return XCTFail()
         }
 
-        let signResult = keystore.signPersonalMessage("♥".data(using: .utf8)!, for: account.currentAccount)
+        let signResult = keystore.signPersonalMessage("♥".data(using: .utf8)!, for: account.accounts[0])
 
         guard case let .success(data) = signResult else {
             return XCTFail()
@@ -293,7 +293,7 @@ class EtherKeystoreTests: XCTestCase {
             return XCTFail()
         }
 
-        let signResult = keystore.signPersonalMessage("0x3f44c2dfea365f01c1ada3b7600db9e2999dfea9fe6c6017441eafcfbc06a543".data(using: .utf8)!, for: account.currentAccount)
+        let signResult = keystore.signPersonalMessage("0x3f44c2dfea365f01c1ada3b7600db9e2999dfea9fe6c6017441eafcfbc06a543".data(using: .utf8)!, for: account.accounts[0])
 
         guard case let .success(data) = signResult else {
             return XCTFail()
@@ -321,7 +321,7 @@ class EtherKeystoreTests: XCTestCase {
         let typedData = EthTypedData(type: "string", name: "Message", value: .string(value: "Hi, Alice!"))
         let typedData2 = EthTypedData(type: "uint32", name: "A number", value: .uint(value: 1337))
 
-        let signResult = keystore.signTypedMessage([typedData, typedData2], for: account.currentAccount)
+        let signResult = keystore.signTypedMessage([typedData, typedData2], for: account.accounts[0])
         guard case let .success(data) = signResult else {
             return XCTFail()
         }

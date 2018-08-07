@@ -171,7 +171,10 @@ final class ImportWalletViewController: FormViewController {
     }
 
     func didImport(account: WalletInfo, name: String) {
-        delegate?.didImportAccount(account: account, fields: [.name(name)], in: self)
+        delegate?.didImportAccount(account: account, fields: [
+            .name(name),
+            .backup(true),
+        ], in: self)
     }
 
     func importWallet() {

@@ -109,7 +109,8 @@ class EtherKeystore: Keystore {
             ) { result in
                 switch result {
                 case .success(let account):
-                    completion(.success(account))
+                    let type = WalletType.privateKey(account)
+                    completion(.success(WalletInfo(type: type, info: self.storage.get(for: type))))
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -147,11 +148,12 @@ class EtherKeystore: Keystore {
                 return completion(.failure(.duplicateAccount))
             }
             storage.store(address: [watchAddress])
-            completion(.success(WalletInfo(type: .address(coin, address))))
+            let type = WalletType.address(coin, address)
+            completion(.success(WalletInfo(type: type, info: storage.get(for: type))))
         }
     }
 
-    func importKeystore(value: String, password: String, newPassword: String, coin: Coin, completion: @escaping (Result<WalletInfo, KeystoreError>) -> Void) {
+    func importKeystore(value: String, password: String, newPassword: String, coin: Coin, completion: @escaping (Result<Wallet, KeystoreError>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let result = self.importKeystore(value: value, password: password, newPassword: newPassword, coin: coin)
             DispatchQueue.main.async {
@@ -186,7 +188,7 @@ class EtherKeystore: Keystore {
         }
     }
 
-    func importKeystore(value: String, password: String, newPassword: String, coin: Coin) -> Result<WalletInfo, KeystoreError> {
+    func importKeystore(value: String, password: String, newPassword: String, coin: Coin) -> Result<Wallet, KeystoreError> {
         guard let data = value.data(using: .utf8) else {
             return (.failure(.failedToParseJSON))
         }
@@ -194,7 +196,7 @@ class EtherKeystore: Keystore {
             //TODO: Blockchain. Pass blockchain ID
             let wallet = try keyStore.import(json: data, password: password, newPassword: newPassword, coin: coin)
             let _ = setPassword(newPassword, for: wallet)
-            return .success(WalletInfo(type: .hd(wallet)))
+            return .success(wallet)
         } catch {
             if case KeyStore.Error.accountAlreadyExists = error {
                 return .failure(.duplicateAccount)

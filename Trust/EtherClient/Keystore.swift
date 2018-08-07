@@ -15,9 +15,7 @@ protocol Keystore {
     @available(iOS 10.0, *)
     func createAccount(with password: String, completion: @escaping (Result<Wallet, KeystoreError>) -> Void)
     func importWallet(type: ImportType, coin: Coin, completion: @escaping (Result<WalletInfo, KeystoreError>) -> Void)
-    func importKeystore(value: String, password: String, newPassword: String, coin: Coin, completion: @escaping (Result<WalletInfo, KeystoreError>) -> Void)
     func createAccout(password: String) -> Wallet
-    func importKeystore(value: String, password: String, newPassword: String, coin: Coin) -> Result<WalletInfo, KeystoreError>
     func importPrivateKey(privateKey: PrivateKey, password: String, coin: Coin) -> Result<WalletInfo, KeystoreError>
     func export(account: Account, password: String, newPassword: String) -> Result<String, KeystoreError>
     func export(account: Account, password: String, newPassword: String, completion: @escaping (Result<String, KeystoreError>) -> Void)
