@@ -9,7 +9,7 @@ final class NonFungibleTokenViewModel {
     let config: Config
     let storage: TokensDataStore
     var tokensNetwork: NetworkProtocol
-    let tokens: Results<NonFungibleTokenCategory>
+    let tokens: Results<CollectibleTokenCategory>
     var tokensObserver: NotificationToken?
     let address: Address
 
@@ -58,7 +58,7 @@ final class NonFungibleTokenViewModel {
         self.tokens = storage.nonFungibleTokens
     }
 
-    func fetchAssets() -> Promise<[NonFungibleTokenCategory]> {
+    func fetchAssets() -> Promise<[CollectibleTokenCategory]> {
         return Promise { seal in
             firstly {
                 tokensNetwork.collectibles()
@@ -71,7 +71,7 @@ final class NonFungibleTokenViewModel {
         }
     }
 
-    func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<NonFungibleTokenCategory>>) -> Void) {
+    func setTokenObservation(with block: @escaping (RealmCollectionChange<Results<CollectibleTokenCategory>>) -> Void) {
         tokensObserver = tokens.observe(block)
     }
 

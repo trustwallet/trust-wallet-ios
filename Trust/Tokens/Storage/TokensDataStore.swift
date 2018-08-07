@@ -23,8 +23,8 @@ class TokensDataStore {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO || rawType = \"coin\""))
             .sorted(byKeyPath: "order", ascending: true)
     }
-    var nonFungibleTokens: Results<NonFungibleTokenCategory> {
-        return realm.objects(NonFungibleTokenCategory.self).sorted(byKeyPath: "name", ascending: true)
+    var nonFungibleTokens: Results<CollectibleTokenCategory> {
+        return realm.objects(CollectibleTokenCategory.self).sorted(byKeyPath: "name", ascending: true)
     }
     var tickers: Results<CoinTicker> {
         return realm.objects(CoinTicker.self).filter("tickersKey == %@", CoinTickerKeyMaker.makeCurrencyKey())
@@ -162,7 +162,7 @@ class TokensDataStore {
         try? realm.write {
             realm.delete(realm.objects(TokenObject.self))
             realm.delete(realm.objects(NonFungibleTokenObject.self))
-            realm.delete(realm.objects(NonFungibleTokenCategory.self))
+            realm.delete(realm.objects(CollectibleTokenCategory.self))
         }
     }
 
