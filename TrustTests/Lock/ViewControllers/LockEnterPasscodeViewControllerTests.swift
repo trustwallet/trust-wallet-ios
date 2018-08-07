@@ -11,7 +11,7 @@ class LockEnterPasscodeViewControllerTests: XCTestCase {
     
     func testCorrectPasscodeInput() {
         let lock = Lock(keychain: KeychainSwift(keyPrefix: Constants.keychainTestsKeyPrefix))
-        let lockViewModel = LockViewModel(lock: lock)
+        let lockViewModel = LockEnterPasscodeViewModel(lock: lock)
         let vc = LockEnterPasscodeViewController(model: lockViewModel, lock: lock)
         vc.configureLockView()
         vc.configureInvisiblePasscodeField()
@@ -25,7 +25,7 @@ class LockEnterPasscodeViewControllerTests: XCTestCase {
     
     func testIncorrectPasscodeInput() {
         let lock = Lock(keychain: KeychainSwift(keyPrefix: Constants.keychainTestsKeyPrefix))
-        let lockViewModel = LockViewModel(lock: lock)
+        let lockViewModel = LockEnterPasscodeViewModel(lock: lock)
         let vc = LockEnterPasscodeViewController(model: lockViewModel, lock: lock)
         vc.configureLockView()
         vc.configureInvisiblePasscodeField()
@@ -39,14 +39,17 @@ class LockEnterPasscodeViewControllerTests: XCTestCase {
     
     func testIncorrectPasscodeLimitInput() {
         let lock = Lock(keychain: KeychainSwift(keyPrefix: Constants.keychainTestsKeyPrefix))
-        let lockViewModel = LockViewModel(lock: lock)
+        
+        XCTAssertFalse(lock.incorrectMaxAttemptTimeIsSet())
+        
+        let lockViewModel = LockEnterPasscodeViewModel(lock: lock)
         let vc = LockEnterPasscodeViewController(model: lockViewModel, lock: lock)
         vc.configureLockView()
         vc.configureInvisiblePasscodeField()
         
         lock.setPasscode(passcode: passcode)
         
-        while lock.numberOfAttempts() < lockViewModel.passcodeAttemptLimit() {
+        while lock.numberOfAttempts() <= lockViewModel.passcodeAttemptLimit() {
             vc.enteredPasscode(incorrectPasscode)
         }
         
