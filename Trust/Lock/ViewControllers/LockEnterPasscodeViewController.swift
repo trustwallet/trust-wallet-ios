@@ -78,7 +78,6 @@ final class LockEnterPasscodeViewController: LockPasscodeViewController {
         if let unlock = unlockWithResult {
             unlock(success, bioUnlock)
         }
-
     }
     private func canEvaluatePolicy() -> Bool {
         return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)

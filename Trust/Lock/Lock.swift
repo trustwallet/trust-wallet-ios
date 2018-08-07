@@ -20,7 +20,11 @@ final class Lock: LockInterface {
     private let maxAttemptTime = "maxAttemptTime"
     private let autoLockType = "autoLockType"
     private let autoLockTime = "autoLockTime"
-    private let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)
+    private let keychain: KeychainSwift!
+
+    init(keychain: KeychainSwift! = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)) {
+        self.keychain = keychain
+    }
 
     func shouldShowProtection() -> Bool {
         return isPasscodeSet() && autoLockTriggered()

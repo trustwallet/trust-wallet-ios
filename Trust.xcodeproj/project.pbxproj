@@ -2011,12 +2011,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		71B1B52F211456F700EF23E5 /* View Controllers */ = {
+		71B1B52F211456F700EF23E5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				71B1B5302114570A00EF23E5 /* LockEnterPasscodeViewControllerTests.swift */,
 			);
-			path = "View Controllers";
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		73200B652044B21100118A82 /* Storage */ = {
@@ -2254,7 +2254,7 @@
 		772C6DBC210A8B8100FCE4F1 /* Lock */ = {
 			isa = PBXGroup;
 			children = (
-				71B1B52F211456F700EF23E5 /* View Controllers */,
+				71B1B52F211456F700EF23E5 /* ViewControllers */,
 				772C6DBD210A8B8600FCE4F1 /* Coordinators */,
 			);
 			path = Lock;
