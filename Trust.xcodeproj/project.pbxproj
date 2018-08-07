@@ -260,7 +260,7 @@
 		73200B6C20477FF900118A82 /* FakeTokensNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B6B20477FF900118A82 /* FakeTokensNetwork.swift */; };
 		73200B7020488C9300118A82 /* TrustNetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B6F20488C9300118A82 /* TrustNetworkProtocol.swift */; };
 		73200B732048A7FC00118A82 /* TokensViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B722048A7FC00118A82 /* TokensViewModelTest.swift */; };
-		73200B752048B67E00118A82 /* NonFungibleTokenObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B742048B67E00118A82 /* NonFungibleTokenObject.swift */; };
+		73200B752048B67E00118A82 /* CollectibleTokenObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73200B742048B67E00118A82 /* CollectibleTokenObject.swift */; };
 		732086B9201508690047F605 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732086B8201508690047F605 /* SplashCoordinator.swift */; };
 		732C51462062B625007134C7 /* ScriptMessageProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732C51452062B625007134C7 /* ScriptMessageProxy.swift */; };
 		732E0F502022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */; };
@@ -757,7 +757,7 @@
 		73200B6B20477FF900118A82 /* FakeTokensNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeTokensNetwork.swift; sourceTree = "<group>"; };
 		73200B6F20488C9300118A82 /* TrustNetworkProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustNetworkProtocol.swift; sourceTree = "<group>"; };
 		73200B722048A7FC00118A82 /* TokensViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensViewModelTest.swift; sourceTree = "<group>"; };
-		73200B742048B67E00118A82 /* NonFungibleTokenObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonFungibleTokenObject.swift; sourceTree = "<group>"; };
+		73200B742048B67E00118A82 /* CollectibleTokenObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectibleTokenObject.swift; sourceTree = "<group>"; };
 		732086B8201508690047F605 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
 		732C51452062B625007134C7 /* ScriptMessageProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptMessageProxy.swift; sourceTree = "<group>"; };
 		732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
@@ -1486,7 +1486,7 @@
 				4EEE540E20799700007D300D /* CoinTicker.swift */,
 				294DFBAD1FE6F254004CEB56 /* TokenObject.swift */,
 				29E9CFCE1FE7347200017744 /* ERC20Token.swift */,
-				73200B742048B67E00118A82 /* NonFungibleTokenObject.swift */,
+				73200B742048B67E00118A82 /* CollectibleTokenObject.swift */,
 				7302405B204C65DF00B327DF /* CollectibleTokenCategory.swift */,
 				735AB03C2073BF2100EEEDDD /* TokenBalanceOperation.swift */,
 			);
@@ -2934,7 +2934,7 @@
 				77E81D94203687FB00534C99 /* NotificationsViewController.swift in Sources */,
 				296FC59920B6874800B923EF /* ExportPhraseCoordinator.swift in Sources */,
 				615F10561FCBEF2E008A45AF /* OnboardingPageViewModel.swift in Sources */,
-				73200B752048B67E00118A82 /* NonFungibleTokenObject.swift in Sources */,
+				73200B752048B67E00118A82 /* CollectibleTokenObject.swift in Sources */,
 				77872D27202505C00032D687 /* EnterPasswordViewModel.swift in Sources */,
 				29F1C85F200369BA003780D8 /* HelpUsViewModel.swift in Sources */,
 				293112371FC9A24600966EEA /* UIGestureRecognizer+Closure.swift in Sources */,

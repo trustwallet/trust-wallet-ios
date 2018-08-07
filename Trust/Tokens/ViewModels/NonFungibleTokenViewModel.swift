@@ -75,11 +75,11 @@ final class NonFungibleTokenViewModel {
         tokensObserver = tokens.observe(block)
     }
 
-    func token(for path: IndexPath) -> NonFungibleTokenObject {
+    func token(for path: IndexPath) -> CollectibleTokenObject {
         return tokens[path.section].items[path.row]
     }
 
-    func tokens(for path: IndexPath) -> [NonFungibleTokenObject] {
+    func tokens(for path: IndexPath) -> [CollectibleTokenObject] {
         return Array(tokens[path.section].items)
     }
 

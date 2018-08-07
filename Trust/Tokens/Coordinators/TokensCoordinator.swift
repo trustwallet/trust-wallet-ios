@@ -151,7 +151,7 @@ final class TokensCoordinator: Coordinator {
         //navigationController.pushCoordinator(coordinator: coordinator, animated: true)
     }
 
-    private func didSelectToken(_ token: NonFungibleTokenObject, with backgroundColor: UIColor) {
+    private func didSelectToken(_ token: CollectibleTokenObject, with backgroundColor: UIColor) {
         let controller = NFTokenViewController(token: token, server: session.currentRPC)
         controller.delegate = self
         controller.imageView.backgroundColor = backgroundColor
@@ -195,7 +195,7 @@ extension TokensCoordinator: NonFungibleTokensViewControllerDelegate {
         delegate?.didPressDiscover(in: self)
     }
 
-    func didPress(token: NonFungibleTokenObject, with bacground: UIColor) {
+    func didPress(token: CollectibleTokenObject, with bacground: UIColor) {
         didSelectToken(token, with: bacground)
     }
 }

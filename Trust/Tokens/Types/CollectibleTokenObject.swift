@@ -5,7 +5,7 @@ import Realm
 import BigInt
 import TrustCore
 
-final class NonFungibleTokenObject: Object, Decodable {
+final class CollectibleTokenObject: Object, Decodable {
     @objc dynamic var id: String = ""
     @objc dynamic var uniqueID: String = ""
     @objc dynamic var contract: String = ""

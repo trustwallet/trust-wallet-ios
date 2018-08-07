@@ -5,10 +5,10 @@ import UIKit
 
 final class NFTDetailsViewModel {
 
-    let token: NonFungibleTokenObject
+    let token: CollectibleTokenObject
     let server: RPCServer
 
-    init(token: NonFungibleTokenObject, server: RPCServer) {
+    init(token: CollectibleTokenObject, server: RPCServer) {
         self.token = token
         self.server = server
     }
