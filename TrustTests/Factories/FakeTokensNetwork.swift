@@ -40,7 +40,7 @@ enum FakeTokensNetworkError: Error {
 //        completion([ticker])
 //    }
 //
-//    func assets() -> Promise<[NonFungibleTokenCategory]> {
+//    func assets() -> Promise<[CollectibleTokenCategory]> {
 //        return Promise { seal in
 //            seal.reject(FakeTokensNetworkError.notImplmented)
 //        }

@@ -34,7 +34,7 @@ final class NFTokenViewController: UIViewController {
         return sendButton
     }()
 
-    let token: NonFungibleTokenObject
+    let token: CollectibleTokenObject
     let server: RPCServer
 
     lazy var imageView: UIImageView = {
@@ -53,7 +53,7 @@ final class NFTokenViewController: UIViewController {
     }()
     weak var delegate: NFTokenViewControllerDelegate?
 
-    init(token: NonFungibleTokenObject, server: RPCServer) {
+    init(token: CollectibleTokenObject, server: RPCServer) {
         self.token = token
         self.server = server
         super.init(nibName: nil, bundle: nil)

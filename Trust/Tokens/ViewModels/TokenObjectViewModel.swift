@@ -2,6 +2,7 @@
 
 import Foundation
 import UIKit
+import TrustCore
 
 struct TokenObjectViewModel {
 
@@ -17,8 +18,18 @@ struct TokenObjectViewModel {
 
     var placeholder: UIImage? {
         switch token.type {
-        case .coin: return R.image.ethereum_logo_256()
-        case .ERC20: return R.image.erc20()
+        case .coin:
+            return R.image.ethereum_logo_256()
+        case .ERC20:
+            let imageCache = ImageCaching.shared
+            let key = token.coin.tokenTitle
+            guard let image = imageCache.getImage(for: key) else {
+                return imageCache.setImage(
+                    TokenImageGenerator.drawImagesAndText(title: token.coin.tokenTitle),
+                    for: key
+                )
+            }
+            return image
         }
     }
 
@@ -32,3 +43,4 @@ struct TokenObjectViewModel {
         }
     }
 }
+

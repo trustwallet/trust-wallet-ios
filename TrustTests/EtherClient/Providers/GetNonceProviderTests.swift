@@ -55,7 +55,7 @@ class GetNonceProviderTests: XCTestCase {
         XCTAssertEqual(BigInt(7), provider.nextNonce)
     }
 
-    func testChangingNonceWhenNewTransactionAdded() {
+    func testChangingNonceWhenNewTransactionIsAdded() {
         let storage = FakeTransactionsStorage()
         storage.add([.make(nonce: 5)])
         let provider = GetNonceProvider(
@@ -68,6 +68,24 @@ class GetNonceProviderTests: XCTestCase {
         XCTAssertEqual(BigInt(6), provider.nextNonce)
 
         storage.add([.make(nonce: 6)])
+
+        XCTAssertEqual(BigInt(6), provider.latestNonce)
+        XCTAssertEqual(BigInt(7), provider.nextNonce)
+    }
+
+    func testChangingNonceWhenNewPendingTransactionIsAdded() {
+        let storage = FakeTransactionsStorage()
+        storage.add([.make(nonce: 5)])
+        let provider = GetNonceProvider(
+            storage: storage,
+            server: .make(),
+            address: EthereumAddress.make()
+        )
+
+        XCTAssertEqual(BigInt(5), provider.latestNonce)
+        XCTAssertEqual(BigInt(6), provider.nextNonce)
+
+        storage.add([.make(nonce: 6, state: .pending)])
 
         XCTAssertEqual(BigInt(6), provider.latestNonce)
         XCTAssertEqual(BigInt(7), provider.nextNonce)

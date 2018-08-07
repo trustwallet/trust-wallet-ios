@@ -7,7 +7,7 @@ import PromiseKit
 
 protocol NonFungibleTokensViewControllerDelegate: class {
     func didPressDiscover()
-    func didPress(token: NonFungibleTokenObject, with bacground: UIColor)
+    func didPress(token: CollectibleTokenObject, with bacground: UIColor)
 }
 
 final class NonFungibleTokensViewController: UIViewController {

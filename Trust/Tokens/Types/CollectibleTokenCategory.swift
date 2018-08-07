@@ -4,14 +4,14 @@ import RealmSwift
 import Realm
 import Foundation
 
-final class NonFungibleTokenCategory: Object, Decodable {
+final class CollectibleTokenCategory: Object, Decodable {
     @objc dynamic var name: String = ""
-    var items = List<NonFungibleTokenObject>()
+    var items = List<CollectibleTokenObject>()
 
     convenience init(
         name: String,
-        items: List<NonFungibleTokenObject>
-        ) {
+        items: List<CollectibleTokenObject>
+    ) {
         self.init()
         self.name = name
         self.items = items
@@ -21,16 +21,16 @@ final class NonFungibleTokenCategory: Object, Decodable {
         return "name"
     }
 
-    private enum NonFungibleTokenCategoryCodingKeys: String, CodingKey {
+    private enum CollectibleTokenCategoryCodingKeys: String, CodingKey {
         case name
         case items
     }
 
     convenience required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: NonFungibleTokenCategoryCodingKeys.self)
+        let container = try decoder.container(keyedBy: CollectibleTokenCategoryCodingKeys.self)
         let name = try container.decode(String.self, forKey: .name)
-        let itemsArray = try container.decode([NonFungibleTokenObject].self, forKey: .items)
-        let itemsList = List<NonFungibleTokenObject>()
+        let itemsArray = try container.decode([CollectibleTokenObject].self, forKey: .items)
+        let itemsList = List<CollectibleTokenObject>()
         itemsList.append(objectsIn: itemsArray)
         self.init(name: name, items: itemsList)
     }

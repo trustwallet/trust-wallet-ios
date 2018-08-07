@@ -16,7 +16,7 @@ enum TrustNetworkProtocolError: LocalizedError {
 }
 
 protocol NetworkProtocol: TrustNetworkProtocol {
-    func assets(for address: Address) -> Promise<[NonFungibleTokenCategory]>
+    func collectibles() -> Promise<[CollectibleTokenCategory]>
     func tickers(with tokenPrices: [TokenPrice]) -> Promise<[CoinTicker]>
 
     func tokensList() -> Promise<[TokenObject]>
@@ -46,7 +46,7 @@ final class TrustNetwork: NetworkProtocol {
         self.wallet = wallet
     }
 
-    private func getTickerFrom(rawTicker: CoinTicker) -> CoinTicker? {
+    private func getTickerFrom(_ rawTicker: CoinTicker) -> CoinTicker? {
         guard let contract = EthereumAddress(string: rawTicker.contract) else { return .none }
         return CoinTicker(
             price: rawTicker.price,
@@ -85,10 +85,8 @@ final class TrustNetwork: NetworkProtocol {
                 switch result {
                 case .success(let response):
                     do {
-                        let rawTickers = try response.map([CoinTicker].self, atKeyPath: "response", using: JSONDecoder())
-                        let tickers = rawTickers.compactMap { rawTicker in
-                            return self.getTickerFrom(rawTicker: rawTicker)
-                        }
+                        let rawTickers = try response.map(ArrayResponse<CoinTicker>.self).docs
+                        let tickers = rawTickers.compactMap { self.getTickerFrom($0) }
                         seal.fulfill(tickers)
                     } catch {
                         seal.reject(error)
@@ -100,13 +98,13 @@ final class TrustNetwork: NetworkProtocol {
         }
     }
 
-    func assets(for address: Address) -> Promise<[NonFungibleTokenCategory]> {
+    func collectibles() -> Promise<[CollectibleTokenCategory]> {
         return Promise { seal in
-            provider.request(.assets(address: address.description)) { result in
+            provider.request(.collectibles(dict)) { result in
                 switch result {
                 case .success(let response):
                     do {
-                        let tokens = try response.map(ArrayResponse<NonFungibleTokenCategory>.self).docs
+                        let tokens = try response.map(ArrayResponse<CollectibleTokenCategory>.self).docs
                         seal.fulfill(tokens)
                     } catch {
                         seal.reject(error)

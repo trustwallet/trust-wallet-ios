@@ -282,3 +282,9 @@
 "EnableTestNetworks" = "启用测试网络";
 "Network" = "网络";
 "MultiCoinWallet" = "多币种钱包";
+"LearnMore" = "Learn More";
+"settings.helpCenter.title" = "Help Center";
+"DailyUsage" = "Daily Usage";
+"DeferredDeepLinking" = "Deferred Deep Linking";
+"CrashReports" = "Crash Reports";
+"Confirm signing this message:" = "Confirm signing this message:";

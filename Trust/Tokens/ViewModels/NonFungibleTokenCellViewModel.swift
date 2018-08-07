@@ -4,9 +4,9 @@ import UIKit
 
 final class NonFungibleTokenCellViewModel {
 
-    private let tokens: [NonFungibleTokenObject]
+    private let tokens: [CollectibleTokenObject]
 
-    init(tokens: [NonFungibleTokenObject]) {
+    init(tokens: [CollectibleTokenObject]) {
         self.tokens = tokens
     }
 
@@ -22,7 +22,7 @@ final class NonFungibleTokenCellViewModel {
         return NonFungibleCollectionViewCellModel(token: tokens[index.row])
     }
 
-    func token(for index: IndexPath) -> NonFungibleTokenObject {
+    func token(for index: IndexPath) -> CollectibleTokenObject {
         return tokens[index.row]
     }
 }
