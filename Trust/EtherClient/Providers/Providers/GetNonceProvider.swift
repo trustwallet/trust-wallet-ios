@@ -55,10 +55,12 @@ final class GetNonceProvider: NonceProvider {
     }
 
     func fetchNextNonce(completion: @escaping (Result<BigInt, AnyError>) -> Void) {
-        fetch { result in
+        fetch { [weak self] result in
+            guard let `self` = self else { return }
             switch result {
             case .success(let nonce):
-                completion(.success(nonce + 1))
+                let res = self.nextNonce ?? nonce + 1
+                completion(.success(res))
             case .failure(let error):
                 completion(.failure(error))
             }
