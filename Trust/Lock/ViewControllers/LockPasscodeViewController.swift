@@ -6,10 +6,10 @@ class LockPasscodeViewController: UIViewController {
     var willFinishWithResult: ((_ success: Bool) -> Void)?
     let model: LockViewModel
     var lockView: LockView!
-    let lock: Lock!
+    let lock: Lock
     private var invisiblePasscodeField = UITextField()
     private var shouldIgnoreTextFieldDelegateCalls = false
-    init(model: LockViewModel, lock: Lock! = Lock()) {
+    init(model: LockViewModel, lock: Lock = Lock()) {
         self.model = model
         self.lock = lock
         super.init(nibName: nil, bundle: nil)

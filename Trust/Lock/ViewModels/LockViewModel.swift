@@ -3,8 +3,8 @@
 import UIKit
 
 class LockViewModel {
-    private let lock: Lock!
-    init(lock: Lock! = Lock()) {
+    private let lock: Lock
+    init(lock: Lock = Lock()) {
         self.lock = lock
     }
     func charCount() -> Int {
