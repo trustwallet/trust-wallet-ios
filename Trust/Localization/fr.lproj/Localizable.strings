@@ -288,3 +288,6 @@
 "DeferredDeepLinking" = "Liens profonds différés";
 "CrashReports" = "Rapports de plantage";
 "Confirm signing this message:" = "Confirm signing this message:";
+"market.navigation.title" = "Market";
+"market.tab.segmentedControl.watchlist.title" = "Whatchlist";
+"market.tab.segmentedControl.all.title" = "All";

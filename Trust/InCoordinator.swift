@@ -180,10 +180,16 @@ class InCoordinator: Coordinator {
         settingsCoordinator.start()
         addCoordinator(settingsCoordinator)
 
+        let marketCoordinator = MarketCoordinator()
+        marketCoordinator.rootViewController.tabBarItem = viewModel.marketBarItem
+        marketCoordinator.start()
+        addCoordinator(marketCoordinator)
+
         tabBarController.viewControllers = [
             browserCoordinator.navigationController.childNavigationController,
             walletCoordinator.navigationController.childNavigationController,
             settingsCoordinator.navigationController.childNavigationController,
+            marketCoordinator.navigationController.childNavigationController,
         ]
 
         navigationController.setViewControllers([tabBarController], animated: false)

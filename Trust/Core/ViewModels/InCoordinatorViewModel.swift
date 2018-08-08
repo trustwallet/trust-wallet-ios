@@ -43,4 +43,8 @@ struct InCoordinatorViewModel {
             selectedImage: nil
         )
     }
+
+    var marketBarItem: UITabBarItem {
+        return UITabBarItem(title: R.string.localizable.marketNavigationTitle(), image: R.image.market_tab_icon(), selectedImage: nil)
+    }
 }

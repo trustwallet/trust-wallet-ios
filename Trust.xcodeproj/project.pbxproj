@@ -440,6 +440,10 @@
 		A2B7ECAE2039001300828E7D /* ExportPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7ECAD2039001300828E7D /* ExportPrivateKeyViewController.swift */; };
 		A2E43B4E20802879001FAD3D /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E43B4D20802879001FAD3D /* UINavigationController.swift */; };
 		A2E895D020953404003D5303 /* QRGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E895CF20953404003D5303 /* QRGenerator.swift */; };
+		AC9B41632119DB2100486072 /* MarketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9B41622119DB2100486072 /* MarketViewModel.swift */; };
+		AC9B41662119E79A00486072 /* MarketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9B41652119E79A00486072 /* MarketViewController.swift */; };
+		AC9B41692119E7C100486072 /* MarketCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9B41682119E7C100486072 /* MarketCoordinator.swift */; };
+		AC9B416C211A24F300486072 /* UISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9B416B211A24F300486072 /* UISegmentedControl.swift */; };
 		ACE3F4EC211485F8003CB0A0 /* NSLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE3F4EB211485F8003CB0A0 /* NSLocale.swift */; };
 		BB03A86D20416AF600649DA0 /* BalanceStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A86C20416AF600649DA0 /* BalanceStatus.swift */; };
 		BB03A8712042B01300649DA0 /* BalanceStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB03A8702042B01300649DA0 /* BalanceStatusTests.swift */; };
@@ -944,6 +948,10 @@
 		A2E895CF20953404003D5303 /* QRGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRGenerator.swift; sourceTree = "<group>"; };
 		A3B747245A27436E621E7E41 /* Pods-TrustUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrustUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrustUITests/Pods-TrustUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A48A17FC2CC895AF2BB871D0 /* Pods_TrustTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC9B41622119DB2100486072 /* MarketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketViewModel.swift; sourceTree = "<group>"; };
+		AC9B41652119E79A00486072 /* MarketViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketViewController.swift; sourceTree = "<group>"; };
+		AC9B41682119E7C100486072 /* MarketCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketCoordinator.swift; sourceTree = "<group>"; };
+		AC9B416B211A24F300486072 /* UISegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISegmentedControl.swift; sourceTree = "<group>"; };
 		ACE3F4EB211485F8003CB0A0 /* NSLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLocale.swift; sourceTree = "<group>"; };
 		B13A87D3BA5167741E5D0801 /* Pods-Trust.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trust.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trust/Pods-Trust.release.xcconfig"; sourceTree = "<group>"; };
 		BB03A86C20416AF600649DA0 /* BalanceStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceStatus.swift; sourceTree = "<group>"; };
@@ -1058,6 +1066,7 @@
 				296106C01F7640240006164B /* Tokens */,
 				2912CD291F6A831D00C6CBE3 /* Transactions */,
 				2912CD281F6A831700C6CBE3 /* Wallet */,
+				AC9B415D2119D84200486072 /* Market */,
 				291F52A01F6B6DBC00B369AB /* EtherClient */,
 				291EC9E01F7053C80004EDD0 /* UI */,
 				29A13E311F6B1B6C00E432A2 /* Style */,
@@ -1578,6 +1587,7 @@
 				296FC5A520C2773B00B923EF /* UIScrollView.swift */,
 				771DC9D420F36555003E2CE2 /* UIBarButtonItem.swift */,
 				ACE3F4EB211485F8003CB0A0 /* NSLocale.swift */,
+				AC9B416B211A24F300486072 /* UISegmentedControl.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2436,6 +2446,48 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AC9B415D2119D84200486072 /* Market */ = {
+			isa = PBXGroup;
+			children = (
+				AC9B416A2119F0FF00486072 /* Views */,
+				AC9B41672119E7A500486072 /* Coordinators */,
+				AC9B41642119E79A00486072 /* ViewControllers */,
+				AC9B415F2119DB0A00486072 /* ViewModels */,
+			);
+			path = Market;
+			sourceTree = "<group>";
+		};
+		AC9B415F2119DB0A00486072 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				AC9B41622119DB2100486072 /* MarketViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		AC9B41642119E79A00486072 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				AC9B41652119E79A00486072 /* MarketViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		AC9B41672119E7A500486072 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				AC9B41682119E7C100486072 /* MarketCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		AC9B416A2119F0FF00486072 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		BB3864A1208F1C3000CBF773 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2921,11 +2973,13 @@
 				294DFB981FDF8CBB004CEB56 /* CrashReportInitializer.swift in Sources */,
 				291F52B91F6B880F00B369AB /* EtherKeystore.swift in Sources */,
 				779141CA210271DB007E8E16 /* BalanceNetworkProvider.swift in Sources */,
+				AC9B41632119DB2100486072 /* MarketViewModel.swift in Sources */,
 				29BB94971F6FCD60009B09CC /* SendViewModel.swift in Sources */,
 				296106D01F778A8D0006164B /* TransferType.swift in Sources */,
 				29E14FDB1F7F4F3D00185568 /* Transaction.swift in Sources */,
 				7712437A20FD97730097296E /* WalletAccountViewModel.swift in Sources */,
 				BBF4F9B72029D0B3009E04C0 /* GasViewModel.swift in Sources */,
+				AC9B41692119E7C100486072 /* MarketCoordinator.swift in Sources */,
 				73C41C75201B65AD00243C6C /* LockCreatePasscodeCoordinator.swift in Sources */,
 				7301BA9220A3117000E1AFE5 /* AutoLock.swift in Sources */,
 				296106C81F7646590006164B /* TokensViewModel.swift in Sources */,
@@ -2968,6 +3022,7 @@
 				771D0646208B3FAD00016B72 /* MonetaryAmountViewModel.swift in Sources */,
 				29FC0CB81F8299510036089F /* Coordinator.swift in Sources */,
 				296106C61F7645CC0006164B /* TokensViewController.swift in Sources */,
+				AC9B41662119E79A00486072 /* MarketViewController.swift in Sources */,
 				771DC9D520F36555003E2CE2 /* UIBarButtonItem.swift in Sources */,
 				29282B531F7630970067F88D /* Token.swift in Sources */,
 				29F1C85D2003698A003780D8 /* WellDoneViewController.swift in Sources */,
@@ -3003,6 +3058,7 @@
 				7704837420FFD38F00837735 /* TransactionsViewModel.swift in Sources */,
 				2995739F1FA1F294006F17FD /* QRURLParser.swift in Sources */,
 				77EAD88420E1B82300D14AA2 /* WalletInfoViewController.swift in Sources */,
+				AC9B416C211A24F300486072 /* UISegmentedControl.swift in Sources */,
 				29C9F5F91F720BD30025C494 /* FloatLabelCell.swift in Sources */,
 				77B641032097211F00BEF3EB /* TransactionsTableView.swift in Sources */,
 				77EAD88820E1C02200D14AA2 /* WalletInfoViewModel.swift in Sources */,
