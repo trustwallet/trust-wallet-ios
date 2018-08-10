@@ -9,7 +9,7 @@ import Result
 enum SignMesageType {
     case message(Data)
     case personalMessage(Data)
-    case typedMessage([EthTypedData])
+    case typedMessage(EIP712TypedData)
 }
 
 protocol SignMessageCoordinatorDelegate: class {
@@ -74,9 +74,8 @@ final class SignMessageCoordinator: Coordinator {
                 }
                 return message
         case .typedMessage(let (typedData)):
-                let string = typedData.map {
-                    return "\($0.name) : \($0.value.string)"
-                }.joined(separator: "\n")
+                let string = [typedData.domain.debugDescription, typedData.message.debugDescription]
+                    .joined(separator: "\n")
                 return string
         }
     }
@@ -99,11 +98,7 @@ final class SignMessageCoordinator: Coordinator {
         case .personalMessage(let data):
             result = keystore.signPersonalMessage(data, for: account)
         case .typedMessage(let typedData):
-            if typedData.isEmpty {
-                result = .failure(KeystoreError.failedToSignMessage)
-            } else {
-                result = keystore.signTypedMessage(typedData, for: account)
-            }
+            result = keystore.signTypedMessage(typedData, for: account)
         }
         switch result {
         case .success(let data):

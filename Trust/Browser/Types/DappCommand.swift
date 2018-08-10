@@ -38,18 +38,15 @@ enum DappCallbackValue {
 
 struct DappCommandObjectValue: Decodable {
     public var value: String = ""
-    public var array: [EthTypedData] = []
+    public var typedData: EIP712TypedData?
     public init(from coder: Decoder) throws {
         let container = try coder.singleValueContainer()
         if let intValue = try? container.decode(Int.self) {
             self.value = String(intValue)
         } else if let stringValue = try? container.decode(String.self) {
             self.value = stringValue
-        } else {
-            var arrayContainer = try coder.unkeyedContainer()
-            while !arrayContainer.isAtEnd {
-                self.array.append(try arrayContainer.decode(EthTypedData.self))
-            }
+        } else if let typedData = try? container.decode(EIP712TypedData.self) {
+            self.typedData = typedData
         }
     }
 }

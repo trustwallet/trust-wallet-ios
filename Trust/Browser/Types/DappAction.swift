@@ -8,7 +8,7 @@ import WebKit
 enum DappAction {
     case signMessage(String)
     case signPersonalMessage(String)
-    case signTypedMessage([EthTypedData])
+    case signTypedMessage(EIP712TypedData)
     case signTransaction(UnconfirmedTransaction)
     case sendTransaction(UnconfirmedTransaction)
     case unknown
@@ -28,8 +28,10 @@ extension DappAction {
             let data = command.object["data"]?.value ?? ""
             return .signPersonalMessage(data)
         case .signTypedMessage:
-            let array = command.object["data"]?.array ?? []
-            return .signTypedMessage(array)
+            guard let typedData = command.object["data"]?.typedData else {
+                return .unknown
+            }
+            return .signTypedMessage(typedData)
         case .unknown:
             return .unknown
         }

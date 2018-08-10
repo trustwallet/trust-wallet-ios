@@ -24,6 +24,19 @@ struct EIP712TypedData: Codable {
 }
 
 extension EIP712TypedData {
+
+    var typeHash: Data {
+        let data = encodeType(primaryType: primaryType)
+        return Crypto.hash(data)
+    }
+
+    var signHash: Data {
+        let data = Data(bytes: [0x19, 0x01]) +
+            Crypto.hash(encodeData(data: domain, type: "EIP712Domain")) +
+            Crypto.hash(encodeData(data: message, type: "Mail"))
+        return Crypto.hash(data)
+    }
+
     func findDependencies(primaryType: String, dependencies: Set<String> = Set<String>()) -> Set<String> {
         var found = dependencies
         guard !found.contains(primaryType),

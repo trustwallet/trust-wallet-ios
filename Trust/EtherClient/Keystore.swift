@@ -26,7 +26,7 @@ protocol Keystore {
     func delete(wallet: WalletInfo, completion: @escaping (Result<Void, KeystoreError>) -> Void)
     func signPersonalMessage(_ data: Data, for account: Account) -> Result<Data, KeystoreError>
     func signMessage(_ message: Data, for account: Account) -> Result<Data, KeystoreError>
-    func signTypedMessage(_ datas: [EthTypedData], for account: Account) -> Result<Data, KeystoreError>
+    func signTypedMessage(_ data: EIP712TypedData, for account: Account) -> Result<Data, KeystoreError>
     func signHash(_ hash: Data, for account: Account) -> Result<Data, KeystoreError>
     func signTransaction(_ signTransaction: SignTransaction) -> Result<Data, KeystoreError>
     func getPassword(for account: Wallet) -> String?

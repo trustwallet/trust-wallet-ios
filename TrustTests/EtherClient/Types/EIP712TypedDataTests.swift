@@ -7,7 +7,7 @@ import TrustKeystore
 
 class EIP712TypedDataTests: XCTestCase {
     var typedData: EIP712TypedData!
-    let keystore = FakeEtherKeystore()
+
     override func setUp() {
         super.setUp()
         let string = """
@@ -66,8 +66,7 @@ class EIP712TypedDataTests: XCTestCase {
 
     func testEncodedTypeHash() {
         let result = "0xa0cedeb2dc280ba39b857546d74f5549c3a1d7bdc2dd96bf881f76108e23dac2"
-        let data = typedData.encodeType(primaryType: "Mail")
-        XCTAssertEqual(Crypto.hash(data).hexEncoded, result)
+        XCTAssertEqual(typedData.typeHash.hexEncoded, result)
     }
 
     func testEncodeData() {
@@ -89,15 +88,15 @@ class EIP712TypedDataTests: XCTestCase {
 
     func testSignHash() {
         let cow = "cow".data(using: .utf8)!
-        let privateKey = PrivateKey(data: Crypto.hash(cow))!
-        let importResult = keystore.importPrivateKey(privateKey: privateKey, password: TestKeyStore.password, coin: .ethereum)
-        guard case let .success(account1) = importResult else {
-            return XCTFail("import account failed")
-        }
-        let data = Data(bytes: [0x19, 0x01]) +
-            Crypto.hash(typedData.encodeData(data: typedData.domain, type: "EIP712Domain")) +
-            Crypto.hash(typedData.encodeData(data: typedData.message, type: "Mail"))
+        let privateKeyData = Crypto.hash(cow)
+        let privateKey = PrivateKey(data: privateKeyData)!
+
         let result = "0xbe609aee343fb3c4b28e1df9e632fca64fcfaede20f02e86244efddf30957bd2"
-        XCTAssertEqual(Crypto.hash(data).hexEncoded, result)
+        let address = "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826"
+        let signed = Crypto.sign(hash: typedData.signHash, privateKey: privateKeyData)
+
+        XCTAssertEqual(privateKey.publicKey(for: .ethereum).address.description.lowercased(), address)
+        XCTAssertEqual(typedData.signHash.hexEncoded, result)
+        XCTAssertEqual(signed.hexEncoded, "0x4355c47d63924e8a72e509b65029052eb6c299d53a04e167c5775fd466751c9d07299936d304c153f6443dfa05f40ff007d72911b6f72307f996231605b9156201")
     }
 }
