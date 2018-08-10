@@ -457,6 +457,9 @@
 		BB3E2A1020A12592000F8B76 /* ENSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3E2A0F20A12592000F8B76 /* ENSManager.swift */; };
 		BB58B92D206F70E800A70A3C /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB58B92C206F70E800A70A3C /* HistoryStore.swift */; };
 		BB58B92F206F70FE00A70A3C /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB58B92E206F70FE00A70A3C /* History.swift */; };
+		BB636D2B211D26280071AE07 /* EIP712TypedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB636D2A211D26280071AE07 /* EIP712TypedData.swift */; };
+		BB636D2D211D267B0071AE07 /* GenericJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB636D2C211D267B0071AE07 /* GenericJSON.swift */; };
+		BB636D2F211D272C0071AE07 /* EIP712TypedDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB636D2E211D272C0071AE07 /* EIP712TypedDataTests.swift */; };
 		BB767E2E205E10FD00263658 /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB767E2D205E10FD00263658 /* Debounce.swift */; };
 		BB8E747920818E5E001BA99A /* SearchTokenResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8E747820818E5E001BA99A /* SearchTokenResultsController.swift */; };
 		BBAA2A3B2058155100B0878C /* TypedMessageEncodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAA2A3A2058155100B0878C /* TypedMessageEncodingTests.swift */; };
@@ -960,6 +963,9 @@
 		BB3E2A0F20A12592000F8B76 /* ENSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENSManager.swift; sourceTree = "<group>"; };
 		BB58B92C206F70E800A70A3C /* HistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStore.swift; sourceTree = "<group>"; };
 		BB58B92E206F70FE00A70A3C /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		BB636D2A211D26280071AE07 /* EIP712TypedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP712TypedData.swift; sourceTree = "<group>"; };
+		BB636D2C211D267B0071AE07 /* GenericJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericJSON.swift; sourceTree = "<group>"; };
+		BB636D2E211D272C0071AE07 /* EIP712TypedDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP712TypedDataTests.swift; sourceTree = "<group>"; };
 		BB767E2D205E10FD00263658 /* Debounce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debounce.swift; sourceTree = "<group>"; };
 		BB8E747820818E5E001BA99A /* SearchTokenResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTokenResultsController.swift; sourceTree = "<group>"; };
 		BBAA2A3A2058155100B0878C /* TypedMessageEncodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedMessageEncodingTests.swift; sourceTree = "<group>"; };
@@ -2220,6 +2226,8 @@
 			children = (
 				771D53622050AFC700C79485 /* WalletType.swift */,
 				BBD4E415205654E4005545E9 /* EthTypedData.swift */,
+				BB636D2A211D26280071AE07 /* EIP712TypedData.swift */,
+				BB636D2C211D267B0071AE07 /* GenericJSON.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2335,6 +2343,7 @@
 			isa = PBXGroup;
 			children = (
 				778EA5FC2050A5ED00E81F7F /* WalletTests.swift */,
+				BB636D2E211D272C0071AE07 /* EIP712TypedDataTests.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -2915,6 +2924,7 @@
 				29FF12F61F74799D00AFD326 /* NSAttributedString.swift in Sources */,
 				290B2B651F91A4880053C83E /* ButtonsFooterView.swift in Sources */,
 				771ACE0E20A15AC000FB03EE /* SendNFTRow.swift in Sources */,
+				BB636D2B211D26280071AE07 /* EIP712TypedData.swift in Sources */,
 				779141DB21055B72007E8E16 /* MultiCoinMigration.swift in Sources */,
 				29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */,
 				29AD8A091F93F8B2008E10E7 /* Session.swift in Sources */,
@@ -2990,6 +3000,7 @@
 				775DF42B203693CD009CD082 /* Preferences.swift in Sources */,
 				296421991F70C1F900EB363B /* EmptyView.swift in Sources */,
 				29AD3D5120F5B9F9007893C9 /* WalletsViewController.swift in Sources */,
+				BB636D2D211D267B0071AE07 /* GenericJSON.swift in Sources */,
 				77B806B220778F6A005FDCBE /* URLViewModel.swift in Sources */,
 				29C70C7C201990540072E454 /* SendTransaction.swift in Sources */,
 				29AD3D5720F5BB08007893C9 /* WalletsViewModel.swift in Sources */,
@@ -3258,6 +3269,7 @@
 				776C1142205BAFA800449539 /* ExportPrivateKeyCoordinatorTests.swift in Sources */,
 				772C6DB9210918C400FCE4F1 /* TokenObjectViewModelTest.swift in Sources */,
 				2923D9B71FDA5E51000CF3F8 /* PasswordGeneratorTests.swift in Sources */,
+				BB636D2F211D272C0071AE07 /* EIP712TypedDataTests.swift in Sources */,
 				733AFC822109093900C0AE35 /* GasViewModel.swift in Sources */,
 				BBAA2A3B2058155100B0878C /* TypedMessageEncodingTests.swift in Sources */,
 				77EAD89720EAF1FD00D14AA2 /* WalletObject.swift in Sources */,
