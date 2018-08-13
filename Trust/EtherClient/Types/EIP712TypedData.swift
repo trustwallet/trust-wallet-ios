@@ -33,7 +33,7 @@ extension EIP712TypedData {
     var signHash: Data {
         let data = Data(bytes: [0x19, 0x01]) +
             Crypto.hash(encodeData(data: domain, type: "EIP712Domain")) +
-            Crypto.hash(encodeData(data: message, type: "Mail"))
+            Crypto.hash(encodeData(data: message, type: primaryType))
         return Crypto.hash(data)
     }
 
