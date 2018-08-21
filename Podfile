@@ -25,6 +25,7 @@ target 'Trust' do
   pod 'Kingfisher', '~> 4.0'
   pod 'TrustCore', :git=>'https://github.com/TrustWallet/trust-core', :branch=>'master'
   pod 'TrustKeystore', :git=>'https://github.com/TrustWallet/trust-keystore', :branch=>'master'
+  pod 'TrezorCrypto'
   pod 'Branch'
   pod 'SAMKeychain'
   pod 'TrustWeb3Provider', :git=>'https://github.com/TrustWallet/trust-web3-provider', :commit=>'f4e0ebb1b8fa4812637babe85ef975d116543dfd'
