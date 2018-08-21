@@ -69,7 +69,7 @@ final class BrowserCoordinator: NSObject, Coordinator {
 
     weak var delegate: BrowserCoordinatorDelegate?
 
-    var enableToolbar: Bool = true {
+    var enableToolbar: Bool = false {
         didSet {
             navigationController.isToolbarHidden = !enableToolbar
         }
@@ -149,7 +149,7 @@ final class BrowserCoordinator: NSObject, Coordinator {
     }
 
     func handleToolbar(for url: URL) {
-        let isToolbarHidden = url.absoluteString != Constants.dappsBrowserURL
+        let isToolbarHidden = true
         navigationController.isToolbarHidden = isToolbarHidden
 
         if isToolbarHidden {
