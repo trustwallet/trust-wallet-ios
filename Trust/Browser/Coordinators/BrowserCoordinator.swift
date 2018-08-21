@@ -82,6 +82,7 @@ final class BrowserCoordinator: NSObject, Coordinator {
         sharedRealm: Realm
     ) {
         self.navigationController = NavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
+        self.navigationController.setNavigationBarHidden(true, animated: false);
         self.session = session
         self.keystore = keystore
         self.sharedRealm = sharedRealm
