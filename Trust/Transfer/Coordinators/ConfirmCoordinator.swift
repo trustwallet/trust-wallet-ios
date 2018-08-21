@@ -27,6 +27,10 @@ final class ConfirmCoordinator: RootCoordinator {
         return controller
     }
 
+    private lazy var authenticateUserCoordinator: AuthenticateUserCoordinator = {
+        return AuthenticateUserCoordinator(navigationController: navigationController)
+    }()
+
     private lazy var controller: ConfirmPaymentViewController = {
         return ConfirmPaymentViewController(
             session: session,
@@ -55,7 +59,8 @@ final class ConfirmCoordinator: RootCoordinator {
         self.type = type
         self.server = server
 
-        controller.didCompleted = { [weak self] result in
+        controller.delegate = self
+        controller.didComplete = { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .success(let data):
@@ -74,5 +79,21 @@ final class ConfirmCoordinator: RootCoordinator {
     @objc func dismiss() {
         didCompleted?(.failure(AnyError(DAppError.cancelled)))
         delegate?.didCancel(in: self)
+    }
+}
+
+extension ConfirmCoordinator: ConfirmPaymentAuthenticationDelegate {
+    func confirmPaymentControllerNeedsAuthentication(_ controller: ConfirmPaymentViewController) {
+        let needsPasscodeCheck = Lock().shouldAuthorizeTransactions()
+        if needsPasscodeCheck {
+            authenticateUserCoordinator.start { [weak self] (success, _) in
+                if success {
+                    self?.controller.sendTransaction()
+                    self?.authenticateUserCoordinator.stop()
+                }
+            }
+        } else {
+            self.controller.sendTransaction()
+        }
     }
 }

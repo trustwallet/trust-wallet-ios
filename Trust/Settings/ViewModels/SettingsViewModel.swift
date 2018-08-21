@@ -48,6 +48,10 @@ struct SettingsViewModel {
         }
     }
 
+    var verifyTransactionsWithPasscodeTitle: String {
+        return R.string.localizable.settingsLockTransactionsLabelTitle()
+    }
+
     var networkTitle: String {
         return NSLocalizedString("settings.network.button.title", value: "Network", comment: "")
     }

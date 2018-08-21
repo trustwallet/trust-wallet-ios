@@ -14,8 +14,8 @@ final class LockEnterPasscodeCoordinator: Coordinator {
         self.window.windowLevel = UIWindowLevelStatusBar + 1.0
         self.model = model
         self.lock = lock
-        lockEnterPasscodeViewController.unlockWithResult = { [weak self] (state, bioUnlock) in
-            if state {
+        lockEnterPasscodeViewController.unlockWithResult = { [weak self] (success, bioUnlock) in
+            if success {
                 self?.stop()
             }
         }
@@ -27,6 +27,7 @@ final class LockEnterPasscodeCoordinator: Coordinator {
         window.rootViewController = lockEnterPasscodeViewController
         window.makeKeyAndVisible()
     }
+
     //This method should be refactored!!!
     func showAuthentication() {
         guard window.isKeyWindow, lock.isPasscodeSet() else {

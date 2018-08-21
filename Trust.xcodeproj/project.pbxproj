@@ -250,6 +250,8 @@
 		61FC5ECF1FCFBAE500CCB12A /* EtherNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */; };
 		61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */; };
 		664D11A12007D59F0041A0B0 /* EstimateGasRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */; };
+		71684E5521105E4200D8FD4B /* AuthenticateEnterPasscodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71684E5421105E4200D8FD4B /* AuthenticateEnterPasscodeViewModel.swift */; };
+		71684E5721105F3E00D8FD4B /* EnterPasscodeViewModelInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71684E5621105F3E00D8FD4B /* EnterPasscodeViewModelInterface.swift */; };
 		71A433702113860900985ADC /* ConfirmPaymentDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A4336F2113860900985ADC /* ConfirmPaymentDetailsViewModelTests.swift */; };
 		7301BA9220A3117000E1AFE5 /* AutoLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7301BA9120A3117000E1AFE5 /* AutoLock.swift */; };
 		7301BA9620AB1E5600E1AFE5 /* CookiesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7301BA9520AB1E5600E1AFE5 /* CookiesStore.swift */; };
@@ -747,6 +749,8 @@
 		61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherNumberFormatterTests.swift; sourceTree = "<group>"; };
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateGasRequest.swift; sourceTree = "<group>"; };
+		71684E5421105E4200D8FD4B /* AuthenticateEnterPasscodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateEnterPasscodeViewModel.swift; sourceTree = "<group>"; };
+		71684E5621105F3E00D8FD4B /* EnterPasscodeViewModelInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPasscodeViewModelInterface.swift; sourceTree = "<group>"; };
 		71A4336F2113860900985ADC /* ConfirmPaymentDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPaymentDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		7301BA9120A3117000E1AFE5 /* AutoLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLock.swift; sourceTree = "<group>"; };
 		7301BA9520AB1E5600E1AFE5 /* CookiesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookiesStore.swift; sourceTree = "<group>"; };
@@ -2104,8 +2108,8 @@
 		73ACEEF720163B4E003DD71D /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				73ACEF0420163F46003DD71D /* LockEnterPasscodeCoordinator.swift */,
 				73C41C74201B65AD00243C6C /* LockCreatePasscodeCoordinator.swift */,
+				73ACEF0420163F46003DD71D /* LockEnterPasscodeCoordinator.swift */,
 				772C6DBA210A842200FCE4F1 /* AuthenticateUserCoordinator.swift */,
 			);
 			path = Coordinators;
@@ -2125,8 +2129,10 @@
 			isa = PBXGroup;
 			children = (
 				73ACEF0020163ED4003DD71D /* LockViewModel.swift */,
-				73C41C70201B46AD00243C6C /* LockEnterPasscodeViewModel.swift */,
 				73C41C72201B5EFF00243C6C /* LockCreatePasscodeViewModel.swift */,
+				73C41C70201B46AD00243C6C /* LockEnterPasscodeViewModel.swift */,
+				71684E5421105E4200D8FD4B /* AuthenticateEnterPasscodeViewModel.swift */,
+				71684E5621105F3E00D8FD4B /* EnterPasscodeViewModelInterface.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2926,6 +2932,7 @@
 				29E14FDB1F7F4F3D00185568 /* Transaction.swift in Sources */,
 				7712437A20FD97730097296E /* WalletAccountViewModel.swift in Sources */,
 				BBF4F9B72029D0B3009E04C0 /* GasViewModel.swift in Sources */,
+				71684E5721105F3E00D8FD4B /* EnterPasscodeViewModelInterface.swift in Sources */,
 				73C41C75201B65AD00243C6C /* LockCreatePasscodeCoordinator.swift in Sources */,
 				7301BA9220A3117000E1AFE5 /* AutoLock.swift in Sources */,
 				296106C81F7646590006164B /* TokensViewModel.swift in Sources */,
@@ -3021,6 +3028,7 @@
 				90DDF48520518AE50016E6D4 /* BookmarkViewModel.swift in Sources */,
 				BBB61E122050993A00428BBD /* BrowserErrorView.swift in Sources */,
 				29C80D4B1FB51C460037B1E0 /* Decimal.swift in Sources */,
+				71684E5521105E4200D8FD4B /* AuthenticateEnterPasscodeViewModel.swift in Sources */,
 				297800521F71FDCF003185C1 /* FormAppearance.swift in Sources */,
 				77B3BF3C201908ED00EEC15A /* ConfirmCoordinator.swift in Sources */,
 				7704837020FFD2F700837735 /* TransactionsViewController.swift in Sources */,

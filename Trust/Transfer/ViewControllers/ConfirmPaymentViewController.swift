@@ -16,10 +16,15 @@ enum ConfirmResult {
     case sentTransaction(SentTransaction)
 }
 
+protocol ConfirmPaymentAuthenticationDelegate: class {
+    func confirmPaymentControllerNeedsAuthentication(_ controller: ConfirmPaymentViewController)
+}
+
 class ConfirmPaymentViewController: UIViewController {
 
     private let keystore: Keystore
     let session: WalletSession
+    public weak var delegate: ConfirmPaymentAuthenticationDelegate?
     lazy var sendTransactionCoordinator = {
         return SendTransactionCoordinator(session: self.session, keystore: keystore, confirmType: confirmType, server: server)
     }()
@@ -37,7 +42,7 @@ class ConfirmPaymentViewController: UIViewController {
     var configurator: TransactionConfigurator
     let confirmType: ConfirmType
     let server: RPCServer
-    var didCompleted: ((Result<ConfirmResult, AnyError>) -> Void)?
+    var didComplete: ((Result<ConfirmResult, AnyError>) -> Void)?
 
     lazy var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -207,12 +212,15 @@ class ConfirmPaymentViewController: UIViewController {
     }
 
     @objc func send() {
-        self.displayLoading()
+        delegate?.confirmPaymentControllerNeedsAuthentication(self)
+    }
 
-        let transaction = configurator.signTransaction
+    public func sendTransaction() {
+        self.displayLoading()
+        let transaction = self.configurator.signTransaction
         self.sendTransactionCoordinator.send(transaction: transaction) { [weak self] result in
             guard let `self` = self else { return }
-            self.didCompleted?(result)
+            self.didComplete?(result)
             self.hideLoading()
         }
     }

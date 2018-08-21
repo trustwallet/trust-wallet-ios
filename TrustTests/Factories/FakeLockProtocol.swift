@@ -7,6 +7,7 @@ class FakeLockProtocol: LockInterface {
 
     var passcodeSet = true
     var showProtection = true
+    var authorizeTransactions = true
 
     func isPasscodeSet() -> Bool {
         return passcodeSet
@@ -14,5 +15,13 @@ class FakeLockProtocol: LockInterface {
 
     func shouldShowProtection() -> Bool {
         return isPasscodeSet() && showProtection
+    }
+
+    func authorizeTransactionsValue() -> Bool {
+        return authorizeTransactions
+    }
+
+    func shouldAuthorizeTransactions() -> Bool {
+        return isPasscodeSet() && authorizeTransactionsValue()
     }
 }

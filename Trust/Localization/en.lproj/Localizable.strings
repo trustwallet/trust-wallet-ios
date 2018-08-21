@@ -59,6 +59,7 @@
 "settings.feedback.email.title" = "Trust Feedback";
 "settings.navigation.title" = "Settings";
 "settings.network.button.title" = "Network";
+"settings.lockTransactions.label.title" = "Authenticate Transactions";
 "settings.openSourceDevelopment.label.title" = "Open Source Development";
 "settings.privacyPolicy.button.title" = "Privacy Policy";
 "settings.pushNotifications.button.title" = "Push Notifications";
@@ -142,6 +143,7 @@
 "lock.enter.passcode.view.model.incorrect.passcode" = "Incorrect passcode. You have %li attempts left.";
 "lock.enter.passcode.view.model.initial" = "Enter your passcode.";
 "lock.enter.passcode.view.model.touch.id" = "Logging in with Touch ID";
+"lock.authenticate.enter.passcode.view.model.touch.id" = "Authenticating with Touch ID";
 "lock.enter.passcode.view.model.try.after.one.minute" = "Try after 1 minute.";
 "Name" = "Name";
 "send.action.copy.transaction.title" = "Copy Transaction ID";
