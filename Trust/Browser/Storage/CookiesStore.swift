@@ -22,7 +22,7 @@ final class CookiesStore {
             fetchCookies()
         }.done { cookies in
             save(cookies: cookies)
-        }
+        }.catch { _ in }
     }
 
     static func load() {

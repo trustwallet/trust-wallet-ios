@@ -20,8 +20,6 @@ target 'Trust' do
   pod 'RealmSwift'
   pod 'Moya', '~> 10.0.1'
   pod 'CryptoSwift', '~> 0.10.0'
-  pod 'Fabric'
-  pod 'Crashlytics', '~> 3.10'
   pod 'Kingfisher', '~> 4.0'
   pod 'TrustCore', :git=>'https://github.com/TrustWallet/trust-core', :branch=>'master'
   pod 'TrustKeystore', :git=>'https://github.com/TrustWallet/trust-keystore', :branch=>'master'

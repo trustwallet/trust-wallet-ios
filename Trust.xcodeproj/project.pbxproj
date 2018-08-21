@@ -64,7 +64,6 @@
 		293E62711FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E62701FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift */; };
 		293E62731FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E62721FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift */; };
 		294BB5112086CE4A00430EFA /* DAppRequster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BB5102086CE4A00430EFA /* DAppRequster.swift */; };
-		294DFB981FDF8CBB004CEB56 /* CrashReportInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DFB971FDF8CBB004CEB56 /* CrashReportInitializer.swift */; };
 		294DFBA01FE0CADE004CEB56 /* TransactionDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DFB9F1FE0CADD004CEB56 /* TransactionDetailsViewModel.swift */; };
 		294DFBA31FE0E2EA004CEB56 /* TransactionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DFBA21FE0E2EA004CEB56 /* TransactionValue.swift */; };
 		294DFBA61FE11CAE004CEB56 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 290B2B561F8F50030053C83E /* Localizable.strings */; };
@@ -552,7 +551,6 @@
 		293E62701FA2F63500CB0A66 /* InitialWalletCreationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialWalletCreationCoordinator.swift; sourceTree = "<group>"; };
 		293E62721FA3165C00CB0A66 /* InitialWalletCreationCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialWalletCreationCoordinatorTests.swift; sourceTree = "<group>"; };
 		294BB5102086CE4A00430EFA /* DAppRequster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppRequster.swift; sourceTree = "<group>"; };
-		294DFB971FDF8CBB004CEB56 /* CrashReportInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReportInitializer.swift; sourceTree = "<group>"; };
 		294DFB9F1FE0CADD004CEB56 /* TransactionDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetailsViewModel.swift; sourceTree = "<group>"; };
 		294DFBA21FE0E2EA004CEB56 /* TransactionValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionValue.swift; sourceTree = "<group>"; };
 		294DFBA41FE0F437004CEB56 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1887,7 +1885,6 @@
 				29FC9BC51F830880000209CD /* MirgrationInitializer.swift */,
 				2923D9B01FDA49D8000CF3F8 /* Initializer.swift */,
 				2923D9B21FDA49F8000CF3F8 /* SkipBackupFilesInitializer.swift */,
-				294DFB971FDF8CBB004CEB56 /* CrashReportInitializer.swift */,
 				77B806A42075C33D005FDCBE /* SharedMigrationInitializer.swift */,
 			);
 			path = Initializers;
@@ -2540,7 +2537,6 @@
 				F291FF6299FBB0600050DA49 /* [CP] Embed Pods Frameworks */,
 				2909B06A324FDD6FB858F676 /* [CP] Copy Pods Resources */,
 				29282B511F7629DB0067F88D /* Run SwiftLint */,
-				294DFB961FDF8C6A004CEB56 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2744,19 +2740,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/Trust\"\n";
 		};
-		294DFB961FDF8C6A004CEB56 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 74d3fa8b5038a154c0c05555d27112a0d4a80d68 8973b953bafdeaf177a2bae935a2bfba6158575b615f75305af25cf01a6adac6\n";
-		};
 		558B94C30BF51EDC00493AF8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2929,7 +2912,6 @@
 				779141DB21055B72007E8E16 /* MultiCoinMigration.swift in Sources */,
 				29FC9BC61F830899000209CD /* MirgrationInitializer.swift in Sources */,
 				29AD8A091F93F8B2008E10E7 /* Session.swift in Sources */,
-				294DFB981FDF8CBB004CEB56 /* CrashReportInitializer.swift in Sources */,
 				291F52B91F6B880F00B369AB /* EtherKeystore.swift in Sources */,
 				779141CA210271DB007E8E16 /* BalanceNetworkProvider.swift in Sources */,
 				29BB94971F6FCD60009B09CC /* SendViewModel.swift in Sources */,

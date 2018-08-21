@@ -3,7 +3,6 @@
 import UIKit
 import Eureka
 import Branch
-import Crashlytics
 import TrustCore
 import KeychainSwift
 

@@ -61,7 +61,7 @@ final class EditTokenViewModel {
                 $0.isDisabled = false
             }
             completion?(tokens.filter { !filterSet.contains($0) })
-        }
+        }.catch { _ in }
     }
 
     func searchLocal(token searchText: String?) -> [TokenObject] {

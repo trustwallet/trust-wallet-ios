@@ -26,7 +26,7 @@ final class TokenBalanceOperation: TrustOperation {
                 return
             }
             strongSelf.updateModel(with: balance)
-        }
+        }.catch { _ in }
     }
 
     private func updateModel(with balance: BigInt) {

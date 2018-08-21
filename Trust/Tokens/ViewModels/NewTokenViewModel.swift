@@ -2,7 +2,6 @@
 
 import Foundation
 import PromiseKit
-import Crashlytics
 
 struct NewTokenViewModel {
 

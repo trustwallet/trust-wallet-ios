@@ -3,7 +3,6 @@
 import UIKit
 import Eureka
 import Branch
-import Crashlytics
 
 final class PrivacyViewController: FormViewController {
 
