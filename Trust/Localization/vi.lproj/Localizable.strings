@@ -121,7 +121,7 @@
 "Deleting" = "Đang xóa";
 "EthereumAddress" = "Địa chỉ Ethereum";
 "InCoordinatorError.onlyWatchAccount" = "Ví này có thể chỉ được sử dụng để xem. Nhập Private Key/Keystore để xác nhận thực hiện các giao dịch.";
-"Share With Friends" = "Chia sẻ với bạn bè.";
+"ShareWithFriends" = "Chia sẻ với bạn bè.";
 "transaction.cell.unknown.title" = "Không xác định";
 "welldone.description.label.text" = "Giúp chúng tôi lớn mạnh bằng cách chia sẻ ứng dụng này với bạn bè của bạn.";
 "welldone.navigation.title" = "Cám ơn!";
@@ -287,4 +287,7 @@
 "DailyUsage" = "Daily Usage";
 "DeferredDeepLinking" = "Deferred Deep Linking";
 "CrashReports" = "Crash Reports";
+"ConfirmSigningThisMessage:" = "Confirm signing this message:";
+"Addresses" = "Addresses";
+"MultiCoinWallets" = "Multi-Coin Wallets";
 "Confirm signing this message:" = "Confirm signing this message:";

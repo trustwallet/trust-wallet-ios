@@ -121,7 +121,7 @@
 "Deleting" = "削除";
 "EthereumAddress" = "イーサリアムアドレス";
 "InCoordinatorError.onlyWatchAccount" = "このウォレットは監視にのみ利用できます。トランザクション／メッセージに署名するため秘密鍵/Keystoreをインポートしてください";
-"Share With Friends" = "友だちにシェアする";
+"ShareWithFriends" = "友だちにシェアする";
 "transaction.cell.unknown.title" = "Unknown";
 "welldone.description.label.text" = "このアプリの発展のため、お友達にシェアしていただけませんか？";
 "welldone.navigation.title" = "ありがとうございます！";
@@ -287,4 +287,7 @@
 "DailyUsage" = "毎日の利用状況";
 "DeferredDeepLinking" = "ディファードディープリンク";
 "CrashReports" = "クラッシュレポート";
+"ConfirmSigningThisMessage:" = "このメッセージの署名を確認する：";
+"Addresses" = "アドレス";
+"MultiCoinWallets" = "マルチコインウォレット";
 "Confirm signing this message:" = "Confirm signing this message:";

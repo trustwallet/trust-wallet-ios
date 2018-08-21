@@ -121,7 +121,7 @@
 "Deleting" = "Suppression";
 "EthereumAddress" = "Adresse Ethereum";
 "InCoordinatorError.onlyWatchAccount" = "Ce portefeuille ne peut être utilisé que pour regarder. Importer une Clé Privée/Keystore pour signer des transactions/messages.";
-"Share With Friends" = "Partager avec des amis";
+"ShareWithFriends" = "Partager avec des amis";
 "transaction.cell.unknown.title" = "Inconnu";
 "welldone.description.label.text" = "Aidez-nous à grandir en partageant cette application avec vos amis !";
 "welldone.navigation.title" = "Merci !";
@@ -287,4 +287,7 @@
 "DailyUsage" = "Utilisation quotidienne";
 "DeferredDeepLinking" = "Liens profonds différés";
 "CrashReports" = "Rapports de plantage";
+"ConfirmSigningThisMessage:" = "Confirmez la signature de ce message:";
+"Addresses" = "Adresses";
+"MultiCoinWallets" = "Portefeuille multi-monnaies";
 "Confirm signing this message:" = "Confirm signing this message:";

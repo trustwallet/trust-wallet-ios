@@ -122,7 +122,7 @@
 "Deleting" = "Удаление";
 "EthereumAddress" = "Адрес Ethereum";
 "InCoordinatorError.onlyWatchAccount" = "Этот кошелек можно использовать только для просмотра. Импортируйте приватный ключ / Keystore для подписания транзакций / сообщений";
-"Share With Friends" = "Поделиться с друзьями";
+"ShareWithFriends" = "Поделиться с друзьями";
 "transaction.cell.unknown.title" = "Неизвестно";
 "welldone.description.label.text" = "Help us grow by sharing this app with your friends!";
 "welldone.navigation.title" = "Спасибо!";
@@ -151,7 +151,7 @@
 "transaction.cell.failed.title" = "Не удалось загрузить";
 "transaction.cell.pending.title" = "Ожидание";
 "transactions.receive.button.title" = "Получить";
-"accounts.confirm.delete.message" = "Убедитесь, что вы резервное копирование Вашего кошелька.";
+"accounts.confirm.delete.message" = "Убедитесь, что вы сделали резервное копирование Вашего кошелька.";
 "accounts.confirm.delete.title" = "Are you sure you would like to delete this wallet?";
 "Approve" = "Одобрить";
 "ChainID" = "Chain ID";
@@ -166,7 +166,7 @@
 "transaction.time.label.title" = "Время транзакции";
 "transaction.to.label.title" = "Кому";
 "settings.allowPushNotifications.button.title" = "Разрешить Push-уведомления";
-"settings.pushNotifications.allowPushNotifications.footer" = "Вы будете уведомлены об отправлянных и полученных транзакциях.";
+"settings.pushNotifications.allowPushNotifications.footer" = "Вы будете уведомлены об отправленных и полученных транзакциях.";
 "settings.pushNotifications.payment.button.title" = "Отправлено и получено";
 "settings.pushNotifications.title" = "Push-уведомления";
 "bookmarks.noBookmarks.label.title" = "Пока нет закладок!";
@@ -288,4 +288,7 @@
 "DailyUsage" = "Ежедневное использование";
 "DeferredDeepLinking" = "Deferred Deep Linking";
 "CrashReports" = "Отчеты О Сбоях";
+"ConfirmSigningThisMessage:" = "Confirm signing this message:";
+"Addresses" = "Адреса";
+"MultiCoinWallets" = "Мульти-монетный кошелеки";
 "Confirm signing this message:" = "Confirm signing this message:";

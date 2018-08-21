@@ -121,7 +121,7 @@
 "Deleting" = "Deleting";
 "EthereumAddress" = "Ethereum Address";
 "InCoordinatorError.onlyWatchAccount" = "This wallet can be only used for watching. Import Private Key/Keystore to sign transactions/messages";
-"Share With Friends" = "Share With Friends";
+"ShareWithFriends" = "Share With Friends";
 "transaction.cell.unknown.title" = "Unknown";
 "welldone.description.label.text" = "Help us grow by sharing this app with your friends!";
 "welldone.navigation.title" = "Thank you!";
@@ -287,4 +287,7 @@
 "DailyUsage" = "Daily Usage";
 "DeferredDeepLinking" = "Deferred Deep Linking";
 "CrashReports" = "Crash Reports";
+"ConfirmSigningThisMessage:" = "Confirm signing this message:";
+"Addresses" = "Addresses";
+"MultiCoinWallets" = "Multi-Coin Wallets";
 "Confirm signing this message:" = "Confirm signing this message:";

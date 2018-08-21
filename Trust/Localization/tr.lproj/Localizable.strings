@@ -121,7 +121,7 @@
 "Deleting" = "Siliniyor";
 "EthereumAddress" = "Ethereum Adresi";
 "InCoordinatorError.onlyWatchAccount" = "Bu cüzdan sadece izlemek için kullanılabilir. Gizli Anahtarı veya Anahtar dosyasının aktararak işlemleri ve mesajları daha detaylı görüntüleyebilirsiniz";
-"Share With Friends" = "Arkadaşlarınızla Paylaşın";
+"ShareWithFriends" = "Arkadaşlarınızla Paylaşın";
 "transaction.cell.unknown.title" = "Bilinmeyen";
 "welldone.description.label.text" = "Bu uygulamayı arkadaşlarınızla paylaşarak büyümemize yardımcı olun!";
 "welldone.navigation.title" = "Teşekkürler!";
@@ -287,4 +287,7 @@
 "DailyUsage" = "Daily Usage";
 "DeferredDeepLinking" = "Deferred Deep Linking";
 "CrashReports" = "Crash Reports";
+"ConfirmSigningThisMessage:" = "Confirm signing this message:";
+"Addresses" = "Addresses";
+"MultiCoinWallets" = "Multi-Coin Wallets";
 "Confirm signing this message:" = "Confirm signing this message:";

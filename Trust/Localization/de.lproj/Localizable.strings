@@ -121,7 +121,7 @@
 "Deleting" = "Löschen";
 "EthereumAddress" = "Ethereum-Adresse";
 "InCoordinatorError.onlyWatchAccount" = "Nur öffentliche Informationen dieses Wallets einsehbar. Importieren Sie den privaten Schlüssel / Keystore, um Transaktionen zu signieren";
-"Share With Friends" = "Mit Freunden teilen";
+"ShareWithFriends" = "Mit Freunden teilen";
 "transaction.cell.unknown.title" = "Unbekannt";
 "welldone.description.label.text" = "Helfen Sie uns, indem Sie diese App mit Ihren Freunden teilen!";
 "welldone.navigation.title" = "Vielen Dank!";
@@ -287,4 +287,7 @@
 "DailyUsage" = "Daily Usage";
 "DeferredDeepLinking" = "Deferred Deep Linking";
 "CrashReports" = "Crash Reports";
+"ConfirmSigningThisMessage:" = "Confirm signing this message:";
+"Addresses" = "Addresses";
+"MultiCoinWallets" = "Multi-Coin Wallets";
 "Confirm signing this message:" = "Confirm signing this message:";

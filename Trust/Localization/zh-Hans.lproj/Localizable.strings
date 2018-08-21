@@ -121,7 +121,7 @@
 "Deleting" = "删除";
 "EthereumAddress" = "以太坊地址";
 "InCoordinatorError.onlyWatchAccount" = "这个钱包只能观察，请导入私钥 / Keystore 来签署交易";
-"Share With Friends" = "与朋友分享";
+"ShareWithFriends" = "与朋友分享";
 "transaction.cell.unknown.title" = "未知";
 "welldone.description.label.text" = "通过与你的朋友分享这个应用来帮助我们成长！";
 "welldone.navigation.title" = "谢谢！";
@@ -282,9 +282,12 @@
 "EnableTestNetworks" = "启用测试网络";
 "Network" = "网络";
 "MultiCoinWallet" = "多币种钱包";
-"LearnMore" = "Learn More";
-"settings.helpCenter.title" = "Help Center";
-"DailyUsage" = "Daily Usage";
+"LearnMore" = "了解更多";
+"settings.helpCenter.title" = "帮助中心";
+"DailyUsage" = "每日使用量";
 "DeferredDeepLinking" = "Deferred Deep Linking";
-"CrashReports" = "Crash Reports";
+"CrashReports" = "崩溃报告";
+"ConfirmSigningThisMessage:" = "确认签署本信息：";
+"Addresses" = "地址";
+"MultiCoinWallets" = "多币种钱包";
 "Confirm signing this message:" = "Confirm signing this message:";
