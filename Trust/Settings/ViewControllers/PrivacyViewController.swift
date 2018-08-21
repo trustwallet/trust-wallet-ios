@@ -35,13 +35,5 @@ final class PrivacyViewController: FormViewController {
              self?.viewModel.branch.update(with: enabled)
              Branch.setTrackingDisabled(!enabled)
         }
-        form +++ Section(footer: viewModel.crashlytics.description)
-
-        <<< SwitchRow {
-            $0.title = viewModel.crashlytics.title
-            $0.value = viewModel.crashlytics.isEnabled
-        }.onChange { [weak self] row in
-             self?.viewModel.crashlytics.update(with: row.value ?? false)
-        }
     }
 }

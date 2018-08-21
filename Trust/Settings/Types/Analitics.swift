@@ -3,7 +3,6 @@
 import UIKit
 
 enum Analitics: String {
-    case crashlytics
     case branch
     case answer
 
@@ -11,14 +10,11 @@ enum Analitics: String {
         switch self {
         case .answer: return R.string.localizable.dailyUsage()
         case .branch: return R.string.localizable.deferredDeepLinking()
-        case .crashlytics: return R.string.localizable.crashReports()
         }
     }
 
     var description: String {
         switch self {
-        case .crashlytics:
-            return R.string.localizable.settingsAnaliticsCrashlyticsDescription()
         case .branch:
             return R.string.localizable.settingsAnaliticsBranchDescription()
         case .answer:
