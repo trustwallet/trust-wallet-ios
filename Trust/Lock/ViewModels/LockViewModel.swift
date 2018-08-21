@@ -3,7 +3,10 @@
 import UIKit
 
 class LockViewModel {
-    private let lock = Lock()
+    private let lock: Lock
+    init(lock: Lock = Lock()) {
+        self.lock = lock
+    }
     func charCount() -> Int {
         //This step is required for old clients to support 4 digit passcode.
         var count = 0

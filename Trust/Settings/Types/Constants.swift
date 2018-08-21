@@ -8,6 +8,7 @@ public struct Constants {
     public static let changellyRefferalID = "968d4f0f0bf9"
     //
     public static let keychainKeyPrefix = "trustwallet"
+    public static let keychainTestsKeyPrefix = "trustwallet-tests"
 
     // social
     public static let website = "https://trustwalletapp.com"

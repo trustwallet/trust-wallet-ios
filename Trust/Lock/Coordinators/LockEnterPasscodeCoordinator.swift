@@ -34,8 +34,6 @@ final class LockEnterPasscodeCoordinator: Coordinator {
             return
         }
 
-        lockEnterPasscodeViewController.showKeyboard()
-        lockEnterPasscodeViewController.showBioMerickAuth()
         lockEnterPasscodeViewController.cleanUserInput()
     }
 

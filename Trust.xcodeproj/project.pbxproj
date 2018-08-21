@@ -251,6 +251,7 @@
 		61FC5ED11FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */; };
 		664D11A12007D59F0041A0B0 /* EstimateGasRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */; };
 		71A433702113860900985ADC /* ConfirmPaymentDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A4336F2113860900985ADC /* ConfirmPaymentDetailsViewModelTests.swift */; };
+		71B1B5312114570A00EF23E5 /* LockEnterPasscodeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B1B5302114570A00EF23E5 /* LockEnterPasscodeViewControllerTests.swift */; };
 		7301BA9220A3117000E1AFE5 /* AutoLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7301BA9120A3117000E1AFE5 /* AutoLock.swift */; };
 		7301BA9620AB1E5600E1AFE5 /* CookiesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7301BA9520AB1E5600E1AFE5 /* CookiesStore.swift */; };
 		7302405C204C65DF00B327DF /* CollectibleTokenCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7302405B204C65DF00B327DF /* CollectibleTokenCategory.swift */; };
@@ -748,6 +749,7 @@
 		646C8C822C986358D7388602 /* Pods_Trust.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trust.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateGasRequest.swift; sourceTree = "<group>"; };
 		71A4336F2113860900985ADC /* ConfirmPaymentDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPaymentDetailsViewModelTests.swift; sourceTree = "<group>"; };
+		71B1B5302114570A00EF23E5 /* LockEnterPasscodeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeViewControllerTests.swift; sourceTree = "<group>"; };
 		7301BA9120A3117000E1AFE5 /* AutoLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLock.swift; sourceTree = "<group>"; };
 		7301BA9520AB1E5600E1AFE5 /* CookiesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookiesStore.swift; sourceTree = "<group>"; };
 		7302405B204C65DF00B327DF /* CollectibleTokenCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectibleTokenCategory.swift; sourceTree = "<group>"; };
@@ -2009,6 +2011,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		71B1B52F211456F700EF23E5 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				71B1B5302114570A00EF23E5 /* LockEnterPasscodeViewControllerTests.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		73200B652044B21100118A82 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
@@ -2244,6 +2254,7 @@
 		772C6DBC210A8B8100FCE4F1 /* Lock */ = {
 			isa = PBXGroup;
 			children = (
+				71B1B52F211456F700EF23E5 /* ViewControllers */,
 				772C6DBD210A8B8600FCE4F1 /* Coordinators */,
 			);
 			path = Lock;
@@ -3247,6 +3258,7 @@
 			files = (
 				771A8480203240BB00528D28 /* PreferencesControllerTests.swift in Sources */,
 				29F1C85620036887003780D8 /* AppTrackerTests.swift in Sources */,
+				71B1B5312114570A00EF23E5 /* LockEnterPasscodeViewControllerTests.swift in Sources */,
 				29BDF19F1FEE51650023A45F /* GasLimitConfigurationTests.swift in Sources */,
 				73200B642040B9D700118A82 /* CryptoAddressValidatorTest.swift in Sources */,
 				733AFC7C210907DE00C0AE35 /* GasViewModelTest.swift in Sources */,
