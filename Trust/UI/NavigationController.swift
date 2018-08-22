@@ -113,7 +113,7 @@ public class NavigationController: UIViewController {
     }
 
     func setNavigationBarHidden(_ hidden: Bool, animated: Bool) {
-        childNavigationController.setNavigationBarHidden(hidden, animated: animated)
+        childNavigationController.setNavigationBarHidden(true, animated: false)
     }
 
     func removeChildCoordinators() {
