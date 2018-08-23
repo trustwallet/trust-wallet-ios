@@ -260,16 +260,6 @@ final class ImportWalletViewController: FormViewController {
     }
 }
 
-extension ImportWalletViewController: UIDocumentPickerDelegate {
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-        if controller.documentPickerMode == UIDocumentPickerMode.import {
-            let text = try? String(contentsOfFile: url.path)
-            keystoreRow?.value = text
-            keystoreRow?.reload()
-        }
-    }
-}
-
 extension ImportWalletViewController: QRCodeReaderDelegate {
     func readerDidCancel(_ reader: QRCodeReaderViewController!) {
         reader.stopScanning()
