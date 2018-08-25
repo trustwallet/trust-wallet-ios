@@ -235,24 +235,21 @@ final class ImportWalletViewController: FormViewController {
         switch type {
         case .keystore:
             keystoreRow?.value = string
-            keystoreRow?.reload()
         case .privateKey:
             privateKeyRow?.value = string
-            privateKeyRow?.reload()
         case .address:
             guard let result = QRURLParser.from(string: string) else { return }
             addressRow?.value = result.address
-            addressRow?.reload()
         case .mnemonic:
             phraseRow?.value = string
-            phraseRow?.reload()
         }
+        tableView.reloadData()
     }
 
     @objc func pasteAddressAction() {
         let value = UIPasteboard.general.string?.trimmed
         addressRow?.value = value
-        addressRow?.reload()
+        tableView.reloadData()
     }
 
     required init?(coder aDecoder: NSCoder) {
