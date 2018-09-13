@@ -3,7 +3,6 @@
 import Foundation
 
 enum Method: String, Decodable {
-    //case getAccounts
     case sendTransaction
     case signTransaction
     case signPersonalMessage
