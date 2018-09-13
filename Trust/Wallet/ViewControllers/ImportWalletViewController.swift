@@ -180,6 +180,8 @@ final class ImportWalletViewController: FormViewController {
     func importWallet() {
         let validatedError = keystoreRow?.section?.form?.validate()
         guard let errors = validatedError, errors.isEmpty else { return }
+        let validatedAdressError = addressRow?.section?.form?.validate()
+        guard let addressErrors = validatedAdressError, addressErrors.isEmpty else { return }
 
         let keystoreInput = keystoreRow?.value?.trimmed ?? ""
         let privateKeyInput = privateKeyRow?.value?.trimmed ?? ""
