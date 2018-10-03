@@ -103,7 +103,7 @@ final class EtherNumberFormatter {
         if fractionalString.isEmpty {
             return integerString
         }
-        return "\(integerString).\(fractionalString)"
+        return "\(integerString)\(self.decimalSeparator)\(fractionalString)"
     }
     /// Formats a `BigInt` to a Decimal.
     ///
@@ -121,7 +121,7 @@ final class EtherNumberFormatter {
         if fractionalString.isEmpty {
             return Decimal(string: integerString)
         }
-        return Decimal(string: "\(integerString).\(fractionalString)")
+        return Decimal(string: "\(integerString)\(self.decimalSeparator)\(fractionalString)")
     }
     private func integerString(from: BigInt) -> String {
         var string = from.description
