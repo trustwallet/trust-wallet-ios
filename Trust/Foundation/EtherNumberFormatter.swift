@@ -25,9 +25,12 @@ final class EtherNumberFormatter {
 
     /// Thousands separator.
     var groupingSeparator = ","
+    
+    let locale: Locale
 
     /// Initializes a `EtherNumberFormatter` with a `Locale`.
     init(locale: Locale = .current) {
+        self.locale = locale
         decimalSeparator = locale.decimalSeparator ?? "."
         groupingSeparator = locale.groupingSeparator ?? ","
     }
@@ -121,7 +124,7 @@ final class EtherNumberFormatter {
         if fractionalString.isEmpty {
             return Decimal(string: integerString)
         }
-        return Decimal(string: "\(integerString)\(self.decimalSeparator)\(fractionalString)")
+        return Decimal(string: "\(integerString)\(self.decimalSeparator)\(fractionalString)", locale: locale)
     }
     private func integerString(from: BigInt) -> String {
         var string = from.description
