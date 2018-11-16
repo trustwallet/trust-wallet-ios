@@ -2700,7 +2700,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Trust/Pods-Trust-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Trust/Pods-Trust-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/TrustWeb3Provider/TrustWeb3Provider.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -2709,7 +2709,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trust/Pods-Trust-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Trust/Pods-Trust-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		29282B511F7629DB0067F88D /* Run SwiftLint */ = {
@@ -2782,7 +2782,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Trust/Pods-Trust-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Trust/Pods-Trust-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APIKit/APIKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
@@ -2841,7 +2841,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trust/Pods-Trust-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Trust/Pods-Trust-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F48CC1C9F6D4FAE6EF587C03 /* [CP] Check Pods Manifest.lock */ = {

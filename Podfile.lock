@@ -43,7 +43,7 @@ PODS:
   - SipHash (1.2.0)
   - StatefulViewController (3.0)
   - SwiftLint (0.27.0)
-  - TrezorCrypto (0.0.8)
+  - TrezorCrypto (0.0.9)
   - TrustCore (0.0.7):
     - BigInt
     - TrezorCrypto (~> 0.0.6)
@@ -173,7 +173,7 @@ SPEC CHECKSUMS:
   SipHash: c6e9e43e9c531b5bc6602545130c26194a6d31ce
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
-  TrezorCrypto: 938c4b715fff7824a9c891a105e65ee0e4e81662
+  TrezorCrypto: bfeea47a052dca2c77d4a39e1e183865e52de14d
   TrustCore: 6c7deb45f03664d650da712bb5a19b33df0534a6
   TrustKeystore: c54b52ade9c97d31d23ded9ae2518c62dd73b5fe
   TrustWalletSDK: 12451433bda69bc07e5a27408449b1f4692879e4
@@ -182,4 +182,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 30a4ddccde066176b63c4f1326409df048b754a1
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0.beta.1
