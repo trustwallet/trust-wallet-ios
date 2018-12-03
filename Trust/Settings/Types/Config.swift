@@ -29,7 +29,7 @@ struct Config {
             }
             //If ther is not saved currency try to use user local currency if it is supported.
             let avaliableCurrency = Currency.allValues.first { currency in
-                return currency.rawValue == Locale.current.currencySymbol
+                return currency.rawValue == Locale.current.currencyCode
             }
             if let isAvaliableCurrency = avaliableCurrency {
                 return isAvaliableCurrency
