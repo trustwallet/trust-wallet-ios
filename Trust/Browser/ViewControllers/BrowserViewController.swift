@@ -128,7 +128,7 @@ final class BrowserViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        self.navigationController?.isToolbarHidden = true
         browserNavBar?.browserDelegate = self
         refreshURL()
     }
@@ -163,6 +163,7 @@ final class BrowserViewController: UIViewController {
         hideErrorView()
         webView.load(request)
         browserNavBar?.textField.text = url.absoluteString
+        self.navigationController?.isToolbarHidden = true
     }
 
     func reload() {
