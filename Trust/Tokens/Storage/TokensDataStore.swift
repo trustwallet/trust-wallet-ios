@@ -255,6 +255,10 @@ extension Coin {
         case .gochain: return RPCServer.gochain
         case .callisto: return RPCServer.callisto
         case .poa: return RPCServer.poa
+//        case .ethereumClassic: return nil
+//        case .gochain: return nil
+//        case .callisto: return nil
+//        case .poa: return nil
         }
     }
 }
