@@ -48,7 +48,7 @@ struct DeveloperViewModel {
 protocol DeveloperViewControllerDelegate: class {
     func didClearTransactions(in controller: DeveloperViewController)
     func didClearTokens(in controller: DeveloperViewController)
-    //func didSelect(server: , in controller: DeveloperViewController)
+    func didSelect(server: RPCServer, in controller: DeveloperViewController)
 }
 
 final class DeveloperViewController: FormViewController {
@@ -113,11 +113,8 @@ final class DeveloperViewController: FormViewController {
 
         return PushRow<RPCServer> { [weak self] in
             $0.title = node.name
-            print($0.title)
             $0.selectorTitle = node.name
-            print($0.selectorTitle)
             $0.options = node.options
-            print($0.options)
             $0.value = viewModel.defaultServer(for: main)
             $0.displayValueFor = { value in
                 return value?.name
@@ -140,7 +137,7 @@ final class DeveloperViewController: FormViewController {
         }.onChange { [weak self]  row in
             guard let value = row.value, let `self` = self else { return }
             self.viewModel.setDefaultServer(for: main, active: value)
-            //self.delegate?.didSelect(server: value, in: self)
+            self.delegate?.didSelect(server: value, in: self)
         }
     }
 }

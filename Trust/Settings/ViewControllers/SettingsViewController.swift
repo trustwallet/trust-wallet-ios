@@ -354,4 +354,15 @@ extension SettingsViewController: DeveloperViewControllerDelegate {
     func didClearTokens(in controller: DeveloperViewController) {
         delegate?.didAction(action: .clearTokens, in: self)
     }
+    
+    func didSelect(server: RPCServer, in controller: DeveloperViewController) {
+        print("we switching the servers")
+        if server == RPCServer.test {
+            print("to ropsten")
+            delegate?.didAction(action: .switchToTest, in: self)
+        } else if server == RPCServer.main {
+            print("to main")
+            delegate?.didAction(action: .switchToMain, in: self)
+        }
+    }
 }

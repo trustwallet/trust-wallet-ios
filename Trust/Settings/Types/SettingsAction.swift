@@ -7,6 +7,8 @@ enum SettingsAction {
     case pushNotifications(NotificationChanged)
     case clearBrowserCache
     case clearTransactions
+    case switchToTest
+    case switchToMain
     case clearTokens
     case openURL(URL)
     case wallets
