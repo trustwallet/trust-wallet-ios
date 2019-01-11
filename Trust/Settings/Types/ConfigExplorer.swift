@@ -16,7 +16,7 @@ struct ConfigExplorer {
         guard let endpoint = explorer(for: server) else { return .none }
         let urlString: String? = {
             switch server {
-            case .main:
+            case .main, .test:
                 return endpoint + "/tx/" + ID
             case .classic:
                 return endpoint + "/tx/" + ID
@@ -36,6 +36,8 @@ struct ConfigExplorer {
         switch server {
         case .main:
             return "https://etherscan.io"
+        case .test:
+            return "https://ropsten.etherscan.io"
         case .classic:
             return "https://gastracker.io"
         case .poa:

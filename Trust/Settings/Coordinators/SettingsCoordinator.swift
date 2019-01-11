@@ -104,6 +104,10 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
             session.transactionsStorage.deleteAll()
         case .clearTokens:
             session.tokensStorage.deleteAll()
+        case .switchToTest:
+            session.currentRPC = RPCServer.test
+        case .switchToMain:
+            session.currentRPC = RPCServer.main
         case .wallets:
             showWallets()
         }
