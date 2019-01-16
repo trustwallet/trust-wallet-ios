@@ -18,8 +18,8 @@ struct ConfigExplorer {
             switch server {
             case .main, .test:
                 return endpoint + "/tx/" + ID
-            case .classic:
-                return endpoint + "/tx/" + ID
+//            case .classic:
+//                return endpoint + "/tx/" + ID
             case .poa:
                 return endpoint + "/txid/search/" + ID
             case .callisto:
@@ -38,8 +38,8 @@ struct ConfigExplorer {
             return "https://etherscan.io"
         case .test:
             return "https://ropsten.etherscan.io"
-        case .classic:
-            return "https://gastracker.io"
+//        case .classic:
+//            return "https://gastracker.io"
         case .poa:
             return "https://poaexplorer.com"
         case .callisto:
