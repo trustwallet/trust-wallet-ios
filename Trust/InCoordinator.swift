@@ -53,8 +53,8 @@ struct CoinTypeViewModel {
     var server: RPCServer {
         switch account.coin! {
         case .ethereum: return RPCServer.main
-        case .ethereumTest: return RPCServer.test
-        //case .ethereumClassic: return RPCServer.classic
+//        case .ethereumTest: return RPCServer.test
+        case .ethereumClassic: return RPCServer.test
         case .gochain: return RPCServer.gochain
         case .poa: return RPCServer.poa
         case .callisto: return RPCServer.callisto
