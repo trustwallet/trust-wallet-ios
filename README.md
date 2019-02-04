@@ -12,7 +12,7 @@ Welcome to Trust's open source iOS app!
 
 ## Getting Started
 
-1. [Download](https://developer.apple.com/xcode/download/) the Xcode 9 release.
+1. [Download](https://developer.apple.com/xcode/download/) Xcode.
 1. Clone this repository.
 1. Run `make bootstrap` to install tools and dependencies.
 
