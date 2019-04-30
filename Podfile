@@ -21,14 +21,14 @@ target 'Trust' do
   pod 'Moya', '~> 10.0.1'
   pod 'CryptoSwift', '~> 0.10.0'
   pod 'Kingfisher', '~> 4.0'
-  pod 'TrustCore', :git=>'https://github.com/TrustWallet/trust-core', :branch=>'master'
-  pod 'TrustKeystore', :git=>'https://github.com/TrustWallet/trust-keystore', :branch=>'master'
+  pod 'TrustCore', :git=>'https://github.com/dappstore123/trust-core', :commit=>'f987ee12f98c2df9d1538d86448dd8e671669350'
+  pod 'TrustKeystore', :git=>'https://github.com/dappstore123/trust-keystore', :commit=>'5829d9631af1572c65108692a09d823c504aea7b'
   pod 'TrezorCrypto'
   pod 'Branch'
   pod 'SAMKeychain'
-  pod 'TrustWeb3Provider', :git=>'https://github.com/TrustWallet/trust-web3-provider', :commit=>'f4e0ebb1b8fa4812637babe85ef975d116543dfd'
+  pod 'TrustWeb3Provider', :git=>'https://github.com/dappstore123/trust-web3-provider', :commit=>'f4e0ebb1b8fa4812637babe85ef975d116543dfd'
+   pod 'TrustWalletSDK', :git=>'https://github.com/dappstore123/TrustSDK-iOS', :commit=>'99eb1456c6ebf1ce6a2dca15731ff99d69f93eb0'
   pod 'URLNavigator'
-  pod 'TrustWalletSDK', :git=>'https://github.com/TrustWallet/TrustSDK-iOS', :branch=>'master'
 
   target 'TrustTests' do
     inherit! :search_paths

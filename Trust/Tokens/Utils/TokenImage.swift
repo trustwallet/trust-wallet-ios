@@ -46,7 +46,7 @@ extension Coin {
         case .ethereum: return "ERC\n20"
         case .poa: return "POA\n20"
         case .ethereumClassic: return "ETC\n20"
-        case .gochain: return "GO\n20"
+        case .gochain: return "IPOS\n20"
         case .callisto: return "CLO\n20"
         default: return "ERC\n20"
         }

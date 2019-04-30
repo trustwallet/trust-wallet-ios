@@ -18,7 +18,7 @@ struct CoinViewModel {
         case .ethereumClassic: return "Ethereum Classic"
         case .poa: return "POA Network"
         case .callisto: return "Callisto"
-        case .gochain: return "GoChain"
+        case .gochain: return "IPOS"
         }
     }
 
@@ -28,7 +28,7 @@ struct CoinViewModel {
         case .ethereumClassic: return "ETC"
         case .callisto: return "CLO"
         case .poa: return "POA"
-        case .gochain: return "GO"
+        case .gochain: return "IPOS"
         case .bitcoin: return "Bitcoin"
         }
     }

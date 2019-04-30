@@ -18,14 +18,33 @@ enum TrustAPI {
 
 extension TrustAPI: TargetType {
 
-    var baseURL: URL { return Constants.trustAPI }
+    var baseURL: URL {
+        switch self {
+        case .prices:
+            return   Constants.trustAPI
+        case .getTransactions(let value):
+            return URL(string: "\(value.server.remoteURL)")!
+        case .getTokens:
+            return Constants.trustAPI
+        case .getAllTransactions:
+            return Constants.trustAPI
+        case .register:
+            return  Constants.trustAPI
+        case .unregister:
+            return  Constants.trustAPI
+        case .collectibles:
+            return Constants.trustAPI
+        case .search:
+            return Constants.trustAPI
+        }
+    }
 
     var path: String {
         switch self {
         case .prices:
             return "/prices"
-        case .getTransactions(let value):
-            return "/\(value.server.id)/transactions"
+        case .getTransactions:
+            return "/transactions"
         case .getTokens:
             return "/tokens"
         case .getAllTransactions:

@@ -16,7 +16,7 @@ enum RPCServer {
         case .poa: return "poa"
         case .classic: return "classic"
         case .callisto: return "callisto"
-        case .gochain: return "gochain"
+        case .gochain: return "IPOS"
         }
     }
 
@@ -26,7 +26,7 @@ enum RPCServer {
         case .poa: return 99
         case .classic: return 61
         case .callisto: return 820
-        case .gochain: return 60
+        case .gochain: return 1122334455
         }
     }
 
@@ -53,7 +53,7 @@ enum RPCServer {
         case .poa: return "POA Network"
         case .classic: return "Ethereum Classic"
         case .callisto: return "Callisto"
-        case .gochain: return "GoChain"
+        case .gochain: return "IPOS"
         }
     }
 
@@ -67,7 +67,7 @@ enum RPCServer {
         case .classic: return "ETC"
         case .callisto: return "CLO"
         case .poa: return "POA"
-        case .gochain: return "GO"
+        case .gochain: return "IPOS"
         }
     }
 
@@ -82,7 +82,7 @@ enum RPCServer {
             case .classic: return "https://etc-geth.0xinfra.com"
             case .callisto: return "https://clo-geth.0xinfra.com"
             case .poa: return "https://poa.infura.io"
-            case .gochain: return "https://rpc.gochain.io"
+            case .gochain: return "https://rpc.iposlab.com"
             }
         }()
         return URL(string: urlString)!
@@ -95,7 +95,7 @@ enum RPCServer {
             case .classic: return "https://classic.trustwalletapp.com"
             case .callisto: return "https://callisto.trustwalletapp.com"
             case .poa: return "https://poa.trustwalletapp.com"
-            case .gochain: return "https://gochain.trustwalletapp.com"
+            case .gochain: return "http://192.168.1.105:8000"
             }
         }()
         return URL(string: urlString)!

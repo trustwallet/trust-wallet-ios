@@ -9,8 +9,8 @@ PODS:
   - Branch/Core (0.25.3)
   - CryptoSwift (0.10.0)
   - Eureka (4.2.0)
-  - JSONRPCKit (2.0.0):
-    - Result (~> 3.0)
+  - JSONRPCKit (3.0.0):
+    - Result (~> 3.2.0)
   - KeychainSwift (10.0.0)
   - Kingfisher (4.8.1)
   - MBProgressHUD (1.1.0)
@@ -64,7 +64,7 @@ DEPENDENCIES:
   - Branch
   - CryptoSwift (~> 0.10.0)
   - Eureka
-  - JSONRPCKit (from `https://github.com/bricklife/JSONRPCKit.git`)
+  - JSONRPCKit (from `https://github.com/bricklife/JSONRPCKit.git`, branch `master`)
   - KeychainSwift
   - Kingfisher (~> 4.0)
   - MBProgressHUD
@@ -78,10 +78,10 @@ DEPENDENCIES:
   - StatefulViewController
   - SwiftLint
   - TrezorCrypto
-  - TrustCore (from `https://github.com/TrustWallet/trust-core`, branch `master`)
-  - TrustKeystore (from `https://github.com/TrustWallet/trust-keystore`, branch `master`)
-  - TrustWalletSDK (from `https://github.com/TrustWallet/TrustSDK-iOS`, branch `master`)
-  - TrustWeb3Provider (from `https://github.com/TrustWallet/trust-web3-provider`, commit `f4e0ebb1b8fa4812637babe85ef975d116543dfd`)
+  - TrustCore (from `https://github.com/dappstore123/trust-core`, commit `f987ee12f98c2df9d1538d86448dd8e671669350`)
+  - TrustKeystore (from `https://github.com/dappstore123/trust-keystore`, commit `5829d9631af1572c65108692a09d823c504aea7b`)
+  - TrustWalletSDK (from `https://github.com/dappstore123/TrustSDK-iOS`, commit `99eb1456c6ebf1ce6a2dca15731ff99d69f93eb0`)
+  - TrustWeb3Provider (from `https://github.com/dappstore123/trust-web3-provider`, commit `f4e0ebb1b8fa4812637babe85ef975d116543dfd`)
   - URLNavigator
 
 SPEC REPOS:
@@ -112,42 +112,43 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   JSONRPCKit:
+    :branch: master
     :git: https://github.com/bricklife/JSONRPCKit.git
   QRCodeReaderViewController:
     :branch: master
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
   TrustCore:
-    :branch: master
-    :git: https://github.com/TrustWallet/trust-core
+    :commit: f987ee12f98c2df9d1538d86448dd8e671669350
+    :git: https://github.com/dappstore123/trust-core
   TrustKeystore:
-    :branch: master
-    :git: https://github.com/TrustWallet/trust-keystore
+    :commit: 5829d9631af1572c65108692a09d823c504aea7b
+    :git: https://github.com/dappstore123/trust-keystore
   TrustWalletSDK:
-    :branch: master
-    :git: https://github.com/TrustWallet/TrustSDK-iOS
+    :commit: 99eb1456c6ebf1ce6a2dca15731ff99d69f93eb0
+    :git: https://github.com/dappstore123/TrustSDK-iOS
   TrustWeb3Provider:
     :commit: f4e0ebb1b8fa4812637babe85ef975d116543dfd
-    :git: https://github.com/TrustWallet/trust-web3-provider
+    :git: https://github.com/dappstore123/trust-web3-provider
 
 CHECKOUT OPTIONS:
   JSONRPCKit:
-    :commit: 50d19a4f7ec593ac5e07cffa1e11c17f1fbe347d
+    :commit: e1ae67de59067ebb677ad0024b3dc6789f31f193
     :git: https://github.com/bricklife/JSONRPCKit.git
   QRCodeReaderViewController:
     :commit: 80bd79cbeede842949b229f81bc6328f53701c5a
     :git: https://github.com/yannickl/QRCodeReaderViewController.git
   TrustCore:
     :commit: f987ee12f98c2df9d1538d86448dd8e671669350
-    :git: https://github.com/TrustWallet/trust-core
+    :git: https://github.com/dappstore123/trust-core
   TrustKeystore:
     :commit: 5829d9631af1572c65108692a09d823c504aea7b
-    :git: https://github.com/TrustWallet/trust-keystore
+    :git: https://github.com/dappstore123/trust-keystore
   TrustWalletSDK:
     :commit: 99eb1456c6ebf1ce6a2dca15731ff99d69f93eb0
-    :git: https://github.com/TrustWallet/TrustSDK-iOS
+    :git: https://github.com/dappstore123/TrustSDK-iOS
   TrustWeb3Provider:
     :commit: f4e0ebb1b8fa4812637babe85ef975d116543dfd
-    :git: https://github.com/TrustWallet/trust-web3-provider
+    :git: https://github.com/dappstore123/trust-web3-provider
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
@@ -156,7 +157,7 @@ SPEC CHECKSUMS:
   Branch: 9917f91a5381bc88ed8e4f080a18213267cf44e6
   CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
   Eureka: 0748c7bbb2560130e43c7bfa83e99c98854a1f42
-  JSONRPCKit: 22132c575ba2dc6f2f4ae72fda4943a63efca686
+  JSONRPCKit: 35aecfdf923a8e2053cef8e46d68ed3da66296c8
   KeychainSwift: f9f7910449a0c0fd2cabc889121530dd2c477c33
   Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
@@ -180,6 +181,6 @@ SPEC CHECKSUMS:
   TrustWeb3Provider: 50fa391bdf170feb43dd4419992931510a5751d8
   URLNavigator: 2357a32f3b3787b748bf87deb927761f8b0f7f53
 
-PODFILE CHECKSUM: 30a4ddccde066176b63c4f1326409df048b754a1
+PODFILE CHECKSUM: 5555d86e9894498405955c2dfe76520786173456
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.1

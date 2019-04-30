@@ -122,6 +122,10 @@ final class TrustNetwork: NetworkProtocol {
             case .success(let response):
                 do {
                     let transactions = try response.map(ArrayResponse<Transaction>.self).docs
+                    for index in 0..<transactions.count {
+                        let item = transactions[index]
+                        item.coin = server.coin
+                    }
                     completion((transactions, true))
                 } catch {
                     completion((nil, false))

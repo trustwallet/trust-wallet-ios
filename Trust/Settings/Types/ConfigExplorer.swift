@@ -43,7 +43,7 @@ struct ConfigExplorer {
         case .callisto:
             return "https://explorer.callisto.network"
         case .gochain:
-            return "https://explorer.gochain.io"
+            return "https://explorer.iposlab.com"
         }
     }
 }
