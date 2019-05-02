@@ -95,7 +95,7 @@ enum RPCServer {
             case .classic: return "https://classic.trustwalletapp.com"
             case .callisto: return "https://callisto.trustwalletapp.com"
             case .poa: return "https://poa.trustwalletapp.com"
-            case .gochain: return "http://192.168.1.105:8000"
+            case .gochain: return "http://iposwallet.herokuapp.com"
             }
         }()
         return URL(string: urlString)!

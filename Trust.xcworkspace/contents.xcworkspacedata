@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Trust.xcodeproj">
+      location = "group:/Users/laozhang/Documents/dev/git/trust-wallet-ios/IPOS.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
