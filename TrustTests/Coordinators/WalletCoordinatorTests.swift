@@ -66,14 +66,14 @@ class WalletCoordinatorTests: XCTestCase {
 
 class FakeWalletCoordinatorDelegate: WalletCoordinatorDelegate {
     var didFail: Error? = .none
-    var didFinishAccount: Trust.WalletInfo? = .none
+    var didFinishAccount: IPOS.WalletInfo? = .none
     var didCancel: Bool = false
 
     func didCancel(in coordinator: WalletCoordinator) {
         didCancel = true
     }
 
-    func didFinish(with account: Trust.WalletInfo, in coordinator: WalletCoordinator) {
+    func didFinish(with account: IPOS.WalletInfo, in coordinator: WalletCoordinator) {
         didFinishAccount = account
     }
 

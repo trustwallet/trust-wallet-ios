@@ -4,7 +4,7 @@ import Foundation
 @testable import IPOS
 import TrustCore
 
-extension Trust.Transaction {
+extension IPOS.Transaction {
     static func make(
         id: String = "0x1",
         blockNumber: Int = 1,
@@ -19,8 +19,8 @@ extension Trust.Transaction {
         coin: Coin = .ethereum,
         localizedOperations: [LocalizedOperationObject] = [],
         state: TransactionState = .completed
-    ) -> Trust.Transaction {
-        return Trust.Transaction(
+    ) -> IPOS.Transaction {
+        return IPOS.Transaction(
             id: id,
             blockNumber: blockNumber,
             from: from,

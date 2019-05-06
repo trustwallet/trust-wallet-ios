@@ -16,7 +16,7 @@ class TransactionsStorageTests: XCTestCase {
 
     func testAddItem() {
         let storage = FakeTransactionsStorage()
-        let item: Trust.Transaction = .make()
+        let item: IPOS.Transaction = .make()
 
         storage.add([item])
 
@@ -48,8 +48,8 @@ class TransactionsStorageTests: XCTestCase {
 
     func testDelete() {
         let storage = FakeTransactionsStorage()
-        let one: Trust.Transaction = .make(nonce: 1)
-        let two: Trust.Transaction = .make(nonce: 2)
+        let one: IPOS.Transaction = .make(nonce: 1)
+        let two: IPOS.Transaction = .make(nonce: 2)
 
         storage.add([
             one,

@@ -27,11 +27,11 @@ class InCoordinatorTests: XCTestCase {
     }
 
     func testChangeRecentlyUsedAccount() {
-        let account1: Trust.WalletInfo = WalletInfo(
+        let account1: IPOS.WalletInfo = WalletInfo(
             type: .address(.ethereum, EthereumAddress(string: "0x1000000000000000000000000000000000000000")!),
             info: .make()
         )
-        let account2: Trust.WalletInfo = WalletInfo(
+        let account2: IPOS.WalletInfo = WalletInfo(
             type: .address(.ethereum, EthereumAddress(string: "0x2000000000000000000000000000000000000000")!),
             info: .make()
         )

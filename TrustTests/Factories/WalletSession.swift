@@ -8,7 +8,7 @@ import RealmSwift
 
 extension WalletSession {
     static func make(
-        account: Trust.WalletInfo = .make(),
+        account: IPOS.WalletInfo = .make(),
         config: Config = .make(),
         realm: Realm = .make(),
         sharedRealm: Realm = .make()

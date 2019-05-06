@@ -1,7 +1,7 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import XCTest
-@testable import Pods_IPOS
+@testable import IPOS
 
 class PreferencesControllerTests: XCTestCase {
 
