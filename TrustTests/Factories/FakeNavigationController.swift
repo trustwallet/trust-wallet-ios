@@ -2,7 +2,7 @@
 
 import Foundation
 import UIKit
-@testable import Trust
+@testable import IPOS
 
 class FakeNavigationController: NavigationController {
 

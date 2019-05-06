@@ -2,7 +2,7 @@
 
 import XCTest
 import BigInt
-@testable import Trust
+@testable import IPOS
 
 class SendViewModelTest: XCTestCase {
     var sendViewModel = SendViewModel(

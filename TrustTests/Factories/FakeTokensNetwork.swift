@@ -2,7 +2,7 @@
 
 import Foundation
 import Moya
-@testable import Trust
+@testable import IPOS
 import BigInt
 import TrustCore
 import TrustKeystore

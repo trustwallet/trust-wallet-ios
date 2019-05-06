@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2912CCF41F6A830700C6CBE3"
-               BuildableName = "Trust.app"
-               BlueprintName = "Trust"
-               ReferencedContainer = "container:Trust.xcodeproj">
+               BuildableName = "IPOS.app"
+               BlueprintName = "IPOS"
+               ReferencedContainer = "container:IPOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2912CD0A1F6A830700C6CBE3"
-               BuildableName = "TrustTests.xctest"
-               BlueprintName = "TrustTests"
-               ReferencedContainer = "container:Trust.xcodeproj">
+               BuildableName = "IPOSTests.xctest"
+               BlueprintName = "IPOSTests"
+               ReferencedContainer = "container:IPOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2912CD151F6A830700C6CBE3"
-               BuildableName = "TrustUITests.xctest"
-               BlueprintName = "TrustUITests"
-               ReferencedContainer = "container:Trust.xcodeproj">
+               BuildableName = "IPOSUITests.xctest"
+               BlueprintName = "IPOSUITests"
+               ReferencedContainer = "container:IPOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2912CCF41F6A830700C6CBE3"
-            BuildableName = "Trust.app"
-            BlueprintName = "Trust"
-            ReferencedContainer = "container:Trust.xcodeproj">
+            BuildableName = "IPOS.app"
+            BlueprintName = "IPOS"
+            ReferencedContainer = "container:IPOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2912CCF41F6A830700C6CBE3"
-            BuildableName = "Trust.app"
-            BlueprintName = "Trust"
-            ReferencedContainer = "container:Trust.xcodeproj">
+            BuildableName = "IPOS.app"
+            BlueprintName = "IPOS"
+            ReferencedContainer = "container:IPOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -99,9 +99,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2912CCF41F6A830700C6CBE3"
-            BuildableName = "Trust.app"
-            BlueprintName = "Trust"
-            ReferencedContainer = "container:Trust.xcodeproj">
+            BuildableName = "IPOS.app"
+            BlueprintName = "IPOS"
+            ReferencedContainer = "container:IPOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

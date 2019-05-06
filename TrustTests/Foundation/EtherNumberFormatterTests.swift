@@ -1,7 +1,7 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import BigInt
-@testable import Trust
+@testable import IPOS
 import XCTest
 
 class EtherNumberFormatterTests: XCTestCase {

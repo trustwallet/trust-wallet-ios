@@ -1,7 +1,7 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-@testable import Trust
+@testable import IPOS
 import TrustCore
 
 extension EthereumAddress {

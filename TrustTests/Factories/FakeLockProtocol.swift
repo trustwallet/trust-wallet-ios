@@ -1,7 +1,7 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import UIKit
-@testable import Trust
+@testable import IPOS
 
 class FakeLockProtocol: LockInterface {
 

@@ -2,7 +2,7 @@
 
 import XCTest
 import KeychainSwift
-@testable import Trust
+@testable import IPOS
 
 class LockEnterPasscodeViewControllerTests: XCTestCase {
     

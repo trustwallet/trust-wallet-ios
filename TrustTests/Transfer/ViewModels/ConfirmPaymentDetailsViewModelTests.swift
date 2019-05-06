@@ -4,7 +4,7 @@ import XCTest
 import Realm
 import RealmSwift
 import BigInt
-@testable import Trust
+@testable import IPOS
 import TrustCore
 
 class ConfirmPaymentDetailsViewModelTests: XCTestCase {

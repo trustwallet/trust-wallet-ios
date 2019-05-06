@@ -2,7 +2,7 @@ platform :ios, '10.0'
 inhibit_all_warnings!
 source 'https://github.com/CocoaPods/Specs.git'
 
-target 'Trust' do
+target 'IPOS' do
   use_frameworks!
 
   pod 'BigInt', '~> 3.0'
@@ -30,12 +30,12 @@ target 'Trust' do
    pod 'TrustWalletSDK', :git=>'https://github.com/dappstore123/TrustSDK-iOS', :commit=>'99eb1456c6ebf1ce6a2dca15731ff99d69f93eb0'
   pod 'URLNavigator'
 
-  target 'TrustTests' do
+  target 'IPOSTests' do
     inherit! :search_paths
     # Pods for testing
   end
 
-  target 'TrustUITests' do
+  target 'IPOSUITests' do
     inherit! :search_paths
     # Pods for testing
   end

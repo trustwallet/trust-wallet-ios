@@ -1,6 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-@testable import Trust
+@testable import IPOS
 import XCTest
 
 class CryptoAddressValidatorTest: XCTestCase {

@@ -2,7 +2,7 @@
 
 import Foundation
 import BigInt
-@testable import Trust
+@testable import IPOS
 import TrustCore
 import TrustKeystore
 
