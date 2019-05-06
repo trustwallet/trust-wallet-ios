@@ -125,10 +125,10 @@
 "transaction.cell.unknown.title" = "Unknown";
 "welldone.description.label.text" = "Help us grow by sharing this app with your friends!";
 "welldone.navigation.title" = "Thank you!";
-"welldone.viewmodel.sharing.text1" = "Here is the app I use to store my ETH and ERC20 tokens.";
-"welldone.viewmodel.sharing.text2" = "Check out Trust - the wallet that lets me securely store my Ethereum and ERC20 tokens.";
-"welldone.viewmodel.sharing.text3" = "I securely store Ethereum and ERC20 tokens in the Trust wallet";
-"welldone.viewmodel.sharing.text4" = "I secure my Ethereum and ERC20 tokens in the Trust wallet.";
+"welldone.viewmodel.sharing.text1" = "Here is the app I use to store my IPOS tokens.";
+"welldone.viewmodel.sharing.text2" = "Check out IPOS - the wallet that lets me securely store my IPOS tokens.";
+"welldone.viewmodel.sharing.text3" = "I securely store IPOS tokens in the IPOS wallet";
+"welldone.viewmodel.sharing.text4" = "I secure my IPOS tokens in the IPOS wallet.";
 "browser.home.button.title" = "Home";
 "browser.reload.button.title" = "Reload";
 "configureTransaction.gasPriceGwei.label.title" = "Gas Price (Gwei)";

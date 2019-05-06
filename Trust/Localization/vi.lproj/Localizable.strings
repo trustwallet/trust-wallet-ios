@@ -125,10 +125,10 @@
 "transaction.cell.unknown.title" = "Không xác định";
 "welldone.description.label.text" = "Giúp chúng tôi lớn mạnh bằng cách chia sẻ ứng dụng này với bạn bè của bạn.";
 "welldone.navigation.title" = "Cám ơn!";
-"welldone.viewmodel.sharing.text1" = "Đây là ứng dụng tôi dùng để quản lý ETH và các loại tiền mã hóa tương thích chuẩn ERC20";
-"welldone.viewmodel.sharing.text2" = "Khám phá Trust - Một ví cho phép lưu trữ an toàn Ethereum và các loại tiền tương thích với ERC20.";
-"welldone.viewmodel.sharing.text3" = "Ethereum và các loại tiền mã hóa tương thích ERC20 của tôi được quản lý an toàn bởi ví Trust.";
-"welldone.viewmodel.sharing.text4" = "Tôi quản lý Ethereum và các loại tiền mã hóa tương thích ERC20 bằng ví Trust.";
+"welldone.viewmodel.sharing.text1" = "Đây là ứng dụng tôi dùng để quản lý IPOS và các loại tiền mã hóa tương thích chuẩn ERC20";
+"welldone.viewmodel.sharing.text2" = "Khám phá IPOS - Một ví cho phép lưu trữ an toàn IPOS và các loại tiền tương thích với ERC20.";
+"welldone.viewmodel.sharing.text3" = "IPOS và các loại tiền mã hóa tương thích ERC20 của tôi được quản lý an toàn bởi ví IPOS.";
+"welldone.viewmodel.sharing.text4" = "Tôi quản lý IPOS và các loại tiền mã hóa tương thích ERC20 bằng ví IPOS.";
 "browser.home.button.title" = "Trang chủ";
 "browser.reload.button.title" = "Tải lại";
 "configureTransaction.gasPriceGwei.label.title" = "Phí giao dịch (Gwei)";

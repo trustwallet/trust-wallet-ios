@@ -125,10 +125,10 @@
 "transaction.cell.unknown.title" = "Inconnu";
 "welldone.description.label.text" = "Aidez-nous à grandir en partageant cette application avec vos amis !";
 "welldone.navigation.title" = "Merci !";
-"welldone.viewmodel.sharing.text1" = "Voici l'application que j'utilise pour stocker mes jetons ETH et ERC20.";
-"welldone.viewmodel.sharing.text2" = "Découvrez Trust - le portefeuille qui me permet de stocker en toute sécurité mes jetons Ethereum et ERC20.";
-"welldone.viewmodel.sharing.text3" = "Je stocke en toute sécurité les jetons Ethereum et ERC20 dans le portefeuille Trust";
-"welldone.viewmodel.sharing.text4" = "Je sécurise mes jetons Ethereum et ERC20 dans le portefeuille Trust.";
+"welldone.viewmodel.sharing.text1" = "Voici l'application que j'utilise pour stocker mes jetons IPOS.";
+"welldone.viewmodel.sharing.text2" = "Découvrez IPOS - le portefeuille qui me permet de stocker en toute sécurité mes jetons IPOS.";
+"welldone.viewmodel.sharing.text3" = "Je stocke en toute sécurité les jetons IPOS dans le portefeuille IPOS";
+"welldone.viewmodel.sharing.text4" = "Je sécurise mes jetons IPOS dans le portefeuille IPOS.";
 "browser.home.button.title" = "Accueil";
 "browser.reload.button.title" = "Recharger";
 "configureTransaction.gasPriceGwei.label.title" = "Prix du gaz (Gwei)";

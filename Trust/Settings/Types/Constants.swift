@@ -7,21 +7,21 @@ public struct Constants {
     public static let keychainTestsKeyPrefix = "trustwallet-tests"
 
     // social
-    public static let website = "https://trustwalletapp.com"
-    public static let twitterUsername = "trustwalletapp"
-    public static let defaultTelegramUsername = "trustwallet"
-    public static let facebookUsername = "trustwalletapp"
+    public static let website = "https://iposlab.com"
+    public static let twitterUsername = "iposisanotheros"
+    public static let defaultTelegramUsername = "iposio"
+    public static let facebookUsername = ""
 
-    public static var localizedTelegramUsernames = ["ru": "trustwallet_ru", "vi": "trustwallet_vn", "es": "trustwallet_es", "zh": "trustwallet_cn", "ja": "trustwallet_jp", "de": "trustwallet_de", "fr": "trustwallet_fr"]
+    public static var localizedTelegramUsernames = ["ru": "iposio", "vi": "iposio", "es": "iposio", "zh": "iposio", "ja": "iposio", "de": "iposio", "fr": "iposio"]
 
     // support
-    public static let supportEmail = "support@trustwalletapp.com"
+    public static let supportEmail = "support@iposlab.com"
 
-    public static let dappsBrowserURL = "https://dapps.trustwalletapp.com/"
+    public static let dappsBrowserURL = "https://explorer.iposlab.com"
     public static let dappsOpenSea = "https://opensea.io"
     public static let dappsRinkebyOpenSea = "https://rinkeby.opensea.io"
 
-    public static let images = "https://trustwalletapp.com/images"
+    public static let images = "https://iposlab.com/images"
 
     //public static let trustAPI = URL(string: "http://public.trustwalletapp.com")!
     public static let trustAPI = URL(string: "http://public.trustwalletapp.com")!

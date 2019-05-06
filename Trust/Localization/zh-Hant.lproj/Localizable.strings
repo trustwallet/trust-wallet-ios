@@ -126,10 +126,10 @@
 "transaction.cell.unknown.title" = "未知";
 "welldone.description.label.text" = "通過與你的朋友分享這個應用來幫助我們成長！";
 "welldone.navigation.title" = "謝謝！";
-"welldone.viewmodel.sharing.text1" = "這是我用來存儲以太幣和 ERC20 通證的應用。";
-"welldone.viewmodel.sharing.text2" = "請看 Trust - 讓我安全地存儲以太坊和 ERC20 代幣的錢包。";
-"welldone.viewmodel.sharing.text3" = "我在 Trust 錢包中安全地存儲了以太坊和 ERC20 代幣。";
-"welldone.viewmodel.sharing.text4" = "我在 Trust 錢包中保護了我的以太坊和 ERC20 代幣。";
+"welldone.viewmodel.sharing.text1" = "這是我用來存儲IPOS 通證的應用。";
+"welldone.viewmodel.sharing.text2" = "請看 IPOS - 讓我安全地存儲IPOS 代幣的錢包。";
+"welldone.viewmodel.sharing.text3" = "我在 IPOS 錢包中安全地存儲IPOS 代幣。";
+"welldone.viewmodel.sharing.text4" = "我在 IPOS 錢包中保護了我的IPOS 代幣。";
 "browser.home.button.title" = "返回主頁";
 "browser.reload.button.title" = "重新加載";
 "configureTransaction.gasPriceGwei.label.title" = "Gas 價格 (Gwei)";

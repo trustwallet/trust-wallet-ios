@@ -36,7 +36,7 @@ enum RPCServer {
         case .poa: return EthereumAddress(string: "0x00000000000000000000000000000000000000AC")!
         case .classic: return EthereumAddress(string: "0x000000000000000000000000000000000000003D")!
         case .callisto: return EthereumAddress(string: "0x0000000000000000000000000000000000000334")!
-        case .gochain: return EthereumAddress(string: "0x00000000000000000000000000000000000017aC")!
+        case .gochain: return EthereumAddress(string: "0x0000000000000000000000000000000000003039")!
         }
     }
 
