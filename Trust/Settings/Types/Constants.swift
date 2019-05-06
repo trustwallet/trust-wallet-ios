@@ -24,7 +24,8 @@ public struct Constants {
     public static let images = "https://iposlab.com/images"
 
     //public static let trustAPI = URL(string: "http://public.trustwalletapp.com")!
-    public static let trustAPI = URL(string: "http://public.trustwalletapp.com")!
+    public static let trustAPI = URL(string: "http://iposwallet.herokuapp.com")!
+    public static let priceAPI = URL(string: "http://price.iposlab.com")!
 }
 
 public struct UnitConfiguration {

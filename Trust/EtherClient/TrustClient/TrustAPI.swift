@@ -21,7 +21,7 @@ extension TrustAPI: TargetType {
     var baseURL: URL {
         switch self {
         case .prices:
-            return   Constants.trustAPI
+            return   Constants.priceAPI
         case .getTransactions(let value):
             return URL(string: "\(value.server.remoteURL)")!
         case .getTokens:
