@@ -58,7 +58,8 @@ final class TrustNetwork: NetworkProtocol {
 
     func tokensList() -> Promise<[TokenObject]> {
         return Promise { seal in
-            provider.request(.getTokens(dict)) { result in
+            let addr =   wallet.accounts[0].address.description
+            provider.request(.getTokens(address:addr)) { result in
                 switch result {
                 case .success(let response):
                     do {
@@ -100,7 +101,8 @@ final class TrustNetwork: NetworkProtocol {
 
     func collectibles() -> Promise<[CollectibleTokenCategory]> {
         return Promise { seal in
-            provider.request(.collectibles(dict)) { result in
+             let addr =   wallet.accounts[0].address.description
+            provider.request(.collectibles(address:addr)) { result in
                 switch result {
                 case .success(let response):
                     do {

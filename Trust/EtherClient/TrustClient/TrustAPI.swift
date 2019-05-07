@@ -10,8 +10,8 @@ enum TrustAPI {
     case prices(TokensPrice)
     case getAllTransactions(addresses: [String: String])
     case search(query: String, networks: [Int])
-    case collectibles([String: [String]])
-    case getTokens([String: [String]])
+    case collectibles(address: String)
+    case getTokens(address: String)
     case register(device: PushDevice)
     case unregister(device: PushDevice)
 }
@@ -42,7 +42,7 @@ extension TrustAPI: TargetType {
     var path: String {
         switch self {
         case .prices:
-            return "/prices"
+            return "/prices/"
         case .getTransactions:
             return "/transactions"
         case .getTokens:
@@ -64,7 +64,7 @@ extension TrustAPI: TargetType {
         switch self {
         case .prices: return .post
         case .getTransactions: return .get
-        case .getTokens: return .post
+        case .getTokens: return .get
         case .getAllTransactions: return .post
         case .register: return .post
         case .unregister: return .post
@@ -90,7 +90,8 @@ extension TrustAPI: TargetType {
         case .unregister(let device):
             return .requestJSONEncodable(device)
         case .collectibles(let value), .getTokens(let value):
-            return .requestJSONEncodable(value)
+            let params2: [String: Any] = ["address": value]
+            return .requestParameters(parameters: params2, encoding: URLEncoding())
         case .search(let query, let networks):
             let networkString =  networks.map { String($0) }.joined(separator: ",")
             return .requestParameters(parameters: ["query": query, "networks": networkString], encoding: URLEncoding())
