@@ -42,7 +42,7 @@ extension TrustAPI: TargetType {
     var path: String {
         switch self {
         case .prices:
-            return "/prices/"
+            return "/prices"
         case .getTransactions:
             return "/transactions"
         case .getTokens:
