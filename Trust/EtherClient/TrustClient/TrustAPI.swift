@@ -50,9 +50,9 @@ extension TrustAPI: TargetType {
         case .getAllTransactions:
             return "/transactions"
         case .register:
-            return "/notifications/register"
+            return "/push/register"
         case .unregister:
-            return "/notifications/unregister"
+            return "/push/unregister"
         case .collectibles:
             return "/collectibles"
         case .search:

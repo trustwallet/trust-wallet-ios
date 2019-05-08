@@ -143,18 +143,15 @@ class AppCoordinator: NSObject, Coordinator {
     func didRegisterForRemoteNotificationsWithDeviceToken(deviceToken: Data) {
         pushNotificationRegistrar.didRegister(
             with: deviceToken,
-            networks: networks(for: keystore.wallets)
+            wallets: wallets(for: keystore.wallets)
         )
     }
 
-    private func networks(for wallets: [WalletInfo]) -> [Int: [String]] {
-        var result: [Int: [String]] = [:]
+    private func wallets(for wallets: [WalletInfo]) ->  [String] {
+        var result:  [String] = []
         wallets.forEach { wallet in
             for account in wallet.accounts {
-                guard let coin = account.coin else { break }
-                var elements: [String] = result[coin.rawValue] ?? []
-                elements.append(account.address.description)
-                result[coin.rawValue] = elements
+                result.append(account.address.description)
             }
         }
         return result

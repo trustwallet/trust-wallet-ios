@@ -29,7 +29,7 @@ final class PushNotificationsRegistrar {
         let device = PushDevice(
             deviceID: UIDevice.current.identifierForVendor!.uuidString,
             token: "",
-            networks: [:],
+            wallets: [],
             preferences: NotificationsViewController.getPreferences()
         )
 
@@ -38,7 +38,7 @@ final class PushNotificationsRegistrar {
         UIApplication.shared.unregisterForRemoteNotifications()
     }
 
-    func didRegister(with deviceToken: Data, networks: [Int: [String]]) {
+    func didRegister(with deviceToken: Data, wallets:  [String]) {
         let token = deviceToken.map { data -> String in
             return String(format: "%02.2hhx", data)
         }.joined()
@@ -46,7 +46,7 @@ final class PushNotificationsRegistrar {
         let device = PushDevice(
             deviceID: UIDevice.current.identifierForVendor!.uuidString,
             token: token,
-            networks: networks,
+            wallets: wallets,
             preferences: NotificationsViewController.getPreferences()
         )
 
